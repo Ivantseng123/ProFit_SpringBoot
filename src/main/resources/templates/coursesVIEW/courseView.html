@@ -1,21 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org/">
 <head>
 <meta charset="UTF-8">
 <title>ProFit</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resource/courses/css/coursesView.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/model/model.css">
+<link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
+<link rel="stylesheet" th:href="@{/css/model.css}">
 </head>
 <body>
-	<jsp:include page="../model/header&sidebar.jsp"></jsp:include>
+	<div th:replace="~{model/header&sidebar}"></div>
 	<!-- 主要內容區域 -->
 	<!-- 只是一個範例，裡面布局可以更改 -->
 	<main>
 		<div class="course-header">
 			<h2>課程管理功能</h2>
-			<span><a href="${pageContext.request.contextPath}/courses/addCourse"><button
+			<span><a th:href="@{/courses/addCourse}"><button
 						id="createBtn">新增課程</button></a></span>
 		</div>
 		<div class="dashboard-header">
@@ -60,10 +58,9 @@
 		<div class="table-container" id="search-results"></div>
 	</main>
 	<script>
-        var contextPath = '${pageContext.request.contextPath}';
+        var contextPath = 'http://localhost:8080/ProFit';
     </script>
-	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	<script src="${pageContext.request.contextPath}/resource/courses/js/courseView.js"></script>
-	<script src="${pageContext.request.contextPath}/model/popup.js"></script>
+	<script th:src="@{/js/courses/courseView.js}"></script>
+	<script th:src="@{/model/popup.js}"></script>
 </body>
 </html>

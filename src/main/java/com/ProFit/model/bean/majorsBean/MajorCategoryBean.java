@@ -23,8 +23,8 @@ public class MajorCategoryBean implements java.io.Serializable {
 	@Column(name = "category_name")
 	private String categoryName; // 類別名稱
 
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majorCategory", cascade = CascadeType.ALL)
-//	private Set<MajorBean> majors = new HashSet<MajorBean>(0);
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majorCategory", cascade = CascadeType.ALL)
+	private Set<MajorBean> majors = new HashSet<MajorBean>(0);
 
 	public MajorCategoryBean() {
 		super();
@@ -53,13 +53,13 @@ public class MajorCategoryBean implements java.io.Serializable {
 		this.categoryName = categoryName;
 	}
 
-//	public Set<MajorBean> getMajors() {
-//		return majors;
-//	}
-//
-//	public void setMajors(Set<MajorBean> majors) {
-//		this.majors = majors;
-//	}
+	public Set<MajorBean> getMajors() {
+		return majors;
+	}
+
+	public void setMajors(Set<MajorBean> majors) {
+		this.majors = majors;
+	}
 
 	@Override
 	public String toString() {
