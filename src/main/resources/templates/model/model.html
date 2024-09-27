@@ -3,47 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <title>ProFit</title>
+<link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
 <link rel="stylesheet" th:href="@{/css/model.css}">
 </head>
 <body>
-	<div th:replace="~{model/header&sidebar}"></div>
-
-	<!-- 主要內容區域 -->
-	<!-- 只是一個範例，裡面布局可以更改 -->
-	<main>
-		<div class="dashboard-header">
-			<h2>課程管理功能</h2>
-		</div>
-		<div class="table-container">
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>課程名稱</th>
-						<th>說明</th>
-						<th>進度</th>
-						<th>狀態</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>專案 A</td>
-						<td>描述 A</td>
-						<td>進行中</td>
-						<td><span class="status">正常</span></td>
-						<td class="action-buttons">
-							<button class="view">查看</button>
-							<button class="edit">編輯</button>
-							<button class="delete">刪除</button>
-						</td>
-					</tr>
-					<!-- 更多行 -->
-				</tbody>
-			</table>
-		</div>
-	</main>
+		<div th:replace="~{model/layout-static}"></div>
+		<div class="container pt-5">
+		<!-- 只是一個範例，裡面布局可以更改 -->
+			<div class="dashboard-header">
+				<h2>課程管理功能</h2>
+			</div>
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>課程名稱</th>
+							<th>說明</th>
+							<th>進度</th>
+							<th>狀態</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>專案 A</td>
+							<td>描述 A</td>
+							<td>進行中</td>
+							<td><span class="status">正常</span></td>
+							<td class="action-buttons">
+								<button class="view">查看</button>
+								<button class="edit">編輯</button>
+								<button class="delete">刪除</button>
+							</td>
+						</tr>
+						<!-- 更多行 -->
+					</tbody>
+				</table>
+			</div>
+			</div>
 	<script>
 		/*
 		$.ajax({
