@@ -7,10 +7,10 @@
 <link rel="stylesheet" th:href="@{/css/model.css}">
 </head>
 <body>
-	<div th:replace="~{model/header&sidebar}"></div>
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-5">
 	<!-- 主要內容區域 -->
 	<!-- 只是一個範例，裡面布局可以更改 -->
-	<main>
 		<div class="course-header">
 			<h2>課程管理功能</h2>
 			<span><a th:href="@{/courses/addCourse}"><button
@@ -56,11 +56,11 @@
 		</div>
 		
 		<div class="table-container" id="search-results"></div>
-	</main>
+		</div>
 	<script>
         var contextPath = 'http://localhost:8080/ProFit';
     </script>
 	<script th:src="@{/js/courses/courseView.js}"></script>
-	<script th:src="@{/model/popup.js}"></script>
+	<script th:src="@{/js/popup.js}"></script>
 </body>
 </html>

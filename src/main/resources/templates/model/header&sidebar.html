@@ -1,31 +1,119 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-<meta charset="UTF-8">
-<title>ProFit</title>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-<link rel="stylesheet"
-	th:href="@{/css/model.css}">
-<style>
-.userPicture{
-	width: 100px;
-    height: 100px;
 
-	img {
-  	vertical-align: middle;
-  	border-radius: 50%;
-  	padding: 50px;
-    width: 100%;
-    height: 100%;
-    /* 控制元素為內容大小 調整比例*/
-    object-fit: cover;
-    box-sizing: content-box; /* 將box-sizing設置為content-box以避免被覆蓋 */
-	}
-}
-</style>	
+<head>
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/model.css}">
+	<style>
+		.userPicture {
+			width: 100px;
+			height: 100px;
+
+			img {
+				vertical-align: middle;
+				border-radius: 50%;
+				padding: 50px;
+				width: 100%;
+				height: 100%;
+				/* 控制元素為內容大小 調整比例*/
+				object-fit: cover;
+				box-sizing: content-box;
+				/* 將box-sizing設置為content-box以避免被覆蓋 */
+			}
+		}
+	</style>
 </head>
+
 <body>
-	<!-- 頂列區域 -->
+ <div class="wrapper">
+	<div class="wrapper min-vh-100 ">
+		<aside id="sidebar">
+			<div class="d-flex">
+				<button class="toggle-btn" type="button">
+					<i class="fa-solid fa-grip-lines"></i>
+				</button>
+				<div class="sidebar-logo">
+					<a href="#">Profit</a>
+				</div>
+			</div>
+			<ul class="sidebar-nav">
+				<li class="sidebar-item"><a href="#" class="sidebar-link">
+						<i class="fa-solid fa-chart-line"></i> <span>儀錶板</span>
+					</a></li>
+				<li class="sidebar-item"><a href="#" class="sidebar-link collapsed has-dropdown"
+						data-bs-toggle="collapse" data-bs-target="#user" aria-expanded="false" aria-controls="user"> <i
+							class="fa-regular fa-user"></i> <span>會員管理</span>
+					</a>
+					<ul id="user" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item"><a href="#" class="sidebar-link">全部會員</a>
+						</li>
+						<li class="sidebar-item"><a href="#" class="sidebar-link">重設密碼列表</a>
+						</li>
+						<li class="sidebar-item"><a href="#" class="sidebar-link">企業申請列表</a>
+						</li>
+						<li class="sidebar-item"><a href="#" class="sidebar-link">企業資訊列表</a>
+						</li>
+					</ul>
+				</li>
+				<li class="sidebar-item"><a href="#" class="sidebar-link collapsed has-dropdown"
+						data-bs-toggle="collapse" data-bs-target="#job" aria-expanded="false" aria-controls="job"> <i
+							class="fa-solid fa-briefcase"></i> <span>職缺管理</span>
+					</a>
+					<ul id="job" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item"><a href="#" class="sidebar-link">選單</a>
+						</li>
+					</ul>
+				</li>
+				<li class="sidebar-item"><a href="#" class="sidebar-link collapsed has-dropdown"
+						data-bs-toggle="collapse" data-bs-target="#skill" aria-expanded="false" aria-controls="skill">
+						<i class="fa-regular fa-file-code"></i> <span>技能服務管理</span>
+					</a>
+					<ul id="skill" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item"><a href="#" class="sidebar-link">選單</a>
+						</li>
+					</ul>
+				</li>
+				<li class="sidebar-item"><a href="#" class="sidebar-link collapsed has-dropdown"
+						data-bs-toggle="collapse" data-bs-target="#course" aria-expanded="false" aria-controls="course">
+						<i class="fa-brands fa-leanpub"></i> <span>課程管理</span>
+					</a>
+					<ul id="course" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item"><a href="#" class="sidebar-link">選單</a>
+						</li>
+					</ul>
+				</li>
+				<li class="sidebar-item"><a href="#" class="sidebar-link  collapsed has-dropdown"
+						data-bs-toggle="collapse" data-bs-target="#event" aria-expanded="false" aria-controls="event">
+						<i class=" fa-solid fa-people-group"></i> <span>活動管理</span>
+					</a>
+					<ul id="event" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item"><a href="#" class="sidebar-link">選單</a>
+						</li>
+					</ul>
+				</li>
+				<li class="sidebar-item"><a href="#" class="sidebar-link collapsed has-dropdown"
+						data-bs-toggle="collapse" data-bs-target="#transaction" aria-expanded="false"
+						aria-controls="transaction"> <i class="fa-regular fa-dollar-sign"></i> <span>交易管理</span>
+					</a>
+					<ul id="transaction" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+						<li class="sidebar-item"><a href="#" class="sidebar-link">選單</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<div class="sidebar-footer">
+				<a href="#" class="sidebar-link"> <img
+						src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkiiSGuZZHAXgwIk9YzTjQjmMxxwne2-1VlQ&s"
+						alt="" width="32" height="32" class="rounded-circle me-2"> <strong>登入者</strong>
+					<i class="fa-solid fa-right-from-bracket"></i> <span>登出</span>
+				</a>
+			</div>
+		</aside>
+	</div>
+	<div class="main p-3">
+		<!-- 頂列區域 -->
 	<header>
 		<h1>ProFit</h1>
 		<div class="user-info">
@@ -37,53 +125,42 @@
 			</a>
 		</div>
 	</header>
-
-	<!-- 左側邊欄 -->
-	<nav class="modelbar">
-			<div class="userPicture">
-				<img
-					src="${pageContext.request.contextPath}/usersVIEW/userupload/${sessionScope.user_pictureURL}"
-					alt="Profile Image"/>
-			</div>
-			<br>
-			<br>
-			<br>
-		<ul>
-			<li><a th:href="@{/GetAlluser}">會員管理</a></li>
-			<li><a href="/ProFit/jobsVIEW/jobsList.jsp">職缺管理</a></li>
-			<li><a href="/ProFit/servicesVIEW/Entry.jsp">技能服務管理</a></li>
-			<li><a th:href="@{/courses}">課程管理</a></li>
-			<li><a th:href="@{/events}">活動管理</a></li>
-			<li><a href="/ProFit/transactionVIEW/transactions.jsp">交易管理</a></li>
-		</ul>
-	</nav>
 	<script>
-	    document.addEventListener("DOMContentLoaded", function() {
-	        let userPictureImg = document.querySelector(".userPicture img");
-	        let user_pictureURL = "${sessionScope.user_pictureURL}";
-	        if (!user_pictureURL) {
-	            userPictureImg.src = "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd";
-	        } else {
-	            userPictureImg.src = "${sessionScope.user_pictureURL}";
-	        }
+		/*document.addEventListener("DOMContentLoaded", function() {
+			let userPictureImg = document.querySelector(".userPicture img");
+			let user_pictureURL = "${sessionScope.user_pictureURL}";
+			if (!user_pictureURL) {
+				userPictureImg.src = "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd";
+			} else {
+				userPictureImg.src = "${sessionScope.user_pictureURL}";
+			}
 
-	        let logoutButton = document.querySelector(".logout");
-	        let user_email = "${sessionScope.user_email}";
-	        if (!user_email) {
-	            logoutButton.textContent = "登入";
-	        } else {
-	            logoutButton.textContent = "登出";
-	        }
+			let logoutButton = document.querySelector(".logout");
+			let user_email = "${sessionScope.user_email}";
+			if (!user_email) {
+				logoutButton.textContent = "登入";
+			} else {
+				logoutButton.textContent = "登出";
+			}
 
-	        let login_status = logoutButton.textContent;
-	        if (login_status === "登入") {
-	            document.querySelector(".loginStatus").href = "${pageContext.request.contextPath}/usersVIEW/Login.jsp";
-	        }
-	    });
+			let login_status = logoutButton.textContent;
+			if (login_status === "登入") {
+				document.querySelector(".loginStatus").href = "${pageContext.request.contextPath}/usersVIEW/Login.jsp";
+			}
+		});*/
+		const hamBurger = document.querySelector(".toggle-btn");
+
+		if (hamBurger) {
+			hamBurger.addEventListener("click", function () {
+				document.querySelector("#sidebar").classList.toggle("expand");
+			});
+		}
 
 	</script>
+	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
 	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-    <script th:src="@{/js/axios.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/axios.min.js}"></script>
 </body>
+
 </html>
