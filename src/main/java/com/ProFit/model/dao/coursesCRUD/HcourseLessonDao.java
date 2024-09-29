@@ -31,7 +31,7 @@ public class HcourseLessonDao implements IHcourseLessonDao {
 
 	//刪除章節單元By id
 	@Override
-	public boolean deleteCourseLessonByID(String courseLessonId) {
+	public boolean deleteCourseLessonByID(Integer courseLessonId) {
 		Session session = entityManager.unwrap(Session.class);
 		CourseLessonBean courseLessonBean = session.get(CourseLessonBean.class, courseLessonId);
 		if(courseLessonBean!=null) {
@@ -84,7 +84,7 @@ public class HcourseLessonDao implements IHcourseLessonDao {
 	
 	//搜尋單個單元by id
 	@Override
-	public CourseLessonBean searchOneCourseLessonById(int courseLessonId) {
+	public CourseLessonBean searchOneCourseLessonById(Integer courseLessonId) {
 		Session session = entityManager.unwrap(Session.class);
 		return session.get(CourseLessonBean.class, courseLessonId);
 	}

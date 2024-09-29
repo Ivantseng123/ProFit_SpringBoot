@@ -10,13 +10,13 @@ public interface IHcourseLessonDao {
 	public CourseLessonBean insertCourseLesson(CourseLessonBean courseLesson);
 
 	// 刪除課程單元 by id
-	public boolean deleteCourseLessonByID(String courseLessonId);
+	public boolean deleteCourseLessonByID(Integer courseLessonId);
 
 	// 更新課程單元 by id
 	public boolean updateCourseLessonById(CourseLessonBean newCourseLesson);
 
 	// 查詢單筆課程單元By courseLessonId
-	public CourseLessonBean searchOneCourseLessonById(int courseLessonId);
+	public CourseLessonBean searchOneCourseLessonById(Integer courseLessonId);
 
 	// 查詢全部 多形
 	public List<CourseLessonBean> searchCourseLessons();

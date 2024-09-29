@@ -21,7 +21,7 @@ public class CourseModuleBean implements java.io.Serializable {
 	
 	@Id @Column(name="course_module_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String courseModuleId;
+	private Integer courseModuleId;
 	
 	@Column(name="course_id",insertable = false,updatable = false)
 	private String courseId;
@@ -40,7 +40,7 @@ public class CourseModuleBean implements java.io.Serializable {
 		super();
 	}
 
-	public CourseModuleBean(String courseModuleId, String courseId, String courseModuleName) {
+	public CourseModuleBean(Integer courseModuleId, String courseId, String courseModuleName) {
 		super();
 		this.courseModuleId = courseModuleId;
 		this.courseId = courseId;
@@ -68,11 +68,11 @@ public class CourseModuleBean implements java.io.Serializable {
 	public void setCourse(CourseBean course) {
 		this.course = course;
 	}
-	public String getCourseModuleId() {
+	public Integer getCourseModuleId() {
 		return courseModuleId;
 	}
 
-	public void setCourseModuleId(String courseModuleId) {
+	public void setCourseModuleId(Integer courseModuleId) {
 		this.courseModuleId = courseModuleId;
 	}
 

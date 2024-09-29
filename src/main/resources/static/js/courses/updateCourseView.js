@@ -29,7 +29,7 @@ $(document).ready(function() {
                     <form>
                         <div class="form-group">
                             <label for="courseName">課程名稱:</label>
-                            <input type="text" id="courseName" name="courseName" value="${response.courseName}" readonly>
+                            <input type="text" id="courseName" name="courseName" value="${response.courseName}">
                         </div>
                         <div class="form-group">
                             <label for="courseMajor">課程類別:</label>
@@ -41,15 +41,15 @@ $(document).ready(function() {
                         </div>
                         <div class="form-group">
                             <label for="courseCreateUserId">課程創建者ID:</label>
-                            <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="${response.courseCreaterId}" readonly>
+                            <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="${response.courseCreaterId}" >
                         </div>
                         <div class="form-group">
                             <label for="courseInformation">課程資訊:</label>
-                            <textarea id="courseInformation" name="courseInformation" rows="4" cols="50" readonly>${response.courseInformation}</textarea>
+                            <textarea id="courseInformation" name="courseInformation" rows="4" cols="50" >${response.courseInformation}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="courseDescription">課程描述:</label>
-                            <textarea id="courseDescription" name="courseDescription" rows="6" cols="50" readonly>${response.courseDescription}</textarea>
+                            <textarea id="courseDescription" name="courseDescription" rows="6" cols="50" >${response.courseDescription}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="courseEnrollmentDate">修改日期: (自動帶入)</label>
@@ -65,7 +65,7 @@ $(document).ready(function() {
                         </div>
                         <div class="form-group">
                             <label for="coursePrice">課程價格:</label>
-                            <input type="number" id="coursePrice" name="coursePrice" value="${response.coursePrice}" readonly>
+                            <input type="number" id="coursePrice" name="coursePrice" value="${response.coursePrice}" >
                         </div>
                         <div class="form-group">
                             <label for="courseStatus">課程狀態:</label>
