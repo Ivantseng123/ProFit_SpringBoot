@@ -77,7 +77,7 @@ $(document).ready(function() {
                             </select>
                         </div>
                         <div class="form-group">
-                            <a href="${contextPath}/courses"><button id='cancelBtn' type="button" style="margin-right:380px;">取消修改</button></a>
+                            <a href="${contextPath}/courses"><button id='cancelBtn' type="button" style="margin-right:330px;">取消修改</button></a>
                             <button id="editBtn" name="editBtn" type="submit">修改課程</button>
                         </div>
                     </form>

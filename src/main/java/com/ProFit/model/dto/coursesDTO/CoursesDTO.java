@@ -10,6 +10,7 @@ public class CoursesDTO {
 	private String courseCreaterName;   // 修正拼寫錯誤: courseCraeterName -> courseCreaterName
 	private String courseCategoryId;
 	private String courseCategoryName;
+	private Integer courseModuleNumber;
 	private String courseInformation;
 	private String courseDescription;
 	private String courseEnrollmentDate;
@@ -31,6 +32,7 @@ public class CoursesDTO {
 		this.courseCreaterName = courseBean.getCourseCreater().getUserName();
 		this.courseCategoryId = courseBean.getMajor().getMajorId().toString();
 		this.courseCategoryName = courseBean.getMajor().getMajorName();
+		this.courseModuleNumber = courseBean.getCourseModules().size();
 		this.courseInformation = courseBean.getCourseInformation();
 		this.courseDescription = courseBean.getCourseDescription();
 		this.courseEnrollmentDate = courseBean.getCourseEnrollmentDate().toString();
@@ -42,7 +44,14 @@ public class CoursesDTO {
 
 	// getters 和 setters
 
-	// 添加 get/setCourseId
+	public Integer getCourseModuleNumber() {
+		return courseModuleNumber;
+	}
+
+	public void setCourseModuleNumber(Integer courseModuleNumber) {
+		this.courseModuleNumber = courseModuleNumber;
+	}
+
 	public String getCourseId() {
 		return courseId;
 	}

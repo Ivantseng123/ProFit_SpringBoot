@@ -28,6 +28,8 @@ $('#searchBtn').click(function() {
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
         	                            <th>說明</th>
+										<th>章節數量</th>
+										<th>章節操作</th>
         	                            <th>價格</th>
         	                            <th>狀態</th>
         	                            <th>操作</th>
@@ -47,12 +49,14 @@ $('#searchBtn').click(function() {
         	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
 									<td>${response.courseCreaterName}</td>
         	                        <td>${response.courseDescription}</td>
-        	                        <td>${response.coursePrice}</td>
+									<td>${response.courseModuleNumber}</td>
+									<td><button class="viewModules btn btn-info">查看</button></td>
+									<td>${response.coursePrice}</td>
         	                        <td><span class="status">${response.courseStatus}</span></td>
-        	                        <td class="action-buttons">
-        	                            <button class="view">查看</button>
-        	                            <button class="edit">編輯</button>
-        	                            <button class="delete">刪除</button>
+        	                        <td>
+        	                            <button class="view btn btn-success ">查看課程</button>
+        	                            <button class="edit btn btn-primary">編輯</button>
+        	                            <button class="delete btn btn-danger">刪除</button>
         	                       	</td>
         	                    </tr>
         	                ` );
@@ -160,8 +164,8 @@ $(document).on('click', '.view', function() {
 			        </select>
 			    </div>
 			    <div class="form-group">
-			        <label for="courseCreateUserId">課程創建者ID:</label>
-			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value=${response.courseCreaterId} readonly>
+			        <label for="courseCreateUserId">課程創建者名稱:</label>
+			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.courseCreaterId}) ${response.courseCreaterName}" readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseInformation">課程資訊:</label>
