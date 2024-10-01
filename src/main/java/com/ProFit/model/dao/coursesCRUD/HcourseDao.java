@@ -80,6 +80,10 @@ public class HcourseDao implements IHcourseDao {
 		oldCourse.setCourseInformation(newCourse.getCourseInformation() == null || newCourse.getCourseInformation().isEmpty()
 				? oldCourse.getCourseInformation()
 				: newCourse.getCourseInformation());
+		
+		oldCourse.setCourseCoverPictureURL(newCourse.getCourseCoverPictureURL() == null || newCourse.getCourseCoverPictureURL().isEmpty()
+				? oldCourse.getCourseCoverPictureURL()
+				: newCourse.getCourseCoverPictureURL());
 
 		oldCourse.setCourseDescription(newCourse.getCourseDescription() == null || newCourse.getCourseDescription().isEmpty()
 				? oldCourse.getCourseDescription()

@@ -12,6 +12,7 @@ public class CoursesDTO {
 	private String courseCategoryName;
 	private Integer courseModuleNumber;
 	private String courseInformation;
+	private String courseCoverPictureURL;
 	private String courseDescription;
 	private String courseEnrollmentDate;
 	private String courseStartDate;
@@ -34,6 +35,7 @@ public class CoursesDTO {
 		this.courseCategoryName = courseBean.getMajor().getMajorName();
 		this.courseModuleNumber = courseBean.getCourseModules().size();
 		this.courseInformation = courseBean.getCourseInformation();
+		this.courseCoverPictureURL = courseBean.getCourseCoverPictureURL();
 		this.courseDescription = courseBean.getCourseDescription();
 		this.courseEnrollmentDate = courseBean.getCourseEnrollmentDate().toString();
 		this.courseStartDate = courseBean.getCourseStartDate().toString();
@@ -46,6 +48,14 @@ public class CoursesDTO {
 
 	public Integer getCourseModuleNumber() {
 		return courseModuleNumber;
+	}
+
+	public String getCourseCoverPictureURL() {
+		return courseCoverPictureURL;
+	}
+
+	public void setCourseCoverPictureURL(String courseCoverPictureURL) {
+		this.courseCoverPictureURL = courseCoverPictureURL;
 	}
 
 	public void setCourseModuleNumber(Integer courseModuleNumber) {

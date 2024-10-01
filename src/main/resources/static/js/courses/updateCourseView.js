@@ -47,7 +47,22 @@ $(document).ready(function() {
                             <label for="courseInformation">課程資訊:</label>
                             <textarea id="courseInformation" name="courseInformation" rows="4" cols="50" >${response.courseInformation}</textarea>
                         </div>
-                        <div class="form-group">
+						<div class="form-group">
+						    <label for="courseCoverPicture">課程封面圖片: (建議比例16:9、小於1920 x 1080像素)</label>
+
+						    <!-- 顯示原本的圖片 -->
+						    <div>
+						        <label>目前圖片:</label>
+						        <img id="currentCoverImage" src="${response.courseCoverPictureURL}" alt="Course Cover Picture" style="max-width: 300px; height: auto;">
+						    </div>
+
+						    <!-- 允許用戶上傳新圖片 -->
+						    <input type="file" id="courseCoverPicture" name="courseCoverPicture">
+
+						    <!-- 隱藏字段，保存原始圖片 URL，如果未選擇新圖片，則保留此圖片 -->
+						    <input type="hidden" name="originalCourseCoverPictureURL" value="${response.courseCoverPictureURL}">
+						</div>
+						<div class="form-group">
                             <label for="courseDescription">課程描述:</label>
                             <textarea id="courseDescription" name="courseDescription" rows="6" cols="50" >${response.courseDescription}</textarea>
                         </div>
@@ -128,31 +143,39 @@ $(document).on('click', '#editBtn', function(event) {
         return;
     }
     
+    // 獲取表單元素的值
     let courseStartDate = $('#courseStartDate').val();
     let courseEndDate = $('#courseEndDate').val();
-
     courseStartDate = convertToSQLDateTimeFormat(courseStartDate);
     courseEndDate = convertToSQLDateTimeFormat(courseEndDate);
-    
-    let data = {
-        courseName: $('#courseName').val(),
-        courseCategory: $('#courseMajor').val(),
-        courseCreateUserId: $('#courseCreateUserId').val(),
-        courseInformation: $('#courseInformation').val(),
-        courseDescription: $('#courseDescription').val(),
-        courseEnrollmentDate: $('#courseEnrollmentDate').val(),
-        courseStartDate: courseStartDate,
-        courseEndDate: courseEndDate,
-        coursePrice: $('#coursePrice').val(),
-        courseStatus: $('#courseStatus').val()
-    };
-    
-    console.log(data);
+
+    // 使用 FormData 來封裝表單數據，包括文件
+    let formData = new FormData();
+    formData.append('courseName', $('#courseName').val());
+    formData.append('courseCategory', $('#courseMajor').val());
+    formData.append('courseCreateUserId', $('#courseCreateUserId').val());
+    formData.append('courseInformation', $('#courseInformation').val());
+    formData.append('courseDescription', $('#courseDescription').val());
+    formData.append('courseEnrollmentDate', $('#courseEnrollmentDate').val());
+    formData.append('courseStartDate', courseStartDate);
+    formData.append('courseEndDate', courseEndDate);
+    formData.append('coursePrice', $('#coursePrice').val());
+    formData.append('courseStatus', $('#courseStatus').val());
+
+    // 處理封面圖片檔案
+    let courseCoverPictureFile = $('#courseCoverPicture')[0].files[0];
+    if (courseCoverPictureFile) {
+        formData.append('courseCoverPicture', courseCoverPictureFile);
+    } else {
+        // 如果未選擇新圖片，保留原始圖片
+        formData.append('originalCourseCoverPictureURL', $('input[name="originalCourseCoverPictureURL"]').val());
+    }
 
     $.ajax({
         url: contextPath + '/courses/update/' + oldCourseId, // 使用 contextPath 變數和路徑變數
-        data: data,
-        dataType: 'json',
+        data: formData,
+        processData: false,  // 告訴 jQuery 不要處理數據
+        contentType: false,  // 告訴 jQuery 不要設置 contentType
         type: 'POST', // 使用 POST 方法
         success: function(response) {
             if (response) {

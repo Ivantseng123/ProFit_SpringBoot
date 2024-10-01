@@ -36,7 +36,10 @@ public class CourseBean implements java.io.Serializable {
 
 	@Column(name="course_create_user_id")
 	private String courseCreateUserId;
-
+	
+	@Column(name="course_coverPictureURL")
+	private String courseCoverPictureURL;
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "course",cascade = CascadeType.ALL)
 	private List<CourseModuleBean> courseModules;
 	
@@ -109,33 +112,75 @@ public class CourseBean implements java.io.Serializable {
 		this.coursePrice = coursePrice;
 		this.courseStatus = courseStatus;
 	}
-	
+
+
+	public String getCourseId() {
+		return courseId;
+	}
+
+
+	public void setCourseId(String courseId) {
+		this.courseId = courseId;
+	}
+
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+
 	public Users getCourseCreater() {
 		return courseCreater;
 	}
-	
-	
+
+
 	public void setCourseCreater(Users courseCreater) {
 		this.courseCreater = courseCreater;
 	}
-	
-	
+
+
+	public String getCourseCreateUserId() {
+		return courseCreateUserId;
+	}
+
+
+	public void setCourseCreateUserId(String courseCreateUserId) {
+		this.courseCreateUserId = courseCreateUserId;
+	}
+
+
+	public String getCourseCoverPictureURL() {
+		return courseCoverPictureURL;
+	}
+
+
+	public void setCourseCoverPictureURL(String courseCoverPictureURL) {
+		this.courseCoverPictureURL = courseCoverPictureURL;
+	}
+
+
 	public List<CourseModuleBean> getCourseModules() {
 		return courseModules;
 	}
-	
-	
+
+
 	public void setCourseModules(List<CourseModuleBean> courseModules) {
 		this.courseModules = courseModules;
 	}
-	
-	public Users getCreateUsersId() {
-		return courseCreater;
+
+
+	public String getCourseCategory() {
+		return courseCategory;
 	}
 
 
-	public void setCreateUsersId(Users courseCreater) {
-		this.courseCreater = courseCreater;
+	public void setCourseCategory(String courseCategory) {
+		this.courseCategory = courseCategory;
 	}
 
 
@@ -148,81 +193,76 @@ public class CourseBean implements java.io.Serializable {
 		this.major = major;
 	}
 
-	public String getCourseId() {
-		return courseId;
-	}
-	public void setCourseId(String courseId) {
-		this.courseId = courseId;
-	}
-	public String getCourseName() {
-		return courseName;
-	}
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-	public String getCourseCreateUserId() {
-		return courseCreateUserId;
-	}
-	public void setCourseCreateUserId(String courseCreateUserId) {
-		this.courseCreateUserId = courseCreateUserId;
-	}
-	public String getCourseCategory() {
-		return courseCategory;
-	}
-	public void setCourseCategory(String courseCategory) {
-		this.courseCategory = courseCategory;
-	}
+
 	public String getCourseInformation() {
 		return courseInformation;
 	}
+
+
 	public void setCourseInformation(String courseInformation) {
 		this.courseInformation = courseInformation;
 	}
+
+
 	public String getCourseDescription() {
 		return courseDescription;
 	}
+
+
 	public void setCourseDescription(String courseDescription) {
 		this.courseDescription = courseDescription;
 	}
+
+
 	public LocalDate getCourseEnrollmentDate() {
 		return courseEnrollmentDate;
 	}
 
+
 	public void setCourseEnrollmentDate(LocalDate courseEnrollmentDate) {
 		this.courseEnrollmentDate = courseEnrollmentDate;
 	}
+
+
 	public LocalDateTime getCourseStartDate() {
 		return courseStartDate;
 	}
+
+
 	public void setCourseStartDate(LocalDateTime courseStartDate) {
 		this.courseStartDate = courseStartDate;
 	}
+
+
 	public LocalDateTime getCourseEndDate() {
 		return courseEndDate;
 	}
+
+
 	public void setCourseEndDate(LocalDateTime courseEndDate) {
 		this.courseEndDate = courseEndDate;
 	}
+
+
 	public String getCoursePrice() {
 		return coursePrice;
 	}
+
+
 	public void setCoursePrice(String coursePrice) {
 		this.coursePrice = coursePrice;
 	}
+
+
 	public String getCourseStatus() {
 		return courseStatus;
 	}
+
+
 	public void setCourseStatus(String courseStatus) {
 		this.courseStatus = courseStatus;
 	}
-
-	@Override
-	public String toString() {
-		return "CourseBean [courseId=" + courseId + ", courseName=" + courseName + ", courseCreateUserId="
-				+ courseCreateUserId + ", courseCategory=" + courseCategory + ", courseInformation=" + courseInformation
-				+ ", courseDescription=" + courseDescription + ", courseEnrollmentDate=" + courseEnrollmentDate
-				+ ", courseStartDate=" + courseStartDate + ", courseEndDate=" + courseEndDate + ", coursePrice="
-				+ coursePrice + ", courseStatus=" + courseStatus + "]";
-	}
+	
+	
 
 }

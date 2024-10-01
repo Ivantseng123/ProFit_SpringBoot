@@ -1,10 +1,13 @@
 package com.ProFit.controller.courses;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import com.ProFit.model.bean.coursesBean.CourseBean;
 import com.ProFit.model.dao.coursesCRUD.IHcourseDao;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.service.courseService.IcourseService;
+import com.ProFit.service.utilsService.FirebaseStorageService;
 
 @Controller
 public class CoursesController {
@@ -26,6 +32,9 @@ public class CoursesController {
 	
 	@Autowired
 	private IHcourseDao hcourseDao;
+	
+	@Autowired
+    private FirebaseStorageService firebaseStorageService;
 	
 	@GetMapping("/courses")
 	public String coursesPage() {
@@ -82,7 +91,8 @@ public class CoursesController {
         @RequestParam String courseStartDate,
         @RequestParam String courseEndDate,
         @RequestParam String coursePrice,
-        @RequestParam String courseStatus
+        @RequestParam String courseStatus,
+        @RequestPart(required = false) MultipartFile courseCoverPicture
     ) {
     	
     	// 修剪掉額外的部分（如果有）
@@ -108,6 +118,8 @@ public class CoursesController {
         LocalDateTime endDateParsed = (courseEndDate != null && !courseEndDate.isEmpty()) 
             ? LocalDateTime.parse(courseEndDate, dateTimeFormatter) : null;
         
+      
+        
         // 創建更新的 CourseBean 對象
         CourseBean updateCourse = new CourseBean(
             courseId, 
@@ -122,6 +134,16 @@ public class CoursesController {
             coursePrice, 
             courseStatus
         );
+        
+            String newCoverImageUrl;
+            if(courseCoverPicture !=null) {
+				try {
+					newCoverImageUrl = firebaseStorageService.uploadFile(courseCoverPicture);
+					updateCourse.setCourseCoverPictureURL(newCoverImageUrl);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            }
         
         // 調用 DAO 層更新課程
         boolean isUpdated = hcourseDao.updateCourseById(updateCourse);
@@ -149,12 +171,37 @@ public class CoursesController {
     
     // 新增課程的方法
     // 此方法會自動將表單數據綁定到 CourseBean 對象
+    /**
+     * 新增課程的方法
+     * 此方法會自動將表單數據綁定到 CourseBean 對象
+     *
+     * @param courseBean           課程資料
+     * @param courseCoverPicture   課程封面圖片
+     * @return 插入後的 CourseBean 對象
+     */
     @PostMapping("/courses/insert")
     @ResponseBody
-    public CourseBean insertCourse(@ModelAttribute CourseBean courseBean) {
-        CourseBean insertedCourse = courseService.insertCourse(courseBean);
-        
-        return insertedCourse;
+    public ResponseEntity<CourseBean> insertCourse(
+            @ModelAttribute CourseBean courseBean,
+            @RequestPart(required = false) MultipartFile courseCoverPicture) {
+
+        try {
+            if (courseCoverPicture != null && !courseCoverPicture.isEmpty()) {
+                // 上傳圖片到 Firebase Storage 並獲取 URL
+                String photoURL = firebaseStorageService.uploadFile(courseCoverPicture);
+                courseBean.setCourseCoverPictureURL(photoURL);
+            } else {
+                courseBean.setCourseCoverPictureURL(null);
+            }
+
+            // 插入課程
+            CourseBean insertedCourse = courseService.insertCourse(courseBean);
+
+            return new ResponseEntity<>(insertedCourse, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
