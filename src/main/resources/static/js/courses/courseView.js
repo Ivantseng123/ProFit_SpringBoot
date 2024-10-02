@@ -27,7 +27,7 @@ $('#searchBtn').click(function() {
         	                            <th>ID</th>
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
-        	                            <th>說明</th>
+        	                            <th>課程資訊</th>
 										<th>章節數量</th>
 										<th>章節操作</th>
         	                            <th>價格</th>
@@ -48,7 +48,7 @@ $('#searchBtn').click(function() {
         	                        <td class="result-courseId" name="courseId">${response.courseId}</td>
         	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
 									<td>${response.courseCreaterName}</td>
-        	                        <td>${response.courseDescription}</td>
+        	                        <td>${response.courseInformation}</td>
 									<td>${response.courseModuleNumber}</td>
 									<td><button class="viewModules btn btn-info">查看</button></td>
 									<td>${response.coursePrice}</td>
@@ -151,7 +151,13 @@ $(document).on('click', '.view', function() {
 
 			console.log(response.courseStatus);
 			$('.form-container').append(`<form>
-				    <div class="form-group">
+				
+				<div class="form-group">
+					<label for="courseCoverPictureURL">課程封面圖片:</label>
+					<img src="${response.courseCoverPictureURL}">
+				</div>    
+				
+				<div class="form-group">
 			        <label for="courseName">課程名稱:</label>
 			        <input type="text" id="courseName" name="courseName" value=${response.courseName} readonly>
 			    </div>
@@ -169,11 +175,11 @@ $(document).on('click', '.view', function() {
 			    </div>
 			    <div class="form-group">
 			        <label for="courseInformation">課程資訊:</label>
-			        <textarea id="courseInformation" name="courseInformation" rows="4" cols="50" readonly></textarea>
+			        <textarea id="courseInformation" name="courseInformation" rows="2" cols="50" readonly></textarea>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseDescription">課程描述:</label>
-			        <textarea id="courseDescription" name="courseDescription" rows="6" cols="50" readonly></textarea>
+			        <textarea id="courseDescription" name="courseDescription" rows="2" cols="50" readonly></textarea>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseEnrollmentDate">最後修改日期: (自動帶入)</label>
@@ -197,7 +203,7 @@ $(document).on('click', '.view', function() {
 			            <option value="">請選擇狀態</option>
 			            <option value="Active">啟用</option>
 			            <option value="Pending">審核中</option>
-			            <option value="inactive">停用</option>
+			            <option value="Closed">停用</option>
 			        </select>
 			    </div>
 				<button id="closePopupBtn">關閉</button>

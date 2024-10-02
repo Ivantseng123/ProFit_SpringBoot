@@ -227,6 +227,7 @@ CREATE TABLE event_order (
 CREATE TABLE [dbo].[courses] (
     [course_id]              NVARCHAR (50)  NOT NULL,
     [course_name]            NVARCHAR (50)  NOT NULL,
+    [course_coverPictureURL] NVARCHAR (MAX) NULL,
     [course_create_user_id]  INT            NOT NULL,
     [course_category]        INT            NOT NULL,
     [course_information]     NVARCHAR (MAX) NULL,
