@@ -64,7 +64,7 @@ table {
     border-collapse: collapse;
 }
 
-table th, table td {
+table th, table td, table thead{
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;

@@ -8,6 +8,7 @@ import java.util.Set;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.ProFit.model.bean.majorsBean.MajorBean;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -76,9 +77,11 @@ public class Users implements Serializable {
 	@Column(name = "freelancer_description")
 	private String freelancerDisc;
 	
+	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
 	private List<Pwd_reset_tokens> pwd_reset_tokens = new LinkedList<Pwd_reset_tokens>();
-
+	
+	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
 	private List<Employer_application> employerApplications = new LinkedList<Employer_application>();
 	
@@ -86,6 +89,7 @@ public class Users implements Serializable {
 	private Employer_profile employer_profile;
 
 	 //多對多關係，中介表user_major
+	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_major", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 	@JoinColumn(name = "major_id") })

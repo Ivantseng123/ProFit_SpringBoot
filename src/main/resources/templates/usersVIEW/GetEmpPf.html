@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+</head>
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+		<div class="container pt-5">
+        <div class="dashboard-header">
+            <h2>會員管理</h2>
+        </div>
+		<h2 style="color: orange;">企業申請資訊</h2>
+		<div class="form-container" id="empPf-info">
+																	
+		</div>
+	</div>
+	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/users/getempPfView.js}"></script>
+</body>
+</html>
