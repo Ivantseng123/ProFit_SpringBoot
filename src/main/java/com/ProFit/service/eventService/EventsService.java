@@ -17,11 +17,11 @@ public class EventsService {
     @Autowired
     private EventsDAO eventsDAO;
 
-    public List<EventsBean> getAllEvents() {
+    public List<EventsBean> selectAllEvents() {
         return eventsDAO.findAll();
     }
 
-    public EventsBean getEventById(String eventId) {
+    public EventsBean selectEventById(String eventId) {
         return eventsDAO.findById(eventId).orElse(null);
     }
 
@@ -30,7 +30,7 @@ public class EventsService {
         return event.getEventId();
     }
 
-    public String removeEvent(String eventId) {
+    public String deleteEvent(String eventId) {
         eventsDAO.deleteById(eventId);
         return eventId;
     }
