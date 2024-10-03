@@ -14,14 +14,13 @@
 
 		<!-- 主要內容區域 -->
 		<!-- 只是一個範例，裡面布局可以更改 -->
+		<div class="course-header">
+			<h2>章節管理功能</h2>
+			<span><button id="createBtn">新增章節</button></span>
+		</div>
 		<div class="dashboard-header">
 			<h3 class="mb-0" th:text="|課程名稱: ${courseDTO.courseName}|"></h3>
 		</div>
-		<div class="course-header">
-			<h2>章節管理功能</h2>
-			<span><a th:href="|@{/courseModules/addModule}?courseId=${courseDTO.courseId}|"><button id="createBtn">新增章節</button></a></span>
-		</div>
-
 
 		<div class="table-container" id="search-results">
 
@@ -46,8 +45,7 @@
 							</td>
 							<td>
 								<button class="edit btn btn-primary">編輯</button>
-								<a th:href="|@{/courseModules/delete}?courseModuleId=${courseModule.courseModuleId}|"><button
-										class="delete btn btn-danger">刪除</button></a>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="delete btn btn-danger">刪除</button>
 							</td>
 						</tr>
 					</th:block>

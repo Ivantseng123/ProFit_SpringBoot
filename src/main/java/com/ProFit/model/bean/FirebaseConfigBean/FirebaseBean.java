@@ -3,7 +3,7 @@ package com.ProFit.model.bean.FirebaseConfigBean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FirebaseConfig {
+public class FirebaseBean {
 	
 	private String apiKey;
 	private String authDomain;
