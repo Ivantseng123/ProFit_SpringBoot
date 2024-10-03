@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
+	<link rel="stylesheet" th:href="@{/css/model.css}">
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-5">
+		<!-- 主要內容區域 -->
+		<!-- 只是一個範例，裡面布局可以更改 -->
+		<div class="course-header">
+			<h2>專業類別管理功能</h2>
+			<span><button id="createBtn" type="button" data-bs-toggle="modal"
+					data-bs-target="#staticBackdrop">新增類別</button></span>
+		</div>
+
+		<div class="dashboard-header">
+			<h3 style="margin-top: 0px;">類別查詢</h3>
+
+			</span> <span style="margin-right: 30px;">類別ID:
+				<input type="text" id="majorCategoryId" name="majorCategoryId" value="" style="width: 100px;" />
+
+				<button id="searchBtn">送出查詢</button>
+		</div>
+
+
+
+
+		<div class="table-container" id="search-results"></div>
+	</div>
+
+	</div>
+
+	<!-- 彈出視窗 -->
+	<!-- Button trigger modal -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">新增類別</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form id="categoryForm">
+					<div class="modal-body">
+
+						<div class="mb-3">
+							<label for="majorCategoryName" class="form-label">類別名稱</label>
+							<input type="text" class="form-control" id="majorCategoryName" name="categoryName">
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+							<button type="submit" class="btn btn-primary">送出</button>
+						</div>
+				</form>
+			</div>
+		</div>
+
+
+		<script>
+			var contextPath = 'http://localhost:8080/ProFit';
+
+			$(document).ready(function () {
+				$('#categoryForm').on('submit', function (e) {
+					e.preventDefault(); // 阻止表單的默認提交行為
+
+					let formData = {
+						categoryName: $('#majorCategoryName').val()
+					};
+
+					axios.post('/ProFit/majorCategory/api', formData, {
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+						.then(res => {
+							console.log(res);
+							console.log(res.data);
+							$('#categoryModal').modal('hide'); // 關閉模態框
+							// 可以在這裡添加代碼來更新類別列表或顯示成功消息
+							alert('類別創建成功！');
+							// 如果有類別列表，可以重新加載
+							// loadCategories(); 
+						})
+						.catch(err => {
+							console.error(err);
+							alert('創建類別失敗，請重試。');
+						})
+
+
+				});
+			});
+
+
+
+		</script>
+		<!-- <script th:src="@{/js/courses/courseView.js}"></script> -->
+		<!-- <script th:src="@{/js/popup.js}"></script> -->
+</body>
+
+</html>
