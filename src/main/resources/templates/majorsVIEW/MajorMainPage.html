@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProFit</title>
+    <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
+    <link rel="stylesheet" th:href="@{/css/model.css}">
+</head>
+
+<body>
+    <div th:replace="~{model/layout-static}"></div>
+    <div class="container pt-5">
+
+        <div class="course-header">
+            <h2>專業管理功能</h2>
+            <span><button id="createBtn" type="button" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop-insert">新增專業</button></span>
+        </div>
+
+        <div class="dashboard-header">
+            <h3 id="專業查詢" style="margin-top: 0px;">專業查詢</h3>
+            <span style="margin-right: 30px;">專業ID:
+                <input type="text" id="majorId" name="majorId" style="width: 100px;" />
+            </span>
+            <span style="margin-right: 30px;">專業名稱:
+                <input type="text" id="majorName" name="majorName" style="width: 100px;" />
+            </span>
+            <button id="searchBtn" class="btn btn-secondary">送出查詢</button>
+        </div>
+
+        <div id="search-results" class="table-container">
+            <!-- 查詢結果將在這裡顯示 -->
+        </div>
+    </div>
+
+    <!-- 新增專業的模態框 -->
+    <div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="staticBackdropLabel">新增專業</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="insertMajorId" class="form-label">專業Id</label>
+                        <input type="text" class="form-control" id="insertMajorId">
+                    </div>
+                    <div class="mb-3">
+                        <label for="insertMajorName" class="form-label">專業名稱</label>
+                        <input type="text" class="form-control" id="insertMajorName">
+                    </div>
+                    <div>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>請選擇類別</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="insertMajorDescription" class="form-label">專業描述</label>
+                        <textarea class="form-control" id="insertMajorDescription"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="insertMajorBtn">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯專業的模態框 -->
+    <div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel-edit">編輯專業</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editMajorId" class="form-label">專業Id</label>
+                        <input type="text" class="form-control" id="editMajorId" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMajorName" class="form-label">專業名稱</label>
+                        <input type="text" class="form-control" id="editMajorName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMajorCategoryName" class="form-label">類別名稱</label>
+                        <input type="text" class="form-control" id="editMajorCategoryName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMajorDescription" class="form-label">專業描述</label>
+                        <textarea class="form-control" id="editMajorDescription"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="updateMajorBtn">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 查看專業詳情的模態框 -->
+    <div class="modal fade" id="majorsModal" tabindex="-1" aria-labelledby="majorsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="majorsModalLabel">專業詳情</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="majorsModalBody">
+                    <!-- 專業詳情將在這裡顯示 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            loadAllMajors();
+
+            // 綁定新增專業按鈕事件
+            document.querySelector('.course-header button').addEventListener('click', function () {
+                $('#staticBackdrop-insert').modal('show');
+            });
+
+            // 綁定查詢按鈕事件
+            document.querySelector('.dashboard-header button').addEventListener('click', searchMajors);
+        });
+
+        function loadAllMajors() {
+            showLoading();
+            fetch('/ProFit/major/api/list')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(majors => {
+                    displayMajors(majors);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('載入專業失敗，請稍後再試。');
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+        }
+
+
+        function displayMajors(majors) {
+            const tableContainer = document.getElementById('search-results');
+            if (majors.length === 0) {
+                tableContainer.innerHTML = '<p>沒有找到專業。</p>';
+                return;
+            }
+
+            let tableHtml = `<table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>專業ID</th>
+                    <th>專業名稱</th>
+                    <th>類別ID</th>
+                    <th>類別名稱</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+            majors.forEach(major => {
+                tableHtml += `
+            <tr>
+                <td>${major.majorId}</td>
+                <td>${major.majorName}</td>
+                <td>${major.majorCategoryId}</td>
+                <td>${major.categoryName}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="editMajor(${major.majorId})">編輯</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteMajor(${major.majorId})">刪除</button>
+                    <button class="btn btn-sm btn-info" onclick="viewMajorDetails(${major.majorId})">詳情</button>
+                </td>
+            </tr>`;
+            });
+
+            tableHtml += `
+            </tbody></table>`;
+
+            tableContainer.innerHTML = tableHtml;
+        }
+
+        function showLoading() {
+            // 實現加載指示器，例如顯示一個旋轉圖標
+            const loadingHtml = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+            document.getElementById('search-results').innerHTML = loadingHtml;
+        }
+
+        function hideLoading() {
+            // 移除加載指示器
+        }
+
+        function showError(message) {
+            const errorHtml = `<div class="alert alert-danger" role="alert">${message}</div>`;
+            document.getElementById('search-results').innerHTML = errorHtml;
+        }
+
+        // 查詢
+        function searchMajors() {
+            const majorId = document.getElementById('majorId').value;
+            const majorName = document.getElementById('majorName').value;
+            console.log(majorId.trim().length);
+            console.log(majorName.trim().length);
+
+
+            if (majorId.trim().length === 0 && majorName.trim().length === 0) {
+                loadAllMajors();
+            } else {
+                let url = '/ProFit/major/api/search?';
+                if (majorId) url += `id=${majorId}&`;
+                if (majorName) url += `name=${encodeURIComponent(majorName)}`;
+
+                showLoading();
+                fetch(url)
+                    .then(response => response.json())
+                    .then(majors => {
+                        displayMajors(majors);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showError('搜索專業失敗，請稍後再試。');
+                    })
+                    .finally(() => {
+                        hideLoading();
+                    });
+            }
+
+        }
+
+        // 編輯專業
+        function editMajor(id) {
+            console.log('Editing major with id:', id);
+            // 這裡可以添加打開編輯模態框的代碼
+        }
+
+        // 刪除專業
+        function deleteMajor(id) {
+            if (confirm('確定要刪除這個專業嗎？')) {
+                fetch(`/major/api/${id}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            loadAllMajors(); // 重新加載列表
+                        } else {
+                            throw new Error('Delete failed');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showError('刪除專業失敗，請稍後再試。');
+                    });
+            }
+        }
+
+
+        // 查看專業詳情
+        function viewMajorDetails(id) {
+            console.log('Viewing details of major with id:', id);
+            // 這裡可以添加打開詳情模態框的代碼
+        }
+
+    </script>
+
+</body>
+
+</html>
