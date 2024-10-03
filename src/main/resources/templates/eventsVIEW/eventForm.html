@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <div th:replace="~{/model/header&sidebar.html}"></div>
+    <div th:replace="~{model/layout-static}"></div>
     <main>
         <div class="dashboard-header">
             <h2 th:text="${event.eventId} != null ? '編輯活動' : '新增活動'"></h2>
