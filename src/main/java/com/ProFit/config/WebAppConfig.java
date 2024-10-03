@@ -1,4 +1,4 @@
-//package com.ProFit.springConfig;
+//package com.ProFit.config;
 //
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
@@ -8,6 +8,7 @@
 //import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 //import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+//import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 //import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //import org.springframework.web.servlet.view.InternalResourceViewResolver;
 //import com.ProFit.controller.interceptor.LoginInterceptor;
@@ -16,22 +17,18 @@
 //
 ////相當於mvc-servlet.xml的Java程式組態
 //@Configuration
-//@EnableWebMvc
-//@ComponentScan(basePackages = { "com.ProFit.controller" })
-//
 //public class WebAppConfig implements WebMvcConfigurer {
 //
-//	@Bean
-//	public InternalResourceViewResolver irViewResolver() {
-//		InternalResourceViewResolver irv1 = new InternalResourceViewResolver("/WEB-INF/pages/", ".jsp");
-//		irv1.setOrder(6);
-//		return irv1;
-//	}
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        // 保持默認的 /static/ 路徑映射
+//        registry.addResourceHandler("/**")
+//                .addResourceLocations("classpath:/static/");
 //
-//	@Override
-//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//		configurer.enable();
-//	}
+//        // 自定義 /ProFit/photos 路徑，映射到外部的 photos 資料夾
+//        registry.addResourceHandler("/ProFit/photos/**")
+//                .addResourceLocations("file:/Users/ivantseng/Desktop/photos/");
+//    }
 //
 ////	@Autowired
 ////	private LoginInterceptor loginInterceptor;

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>新增課程 - ProFit</title>
+<link rel="stylesheet" th:href="@{/css/model.css}">
+<link rel="stylesheet" th:href="@{/css/courses/updateCourseView.css}">
+<style>
+    #enrollmentDate[readonly] {
+        color: black !important;
+        background-color: white !important;
+        -webkit-text-fill-color: black !important;
+    }
+</style>
+</head>
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+
+	<!-- 主要內容區域 -->
+	<div class="container pt-5">
+		<div class="dashboard-header">
+			<h2>修改課程</h2>
+		</div>
+		<div class="form-container">
+		</div>
+	</div>
+	<script>
+	    var contextPath = 'http://localhost:8080/ProFit';
+	</script>
+	<script th:src="@{/js/courses/updateCourseView.js}"></script>
+</body>
+</html>

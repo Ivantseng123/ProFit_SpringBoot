@@ -1,12 +1,11 @@
 package com.ProFit.service.courseService;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
 import com.ProFit.model.bean.coursesBean.CourseBean;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 
 public interface IcourseService {
-	
 	
 	//新增課程
 	public CourseBean insertCourse(CourseBean course);
@@ -26,5 +25,7 @@ public interface IcourseService {
 	//查詢全部課程By多條件查詢
 	public List<CoursesDTO> searchCourses(String courseName, String userName, String status, String userId,String category);
 	
+	//查詢結果以分頁顯示
+	public Page<CoursesDTO> findMsgByPage(Integer pageNumber);
 	
 }

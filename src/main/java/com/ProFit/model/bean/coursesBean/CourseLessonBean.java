@@ -17,7 +17,7 @@ public class CourseLessonBean implements java.io.Serializable {
 	
 	@Id @Column(name="course_lesson_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String courseLessonId;
+	private Integer courseLessonId;
 	
 	@Column(name="course_module_id",insertable = false,updatable = false)
 	private String courseModuleId;
@@ -49,7 +49,7 @@ public class CourseLessonBean implements java.io.Serializable {
 		super();
 	}
 
-	public CourseLessonBean(String courseLessonId, String courseModuleId, String courseId, String courseLessonName,
+	public CourseLessonBean(Integer courseLessonId, String courseModuleId, String courseId, String courseLessonName,
 			String courseLessonSort, String lessonMediaUrl, String lessonMediaType, String mediaDuration) {
 		super();
 		this.courseLessonId = courseLessonId;
@@ -80,11 +80,11 @@ public class CourseLessonBean implements java.io.Serializable {
 	public void setCourseModule(CourseModuleBean courseModule) {
 		this.courseModule = courseModule;
 	}
-	public String getCourseLessonId() {
+	public Integer getCourseLessonId() {
 		return courseLessonId;
 	}
 
-	public void setCourseLessonId(String courseLessonId) {
+	public void setCourseLessonId(Integer courseLessonId) {
 		this.courseLessonId = courseLessonId;
 	}
 

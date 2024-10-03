@@ -12,13 +12,13 @@ public interface IHcourseModuleDao {
 	public CourseModuleBean insertCourseModule(CourseModuleBean courseModule);
 
 	// 刪除課程章節 by id
-	public boolean deleteCourseModuleById(String courseModuleId);
+	public boolean deleteCourseModuleById(Integer courseModuleId);
 
 	// 更新課程章節 by id
 	public boolean updateCourseModuleById(CourseModuleBean newCourseModule);
 
 	// 查詢單筆課程章節By courseModuleId
-	public CourseModuleBean searchOneCourseModuleById(int courseModuleId);
+	public CourseModuleBean searchOneCourseModuleById(Integer courseModuleId);
 
 	// 查詢全部 多形
 	public List<CourseModuleBean> searchCourseModules();
