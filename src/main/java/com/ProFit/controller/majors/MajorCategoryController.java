@@ -1,107 +1,86 @@
 package com.ProFit.controller.majors;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import com.ProFit.model.bean.majorsBean.MajorBean;
 import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
-import com.ProFit.service.majorService.IMajorCategoryService;
+import com.ProFit.model.dto.majorsDTO.MajorDTO;
+import com.ProFit.service.majorService.MajorCategoryService;
 
-
-
+import java.util.List;
 
 @Controller
 @RequestMapping("/majorCategory")
 public class MajorCategoryController {
 
 	@Autowired
-	private IMajorCategoryService majorCategoryService;
+	private MajorCategoryService majorCategoryService;
 
-//	@Autowired
-//	private IMajorService majorService;
-
-	// 顯示所有類別
+	// 跳轉到主頁面
 	@GetMapping("/list")
-	public String listMajorCategories(Model model) {
-		List<MajorCategoryBean> listMajorCategory = majorCategoryService.findAllMajorCategories();
-		model.addAttribute("listMajorCategory", listMajorCategory);
-		return "majorsVIEW/MajorCategoryList";
+	public String listMajorCategories() {
+		return "majorsVIEW/MajorCategoryMainPage"; // 返回主頁面的視圖名稱
 	}
 
-//	// 根據選擇的類別顯示專業
-//	@GetMapping("/majors")
-//	public String listMajorsByCategory(@RequestParam("categoryId") int categoryId, Model model) {
-//		List<MajorBean> listMajor = majorService.findMajorsByCategoryId(categoryId);
-//		MajorCategoryBean category = majorCategoryService.findMajorCategoryById(categoryId);
-//		model.addAttribute("listMajor", listMajor);
-//		model.addAttribute("category", category);
-//		return "majorsVIEW/MajorListByCategory";
-//	}
-
-	// 顯示新增專業類別表單
-	@GetMapping("/new")
-	public String showNewForm() {
-		return "majorsVIEW/MajorCategoryForm";
+	// 查詢全部
+	@GetMapping("/api/list")
+	@ResponseBody
+	public ResponseEntity<List<MajorCategoryBean>> getAllMajorCategories() {
+		return ResponseEntity.ok(majorCategoryService.findAllMajorCategories());
 	}
 
-	// 新增類別
-	@PostMapping("/insert")
-	public String insertMajorCategory(@ModelAttribute MajorCategoryBean majorCategory, Model model) {
-		try {	
-			//System.out.println(majorCategory);			
-			majorCategoryService.insertMajorCategory(majorCategory);
-			return "redirect:/majorCategory/list";
-		} catch (Exception e) {
-			model.addAttribute("error", "新增類別失敗，可能是 ID 已存在。");
-			return "majorsVIEW/MajorCategoryForm";
+	// 根據id查詢
+	@GetMapping("/api/{id}")
+	@ResponseBody
+	public MajorCategoryBean getMajorCategoryById(@PathVariable("id") int id) {
+		return majorCategoryService.findMajorCategoryById(id);
+	}
+
+	// 新增
+	@PostMapping("/api")
+	@ResponseBody
+	public ResponseEntity<MajorCategoryBean> createMajorCategory(@RequestBody MajorCategoryBean majorCategory) {
+		System.out.println(majorCategory);
+		MajorCategoryBean createdCategory = majorCategoryService.insertMajorCategory(majorCategory);
+		return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+	}
+
+	// 修改
+	@PutMapping("/api/{id}")
+	@ResponseBody
+	public MajorCategoryBean updateMajorCategory(@PathVariable("id") int id,
+			@RequestBody MajorCategoryBean majorCategory) {
+		majorCategory.setMajorCategoryId(id);
+		return majorCategoryService.updateMajorCategory(majorCategory);
+	}
+
+	// 刪除
+	@DeleteMapping("/api/{id}")
+	@ResponseBody
+	public ResponseEntity<Void> deleteMajorCategory(@PathVariable("id") int id) {
+		if (majorCategoryService.deleteMajorCategory(id)) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
 		}
 	}
 
-	// 刪除類別
-	@GetMapping("/delete")
-	public String deleteMajorCategory(@RequestParam("id") int id) {
-		majorCategoryService.deleteMajorCategory(id);
-		return "redirect:/majorCategory/list";
+	//
+	@GetMapping("/api/{categoryId}/majors")
+	public ResponseEntity<List<MajorDTO>> getMajorsByCategory(@PathVariable int categoryId) {
+		try {
+			List<MajorDTO> majors = majorCategoryService.getMajorsByCategoryId(categoryId);
+			if (majors.isEmpty()) {
+				return ResponseEntity.noContent().build();
+			}
+			return ResponseEntity.ok(majors);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 
-	// 顯示類別更新表單
-	@GetMapping("/edit")
-	public String showEditForm(@RequestParam("id") int id, Model model) {
-	    MajorCategoryBean majorCategory = majorCategoryService.findMajorCategoryById(id);
-	    if (majorCategory != null) {
-	        model.addAttribute("category", majorCategory);
-	        return "majorsVIEW/MajorCategoryForm";
-	    } else {
-	        model.addAttribute("error", "找不到指定的類別");
-	        return "redirect:/majorCategory/list";
-	    }
-	}
-	
-	// 更新專業類別
-	@PostMapping("/update")
-	public String updateMajorCategory(@ModelAttribute("category") MajorCategoryBean majorCategory, 
-	                                  BindingResult result, 
-	                                  Model model) {
-	    if (majorCategory.getMajorCategoryId() == null || majorCategory.getMajorCategoryId() == 0) {
-	        model.addAttribute("error", "更新失敗：無效的類別 ID。");
-	        return "majorsVIEW/MajorCategoryForm";
-	    }
-	    
-	    if (result.hasErrors()) {
-	        return "majorsVIEW/MajorCategoryForm";
-	    }
-	    
-	    if (majorCategoryService.updateMajorCategory(majorCategory)) {
-	        return "redirect:/majorCategory/list";
-	    } else {
-	        model.addAttribute("error", "更新失敗。");
-	        return "majorsVIEW/MajorCategoryForm";
-	    }
-	}
-	
-	
 }
