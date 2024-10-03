@@ -26,7 +26,7 @@ public interface IMajorService {
 	// 根據 majorCategoryid 查找 Majors (
 	List<MajorDTO> findMajorsByCategoryId(int majorCategoryId);
 
-	// 根據MajorName 模糊搜尋Majors
-	List<MajorDTO> findMajorsByMajorName(String name);
+	// 根據MajorName模糊搜尋、ID 多條件查詢
+	List<MajorDTO> searchMajors(Integer id, String name);
 
 }
