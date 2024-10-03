@@ -25,7 +25,7 @@ public class Pwd_reset_tokens implements Serializable{
 	@Column(name="user_id")
 	private Integer userId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id",insertable = false,updatable = false)
 	private Users user;
 	
@@ -34,7 +34,6 @@ public class Pwd_reset_tokens implements Serializable{
 	
 	@Column(name="expiration_time", updatable = false, insertable = false)
 	private String expirationTime;
-
 
 
 	public Pwd_reset_tokens(Integer token_id, Integer user_id,String user_tokenHash,
@@ -97,6 +96,5 @@ public class Pwd_reset_tokens implements Serializable{
 		this.expirationTime = expirationTime;
 	}
 
-	
 
 }

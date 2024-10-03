@@ -1,83 +1,58 @@
-package com.ProFit.model.bean.usersBean;
+package com.ProFit.model.dto.usersDTO;
 
-import java.io.Serializable;
+import com.ProFit.model.bean.usersBean.Employer_profile;
+import com.ProFit.model.bean.usersBean.Users;
 
-import org.hibernate.annotations.DynamicUpdate;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@DynamicUpdate
-@Table(name="employer_profile")
-public class Employer_profile implements Serializable{
-	private static final long serialVersionUID = 1L;
-
-	@Id @Column(name="employer_profile_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EmpPfDTO {
+	
 	private Integer employerProfileId;
-		
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id",insertable = false,updatable = false)
+	
 	private Users user;
 	
-	@Column(name="user_id")
 	private Integer userId;
 	
-	@Column(name="company_name")
+	private String userEmail;
+	
 	private String companyName;
 	
-	@Column(name="company_address")
 	private String companyAddress;
 	
-	@Column(name="company_category")
+	private String companyAddress1;
+	
 	private String companyCategory;
 	
-	@Column(name="company_phoneNumber")
 	private String companyPhoneNumber;
-	
-	@Column(name="company_taxID")
+		
 	private String companyTaxID;
 	
-	@Column(name="company_numberOfemployee")
 	private String companyNumberOfemployee;
 	
-	@Column(name="company_capital")
 	private String companyCaptital;
 	
-	@Column(name="company_description")
 	private String companyDescription;
 	
-	@Column(name="company_photoURL")
 	private String companyPhotoURL;
 
 
-	public Employer_profile(Integer employer_profile_id, Integer user_id, String company_name, String company_address,
-			String company_category, String company_phoneNumber, String company_taxID, String company_numberOfemployee,
-			String company_captital, String company_description, String company_photoURL) {
+	public EmpPfDTO(Employer_profile emp) {
 		super();
-		this.employerProfileId = employer_profile_id;
-		this.userId = user_id;
-		this.companyName = company_name;
-		this.companyAddress = company_address;
-		this.companyCategory = company_category;
-		this.companyPhoneNumber = company_phoneNumber;
-		this.companyTaxID = company_taxID;
-		this.companyNumberOfemployee = company_numberOfemployee;
-		this.companyCaptital = company_captital;
-		this.companyDescription = company_description;
-		this.companyPhotoURL = company_photoURL;
+		this.employerProfileId = emp.getEmployerProfileId();
+		this.userId = emp.getUserId();
+		this.userEmail = emp.getUser().getUserEmail();
+		this.companyName = emp.getCompanyName();
+		this.companyAddress = emp.getCompanyAddress();
+		this.companyCategory = emp.getCompanyCategory();
+		this.companyPhoneNumber = emp.getCompanyPhoneNumber();
+		this.companyTaxID = emp.getCompanyTaxID();
+		this.companyNumberOfemployee = emp.getCompanyNumberOfemployee();
+		this.companyCaptital = emp.getCompanyCaptital();
+		this.companyDescription = emp.getCompanyDescription();
+		this.companyPhotoURL = emp.getCompanyPhotoURL();
 	}
 
 	
 
-	public Employer_profile(Integer user_id, String company_name, String company_address,
+	public EmpPfDTO(Integer user_id, String company_name, String company_address,
 			String company_category, String company_phoneNumber, String company_taxID) {
 		super();
 		this.userId = user_id;
@@ -88,7 +63,7 @@ public class Employer_profile implements Serializable{
 		this.companyTaxID = company_taxID;
 	}
 
-	public Employer_profile() {}
+	public EmpPfDTO() {}
 
 
 
@@ -232,6 +207,26 @@ public class Employer_profile implements Serializable{
 	public void setCompanyPhotoURL(String companyPhotoURL) {
 		this.companyPhotoURL = companyPhotoURL;
 	}
-
 	
+	public String getCompanyAddress1() {
+		return companyAddress1;
+	}
+
+
+	public void setCompanyAddress1(String companyAddress1) {
+		this.companyAddress1 = companyAddress1;
+	}
+
+
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
 }

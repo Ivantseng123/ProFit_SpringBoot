@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-5">
+		<div class="dashboard-header d-flex">
+			<h2>企業申請資訊</h2>
+			<div class="ms-auto">
+				<button id="passbtn" class="btn btn-success">通過</button>
+				<button id="rejectbtn" class="btn btn-warning">否決</button>
+			</div>
+		</div>
+
+		<div class="form-container" id="empAppl-info">
+		</div>
+	</div>
+
+	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/users/getempApplView.js}"></script>
+</body>
+
+</html>

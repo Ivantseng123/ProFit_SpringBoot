@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-5">
+		<div class="dashboard-header">
+			<h2>會員管理</h2>
+
+		</div>
+		<div>
+			<table id="userTable" class="display">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>會員ID</th>
+						<th>會員帳號</th>
+						<th>Token</th>
+						<th>期限</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+
+		<diV class="insertBTN">
+			<button class="btn btn-primary" onclick="togglePopup()">新增</button>
+		</diV>
+		<div id="popupOverlay" class="overlay-container" style="z-index: 1002">
+			<div class="popup-box-inserttoken">
+				<h2 style="color: orange;">新增Token</h2>
+				<form class="form-container" method="post" id="insertform">
+					<label class="form-label" for="user_name"> 會員ID: </label>
+					<input class="form-input" type="text" placeholder="輸入會員ID" id="user_id" name="user_id" required />
+					<input type="submit" value="確定" class="btn-submit" />
+				</form>
+				<br>
+				<button class="btn-close-popup" onclick="togglePopup()">
+					關閉</button>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="fa-solid fa-triangle-exclamation fa-2xl" style="color: #ff0000;"></i>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p class="text-center">確定刪除？</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" id="deleteAction" data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="OkModal" tabindex="-1" aria-labelledby="OkModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content Ok">
+						<div class="modal-header">
+							<p>新增成功</p>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body text-center">
+							<i class="fa-regular fa-circle-check fa-7x" style="color: #00a876;"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.js"></script>
+	<script th:src="@{/js/users/tokenView.js}"></script>
+</body>
+
+</html>
