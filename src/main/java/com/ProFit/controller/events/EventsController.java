@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.ProFit.bean.eventsBean.EventsBean;
+import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.service.eventService.EventsService;
 
 import java.util.List;

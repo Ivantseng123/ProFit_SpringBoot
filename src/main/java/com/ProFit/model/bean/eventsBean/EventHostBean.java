@@ -1,4 +1,4 @@
-package com.ProFit.bean.eventsBean;
+package com.ProFit.model.bean.eventsBean;
 
 import java.io.Serializable;
 

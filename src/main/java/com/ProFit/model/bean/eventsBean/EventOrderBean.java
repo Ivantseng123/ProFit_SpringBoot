@@ -1,9 +1,9 @@
-package com.ProFit.bean.eventsBean;
+package com.ProFit.model.bean.eventsBean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.ProFit.bean.usersBean.*;
+import com.ProFit.model.bean.usersBean.Users;
 
 import jakarta.persistence.*;
 
