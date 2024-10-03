@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-5">
+		<!-- 只是一個範例，裡面布局可以更改 -->
+
+		<div class="dashboard-header">
+			<h2>會員管理</h2>
+		</div>
+		<div>
+			<table id="userTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>會員帳號</th>
+						<th>會員姓名</th>
+						<th>會員身分</th>
+						<th>會員註冊時間</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+
+			</table>
+		</div>
+
+		<diV class="insertBTN">
+			<button class="btn btn-primary" onclick="togglePopup()">新增</button>
+		</diV>
+		<div id="popupOverlay" class="overlay-container" style="z-index: 1002">
+			<div class="popup-box-insertuser">
+				<h2 style="color: orange;">新增會員</h2>
+				<form class="form-group" style="height:700px;margin:0; overflow: auto" id="insertform">
+					<label class="form-label" for="user_name"> 會員姓名: </label>
+					<input class="form-input-insert" type="text" placeholder="輸入會員姓名	" id="user_name" name="user_name"
+						required>
+					<label class="form-label" for="user_email">會員信箱:</label>
+					<input class="form-input-insert" type="email" placeholder="輸入會員信箱" id="user_email" name="user_email"
+						required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+					<label class="form-label" for="user_password"> 會員密碼: </label>
+					<input class="form-input-insert" type="password" placeholder="輸入會員密碼" id="user_password"
+						name="user_password" required>
+					<label class="form-label" for="ConfirmPassword"> 確認密碼: </label>
+					<input id="ConfirmPassword" class="form-input-insert" type="password" placeholder="確認會員密碼"
+						required="required" oninput="setCustomValidity('');"
+						onchange="if(document.getElementById('user_password').value != document.getElementById('ConfirmPassword').value){setCustomValidity('密碼不吻合');}" />
+					<label class="form-label" for="user_phonenumber">會員手機號碼:</label>
+					<input class="form-input-insert" type="text" placeholder="輸入會員手機號碼(格式:09XX-000000)"
+						id="user_phonenumber" name="user_phonenumber" required maxlength="11" pattern="09\d{2}-\d{6}">
+					<label class="form-label" for="user_city">會員居住城市:</label>
+					<select name="user_city">
+						<option>臺北市</option>
+						<option>新北市</option>
+						<option>基隆市</option>
+						<option>桃園市</option>
+						<option>新竹縣</option>
+						<option>新竹市</option>
+						<option>宜蘭縣</option>
+						<option>臺中市</option>
+						<option>苗栗縣</option>
+						<option>彰化縣</option>
+						<option>南投縣</option>
+						<option>雲林縣</option>
+						<option>高雄市</option>
+						<option>臺南市</option>
+						<option>嘉義市</option>
+						<option>嘉義縣</option>
+						<option>屏東縣</option>
+						<option>澎湖縣</option>
+						<option>花蓮縣</option>
+						<option>臺東縣</option>
+					</select>
+					<input type="submit" value="確定" class="btn btn-primary" style="margin-top: 20px" />
+					<button class="btn-close-popup" onclick="togglePopup()">
+						關閉</button>
+				</form>
+			</div>
+		</div>
+		<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<i class="fa-solid fa-triangle-exclamation fa-2xl" style="color: #ff0000;"></i>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p class="text-center">確定刪除？</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" id="deleteAction"
+							data-bs-dismiss="modal">確定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="OkModal" tabindex="-1" aria-labelledby="OkModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content Ok">
+					<div class="modal-header">
+						<p>新增成功</p>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body text-center">
+						<i class="fa-regular fa-circle-check fa-7x" style="color: #00a876;"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>>
+	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.js"></script>
+	<script th:src="@{/js/users/userView.js}"></script>
+</body>
+
+</html>
