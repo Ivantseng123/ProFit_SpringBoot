@@ -30,9 +30,6 @@
 		</div>
 		<div id="search-results" class="table-container"></div>
 
-
-		<div class="table-container" id="search-results"></div>
-
 	</div>
 
 	</div>
@@ -104,7 +101,7 @@
 	<!-- 專業列表模態框 -->
 	<div>
 		<div class="modal fade" id="majorsModal" tabindex="-1" aria-labelledby="majorsModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
+			<div class="modal-dialog modal-xl modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="majorsModalLabel">類別專業列表</h5>
@@ -113,9 +110,39 @@
 					<div class="modal-body" id="majorsModalBody">
 						<!-- 專業列表將在這裡動態加載 -->
 					</div>
+					<hr>
+
+
+					<div class="modal-body container pt-0" id="majorsInsertModalBody">
+
+						<form id="insertMajorForm" class="container">
+
+							<div class="row">
+								<div class="mb-2 col-4">
+									新增專業:
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="mb-3 col">
+									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id" required>
+								</div>
+								<div class="mb-3 col">
+									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱" required>
+								</div>
+								<div class="mb-3 col">
+									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述" required>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary">新增</button>
+						</form>
+					</div>
+
+
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -364,6 +391,7 @@
 			// 顯示加載指示器
 			document.getElementById('majorsModalBody').innerHTML = '<p>加載中...</p>';
 
+
 			// 顯示模態框
 			var majorsModal = new bootstrap.Modal(document.getElementById('majorsModal'));
 			majorsModal.show();
@@ -372,13 +400,20 @@
 			axios.get(`/ProFit/majorCategory/api/${categoryId}/majors`)
 				.then(response => {
 					const majors = response.data;
-					let majorsHtml = '<ul class="list-group">';
+					let majorsHtml = '<ul class="list-group container">';
 
 					if (majors.length === 0) {
+						document.getElementById('majorsModalLabel').innerHTML = `類別專案管理`;
 						majorsHtml = '<p>該類別下沒有專業。</p>';
 					} else {
+						document.getElementById('majorsModalLabel').innerHTML = `類別: ${majors[0].categoryName}`;
+						majorsHtml += `專業: `;
 						majors.forEach(major => {
-							majorsHtml += `<li class="list-group-item">${major.majorName}</li>`;
+							majorsHtml += `<div class="row mb-1">`;
+							majorsHtml += `<li class="list-group-item col-2">${major.majorId}</li>`;
+							majorsHtml += `<li class="list-group-item col-8">${major.majorName}</li>`;
+							majorsHtml += `<button id="MajorDeleteBtn" class="btn btn-sm btn-danger col-2">刪除</button>`;
+							majorsHtml += `</div>`;
 						});
 						majorsHtml += '</ul>';
 					}
