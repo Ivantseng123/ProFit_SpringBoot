@@ -1,53 +1,47 @@
-//package com.ProFit.service.transactionService;
-//
-//import com.ProFit.bean.transactionBean.JobOrderBean;
-//import com.ProFit.dao.transactionCRUD.JobOrderDAO;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import java.sql.Timestamp;
-//import java.util.List;
-//
-//@Service
-//public class JobOrderService {
-//
-//    @Autowired
-//    private JobOrderDAO jobOrderDAO; 
-//
-//    // 顯示所有訂單記錄
-//    @Transactional(readOnly = true) 
-//    public List<JobOrderBean> getAllOrders() {
-//        return jobOrderDAO.getAllOrders(); 
-//    }
-//
-//    // 新增訂單
-//    @Transactional
-//    public void insertOrder(JobOrderBean order) {
-//        jobOrderDAO.insertOrder(order);
-//    }
-//
-//    // 更新訂單
-//    @Transactional
-//    public void updateOrder(JobOrderBean order) {
-//        jobOrderDAO.updateOrder(order); 
-//    }
-//
-//    // 刪除訂單
-//    @Transactional
-//    public void deleteOrder(String jobOrdersId) {
-//        jobOrderDAO.deleteOrder(jobOrdersId);
-//    }
-//
-//    // 根據ID獲取訂單
-//    @Transactional(readOnly = true)
-//    public JobOrderBean getOrderById(String jobOrdersId) {
-//        return jobOrderDAO.getOrderById(jobOrdersId);
-//    }
-//
-//    // 根據條件篩選訂單
-//    @Transactional(readOnly = true)
-//    public List<JobOrderBean> searchOrdersByCriteria(Integer jobApplicationId, Timestamp startDate, Timestamp endDate, String jobOrderStatus) {
-//        return jobOrderDAO.searchOrdersByCriteria(jobApplicationId, startDate, endDate, jobOrderStatus);
-//    }
-//}
+package com.ProFit.service.transactionService;
+
+import com.ProFit.model.bean.transactionBean.JobOrderBean;
+import com.ProFit.model.dao.transactionCRUD.JobOrderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+@Service
+public class JobOrderService {
+
+    @Autowired
+    private JobOrderRepository jobOrderRepository;
+
+    @Transactional(readOnly = true)
+    public List<JobOrderBean> getAllOrders() {
+        return jobOrderRepository.findAll();
+    }
+
+    @Transactional
+    public void insertOrder(JobOrderBean order) {
+        jobOrderRepository.save(order);
+    }
+
+    @Transactional
+    public void updateOrder(JobOrderBean order) {
+        jobOrderRepository.save(order);
+    }
+
+    @Transactional
+    public void deleteOrder(String jobOrdersId) {
+        jobOrderRepository.deleteById(jobOrdersId);
+    }
+
+    @Transactional(readOnly = true)
+    public JobOrderBean getOrderById(String jobOrdersId) {
+        return jobOrderRepository.findById(jobOrdersId).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<JobOrderBean> searchOrdersByCriteria(Integer jobApplicationId, Timestamp startDate, Timestamp endDate, String jobOrderStatus) {
+        return jobOrderRepository.findByJobApplicationIdAndJobOrderDateBetweenAndJobOrderStatus(jobApplicationId, startDate, endDate, jobOrderStatus);
+    }
+}
