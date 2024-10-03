@@ -406,11 +406,11 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,eclipse,macos,windows,java
 
-<<<<<<< HEAD
 ###FirebaseConfig
 firebaseAPIkey.properties
-=======
+
 HELP.md
 
 firebase-service-account.json
->>>>>>> main
+
+db-secrets.properties
