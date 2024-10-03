@@ -22,7 +22,6 @@ public class MajorCategoryBean implements java.io.Serializable {
 
 	@Id
 	@Column(name = "major_category_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer majorCategoryId; // 主鍵，專業_類別ID
 
 	@Column(name = "category_name")

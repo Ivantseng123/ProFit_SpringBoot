@@ -6,6 +6,7 @@
 	<title>ProFit</title>
 	<link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
 	<link rel="stylesheet" th:href="@{/css/model.css}">
+
 </head>
 
 <body>
@@ -16,94 +17,381 @@
 		<div class="course-header">
 			<h2>專業類別管理功能</h2>
 			<span><button id="createBtn" type="button" data-bs-toggle="modal"
-					data-bs-target="#staticBackdrop">新增類別</button></span>
+					data-bs-target="#staticBackdrop-insert">新增類別</button></span>
 		</div>
 
 		<div class="dashboard-header">
 			<h3 style="margin-top: 0px;">類別查詢</h3>
-
-			</span> <span style="margin-right: 30px;">類別ID:
-				<input type="text" id="majorCategoryId" name="majorCategoryId" value="" style="width: 100px;" />
-
-				<button id="searchBtn">送出查詢</button>
+			<span style="margin-right: 30px;">
+				類別ID:
+				<input type="text" id="id-majorCategoryId" name="id-majorCategoryId" value="" style="width: 100px;" />
+			</span>
+			<button id="searchBtn" onclick="searchCategories()">送出查詢</button>
 		</div>
-
-
+		<div id="search-results" class="table-container"></div>
 
 
 		<div class="table-container" id="search-results"></div>
+
 	</div>
 
 	</div>
 
 	<!-- 彈出視窗 -->
-	<!-- Button trigger modal -->
-
 	<!-- Modal -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-		aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="staticBackdropLabel">新增類別</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	<!-- 新增類別 -->
+	<div>
+		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="staticBackdropLabel">新增類別</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<form id="categoryForm">
+						<div class="modal-body">
+							<div class="mb-3">
+								<label for="majorCategoryId" class="form-label">類別Id</label>
+								<input type="text" class="form-control" id="majorCategoryId" name="majorCategoryId">
+							</div>
+
+							<div class="mb-3">
+								<label for="majorCategoryName" class="form-label">類別名稱</label>
+								<input type="text" class="form-control" id="majorCategoryName" name="majorCategoryName">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+								<button type="submit" class="btn btn-primary">送出</button>
+							</div>
+					</form>
 				</div>
-				<form id="categoryForm">
-					<div class="modal-body">
+			</div>
+		</div>
+	</div>
 
-						<div class="mb-3">
-							<label for="majorCategoryName" class="form-label">類別名稱</label>
-							<input type="text" class="form-control" id="majorCategoryName" name="categoryName">
 
+	<!-- 編輯類別 彈出視窗 -->
+	<div>
+		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel-edit">編輯類別</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<form id="editCategoryForm">
+						<div class="modal-body">
+							<label for="editCategoryId" class="form-label">類別Id</label>
+							<input type="number" class="form-control" id="editCategoryId" readonly>
+							<div class="mb-3">
+								<label for="editCategoryName" class="form-label">類別名稱</label>
+								<input type="text" class="form-control" id="editCategoryName" required>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-							<button type="submit" class="btn btn-primary">送出</button>
+							<button type="submit" class="btn btn-primary">更新</button>
 						</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
+	</div>
 
 
-		<script>
-			var contextPath = 'http://localhost:8080/ProFit';
+	<!-- 專業列表模態框 -->
+	<div>
+		<div class="modal fade" id="majorsModal" tabindex="-1" aria-labelledby="majorsModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="majorsModalLabel">類別專業列表</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="majorsModalBody">
+						<!-- 專業列表將在這裡動態加載 -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-			$(document).ready(function () {
-				$('#categoryForm').on('submit', function (e) {
-					e.preventDefault(); // 阻止表單的默認提交行為
 
-					let formData = {
-						categoryName: $('#majorCategoryName').val()
-					};
 
-					axios.post('/ProFit/majorCategory/api', formData, {
-						headers: {
-							'Content-Type': 'application/json'
-						}
+	<script>
+		var contextPath = 'http://localhost:8080/ProFit';
+
+		$(document).ready(function () {
+			loadCategories();
+
+			$('#categoryForm').on('submit', function (e) {
+				e.preventDefault(); // 阻止表單的默認提交行為
+
+				let formData = {
+					majorCategoryId: $('#majorCategoryId').val(),
+					categoryName: $('#majorCategoryName').val()
+				};
+
+				axios.post('/ProFit/majorCategory/api', formData, {
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
+					.then(res => {
+						console.log(res);
+						console.log(res.data);
+						$('#categoryModal').modal('hide'); // 關閉模態框
+						// 可以在這裡添加代碼來更新類別列表或顯示成功消息
+						alert('類別創建成功！');
+						// 如果有類別列表，可以重新加載
+						loadCategories();
 					})
-						.then(res => {
-							console.log(res);
-							console.log(res.data);
-							$('#categoryModal').modal('hide'); // 關閉模態框
-							// 可以在這裡添加代碼來更新類別列表或顯示成功消息
-							alert('類別創建成功！');
-							// 如果有類別列表，可以重新加載
-							// loadCategories(); 
-						})
-						.catch(err => {
-							console.error(err);
-							alert('創建類別失敗，請重試。');
-						})
+					.catch(err => {
+						console.error(err);
+						alert('創建類別失敗，請重試。');
+					})
+
+			});
 
 
-				});
+			$('#editCategoryForm').on('submit', function (e) {
+				e.preventDefault(); // 阻止表單的默認提交行為
+				submitEditCategory();
+			});
+
+
+			// 添加一個事件監聽器，使得在輸入框按下 Enter 鍵時也觸發查詢
+			document.getElementById('id-majorCategoryId').addEventListener('keyup', function (event) {
+				if (event.key === 'Enter') {
+					searchCategories();
+				}
 			});
 
 
 
-		</script>
-		<!-- <script th:src="@{/js/courses/courseView.js}"></script> -->
-		<!-- <script th:src="@{/js/popup.js}"></script> -->
+		});
+
+		// 查詢所有類別
+		function loadCategories() {
+			axios.get('/ProFit/majorCategory/api/list')
+				.then(response => {
+					const categories = response.data;
+					const tableHtml = searchResultsHTMLMaker(categories);
+					document.getElementById('search-results').innerHTML = tableHtml;
+				})
+				.catch(error => {
+					console.error('加載類別失敗:', error);
+					document.getElementById('search-results').innerHTML = '<p>加載類別時出錯，請稍後再試。</p>';
+				});
+		}
+
+
+		// 根據id查詢類別的函數
+		function searchCategories() {
+			const searchId = document.getElementById('id-majorCategoryId').value.trim();
+
+			// 如果搜索 ID 為空，則加載所有類別
+			if (searchId === '') {
+				loadCategories();
+				return;
+			}
+
+			// 發送查詢請求到服務器
+			axios.get(`/ProFit/majorCategory/api/${searchId}`)
+				.then(response => {
+					const category = response.data;
+					// 如果找到類別，顯示結果
+					if (category) {
+						const tableHtml = searchResultsHTMLMaker([category]);
+						document.getElementById('search-results').innerHTML = tableHtml;
+					} else {
+						document.getElementById('search-results').innerHTML = '<p>沒有找到對應的類別。</p>';
+					}
+				})
+				.catch(error => {
+					console.error('查詢類別失敗:', error);
+					if (error.response && error.response.status === 404) {
+						document.getElementById('search-results').innerHTML = '<p>沒有找到對應的類別。</p>';
+					} else {
+						document.getElementById('search-results').innerHTML = '<p>查詢過程中發生錯誤，請稍後再試。</p>';
+					}
+				});
+		}
+
+
+		// 把結果顯示成表格
+		function searchResultsHTMLMaker(categories) {
+			if (categories.length === 0) {
+				return '<p>沒有找到類別。</p>';
+			}
+
+			let tableHtml = `
+        <table class=" table table-striped">
+								<thead>
+									<tr>
+										<th>類別ID</th>
+										<th>類別名稱</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									`;
+
+			categories.forEach(category => {
+				tableHtml += `
+									<tr>
+										<td>${category.majorCategoryId}</td>
+										<td>${category.categoryName}</td>
+										<td>
+											<button class="btn btn-sm btn-primary"
+												onclick="editCategory(${category.majorCategoryId})">編輯</button>
+											<button class="btn btn-sm btn-danger"
+												onclick="deleteCategory(${category.majorCategoryId})">刪除</button>
+											<button class="btn btn-sm btn-success" onclick="viewMajors(${category.majorCategoryId})">該類別的專業</button>
+										</td>
+									</tr>
+									`;
+			});
+
+			tableHtml += `
+								</tbody>
+								</table>
+								`;
+
+			return tableHtml;
+		}
+
+
+		// 顯示編輯類別表單的函數
+		function editCategory(id) {
+			console.log('編輯類別:', id);
+			// 查單筆資料
+			axios.get(`/ProFit/majorCategory/api/${id}`)
+				.then(response => {
+					const category = response.data;
+					// 填充表單
+					document.getElementById('editCategoryId').value = category.majorCategoryId;
+					document.getElementById('editCategoryName').value = category.categoryName;
+					// 打開模態框
+					var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop-edit'));
+					myModal.show();
+					// 確保模態框可見
+					document.getElementById('staticBackdrop-edit').style.display = 'block';
+				})
+				.catch(error => {
+					console.error('獲取類別數據失敗:', error);
+					alert('獲取類別數據失敗，請重試。');
+				});
+		}
+
+		// 提交編輯
+		function submitEditCategory() {
+			const id = document.getElementById('editCategoryId').value;
+			const name = document.getElementById('editCategoryName').value;
+
+			axios.put(`/ProFit/majorCategory/api/${id}`, {
+				majorCategoryId: id,
+				categoryName: name
+			})
+				.then(response => {
+					console.log('類別更新成功:', response.data);
+					alert('更新類別成功。');
+					// 關閉模態框
+					// var myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop-edit'));
+					// myModal.hide();
+
+					// 重新加載類別列表
+					loadCategories();
+				})
+				.catch(error => {
+					console.error('更新類別失敗:', error);
+					alert('更新類別失敗，請重試。');
+				});
+		}
+
+
+		// 刪除類別
+		function deleteCategory(id) {
+			console.log('刪除類別:', id);
+
+			// 使用 confirm 進行用戶確認
+			if (confirm('您確定要刪除這個類別嗎？此操作不可撤銷。')) {
+				// 發送刪除請求到服務器
+				axios.delete(`/ProFit/majorCategory/api/${id}`)
+					.then(response => {
+						console.log('類別刪除成功');
+						// 顯示成功消息
+						showMessage('類別已成功刪除', 'success');
+						// 重新加載類別列表以更新 UI
+						loadCategories();
+					})
+					.catch(error => {
+						console.error('刪除類別失敗:', error);
+						// 顯示錯誤消息
+						showMessage('刪除類別失敗，請重試', 'error');
+					});
+			}
+		}
+
+		// 顯示消息的輔助函數
+		function showMessage(message, type = 'info') {
+			// 創建一個 alert 元素
+			const alertDiv = document.createElement('div');
+			alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+			alertDiv.role = 'alert';
+			alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+			// 將 alert 添加到頁面
+			const container = document.querySelector('.container');
+			container.insertBefore(alertDiv, container.firstChild);
+
+			// 3秒後自動關閉 alert
+			setTimeout(() => {
+				alertDiv.remove();
+			}, 3000);
+		}
+
+		// 顯示category下的所有Majors
+		function viewMajors(categoryId) {
+			// 顯示加載指示器
+			document.getElementById('majorsModalBody').innerHTML = '<p>加載中...</p>';
+
+			// 顯示模態框
+			var majorsModal = new bootstrap.Modal(document.getElementById('majorsModal'));
+			majorsModal.show();
+
+			// 從服務器獲取專業列表
+			axios.get(`/ProFit/majorCategory/api/${categoryId}/majors`)
+				.then(response => {
+					const majors = response.data;
+					let majorsHtml = '<ul class="list-group">';
+
+					if (majors.length === 0) {
+						majorsHtml = '<p>該類別下沒有專業。</p>';
+					} else {
+						majors.forEach(major => {
+							majorsHtml += `<li class="list-group-item">${major.majorName}</li>`;
+						});
+						majorsHtml += '</ul>';
+					}
+
+					document.getElementById('majorsModalBody').innerHTML = majorsHtml;
+				})
+				.catch(error => {
+					console.error('獲取專業列表失敗:', error);
+					document.getElementById('majorsModalBody').innerHTML = '<p>獲取專業列表失敗，請稍後再試。</p>';
+				});
+		}
+
+	</script>
 </body>
 
 </html>

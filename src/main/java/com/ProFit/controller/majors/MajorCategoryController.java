@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import com.ProFit.model.bean.majorsBean.MajorBean;
 import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
+import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.service.majorService.MajorCategoryService;
 
 import java.util.List;
@@ -42,6 +44,7 @@ public class MajorCategoryController {
 	@PostMapping("/api")
 	@ResponseBody
 	public ResponseEntity<MajorCategoryBean> createMajorCategory(@RequestBody MajorCategoryBean majorCategory) {
+		System.out.println(majorCategory);
 		MajorCategoryBean createdCategory = majorCategoryService.insertMajorCategory(majorCategory);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
 	}
@@ -65,4 +68,19 @@ public class MajorCategoryController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+	//
+	@GetMapping("/api/{categoryId}/majors")
+	public ResponseEntity<List<MajorDTO>> getMajorsByCategory(@PathVariable int categoryId) {
+		try {
+			List<MajorDTO> majors = majorCategoryService.getMajorsByCategoryId(categoryId);
+			if (majors.isEmpty()) {
+				return ResponseEntity.noContent().build();
+			}
+			return ResponseEntity.ok(majors);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
 }
