@@ -233,6 +233,11 @@
             </thead>
             <tbody>`;
 
+            if (majors.length === 0) {
+                showError('無符合條件的查詢結果，請更改查詢條件。');
+                return;
+            }
+
             majors.forEach(major => {
                 tableHtml += `
                 <tr>
@@ -252,6 +257,9 @@
             </tbody></table>`;
 
             tableContainer.innerHTML = tableHtml;
+
+            document.getElementById('majorId').value = '';
+            document.getElementById('majorName').value = '';
         }
 
         // 加載指示器，例如顯示一個旋轉圖標
@@ -304,11 +312,12 @@
             fetch(url)
                 .then(response => response.json())
                 .then(majors => {
+                    console.log(majors);
                     displayMajors(majors);
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showError('搜索專業失敗，請稍後再試。');
+                    showError('無符合條件的查詢結果，請更改查詢條件。');
                 })
                 .finally(() => {
                     hideLoading();
