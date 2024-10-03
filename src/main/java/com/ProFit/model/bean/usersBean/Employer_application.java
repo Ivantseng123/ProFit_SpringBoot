@@ -22,7 +22,7 @@ public class Employer_application implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer employerApplicationId;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id",insertable = false,updatable = false)
 	private Users user;
 	

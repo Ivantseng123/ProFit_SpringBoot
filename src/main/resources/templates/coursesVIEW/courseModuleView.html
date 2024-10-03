@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
+	<link rel="stylesheet" th:href="@{/css/model.css}">
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-5">
+
+		<!-- 主要內容區域 -->
+		<!-- 只是一個範例，裡面布局可以更改 -->
+		<div class="course-header">
+			<h2>章節管理功能</h2>
+			<span><button id="createBtn">新增章節</button></span>
+		</div>
+		<div class="dashboard-header">
+			<h3 class="mb-0" th:text="|課程名稱: ${courseDTO.courseName}|"></h3>
+		</div>
+
+		<div class="table-container" id="search-results">
+
+			<table>
+				<thead>
+					<tr>
+						<th>章節排序</th>
+						<th>章節名稱</th>
+						<th>單元數量</th>
+						<th>單元操作</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="table-body">
+					<th:block th:each=" courseModule,courseModuleStat : ${courseModuleDTOList}">
+						<tr>
+							<td th:text="${courseModuleStat.index+1}"></td>
+							<td th:text="${courseModule.courseModuleName}"></td>
+							<td th:text="${courseModule.moduleLessonsId.size()}"></td>
+							<td>
+								<a href="#"><button class="viewLesson btn btn-info">查看</button></a>
+							</td>
+							<td>
+								<button class="edit btn btn-primary">編輯</button>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="delete btn btn-danger">刪除</button>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+		<script>
+			var contextPath = 'http://localhost:8080/ProFit';
+		</script>
+		<script th:src="@{/js/courses/courseModuleView.js}"></script>
+</body>
+
+</html>

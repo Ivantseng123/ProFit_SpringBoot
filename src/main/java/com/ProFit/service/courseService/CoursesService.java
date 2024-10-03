@@ -63,7 +63,7 @@ public class CoursesService implements IcourseService {
 		}
 		
 		// 將 CourseBean 轉換為 CoursesDTO
-		List<CoursesDTO> searchCoursesDTO = (List<CoursesDTO>) searchCourses.stream()
+		List<CoursesDTO> searchCoursesDTO = searchCourses.stream()
 			.map(CoursesDTO::new).collect(Collectors.toList()); // 使用 DTO 的構造函數
 		return searchCoursesDTO;
 	}

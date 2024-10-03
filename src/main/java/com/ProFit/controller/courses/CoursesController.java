@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.ProFit.model.bean.coursesBean.CourseBean;
+import com.ProFit.model.bean.coursesBean.CourseModuleBean;
 import com.ProFit.model.dao.coursesCRUD.IHcourseDao;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.service.courseService.IcourseService;
 import com.ProFit.service.utilsService.FirebaseStorageService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class CoursesController {
@@ -181,11 +188,18 @@ public class CoursesController {
      */
     @PostMapping("/courses/insert")
     @ResponseBody
-    public ResponseEntity<CourseBean> insertCourse(
+    public ResponseEntity<Map<String, String>> insertCourse(
             @ModelAttribute CourseBean courseBean,
+            @RequestParam(required = false) String courseModuleNames,
             @RequestPart(required = false) MultipartFile courseCoverPicture) {
 
         try {
+            // 解析 JSON 字符串為 List<String>
+            ObjectMapper mapper = new ObjectMapper();
+            List<String> moduleNamesList = null;
+            if (courseModuleNames != null) {
+                moduleNamesList = Arrays.asList(mapper.readValue(courseModuleNames, String[].class));
+            }
             if (courseCoverPicture != null && !courseCoverPicture.isEmpty()) {
                 // 上傳圖片到 Firebase Storage 並獲取 URL
                 String photoURL = firebaseStorageService.uploadFile(courseCoverPicture);
@@ -196,8 +210,27 @@ public class CoursesController {
 
             // 插入課程
             CourseBean insertedCourse = courseService.insertCourse(courseBean);
-
-            return new ResponseEntity<>(insertedCourse, HttpStatus.OK);
+            
+        	List<CourseModuleBean> courseModules = new ArrayList<CourseModuleBean>();
+        	if(moduleNamesList != null) {
+        		CourseModuleBean courseModule = null;
+        		for(String courseModuleName:moduleNamesList) {
+        			courseModule = new CourseModuleBean();
+        			courseModule.setCourseModuleName(courseModuleName);
+        			 // 必須設置 courseModule 的 course 屬性
+                    courseModule.setCourse(insertedCourse);
+        			courseModules.add(courseModule);
+        		}
+        		insertedCourse.setCourseModules(courseModules);
+        		courseService.updateCourseById(insertedCourse);
+        	}else {
+        		System.out.println("沒有module");
+        	}
+        	 System.out.println(insertedCourse.getCourseId());
+        	 // 返回 JSON 响应
+             Map<String, String> response = new HashMap<>();
+             response.put("message", "OK");
+            return new ResponseEntity<>(response,HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

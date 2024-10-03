@@ -1,4 +1,4 @@
-$('#searchBtn').click(function() {
+$('#searchBtn').click(function () {
 	// 收集表單數據
 	let data = {
 		courseMajor: $('#id-courseMajor').val(),
@@ -10,11 +10,11 @@ $('#searchBtn').click(function() {
 
 	// 發送 AJAX 請求
 	$.ajax({
-		url: contextPath+ '/courses/search',
+		url: contextPath + '/courses/search',
 		data: data,
 		dataType: 'json',
 		type: 'GET',
-		success: function(response) {
+		success: function (response) {
 			console.log(response);
 
 			// 清空當前表格
@@ -41,7 +41,7 @@ $('#searchBtn').click(function() {
 
 			$('#search-results').append(tableHtml);
 
-			response.forEach(function(response) {
+			response.forEach(function (response) {
 				console.log("Serialized JSON: " + response.courseCreaterName);
 				$('#table-body').append(` 
         		                    <tr>
@@ -50,7 +50,7 @@ $('#searchBtn').click(function() {
 									<td>${response.courseCreaterName}</td>
         	                        <td>${response.courseInformation}</td>
 									<td>${response.courseModuleNumber}</td>
-									<td><button class="viewModules btn btn-info">查看</button></td>
+									<td><a href="${contextPath}/courseModules/search?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
 									<td>${response.coursePrice}</td>
         	                        <td><span class="status">${response.courseStatus}</span></td>
         	                        <td>
@@ -64,7 +64,7 @@ $('#searchBtn').click(function() {
 
 
 		},
-		error: function(jqXHR, textStatus, errorThrown) {
+		error: function (jqXHR, textStatus, errorThrown) {
 			// 處理錯誤
 			console.error('查詢失敗:', textStatus, errorThrown);
 			alert('查詢失敗，請重試。');
@@ -73,7 +73,7 @@ $('#searchBtn').click(function() {
 });
 
 //新增課程後回傳帶參數的url，確認參數是否存在
-$(document).ready(function() {
+$(document).ready(function () {
 	console.log("Document is ready");
 	// 獲取URL中的參數
 	let params = new URLSearchParams(window.location.search);
@@ -84,23 +84,23 @@ $(document).ready(function() {
 		$('#searchBtn').click();
 	}
 
-	$('#id-courseMajor,#id-courseName,#id-courseStatus,#id-courseCreateUserName').change(function() {
+	$('#id-courseMajor,#id-courseName,#id-courseStatus,#id-courseCreateUserName').change(function () {
 		$('#searchBtn').click();
 	})
 });
 
 
 //按下刪除按鈕，抓取欄位的值傳給server
-$(document).on('click', '.delete', function() {
+$(document).on('click', '.delete', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
 	console.log("Selected Course ID for Deletion: " + courseId);
 
 	$.ajax({
-		url: contextPath+ '/courses/delete/'+courseId,
+		url: contextPath + '/courses/delete/' + courseId,
 		data: { courseId: courseId },
 		type: 'get',
-		success: function(response) {
+		success: function (response) {
 			if (response) {
 				window.alert('課程刪除成功');
 				console.log('新增的课程信息:', response);
@@ -109,35 +109,35 @@ $(document).on('click', '.delete', function() {
 				window.alert('課程刪除失敗');
 			}
 		},
-		error: function(error) {
+		error: function (error) {
 			console.error('Error deleting course:', error);
 		}
 	});
 });
 
 // 編輯課程流程
-$(document).on('click', '.edit', function() {
-    var courseId = $(this).closest('tr').find('.result-courseId').text();
-    
-    console.log("Selected Course ID for Editing: " + courseId);
-    
-    // 不需要發送 AJAX 請求來獲取課程信息，直接轉發到控制器方法
-    window.location.href = contextPath + '/courses/viewUpdate?courseId=' + courseId;
+$(document).on('click', '.edit', function () {
+	var courseId = $(this).closest('tr').find('.result-courseId').text();
+
+	console.log("Selected Course ID for Editing: " + courseId);
+
+	// 不需要發送 AJAX 請求來獲取課程信息，直接轉發到控制器方法
+	window.location.href = contextPath + '/courses/viewUpdate?courseId=' + courseId;
 });
 
 
 //按下查看按鈕，抓取欄位的值傳給server
-$(document).on('click', '.view', function() {
+$(document).on('click', '.view', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
 	console.log("Selected Course ID for Deletion: " + courseId);
 
 	$.ajax({
-		url: contextPath+ '/courses/search/'+courseId,
+		url: contextPath + '/courses/search/' + courseId,
 		data: {
 			courseId: courseId
 		},
-		success: function(response) {
+		success: function (response) {
 			// 清空當前表格
 			$('.form-container').empty();
 
@@ -215,7 +215,7 @@ $(document).on('click', '.view', function() {
 			$('#courseStartDate').val(courseStartDateTime);
 			$('#courseEndDate').val(courseEndDateTime);
 		},
-		error: function(error) {
+		error: function (error) {
 			console.error('Error deleting course:', error);
 		}
 	});
