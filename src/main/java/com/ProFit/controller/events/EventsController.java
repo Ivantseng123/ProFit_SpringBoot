@@ -45,11 +45,7 @@ public class EventsController {
 
     @PostMapping
     public String saveEvent(@ModelAttribute EventsBean event) {
-        if (eventsService.selectEventById(event.getEventId()) == null) {
-            eventsService.insertEvent(event);
-        } else {
-            eventsService.updateEvent(event);
-        }
+        eventsService.saveEvent(event);
         return "redirect:/events";
     }
 }
