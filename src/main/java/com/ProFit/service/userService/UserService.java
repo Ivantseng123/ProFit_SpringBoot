@@ -14,12 +14,10 @@ import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 
-
 @Service
 //@Transactional
 public class UserService implements IUserService {
 
-	
 	@Autowired
 	private PasswordEncoder pwdEncoder;
 
@@ -30,7 +28,7 @@ public class UserService implements IUserService {
 	@Override
 	public Users saveUserInfo(String user_name, String user_email, String user_password, String user_phonenumber,
 			String user_city) throws NoSuchAlgorithmException {
-		
+
 		String user_passwordHash = pwdEncoder.encode(user_password);
 		Users user = new Users();
 		user.setUserName(user_name);
@@ -113,16 +111,17 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public boolean validate(String userEmail, String userPasswordHash) {
-		
-		Optional<Users> optional = usersRepository.findByUserEmailAndUserPasswordHash(userEmail, userPasswordHash);
-		
-		if (optional.isPresent()) {
+	public boolean validate(String userEmail, String userPassword) {
+
+		Optional<Users> optional = usersRepository.findByUserEmail(userEmail);
+
+		if (optional.isPresent() && optional.get().getUserIdentity() == 3) {
+			String dbPassword = optional.get().getUserPasswordHash();
 			
-			return true;
+			return pwdEncoder.matches(userPassword, dbPassword);
 		}
 		return false;
-		
+
 	}
 
 	@Override
@@ -155,8 +154,6 @@ public class UserService implements IUserService {
 		return null;
 	}
 
-	
-	
 //	public Page<Users> findUserByPage(Integer pageNumber){
 //		Pageable pgb = PageRequest.of(pageNumber-1, 10, Sort.Direction.DESC ,"userId");
 //		Page<Users> page = usersRepository.findAll(pgb);
@@ -169,29 +166,30 @@ public class UserService implements IUserService {
 //		Page<Users> page = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pgb);
 //		return page;
 //	}
-	
-	@Override
-    public Page<UsersDTO> findUserByPage(Integer pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
-        Page<Users> usersPage = usersRepository.findAll(pageable);
-        
-        
-        return usersPage.map(user -> new UsersDTO(user.getUserId(),  user.getUserEmail(), user.getUserName(), user.getUserIdentity(), user.getUserRegisterTime()));
-    }
 
 	@Override
-    public Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
+	public Page<UsersDTO> findUserByPage(Integer pageNumber) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
+		Page<Users> usersPage = usersRepository.findAll(pageable);
 
-        if (search == null || search.isEmpty()) {
-          
-            Page<Users> usersPage = usersRepository.findAll(pageable);
-            return usersPage.map(user -> new UsersDTO(user.getUserId(),  user.getUserEmail(), user.getUserName(), user.getUserIdentity(), user.getUserRegisterTime()));
-        }
+		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserEmail(), user.getUserName(),
+				user.getUserIdentity(), user.getUserRegisterTime()));
+	}
 
-       
-        Page<Users> usersPage = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pageable);
-        return usersPage.map(user -> new UsersDTO(user.getUserId(),  user.getUserEmail(), user.getUserName(), user.getUserIdentity(), user.getUserRegisterTime()));
-    }
+	@Override
+	public Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
+
+		if (search == null || search.isEmpty()) {
+
+			Page<Users> usersPage = usersRepository.findAll(pageable);
+			return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserEmail(), user.getUserName(),
+					user.getUserIdentity(), user.getUserRegisterTime()));
+		}
+
+		Page<Users> usersPage = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pageable);
+		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserEmail(), user.getUserName(),
+				user.getUserIdentity(), user.getUserRegisterTime()));
+	}
 
 }
