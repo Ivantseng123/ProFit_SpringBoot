@@ -40,11 +40,6 @@ public class CourseModulesController {
 		return "coursesVIEW/courseModuleView";
 	}
 	
-	@GetMapping("/courseModules/addModule")
-	public String addCourseModulePage() {
-		return "coursesVIEW/createCourseModuleView";
-	}
-	
 	@GetMapping("/courseModules/search")
 	public String searchOneCourseModule(@RequestParam String courseId,Model model) {
 		
@@ -58,14 +53,22 @@ public class CourseModulesController {
 		return "coursesVIEW/courseModuleView";
 	}
 	
+	@GetMapping("/courseModules/searchJSON")
+	@ResponseBody
+	public List<CourseModuleDTO> searchOneCourseModuleJSON(@RequestParam String courseId){
+		return courseModuleService.searchCourseModules(courseId);
+	}
+	
 	@GetMapping("/courseModules/delete")
-	public String deleteCourseModulesById(@RequestParam Integer courseModuleId) {
-				
-		CourseModuleDTO courseModule = courseModuleService.searchOneCourseModuleById(courseModuleId);
+	@ResponseBody
+	public CourseModuleDTO deleteCourseModulesById(@RequestParam Integer courseModuleId) {
 		
-		courseModuleService.deleteCourseModuleById(courseModuleId);
-		
-		return "forward:/courseModules/search?courseId="+courseModule.getCourseId();
+		if(courseModuleId!=null) {
+			CourseModuleDTO courseModule = courseModuleService.searchOneCourseModuleById(courseModuleId);
+			courseModuleService.deleteCourseModuleById(courseModuleId);
+			return courseModule;
+		}
+		return null;
 	}
 	
 	
@@ -73,35 +76,20 @@ public class CourseModulesController {
 	@ResponseBody
 	public boolean insertCourseModule(
 			@RequestParam String courseId,
-			@RequestParam String courseModuleNames) {
+			@RequestParam String courseModuleName) {
 		
-		// 解析 JSON 字符串為 List<String>
-		ObjectMapper mapper = new ObjectMapper();
-		List<String> moduleNamesList = null;
-        if (courseModuleNames != null) {
-            try {
-				moduleNamesList = Arrays.asList(mapper.readValue(courseModuleNames, String[].class));
-			} catch (Exception e) {
-				e.printStackTrace();
-				return false;
-			}
-        }
-		
-        CourseBean insertedCourse = new CourseBean();
-        insertedCourse.setCourseId(courseId);
-        
-        List<CourseModuleBean> courseModules = new ArrayList<CourseModuleBean>();
-        if(moduleNamesList != null) {
-        	CourseModuleBean courseModule = null;
-    		for(String courseModuleName:moduleNamesList) {
-    			courseModule = new CourseModuleBean();
-    			courseModule.setCourseModuleName(courseModuleName);
-    			 // 必須設置 courseModule 的 course 屬性
-                courseModule.setCourse(insertedCourse);
-                courseModuleService.insertCourseModule(courseModule);
-    		}
-    		return true;
-        }
+		if(courseModuleName!=null) {
+			CourseBean insertedCourse = new CourseBean();
+			insertedCourse.setCourseId(courseId);
+			
+			CourseModuleBean courseModule = null;
+			courseModule = new CourseModuleBean();
+			courseModule.setCourseModuleName(courseModuleName);
+			// 必須設置 courseModule 的 course 屬性
+			courseModule.setCourse(insertedCourse);
+			courseModuleService.insertCourseModule(courseModule);
+			return true;
+		}
 		return false;
 	}
 	

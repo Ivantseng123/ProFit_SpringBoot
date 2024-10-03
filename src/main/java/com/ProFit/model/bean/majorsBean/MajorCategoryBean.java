@@ -3,10 +3,14 @@ package com.ProFit.model.bean.majorsBean;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -23,6 +27,7 @@ public class MajorCategoryBean implements java.io.Serializable {
 	@Column(name = "category_name")
 	private String categoryName; // 類別名稱
 
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majorCategory", cascade = CascadeType.ALL)
 	private Set<MajorBean> majors = new HashSet<MajorBean>(0);
 

@@ -2,7 +2,11 @@ package com.ProFit.service.majorService;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
+import com.ProFit.model.bean.majorsBean.MajorBean;
 import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
+import com.ProFit.model.dto.majorsDTO.MajorDTO;
 
 
 public interface IMajorCategoryService {
@@ -11,7 +15,7 @@ public interface IMajorCategoryService {
 	MajorCategoryBean insertMajorCategory(MajorCategoryBean majorCategory);
 
 	// 更新專業類別
-	boolean updateMajorCategory(MajorCategoryBean majorCategory);
+	MajorCategoryBean updateMajorCategory(MajorCategoryBean majorCategory);
 
 	// 刪除專業類別
 	boolean deleteMajorCategory(int majorCategoryId);
@@ -21,5 +25,11 @@ public interface IMajorCategoryService {
 
 	// 根據ID查詢專業類別
 	MajorCategoryBean findMajorCategoryById(int majorCategoryId);
+
+	// 分頁顯示所有查詢, 15筆一頁
+	Page<MajorCategoryBean> findMajorCategoryByPage(Integer pageNmuber);
+
+	// 根據 categoryId 查找 Major
+	List<MajorDTO> getMajorsByCategoryId(int categoryId);
 
 }

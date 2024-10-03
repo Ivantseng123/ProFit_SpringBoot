@@ -5,19 +5,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ProFit.config.FirebaseAPI;
-import com.ProFit.model.bean.FirebaseConfigBean.FirebaseConfig;
+import com.ProFit.model.bean.FirebaseConfigBean.FirebaseBean;
 
 @RestController
 public class FirebaseConfigServ {
 	
 	@Autowired
-	private FirebaseConfig firebaseConfig;
+	private FirebaseBean firebaseConfig;
 	
 	@Autowired
 	private FirebaseAPI firebaseAPI;
 		 
     @GetMapping("/FirebaseConfigServ")
-	public FirebaseConfig getFirebaseConfig() {
+	public FirebaseBean getFirebaseConfig() {
 		
     	firebaseConfig.setApiKey(firebaseAPI.getApiKey());
     	firebaseConfig.setAuthDomain(firebaseAPI.getAuthDomain());
