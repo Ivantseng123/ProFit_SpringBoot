@@ -23,10 +23,10 @@ public class CourseModuleBean implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer courseModuleId;
 	
-	@Column(name="course_id",insertable = false,updatable = false)
-	private String courseId;
+//	@Column(name="course_id")
+//	private String courseId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="course_id")
 	private CourseBean course;
 	
@@ -40,19 +40,19 @@ public class CourseModuleBean implements java.io.Serializable {
 		super();
 	}
 
-	public CourseModuleBean(Integer courseModuleId, String courseId, String courseModuleName) {
-		super();
-		this.courseModuleId = courseModuleId;
-		this.courseId = courseId;
-		this.courseModuleName = courseModuleName;
-	}
-	
-
-	public CourseModuleBean(String courseId, String courseModuleName) {
-		super();
-		this.courseId = courseId;
-		this.courseModuleName = courseModuleName;
-	}
+//	public CourseModuleBean(Integer courseModuleId, String courseId, String courseModuleName) {
+//		super();
+//		this.courseModuleId = courseModuleId;
+//		this.courseId = courseId;
+//		this.courseModuleName = courseModuleName;
+//	}
+//	
+//
+//	public CourseModuleBean(String courseId, String courseModuleName) {
+//		super();
+//		this.courseId = courseId;
+//		this.courseModuleName = courseModuleName;
+//	}
 
 	public List<CourseLessonBean> getModuleLessons() {
 		return moduleLessons;
@@ -76,13 +76,13 @@ public class CourseModuleBean implements java.io.Serializable {
 		this.courseModuleId = courseModuleId;
 	}
 
-	public String getCourseId() {
-		return courseId;
-	}
-
-	public void setCourseId(String courseId) {
-		this.courseId = courseId;
-	}
+//	public String getCourseId() {
+//		return courseId;
+//	}
+//
+//	public void setCourseId(String courseId) {
+//		this.courseId = courseId;
+//	}
 
 	public String getCourseModuleName() {
 		return courseModuleName;
@@ -94,7 +94,7 @@ public class CourseModuleBean implements java.io.Serializable {
 
 	@Override
 	public String toString() {
-		return "CourseModule [courseModuleId=" + courseModuleId + ", courseId=" + courseId + ", courseModuleName="
+		return "CourseModule [courseModuleId=" + courseModuleId + "," + ", courseModuleName="
 				+ courseModuleName + "]";
 	}
 

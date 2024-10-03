@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>新增課程章節 - ProFit</title>
+<link rel="stylesheet" th:href="@{/css/model.css}">
+<link rel="stylesheet" th:href="@{/js/jquery-ui-1.14.0.custom/jquery-ui.css}">
+<style>
+label, input {
+    display: block;
+    margin-bottom: 12px;
+}
+
+input.text {
+    width: 95%;
+    padding: .4em;
+}
+
+div#users-contain {
+    width: 100%;
+    margin: 20px 0;
+}
+
+div#users-contain table {
+    margin: 1em 0;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+div#users-contain table td, div#users-contain table th {
+    border: 1px solid #eee;
+    padding: .6em 10px;
+    text-align: center;
+}
+</style>
+
+</head>
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<!-- 主要內容區域 -->
+	<div class="container pt-5">
+		<div id="tabs">
+			<ul>
+				<li><a href="#createCourseTab">課程資訊</a></li>
+				<li><a href="#createModuleTab">新增章節</a></li>
+			</ul>
+			<div id="createCourseTab">
+				<div class="form-container">
+
+				</div>
+			</div>
+			<div id="createModuleTab">
+				<div id="dialog-form" title="新增章節">
+					<form>
+						<fieldset>
+							<label for="name">章節名稱</label> <input type="text" name="name"
+								id="name" value="請輸入章節名稱"
+								class="text ui-widget-content ui-corner-all">
+
+							<!-- Allow form submission with keyboard without duplicating the dialog button -->
+							<input type="submit" tabindex="-1" style="position: absolute; top: -1000px">
+						</fieldset>
+					</form>
+				</div>
+				<div id="users-contain" class="ui-widget">
+					<table id="users" class="ui-widget ui-widget-content">
+						<thead style="text-align: center">
+							<tr class="ui-widget-header">
+								<th>章節</th>
+								<th>章節名稱</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				   <div class="action-buttons">
+				   		<button id="create-Module" class="btn btn-success">創建新章節</button>
+						<button class="btn btn-primary" id="createBtn" name="createBtn" type="button">確定新增</button>
+        	      </div>
+			</div>
+		</div>
+	</div>
+	<script>
+        var contextPath = 'http://localhost:8080/ProFit';
+    </script>
+	<script th:src="@{/js/tabs.js}"></script>
+	<script th:src="@{/js/dialog.js}"></script>
+	<script th:src="@{/js/courses/createCourseModuleView.js}"></script>
+</body>
+</html>

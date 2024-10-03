@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     var dialog, form,
         name = $("#name"),
         tips = $(".validateTips");
@@ -7,7 +7,7 @@ $(function() {
         tips
             .text(t)
             .addClass("ui-state-highlight");
-        setTimeout(function() {
+        setTimeout(function () {
             tips.removeClass("ui-state-highlight", 1500);
         }, 500);
     }
@@ -33,13 +33,12 @@ $(function() {
 
             $("#users tbody").append("<tr>" +
                 "<td style='text-align: center'>" + rowCount + "</td>" +
-                "<td>" + name.val() + "</td>" +
+                "<td class='courseModuleName' >" + name.val() + "</td>" +
                 "<td class='action-buttons'>" +
-                "<button class='view'>查看</button> " +
                 "<button class='edit'>編輯</button> " +
                 "<button class='delete'>刪除</button>" +
                 "</td>" +
-            "</tr>");
+                "</tr>");
 
             dialog.dialog("close");
         }
@@ -53,22 +52,22 @@ $(function() {
         modal: true,
         buttons: {
             "Create Module": addModuleName,
-            Cancel: function() {
+            Cancel: function () {
                 dialog.dialog("close");
             }
         },
-        close: function() {
+        close: function () {
             form[0].reset();
             name.removeClass("ui-state-error");
         }
     });
 
-    form = $("#dialog-form form").on("submit", function(event) {
+    form = $("#dialog-form form").on("submit", function (event) {
         event.preventDefault();
         addModuleName();
     });
 
-    $("#create-Module").button().on("click", function() {
+    $("#create-Module").button().on("click", function () {
         dialog.dialog("open");
     });
 });

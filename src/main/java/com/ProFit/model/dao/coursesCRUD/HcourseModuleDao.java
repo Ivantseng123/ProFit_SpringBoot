@@ -80,11 +80,11 @@ public class HcourseModuleDao implements IHcourseModuleDao {
 
 	// 搜尋課程章節by courseId
 	@Override
-	public List<CourseModuleBean> searchCourseModules(String course_id) {
+	public List<CourseModuleBean> searchCourseModules(String courseId) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<CourseModuleBean> query = session.createQuery("from CourseModuleBean where course.courseId = :courseid",
+		Query<CourseModuleBean> query = session.createQuery("from CourseModuleBean cm where cm.course.courseId = :courseId",
 				CourseModuleBean.class);
-		query.setParameter("courseid", course_id); // 使用 setParameter 設定參數的值
+		query.setParameter("courseId", courseId); // 使用 setParameter 設定參數的值
 		return query.getResultList(); // 執行查詢並返回結果
 	}
 
