@@ -23,7 +23,7 @@ public class Employer_profile implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer employerProfileId;
 		
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id",insertable = false,updatable = false)
 	private Users user;
 	
