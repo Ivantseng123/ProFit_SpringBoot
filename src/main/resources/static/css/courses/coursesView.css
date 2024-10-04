@@ -42,6 +42,20 @@
 	cursor: pointer;
 }
 
+#createCategoryBtn {
+	padding: 5px 10px;
+	font-size: 16px;
+	background-color: #ffa500;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#createCategoryBtn:hover {
+	background-color: #45a049;
+}
+
 #createBtn:hover {
 	background-color: #45a049;
 }
