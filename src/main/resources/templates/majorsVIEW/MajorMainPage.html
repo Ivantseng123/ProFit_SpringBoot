@@ -21,12 +21,25 @@
         <div class="dashboard-header">
             <h3 id="專業查詢" style="margin-top: 0px;">專業查詢</h3>
             <span style="margin-right: 30px;">專業ID:
-                <input type="text" id="majorId" name="majorId" style="width: 100px;" />
+                <input type="number" id="majorId" name="majorId" style="width: 100px;" />
             </span>
             <span style="margin-right: 30px;">專業名稱:
                 <input type="text" id="majorName" name="majorName" style="width: 100px;" />
             </span>
             <button id="searchBtn" class="btn btn-secondary">送出查詢</button>
+            <hr>
+            <div class="mb-3">
+                <span style="margin-right: 30px;">專業類別:
+                    <select name="form-select" id="searchMajorCategory">
+                        <option selected>請選擇類別</option>
+                        <option value="">1</option>
+                    </select>
+                </span>
+                <span><button class="btn btn-success" type="button"
+                        onclick="location.href='http://localhost:8080/ProFit/majorCategory/';">查詢所有專業類別</button></span>
+                <span><button id="createCategoryBtn" type="button" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop-insertCategory">新增專業類別</button></span>
+            </div>
         </div>
 
         <div id="search-results" class="table-container">
@@ -45,20 +58,21 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="insertMajorId" class="form-label">專業Id</label>
-                        <input type="text" class="form-control" id="insertMajorId">
-                    </div>
-                    <div class="mb-3">
-                        <label for="insertMajorName" class="form-label">專業名稱</label>
-                        <input type="text" class="form-control" id="insertMajorName">
-                    </div>
-                    <div>
-                        <select class="form-select" aria-label="Default select example">
+                        <label for="insertMajorCategory" class="form-label">專業類別</label>
+                        <select class="form-select" id="insertMajorCategory" required>
                             <option selected>請選擇類別</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="insertMajorId" class="form-label">專業Id</label>
+                        <input type="number" class="form-control" id="insertMajorId">
+                    </div>
+                    <div class="mb-3">
+                        <label for="insertMajorName" class="form-label">專業名稱</label>
+                        <input type="text" class="form-control" id="insertMajorName">
                     </div>
                     <div class="mb-3">
                         <label for="insertMajorDescription" class="form-label">專業描述</label>
@@ -73,6 +87,37 @@
         </div>
     </div>
 
+    <!-- 新增專業類別 -->
+    <div>
+        <div class="modal fade" id="staticBackdrop-insertCategory" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">新增類別</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="categoryForm">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="majorCategoryId" class="form-label">類別Id</label>
+                                <input type="number" class="form-control" id="majorCategoryId" name="majorCategoryId">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="majorCategoryName" class="form-label">類別名稱</label>
+                                <input type="text" class="form-control" id="majorCategoryName" name="majorCategoryName">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                <button type="submit" class="btn btn-primary">送出</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 編輯專業的模態框 -->
     <div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
@@ -82,28 +127,31 @@
                     <h5 class="modal-title" id="staticBackdropLabel-edit">編輯專業</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="editMajorId" class="form-label">專業Id</label>
-                        <input type="text" class="form-control" id="editMajorId" readonly>
+                <form id="editMajorForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" id="editMajorCategoryId" readonly>
+                            <label for="editMajorCategory" class="form-label">專業類別</label>
+                            <input type="text" class="form-control" id="editMajorCategory" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMajorId" class="form-label">專業Id</label>
+                            <input type="text" class="form-control" id="editMajorId" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMajorName" class="form-label">專業名稱</label>
+                            <input type="text" class="form-control" id="editMajorName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMajorDescription" class="form-label">專業描述</label>
+                            <textarea class="form-control" id="editMajorDescription"></textarea>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="editMajorName" class="form-label">專業名稱</label>
-                        <input type="text" class="form-control" id="editMajorName">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary" id="updateMajorBtn">更新</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="editMajorCategoryName" class="form-label">類別名稱</label>
-                        <input type="text" class="form-control" id="editMajorCategoryName">
-                    </div>
-                    <div class="mb-3">
-                        <label for="editMajorDescription" class="form-label">專業描述</label>
-                        <textarea class="form-control" id="editMajorDescription"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="updateMajorBtn">更新</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -129,18 +177,62 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             loadAllMajors();
-
-            // 綁定新增專業按鈕事件
-            document.querySelector('.course-header button').addEventListener('click', function () {
-                $('#staticBackdrop-insert').modal('show');
-            });
+            loadCategoriesToSearch();
 
             // 綁定查詢按鈕事件
             document.querySelector('.dashboard-header button').addEventListener('click', searchMajors);
+
+            // 綁定新增專業按鈕事件
+            document.querySelector('#createBtn').addEventListener('click', function () {
+                loadCategoriesToInsert();
+                $('#staticBackdrop-insert').modal('show');
+            });
+
+            // 綁定新增專業提交事件
+            document.getElementById('insertMajorBtn').addEventListener('click', submitNewMajor);
+
+            // 綁定新增專業提交事件
+            document.getElementById('searchMajorCategory').addEventListener('change', searchMajorsByCategory);
+
+            // 提交表單新增類別
+            $('#categoryForm').on('submit', function (e) {
+                e.preventDefault(); // 阻止表單的默認提交行為
+
+                let formData = {
+                    majorCategoryId: $('#majorCategoryId').val(),
+                    categoryName: $('#majorCategoryName').val()
+                };
+
+                $('#majorCategoryId').val('');
+                $('#majorCategoryName').val('');
+
+                axios.post('/ProFit/majorCategory/api', formData, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(res => {
+                        $('#staticBackdrop-insertCategory').modal('hide'); // 關閉模態框
+                        // 可以在這裡添加代碼來更新類別列表或顯示成功消息
+                        alert('類別創建成功！');
+                        // 如果有類別列表，可以重新加載
+                        loadCategoriesToSearch();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('創建類別失敗，請重試。');
+                    })
+
+            });
+
         });
 
+        // 載入所有major
         function loadAllMajors() {
             showLoading();
+
+
+
             fetch('/ProFit/major/api/list')
                 .then(response => {
                     if (!response.ok) {
@@ -160,55 +252,108 @@
                 });
         }
 
+        // 載入所有 Categories 到新增專業modal
+        function loadCategoriesToInsert() {
 
+            fetch('/ProFit/majorCategory/api/list')
+                .then(response => response.json())
+                .then(categories => {
+                    const select = document.getElementById('insertMajorCategory');
+                    select.innerHTML = '<option value="">請選擇類別</option>';
+                    categories.forEach(category => {
+                        select.innerHTML += `<option value="${category.majorCategoryId}">${category.majorCategoryId}: ${category.categoryName}</option>`;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading categories:', error);
+                });
+        }
+
+        // 載入所有 Categories 到編輯專業modal
+        function loadCategoriesToEdit() {
+
+            fetch('/ProFit/majorCategory/api/list')
+                .then(response => response.json())
+                .then(categories => {
+                    const select = document.getElementById('editMajorCategory');
+                    select.innerHTML = '<option value="">請選擇類別</option>';
+                    categories.forEach(category => {
+                        select.innerHTML += `<option value="${category.majorCategoryId}">${category.majorCategoryId}: ${category.categoryName}</option>`;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading categories:', error);
+                });
+        }
+
+        // 載入所有 Categories 到查詢選單
+        function loadCategoriesToSearch() {
+            fetch('/ProFit/majorCategory/api/list')
+                .then(response => response.json())
+                .then(categories => {
+                    const select = document.getElementById('searchMajorCategory');
+                    select.innerHTML = '<option value="">請選擇類別</option>';
+                    categories.forEach(category => {
+                        select.innerHTML += `<option value="${category.majorCategoryId}">${category.majorCategoryId}: ${category.categoryName}</option>`;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading categories:', error);
+                });
+        }
+
+        // 顯示查到的majors
         function displayMajors(majors) {
             const tableContainer = document.getElementById('search-results');
-            if (majors.length === 0) {
-                tableContainer.innerHTML = '<p>沒有找到專業。</p>';
-                return;
-            }
 
             let tableHtml = `<table class="table table-striped">
             <thead>
                 <tr>
+                    <th>類別名稱</th>
                     <th>專業ID</th>
                     <th>專業名稱</th>
-                    <th>類別ID</th>
-                    <th>類別名稱</th>
+                    <th>專業描述</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody>`;
 
+            if (majors.length === 0) {
+                showError('無符合條件的查詢結果，請更改查詢條件。');
+                return;
+            }
+
             majors.forEach(major => {
                 tableHtml += `
-            <tr>
-                <td>${major.majorId}</td>
-                <td>${major.majorName}</td>
-                <td>${major.majorCategoryId}</td>
-                <td>${major.categoryName}</td>
-                <td>
-                    <button class="btn btn-sm btn-primary" onclick="editMajor(${major.majorId})">編輯</button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteMajor(${major.majorId})">刪除</button>
-                    <button class="btn btn-sm btn-info" onclick="viewMajorDetails(${major.majorId})">詳情</button>
-                </td>
-            </tr>`;
+                <tr>
+                    <td>${major.categoryName}</td>
+                    <td>${major.majorId}</td>
+                    <td>${major.majorName}</td>
+                    <td>${major.majorDescription}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="editMajor(${major.majorId})">編輯</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteMajor(${major.majorId})">刪除</button>
+                  </td>
+                </tr>`;
             });
 
             tableHtml += `
             </tbody></table>`;
 
             tableContainer.innerHTML = tableHtml;
+
+            document.getElementById('majorId').value = '';
+            document.getElementById('majorName').value = '';
         }
 
+        // 加載指示器，例如顯示一個旋轉圖標
         function showLoading() {
-            // 實現加載指示器，例如顯示一個旋轉圖標
             const loadingHtml = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
             document.getElementById('search-results').innerHTML = loadingHtml;
         }
 
+        // 移除加載指示器
         function hideLoading() {
-            // 移除加載指示器
         }
 
         function showError(message) {
@@ -216,50 +361,184 @@
             document.getElementById('search-results').innerHTML = errorHtml;
         }
 
-        // 查詢
+        // 根據id和關鍵字查詢
         function searchMajors() {
             const majorId = document.getElementById('majorId').value;
             const majorName = document.getElementById('majorName').value;
-            console.log(majorId.trim().length);
-            console.log(majorName.trim().length);
-
 
             if (majorId.trim().length === 0 && majorName.trim().length === 0) {
                 loadAllMajors();
             } else {
                 let url = '/ProFit/major/api/search?';
-                if (majorId) url += `id=${majorId}&`;
-                if (majorName) url += `name=${encodeURIComponent(majorName)}`;
 
-                showLoading();
-                fetch(url)
-                    .then(response => response.json())
-                    .then(majors => {
-                        displayMajors(majors);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showError('搜索專業失敗，請稍後再試。');
-                    })
-                    .finally(() => {
-                        hideLoading();
-                    });
+                if (majorId.trim().length != 0) {
+                    url += `id=${majorId}&`;
+                }
+                if (majorName) url += `name=${majorName}`;
+
+                fetchMajors(url);
             }
-
         }
 
-        // 編輯專業
+        // 根據categoryId查詢
+        function searchMajorsByCategory() {
+            const categoryId = document.getElementById('searchMajorCategory').value;
+            if (categoryId) {
+                fetchMajors(`api/category/${categoryId}`);
+            } else {
+                loadAllMajors(); // 如果沒有選擇類別，加載所有專業
+            }
+        }
+
+        // 統一處理major的fetch
+        function fetchMajors(url) {
+            showLoading();
+            fetch(url)
+                .then(response => response.json())
+                .then(majors => {
+                    // console.log(majors);
+                    displayMajors(majors);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('無符合條件的查詢結果，請更改查詢條件。');
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+        }
+
+
+        // 新增專業
+        function submitNewMajor() {
+            const majorId = document.getElementById('insertMajorId').value;
+            const majorName = document.getElementById('insertMajorName').value;
+            const majorCategoryId = document.getElementById('insertMajorCategory').value;
+            const majorDescription = document.getElementById('insertMajorDescription').value;
+
+            if (!majorName || !majorCategoryId) {
+                alert('請填寫專業名稱並選擇類別');
+                return;
+            }
+
+            const newMajor = {
+                majorId: majorId,
+                majorName: majorName,
+                majorCategoryId: majorCategoryId,
+                majorDescription: majorDescription
+            };
+
+            fetch('/ProFit/major/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newMajor)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('專業新增成功');
+                    $('#staticBackdrop-insert').modal('hide');
+                    loadAllMajors(); // 重新加載專業列表
+                    document.getElementById('insertMajorId').value = '';
+                    document.getElementById('insertMajorName').value = '';
+                    document.getElementById('insertMajorDescription').value = '';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('新增專業失敗，請稍後再試');
+                });
+        }
+
+        // 顯示編輯專業視窗
         function editMajor(id) {
             console.log('Editing major with id:', id);
             // 這裡可以添加打開編輯模態框的代碼
+
+            // 獲取專業詳情
+            fetch(`/ProFit/major/api/${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(major => {
+                    // 填充編輯表單
+                    document.getElementById('editMajorId').value = major.majorId;
+                    document.getElementById('editMajorName').value = major.majorName;
+                    document.getElementById('editMajorCategoryId').value = major.majorCategoryId;
+                    document.getElementById('editMajorCategory').value = major.categoryName;
+                    document.getElementById('editMajorDescription').value = major.majorDescription || '';
+
+                    // 打開編輯模態框
+                    $('#staticBackdrop-edit').modal('show');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('獲取專業詳情失敗，請稍後再試');
+                })
         }
+
+
+        // 處理編輯表單提交
+        document.getElementById('editMajorForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const majorId = document.getElementById('editMajorId').value;
+            const majorName = document.getElementById('editMajorName').value;
+            const majorCategoryId = document.getElementById('editMajorCategoryId').value;
+            const majorDescription = document.getElementById('editMajorDescription').value;
+
+            const updatedMajor = {
+                majorId: majorId,
+                majorName: majorName,
+                majorCategoryId: majorCategoryId,
+                majorDescription: majorDescription
+            };
+
+            fetch(`/ProFit/major/api/${majorId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedMajor)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // console.log('Success:', data);
+                    alert('專業更新成功');
+                    $('#editMajorModal').modal('hide');
+                    loadAllMajors(); // 重新加載專業列表
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('更新專業失敗，請稍後再試');
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+        });
+
+
 
         // 刪除專業
         function deleteMajor(id) {
             if (confirm('確定要刪除這個專業嗎？')) {
-                fetch(`/major/api/${id}`, { method: 'DELETE' })
+                fetch(`/ProFit/major/api/${id}`, { method: 'DELETE' })
                     .then(response => {
                         if (response.ok) {
+                            window.alert("刪除成功");
                             loadAllMajors(); // 重新加載列表
                         } else {
                             throw new Error('Delete failed');
@@ -267,17 +546,11 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        showError('刪除專業失敗，請稍後再試。');
+                        window.alert("'刪除專業失敗，請稍後再試。");
                     });
             }
         }
 
-
-        // 查看專業詳情
-        function viewMajorDetails(id) {
-            console.log('Viewing details of major with id:', id);
-            // 這裡可以添加打開詳情模態框的代碼
-        }
 
     </script>
 

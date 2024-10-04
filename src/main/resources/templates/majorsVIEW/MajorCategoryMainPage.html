@@ -24,9 +24,11 @@
 			<h3 style="margin-top: 0px;">類別查詢</h3>
 			<span style="margin-right: 30px;">
 				類別ID:
-				<input type="text" id="id-majorCategoryId" name="id-majorCategoryId" value="" style="width: 100px;" />
+				<input type="number" id="id-majorCategoryId" name="id-majorCategoryId" value="" style="width: 100px;" />
 			</span>
-			<button id="searchBtn" onclick="searchCategories()">送出查詢</button>
+			<button id="searchBtn">送出查詢</button>
+			<span><button class="btn btn-success" type="button"
+					onclick="location.href='http://localhost:8080/ProFit/major/';">返回專業管理</button></span>
 		</div>
 		<div id="search-results" class="table-container"></div>
 
@@ -38,8 +40,8 @@
 	<!-- Modal -->
 	<!-- 新增類別 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false"
+			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -50,7 +52,7 @@
 						<div class="modal-body">
 							<div class="mb-3">
 								<label for="majorCategoryId" class="form-label">類別Id</label>
-								<input type="text" class="form-control" id="majorCategoryId" name="majorCategoryId">
+								<input type="number" class="form-control" id="majorCategoryId" name="majorCategoryId">
 							</div>
 
 							<div class="mb-3">
@@ -70,8 +72,8 @@
 
 	<!-- 編輯類別 彈出視窗 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-			aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false"
+			tabindex="-1" aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -125,13 +127,16 @@
 
 							<div class="row">
 								<div class="mb-3 col">
-									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id" required>
+									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id"
+										required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱" required>
+									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱"
+										required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述" required>
+									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述"
+										required>
 								</div>
 							</div>
 							<button type="button" class="btn btn-primary">新增</button>
@@ -164,15 +169,16 @@
 					categoryName: $('#majorCategoryName').val()
 				};
 
+				$('#majorCategoryId').val('');
+				$('#majorCategoryName').val('');
+
 				axios.post('/ProFit/majorCategory/api', formData, {
 					headers: {
 						'Content-Type': 'application/json'
 					}
 				})
 					.then(res => {
-						console.log(res);
-						console.log(res.data);
-						$('#categoryModal').modal('hide'); // 關閉模態框
+						$('#staticBackdrop-insert').modal('hide'); // 關閉模態框
 						// 可以在這裡添加代碼來更新類別列表或顯示成功消息
 						alert('類別創建成功！');
 						// 如果有類別列表，可以重新加載
@@ -192,13 +198,21 @@
 			});
 
 
+			document.getElementById("searchBtn").addEventListener('click', function (e) {
+				const searchId = document.getElementById('id-majorCategoryId').value.trim();
+				searchCategories(searchId);
+			})
+
 			// 添加一個事件監聽器，使得在輸入框按下 Enter 鍵時也觸發查詢
 			document.getElementById('id-majorCategoryId').addEventListener('keyup', function (event) {
 				if (event.key === 'Enter') {
-					searchCategories();
+					const searchId = document.getElementById('id-majorCategoryId').value.trim();
+					searchCategories(searchId);
 				}
 			});
 
+			// 綁定新增major按鈕點擊事件
+			document.querySelector('#insertMajorForm .btn-primary').addEventListener('click', insertMajor);
 
 
 		});
@@ -218,9 +232,8 @@
 		}
 
 
-		// 根據id查詢類別的函數
-		function searchCategories() {
-			const searchId = document.getElementById('id-majorCategoryId').value.trim();
+		// 根據id查詢類別
+		function searchCategories(searchId) {
 
 			// 如果搜索 ID 為空，則加載所有類別
 			if (searchId === '') {
@@ -290,6 +303,7 @@
 								</table>
 								`;
 
+			document.getElementById('id-majorCategoryId').value = '';
 			return tableHtml;
 		}
 
@@ -326,7 +340,7 @@
 				categoryName: name
 			})
 				.then(response => {
-					console.log('類別更新成功:', response.data);
+					// console.log('類別更新成功:', response.data);
 					alert('更新類別成功。');
 					// 關閉模態框
 					// var myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop-edit'));
@@ -360,7 +374,7 @@
 					.catch(error => {
 						console.error('刪除類別失敗:', error);
 						// 顯示錯誤消息
-						showMessage('刪除類別失敗，請重試', 'error');
+						showMessage('刪除失敗，該類別下有專業，無法直接刪除', error);
 					});
 			}
 		}
@@ -368,22 +382,24 @@
 		// 顯示消息的輔助函數
 		function showMessage(message, type = 'info') {
 			// 創建一個 alert 元素
-			const alertDiv = document.createElement('div');
-			alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
-			alertDiv.role = 'alert';
-			alertDiv.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
+			// 		const alertDiv = document.createElement('div');
+			// 		alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+			// 		alertDiv.role = 'alert';
+			// 		alertDiv.innerHTML = `
+			//     ${message}
+			//     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			// `;
 
-			// 將 alert 添加到頁面
-			const container = document.querySelector('.container');
-			container.insertBefore(alertDiv, container.firstChild);
+			// 		// 將 alert 添加到頁面
+			// 		const container = document.querySelector('.container');
+			// 		container.insertBefore(alertDiv, container.firstChild);
 
-			// 3秒後自動關閉 alert
-			setTimeout(() => {
-				alertDiv.remove();
-			}, 3000);
+			// 		// 3秒後自動關閉 alert
+			// 		setTimeout(() => {
+			// 			alertDiv.remove();
+			// 		}, 3000);
+
+			window.alert(`${message}`);
 		}
 
 		// 顯示category下的所有Majors
@@ -391,40 +407,151 @@
 			// 顯示加載指示器
 			document.getElementById('majorsModalBody').innerHTML = '<p>加載中...</p>';
 
+			document.getElementById('insertMajorId').value = '';
+			document.getElementById('insertMajorName').value = '';
+			document.getElementById('insertMajorDesc').value = '';
 
 			// 顯示模態框
-			var majorsModal = new bootstrap.Modal(document.getElementById('majorsModal'));
-			majorsModal.show();
+			if (!$('#majorsModal').hasClass('show')) {
+				var majorsModal = new bootstrap.Modal(document.getElementById('majorsModal'));
+				majorsModal.show();
+			}
 
+			console.log(categoryId);
 			// 從服務器獲取專業列表
 			axios.get(`/ProFit/majorCategory/api/${categoryId}/majors`)
 				.then(response => {
 					const majors = response.data;
-					let majorsHtml = '<ul class="list-group container">';
+					let majorsHtml = '<ul id="majorList" class="list-group container">';
 
 					if (majors.length === 0) {
-						document.getElementById('majorsModalLabel').innerHTML = `類別專案管理`;
+						document.getElementById('majorsModalLabel').innerHTML = `類別: ${categoryId}`;
 						majorsHtml = '<p>該類別下沒有專業。</p>';
 					} else {
-						document.getElementById('majorsModalLabel').innerHTML = `類別: ${majors[0].categoryName}`;
+						document.getElementById('majorsModalLabel').innerHTML = `類別: ${majors[0].majorCategoryId}, ${majors[0].categoryName}`;
 						majorsHtml += `專業: `;
 						majors.forEach(major => {
 							majorsHtml += `<div class="row mb-1">`;
 							majorsHtml += `<li class="list-group-item col-2">${major.majorId}</li>`;
 							majorsHtml += `<li class="list-group-item col-8">${major.majorName}</li>`;
-							majorsHtml += `<button id="MajorDeleteBtn" class="btn btn-sm btn-danger col-2">刪除</button>`;
+							majorsHtml += `<button class="MajorDeleteBtn btn btn-sm btn-danger col-2" value="${major.majorId}">刪除</button>`;
 							majorsHtml += `</div>`;
 						});
 						majorsHtml += '</ul>';
 					}
-
 					document.getElementById('majorsModalBody').innerHTML = majorsHtml;
+
+					// 刪除major的按鈕監聽器
+					$('#majorList').click(function (e) {
+						console.log(e.target);
+						if (e.target.tagName == 'BUTTON') {
+							deleteMajor(e.target.value);
+						}
+					});
+
+
+					// 新增隱藏欄位,以便後續取用參數
+					if (document.getElementById('insertMajorCategoryId') != null) {
+						document.getElementById('insertMajorCategoryId').value = `${categoryId}`;
+					} else {
+						document.getElementById('insertMajorForm').firstElementChild.innerHTML += `<input type="hidden" id="insertMajorCategoryId" name="insertMajorCategoryId" value="${categoryId}" />`;
+					}
+
 				})
 				.catch(error => {
 					console.error('獲取專業列表失敗:', error);
 					document.getElementById('majorsModalBody').innerHTML = '<p>獲取專業列表失敗，請稍後再試。</p>';
 				});
 		}
+
+
+		// 新增major with CategoryId
+		function insertMajor() {
+			// 獲取表單數據
+			let majorId = document.getElementById('insertMajorId').value;
+			let majorName = document.getElementById('insertMajorName').value;
+			let majorDesc = document.getElementById('insertMajorDesc').value;
+			let majorCategoryId = document.getElementById('insertMajorCategoryId').value; // viewMajor()方法 中動態新增的 hidden 欄位
+
+			// 基本表單驗證
+			if (!majorId || !majorName || !majorCategoryId) {
+				alert('請填寫所有必要欄位');
+				return;
+			}
+
+			// 準備要發送的數據
+			const majorData = {
+				majorId: majorId,
+				majorName: majorName,
+				majorDescription: majorDesc,
+				majorCategoryId: majorCategoryId
+			};
+			// 發送 AJAX 請求
+			fetch('/ProFit/major/api', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(majorData)
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					return response.json();
+				})
+				.then(data => {
+					// console.log('Success:', data);
+					alert('專業新增成功');
+					
+					// 顯示模態框
+					$('#majorsModal').modal('hide');
+					viewMajors(majorCategoryId);
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+					alert('新增專業失敗，請稍後再試');
+				});
+		}
+
+		// 刪除Major
+		function deleteMajor(majorId) {
+			if (!confirm("確定要刪除該專業?")) {
+				return; // 如果用戶取消，直接返回
+			}
+
+			// 發送 AJAX 請求
+			fetch(`/ProFit/major/api/${majorId}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				}
+			})
+				.then(response => {
+					if (response.status === 204) {
+						// 成功刪除，但沒有返回內容
+						return null;
+					}
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+					return response.json(); // 如果有返回內容
+				})
+				.then(data => {
+					const majorCategoryId = document.getElementById('insertMajorCategoryId').value;
+						alert('專業已成功刪除');
+					// 關閉可能打開的模態框
+					$('#majorsModal').modal('hide');
+					// 重新加載專業列表
+					viewMajors(majorCategoryId);
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+					alert('新增刪除失敗，請稍後再試');
+				});
+
+		}
+
 
 	</script>
 </body>

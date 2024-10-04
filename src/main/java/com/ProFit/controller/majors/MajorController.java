@@ -38,26 +38,25 @@ public class MajorController {
 
 	// 頁面跳轉
 	@GetMapping("/")
-    public String listMajorPage() {
-        return "majorsVIEW/MajorMainPage";
-    }
+	public String listMajorPage() {
+		return "majorsVIEW/MajorMainPage";
+	}
 
-    @GetMapping("/new")
-    public String showNewForm() {
-        return "majorsVIEW/MajorForm";
-    }
+	@GetMapping("/new")
+	public String showNewForm() {
+		return "majorsVIEW/MajorForm";
+	}
 
-    @GetMapping("/edit")
-    public String showEditForm() {
-        return "majorsVIEW/MajorForm";
-    }
+	@GetMapping("/edit")
+	public String showEditForm() {
+		return "majorsVIEW/MajorForm";
+	}
 
-    @GetMapping("/view")
-    public String viewMajorPage() {
-        return "majorsVIEW/MajorView";
-    }
-	
-	
+	@GetMapping("/view")
+	public String viewMajorPage() {
+		return "majorsVIEW/MajorView";
+	}
+
 	// 列出所有專業
 	@GetMapping("/api/list")
 	@ResponseBody
@@ -102,29 +101,29 @@ public class MajorController {
 	}
 
 	// 更新專業
-    @PutMapping("/api/{id}")
-    @ResponseBody
-    public ResponseEntity<?> updateMajor(@PathVariable("id") Integer id, @RequestBody MajorBean major) {
-        major.setMajorId(id);
-        try {
-            MajorBean updatedMajor = majorService.updateMajor(major);
-            return ResponseEntity.ok(MajorDTO.fromEntity(updatedMajor));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("更新專業失敗：" + e.getMessage());
-        }
-    }
+	@PutMapping("/api/{id}")
+	@ResponseBody
+	public ResponseEntity<?> updateMajor(@PathVariable("id") Integer id, @RequestBody MajorBean major) {
+		major.setMajorId(id);
+		try {
+			MajorBean updatedMajor = majorService.updateMajor(major);
+			return ResponseEntity.ok(MajorDTO.fromEntity(updatedMajor));
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("更新專業失敗：" + e.getMessage());
+		}
+	}
 
 	// 刪除專業
-    @DeleteMapping("/api/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> deleteMajor(@PathVariable("id") Integer id) {
-        boolean deleted = majorService.deleteMajor(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+	@DeleteMapping("/api/{id}")
+	@ResponseBody
+	public ResponseEntity<Void> deleteMajor(@PathVariable("id") Integer id) {
+		boolean deleted = majorService.deleteMajor(id);
+		if (deleted) {
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 
 	// 查看專業詳情
 //	@GetMapping("/view")
@@ -134,29 +133,32 @@ public class MajorController {
 //		return "/majorsVIEW/MajorView";
 //	}
 
-    // 根據MajorName 模糊搜尋Majors
-    @GetMapping("/api/search")
-    @ResponseBody
-    public ResponseEntity<List<MajorDTO>> searchMajors(@RequestParam("name") String name) {
-        List<MajorDTO> majors = majorService.findMajorsByMajorName(name);
-        if (majors.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(majors);
-    }
-    
+	// 根據MajorName、ID 多條件查詢
+	@GetMapping("/api/search")
+	@ResponseBody
+	public ResponseEntity<List<MajorDTO>> searchMajors(@RequestParam(required = false) Integer id,
+			@RequestParam(required = false) String name) {
+
+		List<MajorDTO> majors = majorService.searchMajors(id, name);
+
+		if (majors == null || majors.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(majors);
+	}
+
 	// 列出特定類別下的所有專業
 	@GetMapping("/api/category/{categoryId}")
 	@ResponseBody
-    public ResponseEntity<?> listMajorsByCategory(@PathVariable("categoryId") Integer categoryId) {
-        if (majorCategoryService.findMajorCategoryById(categoryId) == null) {
-            return ResponseEntity.badRequest().body("無此id之專業類別");
-        }
-        try {
-            List<MajorDTO> majors = majorService.findMajorsByCategoryId(categoryId);
-            return ResponseEntity.ok(majors);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("獲取專業列表失敗：" + e.getMessage());
-        }
-    }
+	public ResponseEntity<?> listMajorsByCategory(@PathVariable("categoryId") Integer categoryId) {
+		if (majorCategoryService.findMajorCategoryById(categoryId) == null) {
+			return ResponseEntity.badRequest().body("無此id之專業類別");
+		}
+		try {
+			List<MajorDTO> majors = majorService.findMajorsByCategoryId(categoryId);
+			return ResponseEntity.ok(majors);
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().body("獲取專業列表失敗：" + e.getMessage());
+		}
+	}
 }
