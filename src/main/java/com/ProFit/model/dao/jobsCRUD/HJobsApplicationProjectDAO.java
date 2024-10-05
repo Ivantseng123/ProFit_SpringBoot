@@ -1,116 +1,87 @@
-//package com.ProFit.dao.jobsCRUD;
+//package com.ProFit.model.dao.jobsCRUD;
+//
+//
+//import com.ProFit.model.bean.jobsBean.JobsApplicationProject;
+//import jakarta.persistence.EntityManager;
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
+//import org.hibernate.Transaction;
+//import org.hibernate.query.Query;
+//import org.springframework.beans.BeanUtils;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Repository;
+//import org.springframework.transaction.annotation.Transactional;
 //
 //import java.util.List;
 //
-//import com.ProFit.bean.JobsApplicationProject;
-//import org.hibernate.Session;
-//import org.hibernate.Transaction;
-//import org.hibernate.query.Query;
-//
+//@Repository
+//@Transactional
 //public class HJobsApplicationProjectDAO implements IHJobsApplicationProjectDAO {
 //
-//    // session設置
-//    private Session session;
+//	//sessio設置
+////		@Autowired
+////		private SessionFactory factory;
 //
-//    public HJobsApplicationProjectDAO(Session session) {
-//        this.session = session;
-//    }
+//	@Autowired
+//	private EntityManager entityManager;
 //
 //    // 新增
 //    @Override
 //    public JobsApplicationProject save(JobsApplicationProject jobsApplicationProject) {
-////        session.persist(jobsApplicationProject);
-////        return jobsApplicationProject;
-//    	Transaction t = session.beginTransaction();
-//        try {
-//            session.persist(jobsApplicationProject);
-//            t.commit();
-//            return jobsApplicationProject;
-//        } catch (Exception e) {
-//            if (t != null) {
-//                t.rollback();
-//            }
-//            e.printStackTrace();
-//            return null;
+//		Session session = entityManager.unwrap(Session.class);
+//		session.persist(jobsApplicationProject);
+////		session.flush(); //刷新
+//		return jobsApplicationProject;
 //        }
-//    }
 //
-//    
-//    
-//    
+//
+//
+//
+//
 //    // 刪除
 //    @Override
 //    public boolean delete(Integer jobsApplicationProjectId) {
-//        JobsApplicationProject jobsApplicationProject = session.get(JobsApplicationProject.class, jobsApplicationProjectId);
-//        if (jobsApplicationProject != null) {
-//			Transaction t = session.beginTransaction();
-//	        try {
-//	        	session.remove(jobsApplicationProject);
-//	            return true;
-//	        } catch (Exception e) {
-//	            if (t != null) {
-//	                t.rollback();
-//	            }
-//	            e.printStackTrace();
-//	            return false;
-//	        }
+//		Session session = entityManager.unwrap(Session.class);
+//    	JobsApplicationProject resultBean = session.get(JobsApplicationProject.class, jobsApplicationProjectId);
+//		if (resultBean != null) {
+//			session.remove(resultBean);
+//			session.flush(); //刷新
+//			return true;
 //		}
 //		return false;
 //    }
-//    
-//    
-//    
+//
+//
+//
 //
 //    // 修改
 //    @Override
 //    public boolean update(JobsApplicationProject jobsApplicationProject) {
-//        JobsApplicationProject oldJobsApplicationProject = session.get(JobsApplicationProject.class, jobsApplicationProject.getJobsApplicationProjectId());
+//		Session session = entityManager.unwrap(Session.class);
+//    	JobsApplicationProject originalJobs3 = session.get(JobsApplicationProject.class, jobsApplicationProject.getJobsApplicationProjectId());
 //
-//        if (oldJobsApplicationProject == null) {
-//            System.out.println("JobsApplicationProject with ID " + jobsApplicationProject.getJobsApplicationProjectId() + " does not exist.");
-//            return false;
+//		if (originalJobs3 == null) {
+//			return false;
+//		}
+//		BeanUtils.copyProperties(jobsApplicationProject, originalJobs3, "jobsApplicationProjectId");//copyProperties將jobs複製到originalJobs
+//		session.merge(originalJobs3);
+//		session.flush();
+//		return true;
 //        }
 //
-//        // 對比屬性值，並進行更新操作
-//        oldJobsApplicationProject.setJobsApplication(jobsApplicationProject.getJobsApplication() == null
-//                ? oldJobsApplicationProject.getJobsApplication()
-//                : jobsApplicationProject.getJobsApplication());
-//
-//        oldJobsApplicationProject.setJobsApplicationStatus(jobsApplicationProject.getJobsApplicationStatus() == null
-//                ? oldJobsApplicationProject.getJobsApplicationStatus()
-//                : jobsApplicationProject.getJobsApplicationStatus());
-//
-//        oldJobsApplicationProject.setJobsProject(jobsApplicationProject.getJobsProject() == null || jobsApplicationProject.getJobsProject().isEmpty()
-//                ? oldJobsApplicationProject.getJobsProject()
-//                : jobsApplicationProject.getJobsProject());
-//
-//        oldJobsApplicationProject.setJobsAmount(jobsApplicationProject.getJobsAmount() == null
-//                ? oldJobsApplicationProject.getJobsAmount()
-//                : jobsApplicationProject.getJobsAmount());
-//
-//        Transaction t = session.beginTransaction();
-//        try {
-//    		session.merge(oldJobsApplicationProject);
-//            t.commit();
-//            return true;
-//        } catch (Exception e) {
-//            if (t != null) {
-//                t.rollback();
-//            }
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
 //
 //    // id查詢
 //    @Override
 //    public JobsApplicationProject findById(Integer jobsApplicationProjectId) {
-//        return session.get(JobsApplicationProject.class, jobsApplicationProjectId);
+//		Session session = entityManager.unwrap(Session.class);
+//
+//		return session.get(JobsApplicationProject.class, jobsApplicationProjectId);
 //    }
 //
 //    // 查詢全部
 //    @Override
 //    public List<JobsApplicationProject> findAll() {
+//		Session session = entityManager.unwrap(Session.class);
 //        Query<JobsApplicationProject> query = session.createQuery("from JobsApplicationProject", JobsApplicationProject.class);
 //        return query.list();
 //    }
