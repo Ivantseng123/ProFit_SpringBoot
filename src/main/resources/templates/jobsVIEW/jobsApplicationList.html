@@ -11,28 +11,26 @@
 <div layout:fragment="content">
     <div class="table-container" id="search-results">
 
-        <table id="jobsList" class="display table table-striped table-hover nowrap">
+        <table id="jobsApplicationList" class="display table table-striped table-hover nowrap">
             <thead>
             <tr>
                 <th>編號</th>
-                <th>會員ID</th>
-                <th>標題</th>
-                <th>刊登日期</th>
-                <th>截止日期</th>
-                <th>狀態</th>
-                <th>職缺數量</th>
+                <th>刊登方</th>
+                <th>應徵方</th>
+                <th>申請日期</th>
+                <th>職缺申請狀態</th>
+                <th>申請文件</th>
             </tr>
             </thead>
             <tbody id="table-body">
-            <th:block th:each="job : ${jobsList}">
+            <th:block th:each="jobApplication : ${jobsApplicationList}">
                 <tr>
-                    <td th:text="${job.jobsId}"></td>
-                    <td th:text="${job.users.userName}"></td>
-                    <td th:text="${job.jobsTitle}"></td>
-                    <td th:text="${job.jobsPostingDate}"></td>
-                    <td th:text="${job.jobsApplicationDeadline}"></td>
-                    <td th:text="${job.jobsStatus}"></td>
-                    <td th:text="${job.jobsNumberOfOpenings}"></td>
+                    <td th:text="${jobApplication.jobsApplicationId}"></td>
+                    <td th:text="${jobApplication.users.poster}"></td>
+                    <td th:text="${jobApplication.users.applicant}"></td>
+                    <td th:text="${jobApplication.jobsApplicationDate}"></td>
+                    <td th:text="${jobApplication.jobsApplicationStatus}"></td>
+                    <td th:text="${jobApplication.jobsApplicationContract}"></td>
                     <td></td>
                 </tr>
             </th:block>
@@ -42,27 +40,27 @@
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
     $(document).ready(function (){
-        const baseUrl = /*[[@{/jobs}]]*/'';
+        const baseUrl = /*[[@{/jobsApplication}]]*/'';
         console.log(baseUrl);
-        $("#jobsList").DataTable({//
+        $("#jobsApplicationList").DataTable({//
             order: [0, 'asc'],
            columns:[{
-               data: 'jobsId',
+               data: 'jobsApplicationId',
                className: 'all'
            },{
-               data: 'userName',
+               data: 'poster',
                className: 'all'
            },{
-               data: 'jobsTitle',
+               data: 'applicant',
                className: 'all'
            },{
-               data: 'jobsPostingDate',
+               data: 'jobsApplicationDate',
                className: 'all'
            },{
-               data: 'jobsApplicationDeadline',
+               data: 'jobsApplicationContract',
                className: 'all'
            },{
-               data: 'jobsStatus',
+               data: 'jobsApplicationStatus',
                className: 'all',
                render: function (data, type, row) {
                    let result = '';
@@ -71,17 +69,14 @@
                            result = '刊登中';
                            break;
                        case '1':
-                           result = '已下架';
+                           result = '已投遞受理';
                            break;
                        case '2':
-                           result = '不明';
+                           result = '尚未審核';
                            break;
                    }
                    return result;
                }
-           },{
-               data: 'jobsNumberOfOpenings',
-               className: 'all'
            },{
                data: 'actions',
                defaultContent: '',
@@ -91,10 +86,10 @@
                     let result = '';
 
                     //這裡的class就是bootstrap,就幾乎不用style
-                    result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsId +'"><i class="fas fa-search"></i>'
+                    result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i>'
                    console.log(result);
-                    result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsId +'"><i class="fas fa-pen"></i>\''
-                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsId +'"><i class="fas fa-trash"></i>\''
+                    result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i>\''
+                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i>\''
                    return result;
                }
            }]
