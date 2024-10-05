@@ -15,8 +15,6 @@ import java.util.Date;
 import java.util.List;
 
 
-
-
 @Controller
 @RequestMapping(JobsController.URL)
 public class JobsController {
