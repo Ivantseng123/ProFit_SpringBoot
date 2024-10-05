@@ -33,12 +33,11 @@ $('#searchBtn').click(function () {
         	                <table>
         	                    <thead>
         	                        <tr>
-        	                            <th>ID</th>
+        	                            <th>訂單編號</th>
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
-        	                            <th>課程資訊</th>
-										<th>章節數量</th>
-										<th>章節操作</th>
+        	                            <th>訂單備註</th>
+										<th>訂購者名稱</th>
         	                            <th>價格</th>
         	                            <th>狀態</th>
         	                            <th>操作</th>
@@ -57,8 +56,7 @@ $('#searchBtn').click(function () {
         	                        <td class="result-courseId" name="courseId">${response.courseId}</td>
         	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
 									<td>${response.courseCreaterName}</td>
-        	                        <td>${response.courseInformation}</td>
-									<td>${response.courseModuleNumber}</td>
+        	                        <td>${response.courseOrderRemark}</td>
 									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
 									<td>${response.coursePrice}</td>
         	                        <td><span class="status">${response.courseStatus}</span></td>
@@ -111,11 +109,11 @@ $(document).on('click', '.delete', function () {
 		type: 'get',
 		success: function (response) {
 			if (response) {
-				window.alert('課程刪除成功');
-				console.log('新增的课程信息:', response);
+				window.alert('課程訂單刪除成功');
+				console.log('刪除的课程信息:', response);
 				window.location.href = contextPath + '/courses?clickButton=true';
 			} else {
-				window.alert('課程刪除失敗');
+				window.alert('課程訂單刪除失敗');
 			}
 		},
 		error: function (error) {

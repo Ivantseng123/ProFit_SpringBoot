@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 
 
 @Configuration
-@PropertySource("firebaseAPIkey.properties")
+@PropertySource("classpath:firebaseAPIkey.properties")
 public class FirebaseAPI {
 	
 	@Value("${firbaseAPIkey}")

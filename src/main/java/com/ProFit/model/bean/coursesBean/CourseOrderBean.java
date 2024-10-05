@@ -20,18 +20,18 @@ public class CourseOrderBean implements java.io.Serializable {
 	@Id @Column(name="course_order_id")
 	private String courseOrderId;
 	
-	@Column(name="course_id",insertable = false,updatable = false)
+	@Column(name="course_id")
 	private String courseId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="course_id")
+	@JoinColumn(name="course_id",insertable = false,updatable = false)
 	private CourseBean course;
 	
-	@Column(name="student_id",insertable = false,updatable = false)
+	@Column(name="student_id")
 	private String studentId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="student_id")
+	@JoinColumn(name="student_id",insertable = false,updatable = false)
 	private Users student;
 	
 	@Column(name="course_order_price")
