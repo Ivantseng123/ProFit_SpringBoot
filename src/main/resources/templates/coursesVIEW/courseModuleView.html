@@ -10,8 +10,11 @@
 
 <body>
 	<div th:replace="~{model/layout-static}"></div>
-	<div class="container pt-5">
-
+	<div class="container pt-2">
+		<a class="btn btn-primary" role="button" aria-disabled="true"
+		   th:href="@{/courses}">返回課程列表</a>
+	</div>
+	<div class="container pt-3">
 		<!-- 主要內容區域 -->
 		<!-- 只是一個範例，裡面布局可以更改 -->
 		<div class="course-header">
@@ -37,14 +40,14 @@
 				<tbody id="table-body">
 					<th:block th:each=" courseModule,courseModuleStat : ${courseModuleDTOList}">
 						<tr>
-							<td th:text="${courseModuleStat.index+1}"></td>
+							<td class="sort" th:text="${courseModuleStat.index+1}" th:data-courseModuleId="${courseModule.courseModuleId}"></td>
 							<td th:text="${courseModule.courseModuleName}"></td>
 							<td th:text="${courseModule.moduleLessonsId.size()}"></td>
 							<td>
 								<a href="#"><button class="viewLesson btn btn-info">查看</button></a>
 							</td>
 							<td>
-								<button class="edit btn btn-primary">編輯</button>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="edit btn btn-primary">編輯</button>
 								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="delete btn btn-danger">刪除</button>
 							</td>
 						</tr>
