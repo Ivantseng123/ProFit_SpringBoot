@@ -21,7 +21,6 @@ import com.ProFit.model.bean.usersBean.Users;
 public class Jobs implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;//序列化，就像是身分證
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "jobs_id")
