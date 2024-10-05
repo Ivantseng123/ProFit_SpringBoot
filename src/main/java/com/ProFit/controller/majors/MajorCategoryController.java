@@ -21,7 +21,7 @@ public class MajorCategoryController {
 	private MajorCategoryService majorCategoryService;
 
 	// 跳轉到主頁面
-	@GetMapping("/list")
+	@GetMapping("/")
 	public String listMajorCategories() {
 		return "majorsVIEW/MajorCategoryMainPage"; // 返回主頁面的視圖名稱
 	}
