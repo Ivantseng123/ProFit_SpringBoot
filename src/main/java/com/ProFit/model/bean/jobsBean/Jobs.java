@@ -21,7 +21,6 @@ import com.ProFit.model.bean.usersBean.Users;
 public class Jobs implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;//序列化，就像是身分證
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "jobs_id")
@@ -30,8 +29,7 @@ public class Jobs implements java.io.Serializable{
     @ManyToOne(fetch = FetchType.EAGER)//FK，對User表，一個公司（user）可以有po很多職缺
     @JoinColumn(name= "jobs_user_id")
     private Users users;//請跟我有關聯的表格組員修改他們的關係語句
-    
-        
+
 //    @ManyToOne(fetch = FetchType.LAZY)//改FK，對major表，一個技能可以對應很多職缺
 //    @Column(name = "jobs_required_skills")
 //    private String jobsRequiredSkills;

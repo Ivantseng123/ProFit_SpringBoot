@@ -1,140 +1,139 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{jobsVIEW/layout-static}">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div layout:fragment="content">-->
-<!--    <div class="table-container" id="search-results">-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{jobsVIEW/model}"> <!-- 使用 model 作為模板 -->
 
-<!--        <table id="jobsList" class="display table table-striped table-hover nowrap">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>編號</th>-->
-<!--                <th>會員</th>-->
-<!--                <th>標題</th>-->
-<!--                <th>刊登日期</th>-->
-<!--                <th>截止日期</th>-->
-<!--                <th>狀態</th>-->
-<!--                <th>職缺數量</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tbody id="table-body">-->
-<!--            <th:block th:each="job : ${jobsList}">-->
-<!--                <tr>-->
-<!--                    <td th:text="${job.jobsId}"></td>-->
-<!--                    <td th:text="${job.users.userName}"></td>-->
-<!--                    <td th:text="${job.jobsTitle}"></td>-->
-<!--                    <td th:text="${job.jobsPostingDate}"></td>-->
-<!--                    <td th:text="${job.jobsApplicationDeadline}"></td>-->
-<!--                    <td th:text="${job.jobsStatus}"></td>-->
-<!--                    <td th:text="${job.jobsNumberOfOpenings}"></td>-->
-<!--                    <td></td>-->
-<!--                </tr>-->
-<!--            </th:block>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<script th:inline="javascript" layout:fragment="script" type="text/javascript">-->
-<!--    $(document).ready(function (){-->
-<!--        const baseUrl = /*[[@{/jobs}]]*/'';-->
-<!--        console.log(baseUrl);-->
-<!--        $("#jobsList").DataTable({//-->
-<!--            order: [0, 'asc'],-->
-<!--           columns:[{-->
-<!--               data: 'jobsId',-->
-<!--               className: 'all'-->
-<!--           },{-->
-<!--               data: 'userName',-->
-<!--               className: 'all'-->
-<!--           },{-->
-<!--               data: 'jobsTitle',-->
-<!--               className: 'all'-->
-<!--           },{-->
-<!--               data: 'jobsPostingDate',-->
-<!--               className: 'all'-->
-<!--           },{-->
-<!--               data: 'jobsApplicationDeadline',-->
-<!--               className: 'all'-->
-<!--           },{-->
-<!--               data: 'jobsStatus',-->
-<!--               className: 'all',-->
-<!--               render: function (data, type, row) {-->
-<!--                   let result = '';-->
-<!--                   switch (data) {-->
-<!--                       case '0':-->
-<!--                           result = '刊登中';-->
-<!--                           break;-->
-<!--                       case '1':-->
-<!--                           result = '已下架';-->
-<!--                           break;-->
-<!--                       case '2':-->
-<!--                           result = '電子雞';-->
-<!--                           break;-->
-<!--                   }-->
-<!--                   return result;-->
-<!--               }-->
-<!--           },{-->
-<!--               data: 'jobsNumberOfOpenings',-->
-<!--               className: 'all'-->
-<!--           },{-->
-<!--               data: 'actions',-->
-<!--               defaultContent: '',-->
-<!--               orderable: false,-->
-<!--               searchable: false,-->
-<!--               render : function (data, type, row) {-->
-<!--                    let result = '';-->
+<head>
+    <title>查看職缺詳情 - ProFit</title>
+</head>
 
-<!--                    //這裡的class就是bootstrap,就幾乎不用style-->
-<!--                    result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsId +'"><i class="fas fa-search"></i>'-->
-<!--                   console.log(result);-->
-<!--                    result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsId +'"><i class="fas fa-pen"></i>\''-->
-<!--                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsId +'"><i class="fas fa-trash"></i>\''-->
-<!--                   return result;-->
-<!--               }-->
-<!--           }]-->
-<!--       })-->
+<body>
+<div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
+    <h1 class="mt-4">職缺詳情</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/jobs">職缺管理</a></li>
+        <li class="breadcrumb-item active">查看職缺詳情</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- 職缺表單 -->
+            <form id="jobForm">
+                <!-- 職缺 ID -->
+                <input type="hidden" id="jobsId" name="jobsId" th:value="${job.jobsId}" />
 
-<!--        $('.deleteBtn').click(function (e){-->
-<!--            e.preventDefault();-->
-<!--            let url = $(this).attr('href');-->
-<!--            Swal.fire({-->
-<!--                icon: "question",-->
-<!--                title: "確認刪除？",-->
-<!--                showCancelButton: true,-->
-<!--                confirmButtonText: "確認",-->
-<!--            }).then((result) => {-->
-<!--                if (result.isConfirmed) {-->
+                <!-- 職缺標題 -->
+                <div class="mb-3">
+                    <label for="jobsTitle" class="form-label">職缺標題</label>
+                    <input type="text" class="form-control" id="jobsTitle" name="jobsTitle" th:value="${job.jobsTitle}" readonly />
+                </div>
 
-<!--                    //fetch開始是ajax-->
-<!--                    fetch(url, {-->
-<!--                        method: 'DELETE'-->
-<!--                    })-->
-<!--                    .then(response => {-->
-<!--                        if (!response.ok) {-->
-<!--                            throw new Error('Network response was not ok');-->
-<!--                        } else {-->
-<!--                            Swal.fire({//Swal.fire呼叫api的寫法-->
-<!--                                icon: "success",-->
-<!--                                title: "刪除成功",-->
-<!--                                showConfirmButton: true,-->
-<!--                            }).then(() => {-->
-<!--                                window.location.reload();-->
-<!--                            });-->
-<!--                        }-->
-<!--                    })-->
-<!--                    .catch(error => {-->
-<!--                        console.error('There was a problem with the fetch operation:', error);-->
-<!--                    });-->
-<!--                }-->
-<!--            });-->
-<!--        })-->
-<!--    });-->
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
+                <!-- 刊登方 ID -->
+                <div class="mb-3">
+                    <label for="jobsUserId" class="form-label">發布者 ID</label>
+                    <input type="text" class="form-control" id="jobsUserId" name="jobsUserId" th:value="${job.users.userId}" readonly />
+                </div>
+
+                <!-- 所需技能 -->
+                <div class="mb-3">
+                    <label for="jobsRequiredSkills" class="form-label">所需技能</label>
+                    <input type="text" class="form-control" id="jobsRequiredSkills" name="jobsRequiredSkills" th:value="${job.jobsRequiredSkills}" readonly />
+                </div>
+
+                <!-- 發布日期 -->
+                <div class="mb-3">
+                    <label for="jobsPostingDate" class="form-label">發布日期</label>
+                    <input type="date" class="form-control" id="jobsPostingDate" name="jobsPostingDate" th:value="${job.jobsPostingDate}" readonly />
+                </div>
+
+                <!-- 申請截止日期 -->
+                <div class="mb-3">
+                    <label for="jobsApplicationDeadline" class="form-label">申請截止日期</label>
+                    <input type="date" class="form-control" id="jobsApplicationDeadline" name="jobsApplicationDeadline" th:value="${job.jobsApplicationDeadline}" readonly />
+                </div>
+
+                <!-- 職缺描述 -->
+                <div class="mb-3">
+                    <label for="jobsDescription" class="form-label">職缺描述</label>
+                    <textarea class="form-control" id="jobsDescription" name="jobsDescription" rows="3" readonly th:text="${job.jobsDescription}"></textarea>
+                </div>
+
+                <!-- 工作地點 -->
+                <div class="mb-3">
+                    <label for="jobsLocation" class="form-label">工作地點</label>
+                    <input type="text" class="form-control" id="jobsLocation" name="jobsLocation" th:value="${job.jobsLocation}" readonly />
+                </div>
+
+                <!-- 職缺狀態 -->
+                <div class="mb-3">
+                    <label for="jobsStatus" class="form-label">職缺狀態</label>
+                    <input type="text" class="form-control" id="jobsStatus" name="jobsStatus" th:value="${job.jobsStatus == 0 ? '開放中' : '已關閉'}" readonly />
+                </div>
+
+                <!-- 最高薪資 -->
+                <div class="mb-3">
+                    <label for="jobsMaxSalary" class="form-label">最高薪資</label>
+                    <input type="number" class="form-control" id="jobsMaxSalary" name="jobsMaxSalary" th:value="${job.jobsMaxSalary}" readonly />
+                </div>
+
+                <!-- 最低薪資 -->
+                <div class="mb-3">
+                    <label for="jobsMinSalary" class="form-label">最低薪資</label>
+                    <input type="number" class="form-control" id="jobsMinSalary" name="jobsMinSalary" th:value="${job.jobsMinSalary}" readonly />
+                </div>
+
+                <!-- 工作時間 -->
+                <div class="mb-3">
+                    <label for="jobsWorktime" class="form-label">工作時間</label>
+                    <input type="text" class="form-control" id="jobsWorktime" name="jobsWorktime" th:value="${job.jobsWorktime}" readonly />
+                </div>
+
+                <!-- 開放職位數 -->
+                <div class="mb-3">
+                    <label for="jobsNumberOfOpenings" class="form-label">開放職位數</label>
+                    <input type="number" class="form-control" id="jobsNumberOfOpenings" name="jobsNumberOfOpenings" th:value="${job.jobsNumberOfOpenings}" readonly />
+                </div>
+
+                <!-- 返回按鈕 -->
+                <a href="/jobs" class="btn btn-secondary">返回</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 這裡添加從後端獲取數據並填充到頁面的 JavaScript 代碼
+    document.addEventListener('DOMContentLoaded', function() {
+        // 假設職缺 ID 存儲在 URL 參數中
+        const jobId = new URLSearchParams(window.location.search).get('id');
+
+        // 發送請求到後端 API
+        fetch(`/api/jobs/${jobId}`)
+            .then(response => response.json())
+            .then(data => {
+                // 找值到頁面
+                document.getElementById('jobsId').textContent = data.jobsId;
+                document.getElementById('users').textContent = data.users;
+                document.getElementById('jobsTitle').textContent = data.jobsTitle;
+                document.getElementById('jobsPostingDate').textContent = data.jobsPostingDate;
+                document.getElementById('jobsApplicationDeadline').textContent = data.jobsApplicationDeadline;
+                document.getElementById('jobsDescription').textContent = data.jobsDescription;
+                document.getElementById('jobsLocation').textContent = data.jobsLocation;
+                document.getElementById('jobsRequiredSkills').textContent = data.jobsRequiredSkills;
+                document.getElementById('jobsStatus').textContent = data.jobsStatus;
+                document.getElementById('jobsMaxSalary').textContent = data.jobsMaxSalary;
+                document.getElementById('jobsMinSalary').textContent = data.jobsMinSalary;
+                document.getElementById('jobsWorktime').textContent = data.jobsWorktime;
+                document.getElementById('jobsNumberOfOpenings').textContent = data.jobsNumberOfOpenings;
+            })
+            .catch(error => console.error('獲取職缺數據時出錯:', error));
+    })
+
+    function goBack() {
+        window.history.back();
+    }
+
+</script>
+
+</body>
+</html>
