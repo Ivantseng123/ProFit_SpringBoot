@@ -92,7 +92,7 @@ public class EmpApplService implements IEmpApplService {
 
 		if (optional.isPresent()) {
 			Employer_application empAppl = optional.get();
-			empAppl.setApplicationCheck(0);
+			empAppl.setApplicationCheck(2);
 			empApplRepository.save(empAppl);
 
 			return true;
