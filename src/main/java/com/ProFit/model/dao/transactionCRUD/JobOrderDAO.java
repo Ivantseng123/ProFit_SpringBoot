@@ -35,7 +35,6 @@ public class JobOrderDAO {
     public boolean insertOrder(JobOrderBean order) {
         try {
             order.setJobOrdersId(UUID.randomUUID().toString()); 
-            order.setJobOrderDate(new Timestamp(System.currentTimeMillis()));
             getCurrentSession().persist(order);
             return true;
         } catch (Exception e) {

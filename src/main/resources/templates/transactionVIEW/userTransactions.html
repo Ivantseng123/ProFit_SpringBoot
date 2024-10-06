@@ -4,321 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用戶交易管理</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/model.css}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- 引入 jQuery -->
 </head>
 <body>
     <!-- 頁面頭部和側邊欄 -->
     <div th:replace="~{model/layout-static}"></div>
+
+    <!-- 主內容區域 -->
     <div class="container pt-5">
-        <!-- 主內容區域 -->
-        <div class="container pt-5">
-            <main>
-                <div class="course-header">
-                    <h2>用戶交易管理</h2>
+        <div class="course-header text-center">
+            <h2>用戶交易管理</h2>
+        </div>
+
+        <!-- 查詢表單 -->
+        <div class="dashboard-header">
+            <form id="searchForm">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="start_date">開始日期:</label>
+                        <input type="datetime-local" id="start_date" name="startDate" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="end_date">結束日期:</label>
+                        <input type="datetime-local" id="end_date" name="endDate" class="form-control">
+                    </div>
                 </div>
 
-                <!-- 查詢表單 -->
-                <div class="dashboard-header">
-                    <form id="searchForm">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="start_date">開始日期:</label>
-                                <input type="datetime-local" id="start_date" name="startDate" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="end_date">結束日期:</label>
-                                <input type="datetime-local" id="end_date" name="endDate" class="form-control">
-                            </div>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="user_id">用戶ID:</label>
+                        <input type="text" id="user_id" name="userId" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="transaction_type">交易類型:</label>
+                        <select id="transaction_type" name="transactionType" class="form-select">
+                            <option value="">所有</option>
+                            <option value="deposit">存入</option>
+                            <option value="withdrawal">取出</option>
+                            <option value="payment">付款</option>
+                            <option value="refund">退款</option>
+                        </select>
+                    </div>
+                </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="user_id">用戶ID:</label>
-                                <input type="text" id="user_id" name="userId" class="form-control">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="transaction_type">交易類型:</label>
-                                <select id="transaction_type" name="transactionType" class="form-select">
-                                    <option value="">所有</option>
-                                    <option value="deposit">存入</option>
-                                    <option value="withdrawal">取出</option>
-                                    <option value="payment">付款</option>
-                                    <option value="refund">退款</option>
-                                </select>
-                            </div>
-                        </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="transaction_status">交易狀態:</label>
+                        <select id="transaction_status" name="transactionStatus" class="form-select">
+                            <option value="">所有</option>
+                            <option value="pending">待處理</option>
+                            <option value="completed">已完成</option>
+                            <option value="failed">失敗</option>
+                        </select>
+                    </div>
+                </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="transaction_status">交易狀態:</label>
-                                <select id="transaction_status" name="transactionStatus" class="form-select">
-                                    <option value="">所有</option>
-                                    <option value="pending">待處理</option>
-                                    <option value="completed">已完成</option>
-                                    <option value="failed">失敗</option>
-                                </select>
-                            </div>
-                        </div>
+                <div class="row mb-3 text-center">
+                    <div class="col-md-12">
+                        <button type="button" id="searchBtn" class="btn btn-primary">查詢</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-12 text-center">
-                                <button type="button" id="searchBtn" class="btn btn-primary">查詢</button>
-                            </div>
+        <!-- 顯示後端錯誤信息 -->
+        <div id="errorContainer" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+        <!-- 新增交易按鈕 -->
+        <div class="text-center">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">新增交易</button>
+        </div>
+
+        <!-- 新增交易模態框 -->
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="addTransactionForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">新增交易</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            用戶ID: <input type="text" id="addUserId" name="userId" required class="form-control"><br>
+                            交易類型: 
+                            <select id="addTransactionType" name="transactionType" required class="form-select">
+                                <option value="deposit">存入</option>
+                                <option value="withdrawal">取出</option>
+                                <option value="payment">付款</option>
+                                <option value="refund">退款</option>
+                            </select><br>
+                            金額: <input type="number" id="addAmount" name="transactionAmount" required class="form-control" min="1"><br>
+                            交易狀態: 
+                            <select id="addTransactionStatus" name="transactionStatus" required class="form-select">
+                                <option value="pending">待處理</option>
+                                <option value="completed">已完成</option>
+                                <option value="failed">失敗</option>
+                            </select><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" id="addTransactionBtn" class="btn btn-primary">新增</button>
                         </div>
                     </form>
                 </div>
-
-                <!-- 顯示後端錯誤信息 -->
-                <div id="errorContainer" class="alert alert-danger" role="alert" style="display: none;"></div>
-
-                <!-- 新增交易按鈕 -->
-                <div class="text-center">
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">新增交易</button>
-                </div>
-
-                <!-- 新增交易模態框 -->
-                <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form id="addTransactionForm" onsubmit="return false;">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addModalLabel">新增交易</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    用戶ID: <input type="text" id="addUserId" name="userId" required class="form-control"><br>
-                                    交易類型: 
-                                    <select id="addTransactionType" name="transactionType" required class="form-select">
-                                        <option value="deposit">存入</option>
-                                        <option value="withdrawal">取出</option>
-                                        <option value="payment">付款</option>
-                                        <option value="refund">退款</option>
-                                    </select><br>
-                                    金額: <input type="number" id="addAmount" name="transactionAmount" required class="form-control" min="1"><br>
-                                    交易狀態: 
-                                    <select id="addTransactionStatus" name="transactionStatus" required class="form-select">
-                                        <option value="pending">待處理</option>
-                                        <option value="completed">已完成</option>
-                                        <option value="failed">失敗</option>
-                                    </select><br>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                    <button type="button" id="addTransactionBtn" class="btn btn-primary">新增</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 更新交易模態框 -->
-                <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <form id="updateTransactionForm" onsubmit="return false;">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="updateModalLabel">更新交易</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <input type="hidden" name="transactionId" id="updateTransactionId"> 
-                                    用戶ID: <input type="text" id="updateUserId" name="userId" required class="form-control"><br>
-                                    交易類型: 
-                                    <select id="updateTransactionType" name="transactionType" required class="form-select">
-                                        <option value="deposit">存入</option>
-                                        <option value="withdrawal">取出</option>
-                                        <option value="payment">付款</option>
-                                        <option value="refund">退款</option>
-                                    </select><br>
-                                    金額: <input type="number" id="updateAmount" name="transactionAmount" required class="form-control" min="1"><br>
-                                    交易狀態: 
-                                    <select id="updateTransactionStatus" name="transactionStatus" required class="form-select">
-                                        <option value="pending">待處理</option>
-                                        <option value="completed">已完成</option>
-                                        <option value="failed">失敗</option>
-                                    </select><br>
-                                    創建時間: <input type="text" id="updateCreatedAt" name="createdAt" class="form-control" readonly><br>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                                    <button type="button" id="updateTransactionBtn" class="btn btn-primary">更新</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 交易記錄表格 -->
-                <div class="table-container">
-                    <table id="transactionsTable" class="table table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>交易ID</th>
-                                <th>用戶ID</th>
-                                <th>交易類型</th>
-                                <th>金額</th>
-                                <th>交易狀態</th>
-                                <th>創建時間</th>
-                                <th>完成時間</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactionsTableBody">
-                            <!-- 資料將由 AJAX 動態填充 -->
-                        </tbody>
-                    </table>
-                </div>
-            </main>
+            </div>
         </div>
 
-        <!-- 引入 Bootstrap 和 JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            // 頁面加載時自動查詢所有交易記錄
-            $(document).ready(function () {
-                reloadTransactions(); // 自動載入交易
-            });
+        <!-- 更新交易模態框 -->
+        <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="updateTransactionForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateModalLabel">更新交易</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="transactionId" id="updateTransactionId"> 
+                            用戶ID: <input type="text" id="updateUserId" name="userId" required class="form-control"><br>
+                            交易類型: 
+                            <select id="updateTransactionType" name="transactionType" required class="form-select">
+                                <option value="deposit">存入</option>
+                                <option value="withdrawal">取出</option>
+                                <option value="payment">付款</option>
+                                <option value="refund">退款</option>
+                            </select><br>
+                            金額: <input type="number" id="updateAmount" name="transactionAmount" required class="form-control" min="1"><br>
+                            交易狀態: 
+                            <select id="updateTransactionStatus" name="transactionStatus" required class="form-select">
+                                <option value="pending">待處理</option>
+                                <option value="completed">已完成</option>
+                                <option value="failed">失敗</option>
+                            </select><br>
+                            創建時間: <input type="text" id="updateCreatedAt" name="createdAt" class="form-control" readonly><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" id="updateTransactionBtn" class="btn btn-primary">更新</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-            // 查詢交易記錄
-            $("#searchBtn").click(function () {
-                let formData = $("#searchForm").serialize(); // 序列化表單數據
-                $.ajax({
-                    url: '/ProFit/userTransactions/search',
-                    type: 'GET',
-                    data: formData,  // 傳遞序列化的查詢參數
-                    success: function (response) {
-                        populateTransactionTable(response); // 填充表格數據
-                    },
-                    error: function (xhr) {
-                        showError(xhr.responseText);  // 顯示錯誤信息
-                    }
-                });
-            });
+        <!-- 交易記錄表格 -->
+        <div class="table-container">
+            <table id="transactionsTable" class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>交易ID</th>
+                        <th>用戶ID</th>
+                        <th>交易類型</th>
+                        <th>金額</th>
+                        <th>交易狀態</th>
+                        <th>創建時間</th>
+                        <th>完成時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionsTableBody">
+                    <!-- AJAX 填充表格内容 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-            // 新增交易
-            $("#addTransactionBtn").click(function () {
+    <!-- 引入 Bootstrap 和 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // 頁面加載時自動查詢所有交易記錄
+        $(document).ready(function () {
+            reloadTransactions(); // 自動載入交易
+        });
+
+        // 查詢交易記錄
+        $("#searchBtn").click(function () {
+            let formData = $("#searchForm").serialize();
+            $.ajax({
+                url: '/ProFit/userTransactions/search',
+                type: 'GET',
+                data: formData,
+                success: function (response) {
+                    populateTransactionTable(response);
+                },
+                error: function (xhr) {
+                    showError(xhr.responseText);
+                }
+            });
+        });
+
+        // 新增交易
+        $("#addTransactionBtn").click(function () {
+            $.ajax({
+                url: '/ProFit/userTransactions/insert',
+                type: 'POST',
+                data: $("#addTransactionForm").serialize(),
+                success: function () {
+                    $("#addModal").modal('hide');
+                    clearModalBackdrop();
+                    reloadTransactions();
+                },
+                error: function (xhr) {
+                    showError(xhr.responseText);
+                }
+            });
+        });
+
+        // 更新交易
+        $("#updateTransactionBtn").click(function () {
+            let formData = $("#updateTransactionForm").serialize();
+            $.ajax({
+                url: '/ProFit/userTransactions/update',
+                type: 'POST',
+                data: formData,
+                success: function () {
+                    $("#updateModal").modal('hide');
+                    clearModalBackdrop();
+                    reloadTransactions();
+                },
+                error: function (xhr) {
+                    showError(xhr.responseText);
+                }
+            });
+        });
+
+        // 刪除交易
+        function deleteTransaction(transactionId) {
+            if (confirm('確定要刪除這筆交易嗎？')) {
                 $.ajax({
-                    url: '/ProFit/userTransactions/insert',
+                    url: '/ProFit/userTransactions/delete',
                     type: 'POST',
-                    data: $("#addTransactionForm").serialize(),
+                    data: { transactionId: transactionId },
                     success: function () {
-                        $("#addModal").modal('hide'); // 關閉模態框
-                        setTimeout(function () {
-                            $(".modal-backdrop").remove(); // 強制移除遮罩層
-                        }, 500);
-                        reloadTransactions(); // 刷新交易記錄
+                        reloadTransactions();
                     },
                     error: function (xhr) {
                         showError(xhr.responseText);
                     }
                 });
+            }
+        }
+
+        // 重新載入交易記錄
+        function reloadTransactions() {
+            $.ajax({
+                url: '/ProFit/userTransactions/data',
+                type: 'GET',
+                success: function (response) {
+                    populateTransactionTable(response);
+                },
+                error: function (xhr) {
+                    showError(xhr.responseText);
+                }
             });
+        }
 
-            // 更新交易
-            $("#updateTransactionBtn").click(function () {
-                let formData = $("#updateTransactionForm").serialize(); // 序列化表單數據
-                let status = $("#updateTransactionStatus").val(); // 取得當前選中的交易狀態
+        // 填充表格數據
+        function populateTransactionTable(transactions) {
+            let tbody = $("#transactionsTableBody");
+            tbody.empty();
 
-                if (status === 'completed') {
-                    formData += '&completionAt=' + new Date().toISOString(); // 當狀態為完成時，添加完成時間
+            transactions.forEach(function (transaction) {
+                let buttons = '';
+                if (transaction.transactionStatus === 'pending') {
+                    buttons = `
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal"
+                                onclick="populateUpdateForm('${transaction.transactionId}', '${transaction.userId}', '${transaction.transactionType}', '${transaction.transactionAmount}', '${transaction.transactionStatus}', '${transaction.createdAt}')">更新</button>
+                            <button type="button" class="btn btn-danger" onclick="deleteTransaction('${transaction.transactionId}')">刪除</button>
+                        </div>`;
+                } else {
+                    buttons = `<span class="text-muted">無法更新/刪除</span>`;
                 }
 
-                $.ajax({
-                    url: '/ProFit/userTransactions/update',
-                    type: 'POST',
-                    data: formData,
-                    success: function () {
-                        $("#updateModal").modal('hide'); // 隱藏模態框
-                        $(".modal-backdrop").remove(); // 移除遮罩層
-                        reloadTransactions(); // 刷新交易記錄
-                    },
-                    error: function (xhr) {
-                        showError(xhr.responseText);
-                    }
-                });
+                let row = `<tr>
+                    <td>${transaction.transactionId}</td>
+                    <td>${transaction.userId}</td>
+                    <td>${transaction.transactionType}</td>
+                    <td>${transaction.transactionAmount}</td>
+                    <td>${transaction.transactionStatus}</td>
+                    <td>${transaction.createdAt}</td>
+                    <td>${transaction.completionAt ? transaction.completionAt : '未完成'}</td>
+                    <td class="text-center">${buttons}</td>
+                </tr>`;
+                tbody.append(row);
             });
+        }
 
-            // 刪除交易
-            function deleteTransaction(transactionId) {
-                if (confirm('確定要刪除這筆交易嗎？')) {
-                    $.ajax({
-                        url: '/ProFit/userTransactions/delete',
-                        type: 'POST',
-                        data: { transactionId: transactionId },
-                        success: function () {
-                            reloadTransactions(); // 刷新交易記錄
-                        },
-                        error: function (xhr) {
-                            showError(xhr.responseText);
-                        }
-                    });
-                }
-            }
+        // 填充更新表單
+        function populateUpdateForm(transactionId, userId, transactionType, transactionAmount, transactionStatus, createdAt) {
+            $("#updateTransactionId").val(transactionId);
+            $("#updateUserId").val(userId);
+            $("#updateTransactionType").val(transactionType);
+            $("#updateAmount").val(transactionAmount);
+            $("#updateTransactionStatus").val(transactionStatus);
+            $("#updateCreatedAt").val(createdAt);
+        }
 
-            // 重新載入交易記錄
-            function reloadTransactions() {
-                $.ajax({
-                    url: '/ProFit/userTransactions/data',
-                    type: 'GET',
-                    success: function (response) {
-                        populateTransactionTable(response);
-                    },
-                    error: function (xhr) {
-                        showError(xhr.responseText);
-                    }
-                });
-            }
+        // 清除模態框背景
+        function clearModalBackdrop() {
+            setTimeout(function () {
+                $(".modal-backdrop").remove();
+                $("body").removeClass("modal-open").css("overflow", "auto");
+            }, 500);
+        }
 
-            // 填充表格數據
-            function populateTransactionTable(transactions) {
-                let tbody = $("#transactionsTableBody");
-                tbody.empty(); // 清空表格內容
-
-                transactions.forEach(function (transaction) {
-                    let buttons = '';
-                    
-                    // 只允許待處理狀態進行更新或刪除
-                    if (transaction.transactionStatus === 'pending') {
-                        buttons = `
-                            <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal"
-                                    onclick="populateUpdateForm('${transaction.transactionId}', '${transaction.userId}', '${transaction.transactionType}', '${transaction.transactionAmount}', '${transaction.transactionStatus}', '${transaction.createdAt}')">更新</button>
-                                <button type="button" class="btn btn-danger" onclick="deleteTransaction('${transaction.transactionId}')">刪除</button>
-                            </div>`;
-                    } else {
-                        buttons = `<span class="text-muted">無法更新/刪除</span>`;
-                    }
-
-                    let row = `<tr>
-                        <td>${transaction.transactionId}</td>
-                        <td>${transaction.userId}</td>
-                        <td>${transaction.transactionType}</td>
-                        <td>${transaction.transactionAmount}</td>
-                        <td>${transaction.transactionStatus}</td>
-                        <td>${transaction.createdAt}</td>
-                        <td>${transaction.completionAt ? transaction.completionAt : '未完成'}</td>
-                        <td class="text-center">${buttons}</td>
-                    </tr>`;
-                    tbody.append(row); // 動態添加新行
-                });
-            }
-
-            // 填充更新表單
-            function populateUpdateForm(transactionId, userId, transactionType, transactionAmount, transactionStatus, createdAt) {
-                $("#updateTransactionId").val(transactionId);
-                $("#updateUserId").val(userId);
-                $("#updateTransactionType").val(transactionType);
-                $("#updateAmount").val(transactionAmount);
-                $("#updateTransactionStatus").val(transactionStatus);
-                $("#updateCreatedAt").val(createdAt);
-            }
-
-            // 顯示錯誤信息
-            function showError(message) {
-                $("#errorContainer").text(message).show();
-            }
-        </script>
+        // 顯示錯誤信息
+        function showError(message) {
+            $("#errorContainer").text(message).show();
+        }
+    </script>
 </body>
 </html>
