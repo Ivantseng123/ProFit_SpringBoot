@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{jobsVIEW/model}"> <!-- 使用 model 作為基礎模板 -->
+      layout:decorate="~{jobsVIEW/layout-static}">
 
 <head>
     <title>編輯職缺資訊 - ProFit</title>
@@ -18,56 +18,57 @@
     <div class="card mb-4">
         <div class="card-body">
             <!-- 職缺編輯表單 -->
-            <form id="jobForm" th:action="@{/jobs/update}" method="post">
-                <!-- 職缺 ID，隱藏字段 -->
-                <input type="hidden" id="jobsId" name="jobsId" th:value="${job.jobsId}" />
+            <form id="jobForm" th:action="@{/jobs/update/id(id=${job.jobsId})}" method="post">
+                <input type="hidden" th:field="${job.jobsId}"/>
+                <input type="hidden" name="_method" value="put"/>
 
                 <!-- 職缺標題 -->
                 <div class="mb-3">
-                    <label for="jobsTitle" class="form-label">職缺標題</label>
-                    <input type="text" class="form-control" id="jobsTitle" name="jobsTitle" th:value="${job.jobsTitle}" required />
+                    <label class="form-label">職缺標題</label>
+                    <input type="text" class="form-control" th:field="${job.jobsTitle}" required />
                 </div>
 
-                <!-- 發布者 ID（通常不允許編輯） -->
+                <!-- 刊登者 ID（通常不允許編輯） -->
                 <div class="mb-3">
-                    <label for="jobsUserId" class="form-label">發布者 ID</label>
-                    <input type="text" class="form-control" id="jobsUserId" name="jobsUserId" th:value="${job.users.userId}" readonly />
+                    <label class="form-label">發布者 ID</label>
+                    <input type="text" class="form-control" th:field="${job.users.userId}" readonly />
                 </div>
 
                 <!-- 所需技能 -->
                 <div class="mb-3">
-                    <label for="jobsRequiredSkills" class="form-label">所需技能</label>
-                    <input type="text" class="form-control" id="jobsRequiredSkills" name="jobsRequiredSkills" th:value="${job.jobsRequiredSkills}" required />
+                    <label class="form-label">所需技能</label>
+                <!--  th:field 就是包含id=""、name=""、value=""等3個集合體-->
+                    <input type="text" class="form-control" th:field="${job.jobsRequiredSkills}" required />
                 </div>
 
                 <!-- 發布日期（通常不允許編輯） -->
                 <div class="mb-3">
-                    <label for="jobsPostingDate" class="form-label">發布日期</label>
-                    <input type="date" class="form-control" id="jobsPostingDate" name="jobsPostingDate" th:value="${job.jobsPostingDate}" readonly />
+                    <label class="form-label">發布日期</label>
+                    <input type="date" class="form-control" th:value="${job.jobsPostingDate}" readonly />
                 </div>
 
                 <!-- 申請截止日期 -->
                 <div class="mb-3">
-                    <label for="jobsApplicationDeadline" class="form-label">申請截止日期</label>
-                    <input type="date" class="form-control" id="jobsApplicationDeadline" name="jobsApplicationDeadline" th:value="${job.jobsApplicationDeadline}" required />
+                    <label class="form-label">申請截止日期</label>
+                    <input type="date" class="form-control" name="deadline" th:value="${job.jobsApplicationDeadline}" required />
                 </div>
 
                 <!-- 職缺描述 -->
                 <div class="mb-3">
-                    <label for="jobsDescription" class="form-label">職缺描述</label>
-                    <textarea class="form-control" id="jobsDescription" name="jobsDescription" rows="3" required th:text="${job.jobsDescription}"></textarea>
+                    <label class="form-label">職缺描述</label>
+                    <textarea class="form-control" rows="3" required th:field="${job.jobsDescription}"></textarea>
                 </div>
 
                 <!-- 工作地點 -->
                 <div class="mb-3">
-                    <label for="jobsLocation" class="form-label">工作地點</label>
-                    <input type="text" class="form-control" id="jobsLocation" name="jobsLocation" th:value="${job.jobsLocation}" required />
+                    <label class="form-label">工作地點</label>
+                    <input type="text" class="form-control" th:field="${job.jobsLocation}" required />
                 </div>
 
                 <!-- 職缺狀態 -->
                 <div class="mb-3">
-                    <label for="jobsStatus" class="form-label">職缺狀態</label>
-                    <select class="form-control" id="jobsStatus" name="jobsStatus" required>
+                    <label class="form-label">職缺狀態</label>
+                    <select class="form-control" th:field="${job.jobsStatus}" required>
                         <option value="0" th:selected="${job.jobsStatus == 0}">開放中</option>
                         <option value="1" th:selected="${job.jobsStatus == 1}">已關閉</option>
                     </select>
@@ -75,68 +76,91 @@
 
                 <!-- 最高薪資 -->
                 <div class="mb-3">
-                    <label for="jobsMaxSalary" class="form-label">最高薪資</label>
-                    <input type="number" class="form-control" id="jobsMaxSalary" name="jobsMaxSalary" th:value="${job.jobsMaxSalary}" required />
+                    <label class="form-label">最高薪資</label>
+                    <input type="number" class="form-control" th:field="${job.jobsMaxSalary}" required />
                 </div>
 
                 <!-- 最低薪資 -->
                 <div class="mb-3">
-                    <label for="jobsMinSalary" class="form-label">最低薪資</label>
-                    <input type="number" class="form-control" id="jobsMinSalary" name="jobsMinSalary" th:value="${job.jobsMinSalary}" required />
+                    <label class="form-label">最低薪資</label>
+                    <input type="number" class="form-control" th:field="${job.jobsMinSalary}" required />
                 </div>
 
                 <!-- 工作時間 -->
                 <div class="mb-3">
-                    <label for="jobsWorktime" class="form-label">工作時間</label>
-                    <input type="text" class="form-control" id="jobsWorktime" name="jobsWorktime" th:value="${job.jobsWorktime}" required />
+                    <label class="form-label">工作時間</label>
+                    <input type="text" class="form-control" th:field="${job.jobsWorktime}" required />
                 </div>
 
                 <!-- 開放職位數 -->
                 <div class="mb-3">
-                    <label for="jobsNumberOfOpenings" class="form-label">開放職位數</label>
-                    <input type="number" class="form-control" id="jobsNumberOfOpenings" name="jobsNumberOfOpenings" th:value="${job.jobsNumberOfOpenings}" required />
+                    <label class="form-label">開放職位數</label>
+                    <input type="number" class="form-control" th:field="${job.jobsNumberOfOpenings}" required />
                 </div>
 
                 <!-- 提交和取消按鈕 -->
                 <button type="submit" class="btn btn-primary">保存更改</button>
-                <a href="/jobs" class="btn btn-secondary">取消</a>
+                <a th:href="@{/jobs/list}" class="btn btn-secondary">取消</a>
             </form>
         </div>
     </div>
 </div>
-
 <script>
-    // 這裡應該添加從後端獲取數據、填充表單，以及提交更新的 JavaScript 代碼
-    function goBack() {
-        window.history.back();
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+    //     const jobId = new URLSearchParams(window.location.search).get('id');
+    //
+    //     fetch(`/jobs/update/${jobId}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             document.getElementById('jobsId').value = data.jobsId;
+    //             document.getElementById('jobsTitle').value = data.jobsTitle;
+    //             document.getElementById('jobsUserId').value = data.users.userId;
+    //             document.getElementById('jobsRequiredSkills').value = data.jobsRequiredSkills;
+    //             document.getElementById('jobsPostingDate').value = data.jobsPostingDate;
+    //             document.getElementById('jobsApplicationDeadline').value = data.jobsApplicationDeadline;
+    //             document.getElementById('jobsDescription').value = data.jobsDescription;
+    //             document.getElementById('jobsLocation').value = data.jobsLocation;
+    //             document.getElementById('jobsStatus').value = data.jobsStatus;
+    //             document.getElementById('jobsMaxSalary').value = data.jobsMaxSalary;
+    //             document.getElementById('jobsMinSalary').value = data.jobsMinSalary;
+    //             document.getElementById('jobsWorktime').value = data.jobsWorktime;
+    //             document.getElementById('jobsNumberOfOpenings').value = data.jobsNumberOfOpenings;
+    //         })
+    //         .catch(error => console.error('獲取職缺數據時出錯:', error));
+    //
+    //
+    //
+    //     document.getElementById('jobForm').addEventListener('submit', function(e) {
+    //         e.preventDefault();
+    //         const formData = new FormData(this);
+    //         const jobData = Object.fromEntries(formData.entries());
+    //
+    //         fetch('/jobs/update/${jobId}', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(jobData),
+    //         })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 alert('職缺資訊已成功更新');
+    //                 window.location.href = '/jobs';
+    //             })
+    //             .catch(error => {
+    //                 console.error('更新職缺資訊時出錯:', error);
+    //                 alert('更新失敗，請稍後再試');
+    //             });
+    //     });
+    // });
+    //
+    // function goBack() {
+    //     window.history.back();
+    // };
 
-    document.getElementById('editJobForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        // 在這裡添加提交表單數據到後端的代碼
-        // 收集表單數據
-        const formData = new FormData(this);
-        const jobData = Object.fromEntries(formData.entries());
 
-        // 發送數據到後端 API
-        fetch('/api/jobs/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(jobData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('職缺更新成功！');
-                    window.location.href = '/jobs-list.html'; // 重定向到職缺列表頁面
-                } else {
-                    alert('更新失敗：' + data.message);
-                }
-            })
-            .catch(error => console.error('提交表單時出錯:', error));
-    });
+
+
 </script>
 
 </body>

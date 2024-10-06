@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{jobsVIEW/model}"> <!-- 使用 model 作為模板 -->
+      layout:decorate="~{jobsVIEW/layout-static}">
 
 <head>
     <title>查看職缺詳情 - ProFit</title>
@@ -95,7 +95,7 @@
                 </div>
 
                 <!-- 返回按鈕 -->
-                <a href="/jobs" class="btn btn-secondary">返回</a>
+                <a th:href="@{/jobs/list}" class="btn btn-secondary">返回</a>
             </form>
         </div>
     </div>

@@ -27,10 +27,15 @@ import jakarta.persistence.TemporalType;
 //	如果只需要逐個位元組地讀取資料，InputStream 是一個不錯的選擇。
 //	如果需要直接與資料庫進行互動，Blob 是最適合的選擇。
 import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-
-
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Entity
 @Table(name = "jobs_Application")
 public class JobsApplication implements java.io.Serializable{
@@ -61,7 +66,7 @@ public class JobsApplication implements java.io.Serializable{
 	  
 	  
 
-	  @Temporal(TemporalType.DATE)
+//	  @Temporal(TemporalType.DATE)
 	  @Transient
 	  @Column(name = "jobs_application_date",insertable = false,updatable = false)
 	  private Date jobsApplicationDate;
@@ -73,65 +78,8 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_contract")
 	  private Blob jobsApplicationContract;
 
-	  
-	  
-	public int getJobsApplicationId() {
-		return jobsApplicationId;
-	}
 
-	public void setJobsApplicationId(int jobsApplicationId) {
-		this.jobsApplicationId = jobsApplicationId;
-	}
 
-	public Users getPoster() {
-		return poster;
-	}
-
-	public void setPoster(Users poster) {
-		this.poster = poster;
-	}
-
-	public Users getApplicant() {
-		return applicant;
-	}
-
-	public void setApplicant(Users applicant) {
-		this.applicant = applicant;
-	}
-
-	public Date getJobsApplicationDate() {
-		return jobsApplicationDate;
-	}
-
-	public void setJobsApplicationDate(Date jobsApplicationDate) {
-		this.jobsApplicationDate = jobsApplicationDate;
-	}
-
-	public Byte getJobsApplicationStatus() {
-		return jobsApplicationStatus;
-	}
-
-	public void setJobsApplicationStatus(Byte jobsApplicationStatus) {
-		this.jobsApplicationStatus = jobsApplicationStatus;
-	}
-
-	public Blob getJobsApplicationContract() {
-		return jobsApplicationContract;
-	}
-
-	public void setJobsApplicationContract(Blob jobsApplicationContract) {
-		this.jobsApplicationContract = jobsApplicationContract;
-	}
-
-	
-	
-	@Override
-	public String toString() {
-		return "JobsApplication [jobsApplicationId=" + jobsApplicationId + ", poster=" + poster + ", applicant="
-				+ applicant + ", jobsApplicationDate=" + jobsApplicationDate + ", jobsApplicationStatus="
-				+ jobsApplicationStatus + ", jobsApplicationContract=" + jobsApplicationContract + "]";
-	}
-	
 
 
 

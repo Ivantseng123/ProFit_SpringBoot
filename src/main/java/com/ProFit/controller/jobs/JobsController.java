@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -46,13 +47,6 @@ public class JobsController {
         }
     }
 
-//     刪除
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Integer id){
-        jobsService.delete(id);
-        return ResponseEntity.ok().build();//ok的意思代表後端沒問題，ok().build()代表沒回傳值給前端
-    }
-
 //    @GetMapping("/findOne")
 //    public String showEditForm(@RequestParam("id") Integer id, Model model) {
 //        Jobs jobs = jobsService.findById(id);
@@ -62,6 +56,13 @@ public class JobsController {
 //        return "jobsVIEW/jobsList";
 //    }
 
+
+    //     刪除
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id){
+        jobsService.delete(id);
+        return ResponseEntity.ok().build();//ok的意思代表後端沒問題，ok().build()代表沒回傳值給前端
+    }
 
 
     // 新增
@@ -161,20 +162,48 @@ public class JobsController {
 
 
 
+    //導向查看頁面
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("job", jobsService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsForm";
+    }
+
+
+
+
+
     //導向更新頁面
-//    @GetMapping("/edit")
-//    public String edit(@RequestParam(value = "id", required = false) Integer id, Model model){
-//        if (id != null) {
-//            model.addAttribute("job", jobsService.findById(id));
-//        } else {
-//            model.addAttribute("job", null);
-//        }
-//        return "jobsVIEW/jobsForm";
-//    }
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("job", jobsService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsEdit";
+    }
 
 
+  //呈現更新
+    @PutMapping("/update/{id}")
+    public String updateJob(@PathVariable("id") String id, @ModelAttribute Jobs updatedJob,Model model,
+                            @RequestParam("deadline") String deadline) {
+
+        //以下遇到時間的設定就用此寫法
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dateFinish = formatter.parse(deadline);
+            updatedJob.setJobsApplicationDeadline(dateFinish);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        jobsService.update(updatedJob);
+        return "redirect:/jobs/list" ;//只要跟Date相關的就用redirect:轉回到頁面
 
 
+    }
 
     // 更新
 //    @PutMapping("/updated/{id}")
