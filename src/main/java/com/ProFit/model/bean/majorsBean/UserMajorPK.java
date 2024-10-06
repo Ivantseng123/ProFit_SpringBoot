@@ -13,13 +13,11 @@ import jakarta.persistence.ManyToOne;
 public class UserMajorPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
 	@JoinColumn(name = "user_id") // Users的@Id變數名稱
-	private Users user;
+	private Integer userId;
 
-	@ManyToOne
 	@JoinColumn(name = "major_id") // MajorBean的@Id變數名稱
-	private MajorBean major;
+	private Integer majorId;
 
 	@Override
 	public boolean equals(Object o) {
@@ -28,42 +26,25 @@ public class UserMajorPK implements Serializable {
 		if (!(o instanceof UserMajorPK))
 			return false;
 		UserMajorPK that = (UserMajorPK) o;
-		return (major.getMajorId() == that.major.getMajorId() && 
-				user.getUserId() == that.user.getUserId());
+		return Objects.equals(userId, that.userId) && Objects.equals(majorId, that.majorId);
 	}
 
 	@Override
-    public int hashCode() {
-        return Objects.hash(major.getMajorId(), user.getUserId());
-    }
-	
+	public int hashCode() {
+		return Objects.hash(userId, majorId);
+	}
+
 	public UserMajorPK() {
 	}
-	
-	public UserMajorPK(Users user, MajorBean major) {
-        this.user = user;
-        this.major = major;
-    }
-	
-	public Users getUser() {
-		return user;
+
+	public UserMajorPK(Integer userId, Integer majorId) {
+		this.userId = userId;
+		this.majorId = majorId;
 	}
 
-	public void setUser(Users user) {
-		this.user = user;
+	@Override
+	public String toString() {
+		return "UserMajorPK [userId=" + userId + ", majorId=" + majorId + "]";
 	}
-
-	public MajorBean getMajor() {
-		return major;
-	}
-
-	public void setMajor(MajorBean major) {
-		this.major = major;
-	}
-	
-	 @Override
-	    public String toString() {
-	        return "UserMajorPK [user=" + user.getUserId() + ", major=" + major.getMajorId() + "]";
-	    }
 
 }

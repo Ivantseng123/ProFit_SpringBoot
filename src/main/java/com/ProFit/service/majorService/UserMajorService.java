@@ -1,106 +1,103 @@
-//package com.ProFit.service.majorService;
-//
-//import java.sql.SQLException;
-//
-//import java.util.List;
-//import java.util.Map;
-//
-//import org.hibernate.Session;
-//import org.hibernate.query.Query;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import com.ProFit.model.bean.majorsBean.MajorBean;
-//import com.ProFit.model.bean.majorsBean.UserMajorBean;
-//import com.ProFit.model.bean.majorsBean.UserMajorPK;
-//import com.ProFit.model.bean.usersBean.Users;
-//import com.ProFit.model.dao.majorsCRUD.MajorRepository;
-//import com.ProFit.model.dao.majorsCRUD.UserMajorRepository;
-//import com.ProFit.model.dao.usersCRUD.UsersRepository;
-//
-//
-//@Service
-//@Transactional
-//public class UserMajorService implements IUserMajorService {
-//
-////	@Autowired
-////	private IHuserMajorDAO userMajorDAO;
-//	
+package com.ProFit.service.majorService;
+
+import java.sql.SQLException;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ProFit.model.bean.majorsBean.MajorBean;
+import com.ProFit.model.bean.majorsBean.UserMajorBean;
+import com.ProFit.model.bean.majorsBean.UserMajorPK;
+import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dao.majorsCRUD.MajorRepository;
+import com.ProFit.model.dao.majorsCRUD.UserMajorRepository;
+import com.ProFit.model.dao.usersCRUD.UsersRepository;
+import com.ProFit.model.dto.majorsDTO.PageResponse;
+
+@Service
+@Transactional
+public class UserMajorService implements IUserMajorService {
+
 //	@Autowired
-//	private UserMajorRepository userMajorRepo;
-//	
-//	@Autowired
-//	private UsersRepository usersRepo;
-//	
-//	@Autowired
-//	private MajorRepository majorRepo;
-//
-//	// 插入 UserMajor
-//	@Override
-//	public UserMajorBean insertUserMajor(UserMajorBean userMajor) {
-//		// return userMajorDAO.insertUserMajor(userMajor);
-//		
-//		return userMajorRepo.save(userMajor);
-//	}
-//
-//	// 删除 UserMajor(by userId & majorId)
-//	@Override
-//	public boolean deleteUserMajor(int userId, int majorId) {
-//		// return userMajorDAO.deleteUserMajor(userId, majorId);
-//		UserMajorPK userMajorPK = new UserMajorPK();
-//		userMajorPK.setUser(usersRepo.findById(userId).get());
-//		userMajorPK.setMajor(majorRepo.findById(majorId).get());
-//		try {
-//			userMajorRepo.deleteById(userMajorPK);
-//			return true;
-//		} catch (Exception e) {
-//			return false;
-//		}
-//	}
-//
-//	// 查詢所有用戶
-//	@Override
-//	public Map<Integer, String> getAllUsers() {
-//		// return userMajorDAO.getAllUsers();
-//		List<Users> all = usersRepo.findAll();
-//	}
-//
-//	// 查詢所有專業
-//	@Override
-//	public Map<Integer, String> getAllMajors() throws SQLException {
-//		// return userMajorDAO.getAllMajors();
-//		
-//		List<MajorBean> all = majorRepo.findAll();
-//	}
-//
-//	// 查找特定user的所有 Major
-//	@Override
-//	public List<UserMajorBean> findMajorsByUserId(int userId) {
-//		// return userMajorDAO.findMajorsByUserId(userId);
-//		
-//	}
-//
-//	// 查找特定 Major 的所有 User
-//	@Override
-//	public List<UserMajorBean> findUsersByMajorId(int majorId) {
-//		// return userMajorDAO.findUsersByMajorId(majorId);
-//	}
-//
-//	// 查找所有 UserMajor
-//	@Override
-//	public List<UserMajorBean> findAllUserMajors() {
-//		// return userMajorDAO.findAllUserMajors();
-//		
-//		List<UserMajorBean> all = userMajorRepo.findAll();
-//		return all;
-//	}
-//
-//	// 根據user、Major查找單一 UserMajor
-//	@Override
-//	public UserMajorBean findUserMajorByUserIdMajorId(UserMajorPK userMajorPK) {
-//		// return userMajorDAO.findUserMajorByUserIdMajorId(userMajorPK);
-//		
-//		return userMajorRepo.findById(userMajorPK).get();
-//	}
-//}
+//	private IHuserMajorDAO userMajorDAO;
+
+	@Autowired
+	private UserMajorRepository userMajorRepo;
+
+	// 創建 Pageable物件 的 private方法 (需在controller設定默認值,不然很危)
+	private Pageable createPageable(int page, int size, String sortBy, boolean ascending) {
+		// 根據 sortBy 和 ascending 創建排序參數 sort，允許客戶端指定排序字段和順序。
+		Sort sort = Sort.by(ascending ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+		// 根據 page, size, sort 建立 Pageable物件 並回傳
+		return PageRequest.of(page, size, sort);
+	}
+
+	// 分頁獲取所有用戶-專業關聯
+	@Override
+	public PageResponse<UserMajorBean> getAllUserMajors(int page, int size, String sortBy, boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<UserMajorBean> userMajorPage = userMajorRepo.findAll(pageable);
+		// 獲取用戶專業關聯的方法 of，使用自己寫的 PageResponse 傳入 Page 並返回分頁結果(response物件)。
+		return PageResponse.of(userMajorPage);
+	}
+
+	// 根據用戶ID分頁獲取所有關聯的專業
+	@Override
+	public PageResponse<UserMajorBean> getUserMajorsByUserId(Integer userId, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<UserMajorBean> userMajorPage = userMajorRepo.findByIdUserId(userId, pageable);
+		return PageResponse.of(userMajorPage);
+	}
+
+	// 根據專業ID分頁獲取所有關聯的用戶
+	@Override
+	public PageResponse<UserMajorBean> getUserMajorsByMajorId(Integer majorId, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<UserMajorBean> userMajorPage = userMajorRepo.findByIdMajorId(majorId, pageable);
+		return PageResponse.of(userMajorPage);
+	}
+
+	// 添加用戶-專業關聯
+	@Override
+	public UserMajorBean addUserMajor(Integer userId, Integer majorId) {
+		UserMajorPK id = new UserMajorPK(userId, majorId);
+		UserMajorBean userMajor = new UserMajorBean(id);
+		return userMajorRepo.save(userMajor);
+	}
+
+	// 刪除用戶-專業關聯
+	@Override
+	public void deleteUserMajor(Integer userId, Integer majorId) {
+		userMajorRepo.deleteByIdUserIdAndIdMajorId(userId, majorId);
+	}
+
+	// 檢查用戶-專業關聯是否存在
+	@Override
+	public boolean existsUserMajor(Integer userId, Integer majorId) {
+		return userMajorRepo.existsByIdUserIdAndIdMajorId(userId, majorId);
+	}
+
+	// 獲取特定的用戶-專業關聯
+	@Override
+	public UserMajorBean getUserMajor(Integer userId, Integer majorId) {
+		UserMajorPK id = new UserMajorPK(userId, majorId);
+		if (userMajorRepo.findById(id).isPresent()) {
+			return userMajorRepo.findById(id).get();
+		}
+		return null;
+	}
+
+}
