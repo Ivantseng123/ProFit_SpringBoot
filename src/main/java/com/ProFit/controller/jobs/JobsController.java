@@ -63,6 +63,12 @@ public class JobsController {
         jobsService.delete(id);
         return ResponseEntity.ok().build();//ok的意思代表後端沒問題，ok().build()代表沒回傳值給前端
     }
+//第二種寫法
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteJob(@PathVariable Integer id) {
+//        jobsService.delete(id);
+//        return ResponseEntity.ok().build();
+//    }
 
 
     // 新增
@@ -101,65 +107,6 @@ public class JobsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedJob);
     }
 
-//    @PostMapping(value = "/add")
-//    public String addJob(@RequestParam("jobsUserId") Integer jobsUserId,
-//                         @RequestParam("jobsTitle") String jobsTitle,
-//                         @RequestParam("jobsPostingDate") String jobsPostingDate,
-//                         @RequestParam("jobsApplicationDeadline") String jobsApplicationDeadline,
-//                         @RequestParam("jobsDescription") String jobsDescription,
-//                         @RequestParam("jobsStatus") Byte jobsStatus,
-//                         @RequestParam("jobsRequiredSkills") String jobsRequiredSkills,
-//                         @RequestParam("jobsLocation") String jobsLocation,
-//                         @RequestParam("jobsMaxSalary") Integer jobsMaxSalary,
-//                         @RequestParam("jobsMinSalary") Integer jobsMinSalary,
-//                         @RequestParam("jobsWorktime") String jobsWorktime,
-//                         @RequestParam("jobsNumberOfOpenings") Integer jobsNumberOfOpenings) {
-//        Users user = userService.getUserInfoByID(jobsUserId);
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        Date postingDate = new Date();
-//        Date deadline = new Date();
-//        try {
-//            postingDate = formatter.parse(jobsPostingDate);
-//            deadline = formatter.parse(jobsApplicationDeadline);
-//        } catch (ParseException ignore) {}
-//        Jobs jobs = new Jobs();
-//        jobs.setUsers(user);
-//        jobs.setJobsTitle(jobsTitle);
-//        jobs.setJobsPostingDate(postingDate);
-//        jobs.setJobsApplicationDeadline(deadline);
-//        jobs.setJobsDescription(jobsDescription);
-//        jobs.setJobsStatus(jobsStatus);
-//        jobs.setJobsRequiredSkills(jobsRequiredSkills);
-//        jobs.setJobsLocation(jobsLocation);
-//        jobs.setJobsMaxSalary(jobsMaxSalary);
-//        jobs.setJobsMinSalary(jobsMinSalary);
-//        jobs.setJobsWorktime(jobsWorktime);
-//        jobs.setJobsNumberOfOpenings(jobsNumberOfOpenings);
-//        jobsService.save(jobs);
-//        return "jobsVIEW/jobsSuccess";
-//    }
-
-
-
-
-
-    // 刪除
-//    @DeleteMapping("/delete")
-//    public ResponseEntity<?> delete(@RequestParam("id") Integer id){
-//        jobsService.delete(id);
-//        return ResponseEntity.ok().build();//ok的意思代表後端沒問題，ok().build()代表沒回傳值給前端
-//    }
-
-//第二種寫法
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteJob(@PathVariable Integer id) {
-//        jobsService.delete(id);
-//        return ResponseEntity.ok().build();
-//    }
-
-
-
-
 
 
     //導向查看頁面
@@ -182,7 +129,7 @@ public class JobsController {
     }
 
 
-    //呈現更新
+    //呈現更新後
     @PutMapping("/update/{id}")
     public String updateJob(@PathVariable("id") String id, @ModelAttribute Jobs updatedJob,Model model,
                             @RequestParam("deadline") String deadline) {
