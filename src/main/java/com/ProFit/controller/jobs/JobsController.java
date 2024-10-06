@@ -108,7 +108,6 @@ public class JobsController {
     }
 
 
-
     //導向查看頁面
     @GetMapping("/view/{id}")
     public String view(@PathVariable("id") Integer id, Model model){
