@@ -85,8 +85,10 @@
                             </a>                            
                             <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Static Navigation</a>
-                                    <a class="nav-link" href="#">Light Sidenav</a>
+                                    <!-- <a class="nav-link" href="http://localhost:8080/ProFit/majorCategory/">專業類別</a> -->
+                                    <a class="nav-link" href="http://localhost:8080/ProFit/major/">專業管理</a>
+									<a class="nav-link" href="#">會員專業管理</a>
+									<a class="nav-link" href="#">技能服務管理</a>
                                 </nav>
                             </div>
 
@@ -99,6 +101,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" th:href="@{/courses}">查詢所有課程</a>
                                     <a class="nav-link" th:href="@{/courses/addCourse}">新增課程</a>
+                                    <a class="nav-link" th:href="@{/courseOrders}">查詢所有課程訂單</a>
                                 </nav>
                             </div>                                                        
                             
@@ -109,7 +112,7 @@
                             </a>                            
                             <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Static Navigation</a>
+                                    <a class="nav-link" href="@{/events}">活動列表</a>
                                     <a class="nav-link" href="#">Light Sidenav</a>
                                 </nav>
                             </div>
@@ -165,9 +168,9 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <a href="#" class="sidebar-link"> <img
+                        <a href="http://localhost:8080/ProFit/logout" class="sidebar-link"> <img
 							src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkiiSGuZZHAXgwIk9YzTjQjmMxxwne2-1VlQ&s"
-							alt="" width="32" height="32" class="rounded-circle me-2"> <strong>登入者</strong>
+							alt="" width="32" height="32" class="rounded-circle me-2" id="userImage"> <strong id="userName">登入者</strong>
 							<i class="fa-solid fa-right-from-bracket"></i> <span>登出</span>
 							</a>
                     </div>
@@ -181,5 +184,6 @@
         <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 		<script th:src="@{/js/jquery-ui-1.14.0.custom/jquery-ui.js}"></script>
 		<script th:src="@{/js/axios.min.js}"></script>
+		<script th:src="@{/js/users/home.js}"></script>
     </body>
 </html>

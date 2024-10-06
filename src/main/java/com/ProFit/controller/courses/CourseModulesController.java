@@ -1,29 +1,19 @@
 package com.ProFit.controller.courses;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import org.checkerframework.framework.qual.PostconditionAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ProFit.model.bean.coursesBean.CourseBean;
 import com.ProFit.model.bean.coursesBean.CourseModuleBean;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.service.courseService.IcourseModuleService;
 import com.ProFit.service.courseService.IcourseService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
@@ -36,13 +26,7 @@ public class CourseModulesController {
 	private IcourseService courseService;
 	
 	@GetMapping("/courseModules")
-	public String courseModulePage() {
-		return "coursesVIEW/courseModuleView";
-	}
-	
-	@GetMapping("/courseModules/search")
-	public String searchOneCourseModule(@RequestParam String courseId,Model model) {
-		
+	public String courseModulePage(@RequestParam String courseId,Model model) {
 		List<CourseModuleDTO> courseModuleDTOList = courseModuleService.searchCourseModules(courseId);
 		
 		CoursesDTO courseDTO = courseService.searchOneCourseById(courseId);
@@ -91,6 +75,22 @@ public class CourseModulesController {
 			return true;
 		}
 		return false;
+	}
+	
+	@PostMapping("/courseModules/updateModule")
+	@ResponseBody
+	public boolean updateCourseModule(
+			@RequestParam Integer courseModuleId,
+			@RequestParam String courseModuleName
+			) {
+		
+		CourseModuleBean newCourseModule = new CourseModuleBean();
+		newCourseModule.setCourseModuleId(courseModuleId);
+		newCourseModule.setCourseModuleName(courseModuleName);
+		
+		boolean isUpdated = courseModuleService.updateCourseModuleById(newCourseModule);
+		
+		return isUpdated;
 	}
 	
 }

@@ -1,4 +1,13 @@
 $('#searchBtn').click(function () {
+	
+	// 清空當前表格
+	$('#search-results').empty();
+	
+	$('#search-results').append(`	<div class="text-center">
+	  <div class="spinner-border" role="status">
+	    <span class="visually-hidden">Loading...</span>
+	  </div>
+	</div>`);
 	// 收集表單數據
 	let data = {
 		courseMajor: $('#id-courseMajor').val(),
@@ -19,7 +28,7 @@ $('#searchBtn').click(function () {
 
 			// 清空當前表格
 			$('#search-results').empty();
-
+			
 			let tableHtml = `<h3>搜尋結果如下 :</h3>
         	                <table>
         	                    <thead>
@@ -50,7 +59,7 @@ $('#searchBtn').click(function () {
 									<td>${response.courseCreaterName}</td>
         	                        <td>${response.courseInformation}</td>
 									<td>${response.courseModuleNumber}</td>
-									<td><a href="${contextPath}/courseModules/search?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
+									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
 									<td>${response.coursePrice}</td>
         	                        <td><span class="status">${response.courseStatus}</span></td>
         	                        <td>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{jobsVIEW/layout-static}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="table-container" id="search-results">
+
+        <table id="jobsApplicationList" class="display table table-striped table-hover nowrap">
+            <thead>
+            <tr>
+                <th>編號</th>
+                <th>刊登方</th>
+                <th>應徵方</th>
+                <th>申請日期</th>
+                <th>職缺申請狀態</th>
+                <th>申請文件</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            <th:block th:each="jobApplication : ${jobsApplicationList}">
+                <tr>
+                    <td th:text="${jobApplication.jobsApplicationId}"></td>
+                    <td th:text="${jobApplication.users.poster}"></td>
+                    <td th:text="${jobApplication.users.applicant}"></td>
+                    <td th:text="${jobApplication.jobsApplicationDate}"></td>
+                    <td th:text="${jobApplication.jobsApplicationStatus}"></td>
+                    <td th:text="${jobApplication.jobsApplicationContract}"></td>
+                    <td></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+    $(document).ready(function (){
+        const baseUrl = /*[[@{/jobsApplication}]]*/'';
+        console.log(baseUrl);
+        $("#jobsApplicationList").DataTable({//
+            order: [0, 'asc'],
+           columns:[{
+               data: 'jobsApplicationId',
+               className: 'all'
+           },{
+               data: 'poster',
+               className: 'all'
+           },{
+               data: 'applicant',
+               className: 'all'
+           },{
+               data: 'jobsApplicationDate',
+               className: 'all'
+           },{
+               data: 'jobsApplicationContract',
+               className: 'all'
+           },{
+               data: 'jobsApplicationStatus',
+               className: 'all',
+               render: function (data, type, row) {
+                   let result = '';
+                   switch (data) {
+                       case '0':
+                           result = '刊登中';
+                           break;
+                       case '1':
+                           result = '已投遞受理';
+                           break;
+                       case '2':
+                           result = '尚未審核';
+                           break;
+                   }
+                   return result;
+               }
+           },{
+               data: 'actions',
+               defaultContent: '',
+               orderable: false,
+               searchable: false,
+               render : function (data, type, row) {
+                    let result = '';
+
+                    //這裡的class就是bootstrap,就幾乎不用style
+                    result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i>'
+                   console.log(result);
+                    result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i>\''
+                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i>\''
+                   return result;
+               }
+           }]
+       })
+
+        $('.deleteBtn').click(function (e){
+            e.preventDefault();
+            let url = $(this).attr('href');
+            Swal.fire({
+                icon: "question",
+                title: "確認刪除？",
+                showCancelButton: true,
+                confirmButtonText: "確認",
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    //fetch開始是ajax
+                    fetch(url, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        } else {
+                            Swal.fire({//Swal.fire呼叫api的寫法
+                                icon: "success",
+                                title: "刪除成功",
+                                showConfirmButton: true,
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+                }
+            });
+        })
+    });
+</script>
+</body>
+</html>
