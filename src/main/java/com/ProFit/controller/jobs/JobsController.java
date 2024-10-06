@@ -172,9 +172,6 @@ public class JobsController {
     }
 
 
-
-
-
     //導向更新頁面
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
@@ -185,7 +182,7 @@ public class JobsController {
     }
 
 
-  //呈現更新
+    //呈現更新
     @PutMapping("/update/{id}")
     public String updateJob(@PathVariable("id") String id, @ModelAttribute Jobs updatedJob,Model model,
                             @RequestParam("deadline") String deadline) {
@@ -201,8 +198,6 @@ public class JobsController {
 
         jobsService.update(updatedJob);
         return "redirect:/jobs/list" ;//只要跟Date相關的就用redirect:轉回到頁面
-
-
     }
 
     // 更新
