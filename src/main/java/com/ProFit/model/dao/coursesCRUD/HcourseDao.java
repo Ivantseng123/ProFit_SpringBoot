@@ -69,7 +69,7 @@ public class HcourseDao implements IHcourseDao {
 				? oldCourse.getCourseName()
 				: newCourse.getCourseName());
 
-		oldCourse.setCourseCreateUserId(newCourse.getCourseCreateUserId() == null || newCourse.getCourseCreateUserId().isEmpty()
+		oldCourse.setCourseCreateUserId(newCourse.getCourseCreateUserId() == null
 				? oldCourse.getCourseCreateUserId()
 				: newCourse.getCourseCreateUserId());
 
@@ -101,7 +101,7 @@ public class HcourseDao implements IHcourseDao {
 				? oldCourse.getCourseEndDate()
 				: newCourse.getCourseEndDate());
 
-		oldCourse.setCoursePrice(newCourse.getCoursePrice() == null || newCourse.getCoursePrice().isEmpty() 
+		oldCourse.setCoursePrice(newCourse.getCoursePrice() == null
 				? oldCourse.getCoursePrice()
 				: newCourse.getCoursePrice());
 
@@ -131,7 +131,7 @@ public class HcourseDao implements IHcourseDao {
 
 	// 查詢全部By 多條件查詢
 	@Override
-	public List<CourseBean> searchCourses(String courseName, String userName, String status, String userId,
+	public List<CourseBean> searchCourses(String courseName, String userName, String status, Integer userId,
 			String category) {
 		Session session = entityManager.unwrap(Session.class);
 		StringBuilder hql = new StringBuilder("SELECT c FROM CourseBean c INNER JOIN c.courseCreater u WHERE 1=1");
@@ -145,7 +145,7 @@ public class HcourseDao implements IHcourseDao {
 		if (status != null && !status.trim().isEmpty()) {
 			hql.append(" AND c.courseStatus = :status");
 		}
-		if (userId != null && !userId.trim().isEmpty()) {
+		if (userId != null) {
 			hql.append(" AND c.courseCreateUserId = :userId");
 		}
 		if (category != null && !category.trim().isEmpty()) {
@@ -164,8 +164,8 @@ public class HcourseDao implements IHcourseDao {
 		if (status != null && !status.trim().isEmpty()) {
 			query.setParameter("status", status);
 		}
-		if (userId != null && !userId.trim().isEmpty()) {
-			query.setParameter("userId", Integer.parseInt(userId));
+		if (userId != null) {
+			query.setParameter("userId", userId);
 		}
 		if (category != null && !category.trim().isEmpty()) {
 			query.setParameter("category", Integer.parseInt(category));

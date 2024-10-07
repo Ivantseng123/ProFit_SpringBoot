@@ -66,13 +66,13 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 		}
 		
 		// 對比新舊對象的屬性值
-		oldCourseOrder.setCourse(newCourseOrder.getCourse()==null || newCourseOrder.getCourse().getCourseId() == null || newCourseOrder.getCourse().getCourseId().isEmpty()
-				?oldCourseOrder.getCourse()
-				:newCourseOrder.getCourse());
+		oldCourseOrder.setCourseId(newCourseOrder.getCourseId() == null|| newCourseOrder.getCourseId().isEmpty()
+				?oldCourseOrder.getCourseId()
+				:newCourseOrder.getCourseId());
 		
-		oldCourseOrder.setStudnt(newCourseOrder.getStudnt()==null || newCourseOrder.getStudnt().getUserId() ==null || newCourseOrder.getStudnt().getUserId()==0
-				?oldCourseOrder.getStudnt()
-				:newCourseOrder.getStudnt());
+		oldCourseOrder.setStudentId(newCourseOrder.getStudentId()==0
+				?oldCourseOrder.getStudentId()
+				:newCourseOrder.getStudentId());
 		
 		oldCourseOrder.setCourseOrderPrice(newCourseOrder.getCourseOrderPrice()==null
 				?oldCourseOrder.getCourseOrderPrice()
@@ -107,15 +107,15 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 	
 	// 搜尋課程訂單by 多條件
 	@Override
-	public List<CourseOrderBean> searchCourseOrders(String courseId,String studentId,String status) {
+	public List<CourseOrderBean> searchCourseOrders(String courseId,Integer studentId,String status) {
 		Session session = entityManager.unwrap(Session.class);
 		StringBuilder hql = new StringBuilder("from CourseOrderBean CO WHERE 1=1");
 		
 		if(courseId !=null && !courseId.trim().isEmpty()) {
 			hql.append(" AND courseId LIKE :courseId");
 		}
-		if(studentId != null && !studentId.trim().isEmpty()) {
-			hql.append(" AND studentId LIKE :studentId");
+		if(studentId != null) {
+			hql.append(" AND studentId = :studentId");
 		}
 		if(status != null && !status.trim().isEmpty()) {
 			hql.append(" AND status = :status");
@@ -125,8 +125,8 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 		if(courseId !=null && !courseId.trim().isEmpty()) {
 			query.setParameter("courseId", "%"+courseId+"%");
 		}
-		if(studentId != null && !studentId.trim().isEmpty()) {
-			query.setParameter("studentId", "%"+studentId+"%");
+		if(studentId != null) {
+			query.setParameter("studentId", studentId);
 		}
 		if(status != null && !status.trim().isEmpty()) {
 			query.setParameter("status","%"+status+"%");

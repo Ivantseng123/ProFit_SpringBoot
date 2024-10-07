@@ -22,7 +22,7 @@ public interface IHcourseDao {
 
 	// 查詢全部By 多條件查詢
 	public List<CourseBean> searchCourses(String courseName, String userName, 
-								String status, String userId, String category);
+								String status, Integer userId, String category);
 
 
 }
