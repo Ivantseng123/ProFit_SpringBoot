@@ -40,8 +40,8 @@
 	<!-- Modal -->
 	<!-- 新增類別 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false"
-			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -72,8 +72,8 @@
 
 	<!-- 編輯類別 彈出視窗 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false"
-			tabindex="-1" aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -127,16 +127,13 @@
 
 							<div class="row">
 								<div class="mb-3 col">
-									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id"
-										required>
+									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id" required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱"
-										required>
+									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱" required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述"
-										required>
+									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述" required>
 								</div>
 							</div>
 							<button type="button" class="btn btn-primary">新增</button>
@@ -503,7 +500,7 @@
 				.then(data => {
 					// console.log('Success:', data);
 					alert('專業新增成功');
-					
+
 					// 顯示模態框
 					$('#majorsModal').modal('hide');
 					viewMajors(majorCategoryId);
@@ -539,7 +536,7 @@
 				})
 				.then(data => {
 					const majorCategoryId = document.getElementById('insertMajorCategoryId').value;
-						alert('專業已成功刪除');
+					alert('專業已成功刪除');
 					// 關閉可能打開的模態框
 					$('#majorsModal').modal('hide');
 					// 重新加載專業列表

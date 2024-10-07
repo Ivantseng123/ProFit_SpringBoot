@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.ProFit.model.bean.majorsBean.UserMajorBean;
 import com.ProFit.model.dto.majorsDTO.PageResponse;
+import com.ProFit.model.dto.majorsDTO.UserMajorDTO;
 import com.ProFit.service.majorService.IUserMajorService;
 
 @Controller
@@ -23,22 +24,22 @@ public class UserMajorController {
 	}
 
 	// 取得所有使用者-專業關聯（分頁）
-	@GetMapping
+	@GetMapping("/api/list")
 	@ResponseBody
-	public ResponseEntity<PageResponse<UserMajorBean>> getAllUserMajors(@RequestParam(defaultValue = "0") int page,
+	public ResponseEntity<PageResponse<UserMajorDTO>> getAllUserMajors(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy,
 			@RequestParam(defaultValue = "true") boolean ascending) {
-		PageResponse<UserMajorBean> response = userMajorService.getAllUserMajors(page, size, sortBy, ascending);
+		PageResponse<UserMajorDTO> response = userMajorService.getAllUserMajors(page, size, sortBy, ascending);
 		return ResponseEntity.ok(response);
 	}
 
 	// 根據使用者ID取得關聯的專業（分頁）
 	@GetMapping("/api/user/{userId}")
 	@ResponseBody
-	public ResponseEntity<PageResponse<UserMajorBean>> getUserMajorsByUserId(@PathVariable Integer userId,
+	public ResponseEntity<PageResponse<UserMajorDTO>> getUserMajorsByUserId(@PathVariable Integer userId,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "true") boolean ascending) {
-		PageResponse<UserMajorBean> response = userMajorService.getUserMajorsByUserId(userId, page, size, sortBy,
+		PageResponse<UserMajorDTO> response = userMajorService.getUserMajorsByUserId(userId, page, size, sortBy,
 				ascending);
 		return ResponseEntity.ok(response);
 	}
@@ -46,10 +47,10 @@ public class UserMajorController {
 	// 根據專業ID取得關聯的使用者（分頁）
 	@GetMapping("/api/major/{majorId}")
 	@ResponseBody
-	public ResponseEntity<PageResponse<UserMajorBean>> getUserMajorsByMajorId(@PathVariable Integer majorId,
+	public ResponseEntity<PageResponse<UserMajorDTO>> getUserMajorsByMajorId(@PathVariable Integer majorId,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
 			@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "true") boolean ascending) {
-		PageResponse<UserMajorBean> response = userMajorService.getUserMajorsByMajorId(majorId, page, size, sortBy,
+		PageResponse<UserMajorDTO> response = userMajorService.getUserMajorsByMajorId(majorId, page, size, sortBy,
 				ascending);
 		return ResponseEntity.ok(response);
 	}
@@ -57,8 +58,8 @@ public class UserMajorController {
 	// 新增使用者-專業關聯
 	@PostMapping("/api/{userId}/{majorId}")
 	@ResponseBody
-	public ResponseEntity<UserMajorBean> addUserMajor(@PathVariable Integer userId, @PathVariable Integer majorId) {
-		UserMajorBean userMajor = userMajorService.addUserMajor(userId, majorId);
+	public ResponseEntity<UserMajorDTO> addUserMajor(@PathVariable Integer userId, @PathVariable Integer majorId) {
+		UserMajorDTO userMajor = userMajorService.addUserMajor(userId, majorId);
 		return new ResponseEntity<>(userMajor, HttpStatus.CREATED);
 	}
 
@@ -81,8 +82,8 @@ public class UserMajorController {
 	// 取得特定的使用者-專業關聯
 	@GetMapping("/api/{userId}/{majorId}")
 	@ResponseBody
-	public ResponseEntity<UserMajorBean> getUserMajor(@PathVariable Integer userId, @PathVariable Integer majorId) {
-		UserMajorBean userMajor = userMajorService.getUserMajor(userId, majorId);
+	public ResponseEntity<UserMajorDTO> getUserMajor(@PathVariable Integer userId, @PathVariable Integer majorId) {
+		UserMajorDTO userMajor = userMajorService.getUserMajor(userId, majorId);
 		if (userMajor != null) {
 			return ResponseEntity.ok(userMajor);
 		} else {

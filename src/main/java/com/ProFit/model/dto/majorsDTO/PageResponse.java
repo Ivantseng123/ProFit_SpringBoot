@@ -45,6 +45,20 @@ public class PageResponse<T> {
 		return response;
 	}
 
+	// 靜態工廠方法，從 Spring Data 的 Page 對象創建 PageResponse
+	// 可以用DTO創建, 把 page物件 的 content(原本是beanList) 換成 dtoList
+	public static <T, U> PageResponse<T> ofDTO(List<T> dtoList, Page<U> page) {
+		PageResponse<T> response = new PageResponse<>();
+		response.setContent(dtoList); // dtoList 取代 page.getContent()
+		response.setPageNo(page.getNumber());
+		response.setPageSize(page.getSize());
+		response.setTotalElements(page.getTotalElements());
+		response.setTotalPages(page.getTotalPages());
+		response.setLast(page.isLast());
+		response.setFirst(page.isFirst());
+		return response;
+	}
+
 	// Getter 和 Setter 方法
 	public List<T> getContent() {
 		return content;

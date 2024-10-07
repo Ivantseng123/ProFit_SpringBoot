@@ -42,9 +42,28 @@ public class UserMajorPK implements Serializable {
 		this.majorId = majorId;
 	}
 
+	
+	// getter setter
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getMajorId() {
+		return majorId;
+	}
+
+	public void setMajorId(Integer majorId) {
+		this.majorId = majorId;
+	}
+
 	@Override
 	public String toString() {
 		return "UserMajorPK [userId=" + userId + ", majorId=" + majorId + "]";
 	}
 
+	
 }

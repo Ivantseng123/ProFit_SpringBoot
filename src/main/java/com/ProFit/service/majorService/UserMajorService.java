@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -24,6 +25,7 @@ import com.ProFit.model.dao.majorsCRUD.MajorRepository;
 import com.ProFit.model.dao.majorsCRUD.UserMajorRepository;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.majorsDTO.PageResponse;
+import com.ProFit.model.dto.majorsDTO.UserMajorDTO;
 
 @Service
 @Transactional
@@ -45,37 +47,53 @@ public class UserMajorService implements IUserMajorService {
 
 	// 分頁獲取所有用戶-專業關聯
 	@Override
-	public PageResponse<UserMajorBean> getAllUserMajors(int page, int size, String sortBy, boolean ascending) {
+	public PageResponse<UserMajorDTO> getAllUserMajors(int page, int size, String sortBy, boolean ascending) {
 		Pageable pageable = createPageable(page, size, sortBy, ascending);
 		Page<UserMajorBean> userMajorPage = userMajorRepo.findAll(pageable);
-		// 獲取用戶專業關聯的方法 of，使用自己寫的 PageResponse 傳入 Page 並返回分頁結果(response物件)。
-		return PageResponse.of(userMajorPage);
+
+		List<UserMajorDTO> userMajorDTOs = userMajorPage.getContent().stream().map(UserMajorDTO::fromEntity)
+				.collect(Collectors.toList());
+
+		// 獲取用戶專業關聯的方法 ofDTO，使用自己寫的 PageResponse 傳入 DTO 及 Page 並返回分頁結果(PageResponse物件)。
+		return PageResponse.ofDTO(userMajorDTOs, userMajorPage);
 	}
 
 	// 根據用戶ID分頁獲取所有關聯的專業
 	@Override
-	public PageResponse<UserMajorBean> getUserMajorsByUserId(Integer userId, int page, int size, String sortBy,
+	public PageResponse<UserMajorDTO> getUserMajorsByUserId(Integer userId, int page, int size, String sortBy,
 			boolean ascending) {
 		Pageable pageable = createPageable(page, size, sortBy, ascending);
 		Page<UserMajorBean> userMajorPage = userMajorRepo.findByIdUserId(userId, pageable);
-		return PageResponse.of(userMajorPage);
+
+		List<UserMajorDTO> userMajorDTOs = userMajorPage.getContent().stream().map(UserMajorDTO::fromEntity)
+				.collect(Collectors.toList());
+
+		return PageResponse.ofDTO(userMajorDTOs, userMajorPage);
 	}
 
 	// 根據專業ID分頁獲取所有關聯的用戶
 	@Override
-	public PageResponse<UserMajorBean> getUserMajorsByMajorId(Integer majorId, int page, int size, String sortBy,
+	public PageResponse<UserMajorDTO> getUserMajorsByMajorId(Integer majorId, int page, int size, String sortBy,
 			boolean ascending) {
 		Pageable pageable = createPageable(page, size, sortBy, ascending);
 		Page<UserMajorBean> userMajorPage = userMajorRepo.findByIdMajorId(majorId, pageable);
-		return PageResponse.of(userMajorPage);
+
+		List<UserMajorDTO> userMajorDTOs = userMajorPage.getContent().stream().map(UserMajorDTO::fromEntity)
+				.collect(Collectors.toList());
+
+		return PageResponse.ofDTO(userMajorDTOs, userMajorPage);
 	}
 
 	// 添加用戶-專業關聯
 	@Override
-	public UserMajorBean addUserMajor(Integer userId, Integer majorId) {
+	public UserMajorDTO addUserMajor(Integer userId, Integer majorId) {
 		UserMajorPK id = new UserMajorPK(userId, majorId);
 		UserMajorBean userMajor = new UserMajorBean(id);
-		return userMajorRepo.save(userMajor);
+		UserMajorBean userMajorBean = userMajorRepo.save(userMajor);
+
+		UserMajorDTO userMajorDTO = UserMajorDTO.fromEntity(userMajorBean);
+
+		return userMajorDTO;
 	}
 
 	// 刪除用戶-專業關聯
@@ -92,10 +110,11 @@ public class UserMajorService implements IUserMajorService {
 
 	// 獲取特定的用戶-專業關聯
 	@Override
-	public UserMajorBean getUserMajor(Integer userId, Integer majorId) {
+	public UserMajorDTO getUserMajor(Integer userId, Integer majorId) {
 		UserMajorPK id = new UserMajorPK(userId, majorId);
 		if (userMajorRepo.findById(id).isPresent()) {
-			return userMajorRepo.findById(id).get();
+			UserMajorDTO userMajorDTO = UserMajorDTO.fromEntity(userMajorRepo.findById(id).get());
+			return userMajorDTO;
 		}
 		return null;
 	}
