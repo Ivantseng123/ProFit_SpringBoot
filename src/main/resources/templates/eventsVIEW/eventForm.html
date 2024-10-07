@@ -40,7 +40,7 @@
             <input style="width:20px;" type="checkbox" id="isEventActive" name="isEventActive" value="1" ${event.isEventActive==1 ? 'checked' : '' }>
             <hr>
             <label for="eventMajor">專業類別</label>
-            <input type="number" id="eventMajor" name="eventMajor" value="${event.eventMajor}">
+            <input type="number" id="eventMajor" name="eventMajor" value="${event.eventMajor.majorId}">
             <hr>
             <label for="eventStartDate">開始日期</label>
             <input type="datetime-local" id="eventStartDate" name="eventStartDate" value="${event.eventStartDate}">
@@ -70,11 +70,13 @@
             <label for="eventNote">備註</label>
             <textarea id="eventNote" name="eventNote">${event.eventNote}</textarea>
             <hr>
-            <button type="button" onclick="submitForm()">保存</button>
+            <button type="button" id="saveBtn">保存</button>
         </form>
     </main>
 
     <script>
+        document.getElementById("saveBtn").addEventListener("click", submitForm);
+        
         function submitForm() {
             const eventData = {
                 eventId: document.getElementById("eventId").value,

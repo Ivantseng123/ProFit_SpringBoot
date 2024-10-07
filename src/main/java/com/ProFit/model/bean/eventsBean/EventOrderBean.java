@@ -13,19 +13,27 @@ public class EventOrderBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id 
 	private String eventOrderId;
+
+	@Column(name = "event_order_amount")
 	private int eventOrderAmount;
+
+	@Column(name = "is_event_order_active")
 	private boolean isEventOrderActive;
+
+	@Column(name = "event_participant_date")
 	private LocalDateTime eventParticipantDate;
+
+	@Column(name = "event_participant_note")
 	private String eventParticipantNote;
 
 	@ManyToOne
-	@JoinColumn(name = "event_id", referencedColumnName = "event_id")
+	@JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = false)
 	private EventsBean event;
 
 	@ManyToOne
-	@JoinColumn(name = "event_participant_id", referencedColumnName = "user_id")
+	@JoinColumn(name = "event_participant_id", referencedColumnName = "user_id", nullable = false)
 	private Users participant;
 
 	public EventOrderBean() {
@@ -65,12 +73,12 @@ public class EventOrderBean implements Serializable {
 		this.isEventOrderActive = isEventOrderActive;
 	}
 
-	public String getEventId() {
-		return event.getEventId();
+	public EventsBean getEvent() {
+		return event;
 	}
 
-	public int getEventParticipantId() {
-		return participant.getUserId();
+	public Users getEventParticipant() {
+		return participant;
 	}
 
 	public LocalDateTime getEventParticipantDate() {
@@ -92,8 +100,8 @@ public class EventOrderBean implements Serializable {
 	@Override
 	public String toString() {
 		return "EventOrderBean [eventOrderId=" + eventOrderId + ", eventOrderAmount=" + eventOrderAmount
-				+ ", isEventOrderActive=" + isEventOrderActive + ", eventId=" + this.getEventId() + ", eventParticipantId="
-				+ this.getEventParticipantId() + ", eventParticipantDate=" + eventParticipantDate + ", eventParticipantNote="
+				+ ", isEventOrderActive=" + isEventOrderActive + ", eventId=" + this.event.getEventId() + ", eventParticipantId="
+				+ this.participant.getUserId() + ", eventParticipantDate=" + eventParticipantDate + ", eventParticipantNote="
 				+ eventParticipantNote + "]";
 	}
 
