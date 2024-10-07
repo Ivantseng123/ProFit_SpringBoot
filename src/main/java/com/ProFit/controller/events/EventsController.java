@@ -30,15 +30,15 @@ public class EventsController {
         return "eventsVIEW/eventForm";
     }
 
-    @GetMapping("/edit/{eventId}")
-    public String editEvent(@PathVariable String eventId, Model model) {
+    @GetMapping("/edit")
+    public String editEvent(@RequestParam String eventId, Model model) {
         EventsBean event = eventsService.selectEventById(eventId);
         model.addAttribute("event", event);
         return "eventsVIEW/eventForm";
     }
 
-    @GetMapping("/delete/{eventId}")
-    public String deleteEvent(@PathVariable String eventId) {
+    @GetMapping("/delete")
+    public String deleteEvent(@RequestParam String eventId) {
         eventsService.deleteEvent(eventId);
         return "redirect:/events";
     }
