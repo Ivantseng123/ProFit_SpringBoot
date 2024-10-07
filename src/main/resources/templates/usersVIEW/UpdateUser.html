@@ -20,11 +20,11 @@
 				<input type="hidden" name="userPictureURL" id="user_pictureURL" value="">
 				<label class="form-label" for="">會員頭貼:</label>
 				<div class="profile-picture">
-					<img id="profileImagePreview" src="" alt="Profile Image" />
+					<img id="profileImagePreview" src="" alt="Profile Image" class="w-25 h-25" />
 				</div>
 
 				<div>
-					<input class="file-uploader" type="file" id="fileInput" accept="image/*" name="imgfile" />
+					<input class="form-control file-uploader" type="file" id="fileInput" accept="image/*" name="imgfile" />
 				</div>
 				<label class="form-label" for="user_id">會員ID:</label>
 				<input class="form-input" type="text" id="user_id" name="userId" readonly>
@@ -37,7 +37,7 @@
 				<label class="form-label" for="user_password">
 					會員密碼: </label> <input class="form-input" type="password" placeholder="修改會員密碼" id="user_password"
 					name="userPasswordHash" value="${user.userPasswordHash}" readonly>
-				<button class="insertbtn" type="button" style="margin-top: 20px; margin-bottom: 20px"
+				<button class="btn btn-warning insertbtn" type="button" style="margin-top: 20px; margin-bottom: 20px"
 					onclick="togglePopup()">修改密碼</button>
 				<label class="form-label" for="user_phonenumber">會員手機號碼:</label>
 				<input class="form-input" type="text" placeholder="修改會員手機號碼" id="user_phonenumber"

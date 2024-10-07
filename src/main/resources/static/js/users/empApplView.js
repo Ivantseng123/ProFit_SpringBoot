@@ -69,10 +69,18 @@ function allEmpAppl() {
 			},
 			{
 				data: null,
-				defaultContent: `
-					                    <button id="view" class="btn btn-success">查看</button>
-					                    <button id="edit" class="btn btn-warning">編輯</button>
-					                    <button id="delete" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>`
+				render: function(data) {
+					const viewButton = `<button id="view" class="btn btn-success">查看</button>`;
+					const deleteButton = `<button id="delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>`;
+
+					let editButton = '';
+					if (data.applicationCheck === 0) {
+						// 只有在 applicationCheck 為 0 時，才顯示編輯按鈕
+						editButton = `<button id="edit" class="btn btn-warning">編輯</button>`;
+					}
+
+					return `${viewButton} ${editButton} ${deleteButton}`;
+				}
 			} // 操作按钮列
 		],
 		"language": {
@@ -84,7 +92,6 @@ function allEmpAppl() {
 		},
 		ordering: false
 	});
-
 }
 
 $('.file-uploader_taxID').on('change', function() {

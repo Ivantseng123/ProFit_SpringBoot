@@ -35,7 +35,7 @@ public class CourseBean implements java.io.Serializable {
 	private Users courseCreater;
 
 	@Column(name="course_create_user_id")
-	private String courseCreateUserId;
+	private Integer courseCreateUserId;
 	
 	@Column(name="course_coverPictureURL")
 	private String courseCoverPictureURL;
@@ -68,7 +68,7 @@ public class CourseBean implements java.io.Serializable {
 	private LocalDateTime courseEndDate;
 
 	@Column(name="course_price")
-	private String coursePrice;
+	private Integer coursePrice;
 
 	@Column(name="course_status")
 	private String courseStatus;
@@ -78,9 +78,9 @@ public class CourseBean implements java.io.Serializable {
 	}
 	
 	
-	public CourseBean(String courseId, String courseName, String courseCreateUserId, String courseCategory,
+	public CourseBean(String courseId, String courseName, Integer courseCreateUserId, String courseCategory,
 			String courseInformation, String courseDescription, LocalDate courseEnrollmentDate, LocalDateTime courseStartDate,
-			LocalDateTime courseEndDate, String coursePrice, String courseStatus) {
+			LocalDateTime courseEndDate, Integer coursePrice, String courseStatus) {
 		super();
 		this.courseId = courseId;
 		this.courseName = courseName;
@@ -97,9 +97,9 @@ public class CourseBean implements java.io.Serializable {
 	
 	
 	// for create course
-	public CourseBean(String courseName, String courseCreateUserId, String courseCategory, String courseInformation,
+	public CourseBean(String courseName, Integer courseCreateUserId, String courseCategory, String courseInformation,
 			String courseDescription, LocalDate courseEnrollmentDate, LocalDateTime courseStartDate, LocalDateTime courseEndDate,
-			String coursePrice, String courseStatus) {
+			Integer coursePrice, String courseStatus) {
 		super();
 		this.courseName = courseName;
 		this.courseCreateUserId = courseCreateUserId;
@@ -144,12 +144,12 @@ public class CourseBean implements java.io.Serializable {
 	}
 
 
-	public String getCourseCreateUserId() {
+	public Integer getCourseCreateUserId() {
 		return courseCreateUserId;
 	}
 
 
-	public void setCourseCreateUserId(String courseCreateUserId) {
+	public void setCourseCreateUserId(Integer courseCreateUserId) {
 		this.courseCreateUserId = courseCreateUserId;
 	}
 
@@ -244,12 +244,12 @@ public class CourseBean implements java.io.Serializable {
 	}
 
 
-	public String getCoursePrice() {
+	public Integer getCoursePrice() {
 		return coursePrice;
 	}
 
 
-	public void setCoursePrice(String coursePrice) {
+	public void setCoursePrice(Integer coursePrice) {
 		this.coursePrice = coursePrice;
 	}
 
