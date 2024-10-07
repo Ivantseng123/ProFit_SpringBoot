@@ -26,8 +26,8 @@
             <th:block th:each="jobApplication : ${jobsApplicationList}">
                 <tr>
                     <td th:text="${jobApplication.jobsApplicationId}"></td>
-                    <td th:text="${jobApplication.users.poster}"></td>
-                    <td th:text="${jobApplication.users.applicant}"></td>
+                    <td th:text="${jobApplication.poster.userName}"></td>
+                    <td th:text="${jobApplication.applicant.userName}"></td>
                     <td th:text="${jobApplication.jobsApplicationDate}"></td>
                     <td th:text="${jobApplication.jobsApplicationStatus}"></td>
                     <td th:text="${jobApplication.jobsApplicationContract}"></td>
@@ -48,14 +48,24 @@
                data: 'jobsApplicationId',
                className: 'all'
            },{
-               data: 'poster',
-               className: 'all'
+               data: 'poster.userName',
+               className: 'all',
+               // render: function (data, type, row) {
+               //     return row.poster.userName;
+               // }
            },{
-               data: 'applicant',
-               className: 'all'
+               data: 'applicant.userName',
+               className: 'all',
+               // render: function (data, type, row) {
+               //     return row.applicant.userName;
+               // }
            },{
                data: 'jobsApplicationDate',
-               className: 'all'
+               className: 'all',
+               render: function (data, type, row) {
+                   console.log(row.jobsApplicationDate+'aaa')
+                   return row.jobsApplicationDate;
+               }
            },{
                data: 'jobsApplicationContract',
                className: 'all'

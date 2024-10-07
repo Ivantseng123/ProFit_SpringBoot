@@ -1,6 +1,7 @@
 package com.ProFit.model.bean.jobsBean;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +15,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.util.Date;
 import com.ProFit.model.bean.usersBean.Users;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -44,10 +46,14 @@ public class Jobs implements java.io.Serializable{
     private String jobsTitle;
 
     @Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "jobs_posting_date",insertable = false,updatable = false)
     private Date jobsPostingDate;
 
     @Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "jobs_application_deadline")
     private Date jobsApplicationDeadline;
 
