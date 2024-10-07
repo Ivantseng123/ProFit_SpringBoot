@@ -35,10 +35,11 @@ public class MajorBean implements java.io.Serializable {
 	private String majorDescription; // 專業描述
 
 	// 多對多關係，中介表user_major
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_major", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "major_id") })
-	private Set<Users> users = new LinkedHashSet<Users>(0);
+	// 由users表成為關係的所有者，定義了 @JoinTable, 單方向管理這段關係
+	// MajorBean 成為被動方，表明 Users 實體是關係的所有者。
+	// 避免了重複定義 user_major 表
+	@ManyToMany(mappedBy = "majors")
+	private Set<Users> users = new LinkedHashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "major_category_id", insertable = false, updatable = false)
@@ -47,8 +48,8 @@ public class MajorBean implements java.io.Serializable {
 	public MajorBean() {
 		super();
 	}
-	
-	//沒帶id建構子
+
+	// 沒帶id建構子
 	public MajorBean(String majorName, Integer majorCategoryId, String majorDescription) {
 		super();
 		this.majorName = majorName;
@@ -56,7 +57,7 @@ public class MajorBean implements java.io.Serializable {
 		this.majorDescription = majorDescription;
 	}
 
-	//有帶id建構子
+	// 有帶id建構子
 	public MajorBean(Integer majorId, String majorName, Integer majorCategoryId, String majorDescription) {
 		super();
 		this.majorId = majorId;
@@ -116,12 +117,7 @@ public class MajorBean implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "MajorBean [majorId=" + majorId + ", majorName=" + majorName + ", majorCategoryId=" + majorCategoryId
-				+ ", majorDescription=" + majorDescription + ", majorCategory=" + majorCategory
-				+ "]";
+				+ ", majorDescription=" + majorDescription + ", majorCategory=" + majorCategory + "]";
 	}
 
-
-	
-
-	
 }
