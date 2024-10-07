@@ -1,7 +1,9 @@
 package com.ProFit.controller.services;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ProFit.model.bean.majorsBean.MajorBean;
@@ -21,6 +24,7 @@ import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.majorsDTO.PageResponse;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.service.serviceService.ServiceService;
+import com.ProFit.service.utilsService.FirebaseStorageService;
 
 @Controller
 @RequestMapping("/service")
@@ -28,6 +32,9 @@ public class ServiceController {
 
 	@Autowired
 	private ServiceService serviceService;
+	
+	@Autowired
+    private FirebaseStorageService firebaseStorageService;
 
 	// 跳轉到主頁面
 	@GetMapping("/")
@@ -66,24 +73,84 @@ public class ServiceController {
 	// 新增服務的方法
 	@PostMapping("/api")
 	@ResponseBody
-	public ResponseEntity<ServicesDTO> addService(@RequestBody ServicesDTO serviceDTO) {
-		ServicesDTO createdService = serviceService.addService(serviceDTO);
-		return new ResponseEntity<>(createdService, HttpStatus.CREATED);
-	}
+	 public ResponseEntity<Map<String, String>> addService(
+	            @ModelAttribute ServicesDTO serviceDTO,
+	            @RequestPart(required = false) MultipartFile servicePictureURL1,
+	            @RequestPart(required = false) MultipartFile servicePictureURL2,
+	            @RequestPart(required = false) MultipartFile servicePictureURL3) {
+
+	        try {
+	            // 處理圖片上傳
+	            if (servicePictureURL1 != null && !servicePictureURL1.isEmpty()) {
+	                String photoURL = firebaseStorageService.uploadFile(servicePictureURL1);
+	                serviceDTO.setServicePictureURL1(photoURL);
+	            }
+	            if (servicePictureURL2 != null && !servicePictureURL2.isEmpty()) {
+	                String photoURL = firebaseStorageService.uploadFile(servicePictureURL2);
+	                serviceDTO.setServicePictureURL2(photoURL);
+	            }
+	            if (servicePictureURL3 != null && !servicePictureURL3.isEmpty()) {
+	                String photoURL = firebaseStorageService.uploadFile(servicePictureURL3);
+	                serviceDTO.setServicePictureURL3(photoURL);
+	            }
+
+	            // 新增服務
+	            ServicesDTO createdService = serviceService.addService(serviceDTO);
+
+	            // 返回 JSON 響應
+	            Map<String, String> response = new HashMap<>();
+	            response.put("message", "OK");
+	            response.put("serviceId", createdService.getServiceId().toString());
+	            return new ResponseEntity<>(response, HttpStatus.CREATED);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	        }
+	    }
 
 	// 更新服務的方法
 	@PutMapping("/api/{serviceId}")
 	@ResponseBody
-	public ResponseEntity<ServicesDTO> updateService(@PathVariable Integer serviceId,
-			@RequestBody ServicesDTO serviceDTO) {
-		serviceDTO.setServiceId(serviceId);
-		ServicesDTO updatedService = serviceService.updateService(serviceDTO);
-		if (updatedService != null) {
-			return ResponseEntity.ok(updatedService);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+	public ResponseEntity<Map<String, String>> updateService(
+            @PathVariable Integer serviceId,
+            @ModelAttribute ServicesDTO serviceDTO,
+            @RequestPart(required = false) MultipartFile servicePictureURL1,
+            @RequestPart(required = false) MultipartFile servicePictureURL2,
+            @RequestPart(required = false) MultipartFile servicePictureURL3) {
+
+        try {
+            serviceDTO.setServiceId(serviceId);
+
+            // 處理圖片上傳
+            if (servicePictureURL1 != null && !servicePictureURL1.isEmpty()) {
+                String photoURL = firebaseStorageService.uploadFile(servicePictureURL1);
+                serviceDTO.setServicePictureURL1(photoURL);
+            }
+            if (servicePictureURL2 != null && !servicePictureURL2.isEmpty()) {
+                String photoURL = firebaseStorageService.uploadFile(servicePictureURL2);
+                serviceDTO.setServicePictureURL2(photoURL);
+            }
+            if (servicePictureURL3 != null && !servicePictureURL3.isEmpty()) {
+                String photoURL = firebaseStorageService.uploadFile(servicePictureURL3);
+                serviceDTO.setServicePictureURL3(photoURL);
+            }
+
+            // 更新服務
+            ServicesDTO updatedService = serviceService.updateService(serviceDTO);
+
+            if (updatedService != null) {
+                Map<String, String> response = new HashMap<>();
+                response.put("message", "OK");
+                response.put("serviceId", updatedService.getServiceId().toString());
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 	// 刪除服務的方法
 	@DeleteMapping("/api/{serviceId}")
