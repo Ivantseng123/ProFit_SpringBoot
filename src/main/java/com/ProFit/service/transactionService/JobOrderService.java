@@ -1,5 +1,6 @@
 package com.ProFit.service.transactionService;
 
+import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
 import com.ProFit.model.bean.transactionBean.JobOrderBean;
 import com.ProFit.model.dao.transactionCRUD.JobOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class JobOrderService {
@@ -16,62 +18,81 @@ public class JobOrderService {
     @Autowired
     private JobOrderRepository jobOrderRepository;
 
-    // 查詢所有訂單
     @Transactional(readOnly = true)
-    public List<JobOrderBean> getAllOrders() {
-        return jobOrderRepository.findAll();
+    public List<JobOrderDTO> getAllOrdersAsDTO() {
+        return jobOrderRepository.findAll().stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
-    // 根據ID獲取訂單
     @Transactional(readOnly = true)
-    public JobOrderBean getOrderById(String jobOrdersId) {
-        return jobOrderRepository.findById(jobOrdersId).orElse(null); 
-    }
-
-    // 根據條件篩選訂單
-    @Transactional(readOnly = true)
-    public List<JobOrderBean> searchOrdersByCriteria(Integer jobApplicationId, LocalDateTime startDate, LocalDateTime endDate, String jobOrderStatus) {
+    public List<JobOrderDTO> searchOrdersByCriteriaDTO(Integer jobApplicationId, LocalDateTime startDate, LocalDateTime endDate, String jobOrderStatus) {
+        List<JobOrderBean> result;
         if (jobApplicationId != null && startDate != null && endDate != null && jobOrderStatus != null) {
-            // 根據職缺ID、日期範圍和狀態篩選
-            return jobOrderRepository.findByJobApplicationIdAndJobOrderDateBetweenAndJobOrderStatus(jobApplicationId, startDate, endDate, jobOrderStatus);
+            result = jobOrderRepository.findByJobApplicationIdAndJobOrderDateBetweenAndJobOrderStatus(jobApplicationId, startDate, endDate, jobOrderStatus);
         } else if (jobApplicationId != null) {
-            // 根據職缺申請ID篩選
-            return jobOrderRepository.findByJobApplicationId(jobApplicationId);
+            result = jobOrderRepository.findByJobApplicationId(jobApplicationId);
         } else if (startDate != null && endDate != null) {
-            // 根據日期範圍篩選
-            return jobOrderRepository.findByJobOrderDateBetween(startDate, endDate);
+            result = jobOrderRepository.findByJobOrderDateBetween(startDate, endDate);
         } else if (jobOrderStatus != null) {
-            // 根據狀態篩選
-            return jobOrderRepository.findByJobOrderStatus(jobOrderStatus);
+            result = jobOrderRepository.findByJobOrderStatus(jobOrderStatus);
+        } else {
+            result = jobOrderRepository.findAll();
         }
-        return jobOrderRepository.findAll();  // 如果沒有篩選條件，則返回所有訂單
+        return result.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
-    
-    // 新增訂單
+
     @Transactional
-    public void insertOrder(JobOrderBean order) {
-        if (order.getJobOrdersId() == null || order.getJobOrdersId().isEmpty()) {
-            order.setJobOrdersId(UUID.randomUUID().toString());  // 自動生成UUID
+    public void insertOrderFromDTO(JobOrderDTO jobOrderDTO) {
+        JobOrderBean jobOrderBean = convertToEntity(jobOrderDTO);
+        
+        // 確保在插入時自動生成 jobOrdersId
+        if (jobOrderBean.getJobOrdersId() == null || jobOrderBean.getJobOrdersId().isEmpty()) {
+            jobOrderBean.setJobOrdersId(UUID.randomUUID().toString());  // 自動生成 UUID 作為主鍵
         }
-        order.setJobOrderDate(LocalDateTime.now());  // 使用 LocalDateTime.now() 設置當前時間
-        jobOrderRepository.save(order);
+
+        jobOrderBean.setJobOrderDate(LocalDateTime.now());  // 設置當前時間
+        jobOrderRepository.save(jobOrderBean);
     }
 
-    // 更新訂單
     @Transactional
-    public void updateOrder(JobOrderBean order) {
-        if (order.getJobOrderDate() == null) {
-            order.setJobOrderDate(LocalDateTime.now()); // 如果沒有設置日期，則設置為當前時間
+    public void updateOrderFromDTO(JobOrderDTO jobOrderDTO) {
+        JobOrderBean jobOrderBean = convertToEntity(jobOrderDTO);
+
+        // 更新時不需生成新 UUID，但確保有 jobOrderDate
+        if (jobOrderBean.getJobOrderDate() == null) {
+            jobOrderBean.setJobOrderDate(LocalDateTime.now());
         }
-        jobOrderRepository.save(order);  // 更新訂單
+
+        jobOrderRepository.save(jobOrderBean);
     }
 
-
-    // 刪除訂單
     @Transactional
     public void deleteOrder(String jobOrdersId) {
-        jobOrderRepository.deleteById(jobOrdersId);  // 根據ID刪除
+        jobOrderRepository.deleteById(jobOrdersId);
     }
 
-   
+    // 將實體轉換為 DTO
+    private JobOrderDTO convertToDTO(JobOrderBean jobOrderBean) {
+        JobOrderDTO dto = new JobOrderDTO();
+        dto.setJobOrdersId(jobOrderBean.getJobOrdersId());
+        dto.setJobApplicationId(jobOrderBean.getJobApplicationId());
+        dto.setJobOrderDate(jobOrderBean.getJobOrderDate());
+        dto.setJobOrderStatus(jobOrderBean.getJobOrderStatus());
+        dto.setJobNotes(jobOrderBean.getJobNotes());
+        dto.setJobAmount(jobOrderBean.getJobAmount());
+        return dto;
+    }
+
+    // 將 DTO 轉換為實體
+    private JobOrderBean convertToEntity(JobOrderDTO jobOrderDTO) {
+        JobOrderBean entity = new JobOrderBean();
+        entity.setJobOrdersId(jobOrderDTO.getJobOrdersId());
+        entity.setJobApplicationId(jobOrderDTO.getJobApplicationId());
+        entity.setJobOrderDate(jobOrderDTO.getJobOrderDate());
+        entity.setJobOrderStatus(jobOrderDTO.getJobOrderStatus());
+        entity.setJobNotes(jobOrderDTO.getJobNotes());
+        entity.setJobAmount(jobOrderDTO.getJobAmount());
+        return entity;
+    }
 }
