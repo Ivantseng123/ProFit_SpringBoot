@@ -31,14 +31,14 @@ VALUES
 (104, N'行銷經理', DATEADD(day, -3, GETDATE()), DATEADD(month, 3, GETDATE()), N'負責公司整體行銷策略', 1, N'數位行銷, SEO, 社群媒體管理', N'高雄市', 140000, 100000, '09:00:00', 1),
 (105, N'前端開發工程師', GETDATE(), DATEADD(month, 2, GETDATE()), N'開發responsive網站和web應用', 1, N'HTML, CSS, JavaScript, React', N'台北市', 110000, 80000, '09:30:00', 2);
 
--- 2. jobs_application 表
+-- 插入測試資料到 jobs_application 表
 INSERT INTO jobs_application (jobs_application_posting_id, jobs_application_member_id, jobs_application_date, jobs_application_status, jobs_application_contract)
 VALUES
-(1, 101, DATEADD(day, -2, GETDATE()), 1, NULL),
-(2, 102, DATEADD(day, -1, GETDATE()), 2, NULL),
-(3, 103, GETDATE(), 1, NULL),
-(4, 104, DATEADD(day, -3, GETDATE()), 3, NULL),
-(5, 105, DATEADD(day, -1, GETDATE()), 1, NULL);
+(105, 101, DATEADD(day, -2, GETDATE()), 1, NULL),
+(104, 102, DATEADD(day, -1, GETDATE()), 2, NULL),
+(103, 103, GETDATE(), 1, NULL),
+(102, 104, DATEADD(day, -3, GETDATE()), 3, NULL),
+(101, 105, DATEADD(day, -1, GETDATE()), 1, NULL);
 
 -- 3. jobs_application_project 表
 INSERT INTO jobs_application_project (jobs_application_id, jobs_application_status, jobs_project, jobs_amount)
