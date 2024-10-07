@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import com.ProFit.model.bean.usersBean.Users;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,10 +28,16 @@ import jakarta.persistence.TemporalType;
 //	如果只需要逐個位元組地讀取資料，InputStream 是一個不錯的選擇。
 //	如果需要直接與資料庫進行互動，Blob 是最適合的選擇。
 import jakarta.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-
-
-
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Entity
 @Table(name = "jobs_Application")
 public class JobsApplication implements java.io.Serializable{
@@ -40,17 +47,14 @@ public class JobsApplication implements java.io.Serializable{
 	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  @Column(name = "jobs_application_id")
 	  private int jobsApplicationId;
-	  
-	  
+
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個職缺對應到多個申請
-//	  @JoinColumn(name = "jobs_application_posting_id",insertable = false,updatable = false)
 	  @JoinColumn(name = "jobs_application_posting_id")
 	  private Users poster;
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對USER表，一個應徵者對應到多個申請
-//	  @JoinColumn(name = "jobs_application_member_id",insertable = false,updatable = false)//改名為jobs_application_user_id
-	  @JoinColumn(name = "jobs_application_member_id")
+	  @JoinColumn(name = "jobs_application_member_id")//改名為jobs_application_user_id
 	  private Users applicant;
 	  
 //	  @Column(name = "jobs_application_posting_id")
@@ -62,7 +66,8 @@ public class JobsApplication implements java.io.Serializable{
 	  
 
 	  @Temporal(TemporalType.DATE)
-	  @Transient
+	  @DateTimeFormat(pattern = "yyyy-MM-dd")
+	  @JsonFormat(pattern = "yyyy-MM-dd")
 	  @Column(name = "jobs_application_date",insertable = false,updatable = false)
 	  private Date jobsApplicationDate;
 
@@ -73,65 +78,8 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_contract")
 	  private Blob jobsApplicationContract;
 
-	  
-	  
-	public int getJobsApplicationId() {
-		return jobsApplicationId;
-	}
 
-	public void setJobsApplicationId(int jobsApplicationId) {
-		this.jobsApplicationId = jobsApplicationId;
-	}
 
-	public Users getPoster() {
-		return poster;
-	}
-
-	public void setPoster(Users poster) {
-		this.poster = poster;
-	}
-
-	public Users getApplicant() {
-		return applicant;
-	}
-
-	public void setApplicant(Users applicant) {
-		this.applicant = applicant;
-	}
-
-	public Date getJobsApplicationDate() {
-		return jobsApplicationDate;
-	}
-
-	public void setJobsApplicationDate(Date jobsApplicationDate) {
-		this.jobsApplicationDate = jobsApplicationDate;
-	}
-
-	public Byte getJobsApplicationStatus() {
-		return jobsApplicationStatus;
-	}
-
-	public void setJobsApplicationStatus(Byte jobsApplicationStatus) {
-		this.jobsApplicationStatus = jobsApplicationStatus;
-	}
-
-	public Blob getJobsApplicationContract() {
-		return jobsApplicationContract;
-	}
-
-	public void setJobsApplicationContract(Blob jobsApplicationContract) {
-		this.jobsApplicationContract = jobsApplicationContract;
-	}
-
-	
-	
-	@Override
-	public String toString() {
-		return "JobsApplication [jobsApplicationId=" + jobsApplicationId + ", poster=" + poster + ", applicant="
-				+ applicant + ", jobsApplicationDate=" + jobsApplicationDate + ", jobsApplicationStatus="
-				+ jobsApplicationStatus + ", jobsApplicationContract=" + jobsApplicationContract + "]";
-	}
-	
 
 
 

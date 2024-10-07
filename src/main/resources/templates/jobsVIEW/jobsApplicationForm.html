@@ -10,10 +10,10 @@
 
 <body>
 <div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
-    <h1 class="mt-4">職缺詳情</h1>
+    <h1 class="mt-4">職缺申請詳情</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/jobs">職缺管理</a></li>
-        <li class="breadcrumb-item active">查看職缺詳情</li>
+        <li class="breadcrumb-item"><a href="/jobsApplication">職缺申請管理</a></li>
+        <li class="breadcrumb-item active">查看職缺申請詳情</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
@@ -95,7 +95,7 @@
                 </div>
 
                 <!-- 返回按鈕 -->
-                <a th:href="@{/jobs/list}" class="btn btn-secondary">返回</a>
+                <a th:href="@{/jobsApplication/list}" class="btn btn-secondary">返回</a>
             </form>
         </div>
     </div>
@@ -104,11 +104,11 @@
 <script>
     // 這裡添加從後端獲取數據並填充到頁面的 JavaScript 代碼
     document.addEventListener('DOMContentLoaded', function() {
-        // 假設職缺 ID 存儲在 URL 參數中
+        // 假設職缺申請 ID 存儲在 URL 參數中
         const jobId = new URLSearchParams(window.location.search).get('id');
 
         // 發送請求到後端 API
-        fetch(`/api/jobs/${jobId}`)
+        fetch(`/api/jobsApplication/${jobsApplicationId}`)
             .then(response => response.json())
             .then(data => {
                 // 找值到頁面

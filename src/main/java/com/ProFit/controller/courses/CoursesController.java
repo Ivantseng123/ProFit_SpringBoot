@@ -64,7 +64,7 @@ public class CoursesController {
 	    @RequestParam(required = false) String courseName,
 	    @RequestParam(required = false) String courseCreateUserName,
 	    @RequestParam(required = false) String courseStatus,
-	    @RequestParam(required = false) String courseCreateUserId,
+	    @RequestParam(required = false) Integer courseCreateUserId,
 	    @RequestParam(required = false) String courseMajor
 	){
 		List<CoursesDTO> corusesDTOList = courseService.searchCourses(courseName,courseCreateUserName,courseStatus,courseCreateUserId,courseMajor);
@@ -91,13 +91,13 @@ public class CoursesController {
         @PathVariable("oldCourseId") String courseId,
         @RequestParam String courseName,
         @RequestParam String courseCategory,
-        @RequestParam String courseCreateUserId,
+        @RequestParam Integer courseCreateUserId,
         @RequestParam String courseInformation,
         @RequestParam String courseDescription,
         @RequestParam String courseEnrollmentDate,
         @RequestParam String courseStartDate,
         @RequestParam String courseEndDate,
-        @RequestParam String coursePrice,
+        @RequestParam Integer coursePrice,
         @RequestParam String courseStatus,
         @RequestPart(required = false) MultipartFile courseCoverPicture
     ) {
@@ -124,8 +124,6 @@ public class CoursesController {
             ? LocalDateTime.parse(courseStartDate, dateTimeFormatter) : null;
         LocalDateTime endDateParsed = (courseEndDate != null && !courseEndDate.isEmpty()) 
             ? LocalDateTime.parse(courseEndDate, dateTimeFormatter) : null;
-        
-      
         
         // 創建更新的 CourseBean 對象
         CourseBean updateCourse = new CourseBean(
@@ -176,8 +174,6 @@ public class CoursesController {
 		return isCourseDeleted;
 	}
     
-    // 新增課程的方法
-    // 此方法會自動將表單數據綁定到 CourseBean 對象
     /**
      * 新增課程的方法
      * 此方法會自動將表單數據綁定到 CourseBean 對象

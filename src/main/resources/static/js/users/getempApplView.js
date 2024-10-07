@@ -18,6 +18,15 @@ function getEmpAppl() {
 
 		})
 		.then(empAppl => {
+
+			let passBtn = document.getElementById('passbtn')
+			let rejectBtn = document.getElementById('rejectbtn')
+
+			if (empAppl.applicationCheck == 1 || empAppl.applicationCheck == 2) {
+				passBtn.disabled = true;
+				rejectBtn.disabled = true;
+			}
+
 			const empApplInfoContainer = document.getElementById('empAppl-info');
 			empApplInfoContainer.innerHTML = `
 				<div class="row">
@@ -156,11 +165,11 @@ $('#passbtn').on('click', function() {
 		});
 
 });
-$('rejectbtn').on('click', function() {
+$('#rejectbtn').on('click', function() {
 
 	let user_id = document.getElementById('userId').innerText;
 
-	let check = "0";
+	let check = "2";
 
 	const data = {
 		'employer_application_id': employerApplicationId,

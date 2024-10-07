@@ -2,7 +2,6 @@ package com.ProFit.service.courseService;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
-
 import com.ProFit.model.bean.coursesBean.CourseModuleBean;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
 
