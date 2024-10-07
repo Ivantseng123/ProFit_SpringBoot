@@ -117,7 +117,7 @@ public class UserService implements IUserService {
 
 		if (optional.isPresent() && optional.get().getUserIdentity() == 3) {
 			String dbPassword = optional.get().getUserPasswordHash();
-			
+
 			return pwdEncoder.matches(userPassword, dbPassword);
 		}
 		return false;
@@ -172,7 +172,7 @@ public class UserService implements IUserService {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
 		Page<Users> usersPage = usersRepository.findAll(pageable);
 
-		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserEmail(), user.getUserName(),
+		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserName(), user.getUserEmail(),
 				user.getUserIdentity(), user.getUserRegisterTime()));
 	}
 
@@ -183,12 +183,12 @@ public class UserService implements IUserService {
 		if (search == null || search.isEmpty()) {
 
 			Page<Users> usersPage = usersRepository.findAll(pageable);
-			return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserEmail(), user.getUserName(),
+			return usersPage.map(user -> new UsersDTO(user.getUserId(),user.getUserName(), user.getUserEmail(),
 					user.getUserIdentity(), user.getUserRegisterTime()));
 		}
 
 		Page<Users> usersPage = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pageable);
-		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserEmail(), user.getUserName(),
+		return usersPage.map(user -> new UsersDTO(user.getUserId(),user.getUserName(), user.getUserEmail(),
 				user.getUserIdentity(), user.getUserRegisterTime()));
 	}
 

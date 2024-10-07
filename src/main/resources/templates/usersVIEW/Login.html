@@ -24,7 +24,7 @@ body {
 .login-form {
 	margin: 0 auto;
 	width: 100%;
-	height: 320px;
+	height: 360px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -75,11 +75,11 @@ body {
 					<input type="password" id="password" class="form-control"
 						placeholder="密碼" name="userPassword" required>
 				</div>
-				<div id="loginError">
-					
-				</div>
+				<div id="loginError"></div>
 				<button type="submit" class="btn btn-primary btn-block">登入</button>
 			</form>
+			<button type="button" class="btn btn-primary mt-3"
+				onclick="oneClickInsert()">一鍵輸入</button>
 		</div>
 	</div>
 

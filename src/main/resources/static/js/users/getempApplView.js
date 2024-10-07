@@ -95,7 +95,7 @@ function getEmpAppl() {
 						</div>
 						</div>
 				</div>		
-				<div class="row">
+				<div class="row mt-3">
 				<div class="col-md-6">
 						<h6>負責人身份字號:</h6>
 						</div>
@@ -123,7 +123,7 @@ function getEmpAppl() {
 												</div>
 												</div>
 										</div>		
-				<div class="row">
+				<div class="row mt-3">
 				<div class="col-md-6">
 						<h6>審核狀態:</h6>	
 						</div>	
@@ -136,7 +136,11 @@ function getEmpAppl() {
 		.catch(error => console.error('Error fetching empAppl data:', error));
 }
 
-$('#passbtn').on('click', function() {
+document.getElementById('passbtn').addEventListener('click', function(){
+	
+})
+
+$('#passAction').on('click', function() {
 
 	let user_id = document.getElementById('userId').innerText;
 
@@ -165,7 +169,7 @@ $('#passbtn').on('click', function() {
 		});
 
 });
-$('#rejectbtn').on('click', function() {
+$('#rejectAction').on('click', function() {
 
 	let user_id = document.getElementById('userId').innerText;
 
