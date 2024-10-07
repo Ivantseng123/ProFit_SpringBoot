@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.ProFit.model.bean.coursesBean.CourseModuleBean;
@@ -71,7 +72,7 @@ public class CourseModuleService implements IcourseModuleService {
 
 	@Override
 	public Page<CourseModuleDTO> findMsgByPage(Integer pageNumber) {
-		PageRequest pgb = PageRequest.of(pageNumber-1, 10,Sort.Direction.DESC,"added");
+		Pageable pgb = PageRequest.of(pageNumber-1, 10,Sort.Direction.DESC,"added");
 		
 		Page<CourseModuleBean> courseModulePage = courseModuleRepo.findAll(pgb);
 		

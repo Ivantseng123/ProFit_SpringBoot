@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.dao.jobsCRUD.IHJobsDAO;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class JobsService implements IJobsService{
 
     @Override
     public Jobs save(Jobs jobs) {
+
         return jobsDAO.save(jobs);
     }
 
@@ -40,7 +42,10 @@ public class JobsService implements IJobsService{
 
     @Override
     public Jobs update(Jobs jobs) {
-        return jobs;
+        Jobs existJobs = jobsDAO.findById(jobs.getJobsId()).orElse(new Jobs());
+            BeanUtils.copyProperties(jobs, existJobs,"jobsPostingDate");
+
+        return jobsDAO.save(existJobs);
     }
 
     @Override
