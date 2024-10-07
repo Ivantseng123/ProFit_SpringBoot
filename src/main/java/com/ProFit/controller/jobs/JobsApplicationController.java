@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Blob;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -81,15 +80,17 @@ public class JobsApplicationController {
 
         JobsApplication savedJobApplication = jobsApplicationService.save(jobsApplication);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedJobApplication);
+        }
 
-//        //導向查看頁面
-//        @GetMapping("/view/{id}")
-//        public String view(@PathVariable("id") Integer id, Model model){
-//            if (id != null) {
-//                model.addAttribute("job", jobsApplicationService.findById(id).orElse(null));;
-//            }
-//            return "jobsVIEW/jobsApplicationForm";
-//        }
+
+        //導向查看頁面
+        @GetMapping("/view/{id}")
+        public String view(@PathVariable("id") Integer id, Model model){
+            if (id != null) {
+                model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
+            }
+            return "jobsVIEW/jobsApplicationForm";
+        }
 //
 //
 //        //導向更新頁面
@@ -119,6 +120,6 @@ public class JobsApplicationController {
 //            jobsApplicationService.update(updatedJobApplication);
 //            return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
 //        }
-    }
+
 
 }

@@ -96,10 +96,14 @@
                     let result = '';
 
                     //這裡的class就是bootstrap,就幾乎不用style
+                   //查看
                     result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i>'
-                   console.log(result);
+
+                   //編輯
                     result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i>\''
-                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i>\''
+
+                   //刪除
+                   result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i>\''
                    return result;
                }
            }]
