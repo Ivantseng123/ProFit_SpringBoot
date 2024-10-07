@@ -12,7 +12,7 @@
 <div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
     <h1 class="mt-4">職缺詳情</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/jobs">職缺管理</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/jobs/list}">職缺管理</a></li>
         <li class="breadcrumb-item active">查看職缺詳情</li>
     </ol>
     <div class="card mb-4">
@@ -30,7 +30,7 @@
 
                 <!-- 刊登方 ID -->
                 <div class="mb-3">
-                    <label for="jobsUserId" class="form-label">發布者 ID</label>
+                    <label for="jobsUserId" class="form-label">刊登方 ID</label>
                     <input type="text" class="form-control" id="jobsUserId" name="jobsUserId" th:value="${job.users.userId}" readonly />
                 </div>
 

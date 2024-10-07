@@ -34,10 +34,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
+//@Setter
+//@NoArgsConstructor
+///@AllArgsConstructor
+//@Getter
 @Entity
 @Table(name = "jobs_Application")
 public class JobsApplication implements java.io.Serializable{
@@ -62,8 +62,6 @@ public class JobsApplication implements java.io.Serializable{
 //
 //	  @Column(name = "jobs_application_member_id")
 //	  private Integer jobsApplicationMemberId;
-	  
-	  
 
 	  @Temporal(TemporalType.DATE)
 	  @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -78,9 +76,68 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_contract")
 	  private Blob jobsApplicationContract;
 
+    //無參建構子
+	public JobsApplication() {
+		super();
+	}
+
+    //全參建構子
+	public JobsApplication(int jobsApplicationId, Users poster, Users applicant, Date jobsApplicationDate, Byte jobsApplicationStatus, Blob jobsApplicationContract) {
+		this.jobsApplicationId = jobsApplicationId;
+		this.poster = poster;
+		this.applicant = applicant;
+		this.jobsApplicationDate = jobsApplicationDate;
+		this.jobsApplicationStatus = jobsApplicationStatus;
+		this.jobsApplicationContract = jobsApplicationContract;
+	}
 
 
+	//getter setter
+	public int getJobsApplicationId() {
+		return jobsApplicationId;
+	}
 
+	public void setJobsApplicationId(int jobsApplicationId) {
+		this.jobsApplicationId = jobsApplicationId;
+	}
 
+	public Users getPoster() {
+		return poster;
+	}
 
+	public void setPoster(Users poster) {
+		this.poster = poster;
+	}
+
+	public Users getApplicant() {
+		return applicant;
+	}
+
+	public void setApplicant(Users applicant) {
+		this.applicant = applicant;
+	}
+
+	public Date getJobsApplicationDate() {
+		return jobsApplicationDate;
+	}
+
+	public void setJobsApplicationDate(Date jobsApplicationDate) {
+		this.jobsApplicationDate = jobsApplicationDate;
+	}
+
+	public Byte getJobsApplicationStatus() {
+		return jobsApplicationStatus;
+	}
+
+	public void setJobsApplicationStatus(Byte jobsApplicationStatus) {
+		this.jobsApplicationStatus = jobsApplicationStatus;
+	}
+
+	public Blob getJobsApplicationContract() {
+		return jobsApplicationContract;
+	}
+
+	public void setJobsApplicationContract(Blob jobsApplicationContract) {
+		this.jobsApplicationContract = jobsApplicationContract;
+	}
 }
