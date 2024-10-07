@@ -2,6 +2,7 @@ package com.ProFit.model.bean.majorsBean;
 
 import com.ProFit.model.bean.usersBean.Users;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

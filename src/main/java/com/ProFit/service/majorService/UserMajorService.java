@@ -89,6 +89,16 @@ public class UserMajorService implements IUserMajorService {
 	public UserMajorDTO addUserMajor(Integer userId, Integer majorId) {
 		UserMajorPK id = new UserMajorPK(userId, majorId);
 		UserMajorBean userMajor = new UserMajorBean(id);
+		
+		MajorBean major = new MajorBean();
+		major.setMajorId(majorId);
+		
+		Users users = new Users();
+		users.setUserId(userId);
+		
+		userMajor.setMajor(major);
+		userMajor.setUser(users);
+		
 		UserMajorBean userMajorBean = userMajorRepo.save(userMajor);
 
 		UserMajorDTO userMajorDTO = UserMajorDTO.fromEntity(userMajorBean);

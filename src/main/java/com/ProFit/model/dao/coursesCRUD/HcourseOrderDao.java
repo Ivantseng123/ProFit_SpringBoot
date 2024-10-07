@@ -108,6 +108,8 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 	// 搜尋課程訂單by 多條件
 	@Override
 	public List<CourseOrderBean> searchCourseOrders(String courseId,Integer studentId,String status) {
+		
+		System.out.println(status);
 		Session session = entityManager.unwrap(Session.class);
 		StringBuilder hql = new StringBuilder("from CourseOrderBean CO WHERE 1=1");
 		
@@ -118,7 +120,7 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 			hql.append(" AND studentId = :studentId");
 		}
 		if(status != null && !status.trim().isEmpty()) {
-			hql.append(" AND status = :status");
+			hql.append(" AND courseOrderStatus = :status");
 		}
 		
 		Query<CourseOrderBean> query = session.createQuery(hql.toString(),CourseOrderBean.class);
@@ -129,7 +131,7 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 			query.setParameter("studentId", studentId);
 		}
 		if(status != null && !status.trim().isEmpty()) {
-			query.setParameter("status","%"+status+"%");
+			query.setParameter("status",status);
 		}
 		
 		return query.getResultList();
