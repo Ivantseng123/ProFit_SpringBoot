@@ -11,22 +11,23 @@ function allEmpAppl() {
 		"serverSide": true,
 		"paging": true,
 		"pageLength": 10,
+		 lengthChange: false,
 		"ajax": function(data, callback, settings) {
 			const pageNumber = Math.floor(data.start / data.length) + 1; // 當前頁碼，從1開始
-			const searchValue = data.search.value; // 搜索框中的值
+			const searchValue = data.search.value; // 搜尋框中的值
 
 			fetch(`http://localhost:8080/ProFit/api/empAppl/page?pageNumber=${pageNumber}&search=${searchValue}`)
 				.then(response => response.json())
 				.then(result => {
 					// server返回的分頁數據
 					const empAppl = result.content; //當前頁的數據
-					const totalRecords = result.totalElements; // 总记录数
+					const totalRecords = result.totalElements; // 總筆數
 					console.log(result)
 					// 將數據傳給 DataTables 的 callback 以更新表格
 					callback({
 						draw: data.draw,
 						recordsTotal: totalRecords, // 總數
-						recordsFiltered: totalRecords, // 过滤后的记录数，默认与总记录数相同
+						recordsFiltered: totalRecords,
 						data: empAppl // 當前頁的數據
 					});
 				})
@@ -131,21 +132,19 @@ $('.file-uploader_nationalID1').on('change', function() {
 	}
 });
 
-// 绑定 change 事件到文件输入元素
+// 綁定 change 事件到檔案輸入
 $('.file-uploader_nationalID2').on('change', function() {
 	let fileInput = $(this)[0];
 	let previewImage = $('#nationalIDPreview2');
 
-	// 确保有文件被选择
+	// 確保有文件被選擇
 	if (fileInput.files && fileInput.files[0]) {
 		let reader = new FileReader();
 
 		reader.onload = function(e) {
-			// 当文件读取完成后，将结果作为图片的 src
 			previewImage.attr('src', e.target.result);
 		}
 
-		// 读取图片文件
 		reader.readAsDataURL(fileInput.files[0]);
 	}
 });
@@ -218,7 +217,9 @@ function togglePopup() {
 
 
 document.getElementById('insertform').addEventListener('submit', function(e) {
-	e.preventDefault(); // 阻止默认提交
+	e.preventDefault();
+
+	document.getElementById("insertBtn").disabled = true;
 
 	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
 		.then(response => response.json())
@@ -283,10 +284,17 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 						.then(response => response.text())
 						.then((result) => {
 							console.log(result);
-							const OkModal = new bootstrap.Modal(document.getElementById('OkModal'));
-							OkModal.show();
+
+							if (result == '新增OK') {
+								const OkModal = new bootstrap.Modal(document.getElementById('OkModal'));
+								OkModal.show();
+							} else {
+								const failedModal = new bootstrap.Modal(document.getElementById('failedModal'));
+								failedModal.show();
+							}
 							allEmpAppl();
 							togglePopup();
+							document.getElementById("insertBtn").disabled = false;
 						})
 						.catch(error => {
 							console.error('Error:', error);
@@ -307,3 +315,13 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 		});
 });
 
+function oneClickInsert() {
+	document.getElementById('user_id').value = '131';
+	document.getElementById('company_name').value = '資展國際';
+	document.getElementById('company_phoneNumber').value = '03-123456';
+	document.getElementById('company_taxID').value = '12344321';
+	document.getElementById("taoyuan").selected = true;
+	document.getElementById('company_address').value = '中壢區新生路二段';
+	document.getElementById("1").selected = true;
+	document.getElementById('user_national_id').value = 'H123456789';
+}

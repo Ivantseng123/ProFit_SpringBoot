@@ -2,10 +2,11 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>ProFit</title>
-	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
-	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
+<meta charset="UTF-8">
+<title>ProFit</title>
+<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
 </head>
 
 <body>
@@ -17,15 +18,19 @@
 		<div>
 			<h2 style="color: orange;">更新企業資訊</h2>
 			<form class="form-container" id="updateEmpPf">
-				<input type="hidden" id="company_photoURL" name="companyPhotoURL" value="">
-				<label class="form-label" for="employer_profile_id"> 企業資訊ID: </label> <input class="form-input"
-					type="text" id="employer_profile_id" name="employerProfileId" value="" readonly> <label
-					class="form-label" for="user_id">
-					會員ID: </label> <input class="form-input" type="text" id="user_id" name="userId"
-					value="${emp.userId}" readonly> <label class="form-label" for="company_name">公司名稱:</label> <input
-					class="form-input" type="text" placeholder="修改公司名稱" id="company_name" name="companyName"
-					value="${emp.companyName}" required> <label class="form-label" for="company_address">公司地址:</label>
-				<select name="companyAddress" class="address-option">
+				<input type="hidden" id="company_photoURL" name="companyPhotoURL"
+					value=""> <label class="form-label"
+					for="employer_profile_id"> 企業資訊ID: </label> <input
+					class="form-input" type="text" id="employer_profile_id"
+					name="employerProfileId" value="" readonly> <label
+					class="form-label" for="user_id"> 會員ID: </label> <input
+					class="form-input" type="text" id="user_id" name="userId"
+					value="${emp.userId}" readonly> <label class="form-label"
+					for="company_name">公司名稱:</label> <input class="form-input"
+					type="text" placeholder="修改公司名稱" id="company_name"
+					name="companyName" value="${emp.companyName}" required> <label
+					class="form-label" for="company_address">公司地址:</label> <select
+					name="companyAddress" class="address-option">
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
 					<option value="基隆市">基隆市</option>
@@ -47,10 +52,11 @@
 					<option value="澎湖縣">澎湖縣</option>
 					<option value="花蓮縣">花蓮縣</option>
 					<option value="臺東縣">臺東縣</option>
-				</select> <input class="form-input" type="text" placeholder="修改公司地址" id="company_address"
-					name="companyAddress1" value="" required> <label class="form-label"
-					for="company_category">公司分類:</label>
-				<select name="companyCategory" class="category-option" style="margin-bottom: 20px">
+				</select> <input class="form-input" type="text" placeholder="修改公司地址"
+					id="company_address" name="companyAddress1" value="" required>
+				<label class="form-label" for="company_category">公司分類:</label> <select
+					name="companyCategory" class="category-option"
+					style="margin-bottom: 20px">
 					<option value="農、林、漁、牧業">農、林、漁、牧業</option>
 					<option value="礦業及土石採取業">礦業及土石採取業</option>
 					<option value="製造業">製造業</option>
@@ -63,11 +69,13 @@
 					<option value="文化、運動、休閒及其他服務業">文化、運動、休閒及其他服務業</option>
 					<option value="其他">其他</option>
 				</select> <label class="form-label" for="companyPhoneNumber">公司電話:</label> <input
-					class="form-input-insert" type="text" placeholder="輸入公司電話" id="company_phoneNumber"
-					name="companyPhoneNumber" value="" required> <label class="form-label"
-					for="company_taxID">公司統編:</label> <input class="form-input" type="text" placeholder="修改公司統編"
-					id="company_taxID" name="companyTaxID" value="" required> <label class="form-label"
-					for="company_numberOfemployee">公司員工數:</label> <select id="numberOfemployee" class="numOfemp-option"
+					class="form-input-insert" type="text" placeholder="輸入公司電話"
+					id="company_phoneNumber" name="companyPhoneNumber" value=""
+					required> <label class="form-label" for="company_taxID">公司統編:</label>
+				<input class="form-input" type="text" placeholder="修改公司統編"
+					id="company_taxID" name="companyTaxID" value="" required> <label
+					class="form-label" for="company_numberOfemployee">公司員工數:</label> <select
+					id="numberOfemployee" class="numOfemp-option"
 					name="companyNumberOfemployee" style="margin-bottom: 20px">
 					<option value="1-10">1-10</option>
 					<option value="11-50">11-50</option>
@@ -76,28 +84,35 @@
 					<option value="501-1000">501-1000</option>
 					<option value="1001-5000">1001-5000</option>
 					<option value="5000以上">5000以上</option>
-				</select> <label class="form-label" for="company_captital">公司資本額:</label> <input class="form-input"
-					type="text" placeholder="修改公司資本額" id="company_captital" name="companyCaptital" value=""> <label
-					class="form-label" for="company_description">公司簡介:</label>
-				<textarea rows="10" cols="50" id="company_description" name="companyDescription"></textarea>
+				</select> <label class="form-label" for="company_captital">公司資本額:</label>
+				<div class="input-group mb-3">
+					<input class="form-control" type="text" placeholder="修改公司資本額"
+						id="company_captital" name="companyCaptital" value=""> <span
+						class="input-group-text">萬</span>
+				</div>
+				<label class="form-label" for="company_description">公司簡介:</label>
+				<textarea rows="10" cols="50" id="company_description"
+					name="companyDescription"></textarea>
 				<label class="form-label" for="nationalID-img">公司照片:</label>
 				<div class="company-picture">
-					<img class="company-img" id="companyImgPreview" src="" alt="公司照片" />
+					<img class="company-img w-50 h-50" id="companyImgPreview" src="" alt="公司照片" />
 				</div>
 				<div>
-					<input class="form-control file-uploader_companyImg" id="fileInput" type="file" name="companyPhoto"
-						accept="image/*" />
+					<input class="form-control file-uploader_companyImg mt-3 mb-3"
+						id="fileInput" type="file" name="companyPhoto" accept="image/*" />
 				</div>
 				<input type="submit" value="確定" class="btn-submit" />
 			</form>
 		</div>
 	</div>
-	<div class="modal fade" id="OkModal" tabindex="-1" aria-labelledby="OkModalLabel" aria-hidden="true">
+	<div class="modal fade" id="OkModal" tabindex="-1"
+		aria-labelledby="OkModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content Ok">
 				<div class="modal-header">
 					<p>更新成功</p>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body text-center">
 					<i class="fa-regular fa-circle-check fa-7x" style="color: #00a876;"></i>
@@ -106,9 +121,12 @@
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
-	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
+	<script src="https://kit.fontawesome.com/4caf09a569.js"
+		crossorigin="anonymous"></script>
 	<script th:src="@{/js/users/updateempPfView.js}"></script>
 </body>
 

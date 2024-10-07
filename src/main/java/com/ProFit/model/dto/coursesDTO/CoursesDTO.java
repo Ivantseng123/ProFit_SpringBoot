@@ -17,7 +17,7 @@ public class CoursesDTO {
 	private String courseEnrollmentDate;
 	private String courseStartDate;
 	private String courseEndDate;
-	private String coursePrice;
+	private Integer coursePrice;
 	private String courseStatus;
 
 	// 無參數構造函數
@@ -150,11 +150,11 @@ public class CoursesDTO {
 		this.courseEndDate = courseEndDate;
 	}
 
-	public String getCoursePrice() {
+	public Integer getCoursePrice() {
 		return coursePrice;
 	}
 
-	public void setCoursePrice(String coursePrice) {
+	public void setCoursePrice(Integer coursePrice) {
 		this.coursePrice = coursePrice;
 	}
 
