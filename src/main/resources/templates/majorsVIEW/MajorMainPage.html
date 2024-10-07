@@ -241,15 +241,15 @@
                     return response.json();
                 })
                 .then(majors => {
+                    hideLoading();
                     displayMajors(majors);
                 })
                 .catch(error => {
+                    hideLoading();
                     console.error('Error:', error);
                     showError('載入專業失敗，請稍後再試。');
                 })
-                .finally(() => {
-                    hideLoading();
-                });
+
         }
 
         // 載入所有 Categories 到新增專業modal
@@ -354,6 +354,7 @@
 
         // 移除加載指示器
         function hideLoading() {
+            document.getElementById('search-results').innerHTML = '';
         }
 
         function showError(message) {
@@ -397,15 +398,14 @@
                 .then(response => response.json())
                 .then(majors => {
                     // console.log(majors);
+                    hideLoading();
                     displayMajors(majors);
                 })
                 .catch(error => {
+                    hideLoading();
                     console.error('Error:', error);
                     showError('無符合條件的查詢結果，請更改查詢條件。');
                 })
-                .finally(() => {
-                    hideLoading();
-                });
         }
 
 
