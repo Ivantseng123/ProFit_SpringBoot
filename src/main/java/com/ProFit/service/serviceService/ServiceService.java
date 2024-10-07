@@ -122,6 +122,22 @@ public class ServiceService {
 		return ServicesDTO.fromEntity(savedBean);
 	}
 
+	// 新增服務
+	public ServicesDTO addService(ServiceBean serviceBean, Integer userId, Integer majorId) {
+		
+		UserMajorPK userMajorPK = new UserMajorPK(userId, majorId);
+		Optional<UserMajorBean> optional = userMajorRepo.findById(userMajorPK);
+		
+		if (optional.isPresent()) {
+			UserMajorBean userMajorBean = optional.get();
+			serviceBean.setUserMajor(userMajorBean);
+			ServiceBean savedBean = serviceRepo.save(serviceBean);
+			return ServicesDTO.fromEntity(savedBean);
+		}
+		
+		return null;
+	}
+
 	// 根據服務ID刪除服務
 	public void deleteService(Integer serviceId) {
 		serviceRepo.deleteById(serviceId);
@@ -142,13 +158,13 @@ public class ServiceService {
 	// 搜尋單筆的方法
 	public ServicesDTO getServiceById(Integer serviceId) {
 		Optional<ServiceBean> optional = serviceRepo.findById(serviceId);
-		if(optional.isPresent()) {
+		if (optional.isPresent()) {
 			ServiceBean serviceBean = optional.get();
 			return ServicesDTO.fromEntity(serviceBean);
 		}
 		return null;
 	}
-	
+
 	// 分頁查詢所有服務
 	public PageResponse<ServicesDTO> getAllServices(int page, int size, String sortBy, boolean ascending) {
 		Pageable pageable = createPageable(page, size, sortBy, ascending);
@@ -176,66 +192,75 @@ public class ServiceService {
 	}
 
 	// 根據價格範圍查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByPriceRange(Integer minPrice, Integer maxPrice, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByServicePriceBetween(minPrice, maxPrice, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	public PageResponse<ServicesDTO> getServicesByPriceRange(Integer minPrice, Integer maxPrice, int page, int size,
+			String sortBy, boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByServicePriceBetween(minPrice, maxPrice, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據服務狀態查詢（分頁）
-    public PageResponse<ServicesDTO> getServicesByStatus(Integer status, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByServiceStatus(status, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據服務狀態查詢（分頁）
+	public PageResponse<ServicesDTO> getServicesByStatus(Integer status, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByServiceStatus(status, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據用戶ID查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByUserId(Integer userId, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByUserId(userId, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據用戶ID查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByUserId(Integer userId, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByUserId(userId, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據用戶freelancer_identity查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByFreelancerIdentity(String identity, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByUserFreelancerIdentity(identity, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據用戶freelancer_identity查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByFreelancerIdentity(String identity, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByUserFreelancerIdentity(identity, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據用戶freelancer_exprience查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByFreelancerExperience(String experience, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByUserFreelancerExperience(experience, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據用戶freelancer_exprience查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByFreelancerExperience(String experience, int page, int size,
+			String sortBy, boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByUserFreelancerExperience(experience, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據用戶freelancer_location_prefer查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByFreelancerLocationPrefer(String location, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByUserFreelancerLocationPrefer(location, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據用戶freelancer_location_prefer查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByFreelancerLocationPrefer(String location, int page, int size,
+			String sortBy, boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByUserFreelancerLocationPrefer(location, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據專業ID查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByMajorId(Integer majorId, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByMajorId(majorId, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據專業ID查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByMajorId(Integer majorId, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByMajorId(majorId, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據 MajorCategory ID 查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByMajorCategoryId(Integer categoryId, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByMajorCategoryId(categoryId, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據 MajorCategory ID 查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByMajorCategoryId(Integer categoryId, int page, int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByMajorCategoryId(categoryId, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
-    // 根據用戶ID和專業ID查詢服務（分頁）
-    public PageResponse<ServicesDTO> getServicesByUserIdAndMajorId(Integer userId, Integer majorId, int page, int size, String sortBy, boolean ascending) {
-        Pageable pageable = createPageable(page, size, sortBy, ascending);
-        Page<ServiceBean> servicePage = serviceRepo.findByUserIdAndMajorId(userId, majorId, pageable);
-        return convertToPageResponse(servicePage);
-    }
+	// 根據用戶ID和專業ID查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByUserIdAndMajorId(Integer userId, Integer majorId, int page, int size,
+			String sortBy, boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByUserIdAndMajorId(userId, majorId, pageable);
+		return convertToPageResponse(servicePage);
+	}
 
 }

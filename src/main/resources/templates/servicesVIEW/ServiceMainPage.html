@@ -24,6 +24,30 @@
         <input type="text" id="searchId" placeholder="服務ID">
         <input type="text" id="searchTitle" placeholder="服務標題">
         <button type="button" class="btn btn-secondary" id="searchBtn">送出查詢</button>
+        <hr>
+        <div class="mb-1">
+          <span style="margin-right: 30px;">依
+            <select name="form-select" id="sortCondition">
+              <option selected value="serviceId">條件</option>
+              <option value="serviceUpdateDate">更新日期</option>
+            </select>
+            排序
+          </span>
+
+          <!-- <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+              Default radio
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Default checked radio
+            </label>
+          </div> -->
+
+        </div>
       </div>
     </div>
 
@@ -39,6 +63,9 @@
           </tr>
         </thead>
         <tbody id="serviceTableBody">
+          <div id="loadingIndicator" style="display: none;">
+            Loading...
+          </div>
           <!-- 服務列表將在這裡動態插入 -->
         </tbody>
       </table>
@@ -48,13 +75,11 @@
       <!-- 分頁控件將在這裡動態插入 -->
     </div>
 
-    <div id="loadingIndicator" style="display: none;">
-      Loading...
-    </div>
   </div>
 
   <!-- 新增服務的模態框 -->
-  <div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+
+  <!-- <div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -63,12 +88,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <!-- 新增服務的表單字段 -->
+          
           <div class="mb-3">
             <label for="serviceTitle" class="form-label">服務標題</label>
             <input type="text" class="form-control" id="serviceTitle">
           </div>
-          <!-- 添加更多表單字段 -->
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -76,14 +101,16 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
   <script>
     /*<![CDATA[*/
     let currentPage = 1;
     const pageSize = 10;
+    let sortCondition = "";
 
     $(document).ready(function () {
       loadServices(currentPage);
@@ -92,34 +119,53 @@
         loadServices(1);
       });
 
-      $('#createBtn').click(function () {
-        $('#staticBackdrop-insert').modal('show');
-      });
+      document.getElementById('sortCondition').addEventListener('change', function (e) {
+        console.log(sortCondition);
+        sortCondition = document.getElementById('sortCondition').value;
+      })
+      // $('#createBtn').click(function () {
+      //   $('#staticBackdrop-insert').modal('show');
+      // });
 
-      $('#submitService').click(function () {
-        // 處理新增服務的邏輯
-      });
+      // $('#submitService').click(function () {
+      //   // 處理新增服務的邏輯
+      // });
     });
 
     function loadServices(page) {
       const searchId = $('#searchId').val();
       const searchTitle = $('#searchTitle').val();
+      showLoading();
       $.ajax({
-        url: `/ProFit/service/api/list?page=${page - 1}&size=${pageSize}&sortBy=serviceId&ascending=true`,
+        url: `/ProFit/service/api/list?page=${page - 1}&size=${pageSize}&sortBy=${sortCondition}&ascending=true`,
         method: 'GET',
         data: {
           serviceId: searchId,
           serviceTitle: searchTitle
         },
         success: function (response) {
+          hideLoading();
           updateTable(response.content);
           updatePagination(response);
         },
         error: function (error) {
+          hideLoading();
           console.error('Error loading services:', error);
         }
       });
     }
+
+    // 加載指示器，例如顯示一個旋轉圖標
+    function showLoading() {
+      const loadingHtml = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+      document.getElementById('serviceTableBody').innerHTML = loadingHtml;
+    }
+
+    // 移除加載指示器
+    function hideLoading() {
+      document.getElementById('serviceTableBody').innerHTML = '';
+    }
+
 
     function updateTable(services) {
       const tbody = $('#serviceTableBody');
@@ -141,6 +187,7 @@
       });
     }
 
+    // 更新頁碼
     function updatePagination(pageInfo) {
       const pagination = $('#pagination');
       pagination.empty();
@@ -170,10 +217,12 @@
       pagination.html(paginationHtml);
     }
 
+    // 處理編輯服務的邏輯
     function editService(serviceId) {
-      // 處理編輯服務的邏輯
     }
 
+
+    // 刪除服務
     function deleteService(serviceId) {
       if (confirm('確定要刪除這個服務嗎？')) {
         $.ajax({
