@@ -6,9 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
 </head>
 <body>
 <div layout:fragment="content">
+    <div class="course-header">
+        <h2>職缺管理功能</h2>
+    <!-- 添加"新增"按鈕 -->
+    <a th:href="@{/jobs/add}" class="btn btn-sm btn-success ms-1">
+        <i class="fas fa-plus"></i> 新增職缺申請
+    </a>
+</div>
+
     <div class="table-container" id="search-results">
 
         <table id="jobsApplicationList" class="display table table-striped table-hover nowrap">

@@ -6,9 +6,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
 </head>
 <body>
 <div layout:fragment="content">
+    <div class="course-header">
+        <h2>職缺管理功能</h2>
+    <!-- 添加"新增"按鈕 -->
+        <a th:href="@{/jobs/add}" class="btn btn-sm btn-success ms-1">
+            <i class="fas fa-plus"></i> 新增職缺
+        </a>
+    </div>
+
+
     <div class="table-container" id="search-results">
 
         <table id="jobsList" class="display table table-striped table-hover nowrap">
@@ -99,45 +109,54 @@
 
                    //刪除
                     result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsId +'"><i class="fas fa-trash"></i>\''
+
+                   bindDeleteEvent();
                    return result;
                }
            }]
-       })
+       });
 
-        $('.deleteBtn').click(function (e){
-            e.preventDefault();
-            let url = $(this).attr('href');
-            Swal.fire({
-                icon: "question",
-                title: "確認刪除？",
-                showCancelButton: true,
-                confirmButtonText: "確認",
-            }).then((result) => {
-                if (result.isConfirmed) {
+        function bindDeleteEvent() {
 
-                    //fetch開始是ajax
-                    fetch(url, {
-                        method: 'DELETE'
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        } else {
-                            Swal.fire({//Swal.fire呼叫api的寫法
-                                icon: "success",
-                                title: "刪除成功",
-                                showConfirmButton: true,
-                            }).then(() => {
-                                window.location.reload();
+            $('.deleteBtn').click(function (e){
+                e.preventDefault();
+                let url = $(this).attr('href');
+                Swal.fire({
+                    icon: "question",
+                    title: "確認刪除？",
+                    showCancelButton: true,
+                    confirmButtonText: "確認",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        //fetch開始是ajax
+                        fetch(url, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                } else {
+                                    Swal.fire({//Swal.fire呼叫api的寫法
+                                        icon: "success",
+                                        title: "刪除成功",
+                                        showConfirmButton: true,
+                                    }).then(() => {
+                                        window.location.reload();
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('There was a problem with the fetch operation:', error);
                             });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                    });
-                }
-            });
-        })
+                    }
+                });
+            })
+
+
+        }
+
+        bindDeleteEvent();
     });
 </script>
 </body>
