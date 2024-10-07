@@ -30,11 +30,11 @@ public class ServiceBean implements java.io.Serializable {
 			@JoinColumn(name = "major_id", referencedColumnName = "major_id") })
 	private UserMajorBean userMajor;
 
-	/**
-	 * @Column(name = "user_id") private Integer userId; // 使用者ID
-	 * 
-	 * @Column(name = "major_id") private Integer majorId; // 專業ID
-	 **/
+	@Column(name = "user_id", insertable = false, updatable = false)
+	private Integer userId; // 使用者ID
+
+	@Column(name = "major_id", insertable = false, updatable = false)
+	private Integer majorId; // 專業ID
 
 	@Column(name = "service_title")
 	private String serviceTitle; // 服務標題
@@ -69,11 +69,11 @@ public class ServiceBean implements java.io.Serializable {
 	@Column(name = "service_status", nullable = false)
 	private Integer serviceStatus = 0;
 
-	//無參數建構子
+	// 無參數建構子
 	public ServiceBean() {
 	}
-	
-	//主要參數建構子
+
+	// 主要參數建構子
 	public ServiceBean(UserMajorBean userMajorBean, String serviceTitle, String serviceContent, Integer servicePrice,
 			String serviceUnitName, Double serviceDuration, LocalDateTime serviceCreateDate,
 			LocalDateTime serviceUpdateDate) {
@@ -88,7 +88,7 @@ public class ServiceBean implements java.io.Serializable {
 		this.serviceUpdateDate = serviceUpdateDate;
 	}
 
-	//更多參數建構子
+	// 更多參數建構子
 	public ServiceBean(UserMajorBean userMajorBean, String serviceTitle, String serviceContent, Integer servicePrice,
 			String serviceUnitName, Double serviceDuration, LocalDateTime serviceCreateDate,
 			LocalDateTime serviceUpdateDate, String servicePictureURL1, String servicePictureURL2,
@@ -210,26 +210,16 @@ public class ServiceBean implements java.io.Serializable {
 	public void setServiceStatus(Integer serviceStatus) {
 		this.serviceStatus = serviceStatus;
 	}
-	
-	
+
 	@Override
-    public String toString() {
-        return "ServiceBean{" +
-                "serviceId=" + serviceId +
-                ", userMajor=" + userMajor +
-                ", serviceTitle='" + serviceTitle + '\'' +
-                ", serviceContent='" + serviceContent + '\'' +
-                ", servicePrice=" + servicePrice +
-                ", serviceUnitName='" + serviceUnitName + '\'' +
-                ", serviceDuration=" + serviceDuration +
-                ", serviceCreatedate=" + serviceCreateDate +
-                ", serviceUpdatedate=" + serviceUpdateDate +
-                ", servicePictureURL1='" + servicePictureURL1 + '\'' +
-                ", servicePictureURL2='" + servicePictureURL2 + '\'' +
-                ", servicePictureURL3='" + servicePictureURL3 + '\'' +
-                ", serviceStatus=" + serviceStatus +
-                '}';
-    }
-	
+	public String toString() {
+		return "ServiceBean{" + "serviceId=" + serviceId + ", userMajor=" + userMajor + ", serviceTitle='"
+				+ serviceTitle + '\'' + ", serviceContent='" + serviceContent + '\'' + ", servicePrice=" + servicePrice
+				+ ", serviceUnitName='" + serviceUnitName + '\'' + ", serviceDuration=" + serviceDuration
+				+ ", serviceCreatedate=" + serviceCreateDate + ", serviceUpdatedate=" + serviceUpdateDate
+				+ ", servicePictureURL1='" + servicePictureURL1 + '\'' + ", servicePictureURL2='" + servicePictureURL2
+				+ '\'' + ", servicePictureURL3='" + servicePictureURL3 + '\'' + ", serviceStatus=" + serviceStatus
+				+ '}';
+	}
 
 }

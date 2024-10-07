@@ -28,7 +28,7 @@ public class CourseOrderBean implements java.io.Serializable {
 	private CourseBean course;
 	
 	@Column(name="student_id")
-	private String studentId;
+	private Integer studentId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="student_id",insertable = false,updatable = false)
@@ -50,7 +50,7 @@ public class CourseOrderBean implements java.io.Serializable {
 		super();
 	}
 
-	public CourseOrderBean(String courseOrderId, String courseId, String studentId, Integer courseOrderPrice,
+	public CourseOrderBean(String courseOrderId, String courseId, Integer studentId, Integer courseOrderPrice,
 			LocalDateTime courseOrderCreateDate,String courseOrderRemark,String courseOrderStatus) {
 		super();
 		this.courseOrderId = courseOrderId;
@@ -108,11 +108,11 @@ public class CourseOrderBean implements java.io.Serializable {
 		this.courseId = courseId;
 	}
 
-	public String getStudentId() {
+	public Integer getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(String studentId) {
+	public void setStudentId(Integer studentId) {
 		this.studentId = studentId;
 	}
 

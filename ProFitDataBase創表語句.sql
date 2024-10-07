@@ -80,15 +80,16 @@ CREATE TABLE jobs (
     FOREIGN KEY (jobs_user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE jobs_application (
-    jobs_application_id INT PRIMARY KEY IDENTITY(1,1),
-    jobs_application_posting_id INT,
-    jobs_application_member_id INT,
-    jobs_application_date DATETIME,
-    jobs_application_status TINYINT, 
-    jobs_application_contract VARBINARY(MAX), 
-    FOREIGN KEY (jobs_application_posting_id) REFERENCES jobs(jobs_id), 
-    FOREIGN KEY (jobs_application_member_id) REFERENCES users(user_id )
+CREATE TABLE [dbo].[jobs_application] (
+    [jobs_application_id]         INT             IDENTITY (1, 1) NOT NULL,
+    [jobs_application_posting_id] INT             NOT NULL,
+    [jobs_application_member_id]  INT             NOT NULL,
+    [jobs_application_date]       DATE            CONSTRAINT [DEFAULT_jobs_application_jobs_application_date] DEFAULT (getdate()) NULL,
+    [jobs_application_status]     TINYINT         DEFAULT ((0)) NULL,
+    [jobs_application_contract]   VARBINARY (MAX) NULL,
+    PRIMARY KEY CLUSTERED ([jobs_application_id] ASC),
+    CONSTRAINT [FK_jobs_application_member_id] FOREIGN KEY ([jobs_application_member_id]) REFERENCES [dbo].[users] ([user_id]),
+    CONSTRAINT [FK_jobs_application_posting_id] FOREIGN KEY ([jobs_application_posting_id]) REFERENCES [dbo].[users] ([user_id])
 );
 
 CREATE TABLE jobs_application_project (

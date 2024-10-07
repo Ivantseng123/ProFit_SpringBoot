@@ -55,7 +55,7 @@ public class CoursesService implements IcourseService {
 	}
 
 	@Override
-	public List<CoursesDTO> searchCourses(String courseName, String userName, String status, String userId,String category) {
+	public List<CoursesDTO> searchCourses(String courseName, String userName, String status, Integer userId,String category) {
 		List<CourseBean> searchCourses = hcourseDao.searchCourses(courseName, userName, status, userId, category);
 		
 		for(int i=0;i<searchCourses.size();i++) {

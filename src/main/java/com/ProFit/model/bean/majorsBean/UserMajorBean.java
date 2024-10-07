@@ -1,8 +1,13 @@
 package com.ProFit.model.bean.majorsBean;
 
+import com.ProFit.model.bean.usersBean.Users;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,6 +19,16 @@ public class UserMajorBean implements java.io.Serializable {
 	@EmbeddedId
 	private UserMajorPK id;
 
+	@ManyToOne
+	@MapsId("userId")
+	@JoinColumn(name = "user_id")
+	private Users user;
+
+	@ManyToOne
+    @MapsId("majorId")
+    @JoinColumn(name = "major_id")
+    private MajorBean major;
+	
 	// 構造函數
 	public UserMajorBean() {
 	}
@@ -22,7 +37,6 @@ public class UserMajorBean implements java.io.Serializable {
 		this.id = id;
 	}
 
-	// Getter 和 Setter
 	public UserMajorPK getId() {
 		return id;
 	}
@@ -31,9 +45,25 @@ public class UserMajorBean implements java.io.Serializable {
 		this.id = id;
 	}
 
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public MajorBean getMajor() {
+		return major;
+	}
+
+	public void setMajor(MajorBean major) {
+		this.major = major;
+	}
+
 	@Override
 	public String toString() {
-		return "UserMajorBean [id=" + id + "]";
+		return "UserMajorBean [id=" + id + ", user=" + user + ", major=" + major + "]";
 	}
 
 }
