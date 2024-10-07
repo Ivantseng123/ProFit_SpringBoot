@@ -15,6 +15,7 @@ function getEmpPf() {
 
 		})
 		.then(empPf => {
+			console.log(empPf.companyCategory)
 			document.getElementById('company_photoURL').value = empPf.companyPhotoURL;
 			document.getElementById('employer_profile_id').value = empPf.employerProfileId;
 			document.getElementById('user_id').value = empPf.userId;

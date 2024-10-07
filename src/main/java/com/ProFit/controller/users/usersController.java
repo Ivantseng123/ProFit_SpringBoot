@@ -60,7 +60,7 @@ public class usersController {
 			return "新增成功";
 		}
 
-		return "新增失敗";
+		return "信箱已註冊";
 	}
 
 	// 刪除會員
@@ -100,7 +100,7 @@ public class usersController {
 	}
 
 	// 編輯會員
-	@PutMapping(path = "users/updateuser", consumes = "multipart/form-data")
+	@PutMapping(path = "users/updateuser")
 	@ResponseBody
 	@Transactional
 	public Users UpdateUser(@ModelAttribute UsersDTO usersDTO)
@@ -108,7 +108,7 @@ public class usersController {
 				
 		Integer userId = Integer.valueOf(usersDTO.getUserId());
 		Integer userIdentity = Integer.valueOf(usersDTO.getUserIdentity());
-		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance());
+		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance()); 
 		Integer freelancerProfileStatus = Integer.valueOf(usersDTO.getFreelancerProfileStatus());
 
 		return userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(), usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(),

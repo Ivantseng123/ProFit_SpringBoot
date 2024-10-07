@@ -2,18 +2,22 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>ProFit</title>
-	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
-	<link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
+<meta charset="UTF-8">
+<title>ProFit</title>
+<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
 </head>
 
 
 <body>
 	<div th:replace="~{model/layout-static}"></div>
 	<div class="container pt-5">
-		<div class="dashboard-header">
-			<h2>會員管理</h2>
+		<div class="dashboard-header d-flex">
+			<h2>企業列表</h2>
+			<div class="ms-auto">
+				<button class="btn btn-primary" onclick="togglePopup()">新增</button>
+			</div>
 		</div>
 		<div>
 			<table id="userTable" class="display">
@@ -33,32 +37,28 @@
 				</tbody>
 			</table>
 		</div>
-
-		<diV class="insertBTN">
-			<button class="btn btn-primary" onclick="togglePopup()">新增</button>
-		</diV>
 		<div id="popupOverlay" class="overlay-container" style="z-index: 1002">
 			<div class="popup-box-insertEmpPf">
 				<h2 style="color: orange;">新增企業資訊</h2>
-				<form class="form-group" style="margin:0; overflow: auto" id="insertform">
+				<form class="form-group1"
+					style="height: 650px; margin: 0; overflow: auto" id="insertform">
 
-					<label class="form-label" for="user_id">會員ID:</label>
-					<input class="form-input-insert" type="text" placeholder="輸入會員ID" id="user_id" name="userId"
-						required>
-					<label class="form-label" for="company_name">公司名稱:</label>
-					<input class="form-input-insert" type="text" placeholder="公司名稱" id="company_name"
-						name="companyName" required>
-					<label class="form-label" for="company_phoneNumber">公司電話:</label>
-					<input class="form-input-insert" type="text" placeholder="輸入公司電話" id="company_phoneNumber"
-						name="companyPhoneNumber" required>
-					<label class="form-label" for="company_taxID">公司統編:</label>
-					<input class="form-input-insert" type="text" placeholder="輸入公司統編" id="company_taxID"
-						name="companyTaxID" required>
-
-					<label class="form-label" for="company_address">公司地址:</label>
-					<select name="companyAddress">
+					<label class="form-label" for="user_id">會員ID:</label> <input
+						class="form-input-insert" type="text" placeholder="輸入會員ID"
+						id="user_id" name="userId" required> <label
+						class="form-label" for="company_name">公司名稱:</label> <input
+						class="form-input-insert" type="text" placeholder="公司名稱"
+						id="company_name" name="companyName" required> <label
+						class="form-label" for="company_phoneNumber">公司電話:</label> <input
+						class="form-input-insert" type="text" placeholder="輸入公司電話"
+						id="company_phoneNumber" name="companyPhoneNumber" required>
+					<label class="form-label" for="company_taxID">公司統編:</label> <input
+						class="form-input-insert" type="text" placeholder="輸入公司統編"
+						id="company_taxID" name="companyTaxID" required> <label
+						class="form-label" for="company_address">公司地址:</label> <select
+						name="companyAddress">
 						<option>臺北市</option>
-						<option>新北市</option>
+						<option id="newTaipei">新北市</option>
 						<option>基隆市</option>
 						<option>桃園市</option>
 						<option>桃園市</option>
@@ -78,38 +78,39 @@
 						<option>澎湖縣</option>
 						<option>花蓮縣</option>
 						<option>臺東縣</option>
-					</select>
-					<input class="form-input-insert" type="text" placeholder="輸入公司地址" id="company_address"
-						name="companyAddress1" required>
-					<label class="form-label" for="company_category">公司分類:</label>
-					<select name="companyCategory" style="margin-bottom: 20px">
+					</select> <input class="form-input-insert" type="text" placeholder="輸入公司地址"
+						id="company_address" name="companyAddress1" required> <label
+						class="form-label" for="company_category">公司分類:</label> <select
+						name="companyCategory" style="margin-bottom: 20px">
 						<option>農、林、漁、牧業</option>
 						<option>礦業及土石採取業</option>
 						<option>製造業</option>
 						<option>水電燃氣業</option>
 						<option>營造及工程業</option>
 						<option>批發、零售及餐飲業</option>
-						<option>運輸、倉儲及通信業</option>
+						<option id="1">運輸、倉儲及通信業</option>
 						<option>金融、保險及不動產業</option>
 						<option>專業、科學及技術服務業</option>
 						<option>文化、運動、休閒及其他服務業</option>
 						<option>其他</option>
-					</select>
-
-					<input type="submit" value="確定" class="btn-submit" />
+					</select> <input type="submit" value="確定" class="btn-submit" />
+					<button class="btn-close-popup" type="button" onclick="togglePopup()" id="insertBtn">
+						關閉</button>
 				</form>
-				<br>
-				<button class="btn-close-popup" onclick="togglePopup()">
-					關閉</button>
+				<button type="button" class="btn btn-primary mt-5"
+					onclick="oneClickInsert()">一鍵輸入</button>
 			</div>
+			<br>
 		</div>
 	</div>
-	<div class="modal fade" id="OkModal" tabindex="-1" aria-labelledby="OkModalLabel" aria-hidden="true">
+	<div class="modal fade" id="OkModal" tabindex="-1"
+		aria-labelledby="OkModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content Ok">
 				<div class="modal-header">
 					<p>新增成功</p>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body text-center">
 					<i class="fa-regular fa-circle-check fa-7x" style="color: #00a876;"></i>
@@ -117,28 +118,53 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+	<div class="modal fade" id="deleteModal" tabindex="-1"
+		aria-labelledby="deleteModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<i class="fa-solid fa-triangle-exclamation fa-2xl" style="color: #ff0000;"></i>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<i class="fa-solid fa-triangle-exclamation fa-2xl"
+						style="color: #ff0000;"></i>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<p class="text-center">確定刪除？</p>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" id="deleteAction" data-bs-dismiss="modal">確定</button>
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" id="deleteAction"
+						data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="failedModal" tabindex="-1"
+		aria-labelledby="failedModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content Ok">
+				<div class="modal-header">
+					<p>會員不存在</p>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body text-center">
+					<i class="fa-solid fa-circle-exclamation fa-7x"
+						style="color: #FFD43B;"></i>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
-	<script src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
-	<script th:src="@{/js/users/empPfView.js}"></script>>
+	<script
+		src="https://cdn.datatables.net/2.1.7/js/dataTables.bootstrap5.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
+	<script th:src="@{/js/users/empPfView.js}"></script>
+	>
 </body>
 
 </html>

@@ -99,7 +99,7 @@ $('.file-uploader').on('change', function() {
 
 document.getElementById('updateUser-info').addEventListener('submit', (e) => {
 	e.preventDefault(); // 取消原本 form 表單送的 request
-
+	
 	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
 		.then(response => response.json())
 		.then(firebaseConfig => {
@@ -112,7 +112,7 @@ document.getElementById('updateUser-info').addEventListener('submit', (e) => {
 				const file = fileInput.files[0];
 
 				if (file) {
-					// 有文件上传时的处理逻辑
+					
 					const storageRef = storage.ref('userUpload/' + file.name);
 					const uploadTask = storageRef.put(file);
 
@@ -121,7 +121,7 @@ document.getElementById('updateUser-info').addEventListener('submit', (e) => {
 						sendForm();
 					});
 				} else {
-					// 没有文件上传时直接发送表单
+					
 					sendForm();
 				}
 			};
