@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     let currentDate = new Date();
     
     let year = currentDate.getFullYear();
@@ -63,9 +62,18 @@ $(document).ready(function () {
             }
         });
     });
-});
 
-// 日期轉換函數
-function convertToSQLDateTimeFormat(datetimeLocal) {
-    return datetimeLocal + ":00"; // 確保格式 "YYYY-MM-DDTHH:MM:SS"
-}
+    // 日期轉換函數
+    function convertToSQLDateTimeFormat(datetimeLocal) {
+        return datetimeLocal + ":00"; // 確保格式 "YYYY-MM-DDTHH:MM:SS"
+    }
+
+    // 「生成測試資料」按鈕點擊事件
+    $('#generateTestData').on('click', function () {
+        $('#courseId').val('C0103');
+        $('#studentId').val('103');
+        $('#courseOrderRemark').val('測試訂單備註');
+        $('#courseOrderCreateDate').val(formattedDate);
+        $('#courseOrderStatus').val('Closed');
+    });
+});
