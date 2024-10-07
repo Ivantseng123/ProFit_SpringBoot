@@ -13,13 +13,11 @@ import jakarta.persistence.ManyToOne;
 public class UserMajorPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
 	@JoinColumn(name = "user_id") // Users的@Id變數名稱
-	private Users user;
+	private Integer userId;
 
-	@ManyToOne
 	@JoinColumn(name = "major_id") // MajorBean的@Id變數名稱
-	private MajorBean major;
+	private Integer majorId;
 
 	@Override
 	public boolean equals(Object o) {
@@ -28,42 +26,44 @@ public class UserMajorPK implements Serializable {
 		if (!(o instanceof UserMajorPK))
 			return false;
 		UserMajorPK that = (UserMajorPK) o;
-		return (major.getMajorId() == that.major.getMajorId() && 
-				user.getUserId() == that.user.getUserId());
+		return Objects.equals(userId, that.userId) && Objects.equals(majorId, that.majorId);
 	}
 
 	@Override
-    public int hashCode() {
-        return Objects.hash(major.getMajorId(), user.getUserId());
-    }
-	
+	public int hashCode() {
+		return Objects.hash(userId, majorId);
+	}
+
 	public UserMajorPK() {
 	}
+
+	public UserMajorPK(Integer userId, Integer majorId) {
+		this.userId = userId;
+		this.majorId = majorId;
+	}
+
 	
-	public UserMajorPK(Users user, MajorBean major) {
-        this.user = user;
-        this.major = major;
-    }
+	// getter setter
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getMajorId() {
+		return majorId;
+	}
+
+	public void setMajorId(Integer majorId) {
+		this.majorId = majorId;
+	}
+
+	@Override
+	public String toString() {
+		return "UserMajorPK [userId=" + userId + ", majorId=" + majorId + "]";
+	}
+
 	
-	public Users getUser() {
-		return user;
-	}
-
-	public void setUser(Users user) {
-		this.user = user;
-	}
-
-	public MajorBean getMajor() {
-		return major;
-	}
-
-	public void setMajor(MajorBean major) {
-		this.major = major;
-	}
-	
-	 @Override
-	    public String toString() {
-	        return "UserMajorPK [user=" + user.getUserId() + ", major=" + major.getMajorId() + "]";
-	    }
-
 }

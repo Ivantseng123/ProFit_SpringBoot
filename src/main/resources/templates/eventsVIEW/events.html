@@ -24,7 +24,7 @@
             <h2>活動列表</h2>
         </div>
         <div class="action-buttons">
-            <button class="view btn" th:href="@{/events/new}">新增</button>
+            <a class="view btn" th:href="@{events/new}">新增</a>
         </div>
         <div class="table-container">
             <table>
@@ -48,7 +48,7 @@
                     <td th:text="${event.eventId}"></td>
                     <td th:text="${event.eventName}"></td>
                     <td th:text="${event.isEventActive}"></td>
-                    <td th:text="${event.eventMajor}"></td>
+                    <td th:text="${event.eventMajor.majorName}"></td>
                     <td th:text="${event.eventStartDate}"></td>
                     <td th:text="${event.eventEndDate}"></td>
                     <td th:text="${event.eventPartStartDate}"></td>
@@ -59,7 +59,7 @@
                     <td th:text="${event.eventDescription}"></td>
                     <td th:text="${event.eventNote}"></td>
                     <td class="action-buttons">
-                        <a class="edit btn" th:href="@{/events/edit(eventId=${event.eventId})}">編輯</a>
+                        <a class="edit btn" th:href="@{/events/edit?(eventId=${event.eventId})}">編輯</a>
                         <a class="delete btn" th:href="@{/events/delete(eventId=${event.eventId})}">刪除</a>
                     </td>
                 </tr>

@@ -13,7 +13,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		// 判断 session 中是否有 "user_email" 的 key
+		// 判斷 session 中是否有 "user_email" 的 key
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("user_email") == null) {

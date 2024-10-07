@@ -3,6 +3,10 @@ package com.ProFit.model.bean.eventsBean;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.ProFit.model.bean.majorsBean.MajorBean;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -20,19 +24,24 @@ public class EventsBean implements Serializable {
 	@Column(name="is_event_active")
 	private int isEventActive;
 
-	@Column(name="event_major")
-	private int eventMajor;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_major")
+	private MajorBean eventMajor;
 
 	@Column(name="event_start_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventStartDate;
 
 	@Column(name="event_end_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventEndDate;
 
 	@Column(name="event_part_start_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventPartStartDate;
 
 	@Column(name="event_part_end_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventPartEndDate;
 
 	@Column(name="event_amount")
@@ -53,7 +62,7 @@ public class EventsBean implements Serializable {
 	public EventsBean() {
 	}
 
-	public EventsBean(String eventId, String eventName, int isEventActive, int eventMajor, LocalDateTime eventStartDate,
+	public EventsBean(String eventId, String eventName, int isEventActive, MajorBean eventMajor, LocalDateTime eventStartDate,
 			LocalDateTime eventEndDate, LocalDateTime eventPartStartDate, LocalDateTime eventPartEndDate,
 			int eventAmount, String eventLocation, int eventParticipantMaximum, String eventDescription,
 			String eventNote) {
@@ -97,11 +106,11 @@ public class EventsBean implements Serializable {
 		this.isEventActive = isEventActive;
 	}
 
-	public int getEventMajor() {
+	public MajorBean getEventMajor() {
 		return eventMajor;
 	}
 
-	public void setEventMajor(int eventMajor) {
+	public void setEventMajor(MajorBean eventMajor) {
 		this.eventMajor = eventMajor;
 	}
 
@@ -180,7 +189,7 @@ public class EventsBean implements Serializable {
 	@Override
 	public String toString() {
 		return "EventsBean [eventId=" + eventId + ", eventName=" + eventName + ", isEventActive=" + isEventActive
-				+ ", eventMajor=" + eventMajor + ", eventStartDate=" + eventStartDate + ", eventEndDate=" + eventEndDate
+				+ ", eventMajor=" + eventMajor.getMajorId() + ", eventStartDate=" + eventStartDate + ", eventEndDate=" + eventEndDate
 				+ ", eventPartStartDate=" + eventPartStartDate + ", eventPartEndDate=" + eventPartEndDate
 				+ ", eventAmount=" + eventAmount + ", eventLocation=" + eventLocation + ", eventParticipantMaximum="
 				+ eventParticipantMaximum + ", eventDescription=" + eventDescription + ", eventNote=" + eventNote + "]";

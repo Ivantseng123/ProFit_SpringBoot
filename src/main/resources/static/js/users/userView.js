@@ -9,11 +9,11 @@ function alluser() {
 	// 初始化 DataTables
 	$('#userTable').DataTable({
 		"processing": true,
-		"serverSide": true, // 启用服务器端分页
-		"paging": true,
-		"pageLength": 10, // 每页显示 10 条记录
-		"ajax": function(data, callback, settings) {
-			const pageNumber = Math.floor(data.start / data.length) + 1; // 当前页码，从1开始
+		"serverSide": true, // 
+		"pageLength": 10, // 
+		lengthChange: false,
+		"ajax": function(data, callback) {
+			const pageNumber = Math.floor(data.start / data.length) + 1; 
 			const searchValue = data.search.value; // 搜索框中的值
 
 			fetch(`http://localhost:8080/ProFit/api/user/page?pageNumber=${pageNumber}&search=${searchValue}`)
@@ -27,7 +27,7 @@ function alluser() {
 					callback({
 						draw: data.draw,
 						recordsTotal: totalRecords, // 總數
-						recordsFiltered: totalRecords, // 过滤后的记录数，默认与总记录数相同
+						recordsFiltered: totalRecords, 
 						data: users // 當前頁的數據
 					});
 				})
@@ -152,22 +152,27 @@ function togglePopup() {
 
 document.getElementById('insertform').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
-
+	
+	document.getElementById("insertBtn").disabled = true;
+	
 	const insertform = document.getElementById('insertform');
 	const formDataObject = new FormData(insertform);
 	// axios 會自動加上 header: content-Type=multipart/formdata
-	
+
 	axios.post('http://localhost:8080/ProFit/user/adduser', formDataObject)
 		.then(res => {
 			console.log(res.data)
 			if (res.data == '新增成功') {
-				
 				const OkModal = new bootstrap.Modal(document.getElementById('OkModal'));
-				OkModal.show(); 
+				OkModal.show();
+			} else {
+				const failedModal = new bootstrap.Modal(document.getElementById('failedModal'));
+				failedModal.show();
 			}
 			insertform.reset();
-			togglePopup()
-			alluser()
+			togglePopup();
+			document.getElementById("insertBtn").disabled = false;
+			alluser();
 		})
 		.catch(err => {
 			console.error(err);
@@ -175,3 +180,11 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 
 
 })
+function oneClickInsert() {
+	document.getElementById('user_name').value = '馬邦德';
+	document.getElementById('user_email').value = 'mabund@gmail.com';
+	document.getElementById('user_password').value = '@Jk1854656';
+	document.getElementById('ConfirmPassword').value = '@Jk1854656';
+	document.getElementById('user_phonenumber').value = '0912-345678';
+	document.getElementById("taoyuan").selected = true;
+}

@@ -25,6 +25,10 @@ public class EventsService {
     }
 
     public String saveEvent(EventsBean event) {
+        if (eventsDAO.existsById(event.getEventId())==false) {
+            String newEventId = generateNewEventId();
+            event.setEventId(newEventId);
+        }
         eventsDAO.save(event);
         return event.getEventId();
     }
@@ -32,5 +36,11 @@ public class EventsService {
     public String deleteEvent(String eventId) {
         eventsDAO.deleteById(eventId);
         return eventId;
+    }
+
+    private String generateNewEventId() {
+        String maxEventId = eventsDAO.findMaxEventId(); // 此方法需在 DAO 中實現
+        int newId = (maxEventId != null) ? Integer.parseInt(maxEventId.replace("EV", "")) + 1 : 1;
+        return String.format("EV%03d", newId);
     }
 }

@@ -18,6 +18,15 @@ function getEmpAppl() {
 
 		})
 		.then(empAppl => {
+
+			let passBtn = document.getElementById('passbtn')
+			let rejectBtn = document.getElementById('rejectbtn')
+
+			if (empAppl.applicationCheck == 1 || empAppl.applicationCheck == 2) {
+				passBtn.disabled = true;
+				rejectBtn.disabled = true;
+			}
+
 			const empApplInfoContainer = document.getElementById('empAppl-info');
 			empApplInfoContainer.innerHTML = `
 				<div class="row">
@@ -86,7 +95,7 @@ function getEmpAppl() {
 						</div>
 						</div>
 				</div>		
-				<div class="row">
+				<div class="row mt-3">
 				<div class="col-md-6">
 						<h6>負責人身份字號:</h6>
 						</div>
@@ -114,7 +123,7 @@ function getEmpAppl() {
 												</div>
 												</div>
 										</div>		
-				<div class="row">
+				<div class="row mt-3">
 				<div class="col-md-6">
 						<h6>審核狀態:</h6>	
 						</div>	
@@ -127,7 +136,11 @@ function getEmpAppl() {
 		.catch(error => console.error('Error fetching empAppl data:', error));
 }
 
-$('#passbtn').on('click', function() {
+document.getElementById('passbtn').addEventListener('click', function(){
+	
+})
+
+$('#passAction').on('click', function() {
 
 	let user_id = document.getElementById('userId').innerText;
 
@@ -156,11 +169,11 @@ $('#passbtn').on('click', function() {
 		});
 
 });
-$('rejectbtn').on('click', function() {
+$('#rejectAction').on('click', function() {
 
 	let user_id = document.getElementById('userId').innerText;
 
-	let check = "0";
+	let check = "2";
 
 	const data = {
 		'employer_application_id': employerApplicationId,

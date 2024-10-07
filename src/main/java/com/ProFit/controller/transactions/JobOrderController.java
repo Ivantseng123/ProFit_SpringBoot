@@ -1,13 +1,14 @@
 package com.ProFit.controller.transactions;
 
-import com.ProFit.model.bean.transactionBean.JobOrderBean;
+import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
 import com.ProFit.service.transactionService.JobOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -17,17 +18,17 @@ public class JobOrderController {
     @Autowired
     private JobOrderService jobOrderService;
 
-    // 顯示所有訂單記錄
+    // 日期時間格式
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     @GetMapping
     public String listOrders(Model model) {
-        List<JobOrderBean> orders = jobOrderService.getAllOrders();
+        List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO(); // 改為使用DTO
         model.addAttribute("orders", orders);
-        return "transactionVIEW/jobOrders";  
+        return "transactionVIEW/jobOrders"; 
     }
 
-
-    // 根據條件篩選訂單
-    @PostMapping("/search")
+    @GetMapping("/search")
     public String searchOrders(
             @RequestParam(required = false) Integer jobApplicationId,
             @RequestParam(required = false) String startDate,
@@ -35,17 +36,22 @@ public class JobOrderController {
             @RequestParam(required = false) String jobOrderStatus,
             Model model) {
 
-        // 解析日期
-        Timestamp startDateParsed = (startDate != null && !startDate.isEmpty()) ? Timestamp.valueOf(startDate + " 00:00:00") : null;
-        Timestamp endDateParsed = (endDate != null && !endDate.isEmpty()) ? Timestamp.valueOf(endDate + " 23:59:59") : null;
+        LocalDateTime startDateParsed = (startDate != null && !startDate.isEmpty())
+                ? LocalDateTime.parse(startDate + " 00:00:00", formatter) : null;
+        LocalDateTime endDateParsed = (endDate != null && !endDate.isEmpty())
+                ? LocalDateTime.parse(endDate + " 23:59:59", formatter) : null;
 
-        // 查詢訂單
-        List<JobOrderBean> orders = jobOrderService.searchOrdersByCriteria(jobApplicationId, startDateParsed, endDateParsed, jobOrderStatus);
-        model.addAttribute("orders", orders);
+        if (jobApplicationId == null && startDateParsed == null && endDateParsed == null && (jobOrderStatus == null || jobOrderStatus.isEmpty())) {
+            List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO();
+            model.addAttribute("orders", orders);
+        } else {
+            List<JobOrderDTO> orders = jobOrderService.searchOrdersByCriteriaDTO(jobApplicationId, startDateParsed, endDateParsed, jobOrderStatus);
+            model.addAttribute("orders", orders);
+        }
+        
         return "transactionVIEW/jobOrders";
     }
 
-    // 新增訂單
     @PostMapping("/insert")
     public String insertOrder(
             @RequestParam("job_application_id") Integer jobApplicationId,
@@ -53,35 +59,38 @@ public class JobOrderController {
             @RequestParam("job_notes") String jobNotes,
             @RequestParam("total_amount") Integer totalAmount) {
 
-        JobOrderBean order = new JobOrderBean(null, jobApplicationId, new Timestamp(System.currentTimeMillis()), jobOrderStatus, jobNotes, totalAmount);
-        jobOrderService.insertOrder(order);
-        return "redirect:/jobOrders";  // 返回訂單管理頁面
-    }
+        JobOrderDTO orderDTO = new JobOrderDTO();
+        orderDTO.setJobApplicationId(jobApplicationId);
+        orderDTO.setJobOrderStatus(jobOrderStatus);
+        orderDTO.setJobNotes(jobNotes);
+        orderDTO.setJobAmount(totalAmount);
 
-    // 更新訂單
-    @PostMapping("/update")
-    public String updateOrder(
-            @RequestParam("job_orders_id") String jobOrdersId,
-            @RequestParam("job_application_id") Integer jobApplicationId,
-            @RequestParam("job_order_status") String jobOrderStatus,
-            @RequestParam("job_notes") String jobNotes,
-            @RequestParam("total_amount") Integer totalAmount) {
-
-        JobOrderBean order = jobOrderService.getOrderById(jobOrdersId);
-        if (order != null) {
-            order.setJobApplicationId(jobApplicationId);
-            order.setJobOrderStatus(jobOrderStatus);
-            order.setJobNotes(jobNotes);
-            order.setJobAmount(totalAmount);
-            jobOrderService.updateOrder(order);
-        }
+        jobOrderService.insertOrderFromDTO(orderDTO);
         return "redirect:/jobOrders";
     }
 
-    // 刪除訂單
+    @PostMapping("/update")
+    public String updateOrder(
+        @RequestParam("job_orders_id") String jobOrdersId,
+        @RequestParam("job_application_id") Integer jobApplicationId,
+        @RequestParam("job_order_status") String jobOrderStatus,
+        @RequestParam("job_notes") String jobNotes,
+        @RequestParam("total_amount") Integer totalAmount) {
+
+        JobOrderDTO orderDTO = new JobOrderDTO();
+        orderDTO.setJobOrdersId(jobOrdersId);
+        orderDTO.setJobApplicationId(jobApplicationId);
+        orderDTO.setJobOrderStatus(jobOrderStatus);
+        orderDTO.setJobNotes(jobNotes);
+        orderDTO.setJobAmount(totalAmount);
+
+        jobOrderService.updateOrderFromDTO(orderDTO);
+        return "redirect:/jobOrders";
+    }
+
     @PostMapping("/delete")
     public String deleteOrder(@RequestParam("job_orders_id") String jobOrdersId) {
         jobOrderService.deleteOrder(jobOrdersId);
-        return "redirect:/jobOrders";
+        return "redirect:/jobOrders"; 
     }
 }

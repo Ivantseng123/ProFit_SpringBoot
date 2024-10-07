@@ -3,6 +3,7 @@ package com.ProFit.service.jobService;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
@@ -39,7 +40,11 @@ public class JobsApplicationService implements IJobsApplicationService{
 	//void影響boolean
 	@Override
     public JobsApplication update(JobsApplication jobsApplication) {
-        return jobsApplication;
+
+            JobsApplication existJobsApplication = jobsApplicationDAO.findById(jobsApplication.getJobsApplicationId()).orElse(new JobsApplication());
+            BeanUtils.copyProperties(jobsApplication, existJobsApplication,"jobsApplicationDate");
+
+        return jobsApplicationDAO.save(existJobsApplication);
     }
 
 	//void影響boolean

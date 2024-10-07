@@ -10,11 +10,12 @@ function alltoken() {
 	// 初始化 DataTables
 	$('#userTable').DataTable({
 		"processing": true,
-		"serverSide": true, // 启用服务器端分页
+		"serverSide": true,
 		"paging": true,
-		"pageLength": 10, // 每页显示 10 条记录
+		"pageLength": 10,
+		lengthChange: false,
 		"ajax": function(data, callback, settings) {
-			const pageNumber = Math.floor(data.start / data.length) + 1; // 当前页码，从1开始
+			const pageNumber = Math.floor(data.start / data.length) + 1;
 			const searchValue = data.search.value; // 搜索框中的值
 
 			fetch(`http://localhost:8080/ProFit/api/token/page?pageNumber=${pageNumber}&search=${searchValue}`)
@@ -28,7 +29,7 @@ function alltoken() {
 					callback({
 						draw: data.draw,
 						recordsTotal: totalRecords, // 總數
-						recordsFiltered: totalRecords, // 过滤后的记录数，默认与总记录数相同
+						recordsFiltered: totalRecords,
 						data: tokens // 當前頁的數據
 					});
 				})
@@ -105,18 +106,23 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 	const insertform = document.getElementById('insertform');
 	const formDataObject = new FormData(insertform);
 	// axios 會自動加上 header: content-Type=multipart/formdata
-	
+	document.getElementById("insertBtn").disabled = true;
+
 	axios.post('http://localhost:8080/ProFit/tokens/addToken', formDataObject)
 		.then(res => {
 			console.log(res.data)
 			if (res.data == '新增成功') {
-				
+
 				const OkModal = new bootstrap.Modal(document.getElementById('OkModal'));
-				OkModal.show(); 
+				OkModal.show();
+			} else {
+				const failedModal = new bootstrap.Modal(document.getElementById('failedModal'));
+				failedModal.show();
 			}
 			insertform.reset();
 			togglePopup()
 			alltoken()
+			document.getElementById("insertBtn").disabled = false;
 		})
 		.catch(err => {
 			console.error(err);

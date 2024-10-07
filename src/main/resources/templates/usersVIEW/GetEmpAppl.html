@@ -2,9 +2,9 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>ProFit</title>
-	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+<meta charset="UTF-8">
+<title>ProFit</title>
+<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
 </head>
 
 <body>
@@ -13,16 +13,59 @@
 		<div class="dashboard-header d-flex">
 			<h2>企業申請資訊</h2>
 			<div class="ms-auto">
-				<button id="passbtn" class="btn btn-success">通過</button>
-				<button id="rejectbtn" class="btn btn-warning">否決</button>
+				<button id="passbtn" class="btn btn-success" data-bs-toggle="modal"
+					data-bs-target="#passModal">通過</button>
+				<button id="rejectbtn" class="btn btn-warning"
+					data-bs-toggle="modal" data-bs-target="#rejectModal">否決</button>
 			</div>
 		</div>
 
-		<div class="form-container" id="empAppl-info">
+		<div class="form-container" id="empAppl-info"></div>
+	</div>
+	<div class="modal fade" id="passModal" tabindex="-1"
+		aria-labelledby="passModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #FFD43B;"></i>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p class="text-center" id="checkModal">確定通過?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" id="passAction"
+						data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
+	<div class="modal fade" id="rejectModal" tabindex="-1"
+		aria-labelledby="rejectModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<i class="fa-solid fa-circle-exclamation fa-2xl" style="color: #FFD43B;"></i>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p class="text-center" id="checkModal">確定否決?</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary" id="rejectAction"
+						data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="https://kit.fontawesome.com/4caf09a569.js"
+		crossorigin="anonymous"></script>
 	<script th:src="@{/js/users/getempApplView.js}"></script>
 </body>
 

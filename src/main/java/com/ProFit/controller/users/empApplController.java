@@ -62,9 +62,14 @@ public class empApplController {
 		emp.setIdCardPictureURL2(empApplDTO.getIdCardPictureURL2());
 		emp.setApplicationCheck(0);
 
-		empApplService.saveEmpApplInfo(emp);
-
-		return "新增OK";
+		if(empApplService.saveEmpApplInfo(emp) != null) {
+			
+			return "新增OK";
+		}else {
+			return "會員不存在";
+		}
+		
+		
 	}
 
 	@DeleteMapping("empAppl/deleteEmpAppl")
@@ -102,6 +107,7 @@ public class empApplController {
 		emp.setCompanyTaxIdDocURL(empApplDTO.getCompanyTaxIdDocURL());
 		emp.setIdCardPictureURL1(empApplDTO.getIdCardPictureURL1());
 		emp.setIdCardPictureURL2(empApplDTO.getIdCardPictureURL2());
+		emp.setApplicationCheck(0);
 
 		return empApplService.updateEmpApplInfo(emp);
 
