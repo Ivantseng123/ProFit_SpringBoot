@@ -9,11 +9,16 @@ $(document).ready(function() {
 			if (!response.ok) {
 				throw new Error('No session attribute found');
 			}
-			return response.json();  
+			return response.json();
 		})
 		.then(data => {
 			document.getElementById('userName').innerText = data.userEmail
-			document.getElementById('userImage').src = data.userPictureURL
+			if (document.getElementById('userImage').src = data.userPictureURL) {
+
+				document.getElementById('userImage').src = data.userPictureURL;
+			}else{
+				document.getElementById('userImage').src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkiiSGuZZHAXgwIk9YzTjQjmMxxwne2-1VlQ&s';
+			}
 		})
 		.catch(error => {
 			console.error('Error:', error);
