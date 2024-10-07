@@ -22,8 +22,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 				let div = document.getElementById('loginError');
 				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
 			} else if (result === "Login Successful") {
-				
-				window.location.href = 'http://localhost:8080/ProFit/'; 
+
+				window.location.href = 'http://localhost:8080/ProFit/';
 			}
 		})
 		.catch(error => {
@@ -33,3 +33,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 
 
 })
+
+function oneClickInsert() {
+	document.getElementById('username').value = 'admin@gmail.com';
+	document.getElementById('password').value = 'admin';
+}

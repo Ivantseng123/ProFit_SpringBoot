@@ -22,21 +22,6 @@ button {
     cursor: pointer;
 }
 
-.edit{
-    background-color: #3498db;
-    color: white;
-}
-
-.delete, .reject{
-    background-color: #e74c3c;
-    color: white;
-}
-
-.view, .pass {
-    background-color: #2ecc71;
-    color: white;
-}
-
 .insertBTN{
 	text-align: center;
 }
@@ -51,17 +36,6 @@ button {
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 }
-
-.tohref{
-	padding: 12px 24px;
-	font-size: 16px;
-	background-color: gray;
-	color: #fff;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
-} 
 
 .overlay-container {
 	display: none;
@@ -149,7 +123,7 @@ button {
 	border-radius: 12px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 	width: 600px;
-	height: 700px;
+	height: 720px;
 	text-align: center;
 	opacity: 0;
 	transform: scale(0.8);
@@ -316,19 +290,19 @@ to {
   	text-align: center;
 }
 
-.form-group {
+.form-group1 {
     margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group1 label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.form-group input, 
-.form-group select, 
-.form-group textarea {
+.form-group1 input, 
+.form-group1 select, 
+.form-group1 textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -336,7 +310,7 @@ to {
     box-sizing: border-box;
 }
 
-.form-group button {
+.form-group1 button {
     color: white;
     padding: 10px 20px;
     border: none;
