@@ -16,38 +16,45 @@
         <span><a th:href="@{/courses/addCourse}"><button
                 id="createBtn">新增單元</button></a></span>
     </div>
-    <div class="dashboard-header">
-        <h3 style="margin-top: 0px;">查詢單元</h3>
-        <span style="margin-right: 30px;">課程分類: <select
-                id="id-courseMajor" name="courseMajor"
-                style="width: 100px; vertical-align: middle;">
-					<option id="option-courseMajor-all" value="">全部</option>
-					<option id="option-courseMajor-engineering" value="100">程式設計</option>
-			</select>
-			</span> <span style="margin-right: 30px;">課程名稱: <input type="text"
-                                                                       id="id-courseName" name="courseName" style="width: 100px;" />
-			</span> <span>課程狀態: <select id="id-courseStatus" name="courseStatus"
-                                            style="width: 100px;">
-					<option id="option-courseStatus-all" value="">全部</option>
-					<option id="option-courseStatus-Active" value="Active">進行中</option>
-					<option id="option-courseStatus-Pending" value="Pending">審核中</option>
-					<option id="option-courseStatus-Closed" value="Closed">已關閉</option>
-			</select>
-			</span> <br> <br> <span style="margin-right: 30px;">課程創建者ID:
-				<input type="text" id="id-courseCreateUserId"
-                       name="courseCreateUserId" value="" style="width: 100px;" />
-			</span> <span style="margin-right: 30px;">課程創建者名稱: <input type="text"
-                                                                             id="id-courseCreateUserName" name="courseCreateUserName" value=""
-                                                                             style="width: 100px;" />
-			</span>
-        <button id="searchBtn">送出查詢</button>
-    </div>
+	<div class="dashboard-header">
+				<h3 class="mb-0" th:text="|章節名稱: ${courseModuleDTO.courseModuleName}|"></h3>
+			</div>
 
-    <div class="table-container" id="search-results"></div>
+			<div class="table-container" id="search-results">
+
+				<table>
+					<thead>
+						<tr>
+							<th>單元排序</th>
+							<th>單元名稱</th>
+							<th>單元內容</th>
+							<th>單元內容類型</th>
+							<th>單元內容長度</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="table-body">
+						<th:block th:each=" courseLessonDTO : ${courseLessonDTOList}">
+							<tr>
+								<td class="sort" th:text="${courseLessonDTO.courseLessonSort}" th:data-courseLessonId="${courseLessonDTO.courseLessonId}"></td>
+								<td th:text="${courseLessonDTO.courseLessonName}"></td>
+								<td th:text="${courseLessonDTO.lessonMediaUrl}"></td>
+								<td th:text="${courseLessonDTO.lessonMediaType}"></td>
+								<td th:text="|${courseLessonDTO.mediaDuration} 分鐘|"></td>
+								<td>
+									<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}" class="view btn btn-success">查看</button>
+									<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}" class="edit btn btn-primary">編輯</button>
+									<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}" class="delete btn btn-danger">刪除</button>
+								</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
 </div>
 <script>
     var contextPath = 'http://localhost:8080/ProFit';
 </script>
-<script th:src="@{/js/courses/courseView.js}"></script>
+<script th:src="@{/js/courses/courseLessonView.js}"></script>
 </body>
 </html>
