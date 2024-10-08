@@ -64,51 +64,51 @@
 						</div>
 
 						<div class="form-group">
-							<label for="serviceContent">服務內容:</label>
-							<textarea id="serviceContent" name="serviceContent" class="form-control"
-								rows="4"></textarea>
-						</div>
-
-						<div class="form-group">
-							<label for="servicePrice">服務價格:</label>
+							<label for="servicePrice">服務報價:</label>
 							<input type="number" id="servicePrice" name="servicePrice" class="form-control">
 						</div>
 
 						<div class="form-group">
-							<label for="serviceUnitName">服務單位:</label>
+							<label for="serviceUnitName">單位:</label>
 							<input type="text" id="serviceUnitName" name="serviceUnitName" class="form-control">
 						</div>
 
 						<div class="form-group">
-							<label for="serviceDuration">服務時長:</label>
+							<label for="serviceDuration">執行時間(天):</label>
 							<input type="number" id="serviceDuration" name="serviceDuration" class="form-control">
 						</div>
 
+
+						<div class="form-group">
+							<label for="serviceContent">服務內容:</label>
+							<textarea id="serviceContent" name="serviceContent" class="form-control" rows="4"></textarea>
+						</div>
+
+
 						<div class="form-group">
 							<label for="servicePictureURL1">服務圖片 1:</label>
-							<input type="file" id="servicePictureURL1" name="servicePictureURL1"
+							<input type="file" id="servicePictureURL1" name="servicePictureURL1" accept=".jpg, .jpeg, .png"
 								class="form-control-file">
 						</div>
 
 						<div class="form-group">
 							<label for="servicePictureURL2">服務圖片 2:</label>
-							<input type="file" id="servicePictureURL2" name="servicePictureURL2"
+							<input type="file" id="servicePictureURL2" name="servicePictureURL2" accept=".jpg, .jpeg, .png"
 								class="form-control-file">
 						</div>
 
 						<div class="form-group">
 							<label for="servicePictureURL3">服務圖片 3:</label>
-							<input type="file" id="servicePictureURL3" name="servicePictureURL3"
+							<input type="file" id="servicePictureURL3" name="servicePictureURL3" accept=".jpg, .jpeg, .png"
 								class="form-control-file">
 						</div>
 
 						<div class="form-group">
 							<label for="serviceCreateDate">創建日期: (自動帶入)</label>
-							<input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control"
-								readonly>
+							<input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control" readonly>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group" hidden>
 							<label for="serviceStatus">服務狀態:</label>
 							<select id="serviceStatus" name="serviceStatus" class="form-control">
 								<option value="">請選擇狀態</option>
@@ -174,11 +174,6 @@
 				formData.set("servicePictureURL1", $('#servicePictureURL1')[0].files[0]);
 				formData.set("servicePictureURL2", $('#servicePictureURL2')[0].files[0]);
 				formData.set("servicePictureURL3", $('#servicePictureURL3')[0].files[0]);
-
-
-
-
-
 
 
 				// 發送 AJAX 請求
