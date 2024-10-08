@@ -22,6 +22,7 @@ import com.ProFit.model.bean.majorsBean.UserMajorPK;
 import com.ProFit.model.bean.servicesBean.ServiceBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.majorsDTO.PageResponse;
+import com.ProFit.model.dto.majorsDTO.UserMajorDTO;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.service.serviceService.ServiceService;
 import com.ProFit.service.utilsService.FirebaseStorageService;
@@ -32,6 +33,7 @@ public class ServiceController {
 
 	@Autowired
 	private ServiceService serviceService;
+	
 
 	@Autowired
 	private FirebaseStorageService firebaseStorageService;
@@ -46,6 +48,13 @@ public class ServiceController {
 	@GetMapping("/create")
 	public String addServices() {
 		return "servicesVIEW/createServiceView"; // 返回主頁面的視圖名稱
+	}
+
+	// 跳轉到修改頁面
+	@GetMapping("/edit/{serviceId}")
+	public String editServices(@PathVariable Integer serviceId, Model model) {
+		model.addAttribute("serviceId", serviceId);
+		return "servicesVIEW/UpdateServiceView"; // 返回主頁面的視圖名稱
 	}
 
 	// 搜尋全部的方法
@@ -73,70 +82,82 @@ public class ServiceController {
 	// 新增服務的方法
 	@PostMapping("/api")
 	@ResponseBody
-	public ResponseEntity<Map<String, String>> addService(
-            @RequestParam("serviceTitle") String serviceTitle,
-            @RequestParam("serviceContent") String serviceContent,
-            @RequestParam("servicePrice") Integer servicePrice,
-            @RequestParam("serviceUnitName") String serviceUnitName,
-            @RequestParam("serviceDuration") Double serviceDuration,
-            @RequestParam("serviceStatus") Integer serviceStatus,
-            @RequestParam("userId") Integer userId,
-            @RequestParam("majorId") Integer majorId,
-            @RequestPart(required = false) MultipartFile servicePictureURL1,
-            @RequestPart(required = false) MultipartFile servicePictureURL2,
-            @RequestPart(required = false) MultipartFile servicePictureURL3) {
+	public ResponseEntity<Map<String, String>> addService(@RequestParam("serviceTitle") String serviceTitle,
+			@RequestParam("serviceContent") String serviceContent, @RequestParam("servicePrice") Integer servicePrice,
+			@RequestParam("serviceUnitName") String serviceUnitName,
+			@RequestParam("serviceDuration") Double serviceDuration,
+			@RequestParam("serviceStatus") Integer serviceStatus, @RequestParam("userId") Integer userId,
+			@RequestParam("majorId") Integer majorId, @RequestPart(required = false) MultipartFile servicePictureURL1,
+			@RequestPart(required = false) MultipartFile servicePictureURL2,
+			@RequestPart(required = false) MultipartFile servicePictureURL3) {
 
-        try {
-            ServiceBean serviceBean = new ServiceBean();
-            serviceBean.setServiceTitle(serviceTitle);
-            serviceBean.setServiceContent(serviceContent);
-            serviceBean.setServicePrice(servicePrice);
-            serviceBean.setServiceUnitName(serviceUnitName);
-            serviceBean.setServiceDuration(serviceDuration);
-            serviceBean.setServiceStatus(serviceStatus);
-            serviceBean.setServiceCreateDate(LocalDateTime.now());
-            serviceBean.setServiceUpdateDate(LocalDateTime.now());
+		try {
+			ServiceBean serviceBean = new ServiceBean();
+			serviceBean.setServiceTitle(serviceTitle);
+			serviceBean.setServiceContent(serviceContent);
+			serviceBean.setServicePrice(servicePrice);
+			serviceBean.setServiceUnitName(serviceUnitName);
+			serviceBean.setServiceDuration(serviceDuration);
+			serviceBean.setServiceStatus(serviceStatus);
+			serviceBean.setServiceCreateDate(LocalDateTime.now());
+			serviceBean.setServiceUpdateDate(LocalDateTime.now());
 
-            // 處理圖片上傳
-            if (servicePictureURL1 != null && !servicePictureURL1.isEmpty()) {
-                String photoURL = firebaseStorageService.uploadFile(servicePictureURL1);
-                serviceBean.setServicePictureURL1(photoURL);
-            }
-            if (servicePictureURL2 != null && !servicePictureURL2.isEmpty()) {
-                String photoURL = firebaseStorageService.uploadFile(servicePictureURL2);
-                serviceBean.setServicePictureURL2(photoURL);
-            }
-            if (servicePictureURL3 != null && !servicePictureURL3.isEmpty()) {
-                String photoURL = firebaseStorageService.uploadFile(servicePictureURL3);
-                serviceBean.setServicePictureURL3(photoURL);
-            }
+			// 處理圖片上傳
+			if (servicePictureURL1 != null && !servicePictureURL1.isEmpty()) {
+				String photoURL = firebaseStorageService.uploadFile(servicePictureURL1);
+				serviceBean.setServicePictureURL1(photoURL);
+			}
+			if (servicePictureURL2 != null && !servicePictureURL2.isEmpty()) {
+				String photoURL = firebaseStorageService.uploadFile(servicePictureURL2);
+				serviceBean.setServicePictureURL2(photoURL);
+			}
+			if (servicePictureURL3 != null && !servicePictureURL3.isEmpty()) {
+				String photoURL = firebaseStorageService.uploadFile(servicePictureURL3);
+				serviceBean.setServicePictureURL3(photoURL);
+			}
 
-            // 新增服務
-            ServicesDTO createdService = serviceService.addService(serviceBean, userId, majorId);
+			// 新增服務
+			ServicesDTO createdService = serviceService.addService(serviceBean, userId, majorId);
 
-            // 返回 JSON 響應
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "OK");
-            response.put("serviceId", createdService.getServiceId().toString());
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+			// 返回 JSON 響應
+			Map<String, String> response = new HashMap<>();
+			response.put("message", "OK");
+			response.put("serviceId", createdService.getServiceId().toString());
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Map<String, String> errorResponse = new HashMap<>();
+			errorResponse.put("error", e.getMessage());
+			return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	// 更新服務的方法
 	@PutMapping("/api/{serviceId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> updateService(@PathVariable Integer serviceId,
-			@ModelAttribute ServicesDTO serviceDTO, @RequestPart(required = false) MultipartFile servicePictureURL1,
+			@RequestParam("serviceTitle") String serviceTitle, @RequestParam("serviceContent") String serviceContent,
+			@RequestParam("servicePrice") Integer servicePrice, @RequestParam("serviceUnitName") String serviceUnitName,
+			@RequestParam("serviceDuration") Double serviceDuration,
+			@RequestParam("serviceStatus") Integer serviceStatus,
+			@RequestParam("userId") Integer userId, @RequestParam("majorId") Integer majorId,
+			@RequestPart(required = false) MultipartFile servicePictureURL1,
 			@RequestPart(required = false) MultipartFile servicePictureURL2,
 			@RequestPart(required = false) MultipartFile servicePictureURL3) {
+		
+		System.out.println("gg");
 
 		try {
+			ServicesDTO serviceDTO = new ServicesDTO();
 			serviceDTO.setServiceId(serviceId);
+			serviceDTO.setServiceTitle(serviceTitle);
+			serviceDTO.setServiceContent(serviceContent);
+			serviceDTO.setServicePrice(servicePrice);
+			serviceDTO.setServiceUnitName(serviceUnitName);
+			serviceDTO.setServiceDuration(serviceDuration);
+			serviceDTO.setServiceStatus(serviceStatus);
+			serviceDTO.setServiceUpdateDate(LocalDateTime.now());
+	        
 
 			// 處理圖片上傳
 			if (servicePictureURL1 != null && !servicePictureURL1.isEmpty()) {
@@ -152,8 +173,12 @@ public class ServiceController {
 				serviceDTO.setServicePictureURL3(photoURL);
 			}
 
+			System.out.println(serviceDTO);
+			
 			// 更新服務
 			ServicesDTO updatedService = serviceService.updateService(serviceDTO);
+			
+			System.out.println(updatedService);
 
 			if (updatedService != null) {
 				Map<String, String> response = new HashMap<>();
@@ -165,7 +190,9 @@ public class ServiceController {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Map<String, String> errorResponse = new HashMap<>();
+			errorResponse.put("error", e.getMessage());
+			return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

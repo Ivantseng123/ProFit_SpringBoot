@@ -123,6 +123,9 @@ public class JobsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        System.out.println(newJob.getJobsPostingDate());
+        
         jobsService.save(newJob);
         return "redirect:/jobs/list";
     }

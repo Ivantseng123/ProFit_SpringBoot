@@ -34,6 +34,7 @@ $('#searchBtn').click(function () {
         	                    <thead>
         	                        <tr>
         	                            <th>ID</th>
+										<th>課程封面</th>
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
         	                            <th>課程資訊</th>
@@ -55,17 +56,18 @@ $('#searchBtn').click(function () {
 				$('#table-body').append(` 
         		                    <tr>
         	                        <td class="result-courseId" name="courseId">${response.courseId}</td>
+									<td><img id="currentCoverImage" src="${response.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;" /></td>
         	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
 									<td>${response.courseCreaterName}</td>
         	                        <td>${response.courseInformation}</td>
 									<td>${response.courseModuleNumber}</td>
-									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
+									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info btn-sm">查看</button></a></td>
 									<td>${response.coursePrice}</td>
         	                        <td><span class="status">${response.courseStatus}</span></td>
         	                        <td>
-        	                            <button class="view btn btn-success ">查看課程</button>
-        	                            <button class="edit btn btn-primary">編輯</button>
-        	                            <button class="delete btn btn-danger">刪除</button>
+        	                            <button class="view btn btn-success btn-sm">查看</button>
+        	                            <button class="edit btn btn-primary btn-sm">編輯</button>
+        	                            <button class="delete btn btn-danger btn-sm">刪除</button>
         	                       	</td>
         	                    </tr>
         	                ` );
@@ -161,9 +163,9 @@ $(document).on('click', '.view', function () {
 			console.log(response.courseStatus);
 			$('.form-container').append(`<form>
 				
-				<div class="form-group">
+				<div class="form-group" style="text-align: center">
 					<label for="courseCoverPictureURL">課程封面圖片:</label>
-					<img src="${response.courseCoverPictureURL}">
+					<img src="${response.courseCoverPictureURL}" style="max-width: 300px; height: auto;">
 				</div>    
 				
 				<div class="form-group">

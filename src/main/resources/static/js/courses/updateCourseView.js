@@ -51,7 +51,7 @@ $(document).ready(function() {
 						    <label for="courseCoverPicture">課程封面圖片: (建議比例16:9、小於1920 x 1080像素)</label>
 
 						    <!-- 顯示原本的圖片 -->
-						    <div>
+						    <div style="text-align: center">
 						        <label>目前圖片:</label>
 						        <img id="currentCoverImage" src="${response.courseCoverPictureURL}" alt="Course Cover Picture" style="max-width: 300px; height: auto;">
 						    </div>
@@ -93,7 +93,7 @@ $(document).ready(function() {
                         </div>
                         <div class="form-group">
                             <a href="${contextPath}/courses"><button id='cancelBtn' type="button" style="margin-right:330px;">取消修改</button></a>
-                            <button id="editBtn" name="editBtn" type="submit">修改課程</button>
+                            <button id="editBtn" name="editBtn" type="submit" >修改課程</button>
                         </div>
                     </form>
                 `);
