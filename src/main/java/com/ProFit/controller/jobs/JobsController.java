@@ -28,6 +28,7 @@ public class JobsController {
         this.userService = userService;
     }
 
+
     //查詢全部
     @GetMapping("/list")
     public String listJobs(Model model){
@@ -36,16 +37,16 @@ public class JobsController {
         return "jobsVIEW/jobsList";
     }
 
-    // 單筆查詢
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Jobs> getJob(@PathVariable Integer id) {
-        Jobs job = jobsService.findById(id).orElse(null);
-        if (job != null) {
-            return ResponseEntity.ok(job);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    // 單筆查詢
+//    @GetMapping("/find/{id}")
+//    public ResponseEntity<Jobs> getJob(@PathVariable Integer id) {
+//        Jobs job = jobsService.findById(id).orElse(null);
+//        if (job != null) {
+//            return ResponseEntity.ok(job);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
 //    @GetMapping("/findOne")
 //    public String showEditForm(@RequestParam("id") Integer id, Model model) {
@@ -71,40 +72,59 @@ public class JobsController {
 //    }
 
 
-    // 新增
+
+    // 導向新增頁面
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+
+        // 創建一個新的Jobs對象並添加到model中
+        model.addAttribute("job", new Jobs());
+        // 返回jobsEdit視圖
+        return "jobsVIEW/jobsEdit";
+    }
+
+
+//    // 呈現新增後
+//    @PostMapping("/add")
+//    public String addJob(@ModelAttribute Jobs newJob,
+//                         @RequestParam("userId") Integer userId,
+//                         @RequestParam("deadline")
+//                         @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline){
+//        // 獲取當前用戶的 ID
+//        Users id = userService.getUserInfoByID(userId); // 獲取當前用戶
+//        if (id != null) {
+//            newJob.setUsers(id); // 將當前用戶設置為職缺的發布者
+//        }
+//        // 設置職缺的發布日期為當前日期
+//        newJob.setJobsPostingDate(new Date());
+//        // 設置職缺的截止日期
+//        newJob.setJobsApplicationDeadline(deadline);
+//
+//        jobsService.save(newJob);
+//        return "redirect:/jobs/list";
+//    }
+    // 呈現新增後
     @PostMapping("/add")
-    public ResponseEntity<Jobs> addJob(
-            @RequestParam("jobsUserId") Integer jobsUserId,
-            @RequestParam("jobsTitle") String jobsTitle,
-            @RequestParam("jobsPostingDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date jobsPostingDate,
-            @RequestParam("jobsApplicationDeadline") @DateTimeFormat(pattern = "yyyy-MM-dd") Date jobsApplicationDeadline,
-            @RequestParam("jobsDescription") String jobsDescription,
-            @RequestParam("jobsStatus") Byte jobsStatus,
-            @RequestParam("jobsRequiredSkills") String jobsRequiredSkills,
-            @RequestParam("jobsLocation") String jobsLocation,
-            @RequestParam("jobsMaxSalary") Integer jobsMaxSalary,
-            @RequestParam("jobsMinSalary") Integer jobsMinSalary,
-            @RequestParam("jobsWorktime") String jobsWorktime,
-            @RequestParam("jobsNumberOfOpenings") Integer jobsNumberOfOpenings) {
+    public String addJob(
+                         @ModelAttribute Jobs newJob,
+                         @RequestParam("userId") Integer userId,
+                         @RequestParam("deadline")String deadline) {
+        // 獲取當前用戶的 ID
+        Users usersId = userService.getUserInfoByID(userId); // 獲取當前用戶
+        if (usersId != null) {
+            newJob.setUsers(usersId); // 將當前用戶設置為職缺的發布者
+        }
 
-        Users user = userService.getUserInfoByID(jobsUserId);
-        Jobs job = new Jobs();
-
-        job.setUsers(user);
-        job.setJobsTitle(jobsTitle);
-        job.setJobsPostingDate(jobsPostingDate);
-        job.setJobsApplicationDeadline(jobsApplicationDeadline);
-        job.setJobsDescription(jobsDescription);
-        job.setJobsStatus(jobsStatus);
-        job.setJobsRequiredSkills(jobsRequiredSkills);
-        job.setJobsLocation(jobsLocation);
-        job.setJobsMaxSalary(jobsMaxSalary);
-        job.setJobsMinSalary(jobsMinSalary);
-        job.setJobsWorktime(jobsWorktime);
-        job.setJobsNumberOfOpenings(jobsNumberOfOpenings);
-
-        Jobs savedJob = jobsService.save(job);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedJob);
+        //以下遇到時間的設定就用此寫法
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dateFinish = formatter.parse(deadline);
+            newJob.setJobsApplicationDeadline(dateFinish);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        jobsService.save(newJob);
+        return "redirect:/jobs/list";
     }
 
 
@@ -130,7 +150,9 @@ public class JobsController {
 
     //呈現更新後
     @PutMapping("/update/{id}")
-    public String updateJob(@PathVariable("id") String id, @ModelAttribute Jobs updatedJob,Model model,
+    public String updateJob(@PathVariable("id") String id,
+                            @ModelAttribute Jobs updatedJob,
+                            Model model,
                             @RequestParam("deadline") String deadline) {
 
         //以下遇到時間的設定就用此寫法
@@ -145,6 +167,34 @@ public class JobsController {
         jobsService.update(updatedJob);
         return "redirect:/jobs/list" ;//只要跟Date相關的就用redirect:轉回到頁面
     }
+//    // 更新現有的updateJob方法
+//    @PutMapping("/update/{id}")
+//    public String updateJob(@PathVariable("id") Integer id,
+//                            @ModelAttribute Jobs updatedJob,
+//                            @RequestParam("deadline") @DateTimeFormat(pattern = "yyyy-MM-dd") Date deadline) {
+//        // 從數據庫獲取現有的職缺信息
+//        Jobs existingJob = jobsService.findById(id).orElse(null);
+//        if (existingJob != null) {
+//            // 更新職缺信息
+//            existingJob.setJobsTitle(updatedJob.getJobsTitle());
+//
+//        existingJob.setJobsPostingDate(updatedJob.getJobsPostingDate());
+//        existingJob.setJobsApplicationDeadline(deadline);
+//        existingJob.setJobsDescription(updatedJob.getJobsDescription());
+//        existingJob.setJobsStatus(updatedJob.getJobsStatus());
+//        existingJob.setJobsRequiredSkills(updatedJob.getJobsRequiredSkills());
+//        existingJob.setJobsLocation(updatedJob.getJobsLocation());
+//        existingJob.setJobsMaxSalary(updatedJob.getJobsMaxSalary());
+//        existingJob.setJobsMinSalary(updatedJob.getJobsMinSalary());
+//        existingJob.setJobsWorktime(updatedJob.getJobsWorktime());
+//        existingJob.setJobsNumberOfOpenings(updatedJob.getJobsNumberOfOpenings());
+//
+//            jobsService.save(existingJob);
+//        }
+//        // 重定向到職缺列表頁面
+//        return "redirect:/jobs/list";
+//    }
+
 
     // 更新
 //    @PutMapping("/updated/{id}")
@@ -224,6 +274,6 @@ public class JobsController {
 //        jobs.setJobsNumberOfOpenings(jobsNumberOfOpenings);
 //        jobsService.update(jobs);
 //        return "redirect:all";
-//    }
+
 }
 

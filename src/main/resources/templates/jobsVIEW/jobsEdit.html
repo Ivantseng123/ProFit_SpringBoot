@@ -5,23 +5,40 @@
       layout:decorate="~{jobsVIEW/layout-static}">
 <head>
     <meta charset="UTF-8">
-
     <title>編輯職缺資訊 - ProFit</title>
 </head>
 
 <body>
 <div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
-    <h1 class="mt-4">編輯職缺資訊</h1>
+
+    <h1 class="mt-4">新增/編輯職缺資訊</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a th:href="@{/jobs/list}">職缺管理</a></li>
-        <li class="breadcrumb-item active">編輯職缺資訊</li>
+        <li class="breadcrumb-item active">相關資訊</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
-            <!-- 職缺編輯表單 -->
-            <form id="jobForm" th:action="@{/jobs/update/id(id=${job.jobsId})}" method="post">
-                <input type="hidden" th:field="${job.jobsId}"/>
-                <input type="hidden" name="_method" value="put"/>
+
+<!--&lt;!&ndash;             職缺編輯/新增表單&ndash;&gt;-->
+<!--            <form th:action="@{/jobs/update/id(id=${job.jobsId})}" method="post">-->
+
+<!--                <input type="hidden" th:field="${job.jobsId}"/>-->
+<!--                <input type="hidden" name="_method" value="put"/>-->
+
+                <!-- 職缺新增/編輯表單 -->
+                <form th:action="${job.jobsId != null} ? @{/jobs/update/{id}(id=${job.jobsId})} : @{/jobs/add}" method="post">
+
+                    <!-- 隱藏欄位：新增時自動生成刊登者 ID -->
+                    <input type="hidden" th:if="${job.jobsId == null}" th:field="${job.users.userId}" />
+
+                    <!-- 隱藏欄位：僅編輯時顯示 -->
+                    <input type="hidden" th:if="${job.jobsId != null}" th:field="${job.jobsId}"/>
+
+                    <!-- 隱藏欄位：當編輯時，使用 PUT  -->
+                    <input type="hidden" th:if="${job.jobsId != null}" name="_method" value="put"/>
+
+
+
 
                 <!-- 職缺標題 -->
                 <div class="mb-3">
@@ -31,9 +48,12 @@
 
                 <!-- 刊登者 ID（通常不允許編輯） -->
                 <div class="mb-3">
-                    <label class="form-label">發布者 ID</label>
-                    <input type="text" class="form-control" th:field="${job.users.userId}" readonly />
+                    <label class="form-label">刊登者 ID</label>
+                    <input th:if="${job.jobsId != null}" type="text" class="form-control" th:field="${job.users.userId}" readonly/>
+                    <input th:if="${job.jobsId == null}" type="text" class="form-control" name="userId" placeholder="例如：100"/>
+
                 </div>
+
 
                 <!-- 所需技能 -->
                 <div class="mb-3">
@@ -45,7 +65,7 @@
                 <!-- 發布日期（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">發布日期</label>
-                    <input type="date" class="form-control" th:value="${job.jobsPostingDate}" readonly />
+                    <input type="date" class="form-control" name="PostingDate" th:value="${job.jobsPostingDate}" />
                 </div>
 
                 <!-- 申請截止日期 -->
@@ -97,6 +117,7 @@
                 <div class="mb-3">
                     <label class="form-label">開放職位數</label>
                     <input type="number" class="form-control" th:field="${job.jobsNumberOfOpenings}" required />
+
                 </div>
 
                 <!-- 提交和取消按鈕 -->
@@ -158,9 +179,6 @@
     // function goBack() {
     //     window.history.back();
     // };
-
-
-
 
 </script>
 

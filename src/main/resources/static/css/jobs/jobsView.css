@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+#searchBtn {
+	padding: 5px 10px;
+	margin-right: 5px;
+	border: none;
+	cursor: pointer;
+	background-color: lightseagreen;
+	border-radius: 5px;
+	color: white;
+	font-size: 16px;
+}
+
+.table-container {
+	h3 { 
+	margin-top:0px;	
+	}
+}
+
+.jobs-header {
+	background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.jobs-header h2 {
+	margin: 0;
+	font-size: 24px;
+}
+
+
