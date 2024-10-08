@@ -44,11 +44,11 @@
 							<td th:text="${courseModule.courseModuleName}"></td>
 							<td th:text="${courseModule.moduleLessonsId.size()}"></td>
 							<td>
-								<a th:href="@{/courseLessons(courseModuleId=${courseModule.courseModuleId})}"><button class="viewLesson btn btn-info">查看</button></a>
+								<a th:href="@{/courseLessons(courseModuleId=${courseModule.courseModuleId})}"><button class="viewLesson btn btn-info btn-sm">查看</button></a>
 							</td>
 							<td>
-								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="edit btn btn-primary">編輯</button>
-								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="delete btn btn-danger">刪除</button>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="edit btn btn-primary btn-sm">編輯</button>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="delete btn btn-danger btn-sm">刪除</button>
 							</td>
 						</tr>
 					</th:block>
