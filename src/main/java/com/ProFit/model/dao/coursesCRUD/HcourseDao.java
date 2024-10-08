@@ -73,7 +73,7 @@ public class HcourseDao implements IHcourseDao {
 				? oldCourse.getCourseCreateUserId()
 				: newCourse.getCourseCreateUserId());
 
-		oldCourse.setCourseCategory(newCourse.getCourseCategory() == null || newCourse.getCourseCategory().isEmpty()
+		oldCourse.setCourseCategory(newCourse.getCourseCategory() == null
 				? oldCourse.getCourseCategory()
 				: newCourse.getCourseCategory());
 
@@ -132,7 +132,7 @@ public class HcourseDao implements IHcourseDao {
 	// 查詢全部By 多條件查詢
 	@Override
 	public List<CourseBean> searchCourses(String courseName, String userName, String status, Integer userId,
-			String category) {
+			Integer category) {
 		Session session = entityManager.unwrap(Session.class);
 		StringBuilder hql = new StringBuilder("SELECT c FROM CourseBean c INNER JOIN c.courseCreater u WHERE 1=1");
 
@@ -148,7 +148,7 @@ public class HcourseDao implements IHcourseDao {
 		if (userId != null) {
 			hql.append(" AND c.courseCreateUserId = :userId");
 		}
-		if (category != null && !category.trim().isEmpty()) {
+		if (category != null) {
 			hql.append(" AND c.courseCategory = :category");
 		}
 
@@ -167,8 +167,8 @@ public class HcourseDao implements IHcourseDao {
 		if (userId != null) {
 			query.setParameter("userId", userId);
 		}
-		if (category != null && !category.trim().isEmpty()) {
-			query.setParameter("category", Integer.parseInt(category));
+		if (category != null) {
+			query.setParameter("category", category);
 		}
 
 		// 執行查詢

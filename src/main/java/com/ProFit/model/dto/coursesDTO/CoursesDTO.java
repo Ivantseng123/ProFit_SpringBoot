@@ -8,7 +8,7 @@ public class CoursesDTO {
 	private String courseName;
 	private String courseCreaterId;     // 修正拼寫錯誤: coruseCreaterId -> courseCreaterId
 	private String courseCreaterName;   // 修正拼寫錯誤: courseCraeterName -> courseCreaterName
-	private String courseCategoryId;
+	private Integer courseCategoryId;
 	private String courseCategoryName;
 	private Integer courseModuleNumber;
 	private String courseInformation;
@@ -31,8 +31,8 @@ public class CoursesDTO {
 		this.courseName = courseBean.getCourseName();
 		this.courseCreaterId = courseBean.getCourseCreater().getUserId().toString();
 		this.courseCreaterName = courseBean.getCourseCreater().getUserName();
-		this.courseCategoryId = courseBean.getMajor().getMajorId().toString();
-		this.courseCategoryName = courseBean.getMajor().getMajorName();
+		this.courseCategoryId = courseBean.getMajorCategory().getMajorCategoryId();
+		this.courseCategoryName = courseBean.getMajorCategory().getCategoryName();
 		this.courseModuleNumber = courseBean.getCourseModules().size();
 		this.courseInformation = courseBean.getCourseInformation();
 		this.courseCoverPictureURL = courseBean.getCourseCoverPictureURL();
@@ -94,11 +94,11 @@ public class CoursesDTO {
 		this.courseCreaterName = courseCreaterName;
 	}
 
-	public String getCourseCategoryId() {
+	public Integer getCourseCategoryId() {
 		return courseCategoryId;
 	}
 
-	public void setCourseCategoryId(String courseCategoryId) {
+	public void setCourseCategoryId(Integer courseCategoryId) {
 		this.courseCategoryId = courseCategoryId;
 	}
 

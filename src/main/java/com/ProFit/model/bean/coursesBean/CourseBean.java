@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ProFit.model.bean.majorsBean.MajorBean;
+import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
 import com.ProFit.model.bean.usersBean.Users;
 
 import jakarta.persistence.CascadeType;
@@ -44,11 +45,11 @@ public class CourseBean implements java.io.Serializable {
 	private List<CourseModuleBean> courseModules;
 	
 	@Column(name="course_category")
-	private String courseCategory;
+	private Integer courseCategory;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="course_category", insertable = false,updatable = false)
-	private MajorBean major;
+	private MajorCategoryBean majorCategory;
 
 	@Column(name = "course_information")
 	private String courseInformation;
@@ -78,7 +79,7 @@ public class CourseBean implements java.io.Serializable {
 	}
 	
 	
-	public CourseBean(String courseId, String courseName, Integer courseCreateUserId, String courseCategory,
+	public CourseBean(String courseId, String courseName, Integer courseCreateUserId, Integer courseCategory,
 			String courseInformation, String courseDescription, LocalDate courseEnrollmentDate, LocalDateTime courseStartDate,
 			LocalDateTime courseEndDate, Integer coursePrice, String courseStatus) {
 		super();
@@ -97,7 +98,7 @@ public class CourseBean implements java.io.Serializable {
 	
 	
 	// for create course
-	public CourseBean(String courseName, Integer courseCreateUserId, String courseCategory, String courseInformation,
+	public CourseBean(String courseName, Integer courseCreateUserId, Integer courseCategory, String courseInformation,
 			String courseDescription, LocalDate courseEnrollmentDate, LocalDateTime courseStartDate, LocalDateTime courseEndDate,
 			Integer coursePrice, String courseStatus) {
 		super();
@@ -174,23 +175,23 @@ public class CourseBean implements java.io.Serializable {
 	}
 
 
-	public String getCourseCategory() {
+	public Integer getCourseCategory() {
 		return courseCategory;
 	}
 
 
-	public void setCourseCategory(String courseCategory) {
+	public void setCourseCategory(Integer courseCategory) {
 		this.courseCategory = courseCategory;
 	}
 
 
-	public MajorBean getMajor() {
-		return major;
+	public MajorCategoryBean getMajorCategory() {
+		return majorCategory;
 	}
 
 
-	public void setMajor(MajorBean major) {
-		this.major = major;
+	public void setMajorCategory(MajorCategoryBean majorCategory) {
+		this.majorCategory = majorCategory;
 	}
 
 
