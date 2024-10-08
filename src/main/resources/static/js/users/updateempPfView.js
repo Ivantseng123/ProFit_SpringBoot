@@ -49,7 +49,7 @@ $('.file-uploader_companyImg').on('change', function() {
 		reader.onload = function(e) {
 			previewImage.attr('src', e.target.result);
 		}
-		reader.readAsDataURL(fileInput.files[0]);
+			reader.readAsDataURL(fileInput.files[0]);
 	}
 });
 
