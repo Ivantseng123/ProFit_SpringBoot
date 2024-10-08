@@ -49,7 +49,7 @@
                 <!-- 刊登者 ID（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">刊登者 ID</label>
-                    <input th:if="${job.jobsId != null}" type="text" class="form-control" th:field="${job.users.userId}" readonly/>
+                    <input th:if="${job.jobsId != null}" type="text" class="form-control" th:field="${job.users.userId}" />
                     <input th:if="${job.jobsId == null}" type="text" class="form-control" name="userId" placeholder="例如：100"/>
 
                 </div>
@@ -65,7 +65,7 @@
                 <!-- 發布日期（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">發布日期</label>
-                    <input type="date" class="form-control" name="PostingDate" th:value="${job.jobsPostingDate}" />
+                    <input type="date" class="form-control" name="postingDate" th:field="${job.jobsPostingDate}" readonly />
                 </div>
 
                 <!-- 申請截止日期 -->
