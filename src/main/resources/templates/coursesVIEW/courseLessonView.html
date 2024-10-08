@@ -8,7 +8,11 @@
 </head>
 <body>
 <div th:replace="~{model/layout-static}"></div>
-<div class="container pt-5">
+<div class="container pt-2">
+		<a class="btn btn-primary" role="button" aria-disabled="true"
+		   th:href="@{/courseModules(courseId=${courseModuleDTO.courseId})}">返回章節列表</a>
+	</div>
+<div class="container pt-3">
     <!-- 主要內容區域 -->
     <!-- 只是一個範例，裡面布局可以更改 -->
     <div class="course-header">
