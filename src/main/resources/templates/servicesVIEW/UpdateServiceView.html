@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="UTF-8">
+	<title>新增服務 - ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/model.css}">
+	<link rel="stylesheet" th:href="@{/js/jquery-ui-1.14.0.custom/jquery-ui.css}">
+	<style>
+		label,
+		input {
+			display: block;
+			margin-bottom: 12px;
+		}
+
+		input.text {
+			width: 95%;
+			padding: .4em;
+		}
+
+		div#users-contain {
+			width: 100%;
+			margin: 20px 0;
+		}
+
+		div#users-contain table {
+			margin: 1em 0;
+			border-collapse: collapse;
+			width: 50%;
+		}
+
+		div#users-contain table td,
+		div#users-contain table th {
+			border: 1px solid #eee;
+			padding: .6em 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+
+	<div class="container pt-5">
+		<div id="tabs">
+			<ul>
+				<li><a href="#createServiceTab">編輯服務</a></li>
+			</ul>
+
+			<div id="createServiceTab">
+				<div class="form-container">
+					<form id="updateServiceForm" enctype='application/json'>
+						<input type="hidden" id="serviceId" name="serviceId" th:value="${serviceId}">
+						<div class="form-group">
+							<label for="serviceTitle">服務名稱:</label>
+							<input type="text" id="serviceTitle" name="serviceTitle" class="form-control">
+						</div>
+
+						<div class="form-group" hidden>
+							<label for="userMajor">服務提供者(會員-專業):</label>
+							<select id="userMajor" name="userMajor" class="form-control">
+								<option value="">請選擇會員-專業</option>
+								<!-- 這裡需要動態加載會員-專業選項 -->
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="serviceUserName">服務提供者:</label>
+							<input id="userId" name="userId" class="form-control" hidden readonly>
+							<input id="serviceUserName" name="serviceUserName" class="form-control" rows="4" readonly>
+						</div>
+
+						<div class="form-group">
+							<label for="serviceMajorName">專業:</label>
+							<input id="majorId" name="majorId" class="form-control" hidden readonly>
+							<input id="serviceMajorName" name="serviceMajorName" class="form-control" readonly>
+						</div>
+
+						<div class="form-group">
+							<label for="servicePrice">服務報價:</label>
+							<input type="number" id="servicePrice" name="servicePrice" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceUnitName">單位:</label>
+							<input type="text" id="serviceUnitName" name="serviceUnitName" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceDuration">執行時間(天):</label>
+							<input type="number" id="serviceDuration" name="serviceDuration" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceContent">服務內容:</label>
+							<textarea id="serviceContent" name="serviceContent" class="form-control" rows="4"></textarea>
+						</div>
+
+						<div class="form-group">
+							<label for="servicePictureURL1">服務圖片 1:</label>
+							<img width="50px" id="currentPicture1" src="" alt="">
+							<!-- <div class="preview1">
+								<p style="line-height: 60px;">未選擇任何檔案</p>
+							</div> -->
+							<input type="file" id="servicePictureURL1" accept=".jpg, .jpeg, .png" name="servicePictureURL1"
+								class="form-control-file">
+						</div>
+
+						<div class="form-group">
+							<label for="servicePictureURL2">服務圖片 2:</label>
+							<img width="50px" id="currentPicture2" src="" alt="">
+							<!-- <div class="preview2">
+								<p style="line-height: 60px;">未選擇任何檔案</p>
+							</div> -->
+							<input type="file" accept=".jpg, .jpeg, .png" id="servicePictureURL2" name="servicePictureURL2"
+								class="form-control-file">
+						</div>
+
+						<div class="form-group">
+							<label for="servicePictureURL3">服務圖片 3:</label>
+							<img width="50px" id="currentPicture3" src="" alt="">
+							<!-- <div class="preview3">
+								<p style="line-height: 60px;">未選擇任何檔案</p>
+							</div> -->
+							<input type="file" accept=".jpg, .jpeg, .png" id="servicePictureURL3" name="servicePictureURL3"
+								class="form-control-file">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceCreateDate">創建日期: (自動帶入)</label>
+							<input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control" readonly>
+						</div>
+
+						<div class="form-group">
+							<label for="serviceStatus">服務狀態:</label>
+							<select id="serviceStatus" name="serviceStatus" class="form-control">
+								<option value="">請選擇狀態</option>
+								<option value="0">啟用</option>
+								<option value="1">審核中</option>
+								<option value="2">已關閉</option>
+							</select>
+						</div>
+
+						<div style="text-align: right;">
+							<button type="button" class="btn btn-secondary" id="cancelCreate" onclick="cancelUpdate()">取消編輯</button>
+							<button type="submit" class="btn btn-primary" id="submitService">更新服務</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const serviceId = document.getElementById('serviceId').value;
+			// console.log(/*[[${serviceId}]]*/);
+			// const serviceId = /*[[${serviceId}]]*/ null;
+
+			if (serviceId) {
+				loadServiceData(serviceId);
+			} else {
+				alert('沒有指定服務ID');
+				window.location.href = '/ProFit/service/';
+			}
+
+			// // 獲取會員-專業列表
+			// fetch('/api/user-majors')
+			// 	.then(response => response.json())
+			// 	.then(data => {
+			// 		const select = document.getElementById('userMajor');
+			// 		data.forEach(userMajor => {
+			// 			const option = document.createElement('option');
+			// 			option.value = `${userMajor.userId},${userMajor.majorId}`;
+			// 			option.textContent = `${userMajor.userName} - ${userMajor.majorName}`;
+			// 			select.appendChild(option);
+			// 		});
+			// 	})
+			// 	.catch(error => console.error('Error:', error));
+
+
+
+			// 表單提交處理
+			document.getElementById('updateServiceForm').addEventListener('submit', function (e) {
+				e.preventDefault();
+
+				// 使用 FormData 來封裝表單數據
+				// let formData = new FormData(this);
+
+
+				let form = document.getElementById('updateServiceForm');
+				let formData = new FormData(form);
+				formData.set("serviceId", $("#serviceId").val());
+				formData.set("serviceTitle", $("#serviceTitle").val());
+				formData.set("userId", $("#userId").val());
+				formData.set("majorId", $("#userId").val());
+				formData.set("userMajor", $("#userMajor").val());
+				formData.set("serviceContent", $("#serviceContent").val());
+				formData.set("servicePrice", $("#servicePrice").val());
+				formData.set("serviceUnitName", $("#serviceUnitName").val());
+				formData.set("serviceDuration", $("#serviceDuration").val());
+				formData.set("serviceStatus", $("#serviceStatus").val());
+
+
+				if ($('#servicePictureURL1')) {
+
+				}
+
+				console.log($('#servicePictureURL1')[0].files[0]);
+				console.log($('#servicePictureURL2')[0].files[0]);
+
+				console.log($('#servicePictureURL3')[0].files[0]);
+
+
+
+
+				// 只有當文件被選擇時才添加到 FormData
+				if (!($('#servicePictureURL1')[0].files[0] === undefined)) {
+					formData.set("servicePictureURL1", $('#servicePictureURL1')[0].files[0]);
+				}
+				if (!($('#servicePictureURL2')[0].files[0] === undefined)) {
+					formData.set("servicePictureURL2", $('#servicePictureURL2')[0].files[0]);
+				}
+				if (!($('#servicePictureURL3')[0].files[0] === undefined)) {
+					formData.set("servicePictureURL3", $('#servicePictureURL3')[0].files[0]);
+				}
+
+
+
+
+
+				fetch(`/ProFit/service/api/${serviceId}`, {
+					method: 'PUT',
+					body: formData
+				})
+					.then(response => response.json())
+					.then(data => {
+						if (data.message === 'OK') {
+							alert('服務更新成功！');
+							window.location.href = '/ProFit/service/';
+						} else {
+							alert('服務更新失敗：' + data.error);
+						}
+					})
+					.catch(error => console.error('Error:', error));
+			});
+
+
+
+			// 上傳檔案時顯示圖片---------------------------------------------
+			// input1.style.opacity = 0;
+			// input2.style.opacity = 0;
+			// input3.style.opacity = 0;
+			// input1.addEventListener('change', updateImageDisplay1);
+			// input2.addEventListener('change', updateImageDisplay2);
+			// input3.addEventListener('change', updateImageDisplay3);
+		});
+
+		// 查到的資料填入表單中
+		function loadServiceData(serviceId) {
+			fetch(`/ProFit/service/api/${serviceId}`)
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+
+					document.getElementById('userId').value = data.userMajor.user.userId;
+					document.getElementById('majorId').value = data.userMajor.major.majorId;
+
+
+					document.getElementById('serviceTitle').value = data.serviceTitle;
+					document.getElementById('serviceUserName').value = data.userMajor.user.userName;
+					document.getElementById('serviceMajorName').value = data.userMajor.major.majorName;
+
+					document.getElementById('userMajor').value = data.userMajor;
+
+					document.getElementById('serviceContent').value = data.serviceContent;
+					document.getElementById('servicePrice').value = data.servicePrice;
+					document.getElementById('serviceUnitName').value = data.serviceUnitName;
+					document.getElementById('serviceDuration').value = data.serviceDuration;
+					document.getElementById('serviceCreateDate').value = new Date(data.serviceCreateDate).toLocaleString();
+					document.getElementById('serviceStatus').value = data.serviceStatus;
+
+					// 顯示當前圖片
+					document.getElementById('currentPicture1').src = data.servicePictureURL1 || '';
+					document.getElementById('currentPicture2').src = data.servicePictureURL2 || '';
+					document.getElementById('currentPicture3').src = data.servicePictureURL3 || '';
+
+
+					// console.log(document.getElementById('currentPicture1').src)
+					// console.log(document.getElementById('currentPicture2').src)
+					// console.log(document.getElementById('currentPicture3').src)
+
+				})
+				.catch(error => console.error('Error:', error));
+		}
+
+		function cancelUpdate() {
+			if (confirm('確定要取消更新服務嗎？')) {
+				window.location.href = '/ProFit/service/';
+			}
+		}
+
+
+
+
+
+		// 上傳檔案時顯示圖片---------------------------------------------
+		// var input1 = document.getElementById('servicePictureURL1');
+		// var input2 = document.getElementById('servicePictureURL2');
+		// var input3 = document.getElementById('servicePictureURL3');
+		// var preview1 = document.querySelector('.preview1');
+		// var preview2 = document.querySelector('.preview2');
+		// var preview3 = document.querySelector('.preview3');
+
+		// function updateImageDisplay1() {
+		// 	while (preview1.firstChild) {
+		// 		preview1.removeChild(preview1.firstChild);
+		// 	}
+
+		// 	if (input2.files.length === 0) {
+		// 		var para = document.createElement('p');
+		// 		para.textContent = '未選擇任何檔案';
+		// 		para.style = "line-height: 50px;";
+		// 		preview1.appendChild(para);
+		// 	}
+		// 	else {
+		// 		var para = document.createElement('p');
+		// 		var image = document.createElement('img');
+		// 		image.src = window.URL.createObjectURL(input1.files[0]);
+		// 		image.style = "weight: 60px;";
+		// 		preview1.appendChild(image);
+		// 		preview1.appendChild(para);
+		// 	}
+		// }
+
+		// function updateImageDisplay2() {
+		// 	while (preview2.firstChild) {
+		// 		preview2.removeChild(preview2.firstChild);
+		// 	}
+
+		// 	if (input2.files.length === 0) {
+		// 		var para = document.createElement('p');
+		// 		para.textContent = '未選擇任何檔案';
+		// 		para.style = "line-height: 50px;";
+		// 		preview2
+		// 	}
+		// 	else {
+		// 		var para = document.createElement('p');
+		// 		var image = document.createElement('img');
+		// 		image.src = window.URL.createObjectURL(input2.files[0]);
+		// 		image.style = "weight: 60px;";
+		// 		preview2.appendChild(image);
+		// 		preview2.appendChild(para);
+		// 	}
+		// }
+
+		// function updateImageDisplay3() {
+		// 	while (preview3.firstChild) {
+		// 		preview3.removeChild(preview3.firstChild);
+		// 	}
+
+		// 	if (input2.files.length === 0) {
+		// 		var para = document.createElement('p');
+		// 		para.textContent = '未選擇任何檔案';
+		// 		para.style = "line-height: 50px;";
+		// 		preview3.appendChild(para);
+		// 	}
+		// 	else {
+		// 		var para = document.createElement('p');
+		// 		var image = document.createElement('img');
+		// 		image.src = window.URL.createObjectURL(input3.files[0]);
+		// 		image.style = "weight: 60px;";
+		// 		preview3.appendChild(image);
+		// 		preview3.appendChild(para);
+		// 	}
+		// }
+
+
+
+	</script>
+
+
+
+
+</body>
+
+</html>

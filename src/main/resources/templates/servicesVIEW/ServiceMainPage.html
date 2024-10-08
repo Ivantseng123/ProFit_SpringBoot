@@ -28,7 +28,7 @@
         <div class="mb-1">
           <span style="margin-right: 30px;">依
             <select name="form-select" id="sortCondition">
-              <option selected value="serviceId">條件</option>
+              <option selected value="serviceId">ID</option>
               <option value="serviceUpdateDate">更新日期</option>
             </select>
             排序
@@ -56,15 +56,19 @@
         <thead>
           <tr>
             <th>ID</th>
+            <th>圖片</th>
             <th>標題</th>
+            <th>報價</th>
+            <th>發布者</th>
             <th>更新日期</th>
-            <th style="display:none;">狀態</th>
+            <th>狀態</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody id="serviceTableBody">
           <div id="loadingIndicator" style="display: none;">
             Loading...
+            <!-- <tr><td><img width="20px" height="20px" src="" alt=""></td></tr> -->
           </div>
           <!-- 服務列表將在這裡動態插入 -->
         </tbody>
@@ -72,13 +76,74 @@
     </div>
 
     <div id="pagination">
-      <!-- 分頁控件將在這裡動態插入 -->
+      <!-- 分頁將在這裡動態插入 -->
     </div>
 
   </div>
 
-  <!-- 新增服務的模態框 -->
+  <!-- 檢視服務的模態框 -->
+  <div class="modal fade" id="staticBackdrop-view" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fs-5" id="staticBackdropLabel">服務細節</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
 
+          <div class="mb-3">
+            <label for="serviceTitle" class="form-label">服務標題</label>
+            <input type="text" class="form-control" id="serviceTitle" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="serviceMajorName" class="form-label">服務專業</label>
+            <input type="text" class="form-control" id="serviceMajorName">
+          </div>
+          <div class="mb-3">
+            <label for="serviceUserName" class="form-label">發布者</label>
+            <input type="text" class="form-control" id="serviceProvider">
+          </div>
+          <div class="mb-3">
+            <label for="servicePrice" class="form-label">服務報價:</label>
+            <input type="text" class="form-control" id="servicePrice">
+          </div>
+          <div class="mb-3">
+            <label for="serviceDuration" class="form-label">執行時間</label>
+            <input type="text" class="form-control" id="serviceDuration">
+          </div>
+          <div class="mb-3">
+            <label for="serviceContent" class="form-label">服務內容</label>
+            <input type="text" class="form-control" id="serviceContent">
+          </div>
+          <div class="mb-3">
+            <label for="serviceCreateDate" class="form-label">建立時間</label>
+            <input type="text" class="form-control" id="serviceCreateDate">
+          </div>
+          <div class="mb-3">
+            <label for="serviceUpdateDate" class="form-label">更新時間</label>
+            <input type="text" class="form-control" id="serviceUpdateDate">
+          </div>
+          <div class="d-flex flex-row mb-3">
+            <img width="200px" id="servicePicture1" src="" alt="圖片1">
+            <br>
+            <img width="200px" id="servicePicture2" src="" alt="圖片2">
+            <br>
+            <img width="200px" id="servicePicture3" src="" alt="圖片3">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+          <button type="button" class="btn btn-primary" id="editService">編輯</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- 新增服務的模態框 -->
   <!-- <div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -171,12 +236,34 @@
       const tbody = $('#serviceTableBody');
       tbody.empty();
       services.forEach(service => {
+
+        let serviceStatusStr;
+        switch (service.serviceStatus) {
+          case 0: {
+            serviceStatusStr = '啟用';
+            break;
+          }
+          case 1: {
+            serviceStatusStr = '審核中';
+            break;
+          }
+          case 2: {
+            serviceStatusStr = '已關閉';
+            break;
+          }
+          default:
+            break;
+        }
+
         tbody.append(`
                       <tr>
                           <td>${service.serviceId}</td>
+                          <td><img width="80px" src="${service.servicePictureURL1}" alt=""></td>
                           <td>${service.serviceTitle}</td>
+                          <td>$ ${service.servicePrice} / ${service.serviceUnitName}</td>
+                          <td>${service.userMajor.user.userName}</td>
                           <td>${service.serviceUpdateDate}</td>
-                          <td style="display:none;">${service.serviceStatus}</td>
+                          <td>${serviceStatusStr}</td>
                           <td>
                               <button  class="btn btn-primary btn-sm" onclick="editService(${service.serviceId})">編輯</button>
                               <button  class="btn btn-danger btn-sm" onclick="deleteService(${service.serviceId})">刪除</button>
@@ -217,8 +304,43 @@
       pagination.html(paginationHtml);
     }
 
-    // 處理編輯服務的邏輯
+    // 編輯服務
     function editService(serviceId) {
+      // 跳轉到編輯頁面，並傳遞服務ID
+      window.location.href = `/ProFit/service/edit/${serviceId}`;
+    }
+
+
+    // 檢視服務
+    function viewService(serviceId) {
+      fetch(`/ProFit/service/api/${serviceId}`)
+        .then(response => response.json())
+        .then(data => {
+          // 填充模態框中的數據
+          document.getElementById('serviceTitle').value = data.serviceTitle;
+          document.getElementById('serviceMajorName').value = data.userMajor.major.majorName;
+          document.getElementById('serviceProvider').value = data.userMajor.user.userName;
+          document.getElementById('serviceContent').value = data.serviceContent;
+          document.getElementById('servicePrice').value = `${data.servicePrice} ${data.serviceUnitName}`;
+          document.getElementById('serviceDuration').value = `${data.serviceDuration} 天`;
+          document.getElementById('serviceCreateDate').value = new Date(data.serviceCreateDate).toLocaleString();
+          document.getElementById('serviceUpdateDate').value = new Date(data.serviceUpdateDate).toLocaleString();
+
+          // 顯示服務圖片
+          document.getElementById('servicePicture1').src = data.servicePictureURL1 || '';
+          document.getElementById('servicePicture2').src = data.servicePictureURL2 || '';
+          document.getElementById('servicePicture3').src = data.servicePictureURL3 || '';
+
+          // //
+          // document.getElementById('editService').click(function () {
+          //   console.log(data.serviceId);
+          //   editService(data.serviceId);
+          // });
+
+          // 顯示模態框
+          new bootstrap.Modal(document.getElementById('staticBackdrop-view')).show();
+        })
+        .catch(error => console.error('Error:', error))
     }
 
 

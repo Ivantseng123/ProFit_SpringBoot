@@ -145,6 +145,7 @@ public class ServiceService {
 
 	// 修改(更新)服務
 	public ServicesDTO updateService(ServicesDTO serviceDTO) {
+		System.out.println("aa ");
 		Optional<ServiceBean> optional = serviceRepo.findById(serviceDTO.getServiceId());
 		if (optional.isPresent()) {
 			ServiceBean serviceBean = optional.get();
