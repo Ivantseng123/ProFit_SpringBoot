@@ -19,17 +19,10 @@
     <div class="card mb-4">
         <div class="card-body">
 
-<!--&lt;!&ndash;             職缺編輯/新增表單&ndash;&gt;-->
-<!--            <form th:action="@{/jobs/update/id(id=${job.jobsId})}" method="post">-->
 
-<!--                <input type="hidden" th:field="${job.jobsId}"/>-->
-<!--                <input type="hidden" name="_method" value="put"/>-->
 
                 <!-- 職缺新增/編輯表單 -->
                 <form th:action="${job.jobsId != null} ? @{/jobs/update/{id}(id=${job.jobsId})} : @{/jobs/add}" method="post">
-
-                    <!-- 隱藏欄位：新增時自動生成刊登者 ID -->
-                    <input type="hidden" th:if="${job.jobsId == null}" th:field="${job.users.userId}" />
 
                     <!-- 隱藏欄位：僅編輯時顯示 -->
                     <input type="hidden" th:if="${job.jobsId != null}" th:field="${job.jobsId}"/>
@@ -65,7 +58,7 @@
                 <!-- 發布日期（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">發布日期</label>
-                    <input type="date" class="form-control" name="postingDate" th:field="${job.jobsPostingDate}" readonly />
+                    <input type="date" class="form-control" name="postingDate" th:value="${job.jobsPostingDate}" readonly />
                 </div>
 
                 <!-- 申請截止日期 -->

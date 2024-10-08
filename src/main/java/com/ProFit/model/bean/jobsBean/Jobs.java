@@ -48,7 +48,7 @@ public class Jobs implements java.io.Serializable{
     @Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "jobs_posting_date")
+    @Column(name = "jobs_posting_date",insertable = false ,updatable = false)
     private Date jobsPostingDate;
 
     @Temporal(TemporalType.DATE)
