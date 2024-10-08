@@ -20,7 +20,7 @@ import jakarta.transaction.Transactional;
 public class CourseModuleService implements IcourseModuleService {
 
 	@Autowired
-	private IHcourseModuleDao houseModuleDao;
+	private IHcourseModuleDao hcourseModuleDao;
 	
 	@Autowired
 	private CourseModuleRepository courseModuleRepo;
@@ -37,7 +37,7 @@ public class CourseModuleService implements IcourseModuleService {
 
 	@Override
 	public boolean updateCourseModuleById(CourseModuleBean newCourseModule) {
-		return houseModuleDao.updateCourseModuleById(newCourseModule);
+		return hcourseModuleDao.updateCourseModuleById(newCourseModule);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class CourseModuleService implements IcourseModuleService {
 	@Override
 	public List<CourseModuleDTO> searchCourseModules(String courseId) {
 
-		List<CourseModuleBean> searchCourseModules = houseModuleDao.searchCourseModules(courseId);
+		List<CourseModuleBean> searchCourseModules = hcourseModuleDao.searchCourseModules(courseId);
 		
 		List<CourseModuleDTO> courseModulesDTO = searchCourseModules.stream().map(CourseModuleDTO::new).collect(Collectors.toList());
 		

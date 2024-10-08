@@ -24,7 +24,7 @@
 				</div>
 
 				<div>
-					<input class="form-control file-uploader" type="file" id="fileInput" accept="image/*" name="imgfile" />
+					<input class="form-control file-uploader mt-3 mb-3" type="file" id="fileInput" accept="image/*" name="imgfile" />
 				</div>
 				<label class="form-label" for="user_id">會員ID:</label>
 				<input class="form-input" type="text" id="user_id" name="userId" readonly>
@@ -37,7 +37,7 @@
 				<label class="form-label" for="user_password">
 					會員密碼: </label> <input class="form-input" type="password" placeholder="修改會員密碼" id="user_password"
 					name="userPasswordHash" value="${user.userPasswordHash}" readonly>
-				<button class="btn btn-warning insertbtn" type="button" style="margin-top: 20px; margin-bottom: 20px"
+				<button class="btn btn-warning insertbtn mb-3" type="button"
 					onclick="togglePopup()">修改密碼</button>
 				<label class="form-label" for="user_phonenumber">會員手機號碼:</label>
 				<input class="form-input" type="text" placeholder="修改會員手機號碼" id="user_phonenumber"
@@ -125,11 +125,11 @@
 
 				<label class="form-label" for="freelancer_identity">會員接案身份:</label>
 				<div class="input-radio">
-					<input type="radio" id="identityChoice4" name="freelancerIdentity" value="個人兼職" required />
+					<input type="radio" id="identityChoice4" name="freelancerIdentity" value="個人兼職"/>
 					<label for="identityChoice1">個人兼職</label>
-					<input type="radio" id="identityChoice5" name="freelancerIdentity" value="工作室" required />
+					<input type="radio" id="identityChoice5" name="freelancerIdentity" value="工作室"/>
 					<label for="identityChoice2">工作室</label>
-					<input type="radio" id="identityChoice6" name="freelancerIdentity" value="學生" required />
+					<input type="radio" id="identityChoice6" name="freelancerIdentity" value="學生"/>
 					<label for="identityChoice3">學生</label>
 				</div>
 

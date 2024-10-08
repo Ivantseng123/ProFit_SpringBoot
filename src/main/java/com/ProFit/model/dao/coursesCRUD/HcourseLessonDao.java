@@ -59,7 +59,7 @@ public class HcourseLessonDao implements IHcourseLessonDao {
 					:newCourseLesson.getCourseLessonName());
 		
 		oldCourseLesson.setCourseLessonSort(
-				newCourseLesson.getCourseLessonSort() == null || newCourseLesson.getCourseLessonSort().isEmpty()
+				newCourseLesson.getCourseLessonSort() == null
 					?oldCourseLesson.getCourseLessonSort()
 					:newCourseLesson.getCourseLessonSort());
 		
@@ -74,7 +74,7 @@ public class HcourseLessonDao implements IHcourseLessonDao {
 					:newCourseLesson.getLessonMediaUrl());
 		
 		oldCourseLesson.setMediaDuration(
-				newCourseLesson.getMediaDuration() ==null || newCourseLesson.getMediaDuration().isEmpty()
+				newCourseLesson.getMediaDuration() ==null
 					?oldCourseLesson.getMediaDuration()
 					:newCourseLesson.getMediaDuration());
 		
@@ -99,10 +99,10 @@ public class HcourseLessonDao implements IHcourseLessonDao {
 
 	//搜尋全部單元by courseModule id
 	@Override
-	public List<CourseLessonBean> searchCourseLessonsByModuleId(int courseModuleid) {
+	public List<CourseLessonBean> searchCourseLessonsByModuleId(Integer courseModuleId) {
 		Session session = entityManager.unwrap(Session.class);
 		Query<CourseLessonBean> query = session.createQuery("from CourseLessonBean where courseModule.courseModuleId = :courseModuleId",CourseLessonBean.class);
-		query.setParameter("courseModuleId", courseModuleid);
+		query.setParameter("courseModuleId", courseModuleId);
 		return query.getResultList();
 	}
 

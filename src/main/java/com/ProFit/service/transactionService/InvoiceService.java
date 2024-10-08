@@ -1,6 +1,7 @@
 package com.ProFit.service.transactionService;
 
 import com.ProFit.model.bean.transactionBean.InvoiceBean;
+import com.ProFit.model.dto.transactionDTO.InvoiceDTO;
 import com.ProFit.model.dao.transactionCRUD.InvoiceDAORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InvoiceService {
@@ -15,53 +17,59 @@ public class InvoiceService {
     @Autowired
     private InvoiceDAORepository invoiceRepository;
 
-    // 查詢所有發票
+    // 查詢所有發票，並轉換為 DTO
     @Transactional(readOnly = true)
-    public List<InvoiceBean> getAllInvoices() {
-        return invoiceRepository.findAll();
+    public List<InvoiceDTO> getAllInvoices() {
+        return invoiceRepository.findAll().stream()
+            .map(this::convertToDTO)
+            .collect(Collectors.toList());
     }
 
     // 根據發票號碼查詢發票
     @Transactional(readOnly = true)
-    public InvoiceBean getInvoiceById(String invoiceNumber) {
-        return invoiceRepository.findById(invoiceNumber).orElse(null);
+    public InvoiceDTO getInvoiceById(String invoiceNumber) {
+        InvoiceBean invoiceBean = invoiceRepository.findById(invoiceNumber).orElse(null);
+        return invoiceBean != null ? convertToDTO(invoiceBean) : null;
     }
 
     // 根據條件查詢發票
     @Transactional(readOnly = true)
-    public List<InvoiceBean> searchInvoices(String invoiceNumber, String invoiceStatus, String idType, String idValue) {
-        // 根據不同的條件調用對應的查詢方法
+    public List<InvoiceDTO> searchInvoices(String invoiceNumber, String invoiceStatus, String idType, String idValue) {
+        List<InvoiceBean> invoices;
         if (invoiceNumber != null && !invoiceNumber.isEmpty() && invoiceStatus != null && !invoiceStatus.isEmpty()) {
-            // 查詢發票號碼和發票狀態
-            return invoiceRepository.findByInvoiceNumberAndInvoiceStatus(invoiceNumber, invoiceStatus);
+            invoices = invoiceRepository.findByInvoiceNumberAndInvoiceStatus(invoiceNumber, invoiceStatus);
         } else if (invoiceNumber != null && !invoiceNumber.isEmpty()) {
-            // 只查詢發票號碼
-            return invoiceRepository.findByInvoiceNumber(invoiceNumber);
+            invoices = invoiceRepository.findByInvoiceNumber(invoiceNumber);
         } else if (invoiceStatus != null && !invoiceStatus.isEmpty()) {
-            // 只查詢發票狀態
-            return invoiceRepository.findByInvoiceStatus(invoiceStatus);
+            invoices = invoiceRepository.findByInvoiceStatus(invoiceStatus);
         } else if (idType != null && !idType.isEmpty() && idValue != null && !idValue.isEmpty()) {
-            // 根據 idType 查詢對應的訂單ID類型
             switch (idType) {
                 case "transaction_id":
-                    return invoiceRepository.findByTransactionId(idValue);
+                    invoices = invoiceRepository.findByTransactionId(idValue);
+                    break;
                 case "job_order_id":
-                    return invoiceRepository.findByJobOrderId(idValue);
+                    invoices = invoiceRepository.findByJobOrderId(idValue);
+                    break;
                 case "course_order_id":
-                    return invoiceRepository.findByCourseOrderId(idValue);
+                    invoices = invoiceRepository.findByCourseOrderId(idValue);
+                    break;
                 case "event_order_id":
-                    return invoiceRepository.findByEventOrderId(idValue);
+                    invoices = invoiceRepository.findByEventOrderId(idValue);
+                    break;
+                default:
+                    invoices = invoiceRepository.findAllByOrderByIssuedDateDesc();
             }
+        } else {
+            invoices = invoiceRepository.findAllByOrderByIssuedDateDesc();
         }
-        // 返回所有發票
-        return invoiceRepository.findAllByOrderByIssuedDateDesc();
+        return invoices.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
-
 
     // 新增發票
     @Transactional
-    public boolean insertInvoice(InvoiceBean invoice) {
+    public boolean insertInvoice(InvoiceDTO invoiceDTO) {
         try {
+            InvoiceBean invoice = convertToEntity(invoiceDTO);
             invoice.setIssuedDate(LocalDateTime.now()); // 設置當前日期
             invoiceRepository.save(invoice);
             return true;
@@ -73,9 +81,10 @@ public class InvoiceService {
 
     // 更新發票
     @Transactional
-    public boolean updateInvoice(InvoiceBean invoice) {
+    public boolean updateInvoice(InvoiceDTO invoiceDTO) {
         try {
-            if (invoiceRepository.existsById(invoice.getInvoiceNumber())) {
+            if (invoiceRepository.existsById(invoiceDTO.getInvoiceNumber())) {
+                InvoiceBean invoice = convertToEntity(invoiceDTO);
                 invoiceRepository.save(invoice); // 更新已存在的發票
                 return true;
             }
@@ -99,5 +108,33 @@ public class InvoiceService {
             e.printStackTrace();
             return false;
         }
+    }
+
+    // 將實體轉換為 DTO
+    private InvoiceDTO convertToDTO(InvoiceBean invoiceBean) {
+        InvoiceDTO dto = new InvoiceDTO();
+        dto.setInvoiceNumber(invoiceBean.getInvoiceNumber());
+        dto.setTransactionId(invoiceBean.getTransactionId());
+        dto.setJobOrderId(invoiceBean.getJobOrderId());
+        dto.setCourseOrderId(invoiceBean.getCourseOrderId());
+        dto.setEventOrderId(invoiceBean.getEventOrderId());
+        dto.setInvoiceAmount(invoiceBean.getInvoiceAmount());
+        dto.setIssuedDate(invoiceBean.getIssuedDate());
+        dto.setInvoiceStatus(invoiceBean.getInvoiceStatus());
+        return dto;
+    }
+
+    // 將 DTO 轉換為實體
+    private InvoiceBean convertToEntity(InvoiceDTO dto) {
+        InvoiceBean invoice = new InvoiceBean();
+        invoice.setInvoiceNumber(dto.getInvoiceNumber());
+        invoice.setTransactionId(dto.getTransactionId());
+        invoice.setJobOrderId(dto.getJobOrderId());
+        invoice.setCourseOrderId(dto.getCourseOrderId());
+        invoice.setEventOrderId(dto.getEventOrderId());
+        invoice.setInvoiceAmount(dto.getInvoiceAmount());
+        invoice.setIssuedDate(dto.getIssuedDate());
+        invoice.setInvoiceStatus(dto.getInvoiceStatus());
+        return invoice;
     }
 }

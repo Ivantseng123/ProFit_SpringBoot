@@ -19,21 +19,21 @@ public class CourseLessonBean implements java.io.Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer courseLessonId;
 	
-	@Column(name="course_module_id",insertable = false,updatable = false)
-	private String courseModuleId;
+	@Column(name="course_module_id")
+	private Integer courseModuleId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="course_module_id")
+	@JoinColumn(name="course_module_id",insertable = false,updatable = false)
 	private CourseModuleBean courseModule;
 	
-	@Column(name="course_id",insertable = false,updatable = false)
+	@Column(name="course_id")
 	private String courseId;
 
 	@Column(name="course_lesson_name")
 	private String courseLessonName;
 	
 	@Column(name="course_lesson_sort")
-	private String courseLessonSort;
+	private Integer courseLessonSort;
 	
 	@Column(name="lesson_media_url")
 	private String lessonMediaUrl;
@@ -42,15 +42,15 @@ public class CourseLessonBean implements java.io.Serializable {
 	private String lessonMediaType;
 	
 	@Column(name = "lesson_media_duration")
-	private String mediaDuration;
+	private Integer mediaDuration;
 
 
 	public CourseLessonBean() {
 		super();
 	}
 
-	public CourseLessonBean(Integer courseLessonId, String courseModuleId, String courseId, String courseLessonName,
-			String courseLessonSort, String lessonMediaUrl, String lessonMediaType, String mediaDuration) {
+	public CourseLessonBean(Integer courseLessonId, Integer courseModuleId, String courseId, String courseLessonName,
+			Integer courseLessonSort, String lessonMediaUrl, String lessonMediaType, Integer mediaDuration) {
 		super();
 		this.courseLessonId = courseLessonId;
 		this.courseModuleId = courseModuleId;
@@ -63,8 +63,8 @@ public class CourseLessonBean implements java.io.Serializable {
 	}
 	
 
-	public CourseLessonBean(String courseLessonName, String courseLessonSort,
-			String lessonMediaUrl, String lessonMediaType, String mediaDuration) {
+	public CourseLessonBean(String courseLessonName, Integer courseLessonSort,
+			String lessonMediaUrl, String lessonMediaType, Integer mediaDuration) {
 		super();
 		this.courseLessonName = courseLessonName;
 		this.courseLessonSort = courseLessonSort;
@@ -88,11 +88,11 @@ public class CourseLessonBean implements java.io.Serializable {
 		this.courseLessonId = courseLessonId;
 	}
 
-	public String getCourseModuleId() {
+	public Integer getCourseModuleId() {
 		return courseModuleId;
 	}
 
-	public void setCourseModuleId(String courseModuleId) {
+	public void setCourseModuleId(Integer courseModuleId) {
 		this.courseModuleId = courseModuleId;
 	}
 
@@ -112,11 +112,11 @@ public class CourseLessonBean implements java.io.Serializable {
 		this.courseLessonName = courseLessonName;
 	}
 
-	public String getCourseLessonSort() {
+	public Integer getCourseLessonSort() {
 		return courseLessonSort;
 	}
 
-	public void setCourseLessonSort(String courseLessonSort) {
+	public void setCourseLessonSort(Integer courseLessonSort) {
 		this.courseLessonSort = courseLessonSort;
 	}
 
@@ -136,11 +136,11 @@ public class CourseLessonBean implements java.io.Serializable {
 		this.lessonMediaType = lessonMediaType;
 	}
 
-	public String getMediaDuration() {
+	public Integer getMediaDuration() {
 		return mediaDuration;
 	}
 
-	public void setMediaDuration(String mediaDuration) {
+	public void setMediaDuration(Integer mediaDuration) {
 		this.mediaDuration = mediaDuration;
 	}
 

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="UTF-8">
+	<title>新增服務 - ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/model.css}">
+	<link rel="stylesheet" th:href="@{/js/jquery-ui-1.14.0.custom/jquery-ui.css}">
+	<style>
+		label,
+		input {
+			display: block;
+			margin-bottom: 12px;
+		}
+
+		input.text {
+			width: 95%;
+			padding: .4em;
+		}
+
+		div#users-contain {
+			width: 100%;
+			margin: 20px 0;
+		}
+
+		div#users-contain table {
+			margin: 1em 0;
+			border-collapse: collapse;
+			width: 50%;
+		}
+
+		div#users-contain table td,
+		div#users-contain table th {
+			border: 1px solid #eee;
+			padding: .6em 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+
+	<div class="container pt-5">
+		<div id="tabs">
+			<ul>
+				<li><a href="#createServiceTab">新增服務</a></li>
+			</ul>
+
+			<div id="createServiceTab">
+				<div class="form-container">
+					<form id="serviceForm" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="serviceTitle">服務名稱:</label>
+							<input type="text" id="serviceTitle" name="serviceTitle" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="userMajor">服務提供者(會員-專業):</label>
+							<select id="userMajor" name="userMajor" class="form-control">
+								<option value="">請選擇會員-專業</option>
+								<!-- 這裡需要動態加載會員-專業選項 -->
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="serviceContent">服務內容:</label>
+							<textarea id="serviceContent" name="serviceContent" class="form-control"
+								rows="4"></textarea>
+						</div>
+
+						<div class="form-group">
+							<label for="servicePrice">服務價格:</label>
+							<input type="number" id="servicePrice" name="servicePrice" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceUnitName">服務單位:</label>
+							<input type="text" id="serviceUnitName" name="serviceUnitName" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceDuration">服務時長:</label>
+							<input type="number" id="serviceDuration" name="serviceDuration" class="form-control">
+						</div>
+
+						<div class="form-group">
+							<label for="servicePictureURL1">服務圖片 1:</label>
+							<input type="file" id="servicePictureURL1" name="servicePictureURL1"
+								class="form-control-file">
+						</div>
+
+						<div class="form-group">
+							<label for="servicePictureURL2">服務圖片 2:</label>
+							<input type="file" id="servicePictureURL2" name="servicePictureURL2"
+								class="form-control-file">
+						</div>
+
+						<div class="form-group">
+							<label for="servicePictureURL3">服務圖片 3:</label>
+							<input type="file" id="servicePictureURL3" name="servicePictureURL3"
+								class="form-control-file">
+						</div>
+
+						<div class="form-group">
+							<label for="serviceCreateDate">創建日期: (自動帶入)</label>
+							<input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control"
+								readonly>
+						</div>
+
+						<div class="form-group">
+							<label for="serviceStatus">服務狀態:</label>
+							<select id="serviceStatus" name="serviceStatus" class="form-control">
+								<option value="">請選擇狀態</option>
+								<option value="0">啟用</option>
+								<option value="1">審核中</option>
+								<option value="2">已關閉</option>
+							</select>
+						</div>
+
+						<div style="text-align: right;">
+							<button type="button" class="btn btn-secondary" id="cancelCreate">取消新增</button>
+							<button type="button" class="btn btn-primary" id="submitService">新增服務</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function () {
+			$("#tabs").tabs();
+
+			loadUserMajors();
+
+			// 設置當前日期為創建日期
+			let nowTime = new Date();
+			let dateString = nowTime.getFullYear() + '-' + (nowTime.getMonth() + 1).toString().padStart(2, '0') + '-' + nowTime.getDate().toString().padStart(2, '0');
+			$("#serviceCreateDate").val(dateString);
+
+			// 取消新增
+			$("#cancelCreate").click(function () {
+				if (confirm("確定要取消新增服務嗎？所有輸入的資料將會清除。")) {
+					// 重置表單或返回上一頁
+					window.location.href = "/ProFit/service/";  // 服務列表頁面的URL
+				}
+			});
+
+			// 提交新服務
+			$("#submitService").click(function (e) {
+				e.preventDefault;
+
+				var selectedOption = $('#userMajor option:selected');
+				console.log(selectedOption.data('user-id'));
+				// 注意：圖片上傳需要特殊處理
+
+
+
+				// 使用 FormData 來封裝表單數據
+				let form = document.getElementById('serviceForm');
+
+				let formData = new FormData(form);
+				formData.set("serviceTitle", $("#serviceTitle").val());
+				// formData.set("userMajor", $("#userMajor").val());
+				formData.set("serviceContent", $("#serviceContent").val());
+				formData.set("servicePrice", $("#servicePrice").val());
+				formData.set("serviceUnitName", $("#serviceUnitName").val());
+				formData.set("serviceDuration", $("#serviceDuration").val());
+				formData.set("serviceStatus", $("#serviceStatus").val());
+				formData.set('userId', selectedOption.data('user-id'));
+				formData.set('majorId', selectedOption.data('major-id'));
+				formData.set("servicePictureURL1", $('#servicePictureURL1')[0].files[0]);
+				formData.set("servicePictureURL2", $('#servicePictureURL2')[0].files[0]);
+				formData.set("servicePictureURL3", $('#servicePictureURL3')[0].files[0]);
+
+
+
+
+
+
+
+				// 發送 AJAX 請求
+				$.ajax({
+					url: "/ProFit/service/api",
+					type: "POST",
+					processData: false, // 防止 jQuery 轉換數據
+					contentType: false, // 防止設置 Content-Type
+					data: formData,
+					dataType: 'json',
+					success: function (response) {
+						alert("服務創建成功！");
+						window.location.href = "/ProFit/service/";  // 重定向到服務列表頁面
+					},
+					error: function (xhr, status, error) {
+						alert("創建服務時發生錯誤: " + error);
+					}
+				});
+			});
+
+			// 這裡可以添加更多的客戶端驗證邏輯
+		});
+
+
+		function getUserMajor(params) {
+
+		}
+
+
+
+		function loadUserMajors() {
+			$.ajax({
+				url: '/ProFit/userMajors/api/list',
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					var select = $('#userMajor');
+					select.empty();
+					select.append($('<option>', {
+						value: '',
+						text: '請選擇會員-專業'
+					}));
+					$.each(data.content, function (i, item) {
+						select.append($('<option>', {
+							value: item.id,
+							'data-user-id': item.user.userId,
+							'data-major-id': item.major.majorId,
+							text: item.user.userName + ' - ' + item.major.majorName
+						}));
+					});
+				},
+				error: function (xhr, status, error) {
+					console.error("Error loading user majors:", error);
+					alert("加載會員-專業選項時出錯，請稍後再試。");
+				}
+			});
+		}
+
+
+
+
+		/*]]>*/
+	</script>
+
+
+
+
+</body>
+
+</html>
