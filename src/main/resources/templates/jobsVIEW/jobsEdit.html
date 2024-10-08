@@ -65,13 +65,13 @@
                 <!-- 發布日期（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">發布日期</label>
-                    <input type="date" class="form-control" name="PostingDate" th:value="${job.jobsPostingDate}" />
+                    <input type="date" class="form-control" name="PostingDate" th:field="${job.jobsPostingDate}" />
                 </div>
 
                 <!-- 申請截止日期 -->
                 <div class="mb-3">
                     <label class="form-label">申請截止日期</label>
-                    <input type="date" class="form-control" name="deadline" th:value="${job.jobsApplicationDeadline}" required />
+                    <input type="date" class="form-control" name="deadline"  th:value="${job.jobsApplicationDeadline}" required />
                 </div>
 
                 <!-- 職缺描述 -->
