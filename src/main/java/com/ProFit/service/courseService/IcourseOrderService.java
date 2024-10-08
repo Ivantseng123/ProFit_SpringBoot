@@ -9,7 +9,7 @@ import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 public interface IcourseOrderService {
 
 	//新增課程訂單
-	public CourseOrderBean insertCourseOrder(CourseOrderBean courseOrder);
+	public Integer insertCourseOrder(CourseOrderBean courseOrder);
 	
 	//刪除課程訂單by Id
 	public void deleteCourseOrderById(String courseOrderId);

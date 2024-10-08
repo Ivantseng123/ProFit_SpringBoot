@@ -9,8 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.ProFit.model.bean.coursesBean.CourseBean;
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 import com.ProFit.model.dao.coursesCRUD.CourseOrderRepository;
+import com.ProFit.model.dao.coursesCRUD.CoursesRepository;
 import com.ProFit.model.dao.coursesCRUD.IHcourseOrderDao;
 import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 import jakarta.transaction.Transactional;
@@ -25,14 +28,27 @@ public class CourseOrderService implements IcourseOrderService {
 	@Autowired
 	private CourseOrderRepository courseOrderRepo;
 	
+	@Autowired
+	private CoursesRepository coursesRepo;
+	
 	@Override
-	public CourseOrderBean insertCourseOrder(CourseOrderBean courseOrder) {
+	public Integer insertCourseOrder(CourseOrderBean courseOrder) {
+			
+			Optional<CourseBean> optional = coursesRepo.findById(courseOrder.getCourseId());
 		
-		if(courseOrder != null) {
-			return hcourseOrderDao.insertCourseOrder(courseOrder);
-		}
-		
-		return null;
+			//確認課程存在 不是返回0
+			if(optional.isPresent()) {
+				CourseBean courseBean = optional.get();
+				String courseStatus = courseBean.getCourseStatus();
+				
+				//確認課程是進行中 不是返回2 是的話返回1
+				if(courseStatus.equals("Active")) {
+					CourseOrderBean insertedCourseOrder = hcourseOrderDao.insertCourseOrder(courseOrder);
+					return 1;
+				}
+				return 2 ;
+			}
+			return 0;
 	}
 
 	@Override

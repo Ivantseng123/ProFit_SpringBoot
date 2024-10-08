@@ -19,7 +19,7 @@ public class CourseModuleDTO {
 	
 	private List<String> moduleLessonsName;
 	
-	private List<String> moduleLessonsMediaDuration;
+	private List<Integer> moduleLessonsMediaDuration;
 	
 	public CourseModuleDTO() {
 	}
@@ -32,12 +32,12 @@ public class CourseModuleDTO {
 		
 		ArrayList<Integer> moduleLessonIdList = new ArrayList<Integer>();
 		ArrayList<String> moduleLessonNameList = new ArrayList<String>();
-		ArrayList<String> moduleLessonsMediaDurationList = new ArrayList<String>();
+		ArrayList<Integer> moduleLessonsMediaDurationList = new ArrayList<Integer>();
 		
 		for(int i =0 ; i<courseModule.getModuleLessons().size();i++) {
 			Integer moduleLessonsId = courseModule.getModuleLessons().get(i).getCourseLessonId();
 			String moduleLessonsName = courseModule.getModuleLessons().get(i).getCourseLessonName();
-			String moduleLessonsMediaDuration = courseModule.getModuleLessons().get(i).getMediaDuration();
+			Integer moduleLessonsMediaDuration = courseModule.getModuleLessons().get(i).getMediaDuration();
 			
 			moduleLessonIdList.add(moduleLessonsId);
 			moduleLessonNameList.add(moduleLessonsName);
@@ -97,11 +97,11 @@ public class CourseModuleDTO {
 		this.moduleLessonsName = moduleLessonsName;
 	}
 
-	public List<String> getModuleLessonsMediaDuration() {
+	public List<Integer> getModuleLessonsMediaDuration() {
 		return moduleLessonsMediaDuration;
 	}
 
-	public void setModuleLessonsMediaDuration(List<String> moduleLessonsMediaDuration) {
+	public void setModuleLessonsMediaDuration(List<Integer> moduleLessonsMediaDuration) {
 		this.moduleLessonsMediaDuration = moduleLessonsMediaDuration;
 	}
 	

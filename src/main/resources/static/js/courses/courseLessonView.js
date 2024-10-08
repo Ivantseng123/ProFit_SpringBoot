@@ -1,86 +1,4 @@
-$('#searchBtn').click(function () {
-	
-	// 清空當前表格
-	$('#search-results').empty();
-	
-	$('#search-results').append(`	<div class="text-center">
-	  <div class="spinner-border" role="status">
-	    <span class="visually-hidden">Loading...</span>
-	  </div>
-	</div>`);
-	// 收集表單數據
-	let data = {
-		courseMajor: $('#id-courseMajor').val(),
-		courseName: $('#id-courseName').val(),
-		courseStatus: $('#id-courseStatus').val(),
-		courseCreateUserId: $('#id-courseCreateUserId').val(),
-		courseCreateUserName: $('#id-courseCreateUserName').val(),
-	};
-
-	// 發送 AJAX 請求
-	$.ajax({
-		url: contextPath + '/courses/search',
-		data: data,
-		dataType: 'json',
-		type: 'GET',
-		success: function (response) {
-			console.log(response);
-
-			// 清空當前表格
-			$('#search-results').empty();
-			
-			let tableHtml = `<h3>搜尋結果如下 :</h3>
-        	                <table>
-        	                    <thead>
-        	                        <tr>
-        	                            <th>ID</th>
-        	                            <th>課程名稱</th>
-        	                            <th>課程創建者</th>
-        	                            <th>課程資訊</th>
-										<th>章節數量</th>
-										<th>章節操作</th>
-        	                            <th>價格</th>
-        	                            <th>狀態</th>
-        	                            <th>操作</th>
-        	                        </tr>
-        	                    </thead>
-        	                    <tbody id="table-body">
-        	                    </tbody>
-        	                </table>`;
-
-			$('#search-results').append(tableHtml);
-
-			response.forEach(function (response) {
-				console.log("Serialized JSON: " + response.courseCreaterName);
-				$('#table-body').append(` 
-        		                    <tr>
-        	                        <td class="result-courseId" name="courseId">${response.courseId}</td>
-        	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
-									<td>${response.courseCreaterName}</td>
-        	                        <td>${response.courseInformation}</td>
-									<td>${response.courseModuleNumber}</td>
-									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
-									<td>${response.coursePrice}</td>
-        	                        <td><span class="status">${response.courseStatus}</span></td>
-        	                        <td>
-        	                            <button class="view btn btn-success ">查看課程</button>
-        	                            <button class="edit btn btn-primary">編輯</button>
-        	                            <button class="delete btn btn-danger">刪除</button>
-        	                       	</td>
-        	                    </tr>
-        	                ` );
-			});
-
-
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			// 處理錯誤
-			console.error('查詢失敗:', textStatus, errorThrown);
-			alert('查詢失敗，請重試。');
-		}
-	});
-});
-
+/*
 //新增課程後回傳帶參數的url，確認參數是否存在
 $(document).ready(function () {
 	console.log("Document is ready");
@@ -229,3 +147,4 @@ $(document).on('click', '.view', function () {
 		}
 	});
 });
+*/

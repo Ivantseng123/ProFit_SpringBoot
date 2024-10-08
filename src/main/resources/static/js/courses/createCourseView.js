@@ -1,5 +1,42 @@
 $(document).ready(function () {
-    // 初始化標籤頁
+    
+	  // 生成課程測試資料
+	    $("#generateCourseData").click(function () {
+	        $("#courseName").val("面向GTP編程");
+	        $("#courseCategory").val("100"); // 程式設計
+	        $("#courseCreateUserId").val("101");
+	        $("#courseInformation").val("這是一個測試課程資訊。");
+	        $("#courseStartDate").val("2024-10-07T09:00");
+	        $("#courseEndDate").val("2024-12-31T17:00");
+	        $("#courseDescription").val("Claude其實更好用");
+	        $("#coursePrice").val("9999");
+	        $("#courseStatus").val("active");
+	    });
+
+		// 生成章節測試資料
+		$("#generateModuleData").click(function () {
+		    var rowCount = $("#users tbody tr").length + 1; // 獲取當前行數，確保不會與現有行數衝突
+		    var newRow = `
+		        <tr>
+		            <td style="text-align: center">${rowCount}</td>
+		            <td class="courseModuleName">拿出魔法小卡準備訂閱</td>
+		            <td class="action-buttons">
+		                <button class="edit btn btn-primary">編輯</button>
+		                <button class="save btn btn-success" style="display:none;">確認</button>
+		                <button class="delete btn btn-danger">刪除</button>
+		            </td>
+		        </tr>
+		    `;
+		    // 在章節表格中插入測試資料
+		    $("#users tbody").append(newRow);
+
+		    // 新增生成的編輯和刪除按鈕的事件
+		    $("#users tbody tr:last-child .edit").on("click", editModule);
+		    $("#users tbody tr:last-child .save").on("click", saveModule);
+		    $("#users tbody tr:last-child .delete").on("click", deleteModule);
+		});
+	
+	// 初始化標籤頁
     $("#tabs").tabs();
 
     // 初始化對話框（如果需要）
@@ -106,4 +143,38 @@ $(document).ready(function () {
 function convertToSQLDateTimeFormat(datetimeLocal) {
     // 將 "T" 替換成 " "，將 "YYYY-MM-DDTHH:MM" 轉換為 "YYYY-MM-DD HH:MM"
     return datetimeLocal.replace("T", " ") + ":00"; // 確保格式 "YYYY-MM-DD HH:MM:SS"
+}
+
+function editModule() {
+    var row = $(this).closest("tr");
+    var courseModuleName = row.find(".courseModuleName");
+
+    // 變為可編輯的 input 欄位
+    courseModuleName.html("<input type='text' class='editInput' value='" + courseModuleName.text() + "' />");
+
+    // 顯示「確認」按鈕，隱藏「編輯」按鈕
+    row.find(".edit").hide();
+    row.find(".save").show();
+}
+
+function saveModule() {
+    var row = $(this).closest("tr");
+    var courseModuleName = row.find(".courseModuleName");
+
+    // 將輸入框的值保存回表格
+    var newValue = row.find(".editInput").val();
+    courseModuleName.html(newValue);
+
+    // 隱藏「確認」按鈕，顯示「編輯」按鈕
+    row.find(".save").hide();
+    row.find(".edit").show();
+}
+
+function deleteModule() {
+    $(this).closest("tr").remove();
+
+    // 更新行號
+    $("#users tbody tr").each(function (index) {
+        $(this).find("td:first").text(index + 1);
+    });
 }

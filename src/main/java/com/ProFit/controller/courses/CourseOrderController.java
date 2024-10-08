@@ -90,16 +90,24 @@ public class CourseOrderController {
 	// 新增課程訂單的方法
 	@PostMapping("/courseOrders/add")
 	@ResponseBody
-	public boolean postMethodName(@ModelAttribute CourseOrderBean courseOrder) {
-		
+	public Integer postMethodName(@ModelAttribute CourseOrderBean courseOrder) {
+		try {
 		if(courseOrder != null) {
-			CoursesDTO orderdCourse = courseService.searchOneCourseById(courseOrder.getCourseId());
-			courseOrder.setCourseOrderPrice(orderdCourse.getCoursePrice());
-			courseOrderService.insertCourseOrder(courseOrder);
-			return true;
+			
+				CoursesDTO orderedCourse = courseService.searchOneCourseById(courseOrder.getCourseId());
+				
+				courseOrder.setCourseOrderPrice(orderedCourse.getCoursePrice());
+				
+				Integer statusCode = courseOrderService.insertCourseOrder(courseOrder);
+				//0:課程不存在
+				//1:課程進行中
+				//2:課程還未開課
+				return statusCode;
 		}
-		
-		return false;
+		return null;
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 	
 	

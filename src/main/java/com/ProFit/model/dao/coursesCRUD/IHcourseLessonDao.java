@@ -22,6 +22,6 @@ public interface IHcourseLessonDao {
 	public List<CourseLessonBean> searchCourseLessons();
 
 	// 查詢全部 By 章節id
-	public List<CourseLessonBean> searchCourseLessonsByModuleId(int courseModuleid);
+	public List<CourseLessonBean> searchCourseLessonsByModuleId(Integer courseModuleid);
 	
 }
