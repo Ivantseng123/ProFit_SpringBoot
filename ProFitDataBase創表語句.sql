@@ -239,7 +239,7 @@ CREATE TABLE [dbo].[courses] (
     [course_price]           INT            NULL,
     [course_status]          NVARCHAR (20)  NOT NULL,
     PRIMARY KEY CLUSTERED ([course_id] ASC),
-    FOREIGN KEY ([course_category]) REFERENCES [dbo].[major] ([major_id]),
+    FOREIGN KEY ([course_category]) REFERENCES [dbo].[major_category] ([major_category_id]),
     FOREIGN KEY ([course_create_user_id]) REFERENCES [dbo].[users] ([user_id])
 );
 
