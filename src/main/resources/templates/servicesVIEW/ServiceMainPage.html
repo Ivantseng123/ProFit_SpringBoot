@@ -44,7 +44,7 @@
           <option value="serviceId,true">ID 升序</option>
           <option value="serviceId,false">ID 降序</option>
           <option value="serviceUpdateDate,true">更新日期升序</option>
-          <option value="serviceUpdateDate,false">更新日期降序</option>
+          <option value="serviceUpdateDate,false" selected>更新日期降序</option>
         </select>
       </div>
     </div>
@@ -195,7 +195,7 @@
         return `
                   <tr>
                       <td>${service.serviceId}</td>
-                      <td><img src="${service.servicePictureURL1}" alt="服務圖片" style="width: 70px; height: 70px;"></td>
+                      <td style="padding: 0px; border-radius: 50%"><img src="${service.servicePictureURL1}" alt="服務圖片" style="width: 150px; height: 150px; "></td>
                       <td>${service.serviceTitle}</td>
                       <td>$${service.servicePrice} / ${service.serviceUnitName}</td>
                       <td>${service.userMajor.user.userName}</td>
