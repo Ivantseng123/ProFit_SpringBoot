@@ -34,12 +34,12 @@
             </div>
         </div>
 
-        
+
         <div id="search-results" class="table-container">
             <!-- 查詢結果將在這裡顯示 -->
         </div>
 
-        
+
         <!-- 分頁碼 -->
         <div id="pagination" style="display: inline-block">
             <nav aria-label="Page navigation example">
@@ -60,7 +60,9 @@
                 </ul>
             </nav>
         </div>
-        <div id="loadingIndicator" style="display: none, inline-block"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>
+        <div id="loadingIndicator" style="display: none, inline-block">
+            <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+        </div>
 
     </div>
 
@@ -80,7 +82,7 @@
                             <button id="searchUsers" class="btn btn-secondary mt-2">查詢</button>
                         </div>
                         <div class="mb-3">
-                            <label for="userSelect" class="form-label">會員, email</label>
+                            <label for="userSelect" class="form-label">會員email, 會員名稱</label>
                             <select id="userSelect" class="form-select">
                                 <option value="">請選擇會員</option>
                             </select>
@@ -102,6 +104,48 @@
             </div>
         </div>
     </div>
+
+
+    <!-- 查看該使用者-專業關聯下的服務的模態框 -->
+    <div class="modal fade" id="userMajorServicesModal" tabindex="-1" aria-labelledby="userMajorServicesModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userMajorServicesModalLabel">會員-專業關聯服務列表</h5>
+                    <h3 id="userMajorServicesTitle"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>服務ID</th>
+                                <th>標題</th>
+                                <th>價格</th>
+                                <th>狀態</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userMajorServicesTable">
+                            <!-- 服務數據將在這裡動態加載 -->
+                        </tbody>
+                    </table>
+                    <nav aria-label="Services pagination">
+                        <ul class="pagination" id="userMajorServicesPagination">
+                            <!-- 分頁控件將在這裡動態加載 -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <!-- <script th:src="@{/js/majors/pagination.js}"></script>
     <script th:src="@{/js/majors/UserMajorMainPage.js}"></script> -->
@@ -301,6 +345,7 @@
                         <td>${item.major.majorName}</td>
                         <td>
                             <button class="btn btn-danger btn-sm" onclick="deleteUserMajor(${item.userId}, ${item.majorId})">刪除</button>
+                            <button class="btn btn-success btn-sm" onclick="showUserMajorServices(${item.userId},  ${item.majorId})">查看服務</button>
                         </td>
                     </tr>
                 `).join('')}
@@ -491,6 +536,7 @@
                                     <td>${item.major.majorName}</td>
                                     <td>
                                         <button class="btn btn-danger btn-sm" onclick="deleteUserMajor(${item.userId}, ${item.majorId})">刪除</button>
+                                         <button class="btn btn-success btn-sm" onclick="showUserMajorServices(${item.userId},  ${item.majorId})">查看服務</button>
                                     </td>
                                 </tr>
                             `).join('')}
@@ -503,131 +549,104 @@
         }
 
 
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     loadAllUserMajors(1);
+        //////////////////-----------------------服務相關-----------------------------/////////////////////
 
-        // })
+        let currentUserId;
+        let currentMajorId;
+        let currentPage2 = 1;
 
-        // let currentSort = {
-        //     sortBy: 'id',
-        //     ascending: true
-        // };
+        function showUserMajorServices(userId, majorId) {
+            currentUserId = userId;
+            currentMajorId = majorId;
 
-        // function loadAllUserMajors(page, size = 10) {
-        //     showLoading();
-
-        //     const apiUrl = new URL('/ProFit/userMajors/api/list', window.location.origin);
-        //     apiUrl.searchParams.append('page', page - 1);  // API 期望頁碼從 0 開始
-        //     apiUrl.searchParams.append('size', size);
-        //     apiUrl.searchParams.append('sortBy', currentSort.sortBy);
-        //     apiUrl.searchParams.append('ascending', currentSort.ascending);
+            const modal = new bootstrap.Modal(document.getElementById('userMajorServicesModal'));
+            loadUserMajorServices(userId, majorId, 0);
+            modal.show();
+        }
 
 
-        //     fetch(URL)
-        //         .then(response => {
-        //             if (!response.ok) {
-        //                 throw new Error('Network response was not ok');
-        //                 createPagination(data.pageNo + 1, data.totalPages, (newPage) => fetchData(newPage, size));
-        //             }
-        //             return response.json();
-        //         })
-        //         .then(userMajors => {
-        //             displayResults(userMajors);
-        //         })
-        //         .catch(error => {
-        //             console.error('Error:', error);
-        //             showError('載入專業失敗，請稍後再試。');
-        //         })
-        // }
+        function loadUserMajorServices(userId, majorId, page) {
 
-        // function showLoading() {
-        //     const loadingHtml = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
-        //     document.getElementById('search-results').innerHTML = loadingHtml;
-        // }
+            currentPage2 = page;
 
+            fetch(`/ProFit/service/api/userMajor/${userId}/${majorId}?page=${page}&size=10`)
+                .then(response => response.json())
+                .then(data => {
+                    //console.log(data.content.length);
 
+                    // document.getElementById('userMajorServicesTitle').innerHTML = `${service.userMajor.user.userName}, ${service.userMajor.major.majorName}`
+                    const tableBody = document.getElementById('userMajorServicesTable');
+                    tableBody.innerHTML = '';
 
-        // function searchUserMajors() {
-        //     const userId = document.getElementById('userId').value;
-        //     const majorId = document.getElementById('majorId').value;
-        //     let url = '/ProFit/userMajors?page=0&size=10';
-
-        //     if (userId) url += `&userId=${userId}`;
-        //     if (majorId) url += `&majorId=${majorId}`;
-
-        //     fetch(url)
-        //         .then(response => response.json())
-        //         .then(data => displayResults(data))
-        //         .catch(error => console.error('Error:', error));
-        // }
-
-        // function displayResults(data) {
-        //     const resultsDiv = document.getElementById('search-results');
-        //     resultsDiv.innerHTML = '';
-
-        //     if (data.content && data.content.length > 0) {
-        //         const table = document.createElement('table');
-        //         table.className = 'table table-striped';
-        //         table.innerHTML = `
-        //                 <thead>
-        //                     <tr>
-        //                         <th>使用者ID</th>
-        //                         <th>專業ID</th>
-        //                         <th>操作</th>
-        //                     </tr>
-        //                 </thead>
-        //                 <tbody>
-        //                     ${data.content.map(item => `
-        //                         <tr>
-        //                             <td>${item.user.userName}</td>
-        //                             <td>${item.major.majorName}</td>
-        //                             <td>
-        //                                 <button class="btn btn-danger btn-sm" onclick="deleteUserMajor(${item.userId}, ${item.majorId})">刪除</button>
-        //                             </td>
-        //                         </tr>
-        //                     `).join('')}
-        //                 </tbody>
-        //             `;
-        //         resultsDiv.appendChild(table);
-        //     } else {
-        //         resultsDiv.innerHTML = '<p>沒有找到結果。</p>';
-        //     }
-        // }
-
-        // function addUserMajor() {
-        //     const userId = document.getElementById('newUserId').value;
-        //     const majorId = document.getElementById('newMajorId').value;
-
-        //     fetch(`/ProFit/userMajors/api/${userId}/${majorId}`, {
-        //         method: 'POST',
-        //     })
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             alert('新增成功');
-        //             document.getElementById('staticBackdrop-insert').querySelector('.btn-close').click();
-        //             searchUserMajors();
-        //         })
-        //         .catch(error => console.error('Error:', error));
-        // }
-
-        // function deleteUserMajor(userId, majorId) {
-        //     if (confirm('確定要刪除這個關聯嗎？')) {
-        //         fetch(`/ProFit/userMajors/api/${userId}/${majorId}`, {
-        //             method: 'DELETE',
-        //         })
-        //             .then(response => {
-        //                 if (response.ok) {
-        //                     alert('刪除成功');
-        //                     searchUserMajors();
-        //                 } else {
-        //                     alert('刪除失敗');
-        //                 }
-        //             })
-        //             .catch(error => console.error('Error:', error));
-        //     }
-        // }
+                    if (data.content.length === 0) {
+                        tableBody.innerHTML = '<p>沒有找到結果。</p>';
+                        updatePagination(data, userId, majorId);
+                    } else {
+                        const tableBody = document.getElementById('userMajorServicesTable');
+                        tableBody.innerHTML = '';
+                        data.content.forEach(service => {
+                            const row = `
+          <tr>
+            <td>${service.serviceId}</td>
+            <td>${service.serviceTitle}</td>
+            <td>${service.servicePrice} ${service.serviceUnitName}</td>
+            <td>${getStatusText(service.serviceStatus)}</td>
+            <td>
+              <button class="btn btn-sm btn-primary" onclick="editService(${service.serviceId})">編輯</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteService(${service.serviceId})">刪除</button>
+            </td>
+          </tr>
+        `;
+                            tableBody.innerHTML += row;
+                            updatePagination(data, userId, majorId);
+                        });
+                    }
 
 
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+        function updatePagination(data, userId, majorId) {
+            const pagination = document.getElementById('userMajorServicesPagination');
+            pagination.innerHTML = '';
+            for (let i = 0; i < data.totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = `page-item ${i === data.number ? 'active' : ''}`;
+                li.innerHTML = `<a class="page-link" href="#" onclick="loadUserMajorServices(${userId}, ${majorId}, ${i})">${i + 1}</a>`;
+                pagination.appendChild(li);
+            }
+        }
+
+        function getStatusText(status) {
+            switch (status) {
+                case 0: return '啟用';
+                case 1: return '審核中';
+                case 2: return '已關閉';
+                default: return '未知';
+            }
+        }
+
+        function editService(serviceId) {
+            window.location.href = `/ProFit/service/edit/${serviceId}`;
+        }
+
+        function deleteService(serviceId) {
+            if (confirm('確定要刪除這個服務嗎？')) {
+                fetch(`/ProFit/service/api/${serviceId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('服務已成功刪除');
+                            // 重新加載當前頁面的服務列表
+                            loadUserMajorServices(currentUserId, currentMajorId, currentPage2);
+                        } else {
+                            alert('刪除服務失敗');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
 
     </script>
 

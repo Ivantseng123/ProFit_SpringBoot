@@ -47,6 +47,9 @@
 				<li><a href="#createServiceTab">新增服務</a></li>
 			</ul>
 
+			<!-- 生成測試數據按鈕 -->
+			<button id="generateTestDataBtn" class="btn btn-secondary mb-3">一鍵填入資料</button>
+
 			<div id="createServiceTab">
 				<div class="form-container">
 					<form id="serviceForm" enctype="multipart/form-data">
@@ -64,7 +67,7 @@
 						</div>
 
 						<div class="form-group">
-							<label for="servicePrice">服務報價:</label>
+							<label for="servicePrice">服務報價(元):</label>
 							<input type="number" id="servicePrice" name="servicePrice" class="form-control">
 						</div>
 
@@ -75,7 +78,7 @@
 
 						<div class="form-group">
 							<label for="serviceDuration">執行時間(天):</label>
-							<input type="number" id="serviceDuration" name="serviceDuration" class="form-control">
+							<input type="number" step="0.1" id="serviceDuration" name="serviceDuration" class="form-control">
 						</div>
 
 
@@ -87,18 +90,21 @@
 
 						<div class="form-group">
 							<label for="servicePictureURL1">服務圖片 1:</label>
+							<img id="preview1" src="" alt="" hidden>
 							<input type="file" id="servicePictureURL1" name="servicePictureURL1" accept=".jpg, .jpeg, .png"
 								class="form-control-file">
 						</div>
 
 						<div class="form-group">
 							<label for="servicePictureURL2">服務圖片 2:</label>
+							<img id="preview2" src="" alt="" hidden>
 							<input type="file" id="servicePictureURL2" name="servicePictureURL2" accept=".jpg, .jpeg, .png"
 								class="form-control-file">
 						</div>
 
 						<div class="form-group">
 							<label for="servicePictureURL3">服務圖片 3:</label>
+							<img id="preview3" src="" alt="" hidden>
 							<input type="file" id="servicePictureURL3" name="servicePictureURL3" accept=".jpg, .jpeg, .png"
 								class="form-control-file">
 						</div>
@@ -113,7 +119,7 @@
 							<select id="serviceStatus" name="serviceStatus" class="form-control">
 								<option value="">請選擇狀態</option>
 								<option value="0">啟用</option>
-								<option value="1">審核中</option>
+								<option value="1" selected>審核中</option>
 								<option value="2">已關閉</option>
 							</select>
 						</div>
@@ -154,10 +160,8 @@
 
 				var selectedOption = $('#userMajor option:selected');
 				console.log(selectedOption.data('user-id'));
+
 				// 注意：圖片上傳需要特殊處理
-
-
-
 				// 使用 FormData 來封裝表單數據
 				let form = document.getElementById('serviceForm');
 
@@ -194,14 +198,16 @@
 				});
 			});
 
+
+
+			// 監聽所有form-control-file,觸發時更新預覽圖片
+			$(".form-control-file").toArray().forEach(inputElement => {
+				inputElement.addEventListener('change', previewPicture)
+			});
+
+
 			// 這裡可以添加更多的客戶端驗證邏輯
 		});
-
-
-		function getUserMajor(params) {
-
-		}
-
 
 
 		function loadUserMajors() {
@@ -232,6 +238,61 @@
 				}
 			});
 		}
+
+
+		// 預覽圖片的功能, 傳入input觸發的file change事件, 更新 
+		function previewPicture(e) {
+			// console.log(e.target);
+			// console.log(e);
+			// console.log(this);
+			// console.log(this.files);
+			let fileInput = this;
+
+			// 找到 e.target 的父元素, 在父元素下查找 img 元素
+			const parentElement = e.target.parentElement;
+			const imgElement = parentElement.querySelector('img');
+			// 如果找到 img 元素，做一些操作
+			if (imgElement) {
+				// console.log(imgElement);
+				// 例如，可以更改 img 的 src 屬性
+				// imgElement.src = '新的圖片路徑';
+				let previewImage = imgElement;
+				previewImage.hidden = false;
+
+				// 精隨, 在文件選擇後讀取圖片文件並顯示在預覽元素中
+				// 檢查文件輸入框中是否選擇了文件
+				if (fileInput.files && fileInput.files[0]) {
+					// 創建一個 FileReader 來讀取文件
+					let reader = new FileReader();
+
+					// 當文件讀取完成時執行此函數
+					reader.onload = function (a) {
+						// 設置預覽圖片的 src 屬性為讀取的文件內容, 寬度為 200 像素
+						// 使用原生屬性設置圖片
+						previewImage.src = a.target.result;
+						previewImage.style.width = '200px';
+					}
+
+					// 開始以 Data URL 的形式讀取選中的文件
+					reader.readAsDataURL(fileInput.files[0]);
+				}
+
+			}
+
+			// console.log(imgElement);
+		}
+
+
+
+		// -----------------demo用 一鍵填入------////////////////
+		document.getElementById('generateTestDataBtn').addEventListener('click', function () {
+			document.getElementById('serviceTitle').value = 'java 網站建置' + Math.floor(Math.random() * 100);
+			document.getElementById('servicePrice').value = Math.floor(Math.random() * 10000) + 1000;
+			document.getElementById('serviceUnitName').value = '件';
+			document.getElementById('serviceDuration').value = 30;
+			document.getElementById('serviceContent').value = 'java好棒棒。';
+			// document.getElementById('serviceStatus').value = Math.floor(Math.random() * 3) + 1;
+		});
 
 
 

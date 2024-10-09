@@ -27,7 +27,7 @@ public class UserMajorController {
 	@GetMapping("/api/list")
 	@ResponseBody
 	public ResponseEntity<PageResponse<UserMajorDTO>> getAllUserMajors(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sortBy,
+			@RequestParam(defaultValue = "20") int size, @RequestParam(defaultValue = "id") String sortBy,
 			@RequestParam(defaultValue = "true") boolean ascending) {
 		PageResponse<UserMajorDTO> response = userMajorService.getAllUserMajors(page, size, sortBy, ascending);
 		return ResponseEntity.ok(response);

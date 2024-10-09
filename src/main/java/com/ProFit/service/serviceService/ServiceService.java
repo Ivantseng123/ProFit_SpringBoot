@@ -1,5 +1,6 @@
 package com.ProFit.service.serviceService;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,17 +125,17 @@ public class ServiceService {
 
 	// 新增服務
 	public ServicesDTO addService(ServiceBean serviceBean, Integer userId, Integer majorId) {
-		
+
 		UserMajorPK userMajorPK = new UserMajorPK(userId, majorId);
 		Optional<UserMajorBean> optional = userMajorRepo.findById(userMajorPK);
-		
+
 		if (optional.isPresent()) {
 			UserMajorBean userMajorBean = optional.get();
 			serviceBean.setUserMajor(userMajorBean);
 			ServiceBean savedBean = serviceRepo.save(serviceBean);
 			return ServicesDTO.fromEntity(savedBean);
 		}
-		
+
 		return null;
 	}
 
@@ -149,7 +150,27 @@ public class ServiceService {
 		Optional<ServiceBean> optional = serviceRepo.findById(serviceDTO.getServiceId());
 		if (optional.isPresent()) {
 			ServiceBean serviceBean = optional.get();
+
+			String oldPictureURL1 = serviceBean.getServicePictureURL1();
+			String oldPictureURL2 = serviceBean.getServicePictureURL2();
+			String oldPictureURL3 = serviceBean.getServicePictureURL3();
+			LocalDateTime oldserviceCreateDate = serviceBean.getServiceCreateDate();
+			
+			
 			updateEntityFromDTO(serviceBean, serviceDTO);
+			if (serviceBean.getServicePictureURL1() == null) {
+				serviceBean.setServicePictureURL1(oldPictureURL1);
+			}
+			if (serviceBean.getServicePictureURL2() == null) {
+				serviceBean.setServicePictureURL2(oldPictureURL2);
+			}
+			if (serviceBean.getServicePictureURL3() == null) {
+				serviceBean.setServicePictureURL3(oldPictureURL3);
+			}
+			if (serviceBean.getServiceCreateDate() == null) {
+				serviceBean.setServiceCreateDate(oldserviceCreateDate);
+			}
+			System.out.println(serviceBean);
 			ServiceBean updatedBean = serviceRepo.save(serviceBean);
 			return ServicesDTO.fromEntity(updatedBean);
 		}
