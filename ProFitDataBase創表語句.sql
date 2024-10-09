@@ -67,7 +67,7 @@ CREATE TABLE jobs (
     jobs_id INT PRIMARY KEY IDENTITY(1,1), 
     jobs_user_id INT,
     jobs_title NVARCHAR(100), 
-    jobs_posting_date DATETIME default Getdate(),
+    jobs_posting_date DATETIME default DATEADD(HOUR, 8, GETDATE()),
     jobs_application_deadline DATETIME, 
     jobs_description NVARCHAR(MAX), 
     jobs_status TINYINT, 

@@ -30,12 +30,12 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/Users/ivantseng/Desktop/photos/");
     }
 
-//	@Autowired
-//	private LoginInterceptor loginInterceptor;
-//
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(loginInterceptor).addPathPatterns("/**") // 過濾所有請求
-//				.excludePathPatterns("/loginPage","/login"); // 排除登入頁面
-//	}
+	@Autowired
+	private LoginInterceptor loginInterceptor;
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/**") // 過濾所有請求
+				.excludePathPatterns("/loginPage","/login"); // 排除登入頁面
+	}
 }
