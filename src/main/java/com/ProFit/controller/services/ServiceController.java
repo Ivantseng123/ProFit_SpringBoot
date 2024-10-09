@@ -33,7 +33,6 @@ public class ServiceController {
 
 	@Autowired
 	private ServiceService serviceService;
-	
 
 	@Autowired
 	private FirebaseStorageService firebaseStorageService;
@@ -139,12 +138,11 @@ public class ServiceController {
 			@RequestParam("serviceTitle") String serviceTitle, @RequestParam("serviceContent") String serviceContent,
 			@RequestParam("servicePrice") Integer servicePrice, @RequestParam("serviceUnitName") String serviceUnitName,
 			@RequestParam("serviceDuration") Double serviceDuration,
-			@RequestParam("serviceStatus") Integer serviceStatus,
-			@RequestParam("userId") Integer userId, @RequestParam("majorId") Integer majorId,
-			@RequestPart(required = false) MultipartFile servicePictureURL1,
+			@RequestParam("serviceStatus") Integer serviceStatus, @RequestParam("userId") Integer userId,
+			@RequestParam("majorId") Integer majorId, @RequestPart(required = false) MultipartFile servicePictureURL1,
 			@RequestPart(required = false) MultipartFile servicePictureURL2,
 			@RequestPart(required = false) MultipartFile servicePictureURL3) {
-		
+
 		System.out.println("gg");
 
 		try {
@@ -157,7 +155,6 @@ public class ServiceController {
 			serviceDTO.setServiceDuration(serviceDuration);
 			serviceDTO.setServiceStatus(serviceStatus);
 			serviceDTO.setServiceUpdateDate(LocalDateTime.now());
-	        
 
 			// 處理圖片上傳
 			if (servicePictureURL1 != null && !servicePictureURL1.isEmpty()) {
@@ -173,12 +170,10 @@ public class ServiceController {
 				serviceDTO.setServicePictureURL3(photoURL);
 			}
 
-			System.out.println(serviceDTO);
-			
+			// System.out.println(serviceDTO);
 			// 更新服務
 			ServicesDTO updatedService = serviceService.updateService(serviceDTO);
-			
-			System.out.println(updatedService);
+			// System.out.println(updatedService);
 
 			if (updatedService != null) {
 				Map<String, String> response = new HashMap<>();
@@ -224,6 +219,36 @@ public class ServiceController {
 			@RequestParam(defaultValue = "serviceId") String sortBy,
 			@RequestParam(defaultValue = "true") boolean ascending) {
 		PageResponse<ServicesDTO> response = serviceService.getServicesByStatus(status, page, size, sortBy, ascending);
+		return ResponseEntity.ok(response);
+	}
+
+	// 根據 UserMajor 分頁查找所有相關的服務
+	@GetMapping("/api/userMajor/{userId}/{majorId}")
+	@ResponseBody
+	public ResponseEntity<PageResponse<ServicesDTO>> getServicesByUserMajor(@PathVariable Integer userId,
+			@PathVariable Integer majorId, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "serviceId") String sortBy,
+			@RequestParam(defaultValue = "true") boolean ascending) {
+
+		UserMajorDTO userMajorDTO = new UserMajorDTO();
+		userMajorDTO.setUserId(userId);
+		userMajorDTO.setMajorId(majorId);
+
+		PageResponse<ServicesDTO> response = serviceService.getServicesByUserMajor(userMajorDTO, page, size, sortBy,
+				ascending);
+		return ResponseEntity.ok(response);
+	}
+
+	// 根據標題查詢服務
+	@GetMapping("/api/search")
+	@ResponseBody
+	public ResponseEntity<PageResponse<ServicesDTO>> searchServicesByTitle(@RequestParam String title,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "serviceId") String sortBy,
+			@RequestParam(defaultValue = "true") boolean ascending) {
+
+		PageResponse<ServicesDTO> response = serviceService.getServicesServiceTitleContaining(title, page, size, sortBy,
+				ascending);
 		return ResponseEntity.ok(response);
 	}
 

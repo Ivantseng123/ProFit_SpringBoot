@@ -6,6 +6,11 @@
   <title>ProFit</title>
   <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
   <link rel="stylesheet" th:href="@{/css/model.css}">
+  <style>
+    img {
+      object-fit: contain;
+    }
+  </style>
 </head>
 
 <body>
@@ -15,39 +20,32 @@
   <div class="container pt-5">
     <div class="course-header">
       <h2>服務管理功能</h2>
-      <span><a href="/ProFit/service/create"><button id="createBtn">新增服務</button></a></span>
+      <a id="createBtn" href="/ProFit/service/create" class="btn btn-primary">新增服務</a>
     </div>
 
     <div class="dashboard-header">
-      <h3 id="服務查詢" style="margin-top: 0px;">服務查詢</h3>
-      <div class="mb-3">
-        <input type="text" id="searchId" placeholder="服務ID">
-        <input type="text" id="searchTitle" placeholder="服務標題">
-        <button type="button" class="btn btn-secondary" id="searchBtn">送出查詢</button>
-        <hr>
-        <div class="mb-1">
-          <span style="margin-right: 30px;">依
-            <select name="form-select" id="sortCondition">
-              <option selected value="serviceId">ID</option>
-              <option value="serviceUpdateDate">更新日期</option>
-            </select>
-            排序
-          </span>
-
-          <!-- <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">
-              Default radio
-            </label>
+      <h3 id="服務查詢" style="margin-top: 20px;">服務查詢</h3>
+      <form id="searchForm" class="mb-3">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <input type="text" id="serviceId" class="form-control" placeholder="服務ID">
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-            <label class="form-check-label" for="flexRadioDefault2">
-              Default checked radio
-            </label>
-          </div> -->
-
+          <div class="col-auto">
+            <input type="text" id="serviceTitle" class="form-control" placeholder="服務標題">
+          </div>
+          <div class="col-auto">
+            <button id="searchBtn" type="submit" class="btn btn-primary">搜尋</button>
+          </div>
         </div>
+      </form>
+      <div class="mb-3">
+        <label for="sortOrder" class="form-label">排序：</label>
+        <select id="sortOrder" class="form-select">
+          <option value="serviceId,true">ID 升序</option>
+          <option value="serviceId,false">ID 降序</option>
+          <option value="serviceUpdateDate,true">更新日期升序</option>
+          <option value="serviceUpdateDate,false">更新日期降序</option>
+        </select>
       </div>
     </div>
 
@@ -65,305 +63,264 @@
             <th>操作</th>
           </tr>
         </thead>
-        <tbody id="serviceTableBody">
-          <div id="loadingIndicator" style="display: none;">
-            Loading...
-            <!-- <tr><td><img width="20px" height="20px" src="" alt=""></td></tr> -->
-          </div>
-          <!-- 服務列表將在這裡動態插入 -->
+        <tbody id="resultsBody">
+          <!-- 結果將在這裡動態加載 -->
         </tbody>
       </table>
     </div>
 
-    <div id="pagination">
-      <!-- 分頁將在這裡動態插入 -->
+    <!-- 分頁碼 -->
+    <div id="pagination" style="display: inline-block">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
 
+    <div id="loadingIndicator" style="display: none;">
+      Loading...
+    </div>
   </div>
 
-  <!-- 檢視服務的模態框 -->
-  <div class="modal fade" id="staticBackdrop-view" data-bs-keyboard="false" tabindex="-1"
+  <!-- 服務詳情模態框 -->
+  <div class="modal fade" id="staticBackdrop-view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title fs-5" id="staticBackdropLabel">服務細節</h5>
+          <h5 class="modal-title fs-5" id="staticBackdropLabel">服務詳情</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <div class="mb-3">服務標題: <span id="modalServiceTitle"></span></div>
+          <div class="mb-3">服務提供者: <span id="modalServicePublisher"></span></div>
+          <div class="mb-3">服務專業: <span id="modalServiceMajor"></span></div>
+          <div class="mb-3">服務報價: <span id="modalServicePrice"></span></div>
+          <div class="mb-3">執行時間: <span id="modalServiceDuration"></span></div>
+          <div class="mb-3">服務內容: <p id="modalServiceContent"></p>
+          </div>
 
-          <div class="mb-3">
-            <label for="serviceTitle" class="form-label">服務標題</label>
-            <input type="text" class="form-control" id="serviceTitle" disabled>
+          <div class="d-flex flex-wrap align-items-center gap-1 mb-3">
+            <div class="col"><img id="servicePicture1" class="img-fluid" style="max-width: 200px;"></div>
+            <div class="col"><img id="servicePicture2" class="img-fluid" style="max-width: 200px;"></div>
+            <div class="col"><img id="servicePicture3" class="img-fluid" style="max-width: 200px;"></div>
           </div>
-          <div class="mb-3">
-            <label for="serviceMajorName" class="form-label">服務專業</label>
-            <input type="text" class="form-control" id="serviceMajorName">
+
+          <div class="mb-1">建立時間: <span id="modalServiceCreateDate"></span></div>
+          <div class="mb-3">更新時間: <span id="modalServiceUpdateDate"></span></div>
+          <div class="mb-3">服務狀態: <span id="modalServiceStatus"></span>
+
           </div>
-          <div class="mb-3">
-            <label for="serviceUserName" class="form-label">發布者</label>
-            <input type="text" class="form-control" id="serviceProvider">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary" id="editServiceBtn">編輯</button>
           </div>
-          <div class="mb-3">
-            <label for="servicePrice" class="form-label">服務報價:</label>
-            <input type="text" class="form-control" id="servicePrice">
-          </div>
-          <div class="mb-3">
-            <label for="serviceDuration" class="form-label">執行時間</label>
-            <input type="text" class="form-control" id="serviceDuration">
-          </div>
-          <div class="mb-3">
-            <label for="serviceContent" class="form-label">服務內容</label>
-            <input type="text" class="form-control" id="serviceContent">
-          </div>
-          <div class="mb-3">
-            <label for="serviceCreateDate" class="form-label">建立時間</label>
-            <input type="text" class="form-control" id="serviceCreateDate">
-          </div>
-          <div class="mb-3">
-            <label for="serviceUpdateDate" class="form-label">更新時間</label>
-            <input type="text" class="form-control" id="serviceUpdateDate">
-          </div>
-          <div class="d-flex flex-row mb-3">
-            <img width="200px" id="servicePicture1" src="" alt="圖片1">
-            <br>
-            <img width="200px" id="servicePicture2" src="" alt="圖片2">
-            <br>
-            <img width="200px" id="servicePicture3" src="" alt="圖片3">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
-          <button type="button" class="btn btn-primary" id="editService">編輯</button>
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script>
+      let currentPage = 0;
+      const pageSize = 3;
+      let totalPages = 1;
 
+      document.addEventListener('DOMContentLoaded', function () {
+        loadServices();
 
-
-  <!-- 新增服務的模態框 -->
-  <!-- <div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title fs-5" id="staticBackdropLabel">新增服務</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          
-          <div class="mb-3">
-            <label for="serviceTitle" class="form-label">服務標題</label>
-            <input type="text" class="form-control" id="serviceTitle">
-          </div>
-          
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" id="submitService">送出</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-
-  <script>
-    /*<![CDATA[*/
-    let currentPage = 1;
-    const pageSize = 10;
-    let sortCondition = "";
-
-    $(document).ready(function () {
-      loadServices(currentPage);
-
-      $('#searchBtn').click(function () {
-        loadServices(1);
-      });
-
-      document.getElementById('sortCondition').addEventListener('change', function (e) {
-        console.log(sortCondition);
-        sortCondition = document.getElementById('sortCondition').value;
-      })
-      // $('#createBtn').click(function () {
-      //   $('#staticBackdrop-insert').modal('show');
-      // });
-
-      // $('#submitService').click(function () {
-      //   // 處理新增服務的邏輯
-      // });
-    });
-
-    function loadServices(page) {
-      const searchId = $('#searchId').val();
-      const searchTitle = $('#searchTitle').val();
-      showLoading();
-      $.ajax({
-        url: `/ProFit/service/api/list?page=${page - 1}&size=${pageSize}&sortBy=${sortCondition}&ascending=true`,
-        method: 'GET',
-        data: {
-          serviceId: searchId,
-          serviceTitle: searchTitle
-        },
-        success: function (response) {
-          hideLoading();
-          updateTable(response.content);
-          updatePagination(response);
-        },
-        error: function (error) {
-          hideLoading();
-          console.error('Error loading services:', error);
-        }
-      });
-    }
-
-    // 加載指示器，例如顯示一個旋轉圖標
-    function showLoading() {
-      const loadingHtml = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
-      document.getElementById('serviceTableBody').innerHTML = loadingHtml;
-    }
-
-    // 移除加載指示器
-    function hideLoading() {
-      document.getElementById('serviceTableBody').innerHTML = '';
-    }
-
-
-    function updateTable(services) {
-      const tbody = $('#serviceTableBody');
-      tbody.empty();
-      services.forEach(service => {
-
-        let serviceStatusStr;
-        switch (service.serviceStatus) {
-          case 0: {
-            serviceStatusStr = '啟用';
-            break;
-          }
-          case 1: {
-            serviceStatusStr = '審核中';
-            break;
-          }
-          case 2: {
-            serviceStatusStr = '已關閉';
-            break;
-          }
-          default:
-            break;
-        }
-
-        tbody.append(`
-                      <tr>
-                          <td>${service.serviceId}</td>
-                          <td><img width="80px" src="${service.servicePictureURL1}" alt=""></td>
-                          <td>${service.serviceTitle}</td>
-                          <td>$ ${service.servicePrice} / ${service.serviceUnitName}</td>
-                          <td>${service.userMajor.user.userName}</td>
-                          <td>${service.serviceUpdateDate}</td>
-                          <td>${serviceStatusStr}</td>
-                          <td>
-                              <button  class="btn btn-primary btn-sm" onclick="editService(${service.serviceId})">編輯</button>
-                              <button  class="btn btn-danger btn-sm" onclick="deleteService(${service.serviceId})">刪除</button>
-                              <button  class="btn btn-success btn-sm" onclick="viewService(${service.serviceId})">檢視</button>
-                          </td>
-                      </tr>
-                  `);
-      });
-    }
-
-    // 更新頁碼
-    function updatePagination(pageInfo) {
-      const pagination = $('#pagination');
-      pagination.empty();
-      const totalPages = pageInfo.totalPages;
-      const currentPage = pageInfo.pageNo + 1;
-
-      let paginationHtml = '<ul class="pagination">';
-      paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                                     <a class="page-link" href="#" onclick="loadServices(${currentPage - 1})" aria-label="Previous">
-                                         <span aria-hidden="true">&laquo;</span>
-                                     </a>
-                                 </li>`;
-
-      for (let i = 1; i <= totalPages; i++) {
-        paginationHtml += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-                                         <a class="page-link" href="#" onclick="loadServices(${i})">${i}</a>
-                                     </li>`;
-      }
-
-      paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                                     <a class="page-link" href="#" onclick="loadServices(${currentPage + 1})" aria-label="Next">
-                                         <span aria-hidden="true">&raquo;</span>
-                                     </a>
-                                 </li>`;
-      paginationHtml += '</ul>';
-
-      pagination.html(paginationHtml);
-    }
-
-    // 編輯服務
-    function editService(serviceId) {
-      // 跳轉到編輯頁面，並傳遞服務ID
-      window.location.href = `/ProFit/service/edit/${serviceId}`;
-    }
-
-
-    // 檢視服務
-    function viewService(serviceId) {
-      fetch(`/ProFit/service/api/${serviceId}`)
-        .then(response => response.json())
-        .then(data => {
-          // 填充模態框中的數據
-          document.getElementById('serviceTitle').value = data.serviceTitle;
-          document.getElementById('serviceMajorName').value = data.userMajor.major.majorName;
-          document.getElementById('serviceProvider').value = data.userMajor.user.userName;
-          document.getElementById('serviceContent').value = data.serviceContent;
-          document.getElementById('servicePrice').value = `${data.servicePrice} ${data.serviceUnitName}`;
-          document.getElementById('serviceDuration').value = `${data.serviceDuration} 天`;
-          document.getElementById('serviceCreateDate').value = new Date(data.serviceCreateDate).toLocaleString();
-          document.getElementById('serviceUpdateDate').value = new Date(data.serviceUpdateDate).toLocaleString();
-
-          // 顯示服務圖片
-          document.getElementById('servicePicture1').src = data.servicePictureURL1 || '';
-          document.getElementById('servicePicture2').src = data.servicePictureURL2 || '';
-          document.getElementById('servicePicture3').src = data.servicePictureURL3 || '';
-
-          // //
-          // document.getElementById('editService').click(function () {
-          //   console.log(data.serviceId);
-          //   editService(data.serviceId);
-          // });
-
-          // 顯示模態框
-          new bootstrap.Modal(document.getElementById('staticBackdrop-view')).show();
-        })
-        .catch(error => console.error('Error:', error))
-    }
-
-
-    // 刪除服務
-    function deleteService(serviceId) {
-      if (confirm('確定要刪除這個服務嗎？')) {
-        $.ajax({
-          url: `/ProFit/service/api/${serviceId}`,
-          method: 'DELETE',
-          success: function () {
-            alert('服務已成功刪除');
-            loadServices(currentPage);
-          },
-          error: function (error) {
-            console.error('Error deleting service:', error);
-            alert('刪除服務時發生錯誤');
-          }
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          currentPage = 0;
+          loadServices();
         });
-      }
-    }
-    /*]]>*/
-  </script>
 
+        document.getElementById('sortOrder').addEventListener('change', function () {
+          currentPage = 0;
+          loadServices();
+        });
+      });
+
+      function loadServices() {
+        const serviceId = document.getElementById('serviceId').value;
+        const serviceTitle = document.getElementById('serviceTitle').value;
+        const [sortBy, ascending] = document.getElementById('sortOrder').value.split(',');
+
+        let url;
+        if (serviceId) {
+          url = `/ProFit/service/api/${serviceId}`;
+        } else if (serviceTitle) {
+          url = `/ProFit/service/api/search?title=${encodeURIComponent(serviceTitle)}&page=${currentPage}&size=${pageSize}&sortBy=${sortBy}&ascending=${ascending}`;
+        } else {
+          url = `/ProFit/service/api/list?page=${currentPage}&size=${pageSize}&sortBy=${sortBy}&ascending=${ascending}`;
+        }
+
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (serviceId) {
+              displaySingleService(data);
+            } else {
+              displayServices(data);
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+
+      function displaySingleService(service) {
+        const tbody = document.getElementById('resultsBody');
+        tbody.innerHTML = createServiceRow(service);
+        document.getElementById('pagination').innerHTML = '';
+      }
+
+      function displayServices(data) {
+        const tbody = document.getElementById('resultsBody');
+        tbody.innerHTML = data.content.map(createServiceRow).join('');
+        updatePagination(data);
+      }
+
+      function createServiceRow(service) {
+        return `
+                  <tr>
+                      <td>${service.serviceId}</td>
+                      <td><img src="${service.servicePictureURL1}" alt="服務圖片" style="width: 70px; height: 70px;"></td>
+                      <td>${service.serviceTitle}</td>
+                      <td>$${service.servicePrice} / ${service.serviceUnitName}</td>
+                      <td>${service.userMajor.user.userName}</td>
+                      <td>${new Date(service.serviceUpdateDate).toLocaleString()}</td>
+                      <td>${getStatusText(service.serviceStatus)}</td>
+                      <td>
+                          <button onclick="viewService(${service.serviceId})" class="btn btn-sm btn-success">查看</button>
+                          <button onclick="editService(${service.serviceId})" class="btn btn-sm btn-primary">編輯</button>
+                          <button onclick="deleteService(${service.serviceId})" class="btn btn-sm btn-danger">刪除</button>
+                      </td>
+                  </tr>
+              `;
+      }
+
+      // 更新分頁碼
+      function updatePagination(data) {
+        console.log(data)
+        const pagination = document.getElementById('pagination');
+        currentPage = data.pageNo;
+        totalPages = data.totalPages;
+
+        let paginationHTML = `
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item ${currentPage === 0 ? 'disabled' : ''}">
+          <a class="page-link" href="#" onclick="goToPage(${currentPage - 1}); return false;" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>`;
+
+        // 決定顯示哪些頁碼
+        let startPage = Math.max(0, currentPage - 2);
+        let endPage = Math.min(totalPages - 1, startPage + 4);
+        startPage = Math.max(0, endPage - 4);
+
+        for (let i = startPage; i <= endPage; i++) {
+          if (i === currentPage) {
+            paginationHTML += `
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">${i + 1}</span>
+            </li>`;
+          } else {
+            paginationHTML += `
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="goToPage(${i}); return false;">${i + 1}</a>
+            </li>`;
+          }
+        }
+
+        paginationHTML += `
+        <li class="page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}">
+          <a class="page-link" href="#" onclick="goToPage(${currentPage + 1}); return false;" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>`;
+
+        pagination.innerHTML = paginationHTML;
+      }
+
+      function goToPage(page) {
+        // 確保頁碼在有效範圍內
+        page = Math.max(0, Math.min(page, totalPages - 1));
+        if (page !== currentPage) {
+          currentPage = page;
+          loadServices();
+        }
+      }
+
+      function getStatusText(status) {
+        switch (status) {
+          case 0: return '啟用';
+          case 1: return '審核中';
+          case 2: return '已關閉';
+          default: return '未知';
+        }
+      }
+
+      // 檢視服務詳情
+      function viewService(serviceId) {
+        fetch(`/ProFit/service/api/${serviceId}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('modalServiceTitle').textContent = data.serviceTitle;
+            document.getElementById('modalServiceMajor').textContent = data.userMajor.major.majorName;
+            document.getElementById('modalServicePublisher').textContent = data.userMajor.user.userName;
+            document.getElementById('modalServicePrice').textContent = `$ ${data.servicePrice} / ${data.serviceUnitName}`;
+            document.getElementById('modalServiceDuration').textContent = `${data.serviceDuration} 天`;
+            document.getElementById('modalServiceContent').textContent = data.serviceContent;
+            document.getElementById('modalServiceCreateDate').textContent = new Date(data.serviceCreateDate).toLocaleString();
+            document.getElementById('modalServiceUpdateDate').textContent = new Date(data.serviceUpdateDate).toLocaleString();
+            document.getElementById('servicePicture1').src = data.servicePictureURL1 || '';
+            document.getElementById('servicePicture2').src = data.servicePictureURL2 || '';
+            document.getElementById('servicePicture3').src = data.servicePictureURL3 || '';
+
+            document.getElementById('modalServiceStatus').textContent = getStatusText(data.serviceStatus);
+
+            document.getElementById('editServiceBtn').onclick = () => editService(serviceId);
+
+            new bootstrap.Modal(document.getElementById('staticBackdrop-view')).show();
+          })
+          .catch(error => console.error('Error:', error));
+      }
+
+      function editService(serviceId) {
+        window.location.href = `/ProFit/service/edit/${serviceId}`;
+      }
+
+      // 刪除服務
+      function deleteService(serviceId) {
+        if (confirm('確定要刪除這個服務嗎？')) {
+          fetch(`/ProFit/service/api/${serviceId}`, { method: 'DELETE' })
+            .then(response => {
+              if (response.ok) {
+                alert('服務已成功刪除');
+                loadServices();
+              } else {
+                alert('刪除服務失敗');
+              }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+      }
+    </script>
 
 
 </body>
