@@ -23,7 +23,7 @@ public interface IcourseService {
 	public List<CourseBean> searchCourses();
 	
 	//查詢全部課程By多條件查詢
-	public List<CoursesDTO> searchCourses(String courseName, String userName, String status, Integer userId,String category);
+	public List<CoursesDTO> searchCourses(String courseName, String userName, String status, Integer userId,Integer category);
 	
 	//查詢結果以分頁顯示
 	public Page<CoursesDTO> findMsgByPage(Integer pageNumber);

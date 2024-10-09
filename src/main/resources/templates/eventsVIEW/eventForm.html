@@ -5,23 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>變更表格</title>
-    <link rel="stylesheet" href="./model/model.css">
+    <link rel="stylesheet" th:href="@{/css/events/eventsView.css}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <style>
-        /* .form-group label {
-            display: inline-block;
-            width: 30%;
-            margin-right: 10px;
-            vertical-align: top;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            display: inline-block; 
-            width: 60%;
-        } */
-    </style>
 </head>
 
 <body>
@@ -31,78 +16,83 @@
             <h2 th:text="${event.eventId} != null ? '編輯活動' : '新增活動'"></h2>
         </div>
         <form class="form-group form-container" id="eventForm">
-            <input type="hidden" id="eventId" value="${event.eventId}">
+            <input type="hidden" id="eventId" th:value="${event.eventId}">
             <label for="eventName">活動名稱</label>
-            <input type="text" id="eventName" name="eventName" value="${event.eventName}">
+            <input type="text" id="eventName" name="eventName" th:value="${event.eventName}">
             <hr>
             <label for="isEventActive">狀態</label>
             <span>活動是否開始: </span>
-            <input style="width:20px;" type="checkbox" id="isEventActive" name="isEventActive" value="1" ${event.isEventActive==1 ? 'checked' : '' }>
+            <input style="width:20px;" type="checkbox" id="isEventActive" name="isEventActive" value="1"
+                th:checked="${event.isEventActive}">
             <hr>
             <label for="eventMajor">專業類別</label>
-            <input type="number" id="eventMajor" name="eventMajor" value="${event.eventMajor.majorId}">
+            <input type="number" id="eventMajor" name="eventMajor" th:value="${event.eventMajorId}">
             <hr>
             <label for="eventStartDate">開始日期</label>
-            <input type="datetime-local" id="eventStartDate" name="eventStartDate" value="${event.eventStartDate}">
+            <input type="datetime-local" id="eventStartDate" name="eventStartDate" th:value="${event.eventStartDate}">
             <hr>
             <label for="eventEndDate">結束日期</label>
-            <input type="datetime-local" id="eventEndDate" name="eventEndDate" value="${event.eventEndDate}">
+            <input type="datetime-local" id="eventEndDate" name="eventEndDate" th:value="${event.eventEndDate}">
             <hr>
             <label for="eventPartStartDate">報名開始日期</label>
-            <input type="datetime-local" id="eventPartStartDate" name="eventPartStartDate" value="${event.eventPartStartDate}">
+            <input type="datetime-local" id="eventPartStartDate" name="eventPartStartDate"
+                th:value="${event.eventPartStartDate}">
             <hr>
             <label for="eventPartEndDate">報名結束日期</label>
-            <input type="datetime-local" id="eventPartEndDate" name="eventPartEndDate" value="${event.eventPartEndDate}">
+            <input type="datetime-local" id="eventPartEndDate" name="eventPartEndDate"
+                th:value="${event.eventPartEndDate}">
             <hr>
             <label for="eventAmount">金額</label>
-            <input type="number" id="eventAmount" name="eventAmount" value="${event.eventAmount}">
+            <input type="number" id="eventAmount" name="eventAmount" th:value="${event.eventAmount}">
             <hr>
             <label for="eventLocation">地點</label>
-            <input type="text" id="eventLocation" name="eventLocation" value="${event.eventLocation}">
+            <input type="text" id="eventLocation" name="eventLocation" th:value="${event.eventLocation}">
             <hr>
             <label for="eventParticipantMaximum">參加人數上限</label>
             <input type="number" id="eventParticipantMaximum" name="eventParticipantMaximum"
-            value="${event.eventParticipantMaximum}">
+                th:value="${event.eventParticipantMaximum}">
             <hr>
             <label for="eventDescription">描述</label>
-            <textarea id="eventDescription" name="eventDescription">${event.eventDescription}</textarea>
+            <textarea id="eventDescription" name="eventDescription" th:text="${event.eventDescription}"></textarea>
             <hr>
             <label for="eventNote">備註</label>
-            <textarea id="eventNote" name="eventNote">${event.eventNote}</textarea>
+            <textarea id="eventNote" name="eventNote" th:text="${event.eventNote}"></textarea>
             <hr>
             <button type="button" id="saveBtn">保存</button>
         </form>
     </main>
 
-    <script>
-        document.getElementById("saveBtn").addEventListener("click", submitForm);
-        
-        function submitForm() {
-            const eventData = {
-                eventId: document.getElementById("eventId").value,
-                eventName: document.getElementById("eventName").value,
-                isEventActive: document.getElementById("isEventActive").checked ? 1 : 0,
-                eventMajor: document.getElementById("eventMajor").value,
-                eventStartDate: document.getElementById("eventStartDate").value,
-                eventEndDate: document.getElementById("eventEndDate").value,
-                eventPartStartDate: document.getElementById("eventPartStartDate").value,
-                eventPartEndDate: document.getElementById("eventPartEndDate").value,
-                eventAmount: document.getElementById("eventAmount").value,
-                eventLocation: document.getElementById("eventLocation").value,
-                eventParticipantMaximum: document.getElementById("eventParticipantMaximum").value,
-                eventDescription: document.getElementById("eventDescription").value,
-                eventNote: document.getElementById("eventNote").value
-            };
-
-            axios.post('/events', eventData)
-                .then(function (response) {
-                    window.location.href = '/events';
-                })
-                .catch(function (error) {
-                    console.error('There was an error!', error);
-                });
-        }
-    </script>
 </body>
+
+<script>
+    document.getElementById("saveBtn").addEventListener("click", submitForm);
+
+    function submitForm() {
+        const eventData = {
+            eventId: document.getElementById("eventId").value || 'new',
+            eventName: document.getElementById("eventName").value,
+            isEventActive: document.getElementById("isEventActive").checked ? 1 : 0,
+            eventMajorId: document.getElementById("eventMajor").value,
+            eventStartDate: document.getElementById("eventStartDate").value,
+            eventEndDate: document.getElementById("eventEndDate").value,
+            eventPartStartDate: document.getElementById("eventPartStartDate").value,
+            eventPartEndDate: document.getElementById("eventPartEndDate").value,
+            eventAmount: document.getElementById("eventAmount").value,
+            eventLocation: document.getElementById("eventLocation").value,
+            eventParticipantMaximum: document.getElementById("eventParticipantMaximum").value,
+            eventDescription: document.getElementById("eventDescription").value,
+            eventNote: document.getElementById("eventNote").value
+        };
+
+        console.log(eventData);
+        axios.post('/ProFit/events', eventData)
+            .then(function (response) {
+                window.location.href = response.data;
+            })
+            .catch(function (error) {
+                console.error('There was an error!', error);
+            });
+    }
+</script>
 
 </html>

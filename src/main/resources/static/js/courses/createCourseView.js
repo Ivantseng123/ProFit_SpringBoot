@@ -10,7 +10,7 @@ $(document).ready(function () {
 	        $("#courseEndDate").val("2024-12-31T17:00");
 	        $("#courseDescription").val("Claude其實更好用");
 	        $("#coursePrice").val("9999");
-	        $("#courseStatus").val("active");
+	        $("#courseStatus").val("Active");
 	    });
 
 		// 生成章節測試資料
