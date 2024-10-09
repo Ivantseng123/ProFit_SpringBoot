@@ -37,7 +37,8 @@ public class EventsController {
     @GetMapping("/edit")
     public String editEvent(@RequestParam String eventId, Model model) {
         EventsBean event = eventsService.selectEventById(eventId);
-        model.addAttribute("event", event);
+        EventsDTO eventDTO = eventsService.convertToDTO(event) ;		
+        model.addAttribute("event", eventDTO);
         return "eventsVIEW/eventForm";
     }
 
