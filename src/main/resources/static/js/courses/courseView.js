@@ -34,6 +34,7 @@ $('#searchBtn').click(function () {
         	                    <thead>
         	                        <tr>
         	                            <th>ID</th>
+										<th>課程封面</th>
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
         	                            <th>課程資訊</th>
@@ -50,26 +51,36 @@ $('#searchBtn').click(function () {
 
 			$('#search-results').append(tableHtml);
 
-			response.forEach(function (response) {
-				console.log("Serialized JSON: " + response.courseCreaterName);
-				$('#table-body').append(` 
-        		                    <tr>
-        	                        <td class="result-courseId" name="courseId">${response.courseId}</td>
-        	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
-									<td>${response.courseCreaterName}</td>
-        	                        <td>${response.courseInformation}</td>
-									<td>${response.courseModuleNumber}</td>
-									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info">查看</button></a></td>
-									<td>${response.coursePrice}</td>
-        	                        <td><span class="status">${response.courseStatus}</span></td>
-        	                        <td>
-        	                            <button class="view btn btn-success ">查看課程</button>
-        	                            <button class="edit btn btn-primary">編輯</button>
-        	                            <button class="delete btn btn-danger">刪除</button>
-        	                       	</td>
-        	                    </tr>
-        	                ` );
-			});
+			response.forEach(function (course) {
+						console.log("Serialized JSON: " + course.courseCreaterName);
+
+						// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
+						let orderButton = '';
+						if (course.courseStatus === 'Active') {
+							orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
+						}
+
+						$('#table-body').append(` 
+							<tr>
+								<td class="result-courseId" name="courseId">${course.courseId}</td>
+								<td><img id="currentCoverImage" src="${course.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;" /></td>
+								<td class="result-courseName" name="courseName">${course.courseName}</td>
+								<td>${course.courseCreaterName}</td>
+								<td>${course.courseInformation}</td>
+								<td>${course.courseModuleNumber}</td>
+								<td><a href="${contextPath}/courseModules?courseId=${course.courseId}"><button class="viewModules btn btn-info btn-sm">查看</button></a></td>
+								<td>${course.coursePrice}</td>
+								<td class="status">${course.courseStatus}</td>
+								<td>
+									<button class="view btn btn-success btn-sm">查看</button>
+									${orderButton}
+									<br/><br/>
+									<button class="edit btn btn-primary btn-sm">編輯</button>
+									<button class="delete btn btn-danger btn-sm">刪除</button>
+								</td>
+							</tr>
+						`);
+					});
 
 
 		},
@@ -161,9 +172,9 @@ $(document).on('click', '.view', function () {
 			console.log(response.courseStatus);
 			$('.form-container').append(`<form>
 				
-				<div class="form-group">
+				<div class="form-group" style="text-align: center">
 					<label for="courseCoverPictureURL">課程封面圖片:</label>
-					<img src="${response.courseCoverPictureURL}">
+					<img src="${response.courseCoverPictureURL}" style="max-width: 300px; height: auto;">
 				</div>    
 				
 				<div class="form-group">
@@ -172,11 +183,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 			    <div class="form-group">
 			        <label for="courseMajor">課程類別:</label>
-			        <select id="courseMajor" name="courseMajor" required disabled>
-			            <option value="">請選擇類別</option>
-			            <option value="100">程式設計</option>
-			            <option value="2">類別2</option>
-			        </select>
+					<input type="text" id="courseMajor" name="courseMajor" readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseCreateUserId">課程創建者名稱:</label>
@@ -217,7 +224,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 				<button id="closePopupBtn">關閉</button>
 			</form>`)
-			$('#courseMajor').val(response.courseCategoryId);
+			$('#courseMajor').val(response.courseCategoryName);
 			$('#courseStatus').val(response.courseStatus);
 			$('#courseInformation').val(response.courseInformation);
 			$('#courseDescription').val(response.courseDescription);

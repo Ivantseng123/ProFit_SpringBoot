@@ -186,10 +186,10 @@ CREATE TABLE events (
     event_name NVARCHAR(255) NOT NULL,
     is_event_active INT NOT NULL,
     event_major INT,
-    event_start_date DATETIME2,
-    event_end_date DATETIME2,
-    event_part_start_date DATETIME2,
-    event_part_end_date DATETIME2,
+    event_start_date DATETIME2(0),
+    event_end_date DATETIME2(0),
+    event_part_start_date DATETIME2(0),
+    event_part_end_date DATETIME2(0),
     event_amount INT,
     event_location NVARCHAR(255),
     event_participant_maximum INT,
@@ -214,7 +214,7 @@ CREATE TABLE event_order (
     is_event_order_active BIT,
     event_id NVARCHAR(255),
     event_participant_id INT,
-    event_participant_date DATETIME2,
+    event_participant_date DATETIME2(0),
     event_participant_note NVARCHAR(255),
     FOREIGN KEY (event_id) REFERENCES events(event_id),
     FOREIGN KEY (event_participant_id) REFERENCES users(user_id)
@@ -239,7 +239,7 @@ CREATE TABLE [dbo].[courses] (
     [course_price]           INT            NULL,
     [course_status]          NVARCHAR (20)  NOT NULL,
     PRIMARY KEY CLUSTERED ([course_id] ASC),
-    FOREIGN KEY ([course_category]) REFERENCES [dbo].[major] ([major_id]),
+    FOREIGN KEY ([course_category]) REFERENCES [dbo].[major_category] ([major_category_id]),
     FOREIGN KEY ([course_create_user_id]) REFERENCES [dbo].[users] ([user_id])
 );
 

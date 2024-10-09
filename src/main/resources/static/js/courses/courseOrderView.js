@@ -59,9 +59,9 @@ $('#searchBtn').click(function () {
 									<td>${response.courseOrderPrice}</td>
         	                        <td><span class="status">${response.courseOrderStatus}</span></td>
         	                        <td>
-        	                            <button class="view btn btn-success ">查看訂單</button>
-        	                            <button class="edit btn btn-primary">編輯</button>
-        	                            <button class="delete btn btn-danger">刪除</button>
+        	                            <button class="view btn btn-success btn-sm">查看訂單</button>
+        	                            <button class="edit btn btn-primary btn-sm">編輯</button>
+        	                            <button class="delete btn btn-danger btn-sm">刪除</button>
         	                       	</td>
         	                    </tr>
         	                ` );
@@ -151,9 +151,9 @@ $(document).on('click', '.view', function () {
 				    <label for="courseOrderId">訂單編號:</label>
 				    <input type="text" id="courseOrderId" name="courseOrderId" value=${response.courseOrderId} readonly>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="text-align: center">
 					<label for="courseCoverPictureURL">課程封面圖片:</label>
-					<img src="${response.courseCoverPictureURL}">
+					<img src="${response.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;">
 				</div>    
 				
 				<div class="form-group">

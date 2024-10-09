@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.ProFit.model.bean.coursesBean.CourseBean;
 import com.ProFit.model.bean.coursesBean.CourseModuleBean;
+import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
 import com.ProFit.model.dao.coursesCRUD.IHcourseDao;
+import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.service.courseService.IcourseService;
+import com.ProFit.service.majorService.IMajorCategoryService;
 import com.ProFit.service.utilsService.FirebaseStorageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -41,16 +45,40 @@ public class CoursesController {
 	private IHcourseDao hcourseDao;
 	
 	@Autowired
+	private IMajorCategoryService majorCategoryService;
+	
+	@Autowired
     private FirebaseStorageService firebaseStorageService;
 	
 	@GetMapping("/courses")
-	public String coursesPage() {
+	public String coursesPage(Model model) {
+		
+		List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream().map(CourseCategoryDTO::new).collect(Collectors.toList());		
+		
+		model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
+		
 		return "coursesVIEW/courseView";
 	}
 	
 	@GetMapping("/courses/addCourse")
-	public String addCoursePage() {
+	public String addCoursePage(Model model) {
+		
+		List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream().map(CourseCategoryDTO::new).collect(Collectors.toList());		
+		
+		model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
+		
 		return "coursesVIEW/createCourseView";
+	}
+	
+	@GetMapping("/courses/viewUpdate")
+	public String viewUpdateCourse(@RequestParam String courseId, Model model) {
+		CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
+		
+		List<MajorCategoryBean> allMajorCategoriesList = majorCategoryService.findAllMajorCategories();
+		
+		model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
+		model.addAttribute("course", coursesDTO); // 使用 DTO
+		return "coursesVIEW/updateCourseView"; // 假設 view resolver 配置為 /WEB-INF/views/
 	}
 	
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -65,7 +93,7 @@ public class CoursesController {
 	    @RequestParam(required = false) String courseCreateUserName,
 	    @RequestParam(required = false) String courseStatus,
 	    @RequestParam(required = false) Integer courseCreateUserId,
-	    @RequestParam(required = false) String courseMajor
+	    @RequestParam(required = false) Integer courseMajor
 	){
 		List<CoursesDTO> corusesDTOList = courseService.searchCourses(courseName,courseCreateUserName,courseStatus,courseCreateUserId,courseMajor);
 		
@@ -74,14 +102,17 @@ public class CoursesController {
 		
 	}	
 	
-	// 搜尋單筆的方法
 	@GetMapping("/courses/search/{courseId}")
 	@ResponseBody
-	public CoursesDTO searchOneCourse(@PathVariable String courseId){
+	public Map<String, Object> searchOneCourse(@PathVariable String courseId) {
+	    CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
+	    List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream().map(CourseCategoryDTO::new).collect(Collectors.toList());
 	    
-		CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
-
-	    return coursesDTO;
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("course", coursesDTO);
+	    response.put("majorCategories", allMajorCategoriesList);
+	    
+	    return response;
 	}
 	
     // 更新課程的方法，使用路徑變數和 POST 方法
@@ -90,7 +121,7 @@ public class CoursesController {
     public boolean updateCourseById(
         @PathVariable("oldCourseId") String courseId,
         @RequestParam String courseName,
-        @RequestParam String courseCategory,
+        @RequestParam Integer courseCategory,
         @RequestParam Integer courseCreateUserId,
         @RequestParam String courseInformation,
         @RequestParam String courseDescription,
@@ -156,13 +187,6 @@ public class CoursesController {
         return isUpdated;
     }
     
-    // 添加一個方法來轉發到 updateCourseView.jsp
-    @GetMapping("/courses/viewUpdate")
-    public String viewUpdateCourse(@RequestParam String courseId, Model model) {
-    	CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
-        model.addAttribute("course", coursesDTO); // 使用 DTO
-        return "coursesVIEW/updateCourseView"; // 假設 view resolver 配置為 /WEB-INF/views/
-    }
 	
     // 刪除課程的方法
     @GetMapping("/courses/delete/{courseId}")

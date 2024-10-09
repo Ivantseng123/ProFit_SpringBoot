@@ -1,0 +1,13 @@
+@import url(../courses/coursesView.css);
+
+
+
+.action-buttons .create {
+    background-color: #ffa500;
+	color: white;
+}
+
+.action-buttons .create:hover {
+	background-color: #45a049;
+	color: white;
+}

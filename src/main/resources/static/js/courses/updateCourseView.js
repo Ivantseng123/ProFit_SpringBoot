@@ -7,8 +7,6 @@ $(document).ready(function() {
     // 如果 courseId 存在且不為空字串，則發送 AJAX 請求獲取課程信息
     if (oldCourseId) {
 		
-		
-		
         $.ajax({
             url: contextPath + '/courses/search/' + oldCourseId, // 使用 contextPath 和路徑變數
             dataType: 'json',
@@ -16,55 +14,64 @@ $(document).ready(function() {
             success: function(response) {
                 console.log(response);
 				
-				// 完整的日期和时间
-				let courseStartDate = `${response.courseStartDate.split('.')[0]}`;
-				let courseEndDate = `${response.courseEndDate.split('.')[0]}`;
+				// 獲取課程數據
+				    let course = response.course;
 
-				// 拼接成完整的字符串
-				let courseStartDateTime = `${courseStartDate}`;
-				let courseEndDateTime = `${courseEndDate}`;
+				    // 獲取所有課程類別
+				    let majorCategories = response.majorCategories;
+
+				    // 日期格式處理
+				    let courseStartDate = `${course.courseStartDate.split('.')[0]}`;
+				    let courseEndDate = `${course.courseEndDate.split('.')[0]}`;
+				    let courseStartDateTime = `${courseStartDate}`;
+				    let courseEndDateTime = `${courseEndDate}`;
+
+				    // 動態生成課程類別的選項
+				    let majorCategoryOptions = '<option value="">請選擇類別</option>';
+				    majorCategories.forEach(function(category) {
+				        let selected = course.courseCategoryId === category.majorCategoryId ? 'selected' : '';
+				        majorCategoryOptions += `<option value="${category.majorCategoryId}" ${selected}>${category.categoryName}</option>`;
+				    });
 
 				
                 $('.form-container').append(`
                     <form>
                         <div class="form-group">
                             <label for="courseName">課程名稱:</label>
-                            <input type="text" id="courseName" name="courseName" value="${response.courseName}">
+                            <input type="text" id="courseName" name="courseName" value="${course.courseName}">
                         </div>
-                        <div class="form-group">
-                            <label for="courseMajor">課程類別:</label>
-                            <select id="courseMajor" name="courseMajor" required>
-                                <option value="">請選擇類別</option>
-                                <option value="100">程式設計</option>
-                                <option value="2">類別2</option>
-                            </select>
-                        </div>
+						<div class="form-group">
+						    <label for="courseMajor">課程類別:</label>
+						    <select id="courseMajor" name="courseMajor" required>
+						        ${majorCategoryOptions}
+						    </select>
+						</div>
                         <div class="form-group">
                             <label for="courseCreateUserId">課程創建者ID:</label>
-                            <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="${response.courseCreaterId}" >
+                            <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="${course.courseCreaterId}" >
                         </div>
                         <div class="form-group">
                             <label for="courseInformation">課程資訊:</label>
-                            <textarea id="courseInformation" name="courseInformation" rows="4" cols="50" >${response.courseInformation}</textarea>
+                            <textarea id="courseInformation" name="courseInformation" rows="4" cols="50" >${course.courseInformation}</textarea>
                         </div>
 						<div class="form-group">
 						    <label for="courseCoverPicture">課程封面圖片: (建議比例16:9、小於1920 x 1080像素)</label>
 
 						    <!-- 顯示原本的圖片 -->
-						    <div>
+						    <div style="text-align: center">
 						        <label>目前圖片:</label>
-						        <img id="currentCoverImage" src="${response.courseCoverPictureURL}" alt="Course Cover Picture" style="max-width: 300px; height: auto;">
+						        <img id="currentCoverImage" src="${course.courseCoverPictureURL}" alt="Course Cover Picture" style="max-width: 300px; height: auto;">
 						    </div>
 
 						    <!-- 允許用戶上傳新圖片 -->
 						    <input type="file" id="courseCoverPicture" name="courseCoverPicture">
 
 						    <!-- 隱藏字段，保存原始圖片 URL，如果未選擇新圖片，則保留此圖片 -->
-						    <input type="hidden" name="originalCourseCoverPictureURL" value="${response.courseCoverPictureURL}">
+						    <input type="hidden" name="originalCourseCoverPictureURL" value="${course.courseCoverPictureURL}">
 						</div>
 						<div class="form-group">
                             <label for="courseDescription">課程描述:</label>
-                            <textarea id="courseDescription" name="courseDescription" rows="6" cols="50" >${response.courseDescription}</textarea>
+                            <textarea id="courseDescription" name="courseDescription" rows="6" cols="50" >${course.courseDescription}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="courseEnrollmentDate">修改日期: (自動帶入)</label>
@@ -80,7 +87,7 @@ $(document).ready(function() {
                         </div>
                         <div class="form-group">
                             <label for="coursePrice">課程價格:</label>
-                            <input type="number" id="coursePrice" name="coursePrice" value="${response.coursePrice}" >
+                            <input type="number" id="coursePrice" name="coursePrice" value="${course.coursePrice}" >
                         </div>
                         <div class="form-group">
                             <label for="courseStatus">課程狀態:</label>
@@ -93,7 +100,7 @@ $(document).ready(function() {
                         </div>
                         <div class="form-group">
                             <a href="${contextPath}/courses"><button id='cancelBtn' type="button" style="margin-right:330px;">取消修改</button></a>
-                            <button id="editBtn" name="editBtn" type="submit">修改課程</button>
+                            <button id="editBtn" name="editBtn" type="submit" >修改課程</button>
                         </div>
                     </form>
                 `);
@@ -114,8 +121,8 @@ $(document).ready(function() {
                 }
 
                 // 設置課程類別和狀態
-                $('#courseMajor').val(response.courseCategoryId);
-                $('#courseStatus').val(response.courseStatus);
+                $('#courseMajor').val(course.courseCategoryId);
+                $('#courseStatus').val(course.courseStatus);
             },
             error: function(error) {
                 console.error('Error fetching course for editing:', error);
