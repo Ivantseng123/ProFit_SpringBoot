@@ -19,38 +19,32 @@
     <div class="card mb-4">
         <div class="card-body">
 
-<!--&lt;!&ndash;             職缺編輯/新增表單&ndash;&gt;-->
-<!--            <form th:action="@{/jobs/update/id(id=${job.jobsId})}" method="post">-->
 
-<!--                <input type="hidden" th:field="${job.jobsId}"/>-->
-<!--                <input type="hidden" name="_method" value="put"/>-->
+            <!-- 職缺新增/編輯表單 -->
+            <form id="jobsForm"
+                  th:action="${job.jobsId != null} ? @{/jobs/update/{id}(id=${job.jobsId})} : @{/jobs/add}"
+                  method="post">
 
-                <!-- 職缺新增/編輯表單 -->
-                <form th:action="${job.jobsId != null} ? @{/jobs/update/{id}(id=${job.jobsId})} : @{/jobs/add}" method="post">
+                <!-- 隱藏欄位：僅編輯時顯示 -->
+                <input type="hidden" th:if="${job.jobsId != null}" th:field="${job.jobsId}"/>
 
-                    <!-- 隱藏欄位：新增時自動生成刊登者 ID -->
-                    <input type="hidden" th:if="${job.jobsId == null}" th:field="${job.users.userId}" />
-
-                    <!-- 隱藏欄位：僅編輯時顯示 -->
-                    <input type="hidden" th:if="${job.jobsId != null}" th:field="${job.jobsId}"/>
-
-                    <!-- 隱藏欄位：當編輯時，使用 PUT  -->
-                    <input type="hidden" th:if="${job.jobsId != null}" name="_method" value="put"/>
-
-
+                <!-- 隱藏欄位：當編輯時，使用 PUT  -->
+                <input type="hidden" th:if="${job.jobsId != null}" name="_method" value="put"/>
 
 
                 <!-- 職缺標題 -->
                 <div class="mb-3">
                     <label class="form-label">職缺標題</label>
-                    <input type="text" class="form-control" th:field="${job.jobsTitle}" required />
+                    <input type="text" class="form-control" th:field="${job.jobsTitle}" required/>
                 </div>
 
                 <!-- 刊登者 ID（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">刊登者 ID</label>
-                    <input th:if="${job.jobsId != null}" type="text" class="form-control" th:field="${job.users.userId}" readonly/>
-                    <input th:if="${job.jobsId == null}" type="text" class="form-control" name="userId" placeholder="例如：100"/>
+                    <input th:if="${job.jobsId != null}" type="text" class="form-control"
+                           th:field="${job.users.userId}"/>
+                    <input th:if="${job.jobsId == null}" type="text" class="form-control" name="userId"
+                           placeholder="例如：100"/>
 
                 </div>
 
@@ -58,20 +52,22 @@
                 <!-- 所需技能 -->
                 <div class="mb-3">
                     <label class="form-label">所需技能</label>
-                <!--  th:field 就是包含id=""、name=""、value=""等3個集合體-->
-                    <input type="text" class="form-control" th:field="${job.jobsRequiredSkills}" required />
+                    <!--  th:field 就是包含id=""、name=""、value=""等3個集合體-->
+                    <input type="text" class="form-control" th:field="${job.jobsRequiredSkills}" required/>
                 </div>
 
                 <!-- 發布日期（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">發布日期</label>
-                    <input type="date" class="form-control" name="PostingDate" th:field="${job.jobsPostingDate}" />
+                    <input type="date" class="form-control" name="postingDate" th:value="${job.jobsPostingDate}"
+                           readonly/>
                 </div>
 
                 <!-- 申請截止日期 -->
                 <div class="mb-3">
                     <label class="form-label">申請截止日期</label>
-                    <input type="date" class="form-control" name="deadline"  th:value="${job.jobsApplicationDeadline}" required />
+                    <input type="date" class="form-control" name="deadline" th:value="${job.jobsApplicationDeadline}"
+                           required/>
                 </div>
 
                 <!-- 職缺描述 -->
@@ -83,7 +79,7 @@
                 <!-- 工作地點 -->
                 <div class="mb-3">
                     <label class="form-label">工作地點</label>
-                    <input type="text" class="form-control" th:field="${job.jobsLocation}" required />
+                    <input type="text" class="form-control" th:field="${job.jobsLocation}" required/>
                 </div>
 
                 <!-- 職缺狀態 -->
@@ -98,37 +94,65 @@
                 <!-- 最高薪資 -->
                 <div class="mb-3">
                     <label class="form-label">最高薪資</label>
-                    <input type="number" class="form-control" th:field="${job.jobsMaxSalary}" required />
+                    <input type="number" class="form-control" th:field="${job.jobsMaxSalary}" required/>
                 </div>
 
                 <!-- 最低薪資 -->
                 <div class="mb-3">
                     <label class="form-label">最低薪資</label>
-                    <input type="number" class="form-control" th:field="${job.jobsMinSalary}" required />
+                    <input type="number" class="form-control" th:field="${job.jobsMinSalary}" required/>
                 </div>
 
                 <!-- 工作時間 -->
                 <div class="mb-3">
                     <label class="form-label">工作時間</label>
-                    <input type="text" class="form-control" th:field="${job.jobsWorktime}" required />
+                    <input type="text" class="form-control" th:field="${job.jobsWorktime}" required/>
                 </div>
 
                 <!-- 開放職位數 -->
                 <div class="mb-3">
                     <label class="form-label">開放職位數</label>
-                    <input type="number" class="form-control" th:field="${job.jobsNumberOfOpenings}" required />
+                    <input type="number" class="form-control" th:field="${job.jobsNumberOfOpenings}" required/>
 
                 </div>
 
                 <!-- 提交和取消按鈕 -->
-                <button type="submit" class="btn btn-primary">保存更改</button>
+                <button type="button" class="btn btn-primary" id="saveBtn">保存</button>
                 <a th:href="@{/jobs/list}" class="btn btn-secondary">取消</a>
             </form>
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {})
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+    $(document).ready(function () {
+        $('#saveBtn').click(function (e) {
+            e.preventDefault();
+            let timerInterval;
+            Swal.fire({
+                icon: "success",
+                title: "保存成功",
+                html: "即將在 <b></b> 豪秒後跳轉頁面...",
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                        timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    $('#jobsForm').submit()
+                }
+            })
+        })
+    })
+
+
     //     const jobId = new URLSearchParams(window.location.search).get('id');
     //
     //     fetch(`/jobs/update/${jobId}`)

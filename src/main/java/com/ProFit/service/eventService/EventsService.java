@@ -84,7 +84,7 @@ public class EventsService {
     
     
     private String generateNewEventId() {
-    	String maxEventId = eventsDAO.findMaxEventId();
+    	String maxEventId = eventsDAO.findMaxEventId().getEventId();
     	int newId = (maxEventId != null) ? Integer.parseInt(maxEventId.replace("EV", "")) + 1 : 1;
     	return String.format("EV%03d", newId);
     }

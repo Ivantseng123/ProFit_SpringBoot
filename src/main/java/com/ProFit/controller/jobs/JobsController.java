@@ -124,8 +124,6 @@ public class JobsController {
             e.printStackTrace();
         }
         
-        System.out.println(newJob.getJobsPostingDate());
-        
         jobsService.save(newJob);
         return "redirect:/jobs/list";
     }
@@ -153,8 +151,7 @@ public class JobsController {
 
     //呈現更新後
     @PutMapping("/update/{id}")
-    public String updateJob(@PathVariable("id") String id,
-                            @ModelAttribute Jobs updatedJob,
+    public String updateJob(@ModelAttribute Jobs updatedJob,
                             Model model,
                             @RequestParam("deadline") String deadline) {
 
