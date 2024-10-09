@@ -115,24 +115,29 @@ $(document).on('click', '.delete', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
 	console.log("Selected Course ID for Deletion: " + courseId);
-
-	$.ajax({
-		url: contextPath + '/courses/delete/' + courseId,
-		data: { courseId: courseId },
-		type: 'get',
-		success: function (response) {
-			if (response) {
-				window.alert('課程刪除成功');
-				console.log('新增的课程信息:', response);
-				window.location.href = contextPath + '/courses?clickButton=true';
-			} else {
-				window.alert('課程刪除失敗');
+	
+	let answer = confirm('確認刪除嗎？');
+	   if(answer){
+		$.ajax({
+			url: contextPath + '/courses/delete/' + courseId,
+			data: { courseId: courseId },
+			type: 'get',
+			success: function (response) {
+				if (response) {
+					window.alert('課程刪除成功');
+					console.log('新增的课程信息:', response);
+					window.location.href = contextPath + '/courses?clickButton=true';
+				} else {
+					window.alert('課程刪除失敗');
+				}
+			},
+			error: function (error) {
+				console.error('Error deleting course:', error);
 			}
-		},
-		error: function (error) {
-			console.error('Error deleting course:', error);
-		}
-	});
+		});
+	   }else{
+	     
+	   }
 });
 
 // 編輯課程流程
