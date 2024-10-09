@@ -26,7 +26,7 @@
                 th:checked="${event.isEventActive}">
             <hr>
             <label for="eventMajor">專業類別</label>
-            <input type="number" id="eventMajor" name="eventMajor" th:value="${event.eventMajor.majorId}">
+            <input type="number" id="eventMajor" name="eventMajor" th:value="${event.eventMajorId}">
             <hr>
             <label for="eventStartDate">開始日期</label>
             <input type="datetime-local" id="eventStartDate" name="eventStartDate" th:value="${event.eventStartDate}">
@@ -69,7 +69,7 @@
 
     function submitForm() {
         const eventData = {
-            eventId: document.getElementById("eventId").value,
+            eventId: document.getElementById("eventId").value || 'new',
             eventName: document.getElementById("eventName").value,
             isEventActive: document.getElementById("isEventActive").checked ? 1 : 0,
             eventMajorId: document.getElementById("eventMajor").value,
@@ -84,6 +84,7 @@
             eventNote: document.getElementById("eventNote").value
         };
 
+        console.log(eventData);
         axios.post('/ProFit/events', eventData)
             .then(function (response) {
                 window.location.href = response.data;

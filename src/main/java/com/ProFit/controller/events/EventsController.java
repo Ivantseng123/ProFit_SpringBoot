@@ -28,7 +28,9 @@ public class EventsController {
 
     @GetMapping("/new")
     public String newEvent(Model model) {
-        model.addAttribute("event", new EventsBean());
+        EventsDTO event = new EventsDTO();
+        model.addAttribute("event", event);
+        event.setEventMajorId(100);
         return "eventsVIEW/eventForm";
     }
 
