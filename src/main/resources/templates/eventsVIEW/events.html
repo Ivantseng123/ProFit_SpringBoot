@@ -18,12 +18,11 @@
                     <a class="create btn" th:href="@{events/new}">新增</a>
                 </span>
             </div>
-			
-			<!-- 
-            <div class="dashboard-header">
-            </div>
-			 -->
-            <div class="table-container">
+
+            <!-- <div class="dashboard-header">
+            </div> -->
+
+            <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                 <table>
                     <tr>
                         <th>ID</th>
@@ -56,8 +55,10 @@
                         <td th:text="${event.eventDescription}"></td>
                         <td th:text="${event.eventNote}"></td>
                         <td class="action-buttons">
-                            <a class="edit btn" th:href="@{/events/edit?(eventId=${event.eventId})}">編輯</a>
-                            <a class="delete btn" th:href="@{/events/delete(eventId=${event.eventId})}">刪除</a>
+                            <a class="edit btn  btn-primary btn-sm"
+                                th:href="@{/events/edit?(eventId=${event.eventId})}">編輯</a>
+                            <a class="delete btn  btn-danger btn-sm"
+                                th:href="@{/events/delete(eventId=${event.eventId})}">刪除</a>
                         </td>
                     </tr>
                 </table>
