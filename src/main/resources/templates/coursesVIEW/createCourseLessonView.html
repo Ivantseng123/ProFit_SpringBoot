@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="UTF-8">
+	<title>新增單元 - ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/model.css}">
+	<style>
+		label,
+		input {
+			display: block;
+			margin-bottom: 12px;
+		}
+
+		input.text {
+			width: 95%;
+			padding: .4em;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div th:replace="~{model/layout-static}"></div>
+	<!-- 主要內容區域 -->
+	<div class="container pt-5">
+		<div id="createCourseTab">
+			<div class="form-container">
+				<form enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="courseName">課程名稱:(自動帶入)</label> <input type="text" id="courseName" name="courseName"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="courseCreateUserId">章節名稱:(自動帶入)</label> <input type="text" id="courseCreateUserId"
+							name="courseCreateUserId" required>
+					</div>
+					<div class="form-group">
+						<label for="courseInformation">單元名稱:</label>
+						<input type="text" id="courseCreateUserId" name="courseCreateUserId" required>
+					</div>
+					<div class="form-group">
+						<label for="courseInformation">單元排序:</label>
+						<input type="text" id="courseCreateUserId" name="courseCreateUserId" required>
+					</div>
+					<div class="form-group">
+						<label for="courseCoverPictureURL">單元教材: (影片建議比例16:9)</label>
+						<input type="file" id="courseCoverPicture" name="courseCoverPicture"></input>
+					</div>
+					<div class="form-group">
+						<label for="courseStatus">教材類型:</label> <select id="courseStatus" name="courseStatus" required>
+							<option value="">請選擇</option>
+							<option value="Active">影片</option>
+							<option value="Pending">檔案</option>
+							<option value="Closed">作業</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="courseEnrollmentDate">註冊日期: (自動帶入)</label> <input type="date"
+							id="courseEnrollmentDate" name="courseEnrollmentDate" readonly>
+					</div>
+					<div class="form-group">
+						<label for="coursePrice">預估學習時長:(單位:分鐘)</label> <input type="number" id="coursePrice" name="coursePrice">
+					</div>
+					<div style="text-align: right;">
+						<a th:href="@{/courseLessons(courseModuleId=${courseModuleId})}"><button class="btn btn-danger" id='cancelBtn' type="button"
+								style="margin-right:370px;">取消新增</button></a>
+						<button class="btn btn-success" id="switchBtn" name="switchBtn" type="button">新增章節</button>
+						<div class="d-flex justify-content-center mb-3">
+							<button type="button" id="generateCourseData" class="btn btn-info">生成課程測試資料</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		var contextPath = 'http://localhost:8080/ProFit';
+	</script>
+	<script th:src="@{/js/courses/createCourseLessonView.js}"></script>
+</body>
+
+</html>
