@@ -26,7 +26,6 @@ public class CourseLessonsController {
 	public String courseLessonsPage(@RequestParam Integer courseModuleId,Model model) {
 		
 		List<CourseLessonDTO> courseLessonDTOList = courseLessonService.searchCourseLessons(courseModuleId);
-		
 		CourseModuleDTO courseModuleDTO = courseModuleService.searchOneCourseModuleById(courseModuleId);
 		
 		model.addAttribute("courseModuleDTO",courseModuleDTO);
@@ -34,5 +33,15 @@ public class CourseLessonsController {
 		
 		return "coursesVIEW/courseLessonView";
 	}
+	
+	@GetMapping("courseLessons/add")
+	public String createLessonPage(@RequestParam Integer courseModuleId,Model model) {
+		
+		model.addAttribute("courseModuleId",courseModuleId);
+		
+		return "coursesVIEW/createCourseLessonView";
+	}
+	
+	
 	
 }
