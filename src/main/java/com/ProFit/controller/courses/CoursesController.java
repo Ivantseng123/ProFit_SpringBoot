@@ -37,173 +37,174 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class CoursesController {
-	
-	@Autowired
-	private IcourseService courseService;
-	
-	@Autowired
-	private IHcourseDao hcourseDao;
-	
-	@Autowired
-	private IMajorCategoryService majorCategoryService;
-	
-	@Autowired
+
+    @Autowired
+    private IcourseService courseService;
+
+    @Autowired
+    private IHcourseDao hcourseDao;
+
+    @Autowired
+    private IMajorCategoryService majorCategoryService;
+
+    @Autowired
     private FirebaseStorageService firebaseStorageService;
-	
-	@GetMapping("/courses")
-	public String coursesPage(Model model) {
-		
-		List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream().map(CourseCategoryDTO::new).collect(Collectors.toList());		
-		
-		model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
-		
-		return "coursesVIEW/courseView";
-	}
-	
-	@GetMapping("/courses/addCourse")
-	public String addCoursePage(Model model) {
-		
-		List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream().map(CourseCategoryDTO::new).collect(Collectors.toList());		
-		
-		model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
-		
-		return "coursesVIEW/createCourseView";
-	}
-	
-	@GetMapping("/courses/viewUpdate")
-	public String viewUpdateCourse(@RequestParam String courseId, Model model) {
-		CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
-		
-		List<MajorCategoryBean> allMajorCategoriesList = majorCategoryService.findAllMajorCategories();
-		
-		model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
-		model.addAttribute("course", coursesDTO); // 使用 DTO
-		return "coursesVIEW/updateCourseView"; // 假設 view resolver 配置為 /WEB-INF/views/
-	}
-	
+
+    @GetMapping("/courses")
+    public String coursesPage(Model model) {
+
+        List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream()
+                .map(CourseCategoryDTO::new).collect(Collectors.toList());
+
+        model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
+
+        return "coursesVIEW/courseView";
+    }
+
+    @GetMapping("/courses/addCourse")
+    public String addCoursePage(Model model) {
+
+        List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream()
+                .map(CourseCategoryDTO::new).collect(Collectors.toList());
+
+        model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
+
+        return "coursesVIEW/createCourseView";
+    }
+
+    @GetMapping("/courses/viewUpdate")
+    public String viewUpdateCourse(@RequestParam String courseId, Model model) {
+        CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
+
+        List<MajorCategoryBean> allMajorCategoriesList = majorCategoryService.findAllMajorCategories();
+
+        model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
+        model.addAttribute("course", coursesDTO); // 使用 DTO
+        return "coursesVIEW/updateCourseView"; // 假設 view resolver 配置為 /WEB-INF/views/
+    }
+
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	
-	
-	// 搜尋全部的方法
-	@GetMapping("/courses/search")
-	@ResponseBody
-	public List<CoursesDTO> searchAllCourses(
-	    @RequestParam(required = false) String courseName,
-	    @RequestParam(required = false) String courseCreateUserName,
-	    @RequestParam(required = false) String courseStatus,
-	    @RequestParam(required = false) Integer courseCreateUserId,
-	    @RequestParam(required = false) Integer courseMajor
-	){
-		List<CoursesDTO> corusesDTOList = courseService.searchCourses(courseName,courseCreateUserName,courseStatus,courseCreateUserId,courseMajor);
-		
-		
-		return corusesDTOList;
-		
-	}	
-	
-	@GetMapping("/courses/search/{courseId}")
-	@ResponseBody
-	public Map<String, Object> searchOneCourse(@PathVariable String courseId) {
-	    CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
-	    List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream().map(CourseCategoryDTO::new).collect(Collectors.toList());
-	    
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("course", coursesDTO);
-	    response.put("majorCategories", allMajorCategoriesList);
-	    
-	    return response;
-	}
-	
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    // 搜尋全部的方法
+    @GetMapping("/courses/search")
+    @ResponseBody
+    public List<CoursesDTO> searchAllCourses(
+            @RequestParam(required = false) String courseName,
+            @RequestParam(required = false) String courseCreateUserName,
+            @RequestParam(required = false) String courseStatus,
+            @RequestParam(required = false) Integer courseCreateUserId,
+            @RequestParam(required = false) Integer courseMajor) {
+        List<CoursesDTO> corusesDTOList = courseService.searchCourses(courseName, courseCreateUserName, courseStatus,
+                courseCreateUserId, courseMajor);
+
+        return corusesDTOList;
+
+    }
+
+    @GetMapping("/courses/search/{courseId}")
+    @ResponseBody
+    public Map<String, Object> searchOneCourse(@PathVariable String courseId) {
+        CoursesDTO coursesDTO = courseService.searchOneCourseById(courseId);
+        List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream()
+                .map(CourseCategoryDTO::new).collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("course", coursesDTO);
+        response.put("majorCategories", allMajorCategoriesList);
+
+        return response;
+    }
+
     // 更新課程的方法，使用路徑變數和 POST 方法
     @PostMapping("/courses/update/{oldCourseId}")
     @ResponseBody
     public boolean updateCourseById(
-        @PathVariable("oldCourseId") String courseId,
-        @RequestParam String courseName,
-        @RequestParam Integer courseCategory,
-        @RequestParam Integer courseCreateUserId,
-        @RequestParam String courseInformation,
-        @RequestParam String courseDescription,
-        @RequestParam String courseEnrollmentDate,
-        @RequestParam String courseStartDate,
-        @RequestParam String courseEndDate,
-        @RequestParam Integer coursePrice,
-        @RequestParam String courseStatus,
-        @RequestPart(required = false) MultipartFile courseCoverPicture
-    ) {
-    	
-    	// 修剪掉額外的部分（如果有）
-    	if (courseStartDate != null && courseStartDate.length() > 19) {
-    	    courseStartDate = courseStartDate.substring(0, 19); // 保留 "yyyy-MM-dd HH:mm:ss" 對應的部分
-    	}
+            @PathVariable("oldCourseId") String courseId,
+            @RequestParam String courseName,
+            @RequestParam Integer courseCategory,
+            @RequestParam Integer courseCreateUserId,
+            @RequestParam String courseInformation,
+            @RequestParam String courseDescription,
+            @RequestParam String courseEnrollmentDate,
+            @RequestParam String courseStartDate,
+            @RequestParam String courseEndDate,
+            @RequestParam Integer coursePrice,
+            @RequestParam String courseStatus,
+            @RequestPart(required = false) MultipartFile courseCoverPicture) {
 
-    	if (courseEndDate != null && courseEndDate.length() > 19) {
-    	    courseEndDate = courseEndDate.substring(0, 19);
-    	}
+        // 修剪掉額外的部分（如果有）
+        if (courseStartDate != null && courseStartDate.length() > 19) {
+            courseStartDate = courseStartDate.substring(0, 19); // 保留 "yyyy-MM-dd HH:mm:ss" 對應的部分
+        }
 
-    	System.out.println(courseStartDate);
-    	System.out.println(courseEndDate);
+        if (courseEndDate != null && courseEndDate.length() > 19) {
+            courseEndDate = courseEndDate.substring(0, 19);
+        }
+
+        System.out.println(courseStartDate);
+        System.out.println(courseEndDate);
         // 定義日期格式
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        
+
         // 解析日期
-        LocalDate enrollmentDateParsed = (courseEnrollmentDate != null && !courseEnrollmentDate.isEmpty()) 
-            ? LocalDate.parse(courseEnrollmentDate, dateFormatter) : null;
-        LocalDateTime startDateParsed = (courseStartDate != null && !courseStartDate.isEmpty()) 
-            ? LocalDateTime.parse(courseStartDate, dateTimeFormatter) : null;
-        LocalDateTime endDateParsed = (courseEndDate != null && !courseEndDate.isEmpty()) 
-            ? LocalDateTime.parse(courseEndDate, dateTimeFormatter) : null;
-        
+        LocalDate enrollmentDateParsed = (courseEnrollmentDate != null && !courseEnrollmentDate.isEmpty())
+                ? LocalDate.parse(courseEnrollmentDate, dateFormatter)
+                : null;
+        LocalDateTime startDateParsed = (courseStartDate != null && !courseStartDate.isEmpty())
+                ? LocalDateTime.parse(courseStartDate, dateTimeFormatter)
+                : null;
+        LocalDateTime endDateParsed = (courseEndDate != null && !courseEndDate.isEmpty())
+                ? LocalDateTime.parse(courseEndDate, dateTimeFormatter)
+                : null;
+
         // 創建更新的 CourseBean 對象
         CourseBean updateCourse = new CourseBean(
-            courseId, 
-            courseName, 
-            courseCreateUserId, 
-            courseCategory, 
-            courseInformation, 
-            courseDescription, 
-            enrollmentDateParsed, 
-            startDateParsed, 
-            endDateParsed, 
-            coursePrice, 
-            courseStatus
-        );
-        
-            String newCoverImageUrl;
-            if(courseCoverPicture !=null) {
-				try {
-					newCoverImageUrl = firebaseStorageService.uploadFile(courseCoverPicture);
-					updateCourse.setCourseCoverPictureURL(newCoverImageUrl);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+                courseId,
+                courseName,
+                courseCreateUserId,
+                courseCategory,
+                courseInformation,
+                courseDescription,
+                enrollmentDateParsed,
+                startDateParsed,
+                endDateParsed,
+                coursePrice,
+                courseStatus);
+
+        String newCoverImageUrl;
+        if (courseCoverPicture != null) {
+            try {
+                newCoverImageUrl = firebaseStorageService.uploadFile(courseCoverPicture);
+                updateCourse.setCourseCoverPictureURL(newCoverImageUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        
+        }
+
         // 調用 DAO 層更新課程
         boolean isUpdated = hcourseDao.updateCourseById(updateCourse);
-        
+
         return isUpdated;
     }
-    
-	
+
     // 刪除課程的方法
     @GetMapping("/courses/delete/{courseId}")
     @ResponseBody
-	public Boolean deleteCourseById(String courseId){
-		
-		boolean isCourseDeleted = courseService.deleteCourseById(courseId);
+    public Boolean deleteCourseById(String courseId) {
 
-		return isCourseDeleted;
-	}
-    
+        boolean isCourseDeleted = courseService.deleteCourseById(courseId);
+
+        return isCourseDeleted;
+    }
+
     /**
      * 新增課程的方法
      * 此方法會自動將表單數據綁定到 CourseBean 對象
      *
-     * @param courseBean           課程資料
-     * @param courseCoverPicture   課程封面圖片
+     * @param courseBean         課程資料
+     * @param courseCoverPicture 課程封面圖片
      * @return 插入後的 CourseBean 對象
      */
     @PostMapping("/courses/insert")
@@ -230,31 +231,31 @@ public class CoursesController {
 
             // 插入課程
             CourseBean insertedCourse = courseService.insertCourse(courseBean);
-            
-        	List<CourseModuleBean> courseModules = new ArrayList<CourseModuleBean>();
-        	if(moduleNamesList != null) {
-        		CourseModuleBean courseModule = null;
-        		for(String courseModuleName:moduleNamesList) {
-        			courseModule = new CourseModuleBean();
-        			courseModule.setCourseModuleName(courseModuleName);
-        			 // 必須設置 courseModule 的 course 屬性
+
+            List<CourseModuleBean> courseModules = new ArrayList<CourseModuleBean>();
+            if (moduleNamesList != null) {
+                CourseModuleBean courseModule = null;
+                for (String courseModuleName : moduleNamesList) {
+                    courseModule = new CourseModuleBean();
+                    courseModule.setCourseModuleName(courseModuleName);
+                    // 必須設置 courseModule 的 course 屬性
                     courseModule.setCourse(insertedCourse);
-        			courseModules.add(courseModule);
-        		}
-        		insertedCourse.setCourseModules(courseModules);
-        		courseService.updateCourseById(insertedCourse);
-        	}else {
-        		System.out.println("沒有module");
-        	}
-        	 System.out.println(insertedCourse.getCourseId());
-        	 // 返回 JSON 响应
-             Map<String, String> response = new HashMap<>();
-             response.put("message", "OK");
-            return new ResponseEntity<>(response,HttpStatus.OK);
+                    courseModules.add(courseModule);
+                }
+                insertedCourse.setCourseModules(courseModules);
+                courseService.updateCourseById(insertedCourse);
+            } else {
+                System.out.println("沒有module");
+            }
+            System.out.println(insertedCourse.getCourseId());
+            // 返回 JSON
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "OK");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }

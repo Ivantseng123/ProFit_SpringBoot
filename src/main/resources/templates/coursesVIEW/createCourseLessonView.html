@@ -28,47 +28,48 @@
 			<div class="form-container">
 				<form enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="courseName">課程名稱:(自動帶入)</label> <input type="text" id="courseName" name="courseName"
+						<label for="courseName">課程名稱:(自動帶入)</label>
+						<input type="text" id="courseName" name="courseName" th:field="${courseModuleDTO.courseName}"
+							th:data-courseid="${courseModuleDTO.courseId}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="courseModuleName">章節名稱:(自動帶入)</label>
+						<input type="text" id="courseModuleName" name="courseModuleName"
+							th:field="${courseModuleDTO.courseModuleName}"
+							th:data-courseModuleId="${courseModuleDTO.courseModuleId}" readonly>
+					</div>
+					<div class="form-group">
+						<label for="courseLessonName">單元名稱:</label>
+						<input type="text" id="courseLessonName" name="courseLessonName" required>
+					</div>
+					<div class="form-group">
+						<label for="courseLessonSort">單元排序:</label>
+						<input type="text" id="courseLessonSort" name="courseLessonSort" required>
+					</div>
+					<div class="form-group">
+						<label for="lessonMedia">單元教材: (影片建議比例16:9)</label>
+						<input type="file" id="lessonMedia" name="lessonMedia"></input>
+					</div>
+					<div class="form-group">
+						<label for="lessonMediaType">教材類型:</label> <select id="lessonMediaType" name="lessonMediaType"
 							required>
-					</div>
-					<div class="form-group">
-						<label for="courseCreateUserId">章節名稱:(自動帶入)</label> <input type="text" id="courseCreateUserId"
-							name="courseCreateUserId" required>
-					</div>
-					<div class="form-group">
-						<label for="courseInformation">單元名稱:</label>
-						<input type="text" id="courseCreateUserId" name="courseCreateUserId" required>
-					</div>
-					<div class="form-group">
-						<label for="courseInformation">單元排序:</label>
-						<input type="text" id="courseCreateUserId" name="courseCreateUserId" required>
-					</div>
-					<div class="form-group">
-						<label for="courseCoverPictureURL">單元教材: (影片建議比例16:9)</label>
-						<input type="file" id="courseCoverPicture" name="courseCoverPicture"></input>
-					</div>
-					<div class="form-group">
-						<label for="courseStatus">教材類型:</label> <select id="courseStatus" name="courseStatus" required>
-							<option value="">請選擇</option>
-							<option value="Active">影片</option>
-							<option value="Pending">檔案</option>
-							<option value="Closed">作業</option>
+							<option value="" disabled selected>請選擇</option>
+							<option value="Video">影片</option>
+							<option value="File">檔案</option>
+							<option value="HomeWork">作業</option>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="courseEnrollmentDate">註冊日期: (自動帶入)</label> <input type="date"
-							id="courseEnrollmentDate" name="courseEnrollmentDate" readonly>
-					</div>
-					<div class="form-group">
-						<label for="coursePrice">預估學習時長:(單位:分鐘)</label> <input type="number" id="coursePrice" name="coursePrice">
+						<label for="mediaDuration">預估學習時長:(單位:分鐘)</label> <input type="number" id="mediaDuration"
+							name="mediaDuration">
 					</div>
 					<div style="text-align: right;">
-						<a th:href="@{/courseLessons(courseModuleId=${courseModuleId})}"><button class="btn btn-danger" id='cancelBtn' type="button"
-								style="margin-right:370px;">取消新增</button></a>
-						<button class="btn btn-success" id="switchBtn" name="switchBtn" type="button">新增章節</button>
-						<div class="d-flex justify-content-center mb-3">
-							<button type="button" id="generateCourseData" class="btn btn-info">生成課程測試資料</button>
-						</div>
+						<a th:href="@{/courseLessons(courseModuleId=${courseModuleId})}"><button class="btn btn-danger"
+								id='cancelBtn' type="button" style="margin-right:370px;">取消新增</button></a>
+						<button class="btn btn-success" id="createBtn" name="createBtn" type="button">新增單元</button>
+						<!-- <div class="d-flex justify-content-center mb-3">
+							<button type="button" id="generateCourseData" class="btn btn-info">生成單元測試資料</button>
+						</div> -->
 					</div>
 				</form>
 			</div>

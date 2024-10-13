@@ -1,64 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
+
 <head>
-    <meta charset="UTF-8">
-    <title>ProFit</title>
-    <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
-    <link rel="stylesheet" th:href="@{/css/model.css}">
+	<meta charset="UTF-8">
+	<title>ProFit</title>
+	<link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
+	<link rel="stylesheet" th:href="@{/css/model.css}">
 </head>
+
 <body>
-<div th:replace="~{model/layout-static}"></div>
-<div class="container pt-2">
+	<div th:replace="~{model/layout-static}"></div>
+	<div class="container pt-2">
 		<a class="btn btn-primary" role="button" aria-disabled="true"
-		   th:href="@{/courseModules(courseId=${courseModuleDTO.courseId})}">返回章節列表</a>
+			th:href="@{/courseModules(courseId=${courseModuleDTO.courseId})}">返回章節列表</a>
 	</div>
-<div class="container pt-3">
-    <!-- 主要內容區域 -->
-    <!-- 只是一個範例，裡面布局可以更改 -->
-    <div class="course-header">
-        <h2>單元管理功能</h2>
-        <span><a th:href="@{/courses/addCourse}"><button
-                id="createBtn">新增單元</button></a></span>
-    </div>
-	<div class="dashboard-header">
-				<h3 class="mb-0" th:text="|章節名稱: ${courseModuleDTO.courseModuleName}|"></h3>
-			</div>
+	<div class="container pt-3">
+		<!-- 主要內容區域 -->
+		<!-- 只是一個範例，裡面布局可以更改 -->
+		<div class="course-header">
+			<h2>單元管理功能</h2>
+			<span><a th:href="@{/courseLessons/add(courseModuleId=${courseModuleDTO.courseModuleId})}"><button
+						id="createBtn">新增單元</button></a></span>
+		</div>
+		<div class="dashboard-header">
+			<h3 class="mb-0" th:text="|章節名稱: ${courseModuleDTO.courseModuleName}|"></h3>
+		</div>
 
-			<div class="table-container" id="search-results">
+		<div class="table-container" id="search-results">
 
-				<table>
-					<thead>
+			<table>
+				<thead>
+					<tr>
+						<th>單元排序</th>
+						<th>單元名稱</th>
+						<th>單元內容</th>
+						<th>單元內容類型</th>
+						<th>單元內容長度</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="table-body">
+					<th:block th:each=" courseLessonDTO : ${courseLessonDTOList}">
 						<tr>
-							<th>單元排序</th>
-							<th>單元名稱</th>
-							<th>單元內容</th>
-							<th>單元內容類型</th>
-							<th>單元內容長度</th>
-							<th>操作</th>
+							<td class="sort" th:text="${courseLessonDTO.courseLessonSort}"
+								th:data-courseLessonId="${courseLessonDTO.courseLessonId}"></td>
+							<td th:text="${courseLessonDTO.courseLessonName}"></td>
+							<td th:text="${courseLessonDTO.lessonMediaUrl}"></td>
+							<td th:text="${courseLessonDTO.lessonMediaType}"></td>
+							<td th:text="|${courseLessonDTO.mediaDuration} 分鐘|"></td>
+							<td>
+								<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}"
+									class="view btn btn-success btn-sm">查看</button>
+								<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}"
+									class="edit btn btn-primary btn-sm">編輯</button>
+								<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}"
+									class="delete btn btn-danger btn-sm">刪除</button>
+							</td>
 						</tr>
-					</thead>
-					<tbody id="table-body">
-						<th:block th:each=" courseLessonDTO : ${courseLessonDTOList}">
-							<tr>
-								<td class="sort" th:text="${courseLessonDTO.courseLessonSort}" th:data-courseLessonId="${courseLessonDTO.courseLessonId}"></td>
-								<td th:text="${courseLessonDTO.courseLessonName}"></td>
-								<td th:text="${courseLessonDTO.lessonMediaUrl}"></td>
-								<td th:text="${courseLessonDTO.lessonMediaType}"></td>
-								<td th:text="|${courseLessonDTO.mediaDuration} 分鐘|"></td>
-								<td>
-									<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}" class="view btn btn-success btn-sm">查看</button>
-									<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}" class="edit btn btn-primary btn-sm">編輯</button>
-									<button th:data-courseLessonId="${courseLessonDTO.courseLessonId}" class="delete btn btn-danger btn-sm">刪除</button>
-								</td>
-							</tr>
-						</th:block>
-					</tbody>
-				</table>
-			</div>
-</div>
-<script>
-    var contextPath = 'http://localhost:8080/ProFit';
-</script>
-<script th:src="@{/js/courses/courseLessonView.js}"></script>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script>
+		var contextPath = 'http://localhost:8080/ProFit';
+	</script>
+	<script th:src="@{/js/courses/courseLessonView.js}"></script>
 </body>
+
 </html>

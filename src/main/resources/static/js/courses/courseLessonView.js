@@ -1,3 +1,27 @@
+//按下刪除按鈕，抓取欄位的值傳給server
+$(document).on('click', '.delete', function () {
+	let courseLessonId = $(this).closest('tr').find('.sort').data('courselessonid');
+
+	console.log("Selected CourseLesson ID for Deletion: " + courseLessonId);
+
+	$.ajax({
+		url: contextPath + '/courseLessons/delete/' + courseLessonId,
+		type: 'get',
+		success: function (response) {
+			if (response) {
+				window.alert('單元刪除成功');
+				console.log('刪除的單元訊息:', response);
+				window.location.href = contextPath + '/courseLessons?courseModuleId=' + response;
+			} else {
+				window.alert('單元刪除失敗');
+			}
+		},
+		error: function (error) {
+			console.error('Error deleting course:', error);
+		}
+	});
+});
+
 /*
 //新增課程後回傳帶參數的url，確認參數是否存在
 $(document).ready(function () {
@@ -10,36 +34,6 @@ $(document).ready(function () {
 	if (clickButton === 'true' || 1 == 1) {
 		$('#searchBtn').click();
 	}
-
-	$('#id-courseMajor,#id-courseName,#id-courseStatus,#id-courseCreateUserName').change(function () {
-		$('#searchBtn').click();
-	})
-});
-
-
-//按下刪除按鈕，抓取欄位的值傳給server
-$(document).on('click', '.delete', function () {
-	var courseId = $(this).closest('tr').find('.result-courseId').text();
-
-	console.log("Selected Course ID for Deletion: " + courseId);
-
-	$.ajax({
-		url: contextPath + '/courses/delete/' + courseId,
-		data: { courseId: courseId },
-		type: 'get',
-		success: function (response) {
-			if (response) {
-				window.alert('課程刪除成功');
-				console.log('新增的课程信息:', response);
-				window.location.href = contextPath + '/courses?clickButton=true';
-			} else {
-				window.alert('課程刪除失敗');
-			}
-		},
-		error: function (error) {
-			console.error('Error deleting course:', error);
-		}
-	});
 });
 
 // 編輯課程流程
@@ -85,54 +79,54 @@ $(document).on('click', '.view', function () {
 				</div>    
 				
 				<div class="form-group">
-			        <label for="courseName">課程名稱:</label>
-			        <input type="text" id="courseName" name="courseName" value=${response.courseName} readonly>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseMajor">課程類別:</label>
-			        <select id="courseMajor" name="courseMajor" required disabled>
-			            <option value="">請選擇類別</option>
-			            <option value="100">程式設計</option>
-			            <option value="2">類別2</option>
-			        </select>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseCreateUserId">課程創建者名稱:</label>
-			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.courseCreaterId}) ${response.courseCreaterName}" readonly>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseInformation">課程資訊:</label>
-			        <textarea id="courseInformation" name="courseInformation" rows="2" cols="50" readonly></textarea>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseDescription">課程描述:</label>
-			        <textarea id="courseDescription" name="courseDescription" rows="2" cols="50" readonly></textarea>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseEnrollmentDate">最後修改日期: (自動帶入)</label>
-			        <input type="date" id="courseEnrollmentDate" name="courseEnrollmentDate" value=${response.courseEnrollmentDate} readonly>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseStartDate">開始日期:</label>
-			        <input type="text" id="courseStartDate" name="courseStartDate" readonly>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseEndDate">結束日期:</label>
-			        <input type="text" id="courseEndDate" name="courseEndDate" readonly>
-			    </div>
-			    <div class="form-group">
-			        <label for="coursePrice">課程價格:</label>
-			        <input type="number" id="coursePrice" name="coursePrice" value=${response.coursePrice} readonly>
-			    </div>
-			    <div class="form-group">
-			        <label for="courseStatus">課程狀態:</label>
-			        <select id="courseStatus" name="courseStatus" required disabled>
-			            <option value="">請選擇狀態</option>
-			            <option value="Active">啟用</option>
-			            <option value="Pending">審核中</option>
-			            <option value="Closed">停用</option>
-			        </select>
-			    </div>
+					<label for="courseName">課程名稱:</label>
+					<input type="text" id="courseName" name="courseName" value=${response.courseName} readonly>
+				</div>
+				<div class="form-group">
+					<label for="courseMajor">課程類別:</label>
+					<select id="courseMajor" name="courseMajor" required disabled>
+						<option value="">請選擇類別</option>
+						<option value="100">程式設計</option>
+						<option value="2">類別2</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="courseCreateUserId">課程創建者名稱:</label>
+					<input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.courseCreaterId}) ${response.courseCreaterName}" readonly>
+				</div>
+				<div class="form-group">
+					<label for="courseInformation">課程資訊:</label>
+					<textarea id="courseInformation" name="courseInformation" rows="2" cols="50" readonly></textarea>
+				</div>
+				<div class="form-group">
+					<label for="courseDescription">課程描述:</label>
+					<textarea id="courseDescription" name="courseDescription" rows="2" cols="50" readonly></textarea>
+				</div>
+				<div class="form-group">
+					<label for="courseEnrollmentDate">最後修改日期: (自動帶入)</label>
+					<input type="date" id="courseEnrollmentDate" name="courseEnrollmentDate" value=${response.courseEnrollmentDate} readonly>
+				</div>
+				<div class="form-group">
+					<label for="courseStartDate">開始日期:</label>
+					<input type="text" id="courseStartDate" name="courseStartDate" readonly>
+				</div>
+				<div class="form-group">
+					<label for="courseEndDate">結束日期:</label>
+					<input type="text" id="courseEndDate" name="courseEndDate" readonly>
+				</div>
+				<div class="form-group">
+					<label for="coursePrice">課程價格:</label>
+					<input type="number" id="coursePrice" name="coursePrice" value=${response.coursePrice} readonly>
+				</div>
+				<div class="form-group">
+					<label for="courseStatus">課程狀態:</label>
+					<select id="courseStatus" name="courseStatus" required disabled>
+						<option value="">請選擇狀態</option>
+						<option value="Active">啟用</option>
+						<option value="Pending">審核中</option>
+						<option value="Closed">停用</option>
+					</select>
+				</div>
 				<button id="closePopupBtn">關閉</button>
 			</form>`)
 			$('#courseMajor').val(response.courseCategoryId);
