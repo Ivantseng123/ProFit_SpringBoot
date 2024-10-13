@@ -414,3 +414,4 @@ HELP.md
 firebase-service-account.json
 
 db-secrets.properties
+.vscode/
