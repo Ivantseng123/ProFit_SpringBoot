@@ -36,6 +36,6 @@ public class WebAppConfig implements WebMvcConfigurer {
 //	@Override
 //	public void addInterceptors(InterceptorRegistry registry) {
 //		registry.addInterceptor(loginInterceptor).addPathPatterns("/**") // 過濾所有請求
-//				.excludePathPatterns("/loginPage","/login"); // 排除登入頁面
+//				.excludePathPatterns("/loginPage","/login","/js/users/Login.js"); // 排除登入頁面
 //	}
 }

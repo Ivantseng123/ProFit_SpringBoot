@@ -17,11 +17,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("user_email") == null) {
+			response.sendRedirect(request.getContextPath() + "/loginPage");
 			
-			if (!request.getRequestURI().startsWith("/ProFit/js/")) {
-				response.sendRedirect(request.getContextPath() + "/loginPage");
-				return false; // 返回 false 阻止請求繼續
-			}
+//			if (!request.getRequestURI().startsWith("/ProFit/js/")) {
+//				response.sendRedirect(request.getContextPath() + "/loginPage");
+//				return false; // 返回 false 阻止請求繼續
+//			}
 		}
 		return true; // 返回 true 繼續請求
 	}
