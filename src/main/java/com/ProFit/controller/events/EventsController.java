@@ -1,11 +1,13 @@
 package com.ProFit.controller.events;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.ProFit.model.bean.eventsBean.EventsBean;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.service.eventService.EventsService;
 
 import java.util.List;
@@ -26,14 +28,17 @@ public class EventsController {
 
     @GetMapping("/new")
     public String newEvent(Model model) {
-        model.addAttribute("event", new EventsBean());
+        EventsDTO event = new EventsDTO();
+        model.addAttribute("event", event);
+        event.setEventMajorId(100);
         return "eventsVIEW/eventForm";
     }
 
     @GetMapping("/edit")
     public String editEvent(@RequestParam String eventId, Model model) {
         EventsBean event = eventsService.selectEventById(eventId);
-        model.addAttribute("event", event);
+        EventsDTO eventDTO = eventsService.convertToDTO(event) ;		
+        model.addAttribute("event", eventDTO);
         return "eventsVIEW/eventForm";
     }
 
@@ -44,8 +49,9 @@ public class EventsController {
     }
 
     @PostMapping
-    public String saveEvent(@ModelAttribute EventsBean event) {
+    public ResponseEntity<String> saveEvent(@RequestBody EventsDTO eventsDTO) {
+        EventsBean event = eventsService.convertToEntity(eventsDTO);
         eventsService.saveEvent(event);
-        return "redirect:/events";
+        return ResponseEntity.ok("/ProFit/events");
     }
 }

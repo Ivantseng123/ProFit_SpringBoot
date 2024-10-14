@@ -11,39 +11,39 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="course_lessons")
+@Table(name = "course_lessons")
 public class CourseLessonBean implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@Id @Column(name="course_lesson_id")
+
+	@Id
+	@Column(name = "course_lesson_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer courseLessonId;
-	
-	@Column(name="course_module_id")
+
+	@Column(name = "course_module_id")
 	private Integer courseModuleId;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="course_module_id",insertable = false,updatable = false)
+	@JoinColumn(name = "course_module_id", insertable = false, updatable = false)
 	private CourseModuleBean courseModule;
-	
-	@Column(name="course_id")
+
+	@Column(name = "course_id")
 	private String courseId;
 
-	@Column(name="course_lesson_name")
+	@Column(name = "course_lesson_name")
 	private String courseLessonName;
-	
-	@Column(name="course_lesson_sort")
+
+	@Column(name = "course_lesson_sort")
 	private Integer courseLessonSort;
-	
-	@Column(name="lesson_media_url")
+
+	@Column(name = "lesson_media_url")
 	private String lessonMediaUrl;
-	
-	@Column(name="lesson_media_type")
+
+	@Column(name = "lesson_media_type")
 	private String lessonMediaType;
-	
+
 	@Column(name = "lesson_media_duration")
 	private Integer mediaDuration;
-
 
 	public CourseLessonBean() {
 		super();
@@ -61,7 +61,6 @@ public class CourseLessonBean implements java.io.Serializable {
 		this.lessonMediaType = lessonMediaType;
 		this.mediaDuration = mediaDuration;
 	}
-	
 
 	public CourseLessonBean(String courseLessonName, Integer courseLessonSort,
 			String lessonMediaUrl, String lessonMediaType, Integer mediaDuration) {
@@ -76,10 +75,11 @@ public class CourseLessonBean implements java.io.Serializable {
 	public CourseModuleBean getCourseModule() {
 		return courseModule;
 	}
-	
+
 	public void setCourseModule(CourseModuleBean courseModule) {
 		this.courseModule = courseModule;
 	}
+
 	public Integer getCourseLessonId() {
 		return courseLessonId;
 	}
@@ -151,6 +151,5 @@ public class CourseLessonBean implements java.io.Serializable {
 				+ courseLessonSort + ", lessonMediaUrl=" + lessonMediaUrl + ", lessonMediaType=" + lessonMediaType
 				+ ", mediaDuration=" + mediaDuration + "]";
 	}
-
 
 }

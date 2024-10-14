@@ -51,27 +51,36 @@ $('#searchBtn').click(function () {
 
 			$('#search-results').append(tableHtml);
 
-			response.forEach(function (response) {
-				console.log("Serialized JSON: " + response.courseCreaterName);
-				$('#table-body').append(` 
-        		                    <tr>
-        	                        <td class="result-courseId" name="courseId">${response.courseId}</td>
-									<td><img id="currentCoverImage" src="${response.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;" /></td>
-        	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
-									<td>${response.courseCreaterName}</td>
-        	                        <td>${response.courseInformation}</td>
-									<td>${response.courseModuleNumber}</td>
-									<td><a href="${contextPath}/courseModules?courseId=${response.courseId}"><button class="viewModules btn btn-info btn-sm">查看</button></a></td>
-									<td>${response.coursePrice}</td>
-        	                        <td><span class="status">${response.courseStatus}</span></td>
-        	                        <td>
-        	                            <button class="view btn btn-success btn-sm">查看</button>
-        	                            <button class="edit btn btn-primary btn-sm">編輯</button>
-        	                            <button class="delete btn btn-danger btn-sm">刪除</button>
-        	                       	</td>
-        	                    </tr>
-        	                ` );
-			});
+			response.forEach(function (course) {
+						console.log("Serialized JSON: " + course.courseCreaterName);
+
+						// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
+						let orderButton = '';
+						if (course.courseStatus === 'Active') {
+							orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
+						}
+
+						$('#table-body').append(` 
+							<tr>
+								<td class="result-courseId" name="courseId">${course.courseId}</td>
+								<td><img id="currentCoverImage" src="${course.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;" /></td>
+								<td class="result-courseName" name="courseName">${course.courseName}</td>
+								<td>${course.courseCreaterName}</td>
+								<td>${course.courseInformation}</td>
+								<td>${course.courseModuleNumber}</td>
+								<td><a href="${contextPath}/courseModules?courseId=${course.courseId}"><button class="viewModules btn btn-info btn-sm">查看</button></a></td>
+								<td>${course.coursePrice}</td>
+								<td class="status">${course.courseStatus}</td>
+								<td>
+									<button class="view btn btn-success btn-sm">查看</button>
+									${orderButton}
+									<br/><br/>
+									<button class="edit btn btn-primary btn-sm">編輯</button>
+									<button class="delete btn btn-danger btn-sm">刪除</button>
+								</td>
+							</tr>
+						`);
+					});
 
 
 		},
@@ -106,24 +115,29 @@ $(document).on('click', '.delete', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
 	console.log("Selected Course ID for Deletion: " + courseId);
-
-	$.ajax({
-		url: contextPath + '/courses/delete/' + courseId,
-		data: { courseId: courseId },
-		type: 'get',
-		success: function (response) {
-			if (response) {
-				window.alert('課程刪除成功');
-				console.log('新增的课程信息:', response);
-				window.location.href = contextPath + '/courses?clickButton=true';
-			} else {
-				window.alert('課程刪除失敗');
+	
+	let answer = confirm('確認刪除嗎？');
+	   if(answer){
+		$.ajax({
+			url: contextPath + '/courses/delete/' + courseId,
+			data: { courseId: courseId },
+			type: 'get',
+			success: function (response) {
+				if (response) {
+					window.alert('課程刪除成功');
+					console.log('新增的课程信息:', response);
+					window.location.href = contextPath + '/courses?clickButton=true';
+				} else {
+					window.alert('課程刪除失敗');
+				}
+			},
+			error: function (error) {
+				console.error('Error deleting course:', error);
 			}
-		},
-		error: function (error) {
-			console.error('Error deleting course:', error);
-		}
-	});
+		});
+	   }else{
+	     
+	   }
 });
 
 // 編輯課程流程
@@ -151,10 +165,12 @@ $(document).on('click', '.view', function () {
 		success: function (response) {
 			// 清空當前表格
 			$('.form-container').empty();
-
+			
+			console.log(response);
+			
 			// 完整的日期和时间
-			let courseStartDate = `${response.courseStartDate.split('.')[0]}`;
-			let courseEndDate = `${response.courseEndDate.split('.')[0]}`;
+			let courseStartDate = `${response.course.courseStartDate.split('.')[0]}`;
+			let courseEndDate = `${response.course.courseEndDate.split('.')[0]}`;
 
 			// 拼接成完整的字符串
 			let courseStartDateTime = `${courseStartDate}`;
@@ -165,24 +181,20 @@ $(document).on('click', '.view', function () {
 				
 				<div class="form-group" style="text-align: center">
 					<label for="courseCoverPictureURL">課程封面圖片:</label>
-					<img src="${response.courseCoverPictureURL}" style="max-width: 300px; height: auto;">
+					<img src="${response.course.courseCoverPictureURL}" style="max-width: 300px; height: auto;">
 				</div>    
 				
 				<div class="form-group">
 			        <label for="courseName">課程名稱:</label>
-			        <input type="text" id="courseName" name="courseName" value=${response.courseName} readonly>
+			        <input type="text" id="courseName" name="courseName" value=${response.course.courseName} readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseMajor">課程類別:</label>
-			        <select id="courseMajor" name="courseMajor" required disabled>
-			            <option value="">請選擇類別</option>
-			            <option value="100">程式設計</option>
-			            <option value="2">類別2</option>
-			        </select>
+					<input type="text" id="courseMajor" name="courseMajor" readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseCreateUserId">課程創建者名稱:</label>
-			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.courseCreaterId}) ${response.courseCreaterName}" readonly>
+			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.course.courseCreaterId}) ${response.course.courseCreaterName}" readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseInformation">課程資訊:</label>
@@ -194,7 +206,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 			    <div class="form-group">
 			        <label for="courseEnrollmentDate">最後修改日期: (自動帶入)</label>
-			        <input type="date" id="courseEnrollmentDate" name="courseEnrollmentDate" value=${response.courseEnrollmentDate} readonly>
+			        <input type="date" id="courseEnrollmentDate" name="courseEnrollmentDate" value=${response.course.courseEnrollmentDate} readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseStartDate">開始日期:</label>
@@ -206,7 +218,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 			    <div class="form-group">
 			        <label for="coursePrice">課程價格:</label>
-			        <input type="number" id="coursePrice" name="coursePrice" value=${response.coursePrice} readonly>
+			        <input type="number" id="coursePrice" name="coursePrice" value=${response.course.coursePrice} readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseStatus">課程狀態:</label>
@@ -219,10 +231,10 @@ $(document).on('click', '.view', function () {
 			    </div>
 				<button id="closePopupBtn">關閉</button>
 			</form>`)
-			$('#courseMajor').val(response.courseCategoryId);
-			$('#courseStatus').val(response.courseStatus);
-			$('#courseInformation').val(response.courseInformation);
-			$('#courseDescription').val(response.courseDescription);
+			$('#courseMajor').val(response.course.courseCategoryName);
+			$('#courseStatus').val(response.course.courseStatus);
+			$('#courseInformation').val(response.course.courseInformation);
+			$('#courseDescription').val(response.course.courseDescription);
 			$('#courseStartDate').val(courseStartDateTime);
 			$('#courseEndDate').val(courseEndDateTime);
 		},

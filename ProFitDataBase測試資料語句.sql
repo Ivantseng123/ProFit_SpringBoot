@@ -116,10 +116,10 @@ VALUES
 INSERT INTO courses (course_id, course_name, course_create_user_id, course_category, course_information, course_description, course_enrollment_date, course_start_date, course_end_date, course_price, course_status)
 VALUES
 ('C0100', N'Java 進階開發', 101, 100, N'適合有基礎Java經驗的開發者', N'學習Java高級特性和設計模式', GETDATE(), DATEADD(month, 1, GETDATE()), DATEADD(month, 3, GETDATE()), 15000, 'Active'),
-('C0101', N'UI/UX設計原理', 102, 101, N'零基礎入門UI/UX設計', N'學習設計思維和工具使用', DATEADD(day, -10, GETDATE()), DATEADD(day, 20, GETDATE()), DATEADD(month, 2, GETDATE()), 12000, 'Active'),
-('C0102', N'Python數據分析', 103, 102, N'適合有基礎Python經驗的學習者', N'使用Python進行數據處理和視覺化', DATEADD(day, -20, GETDATE()), DATEADD(day, 10, GETDATE()), DATEADD(month, 2, GETDATE()), 18000, 'Active'),
-('C0103', N'數位行銷策略', 104, 103, N'適合行銷新手和有經驗者', N'學習現代數位行銷技巧和策略', DATEADD(day, -5, GETDATE()), DATEADD(month, 1, GETDATE()), DATEADD(month, 3, GETDATE()), 10000, 'Active'),
-('C0104', N'敏捷Scrum實務', 105, 104, N'適合專案經理和團隊領導', N'學習Scrum框架和實施技巧', GETDATE(), DATEADD(month, 2, GETDATE()), DATEADD(month, 4, GETDATE()), 20000, 'Active');
+('C0101', N'UI/UX設計原理', 102, 200, N'零基礎入門UI/UX設計', N'學習設計思維和工具使用', DATEADD(day, -10, GETDATE()), DATEADD(day, 20, GETDATE()), DATEADD(month, 2, GETDATE()), 12000, 'Active'),
+('C0102', N'Python數據分析', 103, 300, N'適合有基礎Python經驗的學習者', N'使用Python進行數據處理和視覺化', DATEADD(day, -20, GETDATE()), DATEADD(day, 10, GETDATE()), DATEADD(month, 2, GETDATE()), 18000, 'Active'),
+('C0103', N'數位行銷策略', 104, 400, N'適合行銷新手和有經驗者', N'學習現代數位行銷技巧和策略', DATEADD(day, -5, GETDATE()), DATEADD(month, 1, GETDATE()), DATEADD(month, 3, GETDATE()), 10000, 'Active'),
+('C0104', N'敏捷Scrum實務', 105, 500, N'適合專案經理和團隊領導', N'學習Scrum框架和實施技巧', GETDATE(), DATEADD(month, 2, GETDATE()), DATEADD(month, 4, GETDATE()), 20000, 'Active');
 
 -- 12. course_order 表
 INSERT INTO course_order (course_order_id, course_id, student_id, course_order_price, course_order_create_date, course_order_remark, course_order_status)
@@ -159,20 +159,29 @@ VALUES
 -- 插入 events 表格的測試數據
 INSERT INTO events (event_id, event_name, is_event_active, event_major, event_start_date, event_end_date, event_part_start_date, event_part_end_date, event_amount, event_location, event_participant_maximum, event_description, event_note)
 VALUES
-('EV100', 'Tech Conference', 1, 100, GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 500, 'Taipei', 300, 'Annual technology conference', 'Registration required'),
-('EV101', 'Finance Summit', 1, 100, GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 700, 'Kaohsiung', 400, 'Leading finance summit', 'Register online');
+('EV100', '科技大會', 1, 100, GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 500, '台北', 300, '年度科技大會', '需要報名'),
+('EV101', '金融高峰會', 1, 101, GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 700, '高雄', 400, '領先的金融高峰會', '線上報名'),
+('EV102', '人工智慧工作坊', 1, 102, GETDATE(), DATEADD(day, 3, GETDATE()), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), 300, '台北', 150, '人工智慧技術工作坊', '需要報名'),
+('EV103', '數據科學訓練營', 1, 103, DATEADD(day, 5, GETDATE()), DATEADD(day, 7, GETDATE()), DATEADD(day, 6, GETDATE()), DATEADD(day, 7, GETDATE()), 800, '新竹', 100, '密集的數據科學訓練營', '立即報名！'),
+('EV104', '網頁開發研討會', 1, 104, DATEADD(day, 10, GETDATE()), DATEADD(day, 11, GETDATE()), DATEADD(day, 10, GETDATE()), DATEADD(day, 11, GETDATE()), 400, '高雄', 200, '了解現代網頁開發', '座位有限');
 
 -- 插入 event_host 表格的測試數據
 INSERT INTO event_host (event_id, event_host_id)
 VALUES
 ('EV100', 100),
-('EV101', 101);
+('EV101', 101),
+('EV102', 102),
+('EV103', 103),
+('EV104', 104);
 
 -- 插入 event_order 表格的測試數據
 INSERT INTO event_order (event_order_id, event_order_amount, is_event_order_active, event_id, event_participant_id, event_participant_date, event_participant_note)
 VALUES
 ('EO100', 500, 1, 'EV100', 100, GETDATE(), 'Confirmed'),
-('EO101', 700, 1, 'EV101', 101, GETDATE(), 'Confirmed');
+('EO101', 700, 1, 'EV101', 101, GETDATE(), 'Confirmed'),
+('EO102', 300, 1, 'EV102', 102, GETDATE(), 'Confirmed'),
+('EO103', 800, 1, 'EV103', 103, GETDATE(), 'Confirmed'),
+('EO104', 400, 1, 'EV104', 104, GETDATE(), 'Pending');
 
 -- 1. job_orders 表
 INSERT INTO job_orders (job_orders_id, job_application_id, job_order_date, job_order_status, job_notes, job_amount)

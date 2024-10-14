@@ -26,7 +26,10 @@
                 id="id-courseMajor" name="courseMajor"
                 style="width: 100px; vertical-align: middle;">
 					<option id="option-courseMajor-all" value="">全部</option>
-					<option id="option-courseMajor-engineering" value="100">程式設計</option>
+					<!-- 使用 th:each 來動態生成其他分類 -->
+					<th:block th:each="majorCategory : ${allMajorCategoriesList}">
+					    <option th:value="${majorCategory.majorCategoryId}" th:text="${majorCategory.categoryName}"></option>
+					</th:block>
 			</select>
 			</span> <span style="margin-right: 30px;">課程名稱: <input type="text"
                                                                        id="id-courseName" name="courseName" style="width: 100px;" />

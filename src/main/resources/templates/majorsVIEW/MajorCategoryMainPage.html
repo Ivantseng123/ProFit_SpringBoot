@@ -40,8 +40,8 @@
 	<!-- Modal -->
 	<!-- 新增類別 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false"
+			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -60,6 +60,8 @@
 								<input type="text" class="form-control" id="majorCategoryName" name="majorCategoryName">
 							</div>
 							<div class="modal-footer">
+								<!-- 一鍵填入數據按鈕 -->
+								<button type="button" id="generateTestDataBtn" class="btn btn-info ">一鍵填入資料</button>
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
 								<button type="submit" class="btn btn-primary">送出</button>
 							</div>
@@ -72,8 +74,8 @@
 
 	<!-- 編輯類別 彈出視窗 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-			aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false"
+			tabindex="-1" aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -127,16 +129,20 @@
 
 							<div class="row">
 								<div class="mb-3 col">
-									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id" required>
+									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id"
+										required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱" required>
+									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱"
+										required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述" required>
+									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述"
+										required>
 								</div>
 							</div>
 							<button type="button" class="btn btn-primary">新增</button>
+							<button type="button" id="generateTestDataBtn2" class="btn btn-info ">一鍵填入資料</button>
 						</form>
 					</div>
 
@@ -210,6 +216,22 @@
 
 			// 綁定新增major按鈕點擊事件
 			document.querySelector('#insertMajorForm .btn-primary').addEventListener('click', insertMajor);
+
+
+			///////------demo用 一鍵填入---------------------------------////////////////
+			document.getElementById('generateTestDataBtn').addEventListener('click', function () {
+				document.getElementById('majorCategoryId').value = 700;
+				document.getElementById('majorCategoryName').value = "影像製作";
+			});
+
+
+			document.getElementById('generateTestDataBtn2').addEventListener('click', function () {
+				document.getElementById('insertMajorId').value = 701;
+				document.getElementById('insertMajorName').value = "動畫製作";
+				document.getElementById('insertMajorDesc').value = "2d動畫製作";
+
+
+			});
 
 
 		});

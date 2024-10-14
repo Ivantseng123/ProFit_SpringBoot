@@ -1,5 +1,14 @@
 $(document).ready(function () {
-    let currentDate = new Date();
+	console.log("Document is ready");
+		let params = new URLSearchParams(window.location.search);
+		let courseId = params.get('courseId');
+	
+	if(courseId){
+		$('#courseId').val(courseId);
+	}
+	
+	
+	let currentDate = new Date();
     
     let year = currentDate.getFullYear();
     let month = ('0' + (currentDate.getMonth() + 1)).slice(-2); 
