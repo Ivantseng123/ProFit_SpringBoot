@@ -1,4 +1,3 @@
-// 新增課程後回傳帶參數的 URL，確認參數是否存在
 $(document).ready(function() {
     // 獲取URL中的參數
     let params = new URLSearchParams(window.location.search);

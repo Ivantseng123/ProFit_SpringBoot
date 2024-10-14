@@ -60,6 +60,21 @@ public class CourseLessonsController {
 		return "coursesVIEW/createCourseLessonView";
 	}
 
+	@GetMapping("/courseLessons/update")
+	public String updateLessonPage(@RequestParam Integer courseLessonId) {
+
+		return "coursesVIEW/updateCourseLessonView";
+	}
+
+	@GetMapping("/courseLessons/search/{courseLessonId}")
+	@ResponseBody
+	public CourseLessonDTO searchOneLessonPage(@PathVariable Integer courseLessonId) {
+
+		CourseLessonDTO courseLessonDTO = courseLessonService.searchOneCourseLessonById(courseLessonId);
+
+		return courseLessonDTO;
+	}
+
 	@PostMapping("/courseLessons/insert")
 	public ResponseEntity<Map<String, String>> createCourseLesson(
 			@ModelAttribute CourseLessonBean courseLesson,
@@ -102,6 +117,30 @@ public class CourseLessonsController {
 		} else {
 			return null;
 		}
+	}
+
+	@PostMapping("/courseLessons/update")
+	@ResponseBody
+	public boolean updateCourseLesson(
+			@ModelAttribute CourseLessonBean courseLesson,
+			@RequestPart(required = false) MultipartFile lessonMedia) {
+
+		if (courseLesson != null) {
+
+			try {
+				if (lessonMedia != null) {
+					String lessonMediaURL = firebaseStorageService.uploadFile(lessonMedia);
+					courseLesson.setLessonMediaUrl(lessonMediaURL);
+				}
+
+				boolean isUpdated = courseLessonService.updateCourseLessonById(courseLesson);
+				return isUpdated;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return false;
 	}
 
 }
