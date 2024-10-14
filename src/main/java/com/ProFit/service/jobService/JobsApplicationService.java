@@ -3,11 +3,12 @@ package com.ProFit.service.jobService;
 import java.util.List;
 import java.util.Optional;
 
+import com.ProFit.model.bean.jobsBean.JobsApplication;
+import com.ProFit.model.dao.jobsCRUD.IHJobsApplicationDAO;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ProFit.model.bean.jobsBean.JobsApplication;
-import com.ProFit.model.dao.jobsCRUD.IHJobsApplicationDAO;
 
 @Service
 @Transactional
@@ -24,6 +25,7 @@ public class JobsApplicationService implements IJobsApplicationService{
 	
 	@Override
     public JobsApplication save(JobsApplication jobsApplication) {
+
         return jobsApplicationDAO.save(jobsApplication);
     }
 
@@ -47,7 +49,6 @@ public class JobsApplicationService implements IJobsApplicationService{
         return jobsApplicationDAO.save(existJobsApplication);
     }
 
-	//void影響boolean
 	@Override
     public void delete(Integer jobsApplicationId) {
         JobsApplication jobsApplication = findById(jobsApplicationId).orElse(null);//orElse如果找不到就會是null

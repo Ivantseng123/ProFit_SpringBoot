@@ -13,6 +13,7 @@ public interface IJobsApplicationService {
 
     List<JobsApplication> findAll();
 
+    //void影響boolean
     JobsApplication update(JobsApplication jobsApplication);
 
     void delete(Integer jobsApplicationId);

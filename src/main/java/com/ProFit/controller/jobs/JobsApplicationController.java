@@ -1,8 +1,10 @@
 package com.ProFit.controller.jobs;
 
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.service.jobService.IJobsApplicationService;
+import com.ProFit.service.jobService.JobsService;
 import com.ProFit.service.userService.IUserService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Blob;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -23,10 +26,12 @@ public class JobsApplicationController {
 
     private final IJobsApplicationService jobsApplicationService;
     private final IUserService userService;
+    private final JobsService jobsService;
 
-    public JobsApplicationController(IJobsApplicationService jobsApplicationService, IUserService userService) {
+    public JobsApplicationController(IJobsApplicationService jobsApplicationService, IUserService userService, JobsService jobsService) {
         this.jobsApplicationService = jobsApplicationService;
         this.userService = userService;
+        this.jobsService = jobsService;
     }
 
     //查詢全部
@@ -37,89 +42,70 @@ public class JobsApplicationController {
         return "jobsVIEW/jobsApplicationList";
     }
 
-    //單筆查詢
-    @GetMapping("/find/{id}")
-    public ResponseEntity<JobsApplication> getJobApplication(@PathVariable Integer id) {
-        JobsApplication jobsApplication = jobsApplicationService.findById(id).orElse(null);
-        if (jobsApplication != null) {
-            return ResponseEntity.ok(jobsApplication);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
 
     // 刪除
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteJobApplication(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         jobsApplicationService.delete(id);
         return ResponseEntity.ok().build();
     }
 
+    // 導向新增頁面
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
 
-    // 新增
+        // 創建一個新的Jobs對象並添加到model中
+        model.addAttribute("jobApplication", new JobsApplication());
+        // 返回jobsEdit視圖
+        return "jobsVIEW/jobsApplicationEdit";
+    }
+
+    // 呈現新增後
     @PostMapping("/add")
-    public ResponseEntity<JobsApplication> addJobApplication(
-            @RequestParam("jobsApplicationPostingId") Integer jobsApplicationPostingId,
-            @RequestParam("jobsApplicationMemberId") Integer jobsApplicationMemberId,
-            @RequestParam("jobsApplicationDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date jobsApplicationDate,
-            @RequestParam("jobsApplicationStatus") Byte jobsApplicationStatus,
-            @RequestParam("jobsApplicationContract")Blob jobsApplicationContract) {
-
-        //拿到id
-        Users poster = userService.getUserInfoByID(jobsApplicationPostingId);
-        Users applicant = userService.getUserInfoByID(jobsApplicationMemberId);
-
-        JobsApplication jobsApplication = new JobsApplication();
-
-        jobsApplication.setPoster(poster);
-        jobsApplication.setApplicant(applicant);
-        jobsApplication.setJobsApplicationDate(jobsApplicationDate);
-        jobsApplication.setJobsApplicationStatus(jobsApplicationStatus);
-        jobsApplication.setJobsApplicationContract(jobsApplicationContract);
-
-        JobsApplication savedJobApplication = jobsApplicationService.save(jobsApplication);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedJobApplication);
+    public String addJobApplication(@ModelAttribute JobsApplication newjobApplication,
+                                    @RequestParam("jobsId") Integer jobsId,
+                                    @RequestParam("userId") Integer userId) {
+        Jobs poster = jobsService.findById(jobsId).orElse(null);
+        if ( poster != null) {
+            newjobApplication.setPoster(poster); // 將當前用戶設置為職缺的發布者
+        }
+        // 獲取當前用戶的 ID
+        Users applicant = userService.getUserInfoByID(userId);
+        if ( applicant != null) {
+            newjobApplication.setApplicant(applicant); // 將當前用戶設置為職缺的發布者
         }
 
+        jobsApplicationService.save(newjobApplication);
+        return "redirect:/jobsApplication/list";
+    }
 
-        //導向查看頁面
-        @GetMapping("/view/{id}")
-        public String view(@PathVariable("id") Integer id, Model model){
-            if (id != null) {
-                model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
-            }
-            return "jobsVIEW/jobsApplicationForm";
+
+    //導向查看頁面
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
         }
-//
-//
-//        //導向更新頁面
-//        @GetMapping("/edit/{id}")
-//        public String edit(@PathVariable("id") Integer id, Model model){
-//            if (id != null) {
-//                model.addAttribute("job", jobsApplicationService.findById(id).orElse(null));;
-//            }
-//            return "jobsVIEW/jobsApplicationEdit";
-//        }
-//
-//
-//        //呈現更新後
-//        @PutMapping("/update/{id}")
-//        public String updateJob(@PathVariable("id") String id, @ModelAttribute Jobs updatedJob,Model model,
-//                @RequestParam("deadline") String deadline) {
-//
-//            //以下遇到時間的設定就用此寫法
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//            try {
-//                java.util.Date dateFinish = formatter.parse(deadline);
-//                updatedJobApplication.setJobsApplicationDeadline(dateFinish);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            jobsApplicationService.update(updatedJobApplication);
-//            return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
-//        }
+        return "jobsVIEW/jobsApplicationForm";
+    }
 
+
+    //導向更新頁面
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsApplicationEdit";
+    }
+
+    //呈現更新後
+    @PutMapping("/update/{id}")
+    public String updateJobApplication(@ModelAttribute JobsApplication updatedJobApplication,
+                                       Model model) {
+        jobsApplicationService.update(updatedJobApplication);
+        return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
+    }
 
 }
