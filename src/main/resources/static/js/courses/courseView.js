@@ -115,24 +115,29 @@ $(document).on('click', '.delete', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
 	console.log("Selected Course ID for Deletion: " + courseId);
-
-	$.ajax({
-		url: contextPath + '/courses/delete/' + courseId,
-		data: { courseId: courseId },
-		type: 'get',
-		success: function (response) {
-			if (response) {
-				window.alert('課程刪除成功');
-				console.log('新增的课程信息:', response);
-				window.location.href = contextPath + '/courses?clickButton=true';
-			} else {
-				window.alert('課程刪除失敗');
+	
+	let answer = confirm('確認刪除嗎？');
+	   if(answer){
+		$.ajax({
+			url: contextPath + '/courses/delete/' + courseId,
+			data: { courseId: courseId },
+			type: 'get',
+			success: function (response) {
+				if (response) {
+					window.alert('課程刪除成功');
+					console.log('新增的课程信息:', response);
+					window.location.href = contextPath + '/courses?clickButton=true';
+				} else {
+					window.alert('課程刪除失敗');
+				}
+			},
+			error: function (error) {
+				console.error('Error deleting course:', error);
 			}
-		},
-		error: function (error) {
-			console.error('Error deleting course:', error);
-		}
-	});
+		});
+	   }else{
+	     
+	   }
 });
 
 // 編輯課程流程
@@ -160,10 +165,12 @@ $(document).on('click', '.view', function () {
 		success: function (response) {
 			// 清空當前表格
 			$('.form-container').empty();
-
+			
+			console.log(response);
+			
 			// 完整的日期和时间
-			let courseStartDate = `${response.courseStartDate.split('.')[0]}`;
-			let courseEndDate = `${response.courseEndDate.split('.')[0]}`;
+			let courseStartDate = `${response.course.courseStartDate.split('.')[0]}`;
+			let courseEndDate = `${response.course.courseEndDate.split('.')[0]}`;
 
 			// 拼接成完整的字符串
 			let courseStartDateTime = `${courseStartDate}`;
@@ -174,12 +181,12 @@ $(document).on('click', '.view', function () {
 				
 				<div class="form-group" style="text-align: center">
 					<label for="courseCoverPictureURL">課程封面圖片:</label>
-					<img src="${response.courseCoverPictureURL}" style="max-width: 300px; height: auto;">
+					<img src="${response.course.courseCoverPictureURL}" style="max-width: 300px; height: auto;">
 				</div>    
 				
 				<div class="form-group">
 			        <label for="courseName">課程名稱:</label>
-			        <input type="text" id="courseName" name="courseName" value=${response.courseName} readonly>
+			        <input type="text" id="courseName" name="courseName" value=${response.course.courseName} readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseMajor">課程類別:</label>
@@ -187,7 +194,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 			    <div class="form-group">
 			        <label for="courseCreateUserId">課程創建者名稱:</label>
-			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.courseCreaterId}) ${response.courseCreaterName}" readonly>
+			        <input type="text" id="courseCreateUserId" name="courseCreateUserId" value="(ID: ${response.course.courseCreaterId}) ${response.course.courseCreaterName}" readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseInformation">課程資訊:</label>
@@ -199,7 +206,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 			    <div class="form-group">
 			        <label for="courseEnrollmentDate">最後修改日期: (自動帶入)</label>
-			        <input type="date" id="courseEnrollmentDate" name="courseEnrollmentDate" value=${response.courseEnrollmentDate} readonly>
+			        <input type="date" id="courseEnrollmentDate" name="courseEnrollmentDate" value=${response.course.courseEnrollmentDate} readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseStartDate">開始日期:</label>
@@ -211,7 +218,7 @@ $(document).on('click', '.view', function () {
 			    </div>
 			    <div class="form-group">
 			        <label for="coursePrice">課程價格:</label>
-			        <input type="number" id="coursePrice" name="coursePrice" value=${response.coursePrice} readonly>
+			        <input type="number" id="coursePrice" name="coursePrice" value=${response.course.coursePrice} readonly>
 			    </div>
 			    <div class="form-group">
 			        <label for="courseStatus">課程狀態:</label>
@@ -224,10 +231,10 @@ $(document).on('click', '.view', function () {
 			    </div>
 				<button id="closePopupBtn">關閉</button>
 			</form>`)
-			$('#courseMajor').val(response.courseCategoryName);
-			$('#courseStatus').val(response.courseStatus);
-			$('#courseInformation').val(response.courseInformation);
-			$('#courseDescription').val(response.courseDescription);
+			$('#courseMajor').val(response.course.courseCategoryName);
+			$('#courseStatus').val(response.course.courseStatus);
+			$('#courseInformation').val(response.course.courseInformation);
+			$('#courseDescription').val(response.course.courseDescription);
 			$('#courseStartDate').val(courseStartDateTime);
 			$('#courseEndDate').val(courseEndDateTime);
 		},

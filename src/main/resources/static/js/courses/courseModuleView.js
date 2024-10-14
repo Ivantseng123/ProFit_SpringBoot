@@ -17,8 +17,8 @@ $(document).ready(function() {
                 <td>0</td>
                 <td></td>
                 <td>
-                    <button class='save btn btn-success'>確定新增</button>
-                    <button class='cancel btn btn-secondary'>取消</button>
+                    <button class='save btn btn-success btn-sm'>確定新增</button>
+                    <button class='cancel btn btn-secondary btn-sm'>取消</button>
                 </td>
             </tr>
         `);
@@ -52,8 +52,8 @@ $(document).ready(function() {
 
 		$(this).closest('tr').find('td:eq(1)').text(moduleName);
 		$(this).closest('tr').find('td:eq(4)').html(`
-            <button class='edit btn btn-primary'>編輯</button>
-            <button class='delete btn btn-danger'>刪除</button>
+            <button class='edit btn btn-primary btn-sm'>編輯</button>
+            <button class='delete btn btn-danger btn-sm'>刪除</button>
         `);
 	});
 
@@ -69,8 +69,8 @@ $(document).ready(function() {
 		// 將章節名稱變成輸入框，並顯示保存和取消按鈕
 		$row.find('td:eq(1)').html(`<input type='text' class='editModuleName' value='${currentModuleName}'>`);
 		$row.find('td:eq(4)').html(`
-            <button class='save-edit btn btn-success'>保存</button>
-            <button class='cancel-edit btn btn-secondary'>取消</button>
+            <button class='save-edit btn btn-success btn-sm'>保存</button>
+            <button class='cancel-edit btn btn-secondary btn-sm'>取消</button>
         `);
 	});
 
@@ -101,8 +101,8 @@ $(document).ready(function() {
 	                // 更新頁面顯示
 	                $row.find('td:eq(1)').text(newModuleName);
 	                $row.find('td:eq(4)').html(`
-	                    <button class='edit btn btn-primary'>編輯</button>
-	                    <button class='delete btn btn-danger'>刪除</button>
+	                    <button class='edit btn btn-primary btn-sm'>編輯</button>
+	                    <button class='delete btn btn-danger btn-sm'>刪除</button>
 	                `);
 	            } else {
 	                window.alert('章節更新失敗');
@@ -120,8 +120,8 @@ $(document).ready(function() {
 		let currentModuleName = $row.find('.editModuleName').val().trim();
 		$row.find('td:eq(1)').text(currentModuleName);
 		$row.find('td:eq(4)').html(`
-            <button class='edit btn btn-primary'>編輯</button>
-            <button class='delete btn btn-danger'>刪除</button>
+            <button class='edit btn btn-primary btn-sm'>編輯</button>
+            <button class='delete btn btn-danger btn-sm'>刪除</button>
         `);
 	});
 

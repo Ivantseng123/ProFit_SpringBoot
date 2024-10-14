@@ -4,34 +4,31 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-
-
 @Configuration
 @PropertySource("classpath:firebaseAPIkey.properties")
 public class FirebaseAPI {
-	
+
 	@Value("${firbaseAPIkey}")
 	private String apiKey;
-	
+
 	@Value("${authDomain}")
 	private String authDomain;
-	
+
 	@Value("${projectId}")
 	private String projectId;
-	
+
 	@Value("${storageBucket}")
 	private String storageBucket;
-	
+
 	@Value("${messagingSenderId}")
 	private String messagingSenderId;
-	
+
 	@Value("${appId}")
 	private String appId;
-	
+
 	@Value("${measurementId}")
 	private String measurementId;
-	
-	
+
 	public String getStorageBucket() {
 		return storageBucket;
 	}
@@ -88,6 +85,4 @@ public class FirebaseAPI {
 		this.apiKey = apiKey;
 	}
 
-
-	
 }

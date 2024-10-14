@@ -29,19 +29,15 @@ public class EventsBean implements Serializable {
 	private MajorBean eventMajor;
 
 	@Column(name="event_start_date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventStartDate;
 
 	@Column(name="event_end_date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventEndDate;
 
 	@Column(name="event_part_start_date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventPartStartDate;
 
 	@Column(name="event_part_end_date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime eventPartEndDate;
 
 	@Column(name="event_amount")

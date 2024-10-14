@@ -13,8 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.ProFit.controller.interceptor.LoginInterceptor;
 
-
-
 //相當於mvc-servlet.xml的Java程式組態
 @Configuration
 public class WebAppConfig implements WebMvcConfigurer {
