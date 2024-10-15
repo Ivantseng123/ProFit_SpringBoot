@@ -13,9 +13,11 @@ CREATE TABLE users(
     freelancer_identity NVARCHAR(20),
     freelancer_profile_status TINYINT NOT NULL,
     freelancer_description NTEXT,
-    user_register_time DATETIME2(0) DEFAULT DATEADD(HOUR, 8, GETDATE())
+    user_register_time DATETIME2(0) DEFAULT DATEADD(HOUR, 8, GETDATE()),
+    enabled TINYINT,
+    verification_code VARCHAR(100)
 );
-
+ 
 
 
 

@@ -43,7 +43,6 @@ function allEmpPf() {
 		},
 		"columns": [
 			{ data: 'employerProfileId' },
-			{ data: 'userId' },
 			{ data: 'userEmail' },
 			{ data: 'companyName' },
 			{ data: 'companyPhoneNumber' },

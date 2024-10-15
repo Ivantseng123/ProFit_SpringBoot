@@ -77,6 +77,12 @@ public class Users implements Serializable {
 	@Column(name = "freelancer_description")
 	private String freelancerDisc;
 	
+	@Column(name = "enabled")
+	private Integer enabled;
+	
+	@Column(name = "verification_code")
+	private String verificationCode;
+	
 	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
 	private List<Pwd_reset_tokens> pwd_reset_tokens = new LinkedList<Pwd_reset_tokens>();
@@ -102,7 +108,7 @@ public class Users implements Serializable {
 			String user_phoneNumber, String user_city, Integer user_identity, String user_register_time,
 			String user_pictureURL, Integer user_balance, String freelancer_location_prefer,
 			String freelancer_exprience, String freelancer_identity, Integer freelancer_profile_status,
-			String freelancer_disc) {
+			String freelancer_disc, Integer enabled, String verification_code) {
 		super();
 		this.userId = user_id;
 		this.userName = user_name;
@@ -119,6 +125,8 @@ public class Users implements Serializable {
 		this.freelancerIdentity = freelancer_identity;
 		this.freelancerProfileStatus = freelancer_profile_status;
 		this.freelancerDisc = freelancer_disc;
+		this.enabled = enabled;
+		this.verificationCode = verification_code;
 	}
 
 	public Users(Integer user_id, String user_name, String user_email, String user_passwordHash,
@@ -156,7 +164,7 @@ public class Users implements Serializable {
 	}
 
 	public Users(String user_name, String user_email, String user_passwordHash, String user_phoneNumber,
-			String user_city, Integer user_identity, Integer user_balance, Integer freelancer_profile_status) {
+			String user_city, Integer user_identity, Integer user_balance, Integer freelancer_profile_status,Integer enabled) {
 		super();
 		this.userName = user_name;
 		this.userEmail = user_email;
@@ -166,6 +174,7 @@ public class Users implements Serializable {
 		this.userIdentity = user_identity;
 		this.userBalance = user_balance;
 		this.freelancerProfileStatus = freelancer_profile_status;
+		this.enabled = enabled;
 	}
 
 	public Integer getUserId() {
@@ -287,6 +296,14 @@ public class Users implements Serializable {
 	public void setFreelancerDisc(String freelancerDisc) {
 		this.freelancerDisc = freelancerDisc;
 	}
+	
+	public Integer getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Integer enabled) {
+		this.enabled = enabled;
+	}
 
 	public List<Employer_application> getEmployerApplications() {
 		return employerApplications;
@@ -296,7 +313,14 @@ public class Users implements Serializable {
 		this.employerApplications = employerApplications;
 	}
 	
-	
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
 	public Set<MajorBean> getMajors() {
 		return majors;
 	}
