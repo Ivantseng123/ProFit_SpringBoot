@@ -22,7 +22,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "jobs_application_project")
-public class JobsApplicationProject {
+public class JobsApplicationProject implements java.io.Serializable {
 
 
 
@@ -56,7 +56,6 @@ public class JobsApplicationProject {
 	    
 	    public JobsApplicationProject() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 
 

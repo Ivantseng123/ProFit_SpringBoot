@@ -37,7 +37,7 @@
                 <div class="mb-3">
                     <label class="form-label">刊登者 ID</label>
                     <input th:if="${jobApplication.jobsApplicationId != null}" type="text" class="form-control"
-                           th:field="${jobApplication.users.userId}"/>
+                           th:field="${jobApplication.poster.users}"/>
                     <input th:if="${jobApplication.jobsApplicationId == null}" type="text" class="form-control" name="userId"
                            placeholder="例如：100"/>
 
@@ -47,7 +47,7 @@
                 <div class="mb-3">
                     <label class="form-label">應徵者 ID</label>
                     <input th:if="${jobApplication.jobsApplicationId != null}" type="text" class="form-control"
-                           th:field="${jobApplication.users.userId}"/>
+                           th:field="${jobApplication.applicant.userId}"/>
                     <input th:if="${jobApplication.jobsApplicationId == null}" type="text" class="form-control" name="userId"
                            placeholder="例如：100"/>
 

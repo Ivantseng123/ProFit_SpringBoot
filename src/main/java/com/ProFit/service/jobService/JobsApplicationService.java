@@ -3,6 +3,7 @@ package com.ProFit.service.jobService;
 import java.util.List;
 import java.util.Optional;
 
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.model.dao.jobsCRUD.IHJobsApplicationDAO;
 
@@ -55,7 +56,14 @@ public class JobsApplicationService implements IJobsApplicationService{
         if (jobsApplication != null) {
             jobsApplicationDAO.delete(jobsApplication);
         }
+
+//        @Override
+//        public Optional<JobsApplication> findByJobsId(Jobs poster) {
+//            return jobsApplicationDAO.findByJobsId(poster);
+//        }
     }
+
+
 
 
 }

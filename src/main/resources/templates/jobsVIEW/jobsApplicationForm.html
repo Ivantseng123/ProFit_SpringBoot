@@ -23,17 +23,17 @@
                 <input type="hidden" id="jobsApplicationId" name="jobsApplicationId" th:value="${jobApplication.jobsApplicationId}" />
 
 
-<!--                &lt;!&ndash; 刊登方 ID &ndash;&gt;-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="posterId" class="form-label">刊登方 ID</label>-->
-<!--                    <input type="text" class="form-control" id="posterId" name="posterId" th:value="${jobApplication.users.poster}" readonly />-->
-<!--                </div>-->
+                <!-- 刊登方 ID -->
+                <div class="mb-3">
+                    <label for="posterId" class="form-label">刊登方 ID</label>
+                    <input type="text" class="form-control" id="posterId" name="poster" th:value="${jobApplication.poster.users}" readonly />
+                </div>
 
-<!--                &lt;!&ndash; 應徵方 ID &ndash;&gt;-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="applicantId" class="form-label">應徵方 ID</label>-->
-<!--                    <input type="text" class="form-control" id="applicantId" name="applicantId" th:value="${jobApplication.users.applicant}" readonly />-->
-<!--                </div>-->
+                <!-- 應徵方 ID -->
+                <div class="mb-3">
+                    <label for="applicantId" class="form-label">應徵方 ID</label>
+                    <input type="text" class="form-control" id="applicantId" name="applicant" th:value="${jobApplication.applicant.userId}" readonly />
+                </div>
 
                 <!-- 發布日期 -->
                 <div class="mb-3">
