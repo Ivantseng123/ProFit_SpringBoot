@@ -4,7 +4,7 @@ import java.util.List;
 import com.ProFit.model.bean.coursesBean.CourseGradeContentBean;
 
 public interface IHcourseGradeContentDao {
-	
+
 	// 新增課程評價
 	public CourseGradeContentBean insertCourse(CourseGradeContentBean courseGradeContent);
 
@@ -21,6 +21,6 @@ public interface IHcourseGradeContentDao {
 	public List<CourseGradeContentBean> searchCourseGradeContents();
 
 	// 查詢全部 By 課程id
-	public List<CourseGradeContentBean> searchCourseGradeContents(String coruseId);
+	public List<CourseGradeContentBean> searchCourseGradeContents(String coruseId, String order);
 
 }
