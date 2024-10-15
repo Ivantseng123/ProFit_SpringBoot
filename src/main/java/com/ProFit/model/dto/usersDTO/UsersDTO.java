@@ -48,6 +48,10 @@ public class UsersDTO {
 	
 	private String freelancerDisc;
 	
+	private Integer enabled;
+	
+	private String verificationCode;
+	
 //	private List<Pwd_reset_tokens> pwd_reset_tokens = new LinkedList<Pwd_reset_tokens>();
 //
 //	
@@ -79,12 +83,13 @@ public class UsersDTO {
 		this.freelancerIdentity = userBean.getFreelancerIdentity();
 		this.freelancerProfileStatus = userBean.getFreelancerProfileStatus();
 		this.freelancerDisc = userBean.getFreelancerDisc();
+		this.enabled = userBean.getEnabled();
 	}
 
 	public UsersDTO(Integer user_id, String user_name, String user_email, String user_passwordHash,
 			String user_phoneNumber, String user_city, Integer user_identity, String user_register_time,
 			Integer user_balance, String freelancer_location_prefer, String freelancer_exprience,
-			String freelancer_identity, Integer freelancer_profile_status, String freelancer_disc) {
+			String freelancer_identity, Integer freelancer_profile_status, String freelancer_disc, Integer enabled) {
 		super();
 		this.userId = user_id;
 		this.userName = user_name;
@@ -100,10 +105,11 @@ public class UsersDTO {
 		this.freelancerIdentity = freelancer_identity;
 		this.freelancerProfileStatus = freelancer_profile_status;
 		this.freelancerDisc = freelancer_disc;
+		this.enabled = enabled;
 	}
 
 	public UsersDTO(String user_name, String user_email, String user_passwordHash, String user_phoneNumber,
-			String user_city, Integer user_identity, String user_register_time, Integer freelancer_profile_status) {
+			String user_city, Integer user_identity, String user_register_time, Integer freelancer_profile_status, Integer enabled) {
 		super();
 		this.userName = user_name;
 		this.userEmail = user_email;
@@ -113,10 +119,11 @@ public class UsersDTO {
 		this.userIdentity = user_identity;
 		this.userRegisterTime = user_register_time;
 		this.freelancerProfileStatus = freelancer_profile_status;
+		this.enabled = enabled;
 	}
 
 	public UsersDTO(String user_name, String user_email, String user_passwordHash, String user_phoneNumber,
-			String user_city, Integer user_identity, Integer user_balance, Integer freelancer_profile_status) {
+			String user_city, Integer user_identity, Integer user_balance, Integer freelancer_profile_status, Integer enabled) {
 		super();
 		this.userName = user_name;
 		this.userEmail = user_email;
@@ -126,18 +133,20 @@ public class UsersDTO {
 		this.userIdentity = user_identity;
 		this.userBalance = user_balance;
 		this.freelancerProfileStatus = freelancer_profile_status;
+		this.enabled = enabled;
 	}
 	
 
-	public UsersDTO(Integer user_id,String user_name, String user_email, 
-			Integer user_identity, String user_register_time) {
+	public UsersDTO(Integer user_id,String user_pictureURL,String user_name, String user_email, 
+			Integer user_identity, String user_register_time, Integer enabled) {
 		super();
 		this.userId = user_id;
+		this.userPictureURL = user_pictureURL;
 		this.userName = user_name;
 		this.userEmail = user_email;		
 		this.userIdentity = user_identity;
 		this.userRegisterTime = user_register_time;
-		
+		this.enabled = enabled;
 	}
 
 	public Integer getUserId() {
@@ -259,6 +268,22 @@ public class UsersDTO {
 	public void setFreelancerDisc(String freelancerDisc) {
 		this.freelancerDisc = freelancerDisc;
 	}
+	
+	public Integer getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Integer enabled) {
+		this.enabled = enabled;
+	}
+	
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
 
 //	public List<Employer_application> getEmployerApplications() {
 //		return employerApplications;
@@ -276,6 +301,7 @@ public class UsersDTO {
 //	public void setMajors(Set<MajorBean> majors) {
 //		this.majors = majors;
 //	}
+
 
 	@Override
 	public String toString() {

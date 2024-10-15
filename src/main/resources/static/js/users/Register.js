@@ -23,7 +23,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
 			} else{
 
-				window.location.href = 'http://localhost:8080/ProFit/user/alluserPage';
+				window.location.href = 'http://localhost:8080/ProFit/';
 			}
 		})
 		.catch(error => {

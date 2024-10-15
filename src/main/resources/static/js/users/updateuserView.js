@@ -33,6 +33,7 @@ function getUser() {
 				document.querySelector(`input[name="freelancerIdentity"][value="${user.freelancerIdentity}"]`).checked = true;
 			}
 			document.querySelector(`input[name="freelancerProfileStatus"][value="${user.freelancerProfileStatus}"]`).checked = true;
+			document.querySelector(`input[name="enabled"][value="${user.enabled}"]`).checked = true;
 			document.getElementById('freelancer_disc').value = user.freelancerDisc;
 			document.getElementById('user_register_time').value = user.userRegisterTime;
 		})
@@ -48,7 +49,7 @@ document.getElementById('updatePwdForm').addEventListener('submit', function(e) 
 	let params = new URLSearchParams(window.location.search);
 	let userId = params.get('userId');
 
-	let pwd = document.getElementById("user_password").value;
+	let pwd = document.getElementById("updatepwd").value;
 
 	const updatePwd = {
 		user_id: userId,
@@ -99,7 +100,7 @@ $('.file-uploader').on('change', function() {
 
 document.getElementById('updateUser-info').addEventListener('submit', (e) => {
 	e.preventDefault(); // 取消原本 form 表單送的 request
-	
+
 	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
 		.then(response => response.json())
 		.then(firebaseConfig => {
@@ -112,7 +113,7 @@ document.getElementById('updateUser-info').addEventListener('submit', (e) => {
 				const file = fileInput.files[0];
 
 				if (file) {
-					
+
 					const storageRef = storage.ref('userUpload/' + file.name);
 					const uploadTask = storageRef.put(file);
 
@@ -121,7 +122,7 @@ document.getElementById('updateUser-info').addEventListener('submit', (e) => {
 						sendForm();
 					});
 				} else {
-					
+
 					sendForm();
 				}
 			};
@@ -168,4 +169,26 @@ function togglePopup() {
 
 }
 
+// 獲取 userIdentity 的值
+const userIdentity = localStorage.getItem('userIdentity');
+
+// 檢查 userIdentity 是否等於 4
+if (userIdentity === '4') {
+	// 創建 input 元素
+	const inputElement = document.createElement('input');
+	inputElement.type = 'radio';
+	inputElement.id = 'identityChoice3';
+	inputElement.name = 'userIdentity';
+	inputElement.value = '3';
+
+	// 創建 label 元素
+	const labelElement = document.createElement('label');
+	labelElement.htmlFor = 'identityChoice3';
+	labelElement.textContent = '管理員';
+
+	// 將 input 和 label 加入到指定的容器中
+	const container = document.getElementById('radioContainer');
+	container.appendChild(inputElement);
+	container.appendChild(labelElement);
+}
 

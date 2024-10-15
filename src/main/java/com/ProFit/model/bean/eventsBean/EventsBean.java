@@ -24,9 +24,15 @@ public class EventsBean implements Serializable {
 	@Column(name="is_event_active")
 	private int isEventActive;
 
+	@Column(name="event_category")
+	private int eventCategory;
+
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_major")
 	private MajorBean eventMajor;
+
+	@Column(name="event_publish_date")
+	private LocalDateTime eventPublishDate;
 
 	@Column(name="event_start_date")
 	private LocalDateTime eventStartDate;
@@ -58,15 +64,17 @@ public class EventsBean implements Serializable {
 	public EventsBean() {
 	}
 
-	public EventsBean(String eventId, String eventName, int isEventActive, MajorBean eventMajor, LocalDateTime eventStartDate,
-			LocalDateTime eventEndDate, LocalDateTime eventPartStartDate, LocalDateTime eventPartEndDate,
-			int eventAmount, String eventLocation, int eventParticipantMaximum, String eventDescription,
-			String eventNote) {
+	public EventsBean(String eventId, String eventName, int isEventActive, int eventCategory, MajorBean eventMajor,
+			LocalDateTime eventPublishDate, LocalDateTime eventStartDate, LocalDateTime eventEndDate,
+			LocalDateTime eventPartStartDate, LocalDateTime eventPartEndDate, int eventAmount, String eventLocation,
+			int eventParticipantMaximum, String eventDescription, String eventNote) {
 		super();
 		this.eventId = eventId;
 		this.eventName = eventName;
 		this.isEventActive = isEventActive;
+		this.eventCategory = eventCategory;
 		this.eventMajor = eventMajor;
+		this.eventPublishDate = eventPublishDate;
 		this.eventStartDate = eventStartDate;
 		this.eventEndDate = eventEndDate;
 		this.eventPartStartDate = eventPartStartDate;
@@ -102,12 +110,28 @@ public class EventsBean implements Serializable {
 		this.isEventActive = isEventActive;
 	}
 
+	public int getEventCategory() {
+		return eventCategory;
+	}
+
+	public void setEventCategory(int eventCategory) {
+		this.eventCategory = eventCategory;
+	}
+
 	public MajorBean getEventMajor() {
 		return eventMajor;
 	}
 
 	public void setEventMajor(MajorBean eventMajor) {
 		this.eventMajor = eventMajor;
+	}
+
+	public LocalDateTime getEventPublishDate() {
+		return eventPublishDate;
+	}
+
+	public void setEventPublishDate(LocalDateTime eventPublishDate) {
+		this.eventPublishDate = eventPublishDate;
 	}
 
 	public LocalDateTime getEventStartDate() {
@@ -185,11 +209,13 @@ public class EventsBean implements Serializable {
 	@Override
 	public String toString() {
 		return "EventsBean [eventId=" + eventId + ", eventName=" + eventName + ", isEventActive=" + isEventActive
-				+ ", eventMajor=" + eventMajor.getMajorId() + ", eventStartDate=" + eventStartDate + ", eventEndDate=" + eventEndDate
+				+ ", eventCategory=" + eventCategory + ", eventMajor=" + eventMajor + ", eventPublishDate="
+				+ eventPublishDate + ", eventStartDate=" + eventStartDate + ", eventEndDate=" + eventEndDate
 				+ ", eventPartStartDate=" + eventPartStartDate + ", eventPartEndDate=" + eventPartEndDate
 				+ ", eventAmount=" + eventAmount + ", eventLocation=" + eventLocation + ", eventParticipantMaximum="
 				+ eventParticipantMaximum + ", eventDescription=" + eventDescription + ", eventNote=" + eventNote + "]";
 	}
 
 	
+		
 }
