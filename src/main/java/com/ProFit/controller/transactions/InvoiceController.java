@@ -28,11 +28,9 @@ public class InvoiceController {
     @GetMapping("/search")
     public String filterInvoices(@RequestParam(required = false) String invoice_number,
                                  @RequestParam(required = false) String invoice_status,
-                                 @RequestParam(required = false) String id_type,
-                                 @RequestParam(required = false) String id_value,
+                                 @RequestParam(required = false) String transaction_id,
                                  Model model) {
-
-        List<InvoiceDTO> invoices = invoiceService.searchInvoices(invoice_number, invoice_status, id_type, id_value);
+        List<InvoiceDTO> invoices = invoiceService.searchInvoices(invoice_number, invoice_status, transaction_id);
         model.addAttribute("invoices", invoices);
         return "transactionVIEW/invoices";
     }
@@ -42,29 +40,13 @@ public class InvoiceController {
     public String insertInvoice(@RequestParam("invoice_number") String invoiceNumber,
                                 @RequestParam("invoice_amount") int invoiceAmount,
                                 @RequestParam("invoice_status") String invoiceStatus,
-                                @RequestParam("order_type") String orderType,
-                                @RequestParam("order_id") String orderId) {
+                                @RequestParam("transaction_id") String transactionId) {
 
         InvoiceDTO invoiceDTO = new InvoiceDTO();
         invoiceDTO.setInvoiceNumber(invoiceNumber);
         invoiceDTO.setInvoiceAmount(invoiceAmount);
         invoiceDTO.setInvoiceStatus(invoiceStatus);
-
-        // 設置對應的訂單 ID
-        switch (orderType) {
-            case "transaction_id":
-                invoiceDTO.setTransactionId(orderId);
-                break;
-            case "job_order_id":
-                invoiceDTO.setJobOrderId(orderId);
-                break;
-            case "course_order_id":
-                invoiceDTO.setCourseOrderId(orderId);
-                break;
-            case "event_order_id":
-                invoiceDTO.setEventOrderId(orderId);
-                break;
-        }
+        invoiceDTO.setTransactionId(transactionId);
 
         invoiceService.insertInvoice(invoiceDTO);
         return "redirect:/invoices";
