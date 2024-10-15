@@ -193,20 +193,20 @@ VALUES
 ('J0104', 5, DATEADD(day, -1, GETDATE()), 'Processing', N'電商平台前端開發訂單', 45000);
 
 -- 插入一筆 user_transactions 的測試資料 
-INSERT INTO user_transactions (transaction_id, user_id, transaction_role, transaction_type, order_id, total_amount, platform_fee, target_income, transaction_status, payment_method, reference_id)
+INSERT INTO user_transactions (transaction_id, user_id, transaction_role, transaction_type, order_id, total_amount, platform_fee, target_income, transaction_status, payment_method, reference_id, created_at)
 VALUES 
-('TXN001', 103, 'buyer', 'purchase', 'ORD001', 100.00, 10.00, 90.00, 'completed', 'credit_card', 'REF12345'),
-('TXN002', 103, 'seller', 'sale', 'ORD002', 200.00, 20.00, 180.00, 'pending', 'paypal', NULL),
-('TXN003', 103, 'buyer', 'refund', 'ORD003', 50.00, 0.00, 50.00, 'completed', 'bank_transfer', 'REF67890');
+('TXN001', 101, 'buyer', 'purchase', 'ORD001', 100, 10, 90, 'completed', 'credit_card', 'REF12345', DATEADD(day, -5, GETDATE())),
+('TXN002', 102, 'seller', 'sale', 'ORD002', 200, 20, 180, 'pending', 'paypal', NULL, DATEADD(day, -4, GETDATE())),
+('TXN003', 103, 'buyer', 'refund', 'ORD003', 50, 0, 50, 'completed', 'bank_transfer', 'REF67890', DATEADD(day, -2, GETDATE()));
 
 
 -- 3. invoices 表
 
 INSERT INTO invoices (invoice_number, transaction_id, invoice_amount, issued_date, invoice_status)
 VALUES 
-('INV001', 'TXN001', 100, '2024-10-01 10:00:00', 'open'),
-('INV002', 'TXN002', 200, '2024-10-02 11:00:00', 'open'),
-('INV003', 'TXN003', 50, '2024-10-03 12:00:00', 'canceled');
+('INV001', 'TXN001', 100, DATEADD(day, -5, GETDATE()), 'open'),
+('INV002', 'TXN002', 200, DATEADD(day, -4, GETDATE()), 'open'),
+('INV003', 'TXN003', 50, DATEADD(day, -2, GETDATE()), 'canceled');
 
 
 

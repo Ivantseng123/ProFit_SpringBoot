@@ -327,13 +327,13 @@ CREATE TABLE user_transactions (
     transaction_role NVARCHAR(10) NOT NULL,          -- 交易角色
     transaction_type NVARCHAR(10) NOT NULL,          -- 交易類型
     order_id NVARCHAR(50),                           -- 通用的訂單ID
-    total_amount DECIMAL(10, 2) NOT NULL,            -- 交易金額
-    platform_fee DECIMAL(10, 2) NOT NULL DEFAULT 0,  -- 平台抽成
-    target_income DECIMAL(10, 2) NULL,               -- 實際支付給接收方的金額
+    total_amount int NOT NULL,            -- 交易金額
+    platform_fee int NOT NULL DEFAULT 0,  -- 平台抽成
+    target_income int NOT NULL,               -- 實際支付給接收方的金額
     transaction_status NVARCHAR(10) NOT NULL,        -- 交易狀態
     payment_method NVARCHAR(20) NOT NULL,            -- 支付方式
     reference_id VARCHAR(100) NULL,                  -- 第三方支付平台的參考ID
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,   -- 交易創建時間
+    created_at DATETIME2 NOT NULL,   -- 交易創建時間
     completion_at DATETIME2(7) NULL,                 -- 交易完成時間
     FOREIGN KEY (user_id) REFERENCES users(user_id)  -- 外鍵關聯到用戶表
 );

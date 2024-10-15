@@ -49,7 +49,6 @@ public class UserTransactionBean {
     private LocalDateTime completionAt;  // 交易完成時間
 
     // Constructors
-
     public UserTransactionBean() {
         // 無參構造函數
     }
@@ -80,7 +79,6 @@ public class UserTransactionBean {
     }
 
     // Getters and Setters
-
     public String getTransactionId() {
         return transactionId;
     }
