@@ -1,5 +1,6 @@
 package com.ProFit.service.eventService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class EventsService {
         if (eventsDAO.existsById(event.getEventId())==false) {
             String newEventId = generateNewEventId();
             event.setEventId(newEventId);
+            event.setEventPublishDate(LocalDateTime.now());
         }
         eventsDAO.save(event);
         return event.getEventId();
@@ -51,7 +53,9 @@ public class EventsService {
         dto.setEventId(event.getEventId());
         dto.setEventName(event.getEventName());
         dto.setIsEventActive(event.getIsEventActive());
+        dto.setEventCategory(event.getEventCategory());
         dto.setEventMajorId(event.getEventMajor() != null ? event.getEventMajor().getMajorId() : null);
+        dto.setEventPublishDate(event.getEventPublishDate());
         dto.setEventStartDate(event.getEventStartDate());
         dto.setEventEndDate(event.getEventEndDate());
         dto.setEventPartStartDate(event.getEventPartStartDate());
@@ -69,7 +73,9 @@ public class EventsService {
         event.setEventId(eventDTO.getEventId());
         event.setEventName(eventDTO.getEventName());
         event.setIsEventActive(eventDTO.getIsEventActive());
+        event.setEventCategory(eventDTO.getEventCategory());
         event.setEventMajor(majorRepository.findById(eventDTO.getEventMajorId()).get());
+        event.setEventPublishDate(eventDTO.getEventPublishDate());
         event.setEventStartDate(eventDTO.getEventStartDate());
         event.setEventEndDate(eventDTO.getEventEndDate());
         event.setEventPartStartDate(eventDTO.getEventPartStartDate());

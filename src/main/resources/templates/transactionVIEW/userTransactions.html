@@ -86,6 +86,13 @@
                         </div>
                         <div class="modal-body">
                             用戶ID: <input type="text" id="addUserId" name="userId" required class="form-control"><br>
+                            
+                            交易角色: 
+                            <select id="addTransactionRole" name="transactionRole" required class="form-select">
+                                <option value="sender">發送方</option>
+                                <option value="receiver">接收方</option>
+                            </select><br>
+                            
                             交易類型: 
                             <select id="addTransactionType" name="transactionType" required class="form-select">
                                 <option value="deposit">存入</option>
@@ -93,13 +100,23 @@
                                 <option value="payment">付款</option>
                                 <option value="refund">退款</option>
                             </select><br>
-                            金額: <input type="number" id="addAmount" name="transactionAmount" required class="form-control" min="1"><br>
+                            
+                            金額: <input type="number" id="addAmount" name="totalAmount" required class="form-control" min="1"><br>
+                            
+                            平台抽成: <input type="number" id="addPlatformFee" name="platformFee" required class="form-control" min="0" step="0.01"><br>
+                            
+                            實際收入: <input type="number" id="addTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01"><br>
+                            
                             交易狀態: 
                             <select id="addTransactionStatus" name="transactionStatus" required class="form-select">
                                 <option value="pending">待處理</option>
                                 <option value="completed">已完成</option>
                                 <option value="failed">失敗</option>
                             </select><br>
+                            
+                            支付方式: <input type="text" id="addPaymentMethod" name="paymentMethod" required class="form-control"><br>
+                            
+                            第三方支付參考ID: <input type="text" id="addReferenceId" name="referenceId" class="form-control"><br>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -122,6 +139,11 @@
                         <div class="modal-body">
                             <input type="hidden" name="transactionId" id="updateTransactionId"> 
                             用戶ID: <input type="text" id="updateUserId" name="userId" required class="form-control"><br>
+                            交易角色: 
+                            <select id="updateTransactionRole" name="transactionRole" required class="form-select">
+                                <option value="sender">發送方</option>
+                                <option value="receiver">接收方</option>
+                            </select><br>
                             交易類型: 
                             <select id="updateTransactionType" name="transactionType" required class="form-select">
                                 <option value="deposit">存入</option>
@@ -129,7 +151,9 @@
                                 <option value="payment">付款</option>
                                 <option value="refund">退款</option>
                             </select><br>
-                            金額: <input type="number" id="updateAmount" name="transactionAmount" required class="form-control" min="1"><br>
+                            金額: <input type="number" id="updateAmount" name="totalAmount" required class="form-control" min="1"><br>
+                            平台抽成: <input type="number" id="updatePlatformFee" name="platformFee" required class="form-control" min="0" step="0.01"><br>
+                            實際收入: <input type="number" id="updateTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01"><br>
                             交易狀態: 
                             <select id="updateTransactionStatus" name="transactionStatus" required class="form-select">
                                 <option value="pending">待處理</option>
@@ -137,10 +161,12 @@
                                 <option value="failed">失敗</option>
                             </select><br>
                             創建時間: <input type="text" id="updateCreatedAt" name="createdAt" class="form-control" readonly><br>
+                            支付方式: <input type="text" id="updatePaymentMethod" name="paymentMethod" required class="form-control"><br>
+                            參考ID: <input type="text" id="updateReferenceId" name="referenceId" class="form-control"><br>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                            <button type="button" id="updateTransactionBtn" class="btn btn-primary">更新</button>
+                            <button type="button" id="updateTransactionBtn" class="btn btn-primary">編輯</button>
                         </div>
                     </form>
                 </div>
@@ -154,11 +180,16 @@
                     <tr>
                         <th>交易ID</th>
                         <th>用戶ID</th>
+                        <th>交易角色</th>
                         <th>交易類型</th>
                         <th>金額</th>
+                        <th>平台抽成</th>
+                        <th>實際收入</th>
                         <th>交易狀態</th>
                         <th>創建時間</th>
                         <th>完成時間</th>
+                        <th>支付方式</th>
+                        <th>參考ID</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -168,6 +199,7 @@
             </table>
         </div>
     </div>
+
     <script>
         // 頁面加載時自動查詢所有交易記錄
         $(document).ready(function () {
@@ -267,7 +299,7 @@
                     buttons = `
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal"
-                                onclick="populateUpdateForm('${transaction.transactionId}', '${transaction.userId}', '${transaction.transactionType}', '${transaction.transactionAmount}', '${transaction.transactionStatus}', '${transaction.createdAt}')">更新</button>
+                                onclick="populateUpdateForm('${transaction.transactionId}', '${transaction.userId}', '${transaction.transactionRole}', '${transaction.transactionType}', '${transaction.totalAmount}', '${transaction.platformFee}', '${transaction.targetIncome}', '${transaction.transactionStatus}', '${transaction.createdAt}', '${transaction.paymentMethod}', '${transaction.referenceId}')">編輯</button>
                             <button type="button" class="btn btn-danger" onclick="deleteTransaction('${transaction.transactionId}')">刪除</button>
                         </div>`;
                 } else {
@@ -277,11 +309,16 @@
                 let row = `<tr>
                     <td>${transaction.transactionId}</td>
                     <td>${transaction.userId}</td>
+                    <td>${transaction.transactionRole}</td>
                     <td>${transaction.transactionType}</td>
-                    <td>${transaction.transactionAmount}</td>
+                    <td>${transaction.totalAmount}</td>
+                    <td>${transaction.platformFee}</td>
+                    <td>${transaction.targetIncome ? transaction.targetIncome : '無'}</td>
                     <td>${transaction.transactionStatus}</td>
                     <td>${transaction.createdAt}</td>
                     <td>${transaction.completionAt ? transaction.completionAt : '未完成'}</td>
+                    <td>${transaction.paymentMethod}</td>
+                    <td>${transaction.referenceId ? transaction.referenceId : '無'}</td>
                     <td class="text-center">${buttons}</td>
                 </tr>`;
                 tbody.append(row);
@@ -289,13 +326,18 @@
         }
 
         // 填充更新表單
-        function populateUpdateForm(transactionId, userId, transactionType, transactionAmount, transactionStatus, createdAt) {
+        function populateUpdateForm(transactionId, userId, transactionRole, transactionType, totalAmount, platformFee, targetIncome, transactionStatus, createdAt, paymentMethod, referenceId) {
             $("#updateTransactionId").val(transactionId);
             $("#updateUserId").val(userId);
+            $("#updateTransactionRole").val(transactionRole);
             $("#updateTransactionType").val(transactionType);
-            $("#updateAmount").val(transactionAmount);
+            $("#updateAmount").val(totalAmount);
+            $("#updatePlatformFee").val(platformFee);
+            $("#updateTargetIncome").val(targetIncome);
             $("#updateTransactionStatus").val(transactionStatus);
             $("#updateCreatedAt").val(createdAt);
+            $("#updatePaymentMethod").val(paymentMethod);
+            $("#updateReferenceId").val(referenceId);
         }
 
         // 清除模態框背景

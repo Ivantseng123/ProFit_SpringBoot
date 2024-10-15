@@ -36,12 +36,36 @@ public class UserTransactionService {
     }
 
     // 插入交易
-    public void insertTransaction(UserTransactionBean transaction) {
+    public void insertTransaction(UserTransactionDTO transactionDTO) {
+        UserTransactionBean transaction = new UserTransactionBean(
+            transactionDTO.getUserId(),
+            transactionDTO.getTransactionRole(),
+            transactionDTO.getTransactionType(),
+            transactionDTO.getOrderId(),
+            transactionDTO.getTotalAmount(),
+            transactionDTO.getPlatformFee(),
+            transactionDTO.getTargetIncome(),
+            transactionDTO.getTransactionStatus(),
+            transactionDTO.getPaymentMethod(),
+            transactionDTO.getReferenceId()
+        );
         transactionRepository.save(transaction);
     }
 
     // 更新交易
-    public void updateTransaction(UserTransactionBean transaction) {
+    public void updateTransaction(UserTransactionDTO transactionDTO) {
+        UserTransactionBean transaction = new UserTransactionBean(
+            transactionDTO.getUserId(),
+            transactionDTO.getTransactionRole(),
+            transactionDTO.getTransactionType(),
+            transactionDTO.getOrderId(),
+            transactionDTO.getTotalAmount(),
+            transactionDTO.getPlatformFee(),
+            transactionDTO.getTargetIncome(),
+            transactionDTO.getTransactionStatus(),
+            transactionDTO.getPaymentMethod(),
+            transactionDTO.getReferenceId()
+        );
         if ("completed".equals(transaction.getTransactionStatus()) && transaction.getCompletionAt() == null) {
             transaction.setCompletionAt(LocalDateTime.now());
         }
@@ -55,27 +79,22 @@ public class UserTransactionService {
 
     // DTO 轉換為實體
     public UserTransactionBean convertToEntity(UserTransactionDTO dto) {
-        UserTransactionBean transaction = new UserTransactionBean();
-        transaction.setTransactionId(dto.getTransactionId());
-        transaction.setUserId(dto.getUserId());
-        transaction.setTransactionType(dto.getTransactionType());
-        transaction.setTransactionAmount(dto.getTransactionAmount());
-        transaction.setTransactionStatus(dto.getTransactionStatus());
-        transaction.setCreatedAt(dto.getCreatedAt());
-        transaction.setCompletionAt(dto.getCompletionAt());
-        return transaction;
+        return new UserTransactionBean(
+            dto.getUserId(),
+            dto.getTransactionRole(),
+            dto.getTransactionType(),
+            dto.getOrderId(),
+            dto.getTotalAmount(),
+            dto.getPlatformFee(),
+            dto.getTargetIncome(),
+            dto.getTransactionStatus(),
+            dto.getPaymentMethod(),
+            dto.getReferenceId()
+        );
     }
 
     // 實體轉換為 DTO
     public UserTransactionDTO convertToDTO(UserTransactionBean transaction) {
-        UserTransactionDTO dto = new UserTransactionDTO();
-        dto.setTransactionId(transaction.getTransactionId());
-        dto.setUserId(transaction.getUserId());
-        dto.setTransactionType(transaction.getTransactionType());
-        dto.setTransactionAmount(transaction.getTransactionAmount());
-        dto.setTransactionStatus(transaction.getTransactionStatus());
-        dto.setCreatedAt(transaction.getCreatedAt());
-        dto.setCompletionAt(transaction.getCompletionAt());
-        return dto;
+        return new UserTransactionDTO(transaction);
     }
 }

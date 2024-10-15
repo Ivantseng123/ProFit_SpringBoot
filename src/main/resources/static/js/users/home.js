@@ -13,7 +13,7 @@ $(document).ready(function() {
 		})
 		.then(data => {
 			
-			document.getElementById('userName').innerText = data.userEmail;
+			document.getElementById('userName').innerText = data.userName;
 			
 			localStorage.setItem('userIdentity', data.userIdentity);
 			

@@ -5,7 +5,7 @@ $(document).ready(function() {
 function alluser() {
 
 	$('#userTable').DataTable().clear().destroy();
-
+	const selectedIdentity = $('#userIdentityFilter').val();
 	// 初始化 DataTables
 	$('#userTable').DataTable({
 		"processing": true,
@@ -16,7 +16,7 @@ function alluser() {
 			const pageNumber = Math.floor(data.start / data.length) + 1;
 			const searchValue = data.search.value; // 搜索框中的值
 
-			fetch(`http://localhost:8080/ProFit/api/user/page?pageNumber=${pageNumber}&search=${searchValue}`)
+			fetch(`http://localhost:8080/ProFit/api/user/page?pageNumber=${pageNumber}&search=${searchValue}&userIdentity=${selectedIdentity}`)
 				.then(response => response.json())
 				.then(result => {
 					// server返回的分頁數據
@@ -127,6 +127,11 @@ function alluser() {
 
 
 }
+
+$('#userIdentityFilter').change(function() {
+	alluser();
+});
+
 
 //查看User
 $('tbody').on('click', '#view', function() {

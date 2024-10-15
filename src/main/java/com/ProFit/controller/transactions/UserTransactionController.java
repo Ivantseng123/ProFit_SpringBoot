@@ -30,7 +30,7 @@ public class UserTransactionController {
     @ResponseBody
     public List<UserTransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactions().stream()
-                .map(transactionService::convertToDTO)  // 將實體轉換為 DTO
+                .map(transactionService::convertToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -57,21 +57,21 @@ public class UserTransactionController {
 
         return transactionService.getTransactionsByFilters(userId, transactionType, transactionStatus, startTimestamp, endTimestamp)
                 .stream()
-                .map(transactionService::convertToDTO)  // 將結果轉換為 DTO
+                .map(transactionService::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     // 新增交易
     @PostMapping("/insert")
     public String insertTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
-        transactionService.insertTransaction(transactionService.convertToEntity(transactionDTO));  // 將 DTO 轉換為實體
+        transactionService.insertTransaction(transactionDTO);
         return "redirect:/userTransactions";
     }
 
     // 更新交易
     @PostMapping("/update")
     public String updateTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
-        transactionService.updateTransaction(transactionService.convertToEntity(transactionDTO));  // 將 DTO 轉換為實體
+        transactionService.updateTransaction(transactionDTO);
         return "redirect:/userTransactions";
     }
 

@@ -16,8 +16,15 @@
 
 		<div class="dashboard-header d-flex align-items-center">
 			<h2>會員列表</h2>
-			<div class="ms-auto">
-				<button class="btn btn-primary" onclick="togglePopup()">新增會員</button>
+			<div class="ms-auto d-flex">
+				<select id="userIdentityFilter" class="form-select me-3" style="width: 150px;">
+					<option value="">所有</option>
+					<option value="1">應徵者</option>
+					<option value="2">企業</option>
+					<option value="3">管理員</option>
+					<option value="4">超級管理員</option>
+				</select>
+				<button class="btn btn-primary w-50" onclick="togglePopup()">新增會員</button>
 			</div>
 		</div>
 		<div>
