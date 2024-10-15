@@ -33,6 +33,7 @@ function getUser() {
 				document.querySelector(`input[name="freelancerIdentity"][value="${user.freelancerIdentity}"]`).checked = true;
 			}
 			document.querySelector(`input[name="freelancerProfileStatus"][value="${user.freelancerProfileStatus}"]`).checked = true;
+			document.querySelector(`input[name="enabled"][value="${user.enabled}"]`).checked = true;
 			document.getElementById('freelancer_disc').value = user.freelancerDisc;
 			document.getElementById('user_register_time').value = user.userRegisterTime;
 		})

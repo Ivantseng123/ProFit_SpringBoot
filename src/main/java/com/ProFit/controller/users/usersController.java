@@ -6,7 +6,6 @@ import java.util.Map;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -152,7 +151,7 @@ public class usersController {
 				usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(), usersDTO.getUserPhoneNumber(),
 				usersDTO.getUserCity(), userIdentity, userBalance, usersDTO.getFreelancerLocationPrefer(),
 				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus,
-				usersDTO.getFreelancerDisc());
+				usersDTO.getFreelancerDisc(),usersDTO.getEnabled());
 	}
 
 	// 編輯會員
@@ -177,13 +176,23 @@ public class usersController {
 	@ResponseBody
 	@GetMapping("/api/user/page")
 	public Page<UsersDTO> findByPageApi(@RequestParam Integer pageNumber,
-			@RequestParam(required = false) String search) {
+			@RequestParam(required = false) String search, @RequestParam(required = false) String userIdentity) {
 		Page<UsersDTO> page;
-		if (search != null && !search.isEmpty()) {
-			page = userService.findUserByPageAndSearch(pageNumber, search);
-		} else {
-			page = userService.findUserByPage(pageNumber);
+		
+		System.out.println("會員身分-----------------------------------:  " + userIdentity);
+		
+		if (!userIdentity.isEmpty() ) {
+			
+			Integer userIdentity1 = Integer.valueOf(userIdentity);
+			page = userService.findUserByPageAndSearch(pageNumber, search, userIdentity1);
+			
+		}else {
+			
+			page = userService.findUserByPageAndSearch(pageNumber, search, null);
 		}
+		
+		
+		
 		return page;
 	}
 }
