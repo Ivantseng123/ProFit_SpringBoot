@@ -2,9 +2,9 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>ProFit</title>
-	<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
+<meta charset="UTF-8">
+<title>ProFit</title>
+<link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
 </head>
 
 <body>
@@ -17,34 +17,35 @@
 		<div>
 			<h2 style="color: orange;">更新會員資訊</h2>
 			<form class="form-container" id='updateUser-info'>
-				<input type="hidden" name="userPictureURL" id="user_pictureURL" value="">
-				<label class="form-label" for="">會員頭貼:</label>
+				<input type="hidden" name="userPictureURL" id="user_pictureURL"
+					value=""> <label class="form-label" for="">會員頭貼:</label>
 				<div class="profile-picture">
-					<img id="profileImagePreview" src="" alt="Profile Image" class="w-25 h-25" />
+					<img id="profileImagePreview" src="" alt="Profile Image"
+						class="w-25 h-25" />
 				</div>
 
 				<div>
-					<input class="form-control file-uploader mt-3 mb-3" type="file" id="fileInput" accept="image/*" name="imgfile" />
+					<input class="form-control file-uploader mt-3 mb-3" type="file"
+						id="fileInput" accept="image/*" name="imgfile" />
 				</div>
-				<label class="form-label" for="user_id">會員ID:</label>
-				<input class="form-input" type="text" id="user_id" name="userId" readonly>
+				<label class="form-label" for="user_id">會員ID:</label> <input
+					class="form-input" type="text" id="user_id" name="userId" readonly>
 
-				<label class="form-label" for="user_name">會員姓名:</label>
-				<input class="form-input" type="text" id="user_name" name="userName" required>
-
-				<label class="form-label" for="user_email">會員信箱:</label>
-				<input class="form-input" type="email" id="user_email" name="userEmail" required>
-				<label class="form-label" for="user_password">
-					會員密碼: </label> <input class="form-input" type="password" placeholder="修改會員密碼" id="user_password"
+				<label class="form-label" for="user_name">會員姓名:</label> <input
+					class="form-input" type="text" id="user_name" name="userName"
+					required> <label class="form-label" for="user_email">會員信箱:</label>
+				<input class="form-input" type="email" id="user_email"
+					name="userEmail" required> <label class="form-label"
+					for="user_password"> 會員密碼: </label> <input class="form-input"
+					type="password" placeholder="修改會員密碼" id="user_password"
 					name="userPasswordHash" value="${user.userPasswordHash}" readonly>
 				<button class="btn btn-warning insertbtn mb-3" type="button"
 					onclick="togglePopup()">修改密碼</button>
-				<label class="form-label" for="user_phonenumber">會員手機號碼:</label>
-				<input class="form-input" type="text" placeholder="修改會員手機號碼" id="user_phonenumber"
-					name="userPhoneNumber" required>
-
-				<label class="form-label" for="user_city">會員居住城市:</label>
-				<select class="city-option" name="userCity">
+				<label class="form-label" for="user_phonenumber">會員手機號碼:</label> <input
+					class="form-input" type="text" placeholder="修改會員手機號碼"
+					id="user_phonenumber" name="userPhoneNumber" required> <label
+					class="form-label" for="user_city">會員居住城市:</label> <select
+					class="city-option" name="userCity">
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
 					<option value="基隆市">基隆市</option>
@@ -66,22 +67,20 @@
 					<option value="澎湖縣">澎湖縣</option>
 					<option value="花蓮縣">花蓮縣</option>
 					<option value="臺東縣">臺東縣</option>
-				</select>
-
-				<label class="form-label" for="user_identity">會員身份:</label>
+				</select> <label class="form-label" for="user_identity">會員身份:</label>
 				<div class="input-radio" id="radioContainer">
-					<input type="radio" id="identityChoice1" name="userIdentity" value="1" />
-					<label for="identityChoice1">應徵者</label>
-					<input type="radio" id="identityChoice2" name="userIdentity" value="2" />
+					<input type="radio" id="identityChoice1" name="userIdentity"
+						value="1" /> <label for="identityChoice1">應徵者</label> <input
+						type="radio" id="identityChoice2" name="userIdentity" value="2" />
 					<label for="identityChoice2">應徵者＋企業主</label>
 				</div>
 
-				<label class="form-label" for="user_balance">會員餘額:</label>
-				<input class="form-input" type="number" placeholder="修改會員餘額" id="user_balance" name="userBalance"
-					required>
-
-				<label class="form-label" for="freelancer_location_prefer">會員工作地點偏好:</label>
-				<select class="city-prefer-option" name="freelancerLocationPrefer" style="margin-bottom: 20px">
+				<label class="form-label" for="user_balance">會員餘額:</label> <input
+					class="form-input" type="number" placeholder="修改會員餘額"
+					id="user_balance" name="userBalance" required> <label
+					class="form-label" for="freelancer_location_prefer">會員工作地點偏好:</label>
+				<select class="city-prefer-option" name="freelancerLocationPrefer"
+					style="margin-bottom: 20px">
 					<!-- 城市選項 -->
 					<option value="臺北市">臺北市</option>
 					<option value="新北市">新北市</option>
@@ -103,10 +102,9 @@
 					<option value="澎湖縣">澎湖縣</option>
 					<option value="花蓮縣">花蓮縣</option>
 					<option value="臺東縣">臺東縣</option>
-				</select>
-
-				<label class="form-label" for="freelancer_exprience">會員工作經驗:</label>
-				<select class="exprience-option" name="freelancerExprience" style="margin-bottom: 20px">
+				</select> <label class="form-label" for="freelancer_exprience">會員工作經驗:</label>
+				<select class="exprience-option" name="freelancerExprience"
+					style="margin-bottom: 20px">
 					<!-- 經驗選項 -->
 					<option value="無工作經驗">無工作經驗</option>
 					<option value="0-1年工作經驗">0-1年工作經驗</option>
@@ -119,47 +117,62 @@
 					<option value="8-9年工作經驗">8-9年工作經驗</option>
 					<option value="9-10年工作經驗">9-10年工作經驗</option>
 					<option value="10年以上年工作經驗">10年以上年工作經驗</option>
-				</select>
-
-				<label class="form-label" for="freelancer_identity">會員接案身份:</label>
+				</select> <label class="form-label" for="freelancer_identity">會員接案身份:</label>
 				<div class="input-radio">
-					<input type="radio" id="identityChoice4" name="freelancerIdentity" value="個人兼職"/>
-					<label for="identityChoice1">個人兼職</label>
-					<input type="radio" id="identityChoice5" name="freelancerIdentity" value="工作室"/>
-					<label for="identityChoice2">工作室</label>
-					<input type="radio" id="identityChoice6" name="freelancerIdentity" value="學生"/>
-					<label for="identityChoice3">學生</label>
+					<input type="radio" id="identityChoice4" name="freelancerIdentity"
+						value="個人兼職" /> <label for="identityChoice1">個人兼職</label> <input
+						type="radio" id="identityChoice5" name="freelancerIdentity"
+						value="工作室" /> <label for="identityChoice2">工作室</label> <input
+						type="radio" id="identityChoice6" name="freelancerIdentity"
+						value="學生" /> <label for="identityChoice3">學生</label>
 				</div>
 
 				<label class="form-label" for="freelancer_profile_status">會員接案狀態:</label>
 				<div class="input-radio">
-					<input type="radio" id="statusChoice1" name="freelancerProfileStatus" value="0" required />
-					<label for="statusChoice1">關閉</label>
-					<input type="radio" id="statusChoice2" name="freelancerProfileStatus" value="1" required/>
-					<label for="statusChoice2">開啓</label>
+					<input type="radio" id="statusChoice1"
+						name="freelancerProfileStatus" value="0" required /> <label
+						for="statusChoice1">關閉</label> <input type="radio"
+						id="statusChoice2" name="freelancerProfileStatus" value="1"
+						required /> <label for="statusChoice2">開啓</label>
 				</div>
 
 				<label class="form-label" for="freelancer_disc">會員接案描述:</label>
-				<textarea rows="10" cols="50" id="freelancer_disc" name="freelancerDisc"></textarea>
+				<textarea rows="10" cols="50" id="freelancer_disc"
+					name="freelancerDisc"></textarea>
 
-				<label class="form-label" for="user_register_time">會員註冊時間:</label>
-				<input class="form-input" type="text" id="user_register_time" name="userRegisterTime" readonly>
+				<label class="form-label" for="user_register_time">會員註冊時間:</label> <input
+					class="form-input" type="text" id="user_register_time"
+					name="userRegisterTime" readonly>
+					
+				<label class="form-label"
+					for="freelancer_profile_status">狀態:</label>
+				<div class="input-radio">
+					<input type="radio" id="statusChoice1"
+						name="enabled" value="0" required /> <label
+						for="statusChoice1">未啟用</label> <input type="radio"
+						id="statusChoice2" name="enabled" value="1"
+						required /> <label for="statusChoice2">啟用</label>
+				</div>
 
 				<input type="submit" value="確定" class="btn-submit" id="submitBtn" />
 
 			</form>
-			<div id="popupOverlay" class="overlay-container" style="z-index: 1002">
+			<div id="popupOverlay" class="overlay-container"
+				style="z-index: 1002">
 				<div class="popup-box-updatepwd">
 					<h2 style="color: orange;">修改密碼</h2>
-					<form class="form-group" style="height: 200px; margin: 0;" id="updatePwdForm">
-						<label class="form-label" for="updatepwd"> 會員密碼: </label>
-						<input class="form-input-insert" type="password" placeholder="輸入會員密碼" id="updatepwd"
-							name="user_password" required>
-						<label class="form-label" for="ConfirmPassword"> 確認密碼: </label>
-						<input id="ConfirmPassword" class="form-input-insert" type="password" placeholder="確認會員密碼"
-							required="required" oninput="setCustomValidity('');"
+					<form class="form-group" style="height: 200px; margin: 0;"
+						id="updatePwdForm">
+						<label class="form-label" for="updatepwd"> 會員密碼: </label> <input
+							class="form-input-insert" type="password" placeholder="輸入會員密碼"
+							id="updatepwd" name="user_password" required> <label
+							class="form-label" for="ConfirmPassword"> 確認密碼: </label> <input
+							id="ConfirmPassword" class="form-input-insert" type="password"
+							placeholder="確認會員密碼" required="required"
+							oninput="setCustomValidity('');"
 							onchange="if(document.getElementById('updatepwd').value != document.getElementById('ConfirmPassword').value){setCustomValidity('密碼不吻合');}" />
-						<input type="submit" value="確定" class="btn-submit" style="margin-top: 20px" />
+						<input type="submit" value="確定" class="btn-submit"
+							style="margin-top: 20px" />
 						<button class="btn-close-popup" onclick="togglePopup()">
 							關閉</button>
 					</form>
@@ -167,12 +180,14 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="OkModal" tabindex="-1" aria-labelledby="OkModalLabel" aria-hidden="true">
+	<div class="modal fade" id="OkModal" tabindex="-1"
+		aria-labelledby="OkModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content Ok">
 				<div class="modal-header">
 					<p>更新成功</p>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body text-center">
 					<i class="fa-regular fa-circle-check fa-7x" style="color: #00a876;"></i>
@@ -180,10 +195,13 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
 	<script th:src="@{/js/users/updateuserView.js}"></script>
-	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/4caf09a569.js"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>
