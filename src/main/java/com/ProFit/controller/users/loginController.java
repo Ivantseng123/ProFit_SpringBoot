@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.service.userService.IUserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ public class loginController {
 
 	@Autowired
 	private IUserService userService;
+	
 
 	@GetMapping("/loginPage")
 	public String LoginPage() {
@@ -30,15 +33,24 @@ public class loginController {
 	@PostMapping("/login")
 	@ResponseBody
 	public String Login(@RequestBody Map<String, String> user, HttpSession session) throws NoSuchAlgorithmException {
-
+		
+		System.out.println(user);
+		
 		if (userService.validate(user.get("userEmail"), user.get("userPassword"))) {
-
-			String user_pictureURL = userService.getUserPictureByEmail(user.get("userEmail"));
+			
+			Users user1 = userService.getUserByEmail(user.get("userEmail"));
+			
+			String user_pictureURL = user1.getUserPictureURL();	
+			Integer user_identity = user1.getUserIdentity();
+			
 			System.out.println("登入成功");
+			
+			
+			
 			session.setAttribute("user_email", user.get("userEmail"));
-
 			session.setAttribute("user_pictureURL", user_pictureURL);
-
+			session.setAttribute("user_identity", user_identity);
+			
 			return "Login Successful";
 
 		} else {
@@ -53,10 +65,12 @@ public class loginController {
 
 		String user_email = (String) session.getAttribute("user_email");
 		String user_pictureURL = (String) session.getAttribute("user_pictureURL");
+		String user_identity = String.valueOf(session.getAttribute("user_identity"));
 		if (user_email != null) {
 			Map<String, String> response = new HashMap<>();
 			response.put("userEmail", user_email);
 			response.put("userPictureURL", user_pictureURL);
+			response.put("userIdentity", user_identity);
 			return ResponseEntity.ok(response);
 		} else {
 			return ResponseEntity.status(404).body(null);

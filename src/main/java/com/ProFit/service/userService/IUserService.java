@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
@@ -42,6 +43,10 @@ public interface IUserService {
 	Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search);
 
 	Page<UsersDTO> findUserByPage(Integer pageNumber);
+
+	ResponseEntity<?> registerUser(Users users);
+
+	ResponseEntity<?> confirmEmail(String confirmationToken);
 
 
 }

@@ -8,11 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import net.bytebuddy.utility.RandomString;
 
 @Service
 //@Transactional
@@ -23,6 +26,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	@Autowired
+	private EmailService emailService;
 
 	// 新增user
 	@Override
@@ -39,6 +45,7 @@ public class UserService implements IUserService {
 		user.setUserIdentity(1);
 		user.setUserBalance(0);
 		user.setFreelancerProfileStatus(0);
+		user.setEnabled(1);
 
 		return usersRepository.save(user);
 	}
@@ -58,7 +65,8 @@ public class UserService implements IUserService {
 			Users user = optional.get();
 			String user_passwordHash = pwdEncoder.encode(pwd);
 			user.setUserPasswordHash(user_passwordHash);
-			return user;
+			System.out.println("修改的密碼----------------" + pwd);
+			return usersRepository.save(user);
 		}
 		return null;
 	}
@@ -115,9 +123,13 @@ public class UserService implements IUserService {
 
 		Optional<Users> optional = usersRepository.findByUserEmail(userEmail);
 
-		if (optional.isPresent() && optional.get().getUserIdentity() == 3) {
+		System.out.println("登入的密碼: " + userPassword);
+		if (optional.isPresent() && optional.get().getUserIdentity() == 3 || optional.get().getUserIdentity() == 4) {
 			String dbPassword = optional.get().getUserPasswordHash();
 
+			System.out.println("User------------" + optional.get());
+
+			System.out.println("比對結果: " + pwdEncoder.matches(userPassword, dbPassword));
 			return pwdEncoder.matches(userPassword, dbPassword);
 		}
 		return false;
@@ -172,8 +184,8 @@ public class UserService implements IUserService {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
 		Page<Users> usersPage = usersRepository.findAll(pageable);
 
-		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserName(), user.getUserEmail(),
-				user.getUserIdentity(), user.getUserRegisterTime()));
+		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
+				user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
 	}
 
 	@Override
@@ -183,13 +195,55 @@ public class UserService implements IUserService {
 		if (search == null || search.isEmpty()) {
 
 			Page<Users> usersPage = usersRepository.findAll(pageable);
-			return usersPage.map(user -> new UsersDTO(user.getUserId(),user.getUserName(), user.getUserEmail(),
-					user.getUserIdentity(), user.getUserRegisterTime()));
+			return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
+					user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
 		}
 
 		Page<Users> usersPage = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pageable);
-		return usersPage.map(user -> new UsersDTO(user.getUserId(),user.getUserName(), user.getUserEmail(),
-				user.getUserIdentity(), user.getUserRegisterTime()));
+		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
+				user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
+	}
+
+	@Override
+	public ResponseEntity<?> registerUser(Users users) {
+
+		String passwordHash = pwdEncoder.encode(users.getUserPasswordHash());
+		
+		users.setUserPasswordHash(passwordHash);
+		users.setEnabled(0);
+		users.setUserBalance(0);
+		users.setUserIdentity(1);
+		users.setFreelancerProfileStatus(0);
+		
+		String randomCode = RandomString.make(64);
+		users.setVerificationCode(randomCode);
+		usersRepository.save(users);
+
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(users.getUserEmail());
+		mailMessage.setSubject("註冊完成!");
+		mailMessage.setText(
+				"為了啟用您的帳戶, 請點擊此連結 : " + "http://localhost:8080/ProFit/user/confirm-account?token=" + users.getVerificationCode());
+		emailService.sendEmail(mailMessage);
+
+		System.out.println("Confirmation Token: " + users.getVerificationCode());
+
+		return ResponseEntity.ok("Verify email by the link sent on your email address");
+
+	}
+
+	@Override
+	public ResponseEntity<?> confirmEmail(String confirmationToken) {
+		Optional<Users> optional = usersRepository.findByVerificationCode(confirmationToken);
+
+		if (optional.isPresent()) {
+			
+			Users user = optional.get();
+			user.setEnabled(1);
+			usersRepository.save(user);
+			return ResponseEntity.ok("Email verified successfully!");
+		}
+		return ResponseEntity.badRequest().body("Error: Couldn't verify email");
 	}
 
 }
