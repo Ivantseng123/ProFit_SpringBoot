@@ -9,37 +9,18 @@ import java.util.List;
 @Repository
 public interface InvoiceDAORepository extends JpaRepository<InvoiceBean, String> {
 
-    // 查詢所有發票，按日期排序
+    // 查詢所有發票，按日期降序排列
     List<InvoiceBean> findAllByOrderByIssuedDateDesc();
 
     // 根據 Transaction ID 查詢發票
-    List<InvoiceBean> findByTransactionId(String transactionId);
+    List<InvoiceBean> findByUserTransactionBean_TransactionId(String transactionId);
+
+    // 查詢發票號碼
+    List<InvoiceBean> findByInvoiceNumber(String invoiceNumber);
+
+    // 根據發票狀態查詢
+    List<InvoiceBean> findByInvoiceStatus(String invoiceStatus);
 
     // 查詢所有有 Transaction ID 的發票
-    List<InvoiceBean> findAllByTransactionIdIsNotNull();
-
-    // 根據 Job Order ID 查詢發票
-    List<InvoiceBean> findByJobOrderId(String jobOrderId);
-
-    // 查詢所有有 Job Order ID 的發票
-    List<InvoiceBean> findAllByJobOrderIdIsNotNull();
-
-    // 根據 Course Order ID 查詢發票
-    List<InvoiceBean> findByCourseOrderId(String courseOrderId);
-
-    // 查詢所有有 Course Order ID 的發票
-    List<InvoiceBean> findAllByCourseOrderIdIsNotNull();
-
-    // 根據 Event Order ID 查詢發票
-    List<InvoiceBean> findByEventOrderId(String eventOrderId);
-
-    // 查詢所有有 Event Order ID 的發票
-    List<InvoiceBean> findAllByEventOrderIdIsNotNull();
-
-	List<InvoiceBean> findByInvoiceNumberAndInvoiceStatus(String invoiceNumber, String invoiceStatus);
-
-	List<InvoiceBean> findByInvoiceNumber(String invoiceNumber);
-
-	List<InvoiceBean> findByInvoiceStatus(String invoiceStatus);
+    List<InvoiceBean> findAllByUserTransactionBean_TransactionIdIsNotNull();
 }
-

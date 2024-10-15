@@ -192,20 +192,21 @@ VALUES
 ('J0103', 4, DATEADD(day, -2, GETDATE()), 'Canceled', N'品牌推廣活動訂單', 60000),
 ('J0104', 5, DATEADD(day, -1, GETDATE()), 'Processing', N'電商平台前端開發訂單', 45000);
 
--- 2. user_transactions 表
-INSERT INTO user_transactions (transaction_id, user_id, transaction_type, transaction_amount, transaction_status, created_at, completion_at)
-VALUES
-('TR001', 101, 'payment', 50000, 'completed', DATEADD(day, -5, GETDATE()), DATEADD(day, -5, GETDATE())),
-('TR002', 102, 'deposit', 100000, 'completed', DATEADD(day, -4, GETDATE()), DATEADD(day, -4, GETDATE())),
-('TR003', 103, 'payment', 40000, 'pending', DATEADD(day, -3, GETDATE()), NULL),
-('TR004', 104, 'withdrawal', 20000, 'completed', DATEADD(day, -2, GETDATE()), DATEADD(day, -2, GETDATE())),
-('TR005', 105, 'refund', 15000, 'pending', DATEADD(day, -1, GETDATE()), NULL);
+-- 插入一筆 user_transactions 的測試資料 
+INSERT INTO user_transactions (transaction_id, user_id, transaction_role, transaction_type, order_id, total_amount, platform_fee, target_income, transaction_status, payment_method, reference_id)
+VALUES 
+('TXN001', 103, 'buyer', 'purchase', 'ORD001', 100.00, 10.00, 90.00, 'completed', 'credit_card', 'REF12345'),
+('TXN002', 103, 'seller', 'sale', 'ORD002', 200.00, 20.00, 180.00, 'pending', 'paypal', NULL),
+('TXN003', 103, 'buyer', 'refund', 'ORD003', 50.00, 0.00, 50.00, 'completed', 'bank_transfer', 'REF67890');
+
 
 -- 3. invoices 表
-INSERT INTO invoices (invoice_number, transaction_id, job_order_id, course_order_id, event_order_id, invoice_amount, issued_date, invoice_status)
-VALUES
-('INV001', 'TR001', 'J0100', NULL, NULL, 50000, DATEADD(day, -5, GETDATE()), 'open'),
-('INV002', 'TR002', NULL, 'CR100', NULL, 15000, DATEADD(day, -4, GETDATE()), 'open'),
-('INV003', 'TR003', 'J0101', NULL, NULL, 40000, DATEADD(day, -3, GETDATE()), 'open'),
-('INV004', 'TR004', NULL, NULL, 'EO100', 500, DATEADD(day, -2, GETDATE()), 'open'),
-('INV005', 'TR005', NULL, 'CR101', NULL, 12000, DATEADD(day, -1, GETDATE()), 'canceled');
+
+INSERT INTO invoices (invoice_number, transaction_id, invoice_amount, issued_date, invoice_status)
+VALUES 
+('INV001', 'TXN001', 100, '2024-10-01 10:00:00', 'open'),
+('INV002', 'TXN002', 200, '2024-10-02 11:00:00', 'open'),
+('INV003', 'TXN003', 50, '2024-10-03 12:00:00', 'canceled');
+
+
+
