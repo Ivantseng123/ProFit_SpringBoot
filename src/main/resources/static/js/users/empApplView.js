@@ -43,7 +43,6 @@ function allEmpAppl() {
 		},
 		"columns": [
 			{ data: 'employerApplicationId' },
-			{ data: 'userId' },
 			{ data: 'userEmail' },
 			{ data: 'companyName' },
 			{ data: 'companyPhoneNumber' },

@@ -14,10 +14,10 @@
 	<div class="container pt-5">
 		<!-- 只是一個範例，裡面布局可以更改 -->
 
-		<div class="dashboard-header d-flex">
+		<div class="dashboard-header d-flex align-items-center">
 			<h2>會員列表</h2>
 			<div class="ms-auto">
-				<button class="btn btn-primary" onclick="togglePopup()">新增</button>
+				<button class="btn btn-primary" onclick="togglePopup()">新增會員</button>
 			</div>
 		</div>
 		<div>
@@ -25,10 +25,12 @@
 				<thead>
 					<tr>
 						<th>ID</th>
+						<th>會員頭貼</th>
 						<th>會員帳號</th>
-						<th>會員姓名</th>
+						<th>會員名稱</th>
 						<th>會員身分</th>
 						<th>會員註冊時間</th>
+						<th>狀態</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -87,7 +89,7 @@
 						<option>臺東縣</option>
 					</select> <input type="submit" value="確定" class="btn btn-primary"
 						style="margin-top: 20px" id="insertBtn" />
-					<button class="btn-close-popup" type="button"
+					<button class="btn-close-popup w-100" type="button"
 						onclick="togglePopup()">關閉</button>
 				</form>
 				<button type="button" class="btn btn-primary mt-0"
