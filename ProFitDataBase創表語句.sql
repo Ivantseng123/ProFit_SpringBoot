@@ -200,8 +200,10 @@ CREATE TABLE jobs_application_project (
 CREATE TABLE events (
     event_id NVARCHAR(255) PRIMARY KEY,
     event_name NVARCHAR(255) NOT NULL,
-    is_event_active INT NOT NULL,
+    is_event_active TINYINT NOT NULL,
+    event_category TINYINT,
     event_major INT,
+    event_publish_date DATETIME2(0),
     event_start_date DATETIME2(0),
     event_end_date DATETIME2(0),
     event_part_start_date DATETIME2(0),
