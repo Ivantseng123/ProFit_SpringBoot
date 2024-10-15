@@ -13,7 +13,7 @@
     <div class="course-header">
         <h2>職缺管理功能</h2>
     <!-- 添加"新增"按鈕 -->
-    <a th:href="@{/jobsApplication/add}" class="btn btn-sm btn-success ms-1">
+    <a th:href="@{/jobs/add}" class="btn btn-sm btn-success ms-1">
         <i class="fas fa-plus"></i> 新增職缺申請
     </a>
 </div>
@@ -26,7 +26,7 @@
                 <th>編號</th>
                 <th>刊登方</th>
                 <th>應徵方</th>
-                <th>刊登日期</th>
+                <th>申請日期</th>
                 <th>職缺申請狀態</th>
                 <th>申請文件</th>
             </tr>
@@ -113,12 +113,10 @@
 
                    //刪除
                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i>\''
-                   bindDeleteEvent();
                    return result;
                }
            }]
        })
-        function bindDeleteEvent() {
 
         $('.deleteBtn').click(function (e){
             e.preventDefault();
@@ -154,12 +152,7 @@
                 }
             });
         })
-
-
-        }
-            bindDeleteEvent();
-
-        });
+    });
 </script>
 </body>
 </html>

@@ -105,13 +105,14 @@ public class JobsController {
 //    }
     // 呈現新增後
     @PostMapping("/add")
-    public String addJob(@ModelAttribute Jobs newJob,
+    public String addJob(
+                         @ModelAttribute Jobs newJob,
                          @RequestParam("userId") Integer userId,
                          @RequestParam("deadline")String deadline) {
         // 獲取當前用戶的 ID
-        Users users = userService.getUserInfoByID(userId); // 獲取當前用戶
-        if (users != null) {
-            newJob.setUsers(users); // 將當前用戶設置為職缺的發布者
+        Users usersId = userService.getUserInfoByID(userId); // 獲取當前用戶
+        if (usersId != null) {
+            newJob.setUsers(usersId); // 將當前用戶設置為職缺的發布者
         }
 
         //以下遇到時間的設定就用此寫法

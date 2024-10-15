@@ -76,15 +76,13 @@ CREATE TABLE jobs (
     jobs_required_skills NVARCHAR(500), 
     jobs_location NVARCHAR(100), 
     jobs_max_salary INT, 
-    jobs_min_salary INT,
+    jobs_min_salary INT, 
     jobs_worktime TIME,
     jobs_number_of_openings INT,
     FOREIGN KEY (jobs_user_id) REFERENCES users(user_id)
 );
 
 -- CREATE TABLE [dbo].[jobs_application] (
--- ALTER TABLE jobs
--- ALTER COLUMN jobs_worktime NVARCHAR(MAX) NULL;
 --     [jobs_application_id]         INT             IDENTITY (1, 1) NOT NULL,
 --     [jobs_application_posting_id] INT             NOT NULL,
 --     [jobs_application_member_id]  INT             NOT NULL,

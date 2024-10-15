@@ -21,7 +21,7 @@ public class JobsService implements IJobsService{
     public JobsService(IHJobsDAO jobsDAO) {
         this.jobsDAO = jobsDAO;
     }
-    //以上4行 爲裝逼寫法，省略了 @Autowired 註解，因為當一個類只有一個構造函數時，
+    //以上4行爲裝逼寫法，省略了 @Autowired 註解，因為當一個類只有一個構造函數時，
     //Spring 自動會進行依賴注入，叫作「構造函數注入」。此寫法違反ioc，依賴於controller
 
     @Override
@@ -42,8 +42,7 @@ public class JobsService implements IJobsService{
 
     @Override
     public Jobs update(Jobs jobs) {
-
-            Jobs existJobs = jobsDAO.findById(jobs.getJobsId()).orElse(new Jobs());
+        Jobs existJobs = jobsDAO.findById(jobs.getJobsId()).orElse(new Jobs());
             BeanUtils.copyProperties(jobs, existJobs,"jobsPostingDate");
 
         return jobsDAO.save(existJobs);
