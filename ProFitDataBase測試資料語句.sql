@@ -157,13 +157,13 @@ VALUES
 (2, 'C0101', N'繪製用戶旅程地圖', '2', 'http://example.com/user','website',30);
 
 -- 插入 events 表格的測試數據
-INSERT INTO events (event_id, event_name, is_event_active, event_major, event_start_date, event_end_date, event_part_start_date, event_part_end_date, event_amount, event_location, event_participant_maximum, event_description, event_note)
+INSERT INTO events (event_id, event_name, is_event_active, event_category, event_major, event_publish_date, event_start_date, event_end_date, event_part_start_date, event_part_end_date, event_amount, event_location, event_participant_maximum, event_description, event_note)
 VALUES
-('EV100', '科技大會', 1, 100, GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 500, '台北', 300, '年度科技大會', '需要報名'),
-('EV101', '金融高峰會', 1, 101, GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 700, '高雄', 400, '領先的金融高峰會', '線上報名'),
-('EV102', '人工智慧工作坊', 1, 102, GETDATE(), DATEADD(day, 3, GETDATE()), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), 300, '台北', 150, '人工智慧技術工作坊', '需要報名'),
-('EV103', '數據科學訓練營', 1, 103, DATEADD(day, 5, GETDATE()), DATEADD(day, 7, GETDATE()), DATEADD(day, 6, GETDATE()), DATEADD(day, 7, GETDATE()), 800, '新竹', 100, '密集的數據科學訓練營', '立即報名！'),
-('EV104', '網頁開發研討會', 1, 104, DATEADD(day, 10, GETDATE()), DATEADD(day, 11, GETDATE()), DATEADD(day, 10, GETDATE()), DATEADD(day, 11, GETDATE()), 400, '高雄', 200, '了解現代網頁開發', '座位有限');
+('EV100', '科技大會', 1, 1, 100, GETDATE(), GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 500, '台北', 300, '年度科技大會', '需要報名'),
+('EV101', '金融高峰會', 1, 1, 101, GETDATE(), GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 700, '高雄', 400, '領先的金融高峰會', '線上報名'),
+('EV102', '人工智慧工作坊', 1, 2, 102, GETDATE(), GETDATE(), DATEADD(day, 3, GETDATE()), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), 300, '台北', 150, '人工智慧技術工作坊', '需要報名'),
+('EV103', '數據科學訓練營', 1, 2, 103, GETDATE(), DATEADD(day, 5, GETDATE()), DATEADD(day, 7, GETDATE()), DATEADD(day, 6, GETDATE()), DATEADD(day, 7, GETDATE()), 800, '新竹', 100, '密集的數據科學訓練營', '立即報名！'),
+('EV104', '網頁開發研討會', 1, 3, 104, GETDATE(), DATEADD(day, 10, GETDATE()), DATEADD(day, 11, GETDATE()), DATEADD(day, 10, GETDATE()), DATEADD(day, 11, GETDATE()), 400, '高雄', 200, '了解現代網頁開發', '座位有限');
 
 -- 插入 event_host 表格的測試數據
 INSERT INTO event_host (event_id, event_host_id)
