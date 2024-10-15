@@ -49,7 +49,7 @@ public class UserTransactionService {
             transactionDTO.getPaymentMethod(),
             transactionDTO.getReferenceId()
         );
-        transactionRepository.save(transaction);
+        transactionRepository.save(transaction);  // transactionId 會自動生成
     }
 
     // 更新交易
@@ -75,22 +75,6 @@ public class UserTransactionService {
     // 刪除交易
     public void deleteTransaction(String transactionId) {
         transactionRepository.deleteById(transactionId);
-    }
-
-    // DTO 轉換為實體
-    public UserTransactionBean convertToEntity(UserTransactionDTO dto) {
-        return new UserTransactionBean(
-            dto.getUserId(),
-            dto.getTransactionRole(),
-            dto.getTransactionType(),
-            dto.getOrderId(),
-            dto.getTotalAmount(),
-            dto.getPlatformFee(),
-            dto.getTargetIncome(),
-            dto.getTransactionStatus(),
-            dto.getPaymentMethod(),
-            dto.getReferenceId()
-        );
     }
 
     // 實體轉換為 DTO

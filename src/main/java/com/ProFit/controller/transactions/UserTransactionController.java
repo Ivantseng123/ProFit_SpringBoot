@@ -42,7 +42,7 @@ public class UserTransactionController {
             @RequestParam(required = false) String transactionType,
             @RequestParam(required = false) String transactionStatus,
             @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate) throws java.text.ParseException {
+            @RequestParam(required = false) String endDate) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startTimestamp = null;

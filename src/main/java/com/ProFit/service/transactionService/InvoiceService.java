@@ -88,14 +88,22 @@ public class InvoiceService {
 
     // 將實體轉換為 DTO
     private InvoiceDTO convertToDTO(InvoiceBean invoiceBean) {
+        String transactionId = null;
+
+        // 檢查 userTransactionBean 是否為 null
+        if (invoiceBean.getUserTransactionBean() != null) {
+            transactionId = invoiceBean.getUserTransactionBean().getTransactionId();
+        }
+
         return new InvoiceDTO(
             invoiceBean.getInvoiceNumber(),
-            invoiceBean.getUserTransactionBean().getTransactionId(),
+            transactionId,  // 這裡可能為 null
             invoiceBean.getInvoiceAmount(),
             invoiceBean.getIssuedDate(),
             invoiceBean.getInvoiceStatus()
         );
     }
+
 
     // 將 DTO 轉換為實體
     private InvoiceBean convertToEntity(InvoiceDTO dto) {

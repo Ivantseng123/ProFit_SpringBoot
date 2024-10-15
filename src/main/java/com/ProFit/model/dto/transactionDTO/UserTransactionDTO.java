@@ -1,7 +1,6 @@
 package com.ProFit.model.dto.transactionDTO;
 
 import java.time.LocalDateTime;
-
 import com.ProFit.model.bean.transactionBean.UserTransactionBean;
 
 public class UserTransactionDTO {
@@ -11,9 +10,9 @@ public class UserTransactionDTO {
     private String transactionRole;  // 交易角色
     private String transactionType;  // 交易類型
     private String orderId;  // 訂單ID
-    private Double totalAmount;  // 交易金額
-    private Double platformFee;  // 平台費用
-    private Double targetIncome;  // 實際支付給接收方的金額
+    private Double totalAmount;  // 交易金額 (改成 Double)
+    private Double platformFee;  // 平台費用 (改成 Double)
+    private Double targetIncome;  // 實際支付給接收方的金額 (改成 Double)
     private String transactionStatus;  // 交易狀態
     private String paymentMethod;  // 支付方式
     private String referenceId;  // 第三方支付平台參考ID
@@ -21,7 +20,6 @@ public class UserTransactionDTO {
     private LocalDateTime completionAt;  // 交易完成時間
 
     // Constructors
-
     public UserTransactionDTO() {
         // 無參構造函數
     }
