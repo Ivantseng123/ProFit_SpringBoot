@@ -71,12 +71,12 @@ public class usersController {
 		return "信箱已註冊";
 	}
 
-	// 註冊會員頁面
-	@GetMapping(path = "user/registerPage")
-	public String RegisterUser() {
-
-		return "usersVIEW/RegisterForm";
-	}
+//	// 註冊會員頁面
+//	@GetMapping(path = "user/registerPage")
+//	public String RegisterUser() {
+//
+//		return "usersVIEW/RegisterForm";
+//	}
 
 	//註冊會員 
 	//@ModelAttribute，Spring從表單數據中提取字段並自動映射到 DTO 中的對應字段。
@@ -85,6 +85,8 @@ public class usersController {
 	public ResponseEntity<?> RegisterUser(@ModelAttribute UsersDTO usersDTO) throws NoSuchAlgorithmException {
 
 		Users existuser = userService.getUserByEmail(usersDTO.getUserEmail());
+		
+		System.out.println("USERDTO---------------------------" + usersDTO);
 		if (existuser == null) {
 
 			Users user = modelMapper.map(usersDTO, Users.class);

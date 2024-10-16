@@ -61,6 +61,38 @@ public class loginController {
 		}
 
 	}
+	
+	@PostMapping("/login_frontend")
+	@ResponseBody
+	public String Login_frontend(@RequestBody Map<String, String> user, HttpSession session) throws NoSuchAlgorithmException {
+		
+		System.out.println(user);
+		
+		if (userService.validate(user.get("userEmail"), user.get("userPassword"))) {
+			
+			Users user1 = userService.getUserByEmail(user.get("userEmail"));
+			
+			String user_pictureURL = user1.getUserPictureURL();	
+			Integer user_identity = user1.getUserIdentity();
+			String user_name = user1.getUserName();
+			
+			System.out.println("登入成功");
+			
+			
+			session.setAttribute("user_email", user.get("userEmail"));
+			session.setAttribute("user_name", user_name);
+			session.setAttribute("user_pictureURL", user_pictureURL);
+			session.setAttribute("user_identity", user_identity);
+			
+			
+			return "Login Successful";
+
+		} else {
+			System.out.println("登入失敗");
+			return "Login Failed";
+		}
+
+	}
 
 	@GetMapping("login/getUserSession")
 	public ResponseEntity<Map<String, String>> getSessionAttribute(HttpSession session) {

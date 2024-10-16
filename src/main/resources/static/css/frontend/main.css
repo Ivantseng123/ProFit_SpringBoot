@@ -1604,6 +1604,7 @@ ol {
 .header .button {
   display: inherit !important;
   margin-left: 60px;
+  width: 300px;
 }
 
 .header .button .login {
