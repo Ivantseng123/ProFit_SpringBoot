@@ -10,4 +10,9 @@ public class testModel {
   public String modelPage() {
 	  return "/model/model";
   }
+  
+  @GetMapping("/home")
+  public String homePage() {
+	  return "/frontendModel/index";
+  }
 }
