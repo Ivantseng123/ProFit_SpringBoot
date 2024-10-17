@@ -7,7 +7,7 @@
     <title>JobGrids - Job Portal HTML Template.</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
     <!-- Place favicon.ico in the root directory -->
 
     <!-- Web Font -->
@@ -16,7 +16,7 @@
 
     <!-- ========================= CSS here ========================= -->
     <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/LineIcons.2.0.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
     <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
     <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
     <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
@@ -27,91 +27,8 @@
 <body>
     <div id="loading-area"></div>
 
-    <!-- Start Header Area -->
-    <header class="header">
-        <div class="navbar-area">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand logo" href="index.html">
-                                <img class="logo1" th:src="@{images/logo/logo.svg}" alt="Logo" />
-                            </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul id="nav" class="navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a class="active" href="index.html">Home</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="index.html">Home 1</a></li>
-                                            <li><a class="active" href="index2.html">Home 2</a></li>
-                                            <li><a href="index3.html">Home 3</a></li>
-                                            <li><a href="index4.html">Home 4</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Pages</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="about-us.html">About Us</a></li>
-                                            <li><a href="job-list.html">Job List</a></li>
-                                            <li><a href="job-details.html">Job Details</a></li>
-                                            <li><a href="resume.html">Resume Page</a></li>
-                                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="faq.html">Faq</a></li>
-                                            <li><a href="pricing.html">Our Pricing</a></li>
-                                            <li><a href="404.html">404 Error</a></li>
-                                            <li><a href="mail-success.html">Mail Success</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Candidates</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="browse-jobs.html">Browse Jobs</a></li>
-                                            <li><a href="browse-categories.html">Browse Categories</a></li>
-                                            <li><a href="add-resume.html">Add Resume</a></li>
-                                            <li><a href="job-alerts.html">Job Alerts</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Employers </a>
-                                        <ul class="sub-menu">
-                                            <li><a href="post-job.html">Add Job</a></li>
-                                            <li><a href="manage-jobs.html">Manage Jobs</a></li>
-                                            <li><a href="manage-applications.html">Manage Applications</a></li>
-                                            <li><a href="manage-resumes.html">Manage Resume</a></li>
-                                            <li><a href="browse-resumes.html">Browse Resumes</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
-                                            <li><a href="blog-single.html">Blog Single</a></li>
-                                            <li><a href="blog-single-sidebar.html">Blog Single Sibebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="contact.html">Contact </a> </li>
-                                </ul>
-                            </div>
-                            <!-- navbar collapse -->
-                            <div class="button">
-                                <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
-                                        class="lni lni-lock-alt"></i> Login</a>
-                                <a href="javacript:" data-toggle="modal" data-target="#signup" class="btn">Sign Up</a>
-                            </div>
-                        </nav>
-                        <!-- navbar -->
-                    </div>
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container -->
-        </div>
-        <!-- navbar area -->
-    </header>
-    <!-- End Header Area -->
+    <!-- 引用 header.html -->
+    <div th:replace="~{model/frontend/header}"></div>
 
     <!-- Start Hero Area -->
     <section class="hero-area style2">
@@ -124,24 +41,21 @@
                             <div class="col-lg-6 co-12">
                                 <div class="inner-content">
                                     <div class="hero-text">
-                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">Find Your Career <br>to Make a
-                                            Better Life
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">找到你的職業 <br>創造更美好的生活
                                         </h1>
-                                        <p class="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is
-                                            not
-                                            easy always. To make your life easier we are introducing Jobcamp template,
-                                            Leverage agile frameworks to high level overviews.
+                                        <p class="wow fadeInUp" data-wow-delay=".5s">
+                                            創建一個美觀的求職網站並不總是容易。為了讓您的生活更輕鬆，我們推出了Jobcamp模板，利用敏捷框架來進行高級概述。
                                         </p>
                                         <div class="button wow fadeInUp" data-wow-delay=".7s">
-                                            <a href="#" class="btn">Post a Job</a>
-                                            <a href="#" class="btn btn-alt">See Our Jobs</a>
+                                            <a href="#" class="btn">發布職位</a>
+                                            <a href="#" class="btn btn-alt">查看我們的職位</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 co-12">
                                 <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
-                                    <img src="assets/images/hero/banner.png" alt="#">
+                                    <img th:src="@{/images/hero/banner.png}" alt="#">
                                 </div>
                             </div>
                         </div>
@@ -153,24 +67,21 @@
                             <div class="col-lg-6 co-12">
                                 <div class="inner-content">
                                     <div class="hero-text">
-                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">Find Your Career <br>to Make a
-                                            Better Life
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">尋找您的職業 <br>以創造更美好的生活
                                         </h1>
-                                        <p class="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is
-                                            not
-                                            easy always. To make your life easier we are introducing Jobcamp template,
-                                            Leverage agile frameworks to high level overviews.
+                                        <p class="wow fadeInUp" data-wow-delay=".5s">建立一個美觀的求職網站並不總是容易。為了讓您的生活更輕鬆，我們介紹了
+                                            Jobcamp 模板，利用敏捷框架來提供高層次的概覽。
                                         </p>
                                         <div class="button wow fadeInUp" data-wow-delay=".7s">
-                                            <a href="#" class="btn">Post a Job</a>
-                                            <a href="#" class="btn btn-alt">See Our Jobs</a>
+                                            <a href="#" class="btn">發布職位</a>
+                                            <a href="#" class="btn btn-alt">查看我們的職位</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 co-12">
                                 <div class="hero-image wow fadeInRight" data-wow-delay=".ss">
-                                    <img src="assets/images/hero/banner2.png" alt="#">
+                                    <img th:src="@{/images/hero/banner2.png}" alt="#">
                                 </div>
                             </div>
                         </div>
@@ -188,12 +99,12 @@
             <div class="row align-items-center">
                 <div class="col-lg-8 col-md-8 col-12">
                     <div class="text">
-                        <h2>Create your profile to find thousands Jobs.</h2>
+                        <h2>創建您的個人資料以查找數千個職位。</h2>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="button">
-                        <a href="browse-jobs.html" class="btn">Browse Jobs</a>
+                        <a href="browse-jobs.html" class="btn">瀏覽職位</a>
                     </div>
                 </div>
             </div>
@@ -207,10 +118,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Job Category</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Browse by Catagories</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
+                        <span class="wow fadeInDown" data-wow-delay=".2s">職業類別</span>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">按類別瀏覽</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">現有許多 Lorem Ipsum 段落的變體，但大多數已經以某種形式被修改過。</p>
                     </div>
                 </div>
             </div>
@@ -219,88 +129,88 @@
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".2s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-1.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-1.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">50</span>
-                                <h3>Technical Support</h3>
+                                <h3>技術支持</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".4s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-2.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-2.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">30</span>
-                                <h3>Business Development</h3>
+                                <h3>商業發展</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".6s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-3.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-3.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">99</span>
-                                <h3>Sales & Communication</h3>
+                                <h3>銷售與溝通</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".8s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-4.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-4.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">15</span>
-                                <h3>Share Maeket Analysis</h3>
+                                <h3>市場分析</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".2s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-5.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-5.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">20</span>
-                                <h3>Human Resource</h3>
+                                <h3>人力資源</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".4s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-6.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-6.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">19</span>
-                                <h3>IT & Networing Sevices</h3>
+                                <h3>IT 及網絡服務</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".6s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-7.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-7.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">25</span>
-                                <h3>Project Management</h3>
+                                <h3>專案管理</h3>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12">
                         <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".8s">
                             <div class="top-side">
-                                <img src="assets/images/jobs/category-8.jpg" alt="#">
+                                <img th:src="@{/images/jobs/category-8.jpg}" alt="#">
                             </div>
                             <div class="bottom-side">
                                 <span class="available-job">40</span>
-                                <h3>Marketing & Management</h3>
+                                <h3>行銷與管理</h3>
                             </div>
                         </a>
                     </div>
@@ -320,25 +230,25 @@
                             <div calss="col-lg-6 col-12">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-6">
-                                        <img class="single-img" src="assets/images/about/small1.jpg" alt="#">
+                                        <img class="single-img" th:src="@{/images/about/small1.jpg}" alt="#">
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-6">
-                                        <img class="single-img mt-50" src="assets/images/about/small2.jpg" alt="#">
+                                        <img class="single-img mt-50" th:src="@{/images/about/small2.jpg}" alt="#">
                                     </div>
                                 </div>
                             </div>
                             <div calss="col-lg-6 col-12">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-6">
-                                        <img class="single-img minus-margin" src="assets/images/about/small3.jpg"
+                                        <img class="single-img minus-margin" th:src="@{/images/about/small3.jpg}"
                                             alt="#">
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-6">
                                         <!-- media body start -->
                                         <div class="media-body">
                                             <i class="lni lni-checkmark"></i>
-                                            <h6 class="">Job alert!</h6>
-                                            <p class="">104 new jobs are available in this week!
+                                            <h6 class="">職位通知！</h6>
+                                            <p class="">本週有104個新職位上線！
                                             </p>
                                         </div>
                                         <!-- media body start -->
@@ -352,17 +262,16 @@
                     <!-- content-1 start -->
                     <div class="content-right wow fadeInRight" data-wow-delay=".5s">
                         <!-- Heading -->
-                        <h2>Help you to get the <br>
-                            best job that fits you</h2>
+                        <h2>幫助您找到 <br>
+                            最適合您的工作</h2>
                         <!-- End Heading -->
                         <!-- Single List -->
                         <div class="single-list">
                             <i class="lni lni-grid-alt"></i>
                             <!-- List body start -->
                             <div class="list-bod">
-                                <h5>#1 Jobs site in UK</h5>
-                                <p>Leverage agile frameworks to provide a
-                                    robust synopsis for high level overviews. Iterative</p>
+                                <h5>#1 英國的求職網站</h5>
+                                <p>利用敏捷框架提供高級概述的強大摘要。</p>
                             </div>
                             <!-- List body start -->
                         </div>
@@ -372,9 +281,8 @@
                             <i class="lni lni-search"></i>
                             <!-- List body start -->
                             <div class="list-bod">
-                                <h5>Seamless searching</h5>
-                                <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta
-                                    test.</p>
+                                <h5>無縫搜尋</h5>
+                                <p>辨識價值增值活動以進行測試。</p>
                             </div>
                             <!-- List body start -->
                         </div>
@@ -384,8 +292,8 @@
                             <i class="lni lni-stats-up"></i>
                             <!-- List body start -->
                             <div class="list-bod">
-                                <h5>Hired in top companies</h5>
-                                <p>Podcasting operational change management inside of workflows to establish.</p>
+                                <h5>頂尖公司錄用</h5>
+                                <p>在工作流程內實施變更管理。</p>
                             </div>
                             <!-- List body start -->
                         </div>
@@ -405,14 +313,11 @@
                     <div class="inner">
                         <div class="section-title">
                             <span class="wow fadeInDown" data-wow-delay=".2s">GETTING STARTED TO WORK</span>
-                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Don’t just find. Be found. Put your
-                                CV in front of great employers</h2>
-                            <p class="wow fadeInUp" data-wow-delay=".6s">It helps you to increase your chances of
-                                finding a suitable job and let recruiters contact you
-                                about jobs that are not needed to pay for advertising.</p>
+                            <h2 class="wow fadeInUp" data-wow-delay=".4s">不要只是尋找，讓自己被發現。將您的履歷呈現給出色的雇主</h2>
+                            <p class="wow fadeInUp" data-wow-delay=".6s">這有助於提高您找到合適工作的機會，並讓招聘者可以聯繫您，告知不需支付廣告費用的工作機會。
+                            </p>
                             <div class="button wow fadeInUp" data-wow-delay=".8s">
-                                <a href="add-resume.html" class="btn"><i class="lni lni-upload"></i> Upload Your
-                                    Resume</a>
+                                <a href="add-resume.html" class="btn"><i class="lni lni-upload"></i> 上傳您的履歷</a>
                             </div>
                         </div>
                     </div>
@@ -428,10 +333,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Hot Jobs</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Browse Recent Jobs</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
+                        <span class="wow fadeInDown" data-wow-delay=".2s">熱門職位</span>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">瀏覽最近的職位</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">現有許多 Lorem Ipsum 段落的變體，但大多數已經以某種形式被修改過。</p>
                     </div>
                 </div>
             </div>
@@ -441,22 +345,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".3s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img1.png" alt="#">
+                                <img th:src="@{/images/jobs/img1.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Software Engineer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">軟體工程師</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>全職</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -464,22 +367,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".3s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img2.png" alt="#">
+                                <img th:src="@{/images/jobs/img2.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Graphics Design</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">平面設計師</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> designhub.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Washington, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 華盛頓，美國</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Intern</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>實習生</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -487,22 +389,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".3s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img3.png" alt="#">
+                                <img th:src="@{/images/jobs/img3.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Ui/Ux Design</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">UI/UX 設計師</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> uddesign.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 庫比蒂諾，美國</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>兼職</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -510,22 +411,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".3s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img4.png" alt="#">
+                                <img th:src="@{/images/jobs/img4.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Web Developer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">網站開發人員</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> webinner.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Delaware, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 德拉瓦州，美國</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Intern</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>實習生</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -535,22 +435,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".5s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img7.png" alt="#">
+                                <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Digital Marketer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">數位行銷專員</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> marketers.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約，美國</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>兼職</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -558,22 +457,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".5s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img5.png" alt="#">
+                                <img th:src="@{/images/jobs/img5.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Sales Manager</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">銷售經理</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Delaware, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 德拉瓦州，美國</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>全職</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -581,22 +479,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".5s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img6.png" alt="#">
+                                <img th:src="@{/images/jobs/img6.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Product Designer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">產品設計師</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約，美國</li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>全職</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -604,23 +501,21 @@
                         <!-- Single Job -->
                         <div class="single-job wow fadeInUp" data-wow-delay=".5s">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img8.png" alt="#">
+                                <img th:src="@{/images/jobs/img8.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Android Developer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <h4><a href="job-details.html">Android 開發人員</a></h4>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <ul>
                                     <li><i class="lni lni-website"></i><a href="#"> androidplex.com</a></li>
                                     <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
+                                    <li><i class="lni lni-map-marker"></i> 庫比蒂諾，美國</li>
                                 </ul>
-
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
+                                    <li><a href="job-details.html">申請</a></li>
+                                    <li><span>兼職</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -654,10 +549,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Featured Jobs</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Browse Featured Jobs</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
+                        <span class="wow fadeInDown" data-wow-delay=".2s">精選職位</span>
+                        <h2 class="wow fadeInUp" data-wow-delay=".4s">瀏覽精選職位</h2>
+                        <p class="wow fadeInUp" data-wow-delay=".6s">現有許多 Lorem Ipsum 段落的變體，但大多數已經以某種形式被修改過。</p>
                     </div>
                 </div>
             </div>
@@ -666,23 +560,21 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-job wow fadeInUp" data-wow-delay=".2s">
                             <div class="shape"></div>
-                            <div class="feature">Featured</div>
+                            <div class="feature">精選</div>
                             <div class="image">
-                                <img src="assets/images/featured-job/img1.jpg" alt="#">
+                                <img th:src="@{/images/featured-job/img1.jpg}" alt="#">
                             </div>
                             <div class="content">
-                                <h4><a href="job-details.html">Graphics Design</a></h4>
+                                <h4><a href="job-details.html">平面設計師</a></h4>
                                 <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
+                                    <li><i class="lni lni-briefcase"></i> 全職</li>
                                     <li><i class="lni lni-dollar"></i> 80K-90K</li>
                                 </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
+                                    <a href="job-details.html" class="btn">立即申請</a>
+                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> 儲存</a>
                                 </div>
                             </div>
                         </div>
@@ -690,23 +582,21 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-job wow fadeInUp" data-wow-delay=".4s">
                             <div class="shape"></div>
-                            <div class="feature">Featured</div>
+                            <div class="feature">精選</div>
                             <div class="image">
-                                <img src="assets/images/featured-job/img2.jpg" alt="#">
+                                <img th:src="@{/images/featured-job/img2.jpg}" alt="#">
                             </div>
                             <div class="content">
-                                <h4><a href="job-details.html">Restaurant Services</a></h4>
+                                <h4><a href="job-details.html">餐飲服務</a></h4>
                                 <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
+                                    <li><i class="lni lni-briefcase"></i> 全職</li>
                                     <li><i class="lni lni-dollar"></i> 80K-90K</li>
                                 </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
+                                    <a href="job-details.html" class="btn">立即申請</a>
+                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> 儲存</a>
                                 </div>
                             </div>
                         </div>
@@ -714,23 +604,21 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-job wow fadeInUp" data-wow-delay=".6s">
                             <div class="shape"></div>
-                            <div class="feature">Featured</div>
+                            <div class="feature">精選</div>
                             <div class="image">
-                                <img src="assets/images/featured-job/img3.jpg" alt="#">
+                                <img th:src="@{/images/featured-job/img3.jpg}" alt="#">
                             </div>
                             <div class="content">
-                                <h4><a href="job-details.html">Share Maeket Analysis</a></h4>
+                                <h4><a href="job-details.html">股市分析</a></h4>
                                 <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
+                                    <li><i class="lni lni-briefcase"></i> 全職</li>
                                     <li><i class="lni lni-dollar"></i> 80K-90K</li>
                                 </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
+                                    <a href="job-details.html" class="btn">立即申請</a>
+                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> 儲存</a>
                                 </div>
                             </div>
                         </div>
@@ -738,23 +626,21 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-job wow fadeInUp" data-wow-delay=".2s">
                             <div class="shape"></div>
-                            <div class="feature">Featured</div>
+                            <div class="feature">精選</div>
                             <div class="image">
-                                <img src="assets/images/featured-job/img4.jpg" alt="#">
+                                <img th:src="@{/images/featured-job/img4.jpg}" alt="#">
                             </div>
                             <div class="content">
-                                <h4><a href="job-details.html">Medical services</a></h4>
+                                <h4><a href="job-details.html">醫療服務</a></h4>
                                 <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
+                                    <li><i class="lni lni-briefcase"></i> 全職</li>
                                     <li><i class="lni lni-dollar"></i> 80K-90K</li>
                                 </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
+                                    <a href="job-details.html" class="btn">立即申請</a>
+                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> 儲存</a>
                                 </div>
                             </div>
                         </div>
@@ -762,23 +648,21 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-job wow fadeInUp" data-wow-delay=".4s">
                             <div class="shape"></div>
-                            <div class="feature">Featured</div>
+                            <div class="feature">精選</div>
                             <div class="image">
-                                <img src="assets/images/featured-job/img5.jpg" alt="#">
+                                <img th:src="@{/images/featured-job/img5.jpg}" alt="#">
                             </div>
                             <div class="content">
-                                <h4><a href="job-details.html">Auto Mobile Services</a></h4>
+                                <h4><a href="job-details.html">汽車服務</a></h4>
                                 <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
+                                    <li><i class="lni lni-briefcase"></i> 全職</li>
                                     <li><i class="lni lni-dollar"></i> 80K-90K</li>
                                 </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
                                 <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
+                                    <a href="job-details.html" class="btn">立即申請</a>
+                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> 儲存</a>
                                 </div>
                             </div>
                         </div>
@@ -786,23 +670,20 @@
                     <div class="col-lg-4 col-md-6 col-12">
                         <div class="single-job wow fadeInUp" data-wow-delay=".6s">
                             <div class="shape"></div>
-                            <div class="feature">Featured</div>
+                            <div class="feature">精選</div>
                             <div class="image">
-                                <img src="assets/images/featured-job/img6.jpg" alt="#">
+                                <img th:src="@{/images/featured-job/img6.jpg}" alt="#">
                             </div>
                             <div class="content">
-                                <h4><a href="job-details.html">IT & Networing Sevices</a></h4>
+                                <h4><a href="job-details.html">IT 及網路服務</a></h4>
                                 <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
+                                    <li><i class="lni lni-map-marker"></i> 紐約</li>
+                                    <li><i class="lni lni-briefcase"></i> 全職</li>
                                     <li><i class="lni lni-dollar"></i> 80K-90K</li>
                                 </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
+                                <p>我們正在尋找招生顧問，負責每週安排30-35次會面。所有潛在客戶都已預先安排。</p>
+                                <div class="button"> <a href="job-details.html" class="btn">立即申請</a> <a
+                                        href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> 儲存</a>
                                 </div>
                             </div>
                         </div>
@@ -815,30 +696,28 @@
 
     <!-- Start Testimonials Section -->
     <section class=" testimonials">
-        <img class="patern1 wow fadeInRight" data-wow-delay=".3s" src="assets/images/testimonial/patern1.png" alt="#">
-        <img class="patern2 wow fadeInLeft" data-wow-delay=".5s" src="assets/images/testimonial/patern1.png" alt="#">
+        <img class="patern1 wow fadeInRight" data-wow-delay=".3s" th:src="@{/images/testimonial/patern1.png}" alt="#">
+        <img class="patern2 wow fadeInLeft" data-wow-delay=".5s" th:src="@{/images/testimonial/patern1.png}" alt="#">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-12">
                     <div class="section-title align-left wow fadeInLeft" data-wow-delay=".3s">
-                        <span>What saye's Our Clients</span>
-                        <h2>Our Testimonials</h2>
+                        <span>客戶怎麼說</span>
+                        <h2>我們的推薦語</h2>
                     </div>
-                    <div class=" testimonial-inner-head wow fadeInLeft" data-wow-delay=".3s">
-                        <div class=" testimonial-inner">
+                    <div class="testimonial-inner-head wow fadeInLeft" data-wow-delay=".3s">
+                        <div class="testimonial-inner">
                             <div class="testimonial-slider">
                                 <!-- Single Testimonial -->
                                 <div class="single-testimonial">
                                     <div class="quote">
                                         <i class="lni lni-quotation"></i>
                                     </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
+                                    <p>"我剛買了它，我很喜歡。Lorem Ipsum 只是印刷和排版行業的虛擬文字。自1500年代以來，Lorem Ipsum 一直是該行業的標準虛擬文字。"
+                                    </p>
                                     <div class="bottom">
                                         <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi1.jpg" alt="#">
+                                            <img th:src="@{/images/testimonial/testi1.jpg}" alt="#">
                                         </div>
                                         <h4 class="name">Musharof Chowdhury <span>CEO - Templates</span></h4>
                                     </div>
@@ -849,13 +728,10 @@
                                     <div class="quote">
                                         <i class="lni lni-quotation"></i>
                                     </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
+                                    <p>"我剛買了它，我很喜歡。Lorem Ipsum 只是印刷和排版行業的虛擬文字。自1500年代以來，Lorem Ipsum 一直是該行業的標準虛擬文字。"
                                     <div class="bottom">
                                         <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi2.jpg" alt="#">
+                                            <img th:src="@{/images/testimonial/testi2.jpg}" alt="#">
                                         </div>
                                         <h4 class="name">Naimur Rahman <span>CEO - Wpthemes Grid</span></h4>
                                     </div>
@@ -866,13 +742,10 @@
                                     <div class="quote">
                                         <i class="lni lni-quotation"></i>
                                     </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
+                                    <p>"我剛買了它，我很喜歡。Lorem Ipsum 只是印刷和排版行業的虛擬文字。自1500年代以來，Lorem Ipsum 一直是該行業的標準虛擬文字。"
                                     <div class="bottom">
                                         <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi3.jpg" alt="#">
+                                            <img th:src="@{/images/testimonial/testi3.jpg}" alt="#">
                                         </div>
                                         <h4 class="name">Karmo kerin<span>CEO - Tredex</span></h4>
                                     </div>
@@ -883,13 +756,10 @@
                                     <div class="quote">
                                         <i class="lni lni-quotation"></i>
                                     </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
+                                    <p>"我剛買了它，我很喜歡。Lorem Ipsum 只是印刷和排版行業的虛擬文字。自1500年代以來，Lorem Ipsum 一直是該行業的標準虛擬文字。"
                                     <div class="bottom">
                                         <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi4.jpg" alt="#">
+                                            <img th:src="@{/images/testimonial/testi4.jpg}" alt="#">
                                         </div>
                                         <h4 class="name">Goro Chala <span>CEO - Dream App</span></h4>
                                     </div>
@@ -901,7 +771,7 @@
                 </div>
                 <div class="col-lg-6 col-12">
                     <div class="testimonial-right wow fadeInRight" data-wow-delay=".5s">
-                        <img src="assets/images/testimonial/testimonial-right.png" alt="#">
+                        <img th:src="@{/images/testimonial/testimonial-right.png}" alt="#">
                     </div>
                 </div>
             </div>
@@ -915,31 +785,31 @@
             <div class="client-logo-wrapper">
                 <div class="client-logo-carousel d-flex align-items-center justify-content-between">
                     <div class="client-logo">
-                        <img src="assets/images/clients/client1.png" alt="#">
+                        <img th:src="@{/images/clients/client1.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client2.png" alt="#">
+                        <img th:src="@{/images/clients/client2.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client3.png" alt="#">
+                        <img th:src="@{/images/clients/client3.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client4.png" alt="#">
+                        <img th:src="@{/images/clients/client4.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client5.png" alt="#">
+                        <img th:src="@{/images/clients/client5.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client6.png" alt="#">
+                        <img th:src="@{/images/clients/client6.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client2.png" alt="#">
+                        <img th:src="@{/images/clients/client2.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client3.png" alt="#">
+                        <img th:src="@{/images/clients/client3.png}" alt="#">
                     </div>
                     <div class="client-logo">
-                        <img src="assets/images/clients/client4.png" alt="#">
+                        <img th:src="@{/images/clients/client4.png}" alt="#">
                     </div>
                 </div>
             </div>
@@ -1085,13 +955,13 @@
                         <!-- Single Widget -->
                         <div class="f-about single-footer">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/images/logo/logo.svg" alt="Logo"></a>
+                                <a href="index.html"><img th:src="@{/images/logo/logo.svg}" alt="Logo"></a>
                             </div>
-                            <p>Start building your creative website with our awesome template Massive.</p>
+                            <p>開始使用我們的出色模板 Massive 建立您的創意網站。</p>
                             <ul class="contact-address">
-                                <li><span>Address:</span> 555 Wall Street, USA, NY</li>
-                                <li><span>Email:</span> example@apus.com</li>
-                                <li><span>Call:</span> 555-555-1234</li>
+                                <li><span>地址：</span> 美國紐約，華爾街 555 號</li>
+                                <li><span>電子郵件：</span> example@apus.com</li>
+                                <li><span>電話：</span> 555-555-1234</li>
                             </ul>
                             <div class="footer-social">
                                 <ul>
@@ -1109,14 +979,14 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <!-- Single Widget -->
                                 <div class="single-footer f-link">
-                                    <h3>For Candidates</h3>
+                                    <h3>給候選人</h3>
                                     <ul>
-                                        <li><a href="#">User Dashboard</a></li>
-                                        <li><a href="#">CV Packages</a></li>
-                                        <li><a href="#">Jobs Featured</a></li>
-                                        <li><a href="#">Jobs Urgent</a></li>
-                                        <li><a href="#">Candidate List</a></li>
-                                        <li><a href="#">Candidates Grid</a></li>
+                                        <li><a href="#">用戶儀表板</a></li>
+                                        <li><a href="#">履歷套餐</a></li>
+                                        <li><a href="#">精選職位</a></li>
+                                        <li><a href="#">緊急職位</a></li>
+                                        <li><a href="#">候選人列表</a></li>
+                                        <li><a href="#">候選人網格</a></li>
                                     </ul>
                                 </div>
                                 <!-- End Single Widget -->
@@ -1124,14 +994,14 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <!-- Single Widget -->
                                 <div class="single-footer f-link">
-                                    <h3>For Employers</h3>
+                                    <h3>給雇主</h3>
                                     <ul>
-                                        <li><a href="#">Post New</a></li>
-                                        <li><a href="#">Employer List</a></li>
-                                        <li><a href="#">Employers Grid</a></li>
-                                        <li><a href="#">Job Packages</a></li>
-                                        <li><a href="#">Jobs Listing</a></li>
-                                        <li><a href="#">Jobs Featured</a></li>
+                                        <li><a href="#">發布新職位</a></li>
+                                        <li><a href="#">雇主列表</a></li>
+                                        <li><a href="#">雇主網格</a></li>
+                                        <li><a href="#">職位套餐</a></li>
+                                        <li><a href="#">職位列表</a></li>
+                                        <li><a href="#">精選職位</a></li>
                                     </ul>
                                 </div>
                                 <!-- End Single Widget -->
@@ -1139,15 +1009,14 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <!-- Single Widget -->
                                 <div class="single-footer newsletter">
-                                    <h3>Join Our Newsletter</h3>
-                                    <p>Subscribe to get the latest jobs posted, candidates...</p>
+                                    <h3>訂閱我們的電子報</h3>
+                                    <p>訂閱以獲取最新發布的職位、候選人資訊...</p>
                                     <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                        <input name="EMAIL" placeholder="Your email address" class="common-input"
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Your email address'" required="" type="email">
-                                        <div class="button">
-                                            <button class="btn">Subscribe Now! <span class="dir-part"></span></button>
-                                        </div>
+                                        <input name="EMAIL" placeholder="您的電子郵件地址" class="common-input"
+                                            onfocus="this.placeholder = ''" onblur="this.placeholder = '您的電子郵件地址'"
+                                            required="" type="email">
+                                        <div class="button"> <button class="btn">立即訂閱！<span
+                                                    class="dir-part"></span></button> </div>
                                     </form>
                                 </div>
                                 <!-- End Single Widget -->
@@ -1165,16 +1034,15 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="left">
-                                <p><a target="_blank" href="http://www.mobanwang.com/" title="网页模板">网页模板</a></p>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="right">
                                 <ul>
-                                    <li><a href="#">Terms of use</a></li>
-                                    <li><a href="#"> Privacy Policy</a></li>
-                                    <li><a href="#">Faq</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">使用條款</a></li>
+                                    <li><a href="#">隱私政策</a></li>
+                                    <li><a href="#">常見問題</a></li>
+                                    <li><a href="#">聯繫我們</a></li>
                                 </ul>
                             </div>
                         </div>
