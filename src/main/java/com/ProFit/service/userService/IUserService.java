@@ -43,5 +43,13 @@ public interface IUserService {
 
 	Page<UsersDTO> findUserByPage(Integer pageNumber);
 
+	ResponseEntity<?> registerUser(Users users);
+
+	boolean confirmEmail(String confirmationToken);
+
+	boolean validateForfrontend(String userEmail, String userPassword);
+
+	//用來更新用戶餘額
+	Users updateUserBalance(Users user);
 
 }

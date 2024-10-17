@@ -31,19 +31,52 @@ public class loginController {
 	@ResponseBody
 	public String Login(@RequestBody Map<String, String> user, HttpSession session) throws NoSuchAlgorithmException {
 
+		System.out.println(user);
+
 		if (userService.validate(user.get("userEmail"), user.get("userPassword"))) {
 
-			String user_pictureURL = userService.getUserPictureByEmail(user.get("userEmail"));
-			System.out.println("登入成功");
-			session.setAttribute("user_email", user.get("userEmail"));
+			Users user1 = userService.getUserByEmail(user.get("userEmail"));
 
+			String user_pictureURL = user1.getUserPictureURL();
+			Integer user_identity = user1.getUserIdentity();
+			String user_name = user1.getUserName();
+
+			System.out.println("登入成功");
+
+			session.setAttribute("user_email", user.get("userEmail"));
+			session.setAttribute("user_name", user_name);
 			session.setAttribute("user_pictureURL", user_pictureURL);
+			session.setAttribute("user_identity", user_identity);
 
 			return "Login Successful";
 
 		} else {
 			System.out.println("登入失敗");
 			return "Login Failed";
+		}
+
+	}
+
+	@PostMapping("/login_frontend")
+	@ResponseBody
+	public ResponseEntity<?> Login_frontend(@RequestBody Map<String, String> user, HttpSession session)
+			throws NoSuchAlgorithmException {
+
+		System.out.println(user);
+
+		if (userService.validateForfrontend(user.get("userEmail"), user.get("userPassword"))) {
+
+			Users user1 = userService.getUserByEmail(user.get("userEmail"));
+
+			System.out.println("登入成功");
+
+			session.setAttribute("CurrentUser", user1);
+
+			return ResponseEntity.ok("Login Successful");
+
+		} else {
+			System.out.println("登入失敗");
+			return ResponseEntity.status(404).body("Login Failed");
 		}
 
 	}
@@ -62,6 +95,19 @@ public class loginController {
 			return ResponseEntity.status(404).body(null);
 		}
 	}
+	
+	@GetMapping("login/getUserSession_frontend")
+	public ResponseEntity<Users> getSessionAttributeFrontend(HttpSession session) {
+
+		
+	
+		if (session.getAttribute("CurrentUser") != null) {
+			Users user = (Users) session.getAttribute("CurrentUser");
+			return ResponseEntity.ok(user);
+		} else {
+			return ResponseEntity.status(404).body(null);
+		}
+	}
 
 	@GetMapping("/logout")
 	public String Logout(HttpSession session) {
@@ -71,6 +117,17 @@ public class loginController {
 		}
 		return "redirect:/loginPage";
 
+	}
+	
+	@GetMapping("/logout_frontend")
+	public ResponseEntity<?> LogoutFrontend(HttpSession session) {
+
+		if (session.getAttribute("CurrentUser") != null) {
+			session.invalidate();
+			System.out.println("登出成功");
+			return ResponseEntity.ok("登出成功");
+		}
+		return  ResponseEntity.status(404).body("登出失敗");
 	}
 
 }

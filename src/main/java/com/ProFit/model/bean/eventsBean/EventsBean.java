@@ -3,8 +3,6 @@ package com.ProFit.model.bean.eventsBean;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.ProFit.model.bean.majorsBean.MajorBean;
 
 import jakarta.persistence.*;
@@ -25,8 +23,14 @@ public class EventsBean implements Serializable {
 	private int isEventActive;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_major")
+    @JoinColumn(name = "event_major",insertable = false,updatable = false)
 	private MajorBean eventMajor;
+  
+    @Column(name = "event_major")
+	private Integer eventMajorId;
+    
+	@Column(name="event_publish_date")
+	private LocalDateTime eventPublishDate;
 
 	@Column(name="event_start_date")
 	private LocalDateTime eventStartDate;

@@ -1,7 +1,10 @@
+
 document.getElementById('loginForm').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
 	let userEmail = document.getElementById('email').value;
 	let userPassword = document.getElementById('password').value;
+	
+	
 
 	const formDataObject = {
 		userEmail: userEmail,
@@ -15,15 +18,17 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 		},
 		body: JSON.stringify(formDataObject)
 	})
-		.then(response => response.text())
-		.then(result => {
-
-			if (result === "Login Failed") {
+		.then(response => {
+			if (!response.ok) {
 				let div = document.getElementById('loginError');
 				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
 			} else {
-
-				window.location.href = 'http://localhost:8080/ProFit/home';
+				
+				$('#login').modal('hide'); 
+				alert('登入成功');
+				document.getElementById("loginForm").reset();
+				
+				getSession();
 			}
 		})
 		.catch(error => {
@@ -57,7 +62,7 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 		.then(result => {
 			console.log('註冊成功' + result);
 			window.location.href = 'http://localhost:8080/ProFit/home';
-			
+
 		})
 		.catch(error => {
 			console.error('Error:', error);
@@ -65,3 +70,96 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 		});
 
 })
+
+$(document).ready(function() {
+	
+	getSession();
+	
+});
+
+function getSession(){
+	fetch('http://localhost:8080/ProFit/login/getUserSession_frontend', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('No session attribute found');
+				}
+				return response.json();
+			})
+			.then(data => {
+				
+				const user = data;
+				
+				localStorage.setItem('isLoggedIn', 'true');
+				localStorage.setItem('sessionValue', JSON.stringify(user));
+			
+				if (localStorage.getItem('sessionValue')) {
+					const userJSON = localStorage.getItem('sessionValue');
+					const userObject = JSON.parse(userJSON);
+					console.log(userObject);
+				}
+
+				console.log("登入狀態: " + localStorage.getItem('isLoggedIn'));
+
+				
+				initializeAuthButton();
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				
+				initializeAuthButton();
+			});
+}
+
+function initializeAuthButton() {
+	// 模擬用戶登入狀態，這裡用 localStorage 模擬，可根據實際情況修改
+	let isLoggedIn = localStorage.getItem('isLoggedIn');
+
+	// 獲取按鈕元素
+	const authButton = document.getElementById('authButton');
+	const authText = document.getElementById('authText');
+
+	// 根據登入狀態顯示按鈕
+	if (isLoggedIn === 'true') {
+		authText.textContent = '登出';
+		authButton.setAttribute('href', ''); // 登出後可以設置登出動作
+		authButton.removeAttribute('data-target'); // 移除data-target属性 // 移除登入事件
+		authButton.addEventListener('click', logout); // 綁定登出事件
+	} else {
+		authText.textContent = '登入';
+		authButton.setAttribute('data-target', '#login');
+		authButton.removeEventListener('click', logout); // 移除登出事件
+	}
+}
+
+// 登出功能
+function logout(event) {
+	event.preventDefault();
+	
+	fetch('http://localhost:8080/ProFit/logout_frontend', {
+		method: 'GET',
+		credentials: 'include'
+	})
+		.then(response => {
+			if (response.ok) {
+				// 清除登入狀態
+				localStorage.removeItem('isLoggedIn');
+				localStorage.removeItem('sessionValue');
+				alert('你已成功登出');
+				
+				getSession();
+			} else {
+				alert('登出失敗，請重試');
+			}
+		})
+		.catch(error => {
+			console.error('登出請求失敗：', error);
+			alert('登出失敗，請重試');
+		});
+}
+
+

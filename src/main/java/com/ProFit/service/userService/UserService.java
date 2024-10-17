@@ -123,6 +123,24 @@ public class UserService implements IUserService {
 		return false;
 
 	}
+	
+	@Override
+	public boolean validateForfrontend(String userEmail, String userPassword) {
+
+		Optional<Users> optional = usersRepository.findByUserEmail(userEmail);
+
+		if (optional.isPresent() && (optional.get().getUserIdentity() == 1 || optional.get().getUserIdentity() == 2) && optional.get().getEnabled() == 1) {
+			String dbPassword = optional.get().getUserPasswordHash();
+
+			System.out.println("User------------" + optional.get());
+
+			System.out.println("比對結果: " + pwdEncoder.matches(userPassword, dbPassword));
+			return pwdEncoder.matches(userPassword, dbPassword);
+		}
+		return false;
+
+	}
+
 
 	@Override
 	public String getUserPictureByEmail(String userEmail) {
@@ -177,19 +195,26 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search) {
-		Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
+	public boolean confirmEmail(String confirmationToken) {
+		Optional<Users> optional = usersRepository.findByVerificationCode(confirmationToken);
 
 		if (search == null || search.isEmpty()) {
 
-			Page<Users> usersPage = usersRepository.findAll(pageable);
-			return usersPage.map(user -> new UsersDTO(user.getUserId(),user.getUserName(), user.getUserEmail(),
-					user.getUserIdentity(), user.getUserRegisterTime()));
-		}
 
-		Page<Users> usersPage = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pageable);
-		return usersPage.map(user -> new UsersDTO(user.getUserId(),user.getUserName(), user.getUserEmail(),
-				user.getUserIdentity(), user.getUserRegisterTime()));
+			Users user = optional.get();
+			user.setEnabled(1);
+			usersRepository.save(user);
+			return true;
+		}
+		return false;
+
 	}
+
+	 // 用來更新用戶餘額的方法
+	@Override
+	public Users updateUserBalance(Users user) {
+	    return usersRepository.save(user);  // 使用 usersRepository 進行保存操作
+	}
+
 
 }

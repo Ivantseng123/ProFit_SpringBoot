@@ -63,6 +63,46 @@ public class usersController {
 		return "信箱已註冊";
 	}
 
+	// 註冊會員頁面
+	@GetMapping(path = "user/registerPage")
+	public String RegisterUser() {
+
+		return "usersVIEW/RegisterForm";
+	}
+
+	//註冊會員 
+	//@ModelAttribute，Spring從表單數據中提取字段並自動映射到 DTO 中的對應字段。
+	@PostMapping(path = "user/register")
+	@ResponseBody
+	public ResponseEntity<?> RegisterUser(@ModelAttribute UsersDTO usersDTO) throws NoSuchAlgorithmException {
+
+		Users existuser = userService.getUserByEmail(usersDTO.getUserEmail());
+		if (existuser == null) {
+
+			Users user = modelMapper.map(usersDTO, Users.class);
+
+			return userService.registerUser(user);
+		}
+
+		return ResponseEntity.badRequest().body("信箱已註冊");
+	}
+	
+	@RequestMapping(value="user/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+	public String confirmUserAccount(@RequestParam("token") String confirmationToken) {
+		
+		if (userService.confirmEmail(confirmationToken)) {
+			return "redirect:/user/verifiedSuccess";
+		}
+		
+		return null;
+	}
+	
+	@GetMapping(path = "user/verifiedSuccess")
+	public String verifiedSuccessPage() {
+
+		return "usersVIEW/frontendVIEW/mail-success";
+	}
+
 	// 刪除會員
 	@DeleteMapping(path = "user/deleteuser")
 	@ResponseBody
