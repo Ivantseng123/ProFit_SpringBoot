@@ -50,4 +50,7 @@ public interface IUserService {
 
 	boolean validateForfrontend(String userEmail, String userPassword);
 
+	//用來更新用戶餘額
+	Users updateUserBalance(Users user);
+
 }

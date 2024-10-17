@@ -294,4 +294,11 @@ public class UserService implements IUserService {
 		return false;
 	}
 
+	 // 用來更新用戶餘額的方法
+	@Override
+	public Users updateUserBalance(Users user) {
+	    return usersRepository.save(user);  // 使用 usersRepository 進行保存操作
+	}
+
+
 }

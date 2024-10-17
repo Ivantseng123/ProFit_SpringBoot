@@ -29,4 +29,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 	Page<Users> findByUserNameContainingOrUserEmailContaining(String userName, String userEmail, Pageable pageable);
 	
 	Page<Users> findByUserIdentity(Integer userIdentity, Pageable pageable);
+
+	//用來更新用戶餘額
+	
 }
