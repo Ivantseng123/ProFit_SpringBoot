@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ProFit</title>
+    <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
+    <link rel="stylesheet" th:href="@{/css/model.css}">
+</head>
+
+<body>
+    <div th:replace="~{model/layout-static}"></div>
+    <div class="container pt-2">
+        <a class="btn btn-primary" role="button" aria-disabled="true" th:href="@{/courses}">返回課程列表</a>
+    </div>
+    <div class="container pt-3">
+        <!-- 主要內容區域 -->
+        <!-- 只是一個範例，裡面布局可以更改 -->
+        <div class="course-header">
+            <h2>課程評論管理功能</h2>
+            <!-- Button trigger modal -->
+            <span>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    新增課程評論
+                </button>
+            </span>
+        </div>
+        <div class="dashboard-header">
+            <h3 class="mb-0" th:text="|課程名稱: ${coursesDTO.courseName}|"></h3>
+        </div>
+        <div class="dashboard-header ">
+            <h3 style="margin-top: 0px;" class="mb-3">查詢課程評論</h3>
+
+            <span>評價排序: <select id="sort" name="sort" style="width: 125px;">
+                    <option id="option-sort-ASC" value="ASC">分數由低到高</option>
+                    <option id="option-sort-DESC" value="DESC">分數由高到低</option>
+                </select>
+
+            </span>
+            <button id="searchBtn">送出查詢</button>
+        </div>
+
+        <div class="table-container" id="search-results"></div>
+
+        <!-- 彈出視窗 -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">新增評論</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-container">
+                            <form id="myForm">
+
+                                <div class="form-group">
+                                    <label for="studentId">評論者:</label>
+                                    <input type="text" id="studentId" name="studentId" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="courseGradeScore">評分:(1~5分)</label>
+                                    <input type="number" id="courseGradeScore" name="courseGradeScore" max="5"
+                                        min="1" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="courseGradeComment">評論內容:</label>
+                                    <textarea id="courseGradeComment" name="courseGradeComment" rows="2"
+                                        cols="50"></textarea>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">關閉</button>
+                        <button type="button" class="createBtn btn btn-primary btn-sm">確定新增</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var contextPath = 'http://localhost:8080/ProFit';
+    </script>
+    <script th:src="@{/js/courses/courseGradesView.js}"></script>
+</body>
+
+</html>

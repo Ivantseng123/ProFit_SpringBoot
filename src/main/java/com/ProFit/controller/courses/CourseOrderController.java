@@ -29,17 +29,17 @@ public class CourseOrderController {
 
 	@GetMapping("/courseOrders")
 	public String courseOrder() {
-		return "coursesVIEW/courseOrderView";
+		return "coursesVIEW/backend/courseOrderView";
 	}
 
 	@GetMapping("/courseOrders/addOrder")
 	public String addCourseOrderPage() {
-		return "coursesVIEW/createCourseOrderView";
+		return "coursesVIEW/backend/createCourseOrderView";
 	}
 
 	@GetMapping("/courseOrders/updateOrder")
 	public String upDateCourseOrderPage() {
-		return "coursesVIEW/updateCourseOrderView";
+		return "coursesVIEW/backend/updateCourseOrderView";
 	}
 
 	// 搜尋全部的方法

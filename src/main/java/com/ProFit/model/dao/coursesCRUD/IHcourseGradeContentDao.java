@@ -20,7 +20,8 @@ public interface IHcourseGradeContentDao {
 	// 查詢全部 多形
 	public List<CourseGradeContentBean> searchCourseGradeContents();
 
-	// 查詢全部 By 課程id
-	public List<CourseGradeContentBean> searchCourseGradeContents(String coruseId, String order);
+	// // 查詢全部 By 課程id
+	// public List<CourseGradeContentBean> searchCourseGradeContents(String
+	// coruseId, String order);
 
 }

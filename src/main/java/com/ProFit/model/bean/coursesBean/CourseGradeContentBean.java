@@ -1,5 +1,7 @@
 package com.ProFit.model.bean.coursesBean;
 
+import com.ProFit.model.bean.usersBean.Users;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,7 +30,11 @@ public class CourseGradeContentBean implements java.io.Serializable {
 	private CourseBean course;
 
 	@Column(name = "student_id")
-	private String studentId;
+	private Integer studentId;
+
+	@ManyToOne
+	@JoinColumn(name = "student_id", insertable = false, updatable = false)
+	private Users student;
 
 	@Column(name = "course_grade_score")
 	private Integer courseGradeScore;
@@ -40,7 +46,8 @@ public class CourseGradeContentBean implements java.io.Serializable {
 		super();
 	}
 
-	public CourseGradeContentBean(Integer courseGradeId, String courseId, String studentId, Integer courseGradeScore,
+	public CourseGradeContentBean(Integer courseGradeId, String courseId,
+			Integer studentId, Integer courseGradeScore,
 			String courseGradeComment) {
 		super();
 		this.courseGradeId = courseGradeId;
@@ -48,6 +55,14 @@ public class CourseGradeContentBean implements java.io.Serializable {
 		this.studentId = studentId;
 		this.courseGradeScore = courseGradeScore;
 		this.courseGradeComment = courseGradeComment;
+	}
+
+	public Users getStudent() {
+		return student;
+	}
+
+	public void setStudent(Users student) {
+		this.student = student;
 	}
 
 	public CourseBean getCourse() {
@@ -74,11 +89,11 @@ public class CourseGradeContentBean implements java.io.Serializable {
 		this.courseId = courseId;
 	}
 
-	public String getStudentId() {
+	public Integer getStudentId() {
 		return studentId;
 	}
 
-	public void setStudentId(String studentId) {
+	public void setStudentId(Integer studentId) {
 		this.studentId = studentId;
 	}
 
