@@ -127,7 +127,6 @@ public class JobsApplicationProject implements java.io.Serializable {
 		public void setJobsAmount(Integer jobsAmount) {
 			this.jobsAmount = jobsAmount;
 		}
-	    
-	
+
 
 }
