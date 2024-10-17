@@ -33,7 +33,7 @@ public class CourseGradeContentController {
 
         model.addAttribute("coursesDTO", coursesDTO);
 
-        return "coursesVIEW/courseGradesView";
+        return "coursesVIEW/backend/courseGradesView";
     }
 
     @GetMapping("/courseGrades/search")
