@@ -25,7 +25,6 @@ import jakarta.persistence.Table;
 public class JobsApplicationProject implements java.io.Serializable {
 
 
-
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    @Column(name = "jobs_application_project_id")
