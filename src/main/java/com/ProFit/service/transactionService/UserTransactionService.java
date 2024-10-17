@@ -1,8 +1,11 @@
 package com.ProFit.service.transactionService;
 
 import com.ProFit.model.bean.transactionBean.UserTransactionBean;
+import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.transactionCRUD.UserTransactionRepository;
 import com.ProFit.model.dto.transactionDTO.UserTransactionDTO;
+import com.ProFit.service.userService.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,9 @@ public class UserTransactionService {
 
     @Autowired
     private UserTransactionRepository transactionRepository;
+    
+    @Autowired
+    private UserService userService;
 
     // 獲取所有交易
     public List<UserTransactionBean> getAllTransactions() {
@@ -49,28 +55,82 @@ public class UserTransactionService {
             transactionDTO.getPaymentMethod(),
             transactionDTO.getReferenceId()
         );
-        transactionRepository.save(transaction);  // transactionId 會自動生成
-    }
 
-    // 更新交易
-    public void updateTransaction(UserTransactionDTO transactionDTO) {
-        UserTransactionBean transaction = new UserTransactionBean(
-            transactionDTO.getUserId(),
-            transactionDTO.getTransactionRole(),
-            transactionDTO.getTransactionType(),
-            transactionDTO.getOrderId(),
-            transactionDTO.getTotalAmount(),
-            transactionDTO.getPlatformFee(),
-            transactionDTO.getTargetIncome(),
-            transactionDTO.getTransactionStatus(),
-            transactionDTO.getPaymentMethod(),
-            transactionDTO.getReferenceId()
-        );
-        if ("completed".equals(transaction.getTransactionStatus()) && transaction.getCompletionAt() == null) {
-            transaction.setCompletionAt(LocalDateTime.now());
+        // 更新用戶餘額
+        Users user = userService.getUserInfoByID(transactionDTO.getUserId());
+        if (user != null) {
+            Integer totalAmount = transactionDTO.getTotalAmount().intValue();  // 假設 totalAmount 是整數
+
+            // 根據交易類型調整餘額，例如存入增加餘額，取出減少餘額
+            if ("deposit".equals(transactionDTO.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() + totalAmount);
+            } else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() - totalAmount);
+            } else if ("payment".equals(transactionDTO.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() - totalAmount);
+            }
+            
+            // 保存更新後的用戶信息
+            userService.updateUserBalance(user);
         }
+
+        // 保存交易
         transactionRepository.save(transaction);
     }
+
+
+ // 更新交易
+    public void updateTransaction(UserTransactionDTO transactionDTO) {
+        // 根據 transactionId 查找原有的交易記錄
+        UserTransactionBean existingTransaction = transactionRepository.findById(transactionDTO.getTransactionId())
+            .orElseThrow(() -> new RuntimeException("交易記錄不存在，無法更新"));
+
+        // 更新用戶餘額
+     // 更新用戶餘額
+        Users user = userService.getUserInfoByID(transactionDTO.getUserId());
+        if (user != null) {
+            // 如果是 Double 類型，可以檢查是否為 null
+            Double oldAmount = existingTransaction.getTotalAmount();
+            Double newAmount = transactionDTO.getTotalAmount();
+
+            // 確保 oldAmount 和 newAmount 都不為 null，如果為 null，設置為 0
+            int oldAmountInt = oldAmount != null ? oldAmount.intValue() : 0;
+            int newAmountInt = newAmount != null ? newAmount.intValue() : 0;
+            int difference = newAmountInt - oldAmountInt;
+
+            // 根據交易類型更新餘額
+            if ("deposit".equals(transactionDTO.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() + difference);
+            } else if ("withdrawal".equals(transactionDTO.getTransactionType()) || 
+                       "payment".equals(transactionDTO.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() - difference);
+            }
+
+            // 保存更新後的用戶信息
+            userService.updateUserBalance(user);
+        }
+
+        // 更新交易記錄
+        existingTransaction.setTransactionRole(transactionDTO.getTransactionRole());
+        existingTransaction.setTransactionType(transactionDTO.getTransactionType());
+        existingTransaction.setTotalAmount(transactionDTO.getTotalAmount());
+        existingTransaction.setPlatformFee(transactionDTO.getPlatformFee());
+        existingTransaction.setTargetIncome(transactionDTO.getTargetIncome());
+        existingTransaction.setTransactionStatus(transactionDTO.getTransactionStatus());
+        existingTransaction.setPaymentMethod(transactionDTO.getPaymentMethod());
+        existingTransaction.setReferenceId(transactionDTO.getReferenceId());
+
+        // 如果狀態變更為已完成，則設置完成時間
+        if ("completed".equals(transactionDTO.getTransactionStatus()) && existingTransaction.getCompletionAt() == null) {
+            existingTransaction.setCompletionAt(LocalDateTime.now());
+        }
+
+        // 保存更新後的交易記錄
+        transactionRepository.save(existingTransaction);
+
+    }
+
+
 
     // 刪除交易
     public void deleteTransaction(String transactionId) {

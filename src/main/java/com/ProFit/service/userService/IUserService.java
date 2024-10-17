@@ -48,4 +48,7 @@ public interface IUserService {
 
 	ResponseEntity<?> confirmEmail(String confirmationToken);
 
+	//用來更新用戶餘額
+	Users updateUserBalance(Users user);
+
 }
