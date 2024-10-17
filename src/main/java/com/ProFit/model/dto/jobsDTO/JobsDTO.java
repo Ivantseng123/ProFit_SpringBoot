@@ -68,7 +68,6 @@ public class JobsDTO {
     public void setJobsApplicationDeadline(Date jobsApplicationDeadline) {
         this.jobsApplicationDeadline = jobsApplicationDeadline;
     }
-
     public String getJobsDescription() {
         return jobsDescription;
     }
