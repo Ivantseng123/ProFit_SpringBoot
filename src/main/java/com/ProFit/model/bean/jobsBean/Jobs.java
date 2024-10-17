@@ -23,7 +23,7 @@ public class Jobs implements java.io.Serializable{
     @JoinColumn(name= "jobs_user_id")
     private Users users;//請跟我有關聯的表格組員修改他們的關係語句
 
-//	@OneToMany(fetch = FetchType.EAGER)//加上mappedBy = ""寫法//FK，對User表，一個公司（user）可以有po很多職缺
+//	@OneToMany(fetch = FetchType.EAGER)//加上mappedBy = ""寫法 //FK，對User表，一個公司（user）可以有po很多職缺
 //	private Users ;
 
 
