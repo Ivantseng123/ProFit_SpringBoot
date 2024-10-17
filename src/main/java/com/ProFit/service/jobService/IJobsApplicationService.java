@@ -3,6 +3,7 @@ package com.ProFit.service.jobService;
 
 import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
+import com.ProFit.model.bean.usersBean.Users;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,6 @@ public interface IJobsApplicationService {
 
     void delete(Integer jobsApplicationId);
 
-//    Optional<JobsApplication> findByJobsId(Jobs poster);
+    List<JobsApplication> findByApplicantId(Integer applicantId);
 
 }

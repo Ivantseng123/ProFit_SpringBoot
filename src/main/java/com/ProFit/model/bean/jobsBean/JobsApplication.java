@@ -48,7 +48,7 @@ public class JobsApplication implements java.io.Serializable{
 	  private int jobsApplicationId;
 
 
-	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個職缺對應到多個申請
+	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個刊登者發布職缺對應到多個申請
 	  @JoinColumn(name = "jobs_application_jobs_id")
 	  private Jobs poster;
 

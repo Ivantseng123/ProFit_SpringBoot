@@ -108,4 +108,13 @@ public class JobsApplicationController {
         return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
     }
 
+//    // 查看某位應徵者的所有申請(東榆使用的方法，這裡是寫在他的controller裡)
+//    @GetMapping("/applicant/{applicantId}")
+//    public String getApplicantApplications(@PathVariable("applicantId") Integer applicantId, Model model) {
+//        List<JobsApplication> jobsApplication = jobsApplicationService.findByApplicantId(applicantId);
+//        model.addAttribute("applications", jobsApplication);
+//        return "jobsVIEW/applicantApplicationList";
+//    }
+
+
 }
