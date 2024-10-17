@@ -1,41 +1,59 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const statuses = document.querySelectorAll(".status");
+    const categories = document.querySelectorAll(".category");
 
-    //狀態映射
-    // 0: 已關閉, 1: 已啟用, 2: 審核中, 其他: 錯誤
+    //活動狀態映射
     statuses.forEach(status => {
-        const value = status.textContent.trim();
-        
-        if (value === '0') {
-            status.textContent = '已關閉';
-        } else if (value === '1') {
-            status.textContent = '已啟用';
-        } else if (value === '2') {
-            status.textContent = '審核中';
-        } else {
-            status.textContent = '錯誤';
-        }
+        const value = Number(status.textContent.trim());
+        status.textContent = statusMapping[value] !== undefined ? statusMapping[value] : statusMapping.default;
     });
 
-    //搜尋
-    // document.getElementById('searchBtn').addEventListener('click', event => {
-    //     event.preventDefault();
+    //活動類別映射
+    categories.forEach(category => {
+        const value = Number(category.textContent.trim());
+        category.textContent = categoryMapping[value] !== undefined ? categoryMapping[value] : categoryMapping.default;
+    });
 
-    //     const criteria = document.getElementById('searchCriteria').value;
-    //     const keyword = document.getElementById('searchInput').value;
+    //搜尋選項
+    // document.getElementById("searchCriteria").addEventListener("change", () => {
+    //     var searchInput = document.getElementById("searchInput");
+    //     var searchOptions = document.getElementById("searchOptions");
 
-    //     const queryParams = new URLSearchParams();
-    //     queryParams.append(criteria, keyword);
+    //     if (this.value === "eventName") {
+    //         searchInput.style.display = "block";
+    //         searchOptions.style.display = "none";
+    //     } else {
+    //         searchInput.style.display = "none";
+    //         searchOptions.style.display = "block";
+    //         if (this.value === "eventStatus") {
 
-    //     axios.get('/ProFit/events/search?' + queryParams.toString())
-    //         .then(response => {
-    //             console.log(response.data);
-    //             // Update the HTML with search results here
-    //         })
-    //         .catch(error => {
-    //             console.error('搜尋發生錯誤:', error);
-    //         });
+    //         } else if (this.value === "eventCategory") {
+
+    //         } else if (this.value === "eventMajor") {
+
+    //         } 
+    //     }
     // });
+
+    //搜尋
+    document.getElementById('searchBtn').addEventListener('click', event => {
+        event.preventDefault();
+
+        const criteria = document.getElementById('searchCriteria').value;
+        const keyword = document.getElementById('searchInput').value;
+
+        const queryParams = new URLSearchParams();
+        queryParams.append(criteria, keyword);
+
+        axios.get('/ProFit/events/search?' + queryParams.toString())
+            .then(response => {
+                console.log(response.data);
+                // Update the HTML with search results here
+            })
+            .catch(error => {
+                console.error('搜尋發生錯誤:', error);
+            });
+    });
 
 });
