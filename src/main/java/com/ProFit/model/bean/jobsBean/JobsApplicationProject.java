@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
 //資料型態對應：
 //INT: Java 的 Integer
 //NVARCHAR: Java 的 String
