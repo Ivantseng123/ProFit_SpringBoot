@@ -36,12 +36,11 @@ public class JobsApplicationController {
 
     //查詢全部
     @GetMapping("/list")
-    public String listJobsApplication(Model model){
+    public String listJobsApplication(Model model) {
         List<JobsApplication> jobsApplicationList = jobsApplicationService.findAll();
         model.addAttribute("jobsApplicationList", jobsApplicationList);
         return "jobsVIEW/jobsApplicationList";
     }
-
 
 
     // 刪除
@@ -67,12 +66,12 @@ public class JobsApplicationController {
                                     @RequestParam("jobsId") Integer jobsId,
                                     @RequestParam("userId") Integer userId) {
         Jobs poster = jobsService.findById(jobsId).orElse(null);
-        if ( poster != null) {
+        if (poster != null) {
             newjobApplication.setPoster(poster); // 將當前用戶設置為職缺的發布者
         }
         // 獲取當前用戶的 ID
         Users applicant = userService.getUserInfoByID(userId);
-        if ( applicant != null) {
+        if (applicant != null) {
             newjobApplication.setApplicant(applicant); // 將當前用戶設置為職缺的發布者
         }
 
@@ -83,9 +82,10 @@ public class JobsApplicationController {
 
     //導向查看頁面
     @GetMapping("/view/{id}")
-    public String view(@PathVariable("id") Integer id, Model model){
+    public String view(@PathVariable("id") Integer id, Model model) {
         if (id != null) {
-            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
+            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));
+            ;
         }
         return "jobsVIEW/jobsApplicationForm";
     }
@@ -93,9 +93,10 @@ public class JobsApplicationController {
 
     //導向更新頁面
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model){
+    public String edit(@PathVariable("id") Integer id, Model model) {
         if (id != null) {
-            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
+            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));
+            ;
         }
         return "jobsVIEW/jobsApplicationEdit";
     }
@@ -105,7 +106,7 @@ public class JobsApplicationController {
     public String updateJobApplication(@ModelAttribute JobsApplication updatedJobApplication,
                                        Model model) {
         jobsApplicationService.update(updatedJobApplication);
-        return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
+        return "redirect:/jobsApplication/list";//只要跟Date相關的就用redirect:轉回到頁面
     }
 
 //    // 查看某位應徵者的所有申請(東榆使用的方法，這裡是寫在他的controller裡)
