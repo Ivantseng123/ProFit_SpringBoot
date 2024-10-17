@@ -1,12 +1,10 @@
 package com.ProFit.controller.users;
 
+
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,24 +15,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.userService.IUserService;
-import com.google.cloud.storage.Acl.User;
 
 @Controller
 public class usersController {
 
 	@Autowired
 	private IUserService userService;
-
-	@Autowired
-	private ModelMapper modelMapper;
 
 	// 全部會員頁面
 	@GetMapping(path = "user/alluserPage")
@@ -151,18 +143,17 @@ public class usersController {
 	@PutMapping(path = "users/updateuser")
 	@ResponseBody
 	@Transactional
-	public Users UpdateUser(@ModelAttribute UsersDTO usersDTO) throws NoSuchAlgorithmException {
-
+	public Users UpdateUser(@ModelAttribute UsersDTO usersDTO)
+			throws NoSuchAlgorithmException {
+				
 		Integer userId = Integer.valueOf(usersDTO.getUserId());
 		Integer userIdentity = Integer.valueOf(usersDTO.getUserIdentity());
-		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance());
+		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance()); 
 		Integer freelancerProfileStatus = Integer.valueOf(usersDTO.getFreelancerProfileStatus());
 
-		return userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(),
-				usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(), usersDTO.getUserPhoneNumber(),
-				usersDTO.getUserCity(), userIdentity, userBalance, usersDTO.getFreelancerLocationPrefer(),
-				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus,
-				usersDTO.getFreelancerDisc(),usersDTO.getEnabled());
+		return userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(), usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(),
+				usersDTO.getUserPhoneNumber(), usersDTO.getUserCity(), userIdentity, userBalance, usersDTO.getFreelancerLocationPrefer(),
+				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus, usersDTO.getFreelancerDisc());
 	}
 
 	// 編輯會員
@@ -172,8 +163,6 @@ public class usersController {
 	public Users UpdateUserPwd(@RequestBody Map<String, String> user) throws NoSuchAlgorithmException {
 
 		Integer user_Id = Integer.valueOf(user.get("user_id"));
-
-		System.out.println(user);
 
 		Users existuser = userService.getUserInfoByID(user_Id);
 		if (existuser != null) {
@@ -187,23 +176,13 @@ public class usersController {
 	@ResponseBody
 	@GetMapping("/api/user/page")
 	public Page<UsersDTO> findByPageApi(@RequestParam Integer pageNumber,
-			@RequestParam(required = false) String search, @RequestParam(required = false) String userIdentity) {
+			@RequestParam(required = false) String search) {
 		Page<UsersDTO> page;
-		
-		System.out.println("會員身分-----------------------------------:  " + userIdentity);
-		
-		if (!userIdentity.isEmpty() ) {
-			
-			Integer userIdentity1 = Integer.valueOf(userIdentity);
-			page = userService.findUserByPageAndSearch(pageNumber, search, userIdentity1);
-			
-		}else {
-			
-			page = userService.findUserByPageAndSearch(pageNumber, search, null);
+		if (search != null && !search.isEmpty()) {
+			page = userService.findUserByPageAndSearch(pageNumber, search);
+		} else {
+			page = userService.findUserByPage(pageNumber);
 		}
-		
-		
-		
 		return page;
 	}
 }

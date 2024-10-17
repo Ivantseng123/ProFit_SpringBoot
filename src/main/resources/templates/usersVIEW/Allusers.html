@@ -14,17 +14,10 @@
 	<div class="container pt-5">
 		<!-- 只是一個範例，裡面布局可以更改 -->
 
-		<div class="dashboard-header d-flex align-items-center">
+		<div class="dashboard-header d-flex">
 			<h2>會員列表</h2>
-			<div class="ms-auto d-flex">
-				<select id="userIdentityFilter" class="form-select me-3" style="width: 150px;">
-					<option value="">所有</option>
-					<option value="1">應徵者</option>
-					<option value="2">企業</option>
-					<option value="3">管理員</option>
-					<option value="4">超級管理員</option>
-				</select>
-				<button class="btn btn-primary w-50" onclick="togglePopup()">新增會員</button>
+			<div class="ms-auto">
+				<button class="btn btn-primary" onclick="togglePopup()">新增</button>
 			</div>
 		</div>
 		<div>
@@ -32,12 +25,10 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>會員頭貼</th>
 						<th>會員帳號</th>
-						<th>會員名稱</th>
+						<th>會員姓名</th>
 						<th>會員身分</th>
 						<th>會員註冊時間</th>
-						<th>狀態</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -96,7 +87,7 @@
 						<option>臺東縣</option>
 					</select> <input type="submit" value="確定" class="btn btn-primary"
 						style="margin-top: 20px" id="insertBtn" />
-					<button class="btn-close-popup w-100" type="button"
+					<button class="btn-close-popup" type="button"
 						onclick="togglePopup()">關閉</button>
 				</form>
 				<button type="button" class="btn btn-primary mt-0"

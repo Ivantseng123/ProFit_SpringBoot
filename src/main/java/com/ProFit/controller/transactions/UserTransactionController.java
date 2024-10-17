@@ -42,7 +42,7 @@ public class UserTransactionController {
     @ResponseBody
     public List<UserTransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactions().stream()
-                .map(transactionService::convertToDTO)
+                .map(transactionService::convertToDTO)  // 將實體轉換為 DTO
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +54,7 @@ public class UserTransactionController {
             @RequestParam(required = false) String transactionType,
             @RequestParam(required = false) String transactionStatus,
             @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate) {
+            @RequestParam(required = false) String endDate) throws java.text.ParseException {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime startTimestamp = null;
@@ -69,21 +69,21 @@ public class UserTransactionController {
 
         return transactionService.getTransactionsByFilters(userId, transactionType, transactionStatus, startTimestamp, endTimestamp)
                 .stream()
-                .map(transactionService::convertToDTO)
+                .map(transactionService::convertToDTO)  // 將結果轉換為 DTO
                 .collect(Collectors.toList());
     }
 
     // 新增交易
     @PostMapping("/insert")
     public String insertTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
-        transactionService.insertTransaction(transactionDTO);
+        transactionService.insertTransaction(transactionService.convertToEntity(transactionDTO));  // 將 DTO 轉換為實體
         return "redirect:/userTransactions";
     }
 
     // 更新交易
     @PostMapping("/update")
     public String updateTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
-        transactionService.updateTransaction(transactionDTO);
+        transactionService.updateTransaction(transactionService.convertToEntity(transactionDTO));  // 將 DTO 轉換為實體
         return "redirect:/userTransactions";
     }
 

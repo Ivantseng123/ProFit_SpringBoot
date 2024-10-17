@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.ProFit.model.bean.majorsBean.UserMajorBean;
 import com.ProFit.model.bean.servicesBean.ServiceBean;
-import java.util.List;
 
 public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 
@@ -54,17 +53,5 @@ public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 
 	// 根據服務ID刪除服務
 
-//	----------------------------------------------------------------------
-	// 前台查尋功能，status為 1 時才能讓其他會員查詢到
-
-	// 根據專業ID查詢開放的服務（分頁）
-	@Query(value = "SELECT * FROM service s WHERE service_status = :status AND major_id = :majorId", nativeQuery = true)
-	Page<ServiceBean> findServiceByMajorIdAndStatus(@Param("status") Integer serviceStatus,
-			@Param("majorId") Integer majorId, Pageable pageable);
-
-	// 根據專業ID查詢開放的服務（分頁）
-	@Query(value = "SELECT * FROM service s WHERE service_status = :status AND service_price >= :minPric AND service_price <= :maxPric", nativeQuery = true)
-	Page<ServiceBean> findServiceByPriceRangeAndStatus(@Param("status")Integer serviceStatus, Integer minPric, Integer maxPric,
-			Pageable pageable);
 
 }

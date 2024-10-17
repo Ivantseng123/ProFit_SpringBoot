@@ -13,7 +13,6 @@ import com.ProFit.service.majorService.IMajorCategoryService;
 import com.ProFit.service.majorService.IMajorService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/events")
@@ -44,6 +43,7 @@ public class EventsController {
     public String newEvent(Model model) {
         EventsDTO event = new EventsDTO();
         model.addAttribute("event", event);
+      
         return "eventsVIEW/eventForm";
     }
 

@@ -1,36 +1,66 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>發票管理</title>
-    <link rel="stylesheet" th:href="@{/css/model.css}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
-     <!-- 引入 DataTables 的 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>發票管理</title>
+<link rel="stylesheet" th:href="@{/css/model.css}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body>
     <div th:replace="~{model/layout-static}"></div>
-    
-    <!-- 主內容區域 -->
     <div class="container pt-5">
         <main>
-            <div class="dashboard-header d-flex align-items-center">
-                <h1>發票管理</h1>
-            <div class="ms-auto d-flex">
-				
-				<!-- 新增交易按鈕 -->
-        		 <div class="text-center mb-4">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">發票管理</h2>
+            </div>
+            <div class="dashboard-header">
+                <form method="get" th:action="@{/invoices/search}">
+                    <div class="row mb-3">
+                        <div class="col-lg-6 col-md-12">
+                            <label for="invoice_number">發票號碼:</label> 
+                            <input type="text" id="invoice_number" name="invoice_number" class="form-control" th:value="${param.invoice_number}">
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <label for="invoice_status">發票狀態:</label> 
+                            <select id="invoice_status" name="invoice_status" class="form-select">
+                                <option value="">全部</option>
+                                <option value="open" th:selected="${param.invoice_status == 'open'}">開立</option>
+                                <option value="canceled" th:selected="${param.invoice_status == 'canceled'}">取消</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-lg-6 col-md-12">
+                            <label for="id_type">訂單ID類型:</label> 
+                            <select id="id_type" name="id_type" class="form-select">
+                                <option value="">選擇ID類型</option>
+                                <option value="transaction_id" th:selected="${param.id_type == 'transaction_id'}">交易ID</option>
+                                <option value="job_order_id" th:selected="${param.id_type == 'job_order_id'}">職缺訂單ID</option>
+                                <option value="course_order_id" th:selected="${param.id_type == 'course_order_id'}">課程訂單ID</option>
+                                <option value="event_order_id" th:selected="${param.id_type == 'event_order_id'}">活動訂單ID</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <label for="id_value">對應ID:</label> 
+                            <input type="text" id="id_value" name="id_value" class="form-control" th:value="${param.id_value}">
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-3">
+                        <input type="submit" value="查詢" class="btn btn-primary px-4">
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-center mb-4">
                 <button type="button" class="btn btn-success px-4" data-bs-toggle="modal" data-bs-target="#addInvoiceModal">新增發票</button>
             </div>
-       		</div>
-       		</div>  
 
-			<!-- 發票記錄表格 -->
-            <div class="container mt-5 table-container">
-                <table id="ordersTable" class="table table-bordered table-striped table-hover align-middle">
-                    <thead>
+            <div class="table-responsive">
+                <table id="invoicesTable" class="table table-bordered table-striped table-hover align-middle">
+                    <thead class="table-light">
                         <tr>
                             <th>發票號碼</th>
                             <th>發票金額</th>
@@ -61,7 +91,6 @@
                 </table>
             </div>
 
-            <!-- 新增發票模態框 -->
             <div class="modal fade" id="addInvoiceModal" tabindex="-1" aria-labelledby="addInvoiceModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -71,20 +100,28 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <label for="addInvoiceNumber">發票號碼:</label>
-                                <input type="text" id="addInvoiceNumber" name="invoice_number" required class="form-control mb-3">
-
-                                <label for="addInvoiceAmount">發票金額:</label>
-                                <input type="number" id="addInvoiceAmount" name="invoice_amount" required class="form-control mb-3" min="0">
-
-                                <label for="addInvoiceStatus">發票狀態:</label>
+                                <label for="addInvoiceNumber">發票號碼:</label> 
+                                <input type="text" id="addInvoiceNumber" name="invoice_number" required class="form-control mb-3"> 
+                                
+                                <label for="addInvoiceAmount">發票金額:</label> 
+                                <input type="number" id="addInvoiceAmount" name="invoice_amount" required class="form-control mb-3" min="0"> 
+                                
+                                <label for="addInvoiceStatus">發票狀態:</label> 
                                 <select id="addInvoiceStatus" name="invoice_status" required class="form-select mb-3">
                                     <option value="open">開立</option>
                                     <option value="canceled">取消</option>
-                                </select>
-
-                                <label for="addTransactionId">交易ID:</label>
-                                <input type="text" id="addTransactionId" name="transaction_id" required class="form-control mb-3">
+                                </select> 
+                                
+                                <label for="addOrderType">訂單類型:</label> 
+                                <select id="addOrderType" name="order_type" class="form-select mb-3" required>
+                                    <option value="transaction_id">交易ID</option>
+                                    <option value="job_order_id">職缺訂單ID</option>
+                                    <option value="course_order_id">課程訂單ID</option>
+                                    <option value="event_order_id">活動訂單ID</option>
+                                </select> 
+                                
+                                <label for="addOrderId">訂單ID:</label> 
+                                <input type="text" id="addOrderId" name="order_id" required class="form-control">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -95,7 +132,6 @@
                 </div>
             </div>
 
-            <!-- 更新發票模態框 -->
             <div class="modal fade" id="updateInvoiceModal" tabindex="-1" aria-labelledby="updateInvoiceModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -105,12 +141,11 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <input type="hidden" name="invoice_number" id="updateInvoiceNumber">
-
-                                <label for="updateInvoiceAmount">發票金額:</label>
-                                <input type="number" id="updateInvoiceAmount" name="invoice_amount" required class="form-control mb-3" min="0">
-
-                                <label for="updateInvoiceStatus">發票狀態:</label>
+                                <input type="hidden" name="invoice_number" id="updateInvoiceNumber"> 
+                                <label for="updateInvoiceAmount">發票金額:</label> 
+                                <input type="number" id="updateInvoiceAmount" name="invoice_amount" required class="form-control mb-3" min="0"> 
+                                
+                                <label for="updateInvoiceStatus">發票狀態:</label> 
                                 <select id="updateInvoiceStatus" name="invoice_status" required class="form-select mb-3">
                                     <option value="open">開立</option>
                                     <option value="canceled">取消</option>
@@ -146,24 +181,7 @@
             }
             return true;
         }
-        
-        // 初始化 DataTables 分頁、排序和搜尋功能
-        $(document).ready(function() {
-            $('#ordersTable').DataTable({
-                "paging": true,
-                "lengthMenu": [5, 10, 25, 50], // 每頁顯示數量
-                "pageLength": 5,               // 預設每頁顯示 5 筆
-                "searching": true,             // 啟用搜尋
-                "ordering": true,              // 啟用排序
-                "info": true                   // 顯示表格資訊
-            });
-        });
-        
+
     </script>
-    
-      <!-- 引入 DataTables 的 JavaScript 文件 -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    
 </body>
 </html>

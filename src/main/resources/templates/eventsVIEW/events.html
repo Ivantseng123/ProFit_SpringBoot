@@ -14,9 +14,9 @@
         <div class="container pt-5">
             <div class="course-header">
                 <h2>活動列表</h2>
-                <div class="action-buttons">
-                    <a class="create btn btn-warning btn-sm text-white" th:href="@{events/new}">新增</a>
-                </div>
+                <span class="action-buttons">
+                    <a class="create btn" th:href="@{events/new}">新增</a>
+                </span>
             </div>
 
             <div class="dashboard-header">
@@ -34,13 +34,12 @@
                 </div>
             </div>
 
-            <div class="table-container">
+            <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                 <table>
                     <tr>
                         <th>ID</th>
                         <th>活動名稱</th>
                         <th>狀態</th>
-                        <th>活動類別</th>
                         <th>專業類別</th>
                         <th>描述</th>
                         <th>操作</th>
@@ -53,29 +52,15 @@
                         <td class="major" th:text="${event.eventMajorId}"></td>
                         <td class="description" th:text="${event.eventDescription}"></td>
                         <td class="action-buttons">
-                            <a class="view btn btn-success btn-sm"
-                                th:href="@{/events/view?(eventId=${event.eventId})}">詳細資料</a>
-                            <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
-                            <a class="view-participant btn btn-success btn-sm" href="#">參加者列表</a>
-                            <a class="edit btn btn-primary btn-sm"
+                            <a class="edit btn  btn-primary btn-sm"
                                 th:href="@{/events/edit?(eventId=${event.eventId})}">編輯</a>
-                            <a class="delete btn btn-danger btn-sm"
+                            <a class="delete btn  btn-danger btn-sm"
                                 th:href="@{/events/delete(eventId=${event.eventId})}">刪除</a>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-
-        <!-- 彈出視窗 -->
-        <!-- <div id="popup" class="popup">
-            <div class="popup-content">
-                <span class="close-btn">&times;</span>
-
-
-            </div>
-        </div> -->
-
     </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>

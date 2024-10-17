@@ -5,52 +5,49 @@
       layout:decorate="~{jobsVIEW/layout-static}">
 <head>
     <meta charset="UTF-8">
-    <title>查看職缺申請詳情 - ProFit</title>
+    <title>查看職缺申請項目詳情 - ProFit</title>
 </head>
 
 <body>
 <div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
-    <h1 class="mt-4">職缺申請詳情</h1>
+    <h1 class="mt-4">職缺申請項目詳情</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a th:href="@{/jobsApplication/list}">職缺申請管理</a></li>
-        <li class="breadcrumb-item active">查看職缺申請詳情</li>
+        <li class="breadcrumb-item"><a th:href="@{/jobsApplicationProject/list}">職缺申請管理</a></li>
+        <li class="breadcrumb-item active">查看職缺申請項目詳情</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
             <!-- 職缺表單 -->
-            <form id="jobApplicationForm">
+            <form id="jobApplicationProjectForm">
                 <!-- 職缺申請 ID -->
-                <input type="hidden" id="jobsApplicationId" name="jobsApplicationId" th:value="${jobApplication.jobsApplicationId}" />
+                <input type="hidden" id="jobsApplicationProjectId" name="jobsApplicationProjectId" th:value="${jobApplicationProject.jobsApplicationProjectId}" />
 
 
-                <!-- 刊登方 ID -->
-                <div class="mb-3">
-                    <label for="posterId" class="form-label">刊登方 ID</label>
-                    <input type="text" class="form-control" id="posterId" name="poster" th:value="${jobApplication.poster.users}" readonly />
-                </div>
 
-                <!-- 應徵方 ID -->
-                <div class="mb-3">
-                    <label for="applicantId" class="form-label">應徵方 ID</label>
-                    <input type="text" class="form-control" id="applicantId" name="applicant" th:value="${jobApplication.applicant.userId}" readonly />
-                </div>
+<!--                &lt;!&ndash; 應徵方 ID &ndash;&gt;-->
+<!--                <div class="mb-3">-->
+<!--                    <label for="applicantId" class="form-label">應徵方 ID</label>-->
+<!--                    <input type="text" class="form-control" id="applicantId" name="applicant" th:value="${jobApplicationProject.applicant.userId}" readonly />-->
+<!--                </div>-->
 
-                <!-- 發布日期 -->
-                <div class="mb-3">
-                    <label for="jobsApplicationDate" class="form-label">發布日期</label>
-                    <input type="date" class="form-control" id="jobsApplicationDate" name="jobsApplicationDate" th:value="${jobApplication.jobsApplicationDate}" readonly />
-                </div>
+
 
                 <!-- 職缺申請狀態 -->
                 <div class="mb-3">
                     <label for="jobsStatus" class="form-label">職缺狀態</label>
-                    <input type="text" class="form-control" id="jobsStatus" name="jobsStatus" th:value="${jobApplication.jobsApplicationStatus == 0 ? '開放中' : '已關閉'}" readonly />
+                    <input type="text" class="form-control" id="jobsStatus" name="jobsApplicationStatus" th:value="${jobApplicationProject.jobsApplicationStatus == 0 ? '開放中' : '已關閉'}" readonly />
                 </div>
 
-                <!-- 職缺申請合約 -->
+                <!-- 職缺項目 -->
                 <div class="mb-3">
-                    <label for="jobsApplicationContract" class="form-label">工作合約</label>
-                    <input type="text" class="form-control" id="jobsApplicationContract" name="jobsApplicationContract" th:value="${jobApplication.jobsApplicationContract}" readonly />
+                    <label for="jobsProject" class="form-label">職缺項目</label>
+                    <input type="text" class="form-control" id="jobsProject" name="jobsProject" th:value="${jobApplicationProject.jobsProject}" readonly />
+                </div>
+
+                <!-- 職缺金額 -->
+                <div class="mb-3">
+                    <label for="jobsAmount" class="form-label">職缺金額</label>
+                    <input type="text" class="form-control" id="jobsAmount" name="jobsAmount" th:value="${jobApplicationProject.jobsAmount}" readonly />
                 </div>
 
 

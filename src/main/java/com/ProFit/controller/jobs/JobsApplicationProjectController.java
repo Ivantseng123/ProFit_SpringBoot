@@ -1,5 +1,6 @@
 package com.ProFit.controller.jobs;
 
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.model.bean.jobsBean.JobsApplicationProject;
 import com.ProFit.service.jobService.IJobsApplicationProjectService;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,29 +32,12 @@ public class JobsApplicationProjectController {
 
     //查詢全部
     @GetMapping("/list")
-    public String listJobs(Model model){
-        List<JobsApplicationProject> jobsApplicationProjectListList = jobsApplicationProjectService.findAll();
-        model.addAttribute("jobsApplicationProjectListList", jobsApplicationProjectListList);
+    public String listJobsApplicationProject(Model model){
+        List<JobsApplicationProject> jobsApplicationProjectList = jobsApplicationProjectService.findAll();
+        model.addAttribute("jobsApplicationProjectListList", jobsApplicationProjectList);
         return "jobsVIEW/jobsApplicationProjectList";
     }
-//    //查詢全部
-//    @GetMapping("/list")
-//    public ResponseEntity<List<JobsApplicationProject>> listJobsApplicationsProject() {
-//        List<JobsApplicationProject> jobsApplicationProjectList = jobsApplicationProjectService.findAll();
-//        return ResponseEntity.ok(jobsApplicationProjectList);
-//    }
 
-
-    // 單筆查詢
-    @GetMapping("/find/{id}")
-    public ResponseEntity<JobsApplicationProject> getJobApplicationProject(@PathVariable Integer id) {
-        JobsApplicationProject jobsApplicationProject = jobsApplicationProjectService.findById(id).orElse(null);
-        if (jobsApplicationProject != null) {
-            return ResponseEntity.ok(jobsApplicationProject);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
 
     // 刪除
@@ -61,56 +47,60 @@ public class JobsApplicationProjectController {
         return ResponseEntity.ok().build();
     }
 
+    // 導向新增頁面
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
 
-    // 新增
-    @PostMapping("/add")
-    public ResponseEntity<JobsApplicationProject> addJobApplicationProject(
-            @RequestParam("jobsApplicationId") Integer jobsApplicationId,
-            @RequestParam("jobsApplicationStatus") Byte jobsApplicationStatus,
-            @RequestParam("jobsProject") String jobsProject,
-            @RequestParam("jobsAmount") Integer jobsAmount) {
+        // 創建一個新的Jobs對象並添加到model中
+        model.addAttribute("jobApplicationProject", new JobsApplicationProject());
+        // 返回jobsEdit視圖
+        return "jobsVIEW/jobsApplicationProjectEdit";
+    }
 
-        JobsApplication jobsApplication = jobsApplicationService.findById(jobsApplicationId).orElse(null);
-        JobsApplicationProject jobsApplicationProject = new JobsApplicationProject();
+//    // 呈現新增後
+//    @PostMapping("/add")
+//    public String addJob(@ModelAttribute JobsApplicationProject newJobApplicationProject,
+//            @RequestParam("jobsApplicationId") Integer jobsApplicationId) {
+//
+//        JobsApplication jobsApplication = jobsApplicationService.findById(jobsApplicationId).orElse(null);
+//        JobsApplicationProject jobsApplicationProject = new JobsApplicationProject();
+//
+//
+//        JobsApplicationProject savedJobsApplicationProject = jobsApplicationProjectService.save(jobsApplicationProject);
+//        return "redirect:/jobsApplicationProject /list";
+//    }
 
-        jobsApplicationProject.setJobsApplication(jobsApplication);
-        jobsApplicationProject.setJobsApplicationStatus(jobsApplicationStatus);
-        jobsApplicationProject.setJobsProject(jobsProject);
-        jobsApplicationProject.setJobsAmount(jobsAmount);
+    //導向查看頁面
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("jobApplicationProject ", jobsApplicationProjectService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsApplicationProjectForm";
+    }
 
-        JobsApplicationProject savedJobsApplicationProject = jobsApplicationProjectService.save(jobsApplicationProject);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedJobsApplicationProject);
+
+    //導向更新頁面
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("jobApplicationProject ", jobsApplicationProjectService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsApplicationProjectEdit";
+    }
+
+
+    //呈現更新後
+    @PutMapping("/update/{id}")
+    public String updateJobApplicationProject (@ModelAttribute JobsApplicationProject  updatedJobApplicationProject,
+                            Model model) {
+
+
+        jobsApplicationProjectService.update(updatedJobApplicationProject);
+        return "redirect:/jobsApplicationProject/list" ;//只要跟Date相關的就用redirect:轉回到頁面
     }
 
 
 
-
-//    // 更新
-//    @PutMapping("/updated/{id}")
-//    public ResponseEntity<JobsApplicationProject> updateJobApplicationProject(
-//            @PathVariable Integer id,
-//            @RequestParam("jobsApplicationId") Integer jobsApplicationId,
-//            @RequestParam("jobsApplicationStatus") Byte jobsApplicationStatus,
-//            @RequestParam("jobsProject") String jobsProject,
-//            @RequestParam("jobsAmount") Integer jobsAmount) {
-//
-//        JobsApplicationProject existingProject = jobsApplicationProjectService.findById(id);
-//        if (existingProject == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//        JobsApplication jobsApplication = jobsApplicationService.findById(jobsApplicationId);
-//        if (jobsApplication == null) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//
-//        existingProject.setJobsApplication(jobsApplication);
-//        existingProject.setJobsApplicationStatus(jobsApplicationStatus);
-//        existingProject.setJobsProject(jobsProject);
-//        existingProject.setJobsAmount(jobsAmount);
-//
-//        JobsApplicationProject updatedJobApplicationProject = jobsApplicationProjectService.update(existingProject);
-//        return ResponseEntity.ok(updatedJobApplicationProject);
-//    }
 }
 

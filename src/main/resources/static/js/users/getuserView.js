@@ -66,7 +66,7 @@ $(document).ready(function() {
 						   										<label>會員身份</label>
 						   									</div>
 						   									<div class="col-md-6">
-						   										 <p>${user.userIdentity == 1 ? '應徵者' : user.userIdentity == 2 ? '應徵者/企業主' : user.userIdentity == 2 ? '管理員' : '超級管理員'}</p>
+						   										 <p>${user.userIdentity == 1 ? '應徵者' : user.userIdentity == 2 ? '應徵者/企業主' : '管理員'}</p>
 						   									</div>
 						   								</div>
 						   								<div class="row">
@@ -125,14 +125,6 @@ $(document).ready(function() {
 						   										<p>${user.userRegisterTime}</p>
 						   									</div>
 						   								</div>
-														<div class="row">
-															<div class="col-md-6">
-																<label>會員註冊時間</label>
-															</div>
-															<div class="col-md-6">
-																<p>${user.enabled == 0 ? '未啟用' : '啟用'}</p>
-															</div>
-														</div>
               `;
 		})
 		.catch(error => console.error('Error fetching user data:', error));

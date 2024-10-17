@@ -137,8 +137,29 @@ public class UserTransactionService {
         transactionRepository.deleteById(transactionId);
     }
 
+    // DTO 轉換為實體
+    public UserTransactionBean convertToEntity(UserTransactionDTO dto) {
+        UserTransactionBean transaction = new UserTransactionBean();
+        transaction.setTransactionId(dto.getTransactionId());
+        transaction.setUserId(dto.getUserId());
+        transaction.setTransactionType(dto.getTransactionType());
+        transaction.setTransactionAmount(dto.getTransactionAmount());
+        transaction.setTransactionStatus(dto.getTransactionStatus());
+        transaction.setCreatedAt(dto.getCreatedAt());
+        transaction.setCompletionAt(dto.getCompletionAt());
+        return transaction;
+    }
+
     // 實體轉換為 DTO
     public UserTransactionDTO convertToDTO(UserTransactionBean transaction) {
-        return new UserTransactionDTO(transaction);
+        UserTransactionDTO dto = new UserTransactionDTO();
+        dto.setTransactionId(transaction.getTransactionId());
+        dto.setUserId(transaction.getUserId());
+        dto.setTransactionType(transaction.getTransactionType());
+        dto.setTransactionAmount(transaction.getTransactionAmount());
+        dto.setTransactionStatus(transaction.getTransactionStatus());
+        dto.setCreatedAt(transaction.getCreatedAt());
+        dto.setCompletionAt(transaction.getCompletionAt());
+        return dto;
     }
 }

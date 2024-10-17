@@ -21,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 			if (result === "Login Failed") {
 				let div = document.getElementById('loginError');
 				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
-			} else{
+			} else if (result === "Login Successful") {
 
 				window.location.href = 'http://localhost:8080/ProFit/user/alluserPage';
 			}

@@ -9,6 +9,7 @@ import java.util.UUID;
 @Table(name = "job_orders")
 public class JobOrderBean {
 
+    // 使用 UUID 作為主鍵
     @Id
     @Column(name = "job_orders_id", nullable = false, unique = true)
     private String jobOrdersId;
@@ -28,10 +29,15 @@ public class JobOrderBean {
     @Column(name = "job_amount", nullable = false)
     private int jobAmount;
 
- 
+    @OneToOne(mappedBy = "jobOrderBean", fetch = FetchType.LAZY)
+    private InvoiceBean invoiceBean;
+
     // 無參構造函數
     public JobOrderBean() {
-        
+        // 如果 jobOrdersId 為空，則生成一個新的 UUID
+        if (this.jobOrdersId == null) {
+            this.jobOrdersId = UUID.randomUUID().toString();
+        }
     }
 
     // 全參構造函數
@@ -94,5 +100,20 @@ public class JobOrderBean {
         this.jobAmount = jobAmount;
     }
 
-   
+    public InvoiceBean getInvoiceBean() {
+        return invoiceBean;
+    }
+
+    public void setInvoiceBean(InvoiceBean invoiceBean) {
+        this.invoiceBean = invoiceBean;
+    }
+
+    // 新增方法：格式化 LocalDateTime 為 yyyy-MM-dd HH:mm:ss 格式
+    public String getFormattedJobOrderDate() {
+        if (jobOrderDate != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return jobOrderDate.format(formatter);
+        }
+        return "";
+    }
 }

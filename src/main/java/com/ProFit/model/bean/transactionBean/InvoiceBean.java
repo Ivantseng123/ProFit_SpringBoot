@@ -7,62 +7,142 @@ import java.time.LocalDateTime;
 @Table(name = "invoices")
 public class InvoiceBean {
 
-    @Id
-    @Column(name = "invoice_number", length = 50, nullable = false)
-    private String invoiceNumber;  // 發票號碼
+	@Id
+	@Column(name = "invoice_number")
+	private String invoiceNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")  // 與交易表的關聯
-    private UserTransactionBean userTransactionBean;
+	@Column(name = "transaction_id")
+	private String transactionId;
 
-    @Column(name = "invoice_amount", nullable = false)
-    private int invoiceAmount;  // 發票金額
+	@Column(name = "job_order_id")
+	private String jobOrderId;
 
-    @Column(name = "issued_date", nullable = false)
-    private LocalDateTime issuedDate;  // 發票開具日期
+	@Column(name = "course_order_id")
+	private String courseOrderId;
 
-    @Column(name = "invoice_status", nullable = false, length = 10)
-    private String invoiceStatus;  // 發票狀態
+	@Column(name = "event_order_id")
+	private String eventOrderId;
 
-    // Getters 和 Setters
+	@Column(name = "invoice_amount")
+	private int invoiceAmount;
 
-    public String getInvoiceNumber() {
-        return invoiceNumber;
-    }
+	@Column(name = "issued_date")
+	private LocalDateTime issuedDate;
 
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
-    }
+	@Column(name = "invoice_status")
+	private String invoiceStatus;
 
-    public UserTransactionBean getUserTransactionBean() {
-        return userTransactionBean;
-    }
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "transaction_id", insertable = false, updatable = false)
+	private UserTransactionBean userTransactionBean;
 
-    public void setUserTransactionBean(UserTransactionBean userTransactionBean) {
-        this.userTransactionBean = userTransactionBean;
-    }
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "job_order_id", insertable = false, updatable = false)
+	private JobOrderBean jobOrderBean;
 
-    public int getInvoiceAmount() {
-        return invoiceAmount;
-    }
+//    
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="course_order_id", insertable = false, updatable = false)
+//    private CourseOrderBean courseOrderBean;
+//
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="event_order_id", insertable = false, updatable = false)
+//    private EventOrderBean eventOrderBean;
 
-    public void setInvoiceAmount(int invoiceAmount) {
-        this.invoiceAmount = invoiceAmount;
-    }
+	// Getters 和 Setters
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
 
-    public LocalDateTime getIssuedDate() {
-        return issuedDate;
-    }
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
 
-    public void setIssuedDate(LocalDateTime issuedDate) {
-        this.issuedDate = issuedDate;
-    }
+	public String getTransactionId() {
+		return transactionId;
+	}
 
-    public String getInvoiceStatus() {
-        return invoiceStatus;
-    }
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
 
-    public void setInvoiceStatus(String invoiceStatus) {
-        this.invoiceStatus = invoiceStatus;
-    }
+	public String getJobOrderId() {
+		return jobOrderId;
+	}
+
+	public void setJobOrderId(String jobOrderId) {
+		this.jobOrderId = jobOrderId;
+	}
+
+	public String getCourseOrderId() {
+		return courseOrderId;
+	}
+
+	public void setCourseOrderId(String courseOrderId) {
+		this.courseOrderId = courseOrderId;
+	}
+
+	public String getEventOrderId() {
+		return eventOrderId;
+	}
+
+	public void setEventOrderId(String eventOrderId) {
+		this.eventOrderId = eventOrderId;
+	}
+
+	public int getInvoiceAmount() {
+		return invoiceAmount;
+	}
+
+	public void setInvoiceAmount(int invoiceAmount) {
+		this.invoiceAmount = invoiceAmount;
+	}
+
+	public LocalDateTime getIssuedDate() {
+		return issuedDate;
+	}
+
+	public void setIssuedDate(LocalDateTime issuedDate) {
+		this.issuedDate = issuedDate;
+	}
+
+	public String getInvoiceStatus() {
+		return invoiceStatus;
+	}
+
+	public void setInvoiceStatus(String invoiceStatus) {
+		this.invoiceStatus = invoiceStatus;
+	}
+
+	public UserTransactionBean getUserTransactionBean() {
+		return userTransactionBean;
+	}
+
+	public void setUserTransactionBean(UserTransactionBean userTransactionBean) {
+		this.userTransactionBean = userTransactionBean;
+	}
+
+	public JobOrderBean getJobOrderBean() {
+		return jobOrderBean;
+	}
+
+	public void setJobOrderBean(JobOrderBean jobOrderBean) {
+		this.jobOrderBean = jobOrderBean;
+	}
+
+//    public CourseOrderBean getCourseOrderBean() {
+//        return courseOrderBean;
+//    }
+//
+//    public void setCourseOrderBean(CourseOrderBean courseOrderBean) {
+//        this.courseOrderBean = courseOrderBean;
+//    }
+//
+//    public EventOrderBean getEventOrderBean() {
+//        return eventOrderBean;
+//    }
+//
+//    public void setEventOrderBean(EventOrderBean eventOrderBean) {
+//        this.eventOrderBean = eventOrderBean;
+//    }
 }

@@ -2,17 +2,8 @@ package com.ProFit.model.bean.jobsBean;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
+
 import java.util.Date;
 import com.ProFit.model.bean.usersBean.Users;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,6 +22,13 @@ public class Jobs implements java.io.Serializable{
     @ManyToOne(fetch = FetchType.EAGER)//FK，對User表，一個公司（user）可以有po很多職缺
     @JoinColumn(name= "jobs_user_id")
     private Users users;//請跟我有關聯的表格組員修改他們的關係語句
+
+//	@OneToMany(fetch = FetchType.EAGER)//加上mappedBy = ""寫法 //FK，對User表，一個公司（user）可以有po很多職缺
+//	private Users ;
+
+
+
+
 
 //    @ManyToOne(fetch = FetchType.LAZY)//改FK，對major表，一個技能可以對應很多職缺
 //    @Column(name = "jobs_required_skills")

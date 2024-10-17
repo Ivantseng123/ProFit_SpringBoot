@@ -45,6 +45,7 @@ function alltoken() {
 		},
 		"columns": [
 			{ data: 'tokenId' },
+			{ data: 'userId' },
 			{ data: 'userEmail' },
 			{ data: 'userTokenHash' },
 			{ data: 'expirationTime' },

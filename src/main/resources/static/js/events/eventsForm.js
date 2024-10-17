@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.getElementById("saveBtn").addEventListener("click", submitForm);
 
     const currentURL = window.location.pathname;
     const titleElement = document.getElementById('eventFormTitle');
@@ -86,3 +86,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+

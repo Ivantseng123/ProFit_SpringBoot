@@ -12,11 +12,7 @@ $(document).ready(function() {
 			return response.json();
 		})
 		.then(data => {
-			
-			document.getElementById('userName').innerText = data.userName;
-			
-			localStorage.setItem('userIdentity', data.userIdentity);
-			
+			document.getElementById('userName').innerText = data.userEmail
 			if (document.getElementById('userImage').src = data.userPictureURL) {
 
 				document.getElementById('userImage').src = data.userPictureURL;

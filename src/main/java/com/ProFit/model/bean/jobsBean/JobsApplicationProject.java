@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
 //資料型態對應：
 //INT: Java 的 Integer
 //NVARCHAR: Java 的 String
@@ -22,8 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "jobs_application_project")
-public class JobsApplicationProject {
-
+public class JobsApplicationProject implements java.io.Serializable {
 
 
 	    @Id
@@ -56,7 +54,6 @@ public class JobsApplicationProject {
 	    
 	    public JobsApplicationProject() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 
 
@@ -129,7 +126,6 @@ public class JobsApplicationProject {
 		public void setJobsAmount(Integer jobsAmount) {
 			this.jobsAmount = jobsAmount;
 		}
-	    
-	
+
 
 }

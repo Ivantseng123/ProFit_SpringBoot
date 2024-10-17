@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ProFit.model.bean.usersBean.Users;
-import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.service.userService.IUserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -87,15 +85,11 @@ public class loginController {
 	public ResponseEntity<Map<String, String>> getSessionAttribute(HttpSession session) {
 
 		String user_email = (String) session.getAttribute("user_email");
-		String user_name = (String) session.getAttribute("user_name");
 		String user_pictureURL = (String) session.getAttribute("user_pictureURL");
-		String user_identity = String.valueOf(session.getAttribute("user_identity"));
 		if (user_email != null) {
 			Map<String, String> response = new HashMap<>();
 			response.put("userEmail", user_email);
-			response.put("userName", user_name);
 			response.put("userPictureURL", user_pictureURL);
-			response.put("userIdentity", user_identity);
 			return ResponseEntity.ok(response);
 		} else {
 			return ResponseEntity.status(404).body(null);

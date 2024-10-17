@@ -157,8 +157,9 @@ VALUES
 (2, 'C0101', N'繪製用戶旅程地圖', '2', 'http://example.com/user','website',30);
 
 -- 插入 events 表格的測試數據
-INSERT INTO events (event_id, event_name, is_event_active, event_category, event_major, event_publish_date, event_start_date, event_end_date, event_part_start_date, event_part_end_date, event_amount, event_location, event_participant_maximum, event_description, event_note)
+INSERT INTO events (event_id, event_name, is_event_active, event_major, event_start_date, event_end_date, event_part_start_date, event_part_end_date, event_amount, event_location, event_participant_maximum, event_description, event_note)
 VALUES
+
 ('EV100', '科技大會', 1, 0, 100, GETDATE(), GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 500, '台北', 300, '年度科技大會', '需要報名'),
 ('EV101', '金融講座', 1, 1, 101, GETDATE(), GETDATE(), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), DATEADD(day, 3, GETDATE()), 700, '高雄', 400, '領先的金融高峰會', '線上報名'),
 ('EV102', '人工智慧工作坊', 1, 2, 102, GETDATE(), GETDATE(), DATEADD(day, 3, GETDATE()), DATEADD(day, 1, GETDATE()), DATEADD(day, 2, GETDATE()), 300, '台北', 150, '人工智慧技術工作坊', '需要報名'),
@@ -192,21 +193,20 @@ VALUES
 ('J0103', 4, DATEADD(day, -2, GETDATE()), 'Canceled', N'品牌推廣活動訂單', 60000),
 ('J0104', 5, DATEADD(day, -1, GETDATE()), 'Processing', N'電商平台前端開發訂單', 45000);
 
--- 插入一筆 user_transactions 的測試資料 
-INSERT INTO user_transactions (transaction_id, user_id, transaction_role, transaction_type, order_id, total_amount, platform_fee, target_income, transaction_status, payment_method, reference_id, created_at)
-VALUES 
-('TXN001', 101, 'buyer', 'purchase', 'ORD001', 100, 10, 90, 'completed', 'credit_card', 'REF12345', DATEADD(day, -5, GETDATE())),
-('TXN002', 102, 'seller', 'sale', 'ORD002', 200, 20, 180, 'pending', 'paypal', NULL, DATEADD(day, -4, GETDATE())),
-('TXN003', 103, 'buyer', 'refund', 'ORD003', 50, 0, 50, 'completed', 'bank_transfer', 'REF67890', DATEADD(day, -2, GETDATE()));
-
+-- 2. user_transactions 表
+INSERT INTO user_transactions (transaction_id, user_id, transaction_type, transaction_amount, transaction_status, created_at, completion_at)
+VALUES
+('TR001', 101, 'payment', 50000, 'completed', DATEADD(day, -5, GETDATE()), DATEADD(day, -5, GETDATE())),
+('TR002', 102, 'deposit', 100000, 'completed', DATEADD(day, -4, GETDATE()), DATEADD(day, -4, GETDATE())),
+('TR003', 103, 'payment', 40000, 'pending', DATEADD(day, -3, GETDATE()), NULL),
+('TR004', 104, 'withdrawal', 20000, 'completed', DATEADD(day, -2, GETDATE()), DATEADD(day, -2, GETDATE())),
+('TR005', 105, 'refund', 15000, 'pending', DATEADD(day, -1, GETDATE()), NULL);
 
 -- 3. invoices 表
-
-INSERT INTO invoices (invoice_number, transaction_id, invoice_amount, issued_date, invoice_status)
-VALUES 
-('INV001', 'TXN001', 100, DATEADD(day, -5, GETDATE()), 'open'),
-('INV002', 'TXN002', 200, DATEADD(day, -4, GETDATE()), 'open'),
-('INV003', 'TXN003', 50, DATEADD(day, -2, GETDATE()), 'canceled');
-
-
-
+INSERT INTO invoices (invoice_number, transaction_id, job_order_id, course_order_id, event_order_id, invoice_amount, issued_date, invoice_status)
+VALUES
+('INV001', 'TR001', 'J0100', NULL, NULL, 50000, DATEADD(day, -5, GETDATE()), 'open'),
+('INV002', 'TR002', NULL, 'CR100', NULL, 15000, DATEADD(day, -4, GETDATE()), 'open'),
+('INV003', 'TR003', 'J0101', NULL, NULL, 40000, DATEADD(day, -3, GETDATE()), 'open'),
+('INV004', 'TR004', NULL, NULL, 'EO100', 500, DATEADD(day, -2, GETDATE()), 'open'),
+('INV005', 'TR005', NULL, 'CR101', NULL, 12000, DATEADD(day, -1, GETDATE()), 'canceled');

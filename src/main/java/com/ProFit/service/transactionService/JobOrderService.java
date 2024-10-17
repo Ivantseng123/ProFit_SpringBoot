@@ -5,6 +5,7 @@ import com.ProFit.model.bean.transactionBean.JobOrderBean;
 import com.ProFit.model.dao.transactionCRUD.JobOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,12 +18,14 @@ public class JobOrderService {
     @Autowired
     private JobOrderRepository jobOrderRepository;
 
+    @Transactional(readOnly = true)
     public List<JobOrderDTO> getAllOrdersAsDTO() {
         return jobOrderRepository.findAll().stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<JobOrderDTO> searchOrdersByCriteriaDTO(Integer jobApplicationId, LocalDateTime startDate, LocalDateTime endDate, String jobOrderStatus) {
         List<JobOrderBean> result;
         if (jobApplicationId != null && startDate != null && endDate != null && jobOrderStatus != null) {
@@ -39,6 +42,7 @@ public class JobOrderService {
         return result.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    @Transactional
     public void insertOrderFromDTO(JobOrderDTO jobOrderDTO) {
         JobOrderBean jobOrderBean = convertToEntity(jobOrderDTO);
         
@@ -51,6 +55,7 @@ public class JobOrderService {
         jobOrderRepository.save(jobOrderBean);
     }
 
+    @Transactional
     public void updateOrderFromDTO(JobOrderDTO jobOrderDTO) {
         JobOrderBean jobOrderBean = convertToEntity(jobOrderDTO);
 
@@ -62,6 +67,7 @@ public class JobOrderService {
         jobOrderRepository.save(jobOrderBean);
     }
 
+    @Transactional
     public void deleteOrder(String jobOrdersId) {
         jobOrderRepository.deleteById(jobOrdersId);
     }

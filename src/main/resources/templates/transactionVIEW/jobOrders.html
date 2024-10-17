@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>職缺訂單管理</title>
     <link rel="stylesheet" th:href="@{/css/model.css}">
-    <!-- 引入 DataTables 的 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 </head>
 <body>
     <!-- 頁面頭部和側邊欄 -->
@@ -15,18 +13,52 @@
     <!-- 主內容區域 -->
     <div class="container pt-5">
         <main>
-            <div class="dashboard-header d-flex align-items-center ">
-                <h1>職缺訂單管理</h1>
-                <div class="ms-auto d-flex">
-				
-				 <!-- 新增訂單按鈕 -->
+            <div class="course-header text-center mb-4">
+                <h2>職缺訂單管理</h2>
+            </div>
+
+            <!-- 查詢表單 -->
+            <div class="dashboard-header">
+                <form method="get" th:action="@{/jobOrders/search}" onsubmit="return validateSearchForm();">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="start_date">訂單日期從:</label>
+                            <input type="date" id="start_date" name="startDate" class="form-control" th:value="${param.startDate}">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="end_date">到:</label>
+                            <input type="date" id="end_date" name="endDate" class="form-control" th:value="${param.endDate}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="job_application_id">職缺申請ID:</label>
+                            <input type="number" id="job_application_id" name="jobApplicationId" class="form-control" min="1" th:value="${param.jobApplicationId}">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="job_order_status">訂單狀態:</label>
+                            <select id="job_order_status" name="jobOrderStatus" class="form-select">
+                                <option value="">全部</option>
+                                <option value="Processing" th:selected="${param.jobOrderStatus == 'Processing'}">處理中</option>
+                                <option value="Completed" th:selected="${param.jobOrderStatus == 'Completed'}">完成</option>
+                                <option value="Canceled" th:selected="${param.jobOrderStatus == 'Canceled'}">取消</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 text-center">
+                        <div class="col-md-12">
+                            <input type="submit" value="查詢" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 新增訂單按鈕 -->
             <div class="text-center mb-3">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">新增訂單</button>
             </div>
-         </div>
-		</div>
-            </div>
-
 
             <!-- 新增訂單模態框 -->
             <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel" aria-hidden="true">
@@ -63,8 +95,8 @@
                 </div>
             </div>
 
-            <!-- 訂單表格，添加ID以便初始化DataTable -->
-            <div class="container mt-5 table-container">
+            <!-- 訂單表格 -->
+            <div class="table-container mt-4">
                 <table id="ordersTable" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
@@ -182,23 +214,6 @@
             }
             return true;
         }
-
-        // 初始化 DataTables 分頁、排序和搜尋功能
-        $(document).ready(function() {
-            $('#ordersTable').DataTable({
-                "paging": true,
-                "lengthMenu": [5, 10, 25, 50], // 每頁顯示數量
-                "pageLength": 5,               // 預設每頁顯示 5 筆
-                "searching": true,             // 啟用搜尋
-                "ordering": true,              // 啟用排序
-                "info": true                   // 顯示表格資訊
-            });
-        });
     </script>
-
-    <!-- 引入 DataTables 的 JavaScript 文件 -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-
 </body>
 </html>

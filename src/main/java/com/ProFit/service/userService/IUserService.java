@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
@@ -24,7 +23,7 @@ public interface IUserService {
 	Users updateUserInfo(Integer user_id, String user_pictureURL, String user_name, String user_email,
 			String user_passwordHash, String user_phoneNumber, String user_city, Integer user_identity,
 			Integer user_balance, String freelancer_location_prefer, String freelancer_exprience,
-			String freelancer_identity, Integer freelancer_profile_status, String freelancer_disc, Integer enabled
+			String freelancer_identity, Integer freelancer_profile_status, String freelancer_disc
 			);
 
 	//給予user企業資格
@@ -40,9 +39,9 @@ public interface IUserService {
 
 	Users getUserByEmail(String user_email);
 
-	Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search, Integer userIdentity);
+	Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search);
 
-	//Page<UsersDTO> findUserByPage(Integer pageNumber);
+	Page<UsersDTO> findUserByPage(Integer pageNumber);
 
 	ResponseEntity<?> registerUser(Users users);
 

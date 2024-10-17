@@ -5,7 +5,7 @@ $(document).ready(function() {
 function alluser() {
 
 	$('#userTable').DataTable().clear().destroy();
-	const selectedIdentity = $('#userIdentityFilter').val();
+
 	// 初始化 DataTables
 	$('#userTable').DataTable({
 		"processing": true,
@@ -13,10 +13,10 @@ function alluser() {
 		"pageLength": 10, // 
 		lengthChange: false,
 		"ajax": function(data, callback) {
-			const pageNumber = Math.floor(data.start / data.length) + 1;
+			const pageNumber = Math.floor(data.start / data.length) + 1; 
 			const searchValue = data.search.value; // 搜索框中的值
 
-			fetch(`http://localhost:8080/ProFit/api/user/page?pageNumber=${pageNumber}&search=${searchValue}&userIdentity=${selectedIdentity}`)
+			fetch(`http://localhost:8080/ProFit/api/user/page?pageNumber=${pageNumber}&search=${searchValue}`)
 				.then(response => response.json())
 				.then(result => {
 					// server返回的分頁數據
@@ -27,7 +27,7 @@ function alluser() {
 					callback({
 						draw: data.draw,
 						recordsTotal: totalRecords, // 總數
-						recordsFiltered: totalRecords,
+						recordsFiltered: totalRecords, 
 						data: users // 當前頁的數據
 					});
 				})
@@ -43,31 +43,11 @@ function alluser() {
 		},
 		"columns": [
 			{ data: 'userId' },
-			{
-				data: 'userPictureURL',
-				render: function(data) {
-
-					return `<div class="rounded-circle overflow-hidden ms-2" style="width: 60px; height: 60px;">
-						<img src="${data || 'https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd'}" class="img-fluid" alt="" style="object-fit: cover; width: 100%; height: 100%;">
-					</div>`
-						;
-				}
-
-			},
 			{ data: 'userEmail' },
 			{ data: 'userName' },
 			{
 				data: 'userIdentity',
-				render: function(data) {
-
-					if (data === 4) {
-						return `
-								 <label>
-									<input class="form-check-input" type="checkbox" checked disabled> 超級管理員
-								 </label>
-								`;
-					}
-
+				render: function(data, type, row) {
 					const applicantChecked = data === 1 || data === 2 ? 'checked' : '';
 					const companyChecked = data === 2 ? 'checked' : '';
 					const adminChecked = data === 3 ? 'checked' : '';
@@ -87,32 +67,11 @@ function alluser() {
 			},
 			{ data: 'userRegisterTime' },
 			{
-				data: 'enabled',
-				render: function(data) {
-					const notActive = data === 0 ? 'checked' : '';
-					const active = data === 1 ? 'checked' : '';
-
-					return `
-							<label>
-								<input class="form-check-input" type="checkbox" ${notActive} disabled> 未啟用
-							</label>
-							<label>
-								<input class="form-check-input" type="checkbox" ${active} disabled> 啟用
-							</label>
-					      `;
-				}
-			},
-			{
-				data: 'userIdentity',
-				render: function(data) {
-					if (data === 4) {
-						return `<button id="view" class="btn btn-success">查看</button>`;
-					}
-					return `
-							<button id="view" class="btn btn-success">查看</button>
-							<button id="edit" class="btn btn-warning">編輯</button>
-							<button id="delete" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button> `;
-				}
+				data: null,
+				defaultContent: `
+			                    <button id="view" class="btn btn-success">查看</button>
+			                    <button id="edit" class="btn btn-warning">編輯</button>
+			                    <button id="delete" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal">刪除</button>`
 			} // 操作按钮列
 		],
 		"language": {
@@ -127,11 +86,6 @@ function alluser() {
 
 
 }
-
-$('#userIdentityFilter').change(function() {
-	alluser();
-});
-
 
 //查看User
 $('tbody').on('click', '#view', function() {
@@ -196,17 +150,11 @@ function togglePopup() {
 	overlay.classList.toggle('show');
 }
 
-function togglePopup_admin() {
-	const overlay = document.getElementById('popupOverlay_admin');
-	overlay.classList.toggle('show');
-}
-
-
 document.getElementById('insertform').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
-
+	
 	document.getElementById("insertBtn").disabled = true;
-
+	
 	const insertform = document.getElementById('insertform');
 	const formDataObject = new FormData(insertform);
 	// axios 會自動加上 header: content-Type=multipart/formdata
