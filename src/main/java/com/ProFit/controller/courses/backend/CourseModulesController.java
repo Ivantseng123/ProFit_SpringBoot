@@ -1,4 +1,4 @@
-package com.ProFit.controller.courses;
+package com.ProFit.controller.courses.backend;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

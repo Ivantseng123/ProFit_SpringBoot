@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Blog Grid Sidebar - JobGrids Job Portal HTML Template.</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+</head>
+
+<body>
+
+    <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+    <!-- Start Breadcrumbs -->
+    <!-- <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Blog Grid Sidebar</h1>
+                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
+                            Business draws on a wide range of different business .</p>
+                    </div>
+                    <ul class="breadcrumb-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li>Blog Grid Sidebar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Hero Area -->
+    <section class="hero-area style2">
+        <!-- Single Slider -->
+        <div class="hero-inner">
+            <div class="home-slider">
+                <div class="single-slider">
+                    <div class="container">
+                        <div class="row ">
+                            <div class="col-lg-6 co-12">
+                                <div class="inner-content">
+                                    <div class="hero-text">
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">提升你的職業技能 <br>打造更美好的未來</h1>
+                                        <p class="wow fadeInUp" data-wow-delay=".5s">
+                                            加入我們的專業課程，讓你的技能在職場中脫穎而出。ProFit 提供的專業指導和敏捷方法，幫助你快速掌握實用知識，成為業界的佼佼者。
+                                        </p>
+                                        <div class="button wow fadeInUp" data-wow-delay=".7s">
+                                            <a href="#" class="btn">開始學習</a>
+                                            <a href="#" class="btn btn-alt">探索課程</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 co-12">
+                                <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
+                                    <img th:src="@{/images/hero/banner.png}" alt="#">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-slider">
+                    <div class="container">
+                        <div class="row ">
+                            <div class="col-lg-6 co-12">
+                                <div class="inner-content">
+                                    <div class="hero-text">
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">解鎖你的職業潛力 <br>創造更有意義的未來</h1>
+                                        <p class="wow fadeInUp" data-wow-delay=".5s">
+                                            不再為職場迷茫！通過我們的專業課程，你將掌握實戰技能和行業洞察力，實現職業發展的突破。ProFit 將帶領你一步步邁向成功，輕鬆應對職場挑戰。
+                                        </p>
+                                        <div class="button wow fadeInUp" data-wow-delay=".7s">
+                                            <a href="#" class="btn">立即加入</a>
+                                            <a href="#" class="btn btn-alt">探索更多課程</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 co-12">
+                                <div class="hero-image wow fadeInRight" data-wow-delay=".ss">
+                                    <img th:src="@{/images/hero/banner2.png}" alt="#">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ End Single Slider -->
+    </section>
+
+    <!-- Start Blog Singel Area -->
+    <section class="section latest-news-area blog-list">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div id="search-results" class="row">
+
+                    </div>
+                    <!-- Pagination -->
+                    <div class="pagination center">
+                        <ul class="pagination-list">
+                            <li><a href="#"><i class="lni lni-chevron-left"></i></a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#"><i class="lni lni-chevron-right"></i></a></li>
+                        </ul>
+                    </div>
+                    <!--/ End Pagination -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Singel Area -->
+
+    <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModal}"></div>
+
+    <!-- 引用 footer.html -->
+    <div th:replace="~{model/frontend/footer}"></div>
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/courses/frontend/courseOverView.js}"></script>
+    <script>
+        //======== Home Slider
+        var slider = new tns({
+            container: '.home-slider',
+            slideBy: 'page',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 0,
+            items: 1,
+            nav: false,
+            controls: true,
+            controlsText: [
+                '<i class="lni lni-arrow-left prev"></i>',
+                '<i class="lni lni-arrow-right next"></i>'
+            ],
+            responsive: {
+                1200: {
+                    items: 1,
+                },
+                992: {
+                    items: 1,
+                },
+                0: {
+                    items: 1,
+                }
+
+            }
+        });
+    </script>
+</body>
+
+</html>

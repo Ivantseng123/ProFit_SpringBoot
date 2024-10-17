@@ -1,4 +1,4 @@
-package com.ProFit.controller.courses;
+package com.ProFit.controller.courses.backend;
 
 import java.io.IOException;
 import java.util.HashMap;
