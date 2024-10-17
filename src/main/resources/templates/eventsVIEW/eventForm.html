@@ -13,7 +13,7 @@
     <div th:replace="~{model/layout-static}"></div>
     <main>
         <div class="dashboard-header">
-            <h2 id="event-form-title"></h2>
+            <h2 id="eventFormTitle"></h2>
         </div>
         <form class="form-group form-container" id="eventForm">
             <input type="hidden" id="eventId" th:value="${event.eventId}">
@@ -21,18 +21,11 @@
             <input type="text" id="eventName" name="eventName" th:value="${event.eventName}">
             <hr>
             <label for="isEventActive">狀態</label>
-            <select id="isEventActive" name="isEventActive">
-                <option value="0" th:selected="${event.isEventActive == 0}">已關閉</option>
-                <option value="1" th:selected="${event.isEventActive == 1}">已啟用</option>
-                <option value="2" th:selected="${event.isEventActive == 2}">審核中</option>
+            <select id="isEventActive" name="isEventActive" th:data-value="${event.isEventActive}">
             </select>
             <hr>
             <label for="eventCategory">活動類別</label>
-            <select id="eventCategory" name="eventCategory">
-                <!-- <option id="eventCategoryOption" value="" th:select="${event.eventCategory}">--請選擇--</option>
-                <th:block th:each="eventCategory : ${allEventCategoriesList}">
-                    <option th:value="${eventCategory.eventCategoryId}" th:text="${eventCategory.categoryName}"></option>
-                </th:block> -->
+            <select id="eventCategory" name="eventCategory" th:data-value="${event.eventCategory}">
             </select>
             <hr>
             <label for="eventMajor">專業類別</label>
@@ -80,6 +73,7 @@
 
 </body>
 
+<script th:src="@{/js/events/eventsMapping.js}"></script>
 <script th:src="@{/js/events/eventsForm.js}"></script>
 
 </html>
