@@ -117,5 +117,4 @@ public class JobsApplicationController {
 //        return "jobsVIEW/applicantApplicationList";
 //    }
 
-
 }
