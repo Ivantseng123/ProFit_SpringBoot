@@ -116,5 +116,4 @@ public class JobsApplicationController {
 //        model.addAttribute("applications", jobsApplication);
 //        return "jobsVIEW/applicantApplicationList";
 //    }
-
 }
