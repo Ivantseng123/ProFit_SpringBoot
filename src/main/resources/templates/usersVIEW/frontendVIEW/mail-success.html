@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Mail Success - JobGrids Job Portal HTML Template.</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- Web Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/LineIcons.2.0.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+        <p class="browserupgrade">
+          You are using an <strong>outdated</strong> browser. Please
+          <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+          your experience and security.
+        </p>
+      <![endif]-->
+
+  <div id="loading-area"></div>
+
+  <!-- Start Error Area -->
+  <div class="maill-success">
+    <div class="d-table">
+      <div class="d-table-cell">
+        <div class="container">
+          <div class="success-content">
+            <h1>恭喜!</h1>
+            <h2>您的信箱已成功驗證!</h2>
+            <p>感謝您加入我們，請點選下方連結進行登入</p>
+            <div class="button">
+              <a href="http://localhost:8080/ProFit/home" class="btn">前往 ProFit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Error Area -->
+
+  <!-- ========================= JS here ========================= -->
+  <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+  <script th:src="@{/js/frontend/wow.min.js}"></script>
+  <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+  <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+  <script>
+    window.onload = function () {
+      window.setTimeout(fadeout, 500);
+    }
+
+    function fadeout() {
+      document.querySelector('#loading-area').style.opacity = '0';
+      document.querySelector('#loading-area').style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>

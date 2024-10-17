@@ -46,6 +46,11 @@ public interface IUserService {
 
 	ResponseEntity<?> registerUser(Users users);
 
-	ResponseEntity<?> confirmEmail(String confirmationToken);
+	boolean confirmEmail(String confirmationToken);
+
+	boolean validateForfrontend(String userEmail, String userPassword);
+
+	//用來更新用戶餘額
+	Users updateUserBalance(Users user);
 
 }

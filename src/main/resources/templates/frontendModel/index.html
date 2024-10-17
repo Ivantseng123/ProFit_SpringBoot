@@ -2,30 +2,29 @@
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>JobGrids - Job Portal HTML Template.</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
-    <!-- Place favicon.ico in the root directory -->
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>JobGrids - Job Portal HTML Template.</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+	<!-- Place favicon.ico in the root directory -->
 
-    <!-- Web Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+	<!-- Web Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
 
-    <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/LineIcons.2.0.css}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
-
+	<!-- ========================= CSS here ========================= -->
+	<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/LineIcons.2.0.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
 </head>
 
 <body>
-    <!--[if lte IE 9]>
+	<!--[if lte IE 9]>
       <p class="browserupgrade">
         You are using an <strong>outdated</strong> browser. Please
         <a href="https://browsehappy.com/">upgrade your browser</a> to improve
@@ -33,1458 +32,1489 @@
       </p>
     <![endif]-->
 
-    <div id="loading-area"></div>
+	<div id="loading-area"></div>
 
-    <!-- Start Header Area -->
-    <header class="header">
-        <div class="navbar-area">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-expand-lg">
-                            <a class="navbar-brand logo" href="index.html">
-                                <img class="logo1" src="assets/images/logo/logo.svg" alt="Logo" />
-                            </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul id="nav" class="navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a class="active" href="index.html">Home</a>
-                                        <ul class="sub-menu">
-                                            <li><a class="active" href="index.html">Home 1</a></li>
-                                            <li><a href="index2.html">Home 2</a></li>
-                                            <li><a href="index3.html">Home 3</a></li>
-                                            <li><a href="index4.html">Home 4</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Pages</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="about-us.html">About Us</a></li>
-                                            <li><a href="job-list.html">Job List</a></li>
-                                            <li><a href="job-details.html">Job Details</a></li>
-                                            <li><a href="resume.html">Resume Page</a></li>
-                                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                            <li><a href="faq.html">Faq</a></li>
-                                            <li><a href="pricing.html">Our Pricing</a></li>
-                                            <li><a href="404.html">404 Error</a></li>
-                                            <li><a href="mail-success.html">Mail Success</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Candidates</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="browse-jobs.html">Browse Jobs</a></li>
-                                            <li><a href="browse-categories.html">Browse Categories</a></li>
-                                            <li><a href="add-resume.html">Add Resume</a></li>
-                                            <li><a href="job-alerts.html">Job Alerts</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Employers </a>
-                                        <ul class="sub-menu">
-                                            <li><a href="post-job.html">Add Job</a></li>
-                                            <li><a href="manage-jobs.html">Manage Jobs</a></li>
-                                            <li><a href="manage-applications.html">Manage Applications</a></li>
-                                            <li><a href="manage-resumes.html">Manage Resume</a></li>
-                                            <li><a href="browse-resumes.html">Browse Resumes</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="#">Blog</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
-                                            <li><a href="blog-single.html">Blog Single</a></li>
-                                            <li><a href="blog-single-sidebar.html">Blog Single Sibebar</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item"><a href="contact.html">Contact </a> </li>
-                                </ul>
-                            </div>
-                            <!-- navbar collapse -->
-                            <div class="button">
-                                <a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
-                                        class="lni lni-lock-alt"></i> Login</a>
-                                <a href="javacript:" data-toggle="modal" data-target="#signup" class="btn">Sign Up</a>
-                            </div>
-                        </nav>
-                        <!-- navbar -->
-                    </div>
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container -->
-        </div>
-        <!-- navbar area -->
-    </header>
-    <!-- End Header Area -->
+	<!-- Start Header Area -->
+	<header class="header">
+		<div class="navbar-area">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-12">
+						<nav class="navbar navbar-expand-lg">
+							<a class="navbar-brand logo" href="index.html">
+								<img class="logo1" src="assets/images/logo/logo.svg" alt="Logo" />
+							</a>
+							<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
+								<ul id="nav" class="navbar-nav ml-auto">
+									<li class="nav-item">
+										<a class="active" href="index.html">Home</a>
+										<ul class="sub-menu">
+											<li><a class="active" href="index.html">Home 1</a></li>
+											<li><a href="index2.html">Home 2</a></li>
+											<li><a href="index3.html">Home 3</a></li>
+											<li><a href="index4.html">Home 4</a></li>
+										</ul>
+									</li>
+									<li class="nav-item"><a href="#">Pages</a>
+										<ul class="sub-menu">
+											<li><a href="about-us.html">About Us</a></li>
+											<li><a href="job-list.html">Job List</a></li>
+											<li><a href="job-details.html">Job Details</a></li>
+											<li><a href="resume.html">Resume Page</a></li>
+											<li><a href="privacy-policy.html">Privacy Policy</a></li>
+											<li><a href="faq.html">Faq</a></li>
+											<li><a href="pricing.html">Our Pricing</a></li>
+											<li><a href="404.html">404 Error</a></li>
+											<li><a th:href="@{frontendModel/mail-success}">Mail Success</a></li>
+										</ul>
+									</li>
+									<li class="nav-item"><a href="#">Candidates</a>
+										<ul class="sub-menu">
+											<li><a href="browse-jobs.html">Browse Jobs</a></li>
+											<li><a href="browse-categories.html">Browse Categories</a></li>
+											<li><a href="add-resume.html">Add Resume</a></li>
+											<li><a href="job-alerts.html">Job Alerts</a></li>
+										</ul>
+									</li>
+									<li class="nav-item"><a href="#">Employers </a>
+										<ul class="sub-menu">
+											<li><a href="post-job.html">Add Job</a></li>
+											<li><a href="manage-jobs.html">Manage Jobs</a></li>
+											<li><a href="manage-applications.html">Manage Applications</a></li>
+											<li><a href="manage-resumes.html">Manage Resume</a></li>
+											<li><a href="browse-resumes.html">Browse Resumes</a></li>
+										</ul>
+									</li>
+									<li class="nav-item"><a href="#">Blog</a>
+										<ul class="sub-menu">
+											<li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
+											<li><a href="blog-single.html">Blog Single</a></li>
+											<li><a href="blog-single-sidebar.html">Blog Single Sibebar</a></li>
+										</ul>
+									</li>
+									<li class="nav-item"><a href="contact.html">Contact </a> </li>
+								</ul>
+							</div>
+							<!-- navbar collapse -->
+							<div class="button">
+								<a href="javacript:" data-toggle="modal" data-target="#login" class="login"><i
+										class="lni lni-lock-alt"></i>登入</a>
+								<a href="javacript:" data-toggle="modal" data-target="#signup" class="btn">註冊</a>
+							</div>
+						</nav>
+						<!-- navbar -->
+					</div>
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- navbar area -->
+	</header>
+	<!-- End Header Area -->
 
-    <!-- Start Hero Area -->
-    <section class="hero-area">
-        <!-- Single Slider -->
-        <div class="hero-inner">
-            <div class="container">
-                <div class="row ">
-                    <div class="col-lg-6 co-12">
-                        <div class="inner-content">
-                            <div class="hero-text">
-                                <h1 class="wow fadeInUp" data-wow-delay=".3s">Find Your Career <br>to Make a Better Life
-                                </h1>
-                                <p class="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is not
-                                    easy <br> always. To make your life easier, we are<br> introducing Jobcamp template.
-                                </p>
-                            </div>
-                            <div class="job-search-wrap-two mt-50 wow fadeInUp" data-wow-delay=".7s">
-                                <div class="job-search-form">
-                                    <form action="#">
-                                        <!-- Single Field Item Start  -->
-                                        <div class="single-field-item keyword">
-                                            <label for="keyword">What</label>
-                                            <input id="keyword" placeholder="What jobs you want?" name="keyword"
-                                                type="text">
-                                        </div>
-                                        <!-- Single Field Item End  -->
-                                        <!-- Single Field Item Start  -->
-                                        <div class="single-field-item location">
-                                            <label for="location">Where</label>
-                                            <input id="location" class="input-field input-field-location"
-                                                placeholder="Location" name="location" type="text">
-                                        </div>
-                                        <!-- Single Field Item End  -->
-                                        <div class="submit-btn">
-                                            <button class="btn" type="submit">Search</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="trending-keywords mt-30">
-                                    <div class="keywords style-two">
-                                        <span class="title">Popular Keywords:</span>
-                                        <ul>
-                                            <li><a href="#">Administrative</a></li>
-                                            <li><a href="#">Android</a></li>
-                                            <li><a href="#">app</a></li>
-                                            <li><a href="#">ASP.NET</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 co-12">
-                        <div class="hero-video-head wow fadeInRight" data-wow-delay=".5s">
-                            <div class="video-inner">
-                                <img src="assets/images/hero/hero-image.png" alt="#">
-                                <a href="#" class="glightbox hero-video"><i class="lni lni-play"></i></a>
-                                <!-- Video Animation -->
-                                <div class="promo-video">
-                                    <div class="waves-block">
-                                        <div class="waves wave-1"></div>
-                                        <div class="waves wave-2"></div>
-                                        <div class="waves wave-3"></div>
-                                    </div>
-                                </div>
-                                <!--/ End Video Animation -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--/ End Single Slider -->
-    </section>
-    <!--/ End Hero Area -->
+	<!-- Start Hero Area -->
+	<section class="hero-area">
+		<!-- Single Slider -->
+		<div class="hero-inner">
+			<div class="container">
+				<div class="row ">
+					<div class="col-lg-6 co-12">
+						<div class="inner-content">
+							<div class="hero-text">
+								<h1 class="wow fadeInUp" data-wow-delay=".3s">Find Your Career <br>to Make a Better Life
+								</h1>
+								<p class="wow fadeInUp" data-wow-delay=".5s">Creating a beautiful job website is not
+									easy <br> always. To make your life easier, we are<br> introducing Jobcamp template.
+								</p>
+							</div>
+							<div class="job-search-wrap-two mt-50 wow fadeInUp" data-wow-delay=".7s">
+								<div class="job-search-form">
+									<form action="#">
+										<!-- Single Field Item Start  -->
+										<div class="single-field-item keyword">
+											<label for="keyword">What</label>
+											<input id="keyword" placeholder="What jobs you want?" name="keyword"
+												type="text">
+										</div>
+										<!-- Single Field Item End  -->
+										<!-- Single Field Item Start  -->
+										<div class="single-field-item location">
+											<label for="location">Where</label>
+											<input id="location" class="input-field input-field-location"
+												placeholder="Location" name="location" type="text">
+										</div>
+										<!-- Single Field Item End  -->
+										<div class="submit-btn">
+											<button class="btn" type="submit">Search</button>
+										</div>
+									</form>
+								</div>
+								<div class="trending-keywords mt-30">
+									<div class="keywords style-two">
+										<span class="title">Popular Keywords:</span>
+										<ul>
+											<li><a href="#">Administrative</a></li>
+											<li><a href="#">Android</a></li>
+											<li><a href="#">app</a></li>
+											<li><a href="#">ASP.NET</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 co-12">
+						<div class="hero-video-head wow fadeInRight" data-wow-delay=".5s">
+							<div class="video-inner">
+								<img src="assets/images/hero/hero-image.png" alt="#">
+								<a href="#" class="glightbox hero-video"><i class="lni lni-play"></i></a>
+								<!-- Video Animation -->
+								<div class="promo-video">
+									<div class="waves-block">
+										<div class="waves wave-1"></div>
+										<div class="waves wave-2"></div>
+										<div class="waves wave-3"></div>
+									</div>
+								</div>
+								<!--/ End Video Animation -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Single Slider -->
+	</section>
+	<!--/ End Hero Area -->
 
-    <!-- Start Apply Process Area -->
-    <section class="apply-process section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="process-item">
-                        <i class="lni lni-user"></i>
-                        <h4>Register Your Account</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="process-item">
-                        <i class="lni lni-book"></i>
-                        <h4>Upload Your Resume</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-12">
-                    <div class="process-item">
-                        <i class="lni lni-briefcase"></i>
-                        <h4>Apply for Dream Job</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--/ End Apply Process Area -->
+	<!-- Start Apply Process Area -->
+	<section class="apply-process section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-12">
+					<div class="process-item">
+						<i class="lni lni-user"></i>
+						<h4>Register Your Account</h4>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-12">
+					<div class="process-item">
+						<i class="lni lni-book"></i>
+						<h4>Upload Your Resume</h4>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-12">
+					<div class="process-item">
+						<i class="lni lni-briefcase"></i>
+						<h4>Apply for Dream Job</h4>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ End Apply Process Area -->
 
-    <!-- Start Job Category Area -->
-    <section class="job-category section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Job Category</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Choose Your Desire Category</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="cat-head">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".2s">
-                            <div class="icon">
-                                <i class="lni lni-cog"></i>
-                            </div>
-                            <h3>Technical<br> Support</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".4s">
-                            <div class="icon">
-                                <i class="lni lni-layers"></i>
-                            </div>
-                            <h3>Business<br> Development</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".6s">
-                            <div class="icon">
-                                <i class="lni lni-home"></i>
-                            </div>
-                            <h3>Real Estate<br> Business</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".8s">
-                            <div class="icon">
-                                <i class="lni lni-search"></i>
-                            </div>
-                            <h3>Share Maeket<br> Analysis</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".2s">
-                            <div class="icon">
-                                <i class="lni lni-investment"></i>
-                            </div>
-                            <h3>Finance & Banking <br> Service</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".4s">
-                            <div class="icon">
-                                <i class="lni lni-cloud-network"></i>
-                            </div>
-                            <h3>IT & Networing <br> Sevices</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".6s">
-                            <div class="icon">
-                                <i class="lni lni-restaurant"></i>
-                            </div>
-                            <h3>Restaurant <br> Services</h3>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-12">
-                        <a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".8s">
-                            <div class="icon">
-                                <i class="lni lni-fireworks"></i>
-                            </div>
-                            <h3>Defence & Fire <br> Service</h3>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /End Job Category Area -->
+	<!-- Start Job Category Area -->
+	<section class="job-category section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<span class="wow fadeInDown" data-wow-delay=".2s">Job Category</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Choose Your Desire Category</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
+							Ipsum available, but the majority have suffered alteration in some form.</p>
+					</div>
+				</div>
+			</div>
+			<div class="cat-head">
+				<div class="row">
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".2s">
+							<div class="icon">
+								<i class="lni lni-cog"></i>
+							</div>
+							<h3>Technical<br> Support</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".4s">
+							<div class="icon">
+								<i class="lni lni-layers"></i>
+							</div>
+							<h3>Business<br> Development</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".6s">
+							<div class="icon">
+								<i class="lni lni-home"></i>
+							</div>
+							<h3>Real Estate<br> Business</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".8s">
+							<div class="icon">
+								<i class="lni lni-search"></i>
+							</div>
+							<h3>Share Maeket<br> Analysis</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".2s">
+							<div class="icon">
+								<i class="lni lni-investment"></i>
+							</div>
+							<h3>Finance & Banking <br> Service</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".4s">
+							<div class="icon">
+								<i class="lni lni-cloud-network"></i>
+							</div>
+							<h3>IT & Networing <br> Sevices</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".6s">
+							<div class="icon">
+								<i class="lni lni-restaurant"></i>
+							</div>
+							<h3>Restaurant <br> Services</h3>
+						</a>
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<a href="browse-jobs.html" class="single-cat wow fadeInUp" data-wow-delay=".8s">
+							<div class="icon">
+								<i class="lni lni-fireworks"></i>
+							</div>
+							<h3>Defence & Fire <br> Service</h3>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /End Job Category Area -->
 
-    <!-- Start About Area -->
-    <section class="about-us section">
-        <div class="container">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-lg-6 col-md-10 col-12">
-                    <div class="content-left wow fadeInLeft" data-wow-delay=".3s">
-                        <div calss="row">
-                            <div calss="col-lg-6 col-12">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-6">
-                                        <img class="single-img" src="assets/images/about/small1.jpg" alt="#">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-6">
-                                        <img class="single-img mt-50" src="assets/images/about/small2.jpg" alt="#">
-                                    </div>
-                                </div>
-                            </div>
-                            <div calss="col-lg-6 col-12">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-6">
-                                        <img class="single-img minus-margin" src="assets/images/about/small3.jpg"
-                                            alt="#">
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-6">
-                                        <!-- media body start -->
-                                        <div class="media-body">
-                                            <i class="lni lni-checkmark"></i>
-                                            <h6 class="">Job alert!</h6>
-                                            <p class="">104 new jobs are available in this week!
-                                            </p>
-                                        </div>
-                                        <!-- media body start -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-10 col-12">
-                    <!-- content-1 start -->
-                    <div class="content-right wow fadeInRight" data-wow-delay=".5s">
-                        <!-- Heading -->
-                        <h2>Help you to get the <br>
-                            best job that fits you</h2>
-                        <!-- End Heading -->
-                        <!-- Single List -->
-                        <div class="single-list">
-                            <i class="lni lni-grid-alt"></i>
-                            <!-- List body start -->
-                            <div class="list-bod">
-                                <h5>#1 Jobs site in UK</h5>
-                                <p>Leverage agile frameworks to provide a
-                                    robust synopsis for high level overviews. Iterative</p>
-                            </div>
-                            <!-- List body start -->
-                        </div>
-                        <!-- End Single List -->
-                        <!-- Single List -->
-                        <div class="single-list">
-                            <i class="lni lni-search"></i>
-                            <!-- List body start -->
-                            <div class="list-bod">
-                                <h5>Seamless searching</h5>
-                                <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta
-                                    test.</p>
-                            </div>
-                            <!-- List body start -->
-                        </div>
-                        <!-- End Single List -->
-                        <!-- Single List -->
-                        <div class="single-list">
-                            <i class="lni lni-stats-up"></i>
-                            <!-- List body start -->
-                            <div class="list-bod">
-                                <h5>Hired in top companies</h5>
-                                <p>Podcasting operational change management inside of workflows to establish.</p>
-                            </div>
-                            <!-- List body start -->
-                        </div>
-                        <!-- End Single List -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End About Area -->
+	<!-- Start About Area -->
+	<section class="about-us section">
+		<div class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-lg-6 col-md-10 col-12">
+					<div class="content-left wow fadeInLeft" data-wow-delay=".3s">
+						<div calss="row">
+							<div calss="col-lg-6 col-12">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-6">
+										<img class="single-img" src="assets/images/about/small1.jpg" alt="#">
+									</div>
+									<div class="col-lg-6 col-md-6 col-6">
+										<img class="single-img mt-50" src="assets/images/about/small2.jpg" alt="#">
+									</div>
+								</div>
+							</div>
+							<div calss="col-lg-6 col-12">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-6">
+										<img class="single-img minus-margin" src="assets/images/about/small3.jpg"
+											alt="#">
+									</div>
+									<div class="col-lg-6 col-md-6 col-6">
+										<!-- media body start -->
+										<div class="media-body">
+											<i class="lni lni-checkmark"></i>
+											<h6 class="">Job alert!</h6>
+											<p class="">104 new jobs are available in this week!
+											</p>
+										</div>
+										<!-- media body start -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-10 col-12">
+					<!-- content-1 start -->
+					<div class="content-right wow fadeInRight" data-wow-delay=".5s">
+						<!-- Heading -->
+						<h2>Help you to get the <br>
+							best job that fits you</h2>
+						<!-- End Heading -->
+						<!-- Single List -->
+						<div class="single-list">
+							<i class="lni lni-grid-alt"></i>
+							<!-- List body start -->
+							<div class="list-bod">
+								<h5>#1 Jobs site in UK</h5>
+								<p>Leverage agile frameworks to provide a
+									robust synopsis for high level overviews. Iterative</p>
+							</div>
+							<!-- List body start -->
+						</div>
+						<!-- End Single List -->
+						<!-- Single List -->
+						<div class="single-list">
+							<i class="lni lni-search"></i>
+							<!-- List body start -->
+							<div class="list-bod">
+								<h5>Seamless searching</h5>
+								<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta
+									test.</p>
+							</div>
+							<!-- List body start -->
+						</div>
+						<!-- End Single List -->
+						<!-- Single List -->
+						<div class="single-list">
+							<i class="lni lni-stats-up"></i>
+							<!-- List body start -->
+							<div class="list-bod">
+								<h5>Hired in top companies</h5>
+								<p>Podcasting operational change management inside of workflows to establish.</p>
+							</div>
+							<!-- List body start -->
+						</div>
+						<!-- End Single List -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End About Area -->
 
-    <!-- Start Call Action Area -->
-    <section class="call-action overlay section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-lg-8 offset-lg-2 col-12">
-                    <div class="inner">
-                        <div class="section-title">
-                            <span class="wow fadeInDown" data-wow-delay=".2s">GETTING STARTED TO WORK</span>
-                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Don’t just find. Be found. Put your
-                                CV in front of great employers</h2>
-                            <p class="wow fadeInUp" data-wow-delay=".6s">It helps you to increase your chances of
-                                finding a suitable job and let recruiters contact you
-                                about jobs that are not needed to pay for advertising.</p>
-                            <div class="button wow fadeInUp" data-wow-delay=".8s">
-                                <a href="add-resume.html" class="btn"><i class="lni lni-upload"></i> Upload Your
-                                    Resume</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /End Call Action Area -->
+	<!-- Start Call Action Area -->
+	<section class="call-action overlay section">
+		<div class="container">
+			<div class="row ">
+				<div class="col-lg-8 offset-lg-2 col-12">
+					<div class="inner">
+						<div class="section-title">
+							<span class="wow fadeInDown" data-wow-delay=".2s">GETTING STARTED TO WORK</span>
+							<h2 class="wow fadeInUp" data-wow-delay=".4s">Don’t just find. Be found. Put your
+								CV in front of great employers</h2>
+							<p class="wow fadeInUp" data-wow-delay=".6s">It helps you to increase your chances of
+								finding a suitable job and let recruiters contact you
+								about jobs that are not needed to pay for advertising.</p>
+							<div class="button wow fadeInUp" data-wow-delay=".8s">
+								<a href="add-resume.html" class="btn"><i class="lni lni-upload"></i> Upload Your
+									Resume</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /End Call Action Area -->
 
-    <!-- Start Find Job Area -->
-    <section class="find-job section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Hot Jobs</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Browse Recent Jobs</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="single-head">
-                <div class="row">
-                    <div class="col-lg-6 col-12">
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".3s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img1.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Software Engineer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".3s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img2.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Graphics Design</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> designhub.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Washington, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Intern</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".3s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img3.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Ui/Ux Design</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> uddesign.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".3s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img4.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Web Developer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> webinner.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Delaware, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Intern</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".5s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img7.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Digital Marketer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> marketers.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".5s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img5.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Sales Manager</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Delaware, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".5s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img6.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Product Designer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job wow fadeInUp" data-wow-delay=".5s">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img8.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Android Developer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> androidplex.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
-                                </ul>
+	<!-- Start Find Job Area -->
+	<section class="find-job section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<span class="wow fadeInDown" data-wow-delay=".2s">Hot Jobs</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Browse Recent Jobs</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
+							Ipsum available, but the majority have suffered alteration in some form.</p>
+					</div>
+				</div>
+			</div>
+			<div class="single-head">
+				<div class="row">
+					<div class="col-lg-6 col-12">
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".3s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img1.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Software Engineer</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>full time</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".3s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img2.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Graphics Design</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> designhub.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> Washington, USA</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>Intern</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".3s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img3.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Ui/Ux Design</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> uddesign.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>Part Time</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".3s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img4.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Web Developer</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> webinner.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> Delaware, USA</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>Intern</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+					</div>
+					<div class="col-lg-6 col-12">
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".5s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img7.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Digital Marketer</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> marketers.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> New York, USA</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>Part Time</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".5s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img5.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Sales Manager</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> Delaware, USA</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>full time</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".5s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img6.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Product Designer</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> New York, USA</li>
+								</ul>
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>full time</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+						<!-- Single Job -->
+						<div class="single-job wow fadeInUp" data-wow-delay=".5s">
+							<div class="job-image">
+								<img src="assets/images/jobs/img8.png" alt="#">
+							</div>
+							<div class="job-content">
+								<h4><a href="job-details.html">Android Developer</a></h4>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<ul>
+									<li><i class="lni lni-website"></i><a href="#"> androidplex.com</a></li>
+									<li><i class="lni lni-dollar"></i> $20k - $25k</li>
+									<li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
+								</ul>
 
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="pagination center wow fadeInUp" data-wow-delay=".3s">
-                            <ul class="pagination-list">
-                                <li><a href="#"><i class="lni lni-arrow-left"></i></a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#"><i class="lni lni-arrow-right"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--/ End Pagination -->
-            </div>
-        </div>
-    </section>
-    <!-- /End Find Job Area -->
+							</div>
+							<div class="job-button">
+								<ul>
+									<li><a href="job-details.html">Apply</a></li>
+									<li><span>Part Time</span></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Job -->
+					</div>
+				</div>
+				<!-- Pagination -->
+				<div class="row">
+					<div class="col-12">
+						<div class="pagination center wow fadeInUp" data-wow-delay=".3s">
+							<ul class="pagination-list">
+								<li><a href="#"><i class="lni lni-arrow-left"></i></a></li>
+								<li class="active"><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#"><i class="lni lni-arrow-right"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--/ End Pagination -->
+			</div>
+		</div>
+	</section>
+	<!-- /End Find Job Area -->
 
-    <!-- Start Featured Job Area -->
-    <section class="featured-job section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Featured Jobs</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Browse Featured Jobs</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="single-head">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-job wow fadeInUp" data-wow-delay=".2s">
-                            <div class="shape"></div>
-                            <div class="feature">Featured</div>
-                            <div class="image">
-                                <img src="assets/images/featured-job/img1.jpg" alt="#">
-                            </div>
-                            <div class="content">
-                                <h4><a href="job-details.html">Graphics Design</a></h4>
-                                <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
-                                    <li><i class="lni lni-dollar"></i> 80K-90K</li>
-                                </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-job wow fadeInUp" data-wow-delay=".4s">
-                            <div class="shape"></div>
-                            <div class="feature">Featured</div>
-                            <div class="image">
-                                <img src="assets/images/featured-job/img2.jpg" alt="#">
-                            </div>
-                            <div class="content">
-                                <h4><a href="job-details.html">Restaurant Services</a></h4>
-                                <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
-                                    <li><i class="lni lni-dollar"></i> 80K-90K</li>
-                                </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-job wow fadeInUp" data-wow-delay=".6s">
-                            <div class="shape"></div>
-                            <div class="feature">Featured</div>
-                            <div class="image">
-                                <img src="assets/images/featured-job/img3.jpg" alt="#">
-                            </div>
-                            <div class="content">
-                                <h4><a href="job-details.html">Share Maeket Analysis</a></h4>
-                                <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
-                                    <li><i class="lni lni-dollar"></i> 80K-90K</li>
-                                </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-job wow fadeInUp" data-wow-delay=".2s">
-                            <div class="shape"></div>
-                            <div class="feature">Featured</div>
-                            <div class="image">
-                                <img src="assets/images/featured-job/img4.jpg" alt="#">
-                            </div>
-                            <div class="content">
-                                <h4><a href="job-details.html">Medical services</a></h4>
-                                <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
-                                    <li><i class="lni lni-dollar"></i> 80K-90K</li>
-                                </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-job wow fadeInUp" data-wow-delay=".4s">
-                            <div class="shape"></div>
-                            <div class="feature">Featured</div>
-                            <div class="image">
-                                <img src="assets/images/featured-job/img5.jpg" alt="#">
-                            </div>
-                            <div class="content">
-                                <h4><a href="job-details.html">Auto Mobile Services</a></h4>
-                                <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
-                                    <li><i class="lni lni-dollar"></i> 80K-90K</li>
-                                </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-job wow fadeInUp" data-wow-delay=".6s">
-                            <div class="shape"></div>
-                            <div class="feature">Featured</div>
-                            <div class="image">
-                                <img src="assets/images/featured-job/img6.jpg" alt="#">
-                            </div>
-                            <div class="content">
-                                <h4><a href="job-details.html">IT & Networing Sevices</a></h4>
-                                <ul>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
-                                    <li><i class="lni lni-briefcase"></i> Full-time</li>
-                                    <li><i class="lni lni-dollar"></i> 80K-90K</li>
-                                </ul>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <div class="button">
-                                    <a href="job-details.html" class="btn">Apply Now</a>
-                                    <a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
-                                        It</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /End Featured Job Area -->
+	<!-- Start Featured Job Area -->
+	<section class="featured-job section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<span class="wow fadeInDown" data-wow-delay=".2s">Featured Jobs</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Browse Featured Jobs</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
+							Ipsum available, but the majority have suffered alteration in some form.</p>
+					</div>
+				</div>
+			</div>
+			<div class="single-head">
+				<div class="row">
+					<div class="col-lg-4 col-md-6 col-12">
+						<div class="single-job wow fadeInUp" data-wow-delay=".2s">
+							<div class="shape"></div>
+							<div class="feature">Featured</div>
+							<div class="image">
+								<img src="assets/images/featured-job/img1.jpg" alt="#">
+							</div>
+							<div class="content">
+								<h4><a href="job-details.html">Graphics Design</a></h4>
+								<ul>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+									<li><i class="lni lni-briefcase"></i> Full-time</li>
+									<li><i class="lni lni-dollar"></i> 80K-90K</li>
+								</ul>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<div class="button">
+									<a href="job-details.html" class="btn">Apply Now</a>
+									<a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
+										It</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<div class="single-job wow fadeInUp" data-wow-delay=".4s">
+							<div class="shape"></div>
+							<div class="feature">Featured</div>
+							<div class="image">
+								<img src="assets/images/featured-job/img2.jpg" alt="#">
+							</div>
+							<div class="content">
+								<h4><a href="job-details.html">Restaurant Services</a></h4>
+								<ul>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+									<li><i class="lni lni-briefcase"></i> Full-time</li>
+									<li><i class="lni lni-dollar"></i> 80K-90K</li>
+								</ul>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<div class="button">
+									<a href="job-details.html" class="btn">Apply Now</a>
+									<a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
+										It</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<div class="single-job wow fadeInUp" data-wow-delay=".6s">
+							<div class="shape"></div>
+							<div class="feature">Featured</div>
+							<div class="image">
+								<img src="assets/images/featured-job/img3.jpg" alt="#">
+							</div>
+							<div class="content">
+								<h4><a href="job-details.html">Share Maeket Analysis</a></h4>
+								<ul>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+									<li><i class="lni lni-briefcase"></i> Full-time</li>
+									<li><i class="lni lni-dollar"></i> 80K-90K</li>
+								</ul>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<div class="button">
+									<a href="job-details.html" class="btn">Apply Now</a>
+									<a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
+										It</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<div class="single-job wow fadeInUp" data-wow-delay=".2s">
+							<div class="shape"></div>
+							<div class="feature">Featured</div>
+							<div class="image">
+								<img src="assets/images/featured-job/img4.jpg" alt="#">
+							</div>
+							<div class="content">
+								<h4><a href="job-details.html">Medical services</a></h4>
+								<ul>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+									<li><i class="lni lni-briefcase"></i> Full-time</li>
+									<li><i class="lni lni-dollar"></i> 80K-90K</li>
+								</ul>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<div class="button">
+									<a href="job-details.html" class="btn">Apply Now</a>
+									<a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
+										It</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<div class="single-job wow fadeInUp" data-wow-delay=".4s">
+							<div class="shape"></div>
+							<div class="feature">Featured</div>
+							<div class="image">
+								<img src="assets/images/featured-job/img5.jpg" alt="#">
+							</div>
+							<div class="content">
+								<h4><a href="job-details.html">Auto Mobile Services</a></h4>
+								<ul>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+									<li><i class="lni lni-briefcase"></i> Full-time</li>
+									<li><i class="lni lni-dollar"></i> 80K-90K</li>
+								</ul>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<div class="button">
+									<a href="job-details.html" class="btn">Apply Now</a>
+									<a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
+										It</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6 col-12">
+						<div class="single-job wow fadeInUp" data-wow-delay=".6s">
+							<div class="shape"></div>
+							<div class="feature">Featured</div>
+							<div class="image">
+								<img src="assets/images/featured-job/img6.jpg" alt="#">
+							</div>
+							<div class="content">
+								<h4><a href="job-details.html">IT & Networing Sevices</a></h4>
+								<ul>
+									<li><i class="lni lni-map-marker"></i> New York</li>
+									<li><i class="lni lni-briefcase"></i> Full-time</li>
+									<li><i class="lni lni-dollar"></i> 80K-90K</li>
+								</ul>
+								<p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+									week. All leads are pre-scheduled. </p>
+								<div class="button">
+									<a href="job-details.html" class="btn">Apply Now</a>
+									<a href="bookmarked.html" class="btn save"><i class="lni lni-bookmark"></i> Save
+										It</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /End Featured Job Area -->
 
-    <!-- Start Testimonials Section -->
-    <section class=" testimonials">
-        <img class="patern1 wow fadeInRight" data-wow-delay=".3s" src="assets/images/testimonial/patern1.png" alt="#">
-        <img class="patern2 wow fadeInLeft" data-wow-delay=".5s" src="assets/images/testimonial/patern1.png" alt="#">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-12">
-                    <div class="section-title align-left wow fadeInLeft" data-wow-delay=".3s">
-                        <span>What saye's Our Clients</span>
-                        <h2>Our Testimonials</h2>
-                    </div>
-                    <div class=" testimonial-inner-head wow fadeInLeft" data-wow-delay=".3s">
-                        <div class=" testimonial-inner">
-                            <div class="testimonial-slider">
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial">
-                                    <div class="quote">
-                                        <i class="lni lni-quotation"></i>
-                                    </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
-                                    <div class="bottom">
-                                        <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi1.jpg" alt="#">
-                                        </div>
-                                        <h4 class="name">Musharof Chowdhury <span>CEO - Templates</span></h4>
-                                    </div>
-                                </div>
-                                <!--/ End Single Testimonial -->
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial">
-                                    <div class="quote">
-                                        <i class="lni lni-quotation"></i>
-                                    </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
-                                    <div class="bottom">
-                                        <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi2.jpg" alt="#">
-                                        </div>
-                                        <h4 class="name">Naimur Rahman <span>CEO - Wpthemes Grid</span></h4>
-                                    </div>
-                                </div>
-                                <!--/ End Single Testimonial -->
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial">
-                                    <div class="quote">
-                                        <i class="lni lni-quotation"></i>
-                                    </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
-                                    <div class="bottom">
-                                        <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi3.jpg" alt="#">
-                                        </div>
-                                        <h4 class="name">Karmo kerin<span>CEO - Tredex</span></h4>
-                                    </div>
-                                </div>
-                                <!--/ End Single Testimonial -->
-                                <!-- Single Testimonial -->
-                                <div class="single-testimonial">
-                                    <div class="quote">
-                                        <i class="lni lni-quotation"></i>
-                                    </div>
-                                    <p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
-                                        typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever
-                                        since the 1500s." </p>
-                                    <div class="bottom">
-                                        <div class="clien-image">
-                                            <img src="assets/images/testimonial/testi4.jpg" alt="#">
-                                        </div>
-                                        <h4 class="name">Goro Chala <span>CEO - Dream App</span></h4>
-                                    </div>
-                                </div>
-                                <!--/ End Single Testimonial -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-12">
-                    <div class="testimonial-right wow fadeInRight" data-wow-delay=".5s">
-                        <img src="assets/images/testimonial/testimonial-right.png" alt="#">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /End Testimonials Section -->
+	<!-- Start Testimonials Section -->
+	<section class=" testimonials">
+		<img class="patern1 wow fadeInRight" data-wow-delay=".3s" src="assets/images/testimonial/patern1.png" alt="#">
+		<img class="patern2 wow fadeInLeft" data-wow-delay=".5s" src="assets/images/testimonial/patern1.png" alt="#">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-12">
+					<div class="section-title align-left wow fadeInLeft" data-wow-delay=".3s">
+						<span>What saye's Our Clients</span>
+						<h2>Our Testimonials</h2>
+					</div>
+					<div class=" testimonial-inner-head wow fadeInLeft" data-wow-delay=".3s">
+						<div class=" testimonial-inner">
+							<div class="testimonial-slider">
+								<!-- Single Testimonial -->
+								<div class="single-testimonial">
+									<div class="quote">
+										<i class="lni lni-quotation"></i>
+									</div>
+									<p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
+										typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+										ever
+										since the 1500s." </p>
+									<div class="bottom">
+										<div class="clien-image">
+											<img src="assets/images/testimonial/testi1.jpg" alt="#">
+										</div>
+										<h4 class="name">Musharof Chowdhury <span>CEO - Templates</span></h4>
+									</div>
+								</div>
+								<!--/ End Single Testimonial -->
+								<!-- Single Testimonial -->
+								<div class="single-testimonial">
+									<div class="quote">
+										<i class="lni lni-quotation"></i>
+									</div>
+									<p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
+										typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+										ever
+										since the 1500s." </p>
+									<div class="bottom">
+										<div class="clien-image">
+											<img src="assets/images/testimonial/testi2.jpg" alt="#">
+										</div>
+										<h4 class="name">Naimur Rahman <span>CEO - Wpthemes Grid</span></h4>
+									</div>
+								</div>
+								<!--/ End Single Testimonial -->
+								<!-- Single Testimonial -->
+								<div class="single-testimonial">
+									<div class="quote">
+										<i class="lni lni-quotation"></i>
+									</div>
+									<p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
+										typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+										ever
+										since the 1500s." </p>
+									<div class="bottom">
+										<div class="clien-image">
+											<img src="assets/images/testimonial/testi3.jpg" alt="#">
+										</div>
+										<h4 class="name">Karmo kerin<span>CEO - Tredex</span></h4>
+									</div>
+								</div>
+								<!--/ End Single Testimonial -->
+								<!-- Single Testimonial -->
+								<div class="single-testimonial">
+									<div class="quote">
+										<i class="lni lni-quotation"></i>
+									</div>
+									<p>" I just brought it and i love it. Lorem Ipsum is simply dummy text of the and
+										typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+										ever
+										since the 1500s." </p>
+									<div class="bottom">
+										<div class="clien-image">
+											<img src="assets/images/testimonial/testi4.jpg" alt="#">
+										</div>
+										<h4 class="name">Goro Chala <span>CEO - Dream App</span></h4>
+									</div>
+								</div>
+								<!--/ End Single Testimonial -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-12">
+					<div class="testimonial-right wow fadeInRight" data-wow-delay=".5s">
+						<img src="assets/images/testimonial/testimonial-right.png" alt="#">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /End Testimonials Section -->
 
 
-    <!-- Start Pricing Table Area -->
-    <section class="pricing-table section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">Pricing Table</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Our Pricing Plan</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Single Table -->
-                    <div class="single-table wow fadeInUp" data-wow-delay=".2s">
-                        <!-- Table Head -->
-                        <div class="table-head">
-                            <h4 class="title">BASIC PACK</h4>
-                            <div class="price">
-                                <p class="amount">$30<span class="duration">per month</span></p>
-                            </div>
-                        </div>
-                        <!-- End Table Head -->
-                        <!-- Table List -->
-                        <ul class="table-list">
-                            <li>5+ Listings</li>
-                            <li>Contact With Agent</li>
-                            <li>Contact With Agent</li>
-                            <li>7×24 Fully Support</li>
-                            <li>50GB Space</li>
-                        </ul>
-                        <!-- End Table List -->
-                        <!-- Table Bottom -->
-                        <div class="button">
-                            <a class="btn" href="#">Register Now</a>
-                        </div>
-                        <!-- End Table Bottom -->
-                    </div>
-                    <!-- End Single Table-->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Single Table -->
-                    <div class="single-table wow fadeInUp" data-wow-delay=".4s">
-                        <!-- Table Head -->
-                        <div class="table-head">
-                            <h4 class="title">STANDARD PACK</h4>
-                            <div class="price">
-                                <p class="amount">$40<span class="duration">per month</span></p>
-                            </div>
-                        </div>
-                        <!-- End Table Head -->
-                        <!-- Table List -->
-                        <ul class="table-list">
-                            <li>5+ Listings</li>
-                            <li>Contact With Agent</li>
-                            <li>Contact With Agent</li>
-                            <li>7×24 Fully Support</li>
-                            <li>50GB Space</li>
-                        </ul>
-                        <!-- End Table List -->
-                        <!-- Table Bottom -->
-                        <div class="button">
-                            <a class="btn" href="#">Register Now</a>
-                        </div>
-                        <!-- End Table Bottom -->
-                    </div>
-                    <!-- End Single Table-->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Single Table -->
-                    <div class="single-table wow fadeInUp" data-wow-delay=".6s">
-                        <!-- Table Head -->
-                        <div class="table-head">
-                            <h4 class="title">PREMIUM PACK</h4>
-                            <div class="price">
-                                <p class="amount">$60<span class="duration">per month</span></p>
-                            </div>
-                        </div>
-                        <!-- End Table Head -->
-                        <!-- Table List -->
-                        <ul class="table-list">
-                            <li>5+ Listings</li>
-                            <li>Contact With Agent</li>
-                            <li>Contact With Agent</li>
-                            <li>7×24 Fully Support</li>
-                            <li>50GB Space</li>
-                        </ul>
-                        <!-- End Table List -->
-                        <!-- Table Bottom -->
-                        <div class="button">
-                            <a class="btn" href="#">Register Now</a>
-                        </div>
-                        <!-- End Table Bottom -->
-                    </div>
-                    <!-- End Single Table-->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--/ End Pricing Table Area -->
+	<!-- Start Pricing Table Area -->
+	<section class="pricing-table section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<span class="wow fadeInDown" data-wow-delay=".2s">Pricing Table</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Our Pricing Plan</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
+							Ipsum available, but the majority have suffered alteration in some form.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Single Table -->
+					<div class="single-table wow fadeInUp" data-wow-delay=".2s">
+						<!-- Table Head -->
+						<div class="table-head">
+							<h4 class="title">BASIC PACK</h4>
+							<div class="price">
+								<p class="amount">$30<span class="duration">per month</span></p>
+							</div>
+						</div>
+						<!-- End Table Head -->
+						<!-- Table List -->
+						<ul class="table-list">
+							<li>5+ Listings</li>
+							<li>Contact With Agent</li>
+							<li>Contact With Agent</li>
+							<li>7×24 Fully Support</li>
+							<li>50GB Space</li>
+						</ul>
+						<!-- End Table List -->
+						<!-- Table Bottom -->
+						<div class="button">
+							<a class="btn" href="#">Register Now</a>
+						</div>
+						<!-- End Table Bottom -->
+					</div>
+					<!-- End Single Table-->
+				</div>
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Single Table -->
+					<div class="single-table wow fadeInUp" data-wow-delay=".4s">
+						<!-- Table Head -->
+						<div class="table-head">
+							<h4 class="title">STANDARD PACK</h4>
+							<div class="price">
+								<p class="amount">$40<span class="duration">per month</span></p>
+							</div>
+						</div>
+						<!-- End Table Head -->
+						<!-- Table List -->
+						<ul class="table-list">
+							<li>5+ Listings</li>
+							<li>Contact With Agent</li>
+							<li>Contact With Agent</li>
+							<li>7×24 Fully Support</li>
+							<li>50GB Space</li>
+						</ul>
+						<!-- End Table List -->
+						<!-- Table Bottom -->
+						<div class="button">
+							<a class="btn" href="#">Register Now</a>
+						</div>
+						<!-- End Table Bottom -->
+					</div>
+					<!-- End Single Table-->
+				</div>
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Single Table -->
+					<div class="single-table wow fadeInUp" data-wow-delay=".6s">
+						<!-- Table Head -->
+						<div class="table-head">
+							<h4 class="title">PREMIUM PACK</h4>
+							<div class="price">
+								<p class="amount">$60<span class="duration">per month</span></p>
+							</div>
+						</div>
+						<!-- End Table Head -->
+						<!-- Table List -->
+						<ul class="table-list">
+							<li>5+ Listings</li>
+							<li>Contact With Agent</li>
+							<li>Contact With Agent</li>
+							<li>7×24 Fully Support</li>
+							<li>50GB Space</li>
+						</ul>
+						<!-- End Table List -->
+						<!-- Table Bottom -->
+						<div class="button">
+							<a class="btn" href="#">Register Now</a>
+						</div>
+						<!-- End Table Bottom -->
+					</div>
+					<!-- End Single Table-->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/ End Pricing Table Area -->
 
-    <!-- Start Latest News Area -->
-    <div class="latest-news-area section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <span class="wow fadeInDown" data-wow-delay=".2s">latest news</span>
-                        <h2 class="wow fadeInUp" data-wow-delay=".4s">Latest News & Blog</h2>
-                        <p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
-                            Ipsum available, but the majority have suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Single News -->
-                    <div class="single-news wow fadeInUp" data-wow-delay=".3s">
-                        <div class="image">
-                            <img class="thumb" src="assets/images/blog/blog1.jpg" alt="#">
-                        </div>
-                        <div class="content-body">
-                            <h4 class="title"><a href="blog-single.html">The Internet Is A Job Seeker Most
-                                    Crucial Success</a></h4>
-                            <div class="meta-details">
-                                <ul>
-                                    <li><a href="#"><i class="lni lni-tag"></i> Job skills</a></li>
-                                    <li><a href="#"><i class="lni lni-calendar"></i> 12-09-2023</a></li>
-                                    <li><a href="#"><i class="lni lni-eye"></i> 55</a></li>
-                                </ul>
-                            </div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                has been the standard.</p>
-                            <div class="button">
-                                <a href="blog-single.html" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single News -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Single News -->
-                    <div class="single-news wow fadeInUp" data-wow-delay=".5s">
-                        <div class="image">
-                            <img class="thumb" src="assets/images/blog/blog2.jpg" alt="#">
-                        </div>
-                        <div class="content-body">
-                            <h4 class="title"><a href="blog-single.html">Today From Connecting With Potential
-                                    Employers</a></h4>
-                            <div class="meta-details">
-                                <ul>
-                                    <li><a href="#"><i class="lni lni-tag"></i> Career advice</a></li>
-                                    <li><a href="#"><i class="lni lni-calendar"></i> 10-10-2023</a></li>
-                                    <li><a href="#"><i class="lni lni-eye"></i> 55</a></li>
-                                </ul>
-                            </div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                has been the standard.</p>
-                            <div class="button">
-                                <a href="blog-single.html" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single News -->
-                </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Single News -->
-                    <div class="single-news wow fadeInUp" data-wow-delay=".7s">
-                        <div class="image">
-                            <img class="thumb" src="assets/images/blog/blog3.jpg" alt="#">
-                        </div>
-                        <div class="content-body">
-                            <h4 class="title"><a href="blog-single.html">We’ve Weeded Through Hundreds Of Job
-                                    Hunting</a></h4>
-                            <div class="meta-details">
-                                <ul>
-                                    <li><a href="#"><i class="lni lni-tag"></i> Future plan</a></li>
-                                    <li><a href="#"><i class="lni lni-calendar"></i> 09-05-2023</a></li>
-                                    <li><a href="#"><i class="lni lni-eye"></i> 55</a></li>
-                                </ul>
-                            </div>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                                has been the standard.</p>
-                            <div class="button">
-                                <a href="blog-single.html" class="btn">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single News -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Latest News Area -->
+	<!-- Start Latest News Area -->
+	<div class="latest-news-area section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<span class="wow fadeInDown" data-wow-delay=".2s">latest news</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Latest News & Blog</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">There are many variations of passages of Lorem
+							Ipsum available, but the majority have suffered alteration in some form.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Single News -->
+					<div class="single-news wow fadeInUp" data-wow-delay=".3s">
+						<div class="image">
+							<img class="thumb" src="assets/images/blog/blog1.jpg" alt="#">
+						</div>
+						<div class="content-body">
+							<h4 class="title"><a href="blog-single.html">The Internet Is A Job Seeker Most
+									Crucial Success</a></h4>
+							<div class="meta-details">
+								<ul>
+									<li><a href="#"><i class="lni lni-tag"></i> Job skills</a></li>
+									<li><a href="#"><i class="lni lni-calendar"></i> 12-09-2023</a></li>
+									<li><a href="#"><i class="lni lni-eye"></i> 55</a></li>
+								</ul>
+							</div>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+								has been the standard.</p>
+							<div class="button">
+								<a href="blog-single.html" class="btn">Read More</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Single News -->
+				</div>
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Single News -->
+					<div class="single-news wow fadeInUp" data-wow-delay=".5s">
+						<div class="image">
+							<img class="thumb" src="assets/images/blog/blog2.jpg" alt="#">
+						</div>
+						<div class="content-body">
+							<h4 class="title"><a href="blog-single.html">Today From Connecting With Potential
+									Employers</a></h4>
+							<div class="meta-details">
+								<ul>
+									<li><a href="#"><i class="lni lni-tag"></i> Career advice</a></li>
+									<li><a href="#"><i class="lni lni-calendar"></i> 10-10-2023</a></li>
+									<li><a href="#"><i class="lni lni-eye"></i> 55</a></li>
+								</ul>
+							</div>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+								has been the standard.</p>
+							<div class="button">
+								<a href="blog-single.html" class="btn">Read More</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Single News -->
+				</div>
+				<div class="col-lg-4 col-md-6 col-12">
+					<!-- Single News -->
+					<div class="single-news wow fadeInUp" data-wow-delay=".7s">
+						<div class="image">
+							<img class="thumb" src="assets/images/blog/blog3.jpg" alt="#">
+						</div>
+						<div class="content-body">
+							<h4 class="title"><a href="blog-single.html">We’ve Weeded Through Hundreds Of Job
+									Hunting</a></h4>
+							<div class="meta-details">
+								<ul>
+									<li><a href="#"><i class="lni lni-tag"></i> Future plan</a></li>
+									<li><a href="#"><i class="lni lni-calendar"></i> 09-05-2023</a></li>
+									<li><a href="#"><i class="lni lni-eye"></i> 55</a></li>
+								</ul>
+							</div>
+							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+								has been the standard.</p>
+							<div class="button">
+								<a href="blog-single.html" class="btn">Read More</a>
+							</div>
+						</div>
+					</div>
+					<!-- End Single News -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Latest News Area -->
 
-    <!-- Start Clients Area -->
-    <div class="client-logo-section">
-        <div class="container">
-            <div class="client-logo-wrapper">
-                <div class="client-logo-carousel d-flex align-items-center justify-content-between">
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client1.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client2.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client3.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client4.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client5.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client6.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client2.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client3.png" alt="#">
-                    </div>
-                    <div class="client-logo">
-                        <img src="assets/images/clients/client4.png" alt="#">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Clients Area -->
+	<!-- Start Clients Area -->
+	<div class="client-logo-section">
+		<div class="container">
+			<div class="client-logo-wrapper">
+				<div class="client-logo-carousel d-flex align-items-center justify-content-between">
+					<div class="client-logo">
+						<img src="assets/images/clients/client1.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client2.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client3.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client4.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client5.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client6.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client2.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client3.png" alt="#">
+					</div>
+					<div class="client-logo">
+						<img src="assets/images/clients/client4.png" alt="#">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Clients Area -->
 
-    <!-- Login Modal -->
-    <div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog max-width-px-840 position-relative">
-            <button type="button"
-                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-                data-dismiss="modal"><i class="lni lni-close"></i></button>
-            <div class="login-modal-main">
-                <div class="row no-gutters">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="heading">
-                                <h3>Login From Here</h3>
-                                <p>Log in to continue your account <br> and explore new jobs.</p>
-                            </div>
-                            <div class="social-login">
-                                <ul>
-                                    <li><a class="linkedin" href="#"><i class="lni lni-linkedin-original"></i> Log in
-                                            with LinkedIn</a></li>
-                                    <li><a class="google" href="#"><i class="lni lni-google"></i> Log in with
-                                            Google</a></li>
-                                    <li><a class="facebook" href="#"><i class="lni lni-facebook-original"></i> Log in
-                                            with Facebook</a></li>
-                                </ul>
-                            </div>
-                            <div class="or-devider">
-                                <span>Or</span>
-                            </div>
-                            <form action="/">
-                                <div class="form-group">
-                                    <label for="email" class="label">E-mail</label>
-                                    <input type="email" class="form-control" placeholder="example@gmail.com" id="email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="label">Password</label>
-                                    <div class="position-relative">
-                                        <input type="password" class="form-control" id="password"
-                                            placeholder="Enter password">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex flex-wrap justify-content-between">
-                                    <!-- Default checkbox -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault" />
-                                        <label class="form-check-label" for="flexCheckDefault">Remember password</label>
-                                    </div>
-                                    <a href="" class="font-size-3 text-dodger line-height-reset">Forget Password</a>
-                                </div>
-                                <div class="form-group mb-8 button">
-                                    <button class="btn ">Log in
-                                    </button>
-                                </div>
-                                <p class="text-center create-new-account">Don’t have an account? <a href="#">Create a
-                                        free account</a></p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Login Modal -->
+	<!-- Login Modal -->
+	<div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal"><i class="lni lni-close"></i></button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h3>登入</h3>
+								<p>登入以繼續獲取服務</p>
+							</div>
+							<div class="social-login">
+								<ul>
+									<li><a class="google" href="#"><i class="lni lni-google"></i>使用
+											Google帳戶繼續</a></li>
+								</ul>
+							</div>
+							<div class="or-devider">
+								<span>Or</span>
+							</div>
+							<form id="loginForm">
+								<div class="form-group">
+									<label for="email" class="label">E-mail</label>
+									<input type="email" class="form-control" placeholder="example@gmail.com" id="email">
+								</div>
+								<div class="form-group">
+									<label for="password" class="label">密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" id="password" placeholder="輸入密碼">
+									</div>
+									<div id="loginError" class="mt-2"></div>
+								</div>
+								<div class="form-group d-flex flex-wrap justify-content-between">
+									<!-- Default checkbox -->
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault" />
+										<label class="form-check-label" for="flexCheckDefault">記住密碼</label>
+									</div>
+									<a href="" class="font-size-3 text-dodger line-height-reset">忘記密碼？</a>
+								</div>
+								<div class="form-group mb-8 button">
+									<button class="btn" type="submit">登入
+									</button>
+								</div>
+								<p class="text-center create-new-account">還沒有帳戶? <a href="#">建立一個免費帳戶</a></p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Login Modal -->
 
-    <!-- Signup Modal -->
-    <div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog max-width-px-840 position-relative">
-            <button type="button"
-                class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-                data-dismiss="modal"><i class="lni lni-close"></i></button>
-            <div class="login-modal-main">
-                <div class="row no-gutters">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="heading">
-                                <h3>Create a free Account <br> Today</h3>
-                                <p>Create your account to continue <br> and explore new jobs.</p>
-                            </div>
-                            <div class="social-login">
-                                <ul>
-                                    <li><a class="linkedin" href="#"><i class="lni lni-linkedin-original"></i> Import
-                                            from LinkedIn</a></li>
-                                    <li><a class="google" href="#"><i class="lni lni-google"></i> Import from
-                                            Google</a></li>
-                                    <li><a class="facebook" href="#"><i class="lni lni-facebook-original"></i> Import
-                                            from Facebook</a></li>
-                                </ul>
-                            </div>
-                            <div class="or-devider">
-                                <span>Or</span>
-                            </div>
-                            <form action="/">
-                                <div class="form-group">
-                                    <label for="email" class="label">E-mail</label>
-                                    <input type="email" class="form-control" placeholder="example@gmail.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="label">Password</label>
-                                    <div class="position-relative">
-                                        <input type="password" class="form-control" placeholder="Enter password">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="label">Confirm Password</label>
-                                    <div class="position-relative">
-                                        <input type="password" class="form-control" placeholder="Enter password">
-                                    </div>
-                                </div>
-                                <div class="form-group d-flex flex-wrap justify-content-between">
-                                    <!-- Default checkbox -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <label class="form-check-label" for="flexCheckDefault">Agree to the <a
-                                                href="#">Terms & Conditions</a></label>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-8 button">
-                                    <button class="btn ">Sign Up
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Signup Modal -->
+	<!-- Signup Modal -->
+	<div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal"><i class="lni lni-close"></i></button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h3>立即創建一個免費帳戶</h3>
+								<p>創建帳戶以獲取服務</p>
+							</div>
+							<div class="social-login">
+								<ul>
+									<li><a class="google" href="#"><i class="lni lni-google"></i>使用Google帳戶繼續</a></li>
+								</ul>
+							</div>
+							<div class="or-devider">
+								<span>Or</span>
+							</div>
+							<form id="signUpForm">
+								<div class="form-group">
+									<label for="email" class="label">E-mail</label>
+									<input type="email" class="form-control" placeholder="example@gmail.com" id="email"
+										name="userEmail" required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+								</div>
+								<div id="loginError" class="mt-2"></div>
+								<div class="form-group">
+									<label for="user_password" class="label">密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" placeholder="輸入密碼"
+											id="user_password" name="userPasswordHash" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="password" class="label">確認密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" placeholder="再次輸入密碼"
+											id="ConfirmPassword" required oninput="setCustomValidity('');"
+											onchange="if(document.getElementById('user_password').value != document.getElementById('ConfirmPassword').value){setCustomValidity('密碼不吻合');}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="label" for="user_phonenumber">會員手機號碼:</label>
+									<input class="form-control" type="text" placeholder="輸入手機號碼(格式:09XX-000000)"
+										id="user_phonenumber" name="userPhoneNumber" required maxlength="11"
+										pattern="09\d{2}-\d{6}">
 
-    <!-- Start Footer Area -->
-    <footer class="footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-lg-6 col-12">
-                        <div class="download-text">
-                            <h3>Download Our Best Apps</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br> eiusmod tempor
-                                incididunt ut labore et dolore</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <div class="download-button">
-                            <div class="button">
-                                <a class="btn" href="#"><i class="lni lni-apple"></i> App Store</a>
-                                <a class="btn" href="#"><i class="lni lni-play-store"></i> Google Play</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Start Middle Top -->
-        <div class="footer-middle">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <!-- Single Widget -->
-                        <div class="f-about single-footer">
-                            <div class="logo">
-                                <a href="index.html"><img src="assets/images/logo/logo.svg" alt="Logo"></a>
-                            </div>
-                            <p>Start building your creative website with our awesome template Massive.</p>
-                            <ul class="contact-address">
-                                <li><span>Address:</span> 555 Wall Street, USA, NY</li>
-                                <li><span>Email:</span> example@apus.com</li>
-                                <li><span>Call:</span> 555-555-1234</li>
-                            </ul>
-                            <div class="footer-social">
-                                <ul>
-                                    <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
-                                    <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
-                                    <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
-                                    <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Widget -->
-                    </div>
-                    <div class="col-lg-8 col-12">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 col-12">
-                                <!-- Single Widget -->
-                                <div class="single-footer f-link">
-                                    <h3>For Candidates</h3>
-                                    <ul>
-                                        <li><a href="resume.html">User Dashboard</a></li>
-                                        <li><a href="#">CV Packages</a></li>
-                                        <li><a href="#">Jobs Featured</a></li>
-                                        <li><a href="#">Jobs Urgent</a></li>
-                                        <li><a href="#">Candidate List</a></li>
-                                        <li><a href="#">Candidates Grid</a></li>
-                                    </ul>
-                                </div>
-                                <!-- End Single Widget -->
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-12">
-                                <!-- Single Widget -->
-                                <div class="single-footer f-link">
-                                    <h3>For Employers</h3>
-                                    <ul>
-                                        <li><a href="#">Post New</a></li>
-                                        <li><a href="#">Employer List</a></li>
-                                        <li><a href="#">Employers Grid</a></li>
-                                        <li><a href="#">Job Packages</a></li>
-                                        <li><a href="#">Jobs Listing</a></li>
-                                        <li><a href="#">Jobs Featured</a></li>
-                                    </ul>
-                                </div>
-                                <!-- End Single Widget -->
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-12">
-                                <!-- Single Widget -->
-                                <div class="single-footer newsletter">
-                                    <h3>Join Our Newsletter</h3>
-                                    <p>Subscribe to get the latest jobs posted, candidates...</p>
-                                    <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                        <input name="EMAIL" placeholder="Your email address" class="common-input"
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Your email address'" required="" type="email">
-                                        <div class="button">
-                                            <button class="btn">Subscribe Now! <span class="dir-part"></span></button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <!-- End Single Widget -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--/ End Footer Middle -->
-        <!-- Start Footer Bottom -->
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="inner">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="left">
-                                <p><a target="_blank" href="http://www.mobanwang.com/" title="网页模板">网页模板</a></p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <div class="right">
-                                <ul>
-                                    <li><a href="#">Terms of use</a></li>
-                                    <li><a href="#"> Privacy Policy</a></li>
-                                    <li><a href="#">Faq</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Footer Middle -->
-    </footer>
-    <!--/ End Footer Area -->
+								</div>
+								<div class="form-group">
+									<label class="label" for="user_city">會員居住城市:</label>
+									<select name="userCity" class="form-select">
+										<option>臺北市</option>
+										<option>新北市</option>
+										<option>基隆市</option>
+										<option id="taoyuan">桃園市</option>
+										<option>新竹縣</option>
+										<option>新竹市</option>
+										<option>宜蘭縣</option>
+										<option>臺中市</option>
+										<option>苗栗縣</option>
+										<option>彰化縣</option>
+										<option>南投縣</option>
+										<option>雲林縣</option>
+										<option>高雄市</option>
+										<option>臺南市</option>
+										<option>嘉義市</option>
+										<option>嘉義縣</option>
+										<option>屏東縣</option>
+										<option>澎湖縣</option>
+										<option>花蓮縣</option>
+										<option>臺東縣</option>
+									</select>
+								</div>
+								<div class="form-group d-flex flex-wrap justify-content-between">
+									<!-- Default checkbox -->
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="">
+										<label class="form-check-label" for="flexCheckDefault">我同意 <a
+												href="#">使用者政策暨隱私權條款</a></label>
+									</div>
+								</div>
+								<div class="form-group mb-8 button">
+									<button class="btn" type="submit">註冊
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Signup Modal -->
 
-    <!-- ========================= scroll-top ========================= -->
-    <a href="#" class="scroll-top btn-hover">
-        <i class="lni lni-chevron-up"></i>
-    </a>
+	<!-- Start Footer Area -->
+	<footer class="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-lg-6 col-12">
+						<div class="download-text">
+							<h3>Download Our Best Apps</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do<br> eiusmod tempor
+								incididunt ut labore et dolore</p>
+						</div>
+					</div>
+					<div class="col-lg-6 col-12">
+						<div class="download-button">
+							<div class="button">
+								<a class="btn" href="#"><i class="lni lni-apple"></i> App Store</a>
+								<a class="btn" href="#"><i class="lni lni-play-store"></i> Google Play</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Start Middle Top -->
+		<div class="footer-middle">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="f-about single-footer">
+							<div class="logo">
+								<a href="index.html"><img src="assets/images/logo/logo.svg" alt="Logo"></a>
+							</div>
+							<p>Start building your creative website with our awesome template Massive.</p>
+							<ul class="contact-address">
+								<li><span>Address:</span> 555 Wall Street, USA, NY</li>
+								<li><span>Email:</span> example@apus.com</li>
+								<li><span>Call:</span> 555-555-1234</li>
+							</ul>
+							<div class="footer-social">
+								<ul>
+									<li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+									<li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+									<li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+									<li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-8 col-12">
+						<div class="row">
+							<div class="col-lg-4 col-md-6 col-12">
+								<!-- Single Widget -->
+								<div class="single-footer f-link">
+									<h3>For Candidates</h3>
+									<ul>
+										<li><a href="resume.html">User Dashboard</a></li>
+										<li><a href="#">CV Packages</a></li>
+										<li><a href="#">Jobs Featured</a></li>
+										<li><a href="#">Jobs Urgent</a></li>
+										<li><a href="#">Candidate List</a></li>
+										<li><a href="#">Candidates Grid</a></li>
+									</ul>
+								</div>
+								<!-- End Single Widget -->
+							</div>
+							<div class="col-lg-4 col-md-6 col-12">
+								<!-- Single Widget -->
+								<div class="single-footer f-link">
+									<h3>For Employers</h3>
+									<ul>
+										<li><a href="#">Post New</a></li>
+										<li><a href="#">Employer List</a></li>
+										<li><a href="#">Employers Grid</a></li>
+										<li><a href="#">Job Packages</a></li>
+										<li><a href="#">Jobs Listing</a></li>
+										<li><a href="#">Jobs Featured</a></li>
+									</ul>
+								</div>
+								<!-- End Single Widget -->
+							</div>
+							<div class="col-lg-4 col-md-6 col-12">
+								<!-- Single Widget -->
+								<div class="single-footer newsletter">
+									<h3>Join Our Newsletter</h3>
+									<p>Subscribe to get the latest jobs posted, candidates...</p>
+									<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+										<input name="EMAIL" placeholder="Your email address" class="common-input"
+											onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Your email address'" required="" type="email">
+										<div class="button">
+											<button class="btn">Subscribe Now! <span class="dir-part"></span></button>
+										</div>
+									</form>
+								</div>
+								<!-- End Single Widget -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Footer Middle -->
+		<!-- Start Footer Bottom -->
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="left">
+								<p><a target="_blank" href="http://www.mobanwang.com/" title="网页模板">网页模板</a></p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-12">
+							<div class="right">
+								<ul>
+									<li><a href="#">Terms of use</a></li>
+									<li><a href="#"> Privacy Policy</a></li>
+									<li><a href="#">Faq</a></li>
+									<li><a href="#">Contact</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Footer Middle -->
+	</footer>
+	<!--/ End Footer Area -->
 
-    <!-- ========================= JS here ========================= -->
-    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
-    <script th:src="@{/js/frontend/wow.min.js}"></script>
-    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
-    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
-    <script th:src="@{/js/frontend/main.js}"></script>
-    <script type="text/javascript">
-        //====== Clients Logo Slider
-        tns({
-            container: '.client-logo-carousel',
-            slideBy: 'page',
-            autoplay: true,
-            autoplayButtonOutput: false,
-            mouseDrag: true,
-            gutter: 15,
-            nav: false,
-            controls: false,
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                540: {
-                    items: 2,
-                },
-                768: {
-                    items: 3,
-                },
-                992: {
-                    items: 4,
-                },
-                1170: {
-                    items: 6,
-                }
-            }
-        });
-        //========= testimonial 
-        tns({
-            container: '.testimonial-slider',
-            items: 1,
-            slideBy: 'page',
-            autoplay: false,
-            mouseDrag: true,
-            gutter: 0,
-            nav: false,
-            controls: true,
-            controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
-            responsive: {
-                0: {
-                    items: 1,
-                },
-                540: {
-                    items: 1,
-                },
-                768: {
-                    items: 1,
-                },
-                992: {
-                    items: 1,
-                },
-                1170: {
-                    items: 1,
-                }
-            }
-        });
+	<!-- ========================= scroll-top ========================= -->
+	<a href="#" class="scroll-top btn-hover">
+		<i class="lni lni-chevron-up"></i>
+	</a>
 
-        //========= glightbox
-        GLightbox({
-            'href': '#',
-            'type': 'video',
-            'source': 'youtube', //vimeo, youtube or local
-            'width': 900,
-            'autoplayVideos': true,
-        });
-    </script>
+	<!-- ========================= JS here ========================= -->
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+	<script th:src="@{/js/frontend/wow.min.js}"></script>
+	<script th:src="@{/js/frontend/tiny-slider.js}"></script>
+	<script th:src="@{/js/frontend/glightbox.min.js}"></script>
+	<script th:src="@{/js/frontend/main.js}"></script>
+	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+	<script type="text/javascript">
+		//====== Clients Logo Slider
+		tns({
+			container: '.client-logo-carousel',
+			slideBy: 'page',
+			autoplay: true,
+			autoplayButtonOutput: false,
+			mouseDrag: true,
+			gutter: 15,
+			nav: false,
+			controls: false,
+			responsive: {
+				0: {
+					items: 1,
+				},
+				540: {
+					items: 2,
+				},
+				768: {
+					items: 3,
+				},
+				992: {
+					items: 4,
+				},
+				1170: {
+					items: 6,
+				}
+			}
+		});
+		//========= testimonial 
+		tns({
+			container: '.testimonial-slider',
+			items: 1,
+			slideBy: 'page',
+			autoplay: false,
+			mouseDrag: true,
+			gutter: 0,
+			nav: false,
+			controls: true,
+			controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+			responsive: {
+				0: {
+					items: 1,
+				},
+				540: {
+					items: 1,
+				},
+				768: {
+					items: 1,
+				},
+				992: {
+					items: 1,
+				},
+				1170: {
+					items: 1,
+				}
+			}
+		});
+
+		//========= glightbox
+		GLightbox({
+			'href': '#',
+			'type': 'video',
+			'source': 'youtube', //vimeo, youtube or local
+			'width': 900,
+			'autoplayVideos': true,
+		});
+
+
+
+	</script>
 </body>
 
 </html>

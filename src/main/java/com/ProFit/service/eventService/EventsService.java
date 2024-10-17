@@ -22,14 +22,34 @@ public class EventsService {
     @Autowired
     private MajorRepository majorRepository;
 
+    //搜尋全部活動
     public List<EventsBean> selectAllEvents() {
         return eventsDAO.findAll();
     }
 
+    //依照ID搜尋活動
     public EventsBean selectEventById(String eventId) {
-        return eventsDAO.findById(eventId).orElse(null);
+    	return eventsDAO.findById(eventId).orElse(null);
+    }
+    
+    //依照名稱搜尋活動
+    public List<EventsBean> selectEventByName(String eventName) {
+    	return eventsDAO.findByEventNameContaining(eventName);
+    }
+    //依照狀態搜尋活動
+    public List<EventsBean> selectEventByStatus(int isEventActive) {
+    	return eventsDAO.findByIsEventActive(isEventActive);
+    }
+    //依照類別搜尋活動
+    public List<EventsBean> selectEventByCategory(int eventCategory) {
+    	return eventsDAO.findByEventCategory(eventCategory);
+    }
+    //依照專業搜尋活動
+    public List<EventsBean> selectEventByMajor(int eventMajor) {
+    	return eventsDAO.findByEventMajorId(eventMajor);
     }
 
+    //保存活動
     public String saveEvent(EventsBean event) {
         if (eventsDAO.existsById(event.getEventId())==false) {
             String newEventId = generateNewEventId();
@@ -40,11 +60,13 @@ public class EventsService {
         return event.getEventId();
     }
 
+    //刪除活動
     public String deleteEvent(String eventId) {
         eventsDAO.deleteById(eventId);
         return eventId;
     }
-
+    
+    //將實體轉換成DTO
     public EventsDTO convertToDTO(EventsBean event) {
         if (event == null) {
             return null;
@@ -68,6 +90,7 @@ public class EventsService {
         return dto;
     }
 
+    //將DTO轉換成實體
     public EventsBean convertToEntity(EventsDTO eventDTO) {
         EventsBean event = new EventsBean();
         event.setEventId(eventDTO.getEventId());

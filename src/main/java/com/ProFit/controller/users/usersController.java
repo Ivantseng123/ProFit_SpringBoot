@@ -96,8 +96,19 @@ public class usersController {
 	}
 	
 	@RequestMapping(value="user/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-	public ResponseEntity<?> confirmUserAccount(@RequestParam("token") String confirmationToken) {
-		return userService.confirmEmail(confirmationToken);
+	public String confirmUserAccount(@RequestParam("token") String confirmationToken) {
+		
+		if (userService.confirmEmail(confirmationToken)) {
+			return "redirect:/user/verifiedSuccess";
+		}
+		
+		return null;
+	}
+	
+	@GetMapping(path = "user/verifiedSuccess")
+	public String verifiedSuccessPage() {
+
+		return "usersVIEW/frontendVIEW/mail-success";
 	}
 
 	// 刪除會員

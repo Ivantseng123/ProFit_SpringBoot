@@ -24,6 +24,18 @@ public class UserTransactionController {
     public String viewTransactions(Model model) {
         return "transactionVIEW/userTransactions";
     }
+    
+    @GetMapping("search/{userId}")
+    @ResponseBody  // 加上這個標註來返回 JSON 而不是頁面
+    public List<UserTransactionDTO> getUserTransactions(@PathVariable("userId") Integer userId) {
+        // 根據 userId 查詢該用戶的所有交易
+        return transactionService.getTransactionsByFilters(userId, null, null, null, null)
+                .stream()
+                .map(transactionService::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
 
     // 獲取所有交易數據，使用 DTO
     @GetMapping("/data")
@@ -77,8 +89,9 @@ public class UserTransactionController {
 
     // 刪除交易
     @PostMapping("/delete")
-    public String deleteTransaction(@RequestParam String transactionId) {
+    @ResponseBody
+    public boolean deleteTransaction(@RequestParam String transactionId) {
         transactionService.deleteTransaction(transactionId);
-        return "redirect:/userTransactions";
+        return true;
     }
 }

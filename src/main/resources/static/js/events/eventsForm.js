@@ -1,9 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const currentURL = window.location.pathname;
-    const titleElement = document.getElementById('event-form-title');
+    const titleElement = document.getElementById('eventFormTitle');
+    const isEventActiveSelect = document.getElementById('isEventActive');
+    const eventCategorySelect = document.getElementById('eventCategory');
     const inputs = document.querySelectorAll('#eventForm input, #eventForm select, #eventForm textarea');
     const saveBtn = document.getElementById("saveBtn");
+
+    //填入選項
+    Object.keys(statusMapping).forEach(key => {
+        if (key !== 'default') {
+            const option = document.createElement('option');
+            option.value = key;
+            option.text = statusMapping[key];
+            //初始選項
+            if (key === isEventActiveSelect.dataset.value) {
+                option.selected = true;
+            }
+            isEventActiveSelect.appendChild(option);
+        }
+    });
+
+    Object.keys(categoryMapping).forEach(key => {
+        if (key !== 'default') {
+            const option = document.createElement('option');
+            option.value = key;
+            option.text = categoryMapping[key];
+            //初始選項
+            if (key === eventCategorySelect.dataset.value) {
+                option.selected = true;
+            }
+            eventCategorySelect.appendChild(option);
+        }
+    });
 
     //設定標題文字
     if (currentURL.includes('/edit')) {
@@ -18,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-
     //保存
     saveBtn.addEventListener("click", () => {
         const confirmation = confirm("確定保存?");
@@ -29,11 +57,13 @@ document.addEventListener("DOMContentLoaded", function () {
         submitForm();
     });
 
+    //送出表單
     function submitForm() {
         const eventData = {
             eventId: document.getElementById("eventId").value || 'new',
             eventName: document.getElementById("eventName").value,
             isEventActive: document.getElementById("isEventActive").value,
+            eventCategory: document.getElementById("eventCategory").value,
             eventMajorId: document.getElementById("eventMajor").value,
             eventStartDate: document.getElementById("eventStartDate").value,
             eventEndDate: document.getElementById("eventEndDate").value,
@@ -46,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
             eventNote: document.getElementById("eventNote").value
         };
 
-        axios.post('/ProFit/events', eventData)
+        axios.post('/ProFit/events/save', eventData)
             .then(function (response) {
                 window.location.href = response.data;
             })
