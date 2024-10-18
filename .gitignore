@@ -415,3 +415,5 @@ firebase-service-account.json
 
 db-secrets.properties
 .vscode/
+
+OAuth2-Credential.properties
