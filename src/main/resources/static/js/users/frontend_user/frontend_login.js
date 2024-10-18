@@ -73,6 +73,8 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 
 $(document).ready(function() {
 	
+	localStorage.removeItem('isLoggedIn');
+	
 	getSession();
 	
 });
@@ -114,6 +116,7 @@ function getSession(){
 				initializeAuthButton();
 			});
 }
+
 
 function initializeAuthButton() {
 	// 模擬用戶登入狀態，這裡用 localStorage 模擬，可根據實際情況修改
