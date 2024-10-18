@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -93,5 +94,12 @@ public class UserTransactionController {
     public boolean deleteTransaction(@RequestParam String transactionId) {
         transactionService.deleteTransaction(transactionId);
         return true;
+    }
+    
+    // 獲取每月的 payment 交易收入
+    @GetMapping("/monthlyIncome")
+    @ResponseBody
+    public Map<String, Double> getMonthlyPaymentIncome() {
+        return transactionService.getMonthlyPaymentIncome();
     }
 }
