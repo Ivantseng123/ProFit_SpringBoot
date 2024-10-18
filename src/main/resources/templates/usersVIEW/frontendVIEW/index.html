@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>JobGrids - Job Portal HTML Template.</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" type="image/x-icon"
+	href="assets/images/favicon.svg" />
+<!-- Place favicon.ico in the root directory -->
+
+<!-- Web Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
+
+<!-- ========================= CSS here ========================= -->
+<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/LineIcons.2.0.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+<link rel="stylesheet"
+	href="https://cdn.lineicons.com/4.0/lineicons.css" />
+</head>
+
+<body>
+	<!--[if lte IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+        your experience and security.
+      </p>
+    <![endif]-->
+
+	<div id="loading-area"></div>
+
+	<!-- Start Header Area -->
+	<header class="header">
+		<div class="navbar-area">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-12">
+						<nav class="navbar navbar-expand-lg">
+							<a class="navbar-brand logo" href="index.html"> <img
+								class="logo1" th:src="@{/images/logo/logo.svg}" alt="Logo" />
+							</a>
+							<button class="navbar-toggler" type="button"
+								data-toggle="collapse" data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent" aria-expanded="false"
+								aria-label="Toggle navigation">
+								<span class="toggler-icon"></span> <span class="toggler-icon"></span>
+								<span class="toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse sub-menu-bar"
+								id="navbarSupportedContent">
+								<ul id="nav" class="navbar-nav ml-auto">
+									<li class="nav-item"><a class="active" href="index.html">Home</a>
+										<ul class="sub-menu">
+											<li><a class="active" href="index.html">Home 1</a></li>
+											<li><a href="index2.html">Home 2</a></li>
+											<li><a href="index3.html">Home 3</a></li>
+											<li><a href="index4.html">Home 4</a></li>
+										</ul></li>
+									<li class="nav-item"><a href="#">Pages</a>
+										<ul class="sub-menu">
+											<li><a href="about-us.html">About Us</a></li>
+											<li><a href="job-list.html">Job List</a></li>
+											<li><a href="job-details.html">Job Details</a></li>
+											<li><a href="resume.html">Resume Page</a></li>
+											<li><a href="privacy-policy.html">Privacy Policy</a></li>
+											<li><a href="faq.html">Faq</a></li>
+											<li><a href="pricing.html">Our Pricing</a></li>
+											<li><a href="404.html">404 Error</a></li>
+											<li><a href="mail-success.html">Mail Success</a></li>
+										</ul></li>
+									<li class="nav-item"><a href="#">Candidates</a>
+										<ul class="sub-menu">
+											<li><a href="browse-jobs.html">Browse Jobs</a></li>
+											<li><a href="browse-categories.html">Browse
+													Categories</a></li>
+											<li><a href="add-resume.html">Add Resume</a></li>
+											<li><a href="job-alerts.html">Job Alerts</a></li>
+										</ul></li>
+									<li class="nav-item"><a href="#">Employers </a>
+										<ul class="sub-menu">
+											<li><a href="post-job.html">Add Job</a></li>
+											<li><a href="manage-jobs.html">Manage Jobs</a></li>
+											<li><a href="manage-applications.html">Manage
+													Applications</a></li>
+											<li><a href="manage-resumes.html">Manage Resume</a></li>
+											<li><a href="browse-resumes.html">Browse Resumes</a></li>
+										</ul></li>
+									<li class="nav-item"><a href="#">Blog</a>
+										<ul class="sub-menu">
+											<li><a href="blog-grid-sidebar.html">Blog Grid
+													Sidebar</a></li>
+											<li><a href="blog-single.html">Blog Single</a></li>
+											<li><a href="blog-single-sidebar.html">Blog Single
+													Sibebar</a></li>
+										</ul></li>
+									<li class="nav-item"><a href="contact.html">Contact </a></li>
+								</ul>
+							</div>
+							<!-- navbar collapse -->
+							<div class="button">
+								<a href="javascript:" id="authButton" data-toggle="modal"
+									data-target="#login" class="login"> <i
+									class="lni lni-lock-alt"></i><span id="authText">登入</span>
+								</a> <a href="javascript:" data-toggle="modal"
+									data-target="#signup" class="btn">註冊</a>
+							</div>
+
+						</nav>
+						<!-- navbar -->
+					</div>
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- navbar area -->
+	</header>
+	<!-- End Header Area -->
+
+
+
+	<!-- Login Modal -->
+	<div class="modal fade form-modal" id="login" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal">
+				<i class="lni lni-close"></i>
+			</button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h3>登入</h3>
+								<p>登入以繼續獲取服務</p>
+							</div>
+							<div class="social-login">
+								<ul>
+									<li><a class="google" href="http://localhost:8080/ProFit/oauth2/authorization/google"><i
+											class="lni lni-google"></i>使用 Google帳戶繼續</a></li>
+								</ul>
+							</div>
+							<div class="or-devider">
+								<span>Or</span>
+							</div>
+							<form id="loginForm">
+								<div class="form-group">
+									<label for="email" class="label">E-mail</label> <input
+										type="email" class="form-control"
+										placeholder="example@gmail.com" id="email">
+								</div>
+								<div class="form-group">
+									<label for="password" class="label">密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" id="password"
+											placeholder="輸入密碼">
+									</div>
+									<div id="loginError" class="mt-2"></div>
+								</div>
+								<div class="form-group d-flex flex-wrap justify-content-between">
+									<!-- Default checkbox -->
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault" /> <label class="form-check-label"
+											for="flexCheckDefault">記住密碼</label>
+									</div>
+									<a href="" class="font-size-3 text-dodger line-height-reset">忘記密碼？</a>
+								</div>
+								<div class="form-group mb-8 button">
+									<button class="btn" type="submit">登入</button>
+								</div>
+								<p class="text-center create-new-account">
+									還沒有帳戶? <a href="#">建立一個免費帳戶</a>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Login Modal -->
+
+	<!-- Signup Modal -->
+	<div class="modal fade form-modal" id="signup" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal">
+				<i class="lni lni-close"></i>
+			</button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h3>立即創建一個免費帳戶</h3>
+								<p>創建帳戶以獲取服務</p>
+							</div>
+							<div class="social-login">
+								<ul>
+									<li><a class="google" th:href="@{/oauth2/authorization/google}"><i
+											class="lni lni-google"></i>使用Google帳戶繼續</a></li>
+								</ul>
+							</div>
+							<div class="or-devider">
+								<span>Or</span>
+							</div>
+							<form id="signUpForm">
+								<div class="form-group">
+									<label for="user_name" class="label">名稱</label> <input
+										type="text" class="form-control" placeholder="輸入稱呼"
+										id="user_name" name="userName" required>
+								</div>
+								<div class="form-group">
+									<label for="email" class="label">E-mail</label> <input
+										type="email" class="form-control"
+										placeholder="example@gmail.com" id="email" name="userEmail"
+										required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+								</div>
+								<div id="loginError" class="mt-2"></div>
+								<div class="form-group">
+									<label for="user_password" class="label">密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" placeholder="輸入密碼"
+											id="user_password" name="userPasswordHash" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="password" class="label">確認密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control"
+											placeholder="再次輸入密碼" id="ConfirmPassword" required
+											oninput="setCustomValidity('');"
+											onchange="if(document.getElementById('user_password').value != document.getElementById('ConfirmPassword').value){setCustomValidity('密碼不吻合');}">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="label" for="user_phonenumber">會員手機號碼:</label> <input
+										class="form-control" type="text"
+										placeholder="輸入手機號碼(格式:09XX-000000)" id="user_phonenumber"
+										name="userPhoneNumber" required maxlength="11"
+										pattern="09\d{2}-\d{6}">
+
+								</div>
+								<div class="form-group">
+									<label class="label" for="user_city">會員居住城市:</label> <select
+										name="userCity" class="form-select">
+										<option>臺北市</option>
+										<option>新北市</option>
+										<option>基隆市</option>
+										<option id="taoyuan">桃園市</option>
+										<option>新竹縣</option>
+										<option>新竹市</option>
+										<option>宜蘭縣</option>
+										<option>臺中市</option>
+										<option>苗栗縣</option>
+										<option>彰化縣</option>
+										<option>南投縣</option>
+										<option>雲林縣</option>
+										<option>高雄市</option>
+										<option>臺南市</option>
+										<option>嘉義市</option>
+										<option>嘉義縣</option>
+										<option>屏東縣</option>
+										<option>澎湖縣</option>
+										<option>花蓮縣</option>
+										<option>臺東縣</option>
+									</select>
+								</div>
+								<div class="form-group d-flex flex-wrap justify-content-between">
+									<!-- Default checkbox -->
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="">
+										<label class="form-check-label" for="flexCheckDefault">我同意
+											<a href="#">使用者政策暨隱私權條款</a>
+										</label>
+									</div>
+								</div>
+								<div class="form-group mb-8 button">
+									<button class="btn" type="submit">註冊</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Signup Modal -->
+
+
+
+	<!-- ========================= scroll-top ========================= -->
+	<a href="#" class="scroll-top btn-hover"> <i
+		class="lni lni-chevron-up"></i>
+	</a>
+
+	<!-- ========================= JS here ========================= -->
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+	<script th:src="@{/js/frontend/wow.min.js}"></script>
+	<script th:src="@{/js/frontend/tiny-slider.js}"></script>
+	<script th:src="@{/js/frontend/glightbox.min.js}"></script>
+	<script th:src="@{/js/frontend/main.js}"></script>
+	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+	<script type="text/javascript">
+        //====== Clients Logo Slider
+        tns({
+            container: '.client-logo-carousel',
+            slideBy: 'page',
+            autoplay: true,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 15,
+            nav: false,
+            controls: false,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 2,
+                },
+                768: {
+                    items: 3,
+                },
+                992: {
+                    items: 4,
+                },
+                1170: {
+                    items: 6,
+                }
+            }
+        });
+        //========= testimonial 
+        tns({
+            container: '.testimonial-slider',
+            items: 1,
+            slideBy: 'page',
+            autoplay: false,
+            mouseDrag: true,
+            gutter: 0,
+            nav: false,
+            controls: true,
+            controlsText: ['<i class="lni lni-arrow-left"></i>', '<i class="lni lni-arrow-right"></i>'],
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                540: {
+                    items: 1,
+                },
+                768: {
+                    items: 1,
+                },
+                992: {
+                    items: 1,
+                },
+                1170: {
+                    items: 1,
+                }
+            }
+        });
+
+        //========= glightbox
+        GLightbox({
+            'href': '#',
+            'type': 'video',
+            'source': 'youtube', //vimeo, youtube or local
+            'width': 900,
+            'autoplayVideos': true,
+        });
+    </script>
+</body>
+
+</html>

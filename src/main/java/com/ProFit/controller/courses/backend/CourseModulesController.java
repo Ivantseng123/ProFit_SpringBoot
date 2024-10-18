@@ -1,4 +1,4 @@
-package com.ProFit.controller.courses;
+package com.ProFit.controller.courses.backend;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,57 +15,55 @@ import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.service.courseService.IcourseModuleService;
 import com.ProFit.service.courseService.IcourseService;
 
-
 @Controller
 public class CourseModulesController {
 
 	@Autowired
 	private IcourseModuleService courseModuleService;
-	
+
 	@Autowired
 	private IcourseService courseService;
-	
+
 	@GetMapping("/courseModules")
-	public String courseModulePage(@RequestParam String courseId,Model model) {
+	public String courseModulePage(@RequestParam String courseId, Model model) {
 		List<CourseModuleDTO> courseModuleDTOList = courseModuleService.searchCourseModules(courseId);
-		
+
 		CoursesDTO courseDTO = courseService.searchOneCourseById(courseId);
-		
-		model.addAttribute("courseModuleDTOList",courseModuleDTOList);
-		model.addAttribute("courseDTO",courseDTO);
-		
-		return "coursesVIEW/courseModuleView";
+
+		model.addAttribute("courseModuleDTOList", courseModuleDTOList);
+		model.addAttribute("courseDTO", courseDTO);
+
+		return "coursesVIEW/backend/courseModuleView";
 	}
-	
+
 	@GetMapping("/courseModules/searchJSON")
 	@ResponseBody
-	public List<CourseModuleDTO> searchOneCourseModuleJSON(@RequestParam String courseId){
+	public List<CourseModuleDTO> searchOneCourseModuleJSON(@RequestParam String courseId) {
 		return courseModuleService.searchCourseModules(courseId);
 	}
-	
+
 	@GetMapping("/courseModules/delete")
 	@ResponseBody
 	public CourseModuleDTO deleteCourseModulesById(@RequestParam Integer courseModuleId) {
-		
-		if(courseModuleId!=null) {
+
+		if (courseModuleId != null) {
 			CourseModuleDTO courseModule = courseModuleService.searchOneCourseModuleById(courseModuleId);
 			courseModuleService.deleteCourseModuleById(courseModuleId);
 			return courseModule;
 		}
 		return null;
 	}
-	
-	
+
 	@PostMapping("/courseModules/addModule")
 	@ResponseBody
 	public boolean insertCourseModule(
 			@RequestParam String courseId,
 			@RequestParam String courseModuleName) {
-		
-		if(courseModuleName!=null) {
+
+		if (courseModuleName != null) {
 			CourseBean insertedCourse = new CourseBean();
 			insertedCourse.setCourseId(courseId);
-			
+
 			CourseModuleBean courseModule = null;
 			courseModule = new CourseModuleBean();
 			courseModule.setCourseModuleName(courseModuleName);
@@ -76,21 +74,20 @@ public class CourseModulesController {
 		}
 		return false;
 	}
-	
+
 	@PostMapping("/courseModules/updateModule")
 	@ResponseBody
 	public boolean updateCourseModule(
 			@RequestParam Integer courseModuleId,
-			@RequestParam String courseModuleName
-			) {
-		
+			@RequestParam String courseModuleName) {
+
 		CourseModuleBean newCourseModule = new CourseModuleBean();
 		newCourseModule.setCourseModuleId(courseModuleId);
 		newCourseModule.setCourseModuleName(courseModuleName);
-		
+
 		boolean isUpdated = courseModuleService.updateCourseModuleById(newCourseModule);
-		
+
 		return isUpdated;
 	}
-	
+
 }

@@ -1,8 +1,8 @@
 $('#searchBtn').click(function () {
-	
+
 	// 清空當前表格
 	$('#search-results').empty();
-	
+
 	$('#search-results').append(`	<div class="text-center">
 	  <div class="spinner-border" role="status">
 	    <span class="visually-hidden">Loading...</span>
@@ -28,7 +28,7 @@ $('#searchBtn').click(function () {
 
 			// 清空當前表格
 			$('#search-results').empty();
-			
+
 			let tableHtml = `<h3>搜尋結果如下 :</h3>
         	                <table>
         	                    <thead>
@@ -52,15 +52,15 @@ $('#searchBtn').click(function () {
 			$('#search-results').append(tableHtml);
 
 			response.forEach(function (course) {
-						console.log("Serialized JSON: " + course.courseCreaterName);
+				console.log("Serialized JSON: " + course.courseCreaterName);
 
-						// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
-						let orderButton = '';
-						if (course.courseStatus === 'Active') {
-							orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
-						}
+				// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
+				// let orderButton = '';
+				// if (course.courseStatus === 'Active') {
+				// 	orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
+				// }
 
-						$('#table-body').append(` 
+				$('#table-body').append(` 
 							<tr>
 								<td class="result-courseId" name="courseId">${course.courseId}</td>
 								<td><img id="currentCoverImage" src="${course.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;" /></td>
@@ -73,14 +73,14 @@ $('#searchBtn').click(function () {
 								<td class="status">${course.courseStatus}</td>
 								<td>
 									<button class="view btn btn-success btn-sm">查看</button>
-									${orderButton}
+									<a href="${contextPath}/courseGrades?courseId=${course.courseId}"><button class="btn btn-warning btn-sm">評論</button></a>
 									<br/><br/>
 									<button class="edit btn btn-primary btn-sm">編輯</button>
 									<button class="delete btn btn-danger btn-sm">刪除</button>
 								</td>
 							</tr>
 						`);
-					});
+			});
 
 
 		},
@@ -115,9 +115,9 @@ $(document).on('click', '.delete', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
 	console.log("Selected Course ID for Deletion: " + courseId);
-	
+
 	let answer = confirm('確認刪除嗎？');
-	   if(answer){
+	if (answer) {
 		$.ajax({
 			url: contextPath + '/courses/delete/' + courseId,
 			data: { courseId: courseId },
@@ -135,9 +135,9 @@ $(document).on('click', '.delete', function () {
 				console.error('Error deleting course:', error);
 			}
 		});
-	   }else{
-	     
-	   }
+	} else {
+
+	}
 });
 
 // 編輯課程流程
@@ -165,9 +165,9 @@ $(document).on('click', '.view', function () {
 		success: function (response) {
 			// 清空當前表格
 			$('.form-container').empty();
-			
+
 			console.log(response);
-			
+
 			// 完整的日期和时间
 			let courseStartDate = `${response.course.courseStartDate.split('.')[0]}`;
 			let courseEndDate = `${response.course.courseEndDate.split('.')[0]}`;

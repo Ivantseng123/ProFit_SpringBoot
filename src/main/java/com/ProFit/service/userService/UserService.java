@@ -136,6 +136,24 @@ public class UserService implements IUserService {
 		return false;
 
 	}
+	
+	@Override
+	public boolean validateForfrontend(String userEmail, String userPassword) {
+
+		Optional<Users> optional = usersRepository.findByUserEmail(userEmail);
+
+		if (optional.isPresent() && (optional.get().getUserIdentity() == 1 || optional.get().getUserIdentity() == 2) && optional.get().getEnabled() == 1) {
+			String dbPassword = optional.get().getUserPasswordHash();
+
+			System.out.println("User------------" + optional.get());
+
+			System.out.println("比對結果: " + pwdEncoder.matches(userPassword, dbPassword));
+			return pwdEncoder.matches(userPassword, dbPassword);
+		}
+		return false;
+
+	}
+
 
 	@Override
 	public String getUserPictureByEmail(String userEmail) {
@@ -263,7 +281,7 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public ResponseEntity<?> confirmEmail(String confirmationToken) {
+	public boolean confirmEmail(String confirmationToken) {
 		Optional<Users> optional = usersRepository.findByVerificationCode(confirmationToken);
 
 		if (optional.isPresent()) {
@@ -271,9 +289,9 @@ public class UserService implements IUserService {
 			Users user = optional.get();
 			user.setEnabled(1);
 			usersRepository.save(user);
-			return ResponseEntity.ok("Email verified successfully!");
+			return true;
 		}
-		return ResponseEntity.badRequest().body("Error: Couldn't verify email");
+		return false;
 	}
 
 	 // 用來更新用戶餘額的方法

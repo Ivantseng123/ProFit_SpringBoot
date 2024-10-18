@@ -9,13 +9,9 @@ import com.ProFit.model.bean.coursesBean.CourseGradeContentBean;
 
 public interface CourseGradeContentRepository extends JpaRepository<CourseGradeContentBean, Integer> {
 
-    @Query("SELECT c FROM CourseGradeContentBean c WHERE " +
-            "(:courseId IS NULL OR c.courseId = :courseId) AND " +
-            "(:minGrade IS NULL OR c.courseGradeScore >= :minGrade) AND " +
-            "(:maxGrade IS NULL OR c.courseGradeScore <= :maxGrade)")
-    Page<CourseGradeContentBean> findByCriteria(
-            @Param("courseId") String courseId,
-            @Param("minGrade") Integer minGrade,
-            @Param("maxGrade") Integer maxGrade,
-            Pageable pageable);
+        @Query("SELECT c FROM CourseGradeContentBean c WHERE " +
+                        "(:courseId IS NULL OR c.courseId = :courseId)")
+        Page<CourseGradeContentBean> findByCourseId(
+                        @Param("courseId") String courseId,
+                        Pageable pageable);
 }

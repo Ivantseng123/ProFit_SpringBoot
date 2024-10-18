@@ -13,6 +13,6 @@ public class testModel {
   
   @GetMapping("/home")
   public String homePage() {
-	  return "/frontendModel/index";
+	  return "usersVIEW/frontendVIEW/index";
   }
 }

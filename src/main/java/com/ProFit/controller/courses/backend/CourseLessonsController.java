@@ -1,4 +1,4 @@
-package com.ProFit.controller.courses;
+package com.ProFit.controller.courses.backend;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -46,7 +46,7 @@ public class CourseLessonsController {
 		model.addAttribute("courseModuleDTO", courseModuleDTO);
 		model.addAttribute("courseLessonDTOList", courseLessonDTOList);
 
-		return "coursesVIEW/courseLessonView";
+		return "coursesVIEW/backend/courseLessonView";
 	}
 
 	@GetMapping("/courseLessons/add")
@@ -57,13 +57,13 @@ public class CourseLessonsController {
 		model.addAttribute("courseModuleDTO", courseModuleDTO);
 		model.addAttribute("courseModuleId", courseModuleId);
 
-		return "coursesVIEW/createCourseLessonView";
+		return "coursesVIEW/backend/createCourseLessonView";
 	}
 
 	@GetMapping("/courseLessons/update")
 	public String updateLessonPage(@RequestParam Integer courseLessonId) {
 
-		return "coursesVIEW/updateCourseLessonView";
+		return "coursesVIEW/backend/updateCourseLessonView";
 	}
 
 	@GetMapping("/courseLessons/search/{courseLessonId}")

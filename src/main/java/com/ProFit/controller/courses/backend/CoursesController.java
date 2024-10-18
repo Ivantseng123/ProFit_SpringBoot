@@ -1,4 +1,4 @@
-package com.ProFit.controller.courses;
+package com.ProFit.controller.courses.backend;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +57,7 @@ public class CoursesController {
 
         model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
 
-        return "coursesVIEW/courseView";
+        return "coursesVIEW/backend/courseView";
     }
 
     @GetMapping("/courses/addCourse")
@@ -69,7 +68,7 @@ public class CoursesController {
 
         model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
 
-        return "coursesVIEW/createCourseView";
+        return "coursesVIEW/backend/createCourseView";
     }
 
     @GetMapping("/courses/viewUpdate")
@@ -80,7 +79,7 @@ public class CoursesController {
 
         model.addAttribute("allMajorCategoriesList", allMajorCategoriesList);
         model.addAttribute("course", coursesDTO); // 使用 DTO
-        return "coursesVIEW/updateCourseView"; // 假設 view resolver 配置為 /WEB-INF/views/
+        return "coursesVIEW/backend/updateCourseView";
     }
 
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -83,29 +83,32 @@ public class HcourseGradeContentDao implements IHcourseGradeContentDao {
 	}
 
 	// 查詢全部 By 課程評價分數
-	@Override
-	public List<CourseGradeContentBean> searchCourseGradeContents(String courseId, String order) {
-		Session session = entityManager.unwrap(Session.class);
-		StringBuilder hql = new StringBuilder("FROM CourseGradeContentBean cg WHERE 1=1");
+	// @Override
+	// public List<CourseGradeContentBean> searchCourseGradeContents(String
+	// courseId, String order) {
+	// Session session = entityManager.unwrap(Session.class);
+	// StringBuilder hql = new StringBuilder("FROM CourseGradeContentBean cg WHERE
+	// 1=1");
 
-		if (courseId != null && !courseId.trim().isEmpty()) {
-			hql.append(" AND cg.courseId = :courseId");
-		}
+	// if (courseId != null && !courseId.trim().isEmpty()) {
+	// hql.append(" AND cg.courseId = :courseId");
+	// }
 
-		// 動態添加排序條件，防止order傳入無效值
-		if ("ASC".equalsIgnoreCase(order)) {
-			hql.append(" ORDER BY cg.courseGradeScore ASC");
-		} else if ("DESC".equalsIgnoreCase(order)) {
-			hql.append(" ORDER BY cg.courseGradeScore DESC");
-		}
+	// // 動態添加排序條件，防止order傳入無效值
+	// if ("ASC".equalsIgnoreCase(order)) {
+	// hql.append(" ORDER BY cg.courseGradeScore ASC");
+	// } else if ("DESC".equalsIgnoreCase(order)) {
+	// hql.append(" ORDER BY cg.courseGradeScore DESC");
+	// }
 
-		Query<CourseGradeContentBean> query = session.createQuery(hql.toString(), CourseGradeContentBean.class);
+	// Query<CourseGradeContentBean> query = session.createQuery(hql.toString(),
+	// CourseGradeContentBean.class);
 
-		if (courseId != null && !courseId.trim().isEmpty()) {
-			query.setParameter("courseId", courseId);
-		}
+	// if (courseId != null && !courseId.trim().isEmpty()) {
+	// query.setParameter("courseId", courseId);
+	// }
 
-		return query.getResultList();
-	}
+	// return query.getResultList();
+	// }
 
 }
