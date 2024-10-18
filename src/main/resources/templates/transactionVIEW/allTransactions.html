@@ -1,47 +1,108 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用戶交易管理</title>
     <link rel="stylesheet" th:href="@{/css/model.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
     <!-- 頁面頭部和側邊欄 -->
     <div th:replace="~{model/layout-static}"></div>
-
-    <!-- 顯示用戶資料 -->
+    
+    <!-- 主內容區域 -->
     <div class="container mt-5">
-        <h2 class="text-center">用戶列表</h2>
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>用戶ID</th>
-                    <th>用戶名稱</th>
-                    <th>餘額</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 遍歷 users 列表，顯示每個用戶的數據 -->
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.userId}"></td>
-                    <td th:text="${user.userName}"></td>
-                    <td th:text="${user.userBalance}"></td>
-                    <td>
-                        <!-- "查看" 按鈕，連接到每個用戶的交易記錄 -->
-                        <a th:href="@{/userTransactions(userId=${user.userId})}" class="btn btn-primary">查看</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    
+     <div class="dashboard-header d-flex align-items-center ">
+                <h1>金流管理</h1>
+                <div class="ms-auto d-flex">
+				
+				 <!-- 新增訂單按鈕 -->
+           
+         </div>
+		</div>
+            
+        <div class="row">
+            <!-- 左邊：用戶列表 -->
+            <div class="col-md-8 table-container"> <!-- 使用8格來放用戶列表 -->
+                <h2 class="text-center">用戶列表</h2>
+                <table id="userTable" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>用戶ID</th>
+                            <th>用戶名稱</th>
+                            <th>餘額</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 遍歷 users 列表，顯示每個用戶的數據 -->
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.userId}"></td>
+                            <td th:text="${user.userName}"></td>
+                            <td th:text="${user.userBalance}"></td>
+                            <td>
+                                <a th:href="@{/userTransactions(userId=${user.userId})}" class="btn btn-primary">查看</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 右邊：訂單管理 -->
+            <div class="col-md-4"> <!-- 使用4格來放訂單管理 -->
+                <div class="card card-widget">
+                    <div class="card-body">
+                        <h5 class="text-muted">訂單管理</h5>
+                        <h2 class="mt-4">5680</h2>
+                        <span>總收入</span>
+                        <div class="mt-4">
+                            <h4>30</h4>
+                            <h6>課程訂單 <span class="pull-right">30%</span></h6>
+                            <div class="progress mb-3" style="height: 7px">
+                                <div class="progress-bar bg-primary" style="width: 30%;" role="progressbar"></div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h4>50</h4>
+                            <h6>職缺訂單 <span class="pull-right">50%</span></h6>
+                            <div class="progress mb-3" style="height: 7px">
+                                <div class="progress-bar bg-success" style="width: 50%;" role="progressbar"></div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h4>20</h4>
+                            <h6>活動訂單 <span class="pull-right">20%</span></h6>
+                            <div class="progress mb-3" style="height: 7px">
+                                <div class="progress-bar bg-warning" style="width: 20%;" role="progressbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- 引入必要的 JS 庫 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入 JS 庫 -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 
+    <!-- 初始化 DataTables -->
+    <script>
+        $(document).ready(function() {
+            $('#userTable').DataTable({
+                "paging": true,
+                "lengthMenu": [5, 10, 25, 50],
+                "pageLength": 5,
+                "searching": true,
+                "ordering": true,
+                "info": true
+            });
+        });
+    </script>
 </body>
 </html>

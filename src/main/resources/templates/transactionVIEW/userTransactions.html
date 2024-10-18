@@ -26,7 +26,6 @@
             <thead>
                 <tr>
                     <th>交易ID</th>
-                    <!-- 交易角色欄位已移除 -->
                     <th>交易類型</th>
                     <th>金額</th>
                     <th>平台費用</th>
@@ -56,8 +55,8 @@
 						用戶ID: <input type="text" id="addUserId" name="userId" th:value="${userId}" class="form-control" readonly><br>
                         交易角色: 
                         <select id="addTransactionRole" name="transactionRole" required class="form-select">
-                            <option value="sender">發送方</option>
-                            <option value="receiver">接收方</option>
+                            <option value="sender">付款方</option>
+                            <option value="receiver">收款方</option>
                         </select><br>
                         交易類型: 
                         <select id="addTransactionType" name="transactionType" required class="form-select">
