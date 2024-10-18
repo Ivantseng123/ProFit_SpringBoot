@@ -353,7 +353,6 @@ CREATE TABLE invoices (
 -- 合作資料僅限發起人(這裡是案主)可編輯,送出合作邀約,接案客同意合作後,狀態改為不可編輯,案主可 前往付款(新增訂單頁面)
 CREATE TABLE service_application(
 	service_application_id INT IDENTITY(100, 1) NOT NULL PRIMARY KEY,
-	service_application_postedby INT NOT NULL,	 --這裡是 合作發起人的的 user_id
 	caseowner_user_id INT NOT NULL,			--這裡是 案主 的 user_id
 	freelancer_user_id	INT NOT NULL,		--這裡是 提供服務人(任務客) 的 user_id
 	--service_id INT,						-- 先不要用到--能從這裡拿到 服務 的 資訊
