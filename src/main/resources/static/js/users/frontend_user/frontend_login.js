@@ -1,10 +1,31 @@
+$(document).ready(function() {
+	fetch('http://localhost:8080/ProFit/user/profileinfo')
+		.then(response => {
+			if (response.ok) {
+				//throw new Error('Network response was not ok');
+				console.log("成功取得會員資料");
+			}
+			return response.json();
+
+		})
+		.then(user => {
+			console.log("User: " + user);
+			console.log("User: " + user);
+			console.log("UserID" + user.userId);
+			console.log("UserName" + user.userName);
+			const userInfoContainer = document.getElementById('user-info');
+			userInfoContainer.innerHTML = ``
+
+		})
+		.catch(error => console.error('Error fetching user data:', error));
+});
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
 	let userEmail = document.getElementById('email').value;
 	let userPassword = document.getElementById('password').value;
-	
-	
+
+
 
 	const formDataObject = {
 		userEmail: userEmail,
@@ -23,11 +44,11 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 				let div = document.getElementById('loginError');
 				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
 			} else {
-				
-				$('#login').modal('hide'); 
+
+				$('#login').modal('hide');
 				alert('登入成功');
 				document.getElementById("loginForm").reset();
-				
+
 				getSession();
 			}
 		})
@@ -72,49 +93,42 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 })
 
 $(document).ready(function() {
-	
+
 	localStorage.removeItem('isLoggedIn');
-	
+
 	getSession();
-	
+
 });
 
-function getSession(){
-	fetch('http://localhost:8080/ProFit/login/getUserSession_frontend', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
+function getSession() {
+	fetch('http://localhost:8080/ProFit/login/checklogin', {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+		.then(response => {
+			if (!response.ok) {
+				localStorage.removeItem('isLoggedIn')
+				throw new Error('No Login');
 			}
+			return response.text();
 		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('No session attribute found');
-				}
-				return response.json();
-			})
-			.then(data => {
-				
-				const user = data;
-				
-				localStorage.setItem('isLoggedIn', 'true');
-				localStorage.setItem('sessionValue', JSON.stringify(user));
-			
-				if (localStorage.getItem('sessionValue')) {
-					const userJSON = localStorage.getItem('sessionValue');
-					const userObject = JSON.parse(userJSON);
-					console.log(userObject);
-				}
+		.then(data => {
 
-				console.log("登入狀態: " + localStorage.getItem('isLoggedIn'));
+			console.log(data);
 
-				
-				initializeAuthButton();
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				
-				initializeAuthButton();
-			});
+			localStorage.setItem('isLoggedIn', 'true');
+
+			console.log("登入狀態: " + localStorage.getItem('isLoggedIn'));
+
+			initializeAuthButton();
+		})
+		.catch(error => {
+			console.error('Error:', error);
+
+			initializeAuthButton();
+		});
 }
 
 
@@ -142,7 +156,7 @@ function initializeAuthButton() {
 // 登出功能
 function logout(event) {
 	event.preventDefault();
-	
+
 	fetch('http://localhost:8080/ProFit/logout_frontend', {
 		method: 'GET',
 		credentials: 'include'
@@ -153,7 +167,7 @@ function logout(event) {
 				localStorage.removeItem('isLoggedIn');
 				localStorage.removeItem('sessionValue');
 				alert('你已成功登出');
-				
+
 				getSession();
 			} else {
 				alert('登出失敗，請重試');

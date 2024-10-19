@@ -1,4 +1,4 @@
-package com.ProFit.controller.users;
+package com.ProFit.controller.users.backend;
 
 import java.util.HashMap;
 import java.util.Map;
