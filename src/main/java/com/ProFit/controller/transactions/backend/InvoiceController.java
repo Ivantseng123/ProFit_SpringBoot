@@ -1,4 +1,4 @@
-package com.ProFit.controller.transactions;
+package com.ProFit.controller.transactions.backend;
 
 import com.ProFit.model.dto.transactionDTO.InvoiceDTO;
 import com.ProFit.service.transactionService.InvoiceService;
@@ -21,7 +21,7 @@ public class InvoiceController {
     public String listInvoices(Model model) {
         List<InvoiceDTO> invoices = invoiceService.getAllInvoices();
         model.addAttribute("invoices", invoices);
-        return "transactionVIEW/invoices";
+        return "transactionVIEW/backend/invoices";
     }
 
     // 根據條件篩選發票
@@ -32,7 +32,7 @@ public class InvoiceController {
                                  Model model) {
         List<InvoiceDTO> invoices = invoiceService.searchInvoices(invoice_number, invoice_status, transaction_id);
         model.addAttribute("invoices", invoices);
-        return "transactionVIEW/invoices";
+        return "transactionVIEW/backend/invoices";
     }
 
     // 新增發票
