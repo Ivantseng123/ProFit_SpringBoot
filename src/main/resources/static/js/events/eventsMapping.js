@@ -17,3 +17,14 @@ const categoryMapping = {
     6: '競賽',
     default: '錯誤'
 }
+
+//活動專業映射
+const majorMapping =[];
+const majors = document.getElementById('majors-data').querySelectorAll('div');
+majors.forEach(major => {
+    const majorId = major.getAttribute('value');
+    const majorName = major.getAttribute('data-name');
+    majorMapping[majorId] = majorName;
+});
+majorMapping['default'] = '錯誤';
+

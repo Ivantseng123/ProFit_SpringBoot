@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dao.eventsCRUD.EventsDAO;
-import com.ProFit.model.dao.majorsCRUD.MajorRepository;
+//import com.ProFit.model.dao.majorsCRUD.MajorRepository;
 
 @Service
 @Transactional
@@ -19,8 +19,8 @@ public class EventsService {
     @Autowired
     private EventsDAO eventsDAO;
     
-    @Autowired
-    private MajorRepository majorRepository;
+//    @Autowired
+//    private MajorRepository majorRepository;
 
     //搜尋全部活動
     public List<EventsBean> selectAllEvents() {
@@ -56,6 +56,7 @@ public class EventsService {
             event.setEventId(newEventId);
             event.setEventPublishDate(LocalDateTime.now());
         }
+        System.out.println(event);
         eventsDAO.save(event);
         return event.getEventId();
     }
@@ -97,7 +98,8 @@ public class EventsService {
         event.setEventName(eventDTO.getEventName());
         event.setIsEventActive(eventDTO.getIsEventActive());
         event.setEventCategory(eventDTO.getEventCategory());
-        event.setEventMajor(majorRepository.findById(eventDTO.getEventMajorId()).get());
+//        event.setEventMajor(majorRepository.findById(eventDTO.getEventMajorId()).get());
+        event.setEventMajorId(eventDTO.getEventMajorId());
         event.setEventPublishDate(eventDTO.getEventPublishDate());
         event.setEventStartDate(eventDTO.getEventStartDate());
         event.setEventEndDate(eventDTO.getEventEndDate());
