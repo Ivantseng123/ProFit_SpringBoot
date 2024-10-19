@@ -1,4 +1,4 @@
-package com.ProFit.controller.transactions;
+package com.ProFit.controller.transactions.backend;
 
 import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
 import com.ProFit.service.transactionService.JobOrderService;
@@ -25,7 +25,7 @@ public class JobOrderController {
     public String listOrders(Model model) {
         List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO(); // 改為使用DTO
         model.addAttribute("orders", orders);
-        return "transactionVIEW/jobOrders"; 
+        return "transactionVIEW/backend/jobOrders"; 
     }
 
     @GetMapping("/search")
@@ -49,7 +49,7 @@ public class JobOrderController {
             model.addAttribute("orders", orders);
         }
         
-        return "transactionVIEW/jobOrders";
+        return "transactionVIEW/backend/jobOrders";
     }
 
     @PostMapping("/insert")

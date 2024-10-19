@@ -1,4 +1,4 @@
-package com.ProFit.controller.transactions;
+package com.ProFit.controller.transactions.backend;
 
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.transactionService.UserTransactionService;
@@ -7,18 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
 public class AllTransactionController {
 
-	@Autowired
-    private UserTransactionService transactionService;
 	
     @Autowired
     private UserService userService;
@@ -36,14 +32,7 @@ public class AllTransactionController {
         model.addAttribute("users", users);
 
         // 返回模板頁面
-        return "transactionVIEW/allTransactions";  // 確保這裡對應你的 Thymeleaf 模板路徑
+        return "transactionVIEW/backend/allTransactions";  // 確保這裡對應你的 Thymeleaf 模板路徑
     }
     
- // 獲取每月的 payment 交易收入
-    @GetMapping("/ProFit/orders/monthlyIncome")
-    @ResponseBody
-    public Map<String, Double> getMonthlyPaymentIncome() {
-        return transactionService.getMonthlyPaymentIncome();
-    }
-
 }
