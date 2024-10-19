@@ -1,4 +1,4 @@
-package com.ProFit.controller.transactions;
+package com.ProFit.controller.transactions.backend;
 
 import java.util.Map;
 
