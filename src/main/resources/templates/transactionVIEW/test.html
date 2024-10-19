@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+</head>
+<body>
+    <div></div>
+
+    <script>
+        axios.post("http://localhost:8080/ProFit/test")
+        .then(res => {
+            console.log(res)
+            document.querySelector("div").innerHTML += res.data
+            document.querySelector("form").submit();
+        })
+        .catch(err => {
+            console.error(err); 
+        })
+    </script>
+</body>
+</html>

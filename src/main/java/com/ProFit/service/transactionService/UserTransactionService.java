@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserTransactionService {
@@ -141,4 +145,33 @@ public class UserTransactionService {
     public UserTransactionDTO convertToDTO(UserTransactionBean transaction) {
         return new UserTransactionDTO(transaction);
     }
+    
+    
+ // 獲取每月的 payment 交易收入統計
+    public Map<String, Double> getMonthlyPaymentIncome() {
+        // 獲取所有 payment 類型的交易
+        List<UserTransactionBean> paymentTransactions = transactionRepository.findByTransactionType("payment");
+
+        // 檢查是否有查詢結果
+        System.out.println("Number of payment transactions: " + paymentTransactions.size());
+
+        // 使用 Java Stream API，將交易按照月份分組，並計算每個月的總收入
+        Map<YearMonth, Double> monthlyIncome = paymentTransactions.stream()
+                .collect(Collectors.groupingBy(
+                        tx -> YearMonth.from(tx.getCreatedAt()),  // 按照月份分組
+                        Collectors.summingDouble(UserTransactionBean::getTotalAmount)  // 累計收入
+                ));
+
+        // 將結果轉換為適合前端的格式
+        Map<String, Double> response = new HashMap<>();
+        monthlyIncome.forEach((yearMonth, total) -> {
+            response.put(yearMonth.toString(), total);  // 例如：2024-01
+        });
+
+        System.out.println("Monthly payment income data: " + response);  // 打印每月收入數據
+        return response;
+    }
+
+    
+    
 }
