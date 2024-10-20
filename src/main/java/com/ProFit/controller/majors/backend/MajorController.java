@@ -1,4 +1,4 @@
-package com.ProFit.controller.majors;
+package com.ProFit.controller.majors.backend;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,22 +39,22 @@ public class MajorController {
 	// 頁面跳轉
 	@GetMapping("/")
 	public String listMajorPage() {
-		return "majorsVIEW/MajorMainPage";
+		return "majorsVIEW/backend/MajorMainPage";
 	}
 
 	@GetMapping("/new")
 	public String showNewForm() {
-		return "majorsVIEW/MajorForm";
+		return "majorsVIEW/backend/MajorForm";
 	}
 
 	@GetMapping("/edit")
 	public String showEditForm() {
-		return "majorsVIEW/MajorForm";
+		return "majorsVIEW/backend/MajorForm";
 	}
 
 	@GetMapping("/view")
 	public String viewMajorPage() {
-		return "majorsVIEW/MajorView";
+		return "majorsVIEW/backend/MajorView";
 	}
 
 	// 列出所有專業
