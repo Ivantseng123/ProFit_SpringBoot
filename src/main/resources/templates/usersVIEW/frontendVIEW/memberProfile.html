@@ -31,21 +31,26 @@
 			object-fit: cover;
 		}
 
-		.fab.fa-twitter {
-			color: #8ab7f1;
-		}
-
-		.fab.fa-instagram {
-			color: #E1306C;
-		}
-
-		.fab.fa-facebook-f {
-			color: #5999ec;
+		.photo_edit {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			object-fit: cover;
 		}
 
 		p {
 			font-size: x-large;
 		}
+
+		input[type="file"]::file-selector-button {
+			background-color: rgb(98, 160, 234);
+			color: white;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	
 	</style>
 </head>
 
@@ -56,61 +61,41 @@
 	<!-- 引用 headerOtherPage.html -->
 	<div th:replace="~{model/frontend/header}"></div>
 
-	<!-- Start Breadcrumbs -->
-	<!-- <div class="breadcrumbs overlay">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">Blog Grid Sidebar</h1>
-                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
-                            Business draws on a wide range of different business .</p>
-                    </div>
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li>Blog Grid Sidebar</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div> -->
-	<!-- End Breadcrumbs -->
-
 	<!-- Start Hero Area -->
 	<section class="hero-area style2">
 		<!-- Single Slider -->
 		<div style="margin: 200px 200px;">
 			<div class="container">
 				<div class="row">
+					<nav aria-label="breadcrumb ">
+						<ol class="breadcrumb py-3 px-3">
+							<li class="breadcrumb-item"><a href="#">1</a></li>
+							<li class="breadcrumb-item"><a href="#">2</a></li>
+							<li class="breadcrumb-item active" aria-current="page">3</li>
+						</ol>
+					</nav>
 					<div class="col-md-5">
 						<div class="row">
 							<div class="col-12 bg-white p-0 px-3 py-3 mb-3">
 								<div class="d-flex flex-column align-items-center">
-									<img class="photo" src="https://i.ytimg.com/vi/BLeZ9r0rJIQ/mqdefault.jpg" alt="">
-									<p class="fw-bold h4 mt-3">John Doe</p>
-									<p class="text-muted">Full Stack Developer</p>
-									<p class="text-muted mb-3">Soma,San Francisco, CA</p>
+									<img class="photo" id="profile_picture" alt="">
+									<p class="fw-bold h4 mt-3" id="user_name"></p>
+									<p class="text-muted" id="user_email"></p>
+									<p class="text-muted mb-3" id="user_city"></p>
 									<div class="d-flex ">
-										<div class="btn btn-primary follow me-2">Follow</div>
-										<div class="btn btn-outline-primary message">Message</div>
+										<div class="btn btn-primary follow me-2" data-toggle="modal"
+											data-target="#editProfile">編輯資料</div>
+										<div class="btn btn-outline-primary message" data-toggle="modal"
+											data-target="#editPassword">修改密碼</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
-								<div class="d-flex justify-content-between border-bottom py-2 px-3">
-									<p><span class="fas fa-globe me-2"></span>名稱</p>
-
+								<div class="d-flex align-items-center justify-content-center border-bottom">
+									<p class="py-2">最近登入時間</p>
 								</div>
-								<div class="d-flex justify-content-between border-bottom py-2 px-3">
-									<p><span class="fab fa-github-alt me-2"></span>Email</p>
-
-								</div>
-								<div class="d-flex justify-content-between border-bottom py-2 px-3">
-									<p><span class="fab fa-twitter me-2"></span>手機號碼</p>
-								</div>
-								<div class="d-flex justify-content-between border-bottom py-2 px-3">
-									<p><span class="fab fa-instagram me-2"></span>居住地</p>
+								<div class="d-flex align-items-center justify-content-center border-bottom">
+									<p class="py-2 text-muted" id="last_login_time"></p>
 								</div>
 							</div>
 						</div>
@@ -118,51 +103,47 @@
 					<div class="col-md-7 ps-md-4">
 						<div class="row">
 							<div class="col-12 bg-white px-3 mb-3 pb-3">
+								<div class="d-flex align-items-center justify-content-center border-bottom">
+									<h4 class="py-2 text-primary">基本資料</h4>
+								</div>
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">名稱</p>
-									<p class="py-2 text-muted"></p>
+									<p class="py-2 text-muted" id="user_name_1"></p>
 								</div>
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">Email</p>
-									<p class="py-2 text-muted"></p>
+									<p class="py-2 text-muted" id="user_email_1"></p>
 								</div>
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">手機號碼</p>
-									<p class="py-2 text-muted"></p>
+									<p class="py-2 text-muted" id="user_phoneNumber"></p>
 								</div>
 								<div class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">居住地</p>
-									<p class="py-2 text-muted"></p>
+									<p class="py-2 text-muted" id="user_city_1"></p>
 								</div>
-							</div>
-							<div class="col-12 bg-white px-3 pb-2">
-								<h6 class="d-flex align-items-center mb-3 fw-bold py-3"><i
-										class="text-info me-2">assignment</i>Project
-									Status</h6>
-								<small>Web Design</small>
-								<div class="progress mb-3" style="height: 5px">
-									<div class="progress-bar bg-primary" role="progressbar" style="width: 60%"
-										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="d-flex align-items-center justify-content-center border-bottom">
+									<h4 class="py-2 text-primary">接案資料</h4>
 								</div>
-								<small>One Page</small>
-								<div class="progress mb-3" style="height: 5px">
-									<div class="progress-bar bg-primary" role="progressbar" style="width: 72%"
-										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">工作地點偏好</p>
+									<p class="py-2 text-muted" id="freelancer_location_prefer"></p>
 								</div>
-								<small>Mobile Template</small>
-								<div class="progress mb-3" style="height: 5px">
-									<div class="progress-bar bg-primary" role="progressbar" style="width: 50%"
-										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">工作經驗</p>
+									<p class="py-2 text-muted" id="freelancer_exprience"></p>
 								</div>
-								<small>Backend API</small>
-								<div class="progress mb-3" style="height: 5px">
-									<div class="progress-bar bg-primary" role="progressbar" style="width: 90%"
-										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">接案身份</p>
+									<p class="py-2 text-muted" id="freelancer_identity"></p>
 								</div>
-								<small>Website Markup</small>
-								<div class="progress mb-3" style="height: 5px">
-									<div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
-										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">接案描述</p>
+									<p class="py-2 text-muted" id="freelancer_description"></p>
+								</div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">接案狀態</p>
+									<p class="py-2 text-muted" id="freelancer_profile_status"></p>
 								</div>
 							</div>
 						</div>
@@ -186,39 +167,148 @@
 		<i class="lni lni-chevron-up"></i>
 	</a>
 
+	<div class="modal fade form-modal" id="editPassword" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal">
+				<i class="lni lni-close"></i>
+			</button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h3>修改密碼</h3>
+							</div>
+							<form id="editPwdForm">
+								<div class="form-group">
+									<label for="user_password_edit" class="label">密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" placeholder="輸入密碼"
+											id="user_password_edit" name="userPasswordHash" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">確認密碼</label>
+									<div class="position-relative">
+										<input type="password" class="form-control" placeholder="再次輸入密碼"
+											id="ConfirmPassword_edit" required oninput="setCustomValidity('');"
+											onchange="if(document.getElementById('user_password_edit').value != document.getElementById('ConfirmPassword_edit').value){setCustomValidity('密碼不吻合');}">
+									</div>
+								</div>
+								<div class="form-group mb-8 button">
+									<button class="btn" type="submit">確定</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade form-modal" id="editProfile" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal">
+				<i class="lni lni-close"></i>
+			</button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h3>編輯資料</h3>
+							</div>
+							<form id="editPwdForm">
+								<div class="form-group">
+									<input type="hidden" name="userPictureURL" id="user_pictureURL" value="">
+									<label class="label" for="">會員頭貼:</label>
+
+									<div class="d-flex justify-content-center">
+										<img id="profileImagePreview" src="" alt="Profile Image" class="photo_edit" />
+									</div>
+									<input class="mt-3 mb-3" type="file" id="fileInput" accept="image/*"
+										name="imgfile" />
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">名稱</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">手機號碼</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">居住地</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">接案狀態</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">工作地點偏好</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">工作經驗</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">接案身份</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="ConfirmPassword_edit" class="label">接案描述</label>
+									<div class="position-relative">
+										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
+											name="userName" required>
+									</div>
+								</div>
+								<div class="form-group mb-8 button">
+									<button class="btn" type="submit">確定</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- ========================= JS here ========================= -->
-	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
 	<script th:src="@{/js/frontend/wow.min.js}"></script>
 	<script th:src="@{/js/frontend/tiny-slider.js}"></script>
 	<script th:src="@{/js/frontend/glightbox.min.js}"></script>
 	<script th:src="@{/js/frontend/main.js}"></script>
 	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
-
-	<script>
-		$(document).ready(function () {
-			fetch('http://localhost:8080/ProFit/user/profileinfo')
-				.then(response => {
-					if (response.ok) {
-						//throw new Error('Network response was not ok');
-						console.log("成功取得會員資料");
-					}
-					return response.json();
-
-				})
-				.then(user => {
-					console.log("User: " + user);
-					console.log("User: " + user);
-					console.log("UserID" + user.userId);
-					console.log("UserName" + user.userName);
-					const userInfoContainer = document.getElementById('user-info');
-					userInfoContainer.innerHTML = ``
-					
-				})
-				.catch(error => console.error('Error fetching user data:', error));
-		});
-
-	</script>
+	<script th:src="@{/js/users/frontend_user/frontend_userProfile.js}"></script>
 </body>
 
 </html>

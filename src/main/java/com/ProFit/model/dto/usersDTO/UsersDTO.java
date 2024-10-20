@@ -52,6 +52,8 @@ public class UsersDTO {
 	
 	private String verificationCode;
 	
+	private String loginTime;
+	
 //	private List<Pwd_reset_tokens> pwd_reset_tokens = new LinkedList<Pwd_reset_tokens>();
 //
 //	
@@ -284,6 +286,8 @@ public class UsersDTO {
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
 	}
+	
+	
 
 //	public List<Employer_application> getEmployerApplications() {
 //		return employerApplications;
@@ -302,6 +306,14 @@ public class UsersDTO {
 //		this.majors = majors;
 //	}
 
+
+	public String getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(String loginTime) {
+		this.loginTime = loginTime;
+	}
 
 	@Override
 	public String toString() {
