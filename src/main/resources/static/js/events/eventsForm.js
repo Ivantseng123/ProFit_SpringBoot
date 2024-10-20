@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const titleElement = document.getElementById('eventFormTitle');
     const isEventActiveSelect = document.getElementById('isEventActive');
     const eventCategorySelect = document.getElementById('eventCategory');
+    const eventMajorSelect = document.getElementById('eventMajor');
     const inputs = document.querySelectorAll('#eventForm input, #eventForm select, #eventForm textarea');
     const saveBtn = document.getElementById("saveBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
 
     //填入選項
     Object.keys(statusMapping).forEach(key => {
@@ -34,6 +36,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    Object.keys(majorMapping).forEach(key => {
+        if (key !== 'default') {
+            const option = document.createElement('option');
+            option.value = key;
+            option.text = majorMapping[key];
+            //初始選項
+            if (key === eventMajorSelect.dataset.value) {
+                option.selected = true;
+            }
+            eventMajorSelect.appendChild(option);
+        }
+    });
+
     //設定標題文字
     if (currentURL.includes('/edit')) {
         titleElement.textContent = '編輯活動';
@@ -57,6 +72,11 @@ document.addEventListener("DOMContentLoaded", function () {
         submitForm();
     });
 
+    //取消
+    cancelBtn.addEventListener("click", () => {
+        window.location.href = '/ProFit/events';
+    });
+    
     //送出表單
     function submitForm() {
         const eventData = {
@@ -65,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
             isEventActive: document.getElementById("isEventActive").value,
             eventCategory: document.getElementById("eventCategory").value,
             eventMajorId: document.getElementById("eventMajor").value,
+            eventPublishDate: document.getElementById("eventPublishDate").value,
             eventStartDate: document.getElementById("eventStartDate").value,
             eventEndDate: document.getElementById("eventEndDate").value,
             eventPartStartDate: document.getElementById("eventPartStartDate").value,
@@ -75,6 +96,8 @@ document.addEventListener("DOMContentLoaded", function () {
             eventDescription: document.getElementById("eventDescription").value,
             eventNote: document.getElementById("eventNote").value
         };
+
+        console.log(eventData);
 
         axios.post('/ProFit/events/save', eventData)
             .then(function (response) {

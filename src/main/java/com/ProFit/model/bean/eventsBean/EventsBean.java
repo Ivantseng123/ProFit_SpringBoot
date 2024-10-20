@@ -127,6 +127,14 @@ public class EventsBean implements Serializable {
 		this.eventMajor = eventMajor;
 	}
 
+	public int getEventMajorId() {
+		return eventMajorId;
+	}
+
+	public void setEventMajorId(int eventMajorId) {
+		this.eventMajorId = eventMajorId;
+	}
+
 	public LocalDateTime getEventPublishDate() {
 		return eventPublishDate;
 	}

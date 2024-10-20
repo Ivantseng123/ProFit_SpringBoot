@@ -1,4 +1,4 @@
-package com.ProFit.controller.majors;
+package com.ProFit.controller.majors.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.ProFit.controller.transactions;
+package com.ProFit.controller.transactions.backend;
 
 import com.ProFit.model.dto.transactionDTO.UserTransactionDTO;
 import com.ProFit.service.transactionService.UserTransactionService;
@@ -22,13 +22,14 @@ public class UserTransactionController {
 
     // 顯示交易記錄頁面
     @GetMapping
-    public String viewTransactions(Model model) {
-        return "transactionVIEW/userTransactions";
+    public String viewTransactions(@RequestParam("userId") Integer userId, Model model) {
+        model.addAttribute("userId", userId);  // 將 userId 傳遞到前端
+        return "transactionVIEW/backend/userTransactions";
     }
     
     @GetMapping("search/{userId}")
     @ResponseBody  // 加上這個標註來返回 JSON 而不是頁面
-    public List<UserTransactionDTO> getUserTransactions(@PathVariable("userId") Integer userId) {
+    public List<UserTransactionDTO> getUserTransactions(@PathVariable("userId") Integer userId) {	
         // 根據 userId 查詢該用戶的所有交易
         return transactionService.getTransactionsByFilters(userId, null, null, null, null)
                 .stream()
@@ -76,16 +77,17 @@ public class UserTransactionController {
 
     // 新增交易
     @PostMapping("/insert")
-    public String insertTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
+    @ResponseBody
+    public Map<String, String> insertTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
         transactionService.insertTransaction(transactionDTO);
-        return "redirect:/userTransactions";
+        return Map.of("status", "success");
     }
 
     // 更新交易
     @PostMapping("/update")
     public String updateTransaction(@ModelAttribute UserTransactionDTO transactionDTO) {
         transactionService.updateTransaction(transactionDTO);
-        return "redirect:/userTransactions";
+        return "redirect:/userTransactions?userId=" + transactionDTO.getUserId();
     }
 
     // 刪除交易
@@ -96,10 +98,4 @@ public class UserTransactionController {
         return true;
     }
     
-    // 獲取每月的 payment 交易收入
-    @GetMapping("/monthlyIncome")
-    @ResponseBody
-    public Map<String, Double> getMonthlyPaymentIncome() {
-        return transactionService.getMonthlyPaymentIncome();
-    }
 }
