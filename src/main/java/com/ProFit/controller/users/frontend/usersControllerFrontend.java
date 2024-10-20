@@ -78,24 +78,25 @@ public class usersControllerFrontend {
 //				usersDTO.getFreelancerDisc(),usersDTO.getEnabled());
 //	}
 //
-//	// 編輯會員
-//	@PutMapping(path = "users/updateuserpwd")
-//	@ResponseBody
-//	@Transactional
-//	public Users UpdateUserPwd(@RequestBody Map<String, String> user) throws NoSuchAlgorithmException {
-//
-//		Integer user_Id = Integer.valueOf(user.get("user_id"));
-//
-//		System.out.println(user);
-//
-//		Users existuser = userService.getUserInfoByID(user_Id);
-//		if (existuser != null) {
-//
-//			return userService.updateUserPwd(user.get("password"), user_Id);
-//		}
-//
-//		return null;
-//	}
+	// 編輯會員
+	@PutMapping(path = "users/updateuserpwdFrontend")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<?> UpdateUserPwd(@RequestParam String userPassword, HttpSession session) throws NoSuchAlgorithmException {
+			
+		
+		if(session.getAttribute("CurrentUser") != null) {
+			
+			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
+			
+			userService.updateUserPwd(userPassword, userDTO.getUserId());
+			
+			return ResponseEntity.ok("Update Successful");
+		}
+	
+		return ResponseEntity.badRequest().body("Update Failed");
+		
+	}
 //
 //	@ResponseBody
 //	@GetMapping("/api/user/page")

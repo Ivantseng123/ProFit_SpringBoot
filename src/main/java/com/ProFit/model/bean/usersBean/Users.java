@@ -1,6 +1,8 @@
 package com.ProFit.model.bean.usersBean;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +25,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @DynamicUpdate
@@ -82,6 +85,9 @@ public class Users implements Serializable {
 	
 	@Column(name = "verification_code")
 	private String verificationCode;
+	
+	@Transient //不映射到資料庫table欄位
+	private String loginTime;
 	
 	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
@@ -328,17 +334,29 @@ public class Users implements Serializable {
 	public void setMajors(Set<MajorBean> majors) {
 		this.majors = majors;
 	}
+	
+	public String getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(String localDateTime) {
+		this.loginTime = localDateTime;
+	}
 
 	@Override
 	public String toString() {
-		return "Users [user_id=" + userId + ", user_name=" + userName + ", user_email=" + userEmail
-				+ ", user_passwordHash=" + userPasswordHash + ", user_phoneNumber=" + userPhoneNumber + ", user_city="
-				+ userCity + ", user_identity=" + userIdentity + ", user_register_time=" + userRegisterTime
-				+ ", user_pictureURL=" + userPictureURL + ", user_balance=" + userBalance
-				+ ", freelancer_location_prefer=" + freelancerLocationPrefer + ", freelancer_exprience="
-				+ freelancerExprience + ", freelancer_identity=" + freelancerIdentity + ", freelancer_profile_status="
-				+ freelancerProfileStatus + ", freelancer_disc=" + freelancerDisc + "]";
+		return "Users [userId=" + userId + ", userEmail=" + userEmail + ", userName=" + userName + ", userPasswordHash="
+				+ userPasswordHash + ", userPhoneNumber=" + userPhoneNumber + ", userCity=" + userCity
+				+ ", userIdentity=" + userIdentity + ", userRegisterTime=" + userRegisterTime + ", userPictureURL="
+				+ userPictureURL + ", userBalance=" + userBalance + ", freelancerLocationPrefer="
+				+ freelancerLocationPrefer + ", freelancerExprience=" + freelancerExprience + ", freelancerIdentity="
+				+ freelancerIdentity + ", freelancerProfileStatus=" + freelancerProfileStatus + ", freelancerDisc="
+				+ freelancerDisc + ", enabled=" + enabled + ", verificationCode=" + verificationCode + ", loginTime="
+				+ loginTime + ", pwd_reset_tokens=" + pwd_reset_tokens + ", employerApplications="
+				+ employerApplications + ", employer_profile=" + employer_profile + ", majors=" + majors + "]";
 	}
+
+
 
 
 }

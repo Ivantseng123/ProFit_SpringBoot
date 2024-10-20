@@ -1,25 +1,3 @@
-$(document).ready(function() {
-	fetch('http://localhost:8080/ProFit/user/profileinfo')
-		.then(response => {
-			if (response.ok) {
-				//throw new Error('Network response was not ok');
-				console.log("成功取得會員資料");
-			}
-			return response.json();
-
-		})
-		.then(user => {
-			console.log("User: " + user);
-			console.log("User: " + user);
-			console.log("UserID" + user.userId);
-			console.log("UserName" + user.userName);
-			const userInfoContainer = document.getElementById('user-info');
-			userInfoContainer.innerHTML = ``
-
-		})
-		.catch(error => console.error('Error fetching user data:', error));
-});
-
 document.getElementById('loginForm').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
 	let userEmail = document.getElementById('email').value;
@@ -42,7 +20,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 		.then(response => {
 			if (!response.ok) {
 				let div = document.getElementById('loginError');
-				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
+				div.innerHTML = '<p style="color: red; font-size: 16px;">帳號或密碼錯誤</p>';
 			} else {
 
 				$('#login').modal('hide');
@@ -82,8 +60,6 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 		})
 		.then(result => {
 			console.log('註冊成功' + result);
-			window.location.href = 'http://localhost:8080/ProFit/home';
-
 		})
 		.catch(error => {
 			console.error('Error:', error);
@@ -166,9 +142,9 @@ function logout(event) {
 				// 清除登入狀態
 				localStorage.removeItem('isLoggedIn');
 				localStorage.removeItem('sessionValue');
-				alert('你已成功登出');
-
+				alert('你已成功登出');			
 				getSession();
+				window.location.href = 'http://localhost:8080/ProFit/homepage';
 			} else {
 				alert('登出失敗，請重試');
 			}
