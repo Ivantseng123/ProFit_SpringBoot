@@ -1,4 +1,4 @@
-package com.ProFit.controller.majors;
+package com.ProFit.controller.majors.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class MajorCategoryController {
 	// 跳轉到主頁面
 	@GetMapping("/")
 	public String listMajorCategories() {
-		return "majorsVIEW/MajorCategoryMainPage"; // 返回主頁面的視圖名稱
+		return "majorsVIEW/backend/MajorCategoryMainPage"; // 返回主頁面的視圖名稱
 	}
 
 	// 查詢全部
@@ -44,7 +44,7 @@ public class MajorCategoryController {
 	@PostMapping("/api")
 	@ResponseBody
 	public ResponseEntity<MajorCategoryBean> createMajorCategory(@RequestBody MajorCategoryBean majorCategory) {
-		System.out.println(majorCategory);
+		// System.out.println(majorCategory);
 		MajorCategoryBean createdCategory = majorCategoryService.insertMajorCategory(majorCategory);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
 	}

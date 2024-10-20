@@ -33,38 +33,16 @@
                     <button class="search btn btn-primary btn-sm my-sm-0" id="searchBtn">搜尋</button>
                 </div>
             </div>
-
-            <div class="table-container">
-                <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>活動名稱</th>
-                        <th>狀態</th>
-                        <th>活動類別</th>
-                        <th>專業類別</th>
-                        <th>描述</th>
-                        <th>操作</th>
-                    </tr>
-                    <tr th:each="event : ${events}">
-                        <td class="id" th:text="${event.eventId}"></td>
-                        <td class="name" th:text="${event.eventName}"></td>
-                        <td class="status" th:text="${event.isEventActive}"></td>
-                        <td class="category" th:text="${event.eventCategory}"></td>
-                        <td class="major" th:text="${event.eventMajorId}"></td>
-                        <td class="description" th:text="${event.eventDescription}"></td>
-                        <td class="action-buttons">
-                            <a class="view btn btn-success btn-sm"
-                                th:href="@{/events/view?(eventId=${event.eventId})}">詳細資料</a>
-                            <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
-                            <a class="view-participant btn btn-success btn-sm" href="#">參加者列表</a>
-                            <a class="edit btn btn-primary btn-sm"
-                                th:href="@{/events/edit?(eventId=${event.eventId})}">編輯</a>
-                            <a class="delete btn btn-danger btn-sm"
-                                th:href="@{/events/delete(eventId=${event.eventId})}">刪除</a>
-                        </td>
-                    </tr>
-                </table>
+            
+            <div class="table-container" id="searchResult"></div>
+            
+            <div id="majors-data" style="display: none;">
+                <th:block th:each="major : ${majors}">
+                    <div th:value="${major.majorId}" th:data-name="${major.majorName}"></div>
+                </th:block>
             </div>
+
+
         </div>
 
         <!-- 彈出視窗 -->

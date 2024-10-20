@@ -35,7 +35,10 @@ public class MajorCategoryService implements IMajorCategoryService {
 	@Override
 	public MajorCategoryBean insertMajorCategory(MajorCategoryBean majorCategory) {
 		// return majorCategoryDAO.insertMajorCategory(majorCategory);
-
+		Optional<MajorCategoryBean> optional = majorCategoryRepo.findById(majorCategory.getMajorCategoryId());
+		if (optional.isPresent()) {
+			return null;
+		}
 		return majorCategoryRepo.save(majorCategory);
 	}
 

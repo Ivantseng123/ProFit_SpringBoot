@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+   <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+	<style>
+		 body {
+   			padding-top: 120px; /* 根據導航欄的實際高度進行調整 */
+		}
+		.header {
+  			position: fixed;
+    		top: 0;
+    		width: 100%;
+    		z-index: 1000; /* 確保頁頭在最上層 */
+		}
+
+        .card {
+            margin-top: 20px;
+        }
+        .summary-title {
+            font-weight: bold;
+        }
+        .summary-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+        }
+        .account-info {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .details-title {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .empty-state {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .empty-state img {
+            max-width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+ <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+
+    <div class="container">
+        
+
+        <!-- Income Summary -->
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="summary-title">即將撥款</div>
+                        <div class="summary-amount">NT$0</div>
+                    </div>
+                    <div class="col-6 text-end">
+                        <div class="summary-title">已撥款</div>
+                        <div class="summary-amount">NT$1,963</div>
+                    </div>
+                </div>
+                <div class="account-info">我的銀行帳戶：****5610</div>
+            </div>
+        </div>
+
+        <!-- Income Details -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="details-title">進帳詳情</h5>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="tab-pending" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">即將撥款</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-paid" data-bs-toggle="tab" data-bs-target="#paid" type="button" role="tab" aria-controls="paid" aria-selected="false">已撥款</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="tab-pending">
+                        <div class="empty-state">
+                            <img src="https://via.placeholder.com/150" alt="Empty State">
+                            <p>無資料</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="tab-paid">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>撥款週期</th>
+                                    <th>訂單編號</th>
+                                    <th>狀態</th>
+                                    <th>撥款金額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024/10/14 - 2024/10/19</td>
+                                    <td>ORD123456789</td>
+                                    <td>已完成</td>
+                                    <td>NT$500</td>
+                                </tr>
+                                <tr>
+                                    <td>2024/10/07 - 2024/10/13</td>
+                                    <td>ORD987654321</td>
+                                    <td>已完成</td>
+                                    <td>NT$1,463</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	 <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModal}"></div>
+
+    <!-- 引用 footer.html -->
+    <div th:replace="~{model/frontend/footer}"></div>
+	
+	<a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/courses/frontend/courseOverView.js}"></script>
+    <script th:src="@{/js/axios.min.js}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -13,12 +13,15 @@
     <div th:replace="~{model/layout-static}"></div>
 
     <!-- 顯示用戶交易記錄 -->
-    <div class="container mt-5">
-        <h2 class="text-center">用戶交易記錄 (用戶ID: <span th:text="${userId}"></span>)</h2>
-
-        <!-- 新增交易按鈕 -->
-        <div class="text-center mb-4">
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">新增交易</button>
+    <div class="container pt-5">
+        <div class="dashboard-header d-flex align-items-center">
+            <h1 class="text-center">用戶交易記錄 (用戶ID: <span th:text="${userId}"></span>)</h1>
+            <div class="ms-auto d-flex">
+                <!-- 新增交易按鈕 -->
+                <div class="text-center mb-3">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">新增交易</button>
+                </div>
+            </div>
         </div>
 
         <!-- 交易記錄表格 -->
@@ -52,7 +55,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-						用戶ID: <input type="text" id="addUserId" name="userId" th:value="${userId}" class="form-control" readonly><br>
+                        用戶ID: <input type="text" id="addUserId" name="userId" th:value="${userId}" class="form-control" readonly><br>
                         交易角色: 
                         <select id="addTransactionRole" name="transactionRole" required class="form-select">
                             <option value="sender">付款方</option>
@@ -66,8 +69,8 @@
                             <option value="refund">退款</option>
                         </select><br>
                         金額: <input type="number" id="addAmount" name="totalAmount" required class="form-control" min="1"><br>
-                        平台抽成: <input type="number" id="addPlatformFee" name="platformFee" required class="form-control" min="0" step="0.01"><br>
-                        實際收入: <input type="number" id="addTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01"><br>
+                        平台抽成: <input type="number" id="addPlatformFee" name="platformFee" required class="form-control" min="0" step="0.01" readonly><br>
+                        實際收入: <input type="number" id="addTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01" readonly><br>
                         交易狀態: 
                         <select id="addTransactionStatus" name="transactionStatus" required class="form-select">
                             <option value="pending">待處理</option>
@@ -111,8 +114,8 @@
                             <option value="refund">退款</option>
                         </select><br>
                         金額: <input type="number" id="updateAmount" name="totalAmount" required class="form-control" min="1"><br>
-                        平台抽成: <input type="number" id="updatePlatformFee" name="platformFee" required class="form-control" min="0" step="0.01"><br>
-                        實際收入: <input type="number" id="updateTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01"><br>
+                        平台抽成: <input type="number" id="updatePlatformFee" name="platformFee" required class="form-control" min="0" step="0.01" readonly><br>
+                        實際收入: <input type="number" id="updateTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01" readonly><br>
                         交易狀態: 
                         <select id="updateTransactionStatus" name="transactionStatus" required class="form-select">
                             <option value="pending">待處理</option>
@@ -151,39 +154,38 @@
             }
         }
 
-       // 重新加載交易記錄
-function loadUserTransactions(userId) {
-    // 先銷毀 DataTable
-    if ($.fn.DataTable.isDataTable('#transactionsTable')) {
-        $('#transactionsTable').DataTable().destroy();
-    }
+        // 自動計算平台抽成和實際收入
+        $('#addAmount, #updateAmount').on('input', function () {
+    		var totalAmount = $(this).val();  // 獲取輸入的金額
+   			var platformFee = Math.floor(totalAmount * 0.05);  // 平台抽成為5%，取整數
+  			var targetIncome = totalAmount - platformFee;  // 實際收入為金額減去平台抽成
 
-    $.ajax({
-        url: '/ProFit/userTransactions/search?userId=' + userId,
-        type: 'GET',
-        dataType: 'json',
-        success: function (transactions) {
-            populateTransactionTable(transactions);  // 將數據填充到表格中
-            initDataTable();  // 初始化 DataTable
-        },
-        error: function () {
-            alert('無法載入交易記錄');
+   		 // 更新平台抽成和實際收入的輸入框
+  		  	$('#addPlatformFee, #updatePlatformFee').val(platformFee);
+  	 		$('#addTargetIncome, #updateTargetIncome').val(targetIncome);
+		});
+
+
+        // 重新加載交易記錄
+        function loadUserTransactions(userId) {
+            // 先銷毀 DataTable
+            if ($.fn.DataTable.isDataTable('#transactionsTable')) {
+                $('#transactionsTable').DataTable().destroy();
+            }
+
+            $.ajax({
+                url: '/ProFit/userTransactions/search?userId=' + userId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (transactions) {
+                    populateTransactionTable(transactions);  // 將數據填充到表格中
+                    initDataTable();  // 初始化 DataTable
+                },
+                error: function () {
+                    alert('無法載入交易記錄');
+                }
+            });
         }
-    });
-}
-
-// 初始化 DataTables
-function initDataTable() {
-    $('#transactionsTable').DataTable({
-        paging: true,
-        lengthMenu: [5, 10, 25, 50],
-        pageLength: 5,
-        searching: true,
-        ordering: true,
-        info: true
-    });
-}
-
 
         // 填充表格
         function populateTransactionTable(transactions) {
@@ -273,16 +275,12 @@ function initDataTable() {
         }
         
         function reloadTransactions() {
-    let param = new URLSearchParams(window.location.search);
-    let userId = param.get("userId");
-    
-   
-    
-    if(userId) {
-        loadUserTransactions(userId);  // 重新加載用戶交易記錄
-    }
-}
-        
+            let param = new URLSearchParams(window.location.search);
+            let userId = param.get("userId");
+            if(userId) {
+                loadUserTransactions(userId);  // 重新加載用戶交易記錄
+            }
+        }
 
         // 填充更新表單
         function populateUpdateForm(transactionId, userId, transactionRole, transactionType, totalAmount, platformFee, targetIncome, transactionStatus, createdAt, paymentMethod, referenceId) {
@@ -306,15 +304,14 @@ function initDataTable() {
             }, 500);
         }
 
-		
         // 頁面加載時加載交易記錄
         $(document).ready(function () {
-        	let param = new URLSearchParams(window.location.search);
+            let param = new URLSearchParams(window.location.search);
             let userId = param.get("userId");
-           	if(userId){
-           	 $('#addUserId').val(userId);
-            loadUserTransactions(userId);  // 加載交易數據
-           	}
+            if(userId){
+                $('#addUserId').val(userId);
+                loadUserTransactions(userId);  // 加載交易數據
+            }
         });
     </script>
 </body>

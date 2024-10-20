@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>Blog Grid Sidebar - JobGrids Job Portal HTML Template.</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+	<!-- Place favicon.ico in the root directory -->
+
+	<!-- Web Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+
+	<!-- ========================= CSS here ========================= -->
+	<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+	<link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+	<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+		.photo {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			object-fit: cover;
+		}
+
+		.fab.fa-twitter {
+			color: #8ab7f1;
+		}
+
+		.fab.fa-instagram {
+			color: #E1306C;
+		}
+
+		.fab.fa-facebook-f {
+			color: #5999ec;
+		}
+
+		p {
+			font-size: x-large;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="loading-area"></div>
+
+	<!-- 引用 headerOtherPage.html -->
+	<div th:replace="~{model/frontend/header}"></div>
+
+	<!-- Start Breadcrumbs -->
+	<!-- <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">Blog Grid Sidebar</h1>
+                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
+                            Business draws on a wide range of different business .</p>
+                    </div>
+                    <ul class="breadcrumb-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li>Blog Grid Sidebar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div> -->
+	<!-- End Breadcrumbs -->
+
+	<!-- Start Hero Area -->
+	<section class="hero-area style2">
+		<!-- Single Slider -->
+		<div style="margin: 200px 200px;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+						<div class="row">
+							<div class="col-12 bg-white p-0 px-3 py-3 mb-3">
+								<div class="d-flex flex-column align-items-center">
+									<img class="photo" src="https://i.ytimg.com/vi/BLeZ9r0rJIQ/mqdefault.jpg" alt="">
+									<p class="fw-bold h4 mt-3">John Doe</p>
+									<p class="text-muted">Full Stack Developer</p>
+									<p class="text-muted mb-3">Soma,San Francisco, CA</p>
+									<div class="d-flex ">
+										<div class="btn btn-primary follow me-2">Follow</div>
+										<div class="btn btn-outline-primary message">Message</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
+								<div class="d-flex justify-content-between border-bottom py-2 px-3">
+									<p><span class="fas fa-globe me-2"></span>名稱</p>
+
+								</div>
+								<div class="d-flex justify-content-between border-bottom py-2 px-3">
+									<p><span class="fab fa-github-alt me-2"></span>Email</p>
+
+								</div>
+								<div class="d-flex justify-content-between border-bottom py-2 px-3">
+									<p><span class="fab fa-twitter me-2"></span>手機號碼</p>
+								</div>
+								<div class="d-flex justify-content-between border-bottom py-2 px-3">
+									<p><span class="fab fa-instagram me-2"></span>居住地</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-7 ps-md-4">
+						<div class="row">
+							<div class="col-12 bg-white px-3 mb-3 pb-3">
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">名稱</p>
+									<p class="py-2 text-muted"></p>
+								</div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">Email</p>
+									<p class="py-2 text-muted"></p>
+								</div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">手機號碼</p>
+									<p class="py-2 text-muted"></p>
+								</div>
+								<div class="d-flex align-items-center justify-content-between border-bottom">
+									<p class="py-2">居住地</p>
+									<p class="py-2 text-muted"></p>
+								</div>
+							</div>
+							<div class="col-12 bg-white px-3 pb-2">
+								<h6 class="d-flex align-items-center mb-3 fw-bold py-3"><i
+										class="text-info me-2">assignment</i>Project
+									Status</h6>
+								<small>Web Design</small>
+								<div class="progress mb-3" style="height: 5px">
+									<div class="progress-bar bg-primary" role="progressbar" style="width: 60%"
+										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<small>One Page</small>
+								<div class="progress mb-3" style="height: 5px">
+									<div class="progress-bar bg-primary" role="progressbar" style="width: 72%"
+										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<small>Mobile Template</small>
+								<div class="progress mb-3" style="height: 5px">
+									<div class="progress-bar bg-primary" role="progressbar" style="width: 50%"
+										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<small>Backend API</small>
+								<div class="progress mb-3" style="height: 5px">
+									<div class="progress-bar bg-primary" role="progressbar" style="width: 90%"
+										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+								<small>Website Markup</small>
+								<div class="progress mb-3" style="height: 5px">
+									<div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
+										aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Single Slider -->
+	</section>
+
+	<!-- End Blog Singel Area -->
+
+	<!-- 引用 signModal.html -->
+	<div th:replace="~{model/frontend/signModal}"></div>
+
+	<!-- 引用 footer.html -->
+	<div th:replace="~{model/frontend/footer}"></div>
+
+	<!-- ========================= scroll-top ========================= -->
+	<a href="#" class="scroll-top btn-hover">
+		<i class="lni lni-chevron-up"></i>
+	</a>
+
+	<!-- ========================= JS here ========================= -->
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/frontend/wow.min.js}"></script>
+	<script th:src="@{/js/frontend/tiny-slider.js}"></script>
+	<script th:src="@{/js/frontend/glightbox.min.js}"></script>
+	<script th:src="@{/js/frontend/main.js}"></script>
+	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+
+	<script>
+		$(document).ready(function () {
+			fetch('http://localhost:8080/ProFit/user/profileinfo')
+				.then(response => {
+					if (response.ok) {
+						//throw new Error('Network response was not ok');
+						console.log("成功取得會員資料");
+					}
+					return response.json();
+
+				})
+				.then(user => {
+					console.log("User: " + user);
+					console.log("User: " + user);
+					console.log("UserID" + user.userId);
+					console.log("UserName" + user.userName);
+					const userInfoContainer = document.getElementById('user-info');
+					userInfoContainer.innerHTML = ``
+					
+				})
+				.catch(error => console.error('Error fetching user data:', error));
+		});
+
+	</script>
+</body>
+
+</html>

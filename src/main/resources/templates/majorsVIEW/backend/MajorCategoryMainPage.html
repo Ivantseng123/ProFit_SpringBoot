@@ -181,11 +181,18 @@
 					}
 				})
 					.then(res => {
-						$('#staticBackdrop-insert').modal('hide'); // 關閉模態框
-						// 可以在這裡添加代碼來更新類別列表或顯示成功消息
-						alert('類別創建成功！');
-						// 如果有類別列表，可以重新加載
-						loadCategories();
+						
+						// console.log(res.data)
+						
+						if (res.data == "" || null) {
+							alert('創建失敗，已存在該id之類別');
+						} else {
+							$('#staticBackdrop-insert').modal('hide'); // 關閉模態框
+							// 可以在這裡添加代碼來更新類別列表或顯示成功消息
+							alert('類別創建成功！');
+							// 如果有類別列表，可以重新加載
+							loadCategories();
+						}
 					})
 					.catch(err => {
 						console.error(err);
@@ -515,7 +522,7 @@
 			})
 				.then(response => {
 					if (!response.ok) {
-						throw new Error('Network response was not ok');
+						throw new Error('response 不成功');
 					}
 					return response.json();
 				})

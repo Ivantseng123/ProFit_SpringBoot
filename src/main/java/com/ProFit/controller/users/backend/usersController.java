@@ -1,4 +1,4 @@
-package com.ProFit.controller.users;
+package com.ProFit.controller.users.backend;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
