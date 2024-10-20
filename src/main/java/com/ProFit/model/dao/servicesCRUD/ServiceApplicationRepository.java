@@ -13,8 +13,8 @@ public interface ServiceApplicationRepository extends JpaRepository<ServiceAppli
     // 根據服務id查詢(分頁)
     Page<ServiceApplicationBean> findByServiceId(Integer serviceId, Pageable pageable);
 
-    // 根據委託狀態查詢（分頁）
-	Page<ServiceBean> findByServiceStatus(Integer status, Pageable pageable);
+//    // 根據委託狀態查詢（分頁）
+//	Page<ServiceBean> findByServiceStatus(Integer status, Pageable pageable);
 
     
 

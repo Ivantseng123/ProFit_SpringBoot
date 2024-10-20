@@ -1,11 +1,36 @@
 $(document).ready(function () {
 
+    console.log($('#categorySpace').length)
+
+    // 清空當前表格
+    $('.categorySpace').empty();
+
+    $.ajax({
+        url: '/ProFit/course/searchCourseByMajorCategory',
+        dataType: 'JSON',
+        type: 'GET',
+        success: function (allCourseCategoryList) {
+
+            // 寫入類別
+            htmlMakerForCategory(allCourseCategoryList);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // 處理錯誤
+            console.error('查詢失敗:', textStatus, errorThrown);
+            alert('查詢失敗，請重試。');
+        }
+    });
+
+
+    // loading 畫面
     $('#search-results').append(`	<div class="text-center">
 	  <div class="spinner-border" role="status">
 	    <span class="visually-hidden">Loading...</span>
 	  </div>
 	</div>`);
 
+    // 頁面載入時的預設搜尋全部
     $.ajax({
         url: '/ProFit/course/searchAll',
         dataType: 'JSON',
@@ -16,7 +41,7 @@ $(document).ready(function () {
             // 清空當前表格
             $('#search-results').empty();
 
-            htmlMaker(searchCoursesPage);
+            htmlMakerForCourses(searchCoursesPage);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -25,9 +50,16 @@ $(document).ready(function () {
             alert('查詢失敗，請重試。');
         }
 
-    })
+    });
 
 })
+
+$(document).on('click', '.categoryId', function () {
+    let categoryId = $(this).data('categoryid');
+
+    loadThatCategoryPage(categoryId);
+
+});
 
 
 function formatPrice(number) {
@@ -40,7 +72,7 @@ function formatDate(data) {
     return formattedDate;
 }
 
-function htmlMaker(searchCoursesPage) {
+function htmlMakerForCourses(searchCoursesPage) {
 
     searchCoursesPage.content.forEach(function (course) {
 
@@ -123,7 +155,7 @@ function loadThatPage(pageNum) {
             $('#search-results').empty();
             $('.pagination-list').empty();
 
-            htmlMaker(searchCoursesPage);
+            htmlMakerForCourses(searchCoursesPage);
 
             // 更新按鈕狀態
             updatePaginationButtons(searchCoursesPage);
@@ -137,25 +169,88 @@ function loadThatPage(pageNum) {
 
     })
 
-    function updatePaginationButtons(searchCoursesPage) {
+}
 
-        // 禁用「上一頁」按鈕，如果在第一頁
-        let currentPage = searchCoursesPage.number + 1;
-        let totalPages = searchCoursesPage.totalPages;
+function updatePaginationButtons(searchCoursesPage) {
 
-        if (currentPage === 1) {
-            $('#prev-page').attr('disabled', true);
-        } else {
-            $('#prev-page').attr('disabled', false);
-        }
+    // 禁用「上一頁」按鈕，如果在第一頁
+    let currentPage = searchCoursesPage.number + 1;
+    let totalPages = searchCoursesPage.totalPages;
 
-        // 禁用「下一頁」按鈕，如果在最後一頁
-        if (currentPage === totalPages) {
-            $('#next-page').attr('disabled', true);
-        } else {
-            $('#next-page').attr('disabled', false);
-        }
+    if (currentPage === 1) {
+        $('#prev-page').attr('disabled', true);
+    } else {
+        $('#prev-page').attr('disabled', false);
     }
 
+    // 禁用「下一頁」按鈕，如果在最後一頁
+    if (currentPage === totalPages) {
+        $('#next-page').attr('disabled', true);
+    } else {
+        $('#next-page').attr('disabled', false);
+    }
+}
+
+function htmlMakerForCategory(allCourseCategoryList) {
+    let i = 1;
+    allCourseCategoryList.forEach(function (courseCategory) {
+        $('.categorySpace').append(`
+            <div class="col-lg-3 col-md-6 col-12">
+                <a href="#courseTop" class="single-cat wow fadeInUp"
+                    data-wow-delay=".2s">
+                    <div class="top-side">
+                        <h6 class="categoryId text-center" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h6>
+                        <img class="rounded" style="max-width:85px"
+                        src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
+                    </div>
+                    <div class="bottom-side mb-4 text-center">
+                            
+                        <span>課程數: </span><span class="available-job">${courseCategory.courseNumber}</span>
+                    </div>
+                </a>
+            </div>`);
+        i++;
+    })
+
+}
+
+function loadThatCategoryPage(categoryId) {
+
+    $.ajax({
+        url: '/ProFit/course/searchAll',
+        data: {
+            "courseMajor": categoryId
+        },
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (searchCoursesPage) {
+            console.log(searchCoursesPage);
+
+            // 清空當前表格
+            $('#search-results').empty();
+            $('.pagination-list').empty();
+
+            // 清空當前標題
+            $('#courseheader').empty();
+
+            // 寫入標題
+            $('#courseheader').append(`
+                <a href="/ProFit/course">最新推薦課程</a>
+                > ${searchCoursesPage.content[0].courseCategoryName} 課程`);
+
+            // 寫入查詢結果
+            htmlMakerForCourses(searchCoursesPage);
+
+            // 更新按鈕狀態
+            updatePaginationButtons(searchCoursesPage);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // 處理錯誤
+            console.error('查詢失敗:', textStatus, errorThrown);
+            alert('查詢失敗，請重試。');
+        }
+
+    })
 
 }
