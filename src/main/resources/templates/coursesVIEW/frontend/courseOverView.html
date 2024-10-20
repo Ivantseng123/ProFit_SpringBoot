@@ -65,111 +65,7 @@
                                     <div class="hero-text">
                                         <h1 class="wow fadeInUp" data-wow-delay=".3s">提升你的職業技能</h1>
                                         <div class="cat-head">
-                                            <div class="row">
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".2s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-1.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">50</span>
-                                                            <p>技術支持</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".4s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-2.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">30</span>
-                                                            <p>商業發展</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".6s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-3.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">99</span>
-                                                            <p>銷售與溝通<p3>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".8s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-4.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">15</span>
-                                                            <p>市場分析</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".2s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-5.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">20</span>
-                                                            <p>人力資源</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".4s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-6.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">19</span>
-                                                            <p>IT 及網絡p</h3>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".6s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-7.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">25</span>
-                                                            <p>專案管理</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-lg-3 col-md-6 col-12">
-                                                    <a href="browse-jobs.html" class="single-cat wow fadeInUp"
-                                                        data-wow-delay=".8s">
-                                                        <div class="top-side">
-                                                            <img class="rounded" style="max-width:125px"
-                                                                th:src="@{/images/jobs/category-8.jpg}" alt="#">
-                                                        </div>
-                                                        <div class="bottom-side">
-                                                            <span>課程數: </span><span class="available-job">40</span>
-                                                            <p>行銷與管理</p>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                            <div class="row categorySpace">
                                             </div>
                                         </div>
                                         <div class="button wow fadeInUp" data-wow-delay=".7s">
@@ -219,7 +115,7 @@
 
     <section id="courseTop" class="section latest-news-area blog-list">
         <div class="container">
-            <h4 class="mb-4">最新推薦課程</h4>
+            <h4 id="courseheader" class="mb-4"><a th:href="@{/course}">最新推薦課程</a></h4>
             <div class="row">
                 <div class="col-12">
                     <div id="search-results" class="row">
