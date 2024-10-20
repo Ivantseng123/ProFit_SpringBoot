@@ -1,4 +1,4 @@
-package com.ProFit.controller.users;
+package com.ProFit.controller.users.backend;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -59,29 +59,7 @@ public class loginController {
 
 	}
 
-	@PostMapping("/login_frontend")
-	@ResponseBody
-	public ResponseEntity<?> Login_frontend(@RequestBody Map<String, String> user, HttpSession session)
-			throws NoSuchAlgorithmException {
-
-		System.out.println(user);
-
-		if (userService.validateForfrontend(user.get("userEmail"), user.get("userPassword"))) {
-
-			Users user1 = userService.getUserByEmail(user.get("userEmail"));
-
-			System.out.println("登入成功");
-
-			session.setAttribute("CurrentUser", user1);
-
-			return ResponseEntity.ok("Login Successful");
-
-		} else {
-			System.out.println("登入失敗");
-			return ResponseEntity.status(404).body("Login Failed");
-		}
-
-	}
+	
 
 	@GetMapping("login/getUserSession")
 	public ResponseEntity<Map<String, String>> getSessionAttribute(HttpSession session) {
@@ -102,19 +80,6 @@ public class loginController {
 		}
 	}
 	
-	@GetMapping("login/getUserSession_frontend")
-	public ResponseEntity<Users> getSessionAttributeFrontend(HttpSession session) {
-
-		
-	
-		if (session.getAttribute("CurrentUser") != null) {
-			Users user = (Users) session.getAttribute("CurrentUser");
-			return ResponseEntity.ok(user);
-		} else {
-			return ResponseEntity.status(404).body(null);
-		}
-	}
-
 	@GetMapping("/logout")
 	public String Logout(HttpSession session) {
 
@@ -125,15 +90,4 @@ public class loginController {
 
 	}
 	
-	@GetMapping("/logout_frontend")
-	public ResponseEntity<?> LogoutFrontend(HttpSession session) {
-
-		if (session.getAttribute("CurrentUser") != null) {
-			session.invalidate();
-			System.out.println("登出成功");
-			return ResponseEntity.ok("登出成功");
-		}
-		return  ResponseEntity.status(404).body("登出失敗");
-	}
-
 }
