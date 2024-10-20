@@ -75,4 +75,24 @@ public class CoursesService implements IcourseService {
 		return dtoPage;
 	}
 
+	@Override
+	public Page<CoursesDTO> searchCoursesPage(String courseName, String userName, String status, Integer userId,
+			Integer category, String sort, Integer pageNumber, Integer pageSize) {
+
+		Sort.Direction direction = Sort.Direction.ASC; // 默認為升序
+
+		if (sort != null && sort.equalsIgnoreCase("DESC")) {
+			direction = Sort.Direction.DESC; // 如果是 "DESC" 則設置為降序
+		}
+
+		PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, Sort.by(direction, "courseEndDate"));
+
+		Page<CourseBean> searchCoursesPage = courseRepo.searchCoursesPage(courseName, userName, status, userId,
+				category, pageRequest);
+
+		Page<CoursesDTO> courseDTOPage = searchCoursesPage.map(CoursesDTO::new);
+
+		return courseDTOPage;
+	}
+
 }
