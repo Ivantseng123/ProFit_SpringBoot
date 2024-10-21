@@ -1,25 +1,3 @@
-$(document).ready(function() {
-	fetch('http://localhost:8080/ProFit/user/profileinfo')
-		.then(response => {
-			if (response.ok) {
-				//throw new Error('Network response was not ok');
-				console.log("成功取得會員資料");
-			}
-			return response.json();
-
-		})
-		.then(user => {
-			console.log("User: " + user);
-			console.log("User: " + user);
-			console.log("UserID" + user.userId);
-			console.log("UserName" + user.userName);
-			const userInfoContainer = document.getElementById('user-info');
-			userInfoContainer.innerHTML = ``
-
-		})
-		.catch(error => console.error('Error fetching user data:', error));
-});
-
 document.getElementById('loginForm').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
 	let userEmail = document.getElementById('email').value;
@@ -42,7 +20,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 		.then(response => {
 			if (!response.ok) {
 				let div = document.getElementById('loginError');
-				div.innerHTML = '<p style="color: red">帳號或密碼錯誤</p>';
+				div.innerHTML = '<p style="color: red; font-size: 16px;">帳號或密碼錯誤</p>';
 			} else {
 
 				$('#login').modal('hide');
@@ -73,28 +51,26 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 		.then(response => {
 			if (!response.ok) {
 				// 如果回應狀態不是 200 OK，則拋出錯誤
-				let div = document.getElementById('loginError');
-				div.innerHTML = '<p style="color: red">信箱已註冊</p>';
-				throw new Error('Network response was not ok');
+				let div = document.getElementById('signUpError');
+				div.innerHTML = '<p style="color: red; font-size: 16px;">信箱已註冊</p>';
+			} else {
+				
+				document.getElementById("submitBtn").disabled;
+				$('#signup').modal('hide');
+				alert('註冊成功，請至註冊信箱查看驗證信!');
+				document.getElementById("signUpForm").reset();
+				getSession();
 			}
-			// 解析 JSON 數據
-			return response.json();
-		})
-		.then(result => {
-			console.log('註冊成功' + result);
-			window.location.href = 'http://localhost:8080/ProFit/home';
-
 		})
 		.catch(error => {
 			console.error('Error:', error);
-
 		});
 
 })
 
 $(document).ready(function() {
 
-	localStorage.removeItem('isLoggedIn');
+	/*localStorage.removeItem('isLoggedIn');*/
 
 	getSession();
 
@@ -167,8 +143,8 @@ function logout(event) {
 				localStorage.removeItem('isLoggedIn');
 				localStorage.removeItem('sessionValue');
 				alert('你已成功登出');
-
 				getSession();
+				window.location.href = 'http://localhost:8080/ProFit/homepage';
 			} else {
 				alert('登出失敗，請重試');
 			}

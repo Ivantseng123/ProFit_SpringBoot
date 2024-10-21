@@ -1,8 +1,10 @@
 package com.ProFit.model.bean.majorsBean;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.ProFit.model.bean.coursesBean.CourseBean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -31,6 +33,10 @@ public class MajorCategoryBean implements java.io.Serializable {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majorCategory", cascade = CascadeType.ALL)
 	private Set<MajorBean> majors = new HashSet<MajorBean>(0);
 
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majorCategory")
+	private List<CourseBean> courseList;
+
 	public MajorCategoryBean() {
 		super();
 	}
@@ -40,6 +46,14 @@ public class MajorCategoryBean implements java.io.Serializable {
 		super();
 		this.majorCategoryId = majorCategoryId;
 		this.categoryName = categoryName;
+	}
+
+	public List<CourseBean> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(List<CourseBean> courseList) {
+		this.courseList = courseList;
 	}
 
 	public Integer getMajorCategoryId() {
