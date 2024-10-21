@@ -1,6 +1,7 @@
 package com.ProFit.service.courseService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,12 +42,16 @@ public class CoursesService implements IcourseService {
 
 	@Override
 	public CoursesDTO searchOneCourseById(String courseId) {
-		CourseBean singleCourseById = hcourseDao.searchOneCourseById(courseId);
+		// CourseBean singleCourseById = hcourseDao.searchOneCourseById(courseId);
+		Optional<CourseBean> optional = courseRepo.findById(courseId);
 
-		// 使用 DTO 包裝 CourseBean 的數據
-		CoursesDTO coursesDTO = new CoursesDTO(singleCourseById);
+		if (optional.isPresent()) {
+			// 使用 DTO 包裝 CourseBean 的數據
+			CoursesDTO coursesDTO = new CoursesDTO(optional.get());
+			return coursesDTO;
+		}
+		return null;
 
-		return coursesDTO;
 	}
 
 	@Override
