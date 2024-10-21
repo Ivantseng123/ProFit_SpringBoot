@@ -136,13 +136,14 @@ public class UserService implements IUserService {
 		return false;
 
 	}
-	
+
 	@Override
 	public boolean validateForfrontend(String userEmail, String userPassword) {
 
 		Optional<Users> optional = usersRepository.findByUserEmail(userEmail);
 
-		if (optional.isPresent() && (optional.get().getUserIdentity() == 1 || optional.get().getUserIdentity() == 2) && optional.get().getEnabled() == 1) {
+		if (optional.isPresent() && (optional.get().getUserIdentity() == 1 || optional.get().getUserIdentity() == 2)
+				&& optional.get().getEnabled() == 1) {
 			String dbPassword = optional.get().getUserPasswordHash();
 
 			System.out.println("User------------" + optional.get());
@@ -153,7 +154,6 @@ public class UserService implements IUserService {
 		return false;
 
 	}
-
 
 	@Override
 	public String getUserPictureByEmail(String userEmail) {
@@ -218,7 +218,7 @@ public class UserService implements IUserService {
 					user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
 
 		}
-		
+
 		if (userIdentity == null) {
 			Page<Users> usersPage = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search,
 					pageable);
@@ -226,7 +226,6 @@ public class UserService implements IUserService {
 					user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
 		}
 
-		
 		if (search == null || search.isEmpty()) {
 			Page<Users> usersPage = usersRepository.findByUserIdentity(userIdentity, pageable);
 			return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
@@ -235,8 +234,7 @@ public class UserService implements IUserService {
 
 		System.out.println("呼叫方法--------------------------------");
 		System.out.println("傳入參數-------------------------------- " + search + " " + userIdentity);
-		Page<Users> usersPage = usersRepository.findBySearchAndUserIdentity(search,
-				 userIdentity, pageable);
+		Page<Users> usersPage = usersRepository.findBySearchAndUserIdentity(search, userIdentity, pageable);
 		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
 				user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
 	}
@@ -294,11 +292,35 @@ public class UserService implements IUserService {
 		return false;
 	}
 
-	 // 用來更新用戶餘額的方法
 	@Override
-	public Users updateUserBalance(Users user) {
-	    return usersRepository.save(user);  // 使用 usersRepository 進行保存操作
+	public Users updateUserInfo(Integer userId, String userPictureURL, String userName, String userPhoneNumber,
+			String userCity, String freelancerLocationPrefer, String freelancerExprience, String freelancerIdentity,
+			Integer freelancerProfileStatus, String freelancerDisc) {
+		
+		Optional<Users> optional = usersRepository.findById(userId);
+
+		if (optional.isPresent()) {
+			Users user = optional.get();
+//			user.setUserId(user_id);
+			user.setUserName(userName);	
+			user.setUserPhoneNumber(userPhoneNumber);
+			user.setUserCity(userCity);
+			user.setUserPictureURL(userPictureURL);
+			user.setFreelancerLocationPrefer(freelancerLocationPrefer);
+			user.setFreelancerExprience(freelancerExprience);
+			user.setFreelancerDisc(freelancerDisc);
+			user.setFreelancerIdentity(freelancerIdentity);
+			user.setFreelancerProfileStatus(freelancerProfileStatus);
+
+			return user;
+		}
+		return null;
 	}
 
+	// 用來更新用戶餘額的方法
+	@Override
+	public Users updateUserBalance(Users user) {
+		return usersRepository.save(user); // 使用 usersRepository 進行保存操作
+	}
 
 }
