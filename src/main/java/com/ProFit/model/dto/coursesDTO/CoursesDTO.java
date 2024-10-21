@@ -4,10 +4,11 @@ import com.ProFit.model.bean.coursesBean.CourseBean;
 
 public class CoursesDTO {
 
-	private String courseId;            // 添加 courseId 字段
+	private String courseId;
 	private String courseName;
-	private String courseCreaterId;     // 修正拼寫錯誤: coruseCreaterId -> courseCreaterId
-	private String courseCreaterName;   // 修正拼寫錯誤: courseCraeterName -> courseCreaterName
+	private String courseCreaterId;
+	private String courseCreaterName;
+	private String courseCreaterPictureURL;
 	private Integer courseCategoryId;
 	private String courseCategoryName;
 	private Integer courseModuleNumber;
@@ -20,17 +21,16 @@ public class CoursesDTO {
 	private Integer coursePrice;
 	private String courseStatus;
 
-	// 無參數構造函數
 	public CoursesDTO() {
 		super();
 	}
 
-	// 帶參數構造函數
 	public CoursesDTO(CourseBean courseBean) {
-		this.courseId = courseBean.getCourseId();    // 為前端表格中添加 ID
+		this.courseId = courseBean.getCourseId();
 		this.courseName = courseBean.getCourseName();
 		this.courseCreaterId = courseBean.getCourseCreater().getUserId().toString();
 		this.courseCreaterName = courseBean.getCourseCreater().getUserName();
+		this.courseCreaterPictureURL = courseBean.getCourseCreater().getUserPictureURL();
 		this.courseCategoryId = courseBean.getMajorCategory().getMajorCategoryId();
 		this.courseCategoryName = courseBean.getMajorCategory().getCategoryName();
 		this.courseModuleNumber = courseBean.getCourseModules().size();
@@ -43,8 +43,6 @@ public class CoursesDTO {
 		this.coursePrice = courseBean.getCoursePrice();
 		this.courseStatus = courseBean.getCourseStatus();
 	}
-
-	// getters 和 setters
 
 	public Integer getCourseModuleNumber() {
 		return courseModuleNumber;
@@ -164,5 +162,13 @@ public class CoursesDTO {
 
 	public void setCourseStatus(String courseStatus) {
 		this.courseStatus = courseStatus;
+	}
+
+	public String getCourseCreaterPictureURL() {
+		return courseCreaterPictureURL;
+	}
+
+	public void setCourseCreaterPictureURL(String courseCreaterPictureURL) {
+		this.courseCreaterPictureURL = courseCreaterPictureURL;
 	}
 }

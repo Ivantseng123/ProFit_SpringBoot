@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Blog Single Sidebar - JobGrids Job Portal HTML Template.</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+    <style>
+        .accordion-button {
+            --bs-accordion-btn-bg: #FFDD55;
+
+            --bs-accordion-active-bg: #FFEE99;
+            /* 展開時背景顏色 */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+
+    <!-- Start Blog Singel Area -->
+    <section class="section blog-single">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="single-inner">
+                        <div class="post-thumbnils">
+                            <img th:src="${courseDTO.courseCoverPictureURL}" alt="#">
+                        </div>
+                        <div class="post-details">
+                            <div class="detail-inner">
+                                <h2 class="post-title" th:text="${courseDTO.courseName}"></h2>
+                                <!-- post meta -->
+                                <ul class="custom-flex post-meta">
+                                    <li>
+                                        <a href="#">
+                                            <i class="lni lni-calendar"></i>
+                                            20th March 2023
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="lni lni-comments"></i>
+                                            35 則留言
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="lni lni-eye"></i>
+                                            55 次購買
+                                        </a>
+                                    </li>
+                                </ul>
+                                <h3 class="mt-3">課程大綱: </h3>
+                                <div class="accordion" id="accordionPanelsStayOpenExample">
+                                    <th:block th:each=" courseModuleDTO,courseModuleStatus : ${CourseModuleDTOList}">
+
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    th:data-bs-target="|#panelsStayOpen-collapse${courseModuleStatus.index+1}|"
+                                                    aria-expanded="false"
+                                                    th:aria-controls="|panelsStayOpen-collapse${courseModuleStatus.index+1}|"
+                                                    th:text="|第${courseModuleStatus.index+1}章: ${courseModuleDTO.courseModuleName}|">
+                                                </button>
+                                            </h2>
+                                            <div th:id="|panelsStayOpen-collapse${courseModuleStatus.index+1}|"
+                                                class="accordion-collapse collapse">
+                                                <!-- 遍歷 moduleLessonsMap -->
+                                                <th:block th:each="lessonEntry : ${courseModuleDTO.moduleLessonsMap}">
+                                                    <!-- lessonEntry.value 是內層 Map，遍歷這個 Map -->
+                                                    <th:block th:each="entry,status : ${lessonEntry.value.entrySet()}">
+                                                        <div class="accordion-body d-flex justify-content-between">
+                                                            <!-- 課程名稱放左邊 -->
+                                                            <strong th:text="|單元名稱: ${entry.key}|"></strong>
+                                                            <!-- 媒體時長放右邊 -->
+                                                            <span th:text="|學習時長: ${entry.value} 分鐘|"></span>
+                                                        </div>
+                                                    </th:block>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </div>
+                                <h3 class="mt-3">課程資訊: </h3>
+                                <p th:text="${courseDTO.courseInformation}"></p>
+                                <!-- post image -->
+                                <!-- <div class="post-image">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <a href="#" class="mb-4">
+                                                <img th:src="@{/images/blog/blog-single2.jpeg}" alt="#">
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <a href="#">
+                                                <img th:src="@{/images/blog/blog-single3.jpeg}" alt="#">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <h3>課程內容: </h3>
+                                <p th:text="${courseDTO.courseDescription}"></p>
+                                <!-- post quote -->
+                                <h3>關於講師: </h3>
+                                <blockquote class="d-flex">
+                                    <div class="rounded-circle overflow-hidden" style="width: 80px; height: 80px;">
+                                        <img class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;"
+                                            th:src="${courseDTO.courseCreaterPictureURL}" alt="">
+                                    </div>
+                                    <div style="margin-left: 20px;">
+                                        <h4 class="" th:text="|講師姓名: ${courseDTO.courseCreaterName}|"></h4>
+                                        <span>擁有10年業界經驗。</span>
+                                        <img class="shape" th:src="@{/images/testimonial/patern1.png}" alt="#">
+                                    </div>
+                                </blockquote>
+                                <!--post tags -->
+                                <div class="post-tags-media mt-3">
+                                    <div class="post-tags popular-tag-widget mb-xl-40">
+                                        <h5 class="tag-title">相關專業</h5>
+                                        <div class="tags">
+                                            <a href="#" th:text="${courseDTO.courseCategoryName}">Popular</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Comments -->
+                            <div class="post-comments">
+                                <h3 class="comment-title"><span>來自其他學生的評價</span></h3>
+                                <ul class="comments-list">
+                                    <th:block th:each="courseGradeDTO,status:${courseGradeDTOList}">
+                                        <li style="padding-left: 100px;">
+                                            <div class="comment-img rounded-circle overflow-hidden"
+                                                style="width: 80px; height: 80px;">
+                                                <img th:src="${courseGradeDTO.studentPictureURL}" class="img-fluid"
+                                                    style="object-fit: cover; width: 100%; height: 100%;" alt="img">
+                                            </div>
+                                            <div class="comment-desc">
+                                                <div class="desc-top d-flex justify-content-between align-items-center">
+                                                    <h6 class="mb-0" th:text="|會員: ${courseGradeDTO.studentName}: |">
+                                                    </h6>
+                                                    <span class="courseGradeScore fs-4"
+                                                        th:data-coursegradescore="|${courseGradeDTO.courseGradeScore}|"
+                                                        th:text="|評分: |"></span>
+                                                </div>
+                                                <div class="bg-body-secondary"
+                                                    style="min-height: 80px; padding-top: 10px;">
+                                                    <p class="fs-6" style="padding-left: 15px; margin-top: 0px;"
+                                                        th:text="${courseGradeDTO.courseGradeComment}"></p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </th:block>
+                                </ul>
+                            </div>
+                            <div class="comment-form">
+                                <h3 class="comment-reply-title"><span>課後留言</span></h3>
+                                <form action="#" method="POST">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-box form-group">
+                                                <input type="text" name="#" class="form-control form-control-custom"
+                                                    placeholder="Your Name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-box form-group">
+                                                <input type="email" name="#" class="form-control form-control-custom"
+                                                    placeholder="Your Email" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-box form-group">
+                                                <input type="email" name="#" class="form-control form-control-custom"
+                                                    placeholder="Your Subject" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-box form-group">
+                                                <textarea name="#" rows="6" class="form-control form-control-custom"
+                                                    placeholder="Your Comments"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="button">
+                                                <button type="submit" class="btn mouse-dir white-bg">送出留言<span
+                                                        class="dir-part"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="col-lg-4 col-md-12 col-12">
+                    <div class="sidebar">
+                        <div class="widget search-widget">
+                            <h5 class="widget-title"><span>購買這堂課</span></h5>
+                            <div class="d-flex">
+                                <p>優惠價:</p>
+                                <h4 th:text="|NT$ ${courseDTO.coursePrice}|"></h4>
+                            </div>
+                            <div class="mt-3">
+                                <button style="width:250px" class="btn btn-primary" type="button">立即購買</button>
+                            </div>
+                        </div>
+
+                        <div class="widget categories-widget">
+                            <h5 class="widget-title"><span>查看更多專業課程</span></h5>
+                            <ul class="custom">
+                                <th:block th:each="courseCategory : ${allCourseCategoryList}">
+                                    <li>
+                                        <a href="#"
+                                            th:utext="|${courseCategory.categoryName}<span>${courseCategory.courseNumber}</span>|">
+                                        </a>
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Singel Area -->
+
+    <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModal}"></div>
+
+    <!-- 引用 footer.html -->
+    <div th:replace="~{model/frontend/footer}"></div>
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/frontend/bootstrap.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('.courseGradeScore').each(function () {
+                let score = $(this).data('coursegradescore'); // 获取评分
+                // 添加实心星星
+                for (let j = 0; j < score; j++) {
+                    $(this).append('<i class="fa-solid fa-star" style="color: #FFD43B;"></i>');
+                }
+                // 添加空心星星，补齐到 5 星
+                for (let k = score; k < 5; k++) {
+                    $(this).append('<i class="fa-regular fa-star"></i>');
+                }
+            });
+
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
