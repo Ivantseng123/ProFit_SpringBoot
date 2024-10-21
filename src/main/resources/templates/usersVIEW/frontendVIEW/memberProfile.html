@@ -2,56 +2,59 @@
 <html lang="zxx" xmlns:th="http://www.thymeleaf.org/">
 
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="x-ua-compatible" content="ie=edge" />
-	<title>Blog Grid Sidebar - JobGrids Job Portal HTML Template.</title>
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
-	<!-- Place favicon.ico in the root directory -->
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>Blog Grid Sidebar - JobGrids Job Portal HTML Template.</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{/images/favicon.svg}" />
+<!-- Place favicon.ico in the root directory -->
 
-	<!-- Web Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-		rel="stylesheet">
+<!-- Web Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
 
-	<!-- ========================= CSS here ========================= -->
-	<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
-	<link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
-	<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
-	<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
-	<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+<!-- ========================= CSS here ========================= -->
+<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="https://cdn.lineicons.com/4.0/lineicons.css" />
+<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-		.photo {
-			width: 200px;
-			height: 200px;
-			border-radius: 50%;
-			object-fit: cover;
-		}
+.photo {
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	object-fit: cover;
+}
 
-		.photo_edit {
-			width: 150px;
-			height: 150px;
-			border-radius: 50%;
-			object-fit: cover;
-		}
+.photo_edit {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+}
 
-		p {
-			font-size: x-large;
-		}
+p {
+	font-size: x-large;
+}
 
-		input[type="file"]::file-selector-button {
-			background-color: rgb(98, 160, 234);
-			color: white;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-	
-	</style>
+input[type="file"]::file-selector-button {
+	background-color: rgb(98, 160, 234);
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -85,16 +88,18 @@
 									<div class="d-flex ">
 										<div class="btn btn-primary follow me-2" data-toggle="modal"
 											data-target="#editProfile">編輯資料</div>
-										<div class="btn btn-outline-primary message" data-toggle="modal"
-											data-target="#editPassword">修改密碼</div>
+										<div class="btn btn-outline-primary message"
+											data-toggle="modal" data-target="#editPassword">修改密碼</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
-								<div class="d-flex align-items-center justify-content-center border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-center border-bottom">
 									<p class="py-2">最近登入時間</p>
 								</div>
-								<div class="d-flex align-items-center justify-content-center border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-center border-bottom">
 									<p class="py-2 text-muted" id="last_login_time"></p>
 								</div>
 							</div>
@@ -103,45 +108,57 @@
 					<div class="col-md-7 ps-md-4">
 						<div class="row">
 							<div class="col-12 bg-white px-3 mb-3 pb-3">
-								<div class="d-flex align-items-center justify-content-center border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-center border-bottom">
 									<h4 class="py-2 text-primary">基本資料</h4>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">名稱</p>
 									<p class="py-2 text-muted" id="user_name_1"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">Email</p>
 									<p class="py-2 text-muted" id="user_email_1"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">手機號碼</p>
 									<p class="py-2 text-muted" id="user_phoneNumber"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">居住地</p>
 									<p class="py-2 text-muted" id="user_city_1"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-center border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-center border-bottom">
 									<h4 class="py-2 text-primary">接案資料</h4>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">工作地點偏好</p>
 									<p class="py-2 text-muted" id="freelancer_location_prefer"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">工作經驗</p>
 									<p class="py-2 text-muted" id="freelancer_exprience"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">接案身份</p>
 									<p class="py-2 text-muted" id="freelancer_identity"></p>
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">接案描述</p>
-									<p class="py-2 text-muted" id="freelancer_description"></p>
+									<textarea rows="7" cols="30" class="form-control ml-5 mt-3 mb-3 w-50"
+										id="freelancer_description" readonly></textarea>								
 								</div>
-								<div class="d-flex align-items-center justify-content-between border-bottom">
+								<div
+									class="d-flex align-items-center justify-content-between border-bottom">
 									<p class="py-2">接案狀態</p>
 									<p class="py-2 text-muted" id="freelancer_profile_status"></p>
 								</div>
@@ -163,11 +180,12 @@
 	<div th:replace="~{model/frontend/footer}"></div>
 
 	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover">
-		<i class="lni lni-chevron-up"></i>
+	<a href="#" class="scroll-top btn-hover"> <i
+		class="lni lni-chevron-up"></i>
 	</a>
 
-	<div class="modal fade form-modal" id="editPassword" tabindex="-1" aria-hidden="true">
+	<div class="modal fade form-modal" id="editPassword" tabindex="-1"
+		aria-hidden="true">
 		<div class="modal-dialog max-width-px-840 position-relative">
 			<button type="button"
 				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -192,8 +210,9 @@
 								<div class="form-group">
 									<label for="ConfirmPassword_edit" class="label">確認密碼</label>
 									<div class="position-relative">
-										<input type="password" class="form-control" placeholder="再次輸入密碼"
-											id="ConfirmPassword_edit" required oninput="setCustomValidity('');"
+										<input type="password" class="form-control"
+											placeholder="再次輸入密碼" id="ConfirmPassword_edit" required
+											oninput="setCustomValidity('');"
 											onchange="if(document.getElementById('user_password_edit').value != document.getElementById('ConfirmPassword_edit').value){setCustomValidity('密碼不吻合');}">
 									</div>
 								</div>
@@ -208,7 +227,8 @@
 		</div>
 	</div>
 
-	<div class="modal fade form-modal" id="editProfile" tabindex="-1" aria-hidden="true">
+	<div class="modal fade form-modal" id="editProfile" tabindex="-1"
+		aria-hidden="true">
 		<div class="modal-dialog modal-lg max-width-px-840 position-relative">
 			<button type="button"
 				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -222,71 +242,143 @@
 							<div class="heading">
 								<h3>編輯資料</h3>
 							</div>
-							<form id="editPwdForm">
+							<form id="editProfileForm">
 								<div class="form-group">
-									<input type="hidden" name="userPictureURL" id="user_pictureURL" value="">
-									<label class="label" for="">會員頭貼:</label>
+									<input type="hidden" name="userPictureURL" id="user_pictureURL"
+										value=""> <label class="label" for="">會員頭貼:</label>
 
 									<div class="d-flex justify-content-center">
-										<img id="profileImagePreview" src="" alt="Profile Image" class="photo_edit" />
+										<img id="profileImagePreview" src="" alt="Profile Image"
+											class="photo_edit" />
 									</div>
-									<input class="mt-3 mb-3" type="file" id="fileInput" accept="image/*"
-										name="imgfile" />
+									<input class="mt-3 mb-3" type="file" id="fileInput"
+										accept="image/*" name="imgfile" />
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">名稱</label>
+									<label for="user_name_edit" class="label"><em
+										class="text-danger pr-1">*</em>名稱</label>
 									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">手機號碼</label>
-									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+										<input type="text" class="form-control" placeholder="修改名稱"
+											id="user_name_edit" name="userName" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">居住地</label>
-									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+									<label for="user_phoneNumber_edit" class="label"><em
+										class="text-danger pr-1">*</em>手機號碼</label>
+									<div class="position-relative d-flex align-items-center">
+										<input type="text" class="form-control" placeholder="修改會員手機號碼"
+											id="user_phoneNumber_edit" name="userPhoneNumber" required>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">接案狀態</label>
+									<label class="label"><em class="text-danger pr-1">*</em>居住地</label>
 									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+										<select class="form-select" id="user_city_edit"
+											name="userCity">
+											<option value="臺北市">臺北市</option>
+											<option value="新北市">新北市</option>
+											<option value="基隆市">基隆市</option>
+											<option value="桃園市">桃園市</option>
+											<option value="桃園市">桃園市</option>
+											<option value="新竹縣">新竹縣</option>
+											<option value="新竹市">新竹市</option>
+											<option value="宜蘭縣">宜蘭縣</option>
+											<option value="臺中市">臺中市</option>
+											<option value="苗栗縣">苗栗縣</option>
+											<option value="彰化縣">彰化縣</option>
+											<option value="南投縣">南投縣</option>
+											<option value="雲林縣">雲林縣</option>
+											<option value="高雄市">高雄市</option>
+											<option value="臺南市">臺南市</option>
+											<option value="嘉義市">嘉義市</option>
+											<option value="嘉義縣">嘉義縣</option>
+											<option value="屏東縣">屏東縣</option>
+											<option value="澎湖縣">澎湖縣</option>
+											<option value="花蓮縣">花蓮縣</option>
+											<option value="臺東縣">臺東縣</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">工作地點偏好</label>
-									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+									<label class="label">接案狀態</label>
+									<div>
+										<input type="radio" class="form-check-input"
+											id="statusChoice1" name="freelancerProfileStatus" value="0"
+											required /> <label for="statusChoice1">關閉</label> <input
+											type="radio" class="form-check-input" id="statusChoice2"
+											name="freelancerProfileStatus" value="1" required /> <label
+											for="statusChoice2">開啓</label>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">工作經驗</label>
+									<label class="label"><em class="text-danger pr-1">*</em>工作地點偏好</label>
 									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+										<select class="form-select"
+											id="freelancer_location_prefer_edit"
+											name="freelancerLocationPrefer" style="margin-bottom: 20px">
+											<!-- 城市選項 -->
+											<option value="臺北市">臺北市</option>
+											<option value="新北市">新北市</option>
+											<option value="基隆市">基隆市</option>
+											<option value="桃園市">桃園市</option>
+											<option value="新竹縣">新竹縣</option>
+											<option value="新竹市">新竹市</option>
+											<option value="宜蘭縣">宜蘭縣</option>
+											<option value="臺中市">臺中市</option>
+											<option value="苗栗縣">苗栗縣</option>
+											<option value="彰化縣">彰化縣</option>
+											<option value="南投縣">南投縣</option>
+											<option value="雲林縣">雲林縣</option>
+											<option value="高雄市">高雄市</option>
+											<option value="臺南市">臺南市</option>
+											<option value="嘉義市">嘉義市</option>
+											<option value="嘉義縣">嘉義縣</option>
+											<option value="屏東縣">屏東縣</option>
+											<option value="澎湖縣">澎湖縣</option>
+											<option value="花蓮縣">花蓮縣</option>
+											<option value="臺東縣">臺東縣</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">接案身份</label>
+									<label class="label"><em class="text-danger pr-1">*</em>工作經驗</label>
 									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+										<select class="form-select" id="freelancer_exprience_edit"
+											name="freelancerExprience" style="margin-bottom: 20px">
+											<!-- 經驗選項 -->
+											<option value="無工作經驗">無工作經驗</option>
+											<option value="0-1年工作經驗">0-1年工作經驗</option>
+											<option value="1-2年工作經驗">1-2年工作經驗</option>
+											<option value="2-3年工作經驗">2-3年工作經驗</option>
+											<option value="3-4年工作經驗">3-4年工作經驗</option>
+											<option value="4-5年工作經驗">4-5年工作經驗</option>
+											<option value="5-6年工作經驗">5-6年工作經驗</option>
+											<option value="7-8年工作經驗">7-8年工作經驗</option>
+											<option value="8-9年工作經驗">8-9年工作經驗</option>
+											<option value="9-10年工作經驗">9-10年工作經驗</option>
+											<option value="10年以上年工作經驗">10年以上年工作經驗</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="ConfirmPassword_edit" class="label">接案描述</label>
+									<label class="label"><em class="text-danger pr-1">*</em>接案身份</label>
 									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name"
-											name="userName" required>
+										<input type="radio" id="identityChoice4"
+											class="form-check-input" name="freelancerIdentity"
+											value="個人兼職" /> <label for="identityChoice1">個人兼職</label> <input
+											type="radio" id="identityChoice5" class="form-check-input"
+											name="freelancerIdentity" value="工作室" /> <label
+											for="identityChoice2">工作室</label> <input type="radio"
+											id="identityChoice6" class="form-check-input"
+											name="freelancerIdentity" value="學生" /> <label
+											for="identityChoice3">學生</label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="freelancer_disc_edit" class="label">接案描述</label>
+									<div class="position-relative">
+										<textarea rows="7" cols="30" class="form-control"
+											id="freelancer_disc_edit" name="freelancerDisc"></textarea>
 									</div>
 								</div>
 								<div class="form-group mb-8 button">
@@ -307,6 +399,10 @@
 	<script th:src="@{/js/frontend/tiny-slider.js}"></script>
 	<script th:src="@{/js/frontend/glightbox.min.js}"></script>
 	<script th:src="@{/js/frontend/main.js}"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
 	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
 	<script th:src="@{/js/users/frontend_user/frontend_userProfile.js}"></script>
 </body>
