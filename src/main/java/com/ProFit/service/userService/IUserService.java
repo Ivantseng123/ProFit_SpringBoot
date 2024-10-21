@@ -26,6 +26,10 @@ public interface IUserService {
 			Integer user_balance, String freelancer_location_prefer, String freelancer_exprience,
 			String freelancer_identity, Integer freelancer_profile_status, String freelancer_disc, Integer enabled
 			);
+	
+	Users updateUserInfo(Integer userId, String userPictureURL, String userName, String userPhoneNumber,
+			String userCity, String freelancerLocationPrefer, String freelancerExprience, String freelancerIdentity,
+			Integer freelancerProfileStatus, String freelancerDisc);
 
 	//給予user企業資格
 	boolean updateUserIdentity(int user_id);
@@ -52,5 +56,7 @@ public interface IUserService {
 
 	//用來更新用戶餘額
 	Users updateUserBalance(Users user);
+
+	
 
 }

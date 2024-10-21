@@ -40,8 +40,8 @@ public class usersControllerFrontend {
 
 	@GetMapping("user/profile")
 	public String GetUserPage() {
-	
-			return "usersVIEW/frontendVIEW/memberProfile";	
+
+		return "usersVIEW/frontendVIEW/memberProfile";
 	}
 
 	// 取得單筆會員
@@ -50,52 +50,67 @@ public class usersControllerFrontend {
 	public ResponseEntity<?> GetUser(HttpSession session) {
 
 		if (session.getAttribute("CurrentUser") != null) {
-			
-			 UsersDTO userDTO = modelMapper.map(session.getAttribute("CurrentUser"), UsersDTO.class);
-			
-			 return ResponseEntity.ok(userDTO);
+
+			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
+
+			return ResponseEntity.ok(userDTO);
 		} else {
 			return ResponseEntity.status(404).body("Get User Fail!");
 		}
 
 	}
 
-//	// 編輯會員
-//	@PutMapping(path = "users/updateuser")
-//	@ResponseBody
-//	@Transactional
-//	public Users UpdateUser(@ModelAttribute UsersDTO usersDTO) throws NoSuchAlgorithmException {
-//
-//		Integer userId = Integer.valueOf(usersDTO.getUserId());
-//		Integer userIdentity = Integer.valueOf(usersDTO.getUserIdentity());
-//		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance());
-//		Integer freelancerProfileStatus = Integer.valueOf(usersDTO.getFreelancerProfileStatus());
-//
-//		return userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(),
-//				usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(), usersDTO.getUserPhoneNumber(),
-//				usersDTO.getUserCity(), userIdentity, userBalance, usersDTO.getFreelancerLocationPrefer(),
-//				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus,
-//				usersDTO.getFreelancerDisc(),usersDTO.getEnabled());
-//	}
-//
-	// 編輯會員
+	// 編輯個人資料
+	@PutMapping(path = "users/updateProfile")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<?> UpdateUser(@ModelAttribute UsersDTO usersDTO, HttpSession session) throws NoSuchAlgorithmException {
+		
+		UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+		
+		System.out.println(usersDTO.toString());
+		
+		
+		Integer userId = currentUser.getUserId();
+		Integer freelancerProfileStatus = Integer.valueOf(usersDTO.getFreelancerProfileStatus());
+		
+		UsersDTO updateUser = modelMapper.map( userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(),
+				usersDTO.getUserPhoneNumber(), usersDTO.getUserCity(), usersDTO.getFreelancerLocationPrefer(),
+				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus,
+				usersDTO.getFreelancerDisc()), UsersDTO.class);
+		
+		updateUser.setLoginTime(currentUser.getLoginTime()); // 保持登入時間不變
+		
+		session.setAttribute("CurrentUser", updateUser);  // 將更新過後的會員更新到 session
+		
+		if (session.getAttribute("CurrentUser") != null) {
+			
+			return ResponseEntity.ok("Updated Successful");
+		}else {
+			
+			return ResponseEntity.badRequest().body("Updated Failed");
+		}
+		
+	}
+
+	// 修改會員密碼
 	@PutMapping(path = "users/updateuserpwdFrontend")
 	@ResponseBody
 	@Transactional
-	public ResponseEntity<?> UpdateUserPwd(@RequestParam String userPassword, HttpSession session) throws NoSuchAlgorithmException {
-			
-		
-		if(session.getAttribute("CurrentUser") != null) {
-			
+	public ResponseEntity<?> UpdateUserPwd(@RequestParam String userPassword, HttpSession session)
+			throws NoSuchAlgorithmException {
+
+		if (session.getAttribute("CurrentUser") != null) {
+
 			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
-			
+
 			userService.updateUserPwd(userPassword, userDTO.getUserId());
-			
+
 			return ResponseEntity.ok("Update Successful");
 		}
-	
+
 		return ResponseEntity.badRequest().body("Update Failed");
-		
+
 	}
 //
 //	@ResponseBody
