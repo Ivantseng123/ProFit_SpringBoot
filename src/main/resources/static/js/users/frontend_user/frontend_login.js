@@ -51,26 +51,26 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 		.then(response => {
 			if (!response.ok) {
 				// 如果回應狀態不是 200 OK，則拋出錯誤
-				let div = document.getElementById('loginError');
-				div.innerHTML = '<p style="color: red">信箱已註冊</p>';
-				throw new Error('Network response was not ok');
+				let div = document.getElementById('signUpError');
+				div.innerHTML = '<p style="color: red; font-size: 16px;">信箱已註冊</p>';
+			} else {
+				
+				document.getElementById("submitBtn").disabled;
+				$('#signup').modal('hide');
+				alert('註冊成功，請至註冊信箱查看驗證信!');
+				document.getElementById("signUpForm").reset();
+				getSession();
 			}
-			// 解析 JSON 數據
-			return response.json();
-		})
-		.then(result => {
-			console.log('註冊成功' + result);
 		})
 		.catch(error => {
 			console.error('Error:', error);
-
 		});
 
 })
 
 $(document).ready(function() {
 
-	localStorage.removeItem('isLoggedIn');
+	/*localStorage.removeItem('isLoggedIn');*/
 
 	getSession();
 
@@ -142,7 +142,7 @@ function logout(event) {
 				// 清除登入狀態
 				localStorage.removeItem('isLoggedIn');
 				localStorage.removeItem('sessionValue');
-				alert('你已成功登出');			
+				alert('你已成功登出');
 				getSession();
 				window.location.href = 'http://localhost:8080/ProFit/homepage';
 			} else {
