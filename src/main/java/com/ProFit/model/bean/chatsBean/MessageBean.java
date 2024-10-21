@@ -58,7 +58,7 @@ public class MessageBean {
     @Override
     public String toString() {
         return "MessageBean [messageId=" + messageId + ", chatId=" + chatId + ", senderId=" + senderId + ", content="
-                + content + ", sendAt=" + sendAt + ", isRead=" + isRead + "]";
+                + content + ", sendAt=" + sentAt + ", isRead=" + isRead + "]";
     }
 
 }
