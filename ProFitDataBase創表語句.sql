@@ -270,6 +270,8 @@ CREATE TABLE [dbo].[course_order] (
     [course_order_create_date] DATETIME2 (7)  NOT NULL,
     [course_order_remark]      NVARCHAR (MAX) NULL,
     [course_order_status]      NVARCHAR (50)  DEFAULT ('Pending') NOT NULL,
+    [course_order_payment_method] NVARCHAR(20) NOT NULL,
+    [course_order_taxID] INT NULL,
     PRIMARY KEY CLUSTERED ([course_order_id] ASC),
     FOREIGN KEY ([course_id]) REFERENCES [dbo].[courses] ([course_id]),
     FOREIGN KEY ([student_id]) REFERENCES [dbo].[users] ([user_id])

@@ -9,6 +9,7 @@ public class CourseGradeContentDTO {
     private String courseName;
     private Integer studentId;
     private String studentName;
+    private String studentPictureURL;
     private Integer courseGradeScore;
     private String courseGradeComment;
 
@@ -22,6 +23,7 @@ public class CourseGradeContentDTO {
         this.courseName = courseGradeContent.getCourse().getCourseName();
         this.studentId = courseGradeContent.getStudentId();
         this.studentName = courseGradeContent.getStudent().getUserName();
+        this.studentPictureURL = courseGradeContent.getStudent().getUserPictureURL();
         this.courseGradeScore = courseGradeContent.getCourseGradeScore();
         this.courseGradeComment = courseGradeContent.getCourseGradeComment();
     }
@@ -80,6 +82,14 @@ public class CourseGradeContentDTO {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public String getStudentPictureURL() {
+        return studentPictureURL;
+    }
+
+    public void setStudentPictureURL(String studentPictureURL) {
+        this.studentPictureURL = studentPictureURL;
     }
 
 }

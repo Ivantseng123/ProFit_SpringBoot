@@ -47,18 +47,18 @@ public class MessageBean {
     public MessageBean() {
     }
 
-    public MessageBean(Integer chatId, Integer senderId, String content, LocalDateTime sendAt, boolean isRead) {
+    public MessageBean(Integer chatId, Integer senderId, String content, LocalDateTime sentAt, boolean isRead) {
         this.chatId = chatId;
         this.senderId = senderId;
         this.content = content;
-        this.sentAt = sendAt;
+        this.sentAt = sentAt;
         this.isRead = isRead;
     }
 
     @Override
     public String toString() {
         return "MessageBean [messageId=" + messageId + ", chatId=" + chatId + ", senderId=" + senderId + ", content="
-                + content + ", isRead=" + isRead + "]";
+                + content + ", sentAt=" + sentAt + ", isRead=" + isRead + "]";
     }
 
 }

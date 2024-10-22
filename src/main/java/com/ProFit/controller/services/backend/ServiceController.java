@@ -1,4 +1,4 @@
-package com.ProFit.controller.services;
+package com.ProFit.controller.services.backend;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
