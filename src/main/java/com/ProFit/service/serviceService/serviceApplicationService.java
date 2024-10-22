@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import com.ProFit.model.dao.servicesCRUD.ServiceApplicationRepository;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 
+@Service
 public class ServiceApplicationService {
 
   @Autowired
