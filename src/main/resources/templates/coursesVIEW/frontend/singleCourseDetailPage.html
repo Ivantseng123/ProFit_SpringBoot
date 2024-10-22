@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Blog Single Sidebar - JobGrids Job Portal HTML Template.</title>
+    <title th:text="${courseDTO.courseName}"></title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
@@ -39,10 +39,12 @@
     <!-- 引用 headerOtherPage.html -->
     <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
-
     <!-- Start Blog Singel Area -->
     <section class="section blog-single">
         <div class="container">
+            <div class="mb-3"
+                th:utext="|<a href='/ProFit/course'>全部課程></a> <span>${courseDTO.courseCategoryName}></span> <span>${courseDTO.courseName}</span>|">
+            </div>
             <div class="row">
                 <div class="col-lg-8">
                     <div class="single-inner">
@@ -57,21 +59,22 @@
                                     <li>
                                         <a href="#">
                                             <i class="lni lni-calendar"></i>
-                                            20th March 2023
+                                            <span
+                                                th:text="|截止日: ${#temporals.format(courseDTO.courseEndDate, 'yyyy 年 MM 月 dd 日')}|"></span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="#commentSpace">
                                             <i class="lni lni-comments"></i>
-                                            35 則留言
+                                            <span th:text="|${courseGradeDTOList.totalElements} 則留言|"></span>
                                         </a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="#">
                                             <i class="lni lni-eye"></i>
                                             55 次購買
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                                 <h3 class="mt-3">課程大綱: </h3>
                                 <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -138,7 +141,7 @@
                                     </div>
                                 </blockquote>
                                 <!--post tags -->
-                                <div class="post-tags-media mt-3">
+                                <div class="post-tags-media mt-3" id="commentSpace">
                                     <div class="post-tags popular-tag-widget mb-xl-40">
                                         <h5 class="tag-title">相關專業</h5>
                                         <div class="tags">
@@ -222,10 +225,11 @@
                             <h5 class="widget-title"><span>購買這堂課</span></h5>
                             <div class="d-flex">
                                 <p>優惠價:</p>
-                                <h4 th:text="|NT$ ${courseDTO.coursePrice}|"></h4>
+                                <h4 id="price" th:data-price="${courseDTO.coursePrice}">NT$</h4>
                             </div>
                             <div class="mt-3">
-                                <button style="width:250px" class="btn btn-primary" type="button">立即購買</button>
+                                <a th:href="@{/course/purchase/}+${courseDTO.courseId}" style="width:250px"
+                                    class="btn btn-primary" type="button">立即購買</a>
                             </div>
                         </div>
 
@@ -249,7 +253,7 @@
     <!-- End Blog Singel Area -->
 
     <!-- 引用 signModal.html -->
-    <div th:replace="~{model/frontend/signModal}"></div>
+    <div th:replace="~{model/frontend/signModalForNewBs}"></div>
 
     <!-- 引用 footer.html -->
     <div th:replace="~{model/frontend/footer}"></div>
@@ -260,12 +264,13 @@
     </a>
 
     <!-- ========================= JS here ========================= -->
-    <script th:src="@{/js/frontend/bootstrap.js}"></script>
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/bootstrap.js}"></script>
     <script th:src="@{/js/frontend/wow.min.js}"></script>
     <script th:src="@{/js/frontend/tiny-slider.js}"></script>
     <script th:src="@{/js/frontend/glightbox.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
     <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
@@ -283,8 +288,15 @@
 
         });
 
+        // 從標籤中獲取價格數據
+        var priceElement = document.getElementById('price');
+        var coursePrice = priceElement.getAttribute('data-price');
 
+        // 將價格格式化為帶有千分位的格式
+        var formattedPrice = new Number(coursePrice).toLocaleString('zh-TW');
 
+        // 更新網頁中的價格顯示
+        priceElement.innerHTML += formattedPrice;
 
     </script>
 </body>

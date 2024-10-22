@@ -2,7 +2,6 @@ package com.ProFit.controller.courses.frontend;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.coursesDTO.CourseGradeContentDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;

@@ -1,6 +1,7 @@
 package com.ProFit.model.dto.coursesDTO;
 
 import com.ProFit.model.bean.coursesBean.CourseBean;
+import java.time.LocalDateTime;
 
 public class CoursesDTO {
 
@@ -16,8 +17,8 @@ public class CoursesDTO {
 	private String courseCoverPictureURL;
 	private String courseDescription;
 	private String courseEnrollmentDate;
-	private String courseStartDate;
-	private String courseEndDate;
+	private LocalDateTime courseStartDate;
+	private LocalDateTime courseEndDate;
 	private Integer coursePrice;
 	private String courseStatus;
 
@@ -38,8 +39,8 @@ public class CoursesDTO {
 		this.courseCoverPictureURL = courseBean.getCourseCoverPictureURL();
 		this.courseDescription = courseBean.getCourseDescription();
 		this.courseEnrollmentDate = courseBean.getCourseEnrollmentDate().toString();
-		this.courseStartDate = courseBean.getCourseStartDate().toString();
-		this.courseEndDate = courseBean.getCourseEndDate().toString();
+		this.courseStartDate = courseBean.getCourseStartDate();
+		this.courseEndDate = courseBean.getCourseEndDate();
 		this.coursePrice = courseBean.getCoursePrice();
 		this.courseStatus = courseBean.getCourseStatus();
 	}
@@ -132,19 +133,19 @@ public class CoursesDTO {
 		this.courseEnrollmentDate = courseEnrollmentDate;
 	}
 
-	public String getCourseStartDate() {
+	public LocalDateTime getCourseStartDate() {
 		return courseStartDate;
 	}
 
-	public void setCourseStartDate(String courseStartDate) {
+	public void setCourseStartDate(LocalDateTime courseStartDate) {
 		this.courseStartDate = courseStartDate;
 	}
 
-	public String getCourseEndDate() {
+	public LocalDateTime getCourseEndDate() {
 		return courseEndDate;
 	}
 
-	public void setCourseEndDate(String courseEndDate) {
+	public void setCourseEndDate(LocalDateTime courseEndDate) {
 		this.courseEndDate = courseEndDate;
 	}
 
