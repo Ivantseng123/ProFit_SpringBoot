@@ -37,7 +37,7 @@ public class MajorBean implements java.io.Serializable {
 	@Column(name = "major_description")
 	private String majorDescription; // 專業描述
 
-	@ManyToMany
+	@ManyToMany(mappedBy = "majors")
 	private List<Jobs> jobs = new ArrayList<>();
 
 	// 多對多關係，中介表user_major
