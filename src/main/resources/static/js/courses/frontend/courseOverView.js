@@ -54,8 +54,8 @@ $(document).ready(function () {
 
 })
 
-$(document).on('click', '.categoryId', function () {
-    let categoryId = $(this).data('categoryid');
+$(document).on('click', '.single-cat', function () {
+    let categoryId = $(this).find('.categoryId').data('categoryid');
 
     loadThatCategoryPage(categoryId);
 
@@ -94,7 +94,7 @@ function htmlMakerForCourses(searchCoursesPage) {
                         </div>
                         <div class="mt-3 d-flex justify-content-between align-items-center">
                                 <h5 class="coursePrice mb-1">NT$ ${formatPrice(course.coursePrice)}</h5>
-                                <a href="#" class="btn btn-warning btn-sm">查看課程</a>
+                                <a href="/ProFit/course/${course.courseId}" class="btn btn-warning btn-sm">查看課程</a>
                         </div>
                     </div>
                 </div>
@@ -179,6 +179,7 @@ function updatePaginationButtons(searchCoursesPage) {
 
     if (currentPage === 1) {
         $('#prev-page').attr('disabled', true);
+        // $('#prev-page').empty();
     } else {
         $('#prev-page').attr('disabled', false);
     }
@@ -186,6 +187,7 @@ function updatePaginationButtons(searchCoursesPage) {
     // 禁用「下一頁」按鈕，如果在最後一頁
     if (currentPage === totalPages) {
         $('#next-page').attr('disabled', true);
+        // $('#next-page').empty();
     } else {
         $('#next-page').attr('disabled', false);
     }
@@ -195,17 +197,16 @@ function htmlMakerForCategory(allCourseCategoryList) {
     let i = 1;
     allCourseCategoryList.forEach(function (courseCategory) {
         $('.categorySpace').append(`
-            <div class="col-lg-3 col-md-6 col-12">
+            <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
                 <a href="#courseTop" class="single-cat wow fadeInUp"
                     data-wow-delay=".2s">
-                    <div class="top-side">
-                        <h6 class="categoryId text-center" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h6>
-                        <img class="rounded" style="max-width:85px"
+                    <div class="top-side text-center">
+                        <img class="rounded" style="max-width:50px"
                         src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
+                        <h5 class="categoryId text-center mt-1" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h5>
                     </div>
-                    <div class="bottom-side mb-4 text-center">
-                            
-                        <span>課程數: </span><span class="available-job">${courseCategory.courseNumber}</span>
+                    <div class="bottom-side text-center mt-2">
+                        <span>課程數:</span> <span class="available-job">${courseCategory.courseNumber}</span>
                     </div>
                 </a>
             </div>`);
@@ -235,8 +236,8 @@ function loadThatCategoryPage(categoryId) {
 
             // 寫入標題
             $('#courseheader').append(`
-                <a href="/ProFit/course">最新推薦課程</a>
-                > ${searchCoursesPage.content[0].courseCategoryName} 課程`);
+                <a href="/ProFit/course">全部課程</a>
+                > ${searchCoursesPage.content[0].courseCategoryName}`);
 
             // 寫入查詢結果
             htmlMakerForCourses(searchCoursesPage);
