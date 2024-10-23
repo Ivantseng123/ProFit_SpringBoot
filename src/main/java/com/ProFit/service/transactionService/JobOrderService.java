@@ -1,7 +1,12 @@
 package com.ProFit.service.transactionService;
 
+import com.ProFit.model.dto.transactionDTO.JobDetailsDTO;
 import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
+import com.ProFit.model.bean.jobsBean.Jobs;
+import com.ProFit.model.bean.jobsBean.JobsApplication;
+import com.ProFit.model.bean.jobsBean.JobsApplicationProject;
 import com.ProFit.model.bean.transactionBean.JobOrderBean;
+import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.transactionCRUD.JobOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class JobOrderService {
 
-    @Autowired
+	@Autowired
     private JobOrderRepository jobOrderRepository;
 
     public List<JobOrderDTO> getAllOrdersAsDTO() {
@@ -41,24 +46,18 @@ public class JobOrderService {
 
     public void insertOrderFromDTO(JobOrderDTO jobOrderDTO) {
         JobOrderBean jobOrderBean = convertToEntity(jobOrderDTO);
-        
-        // 確保在插入時自動生成 jobOrdersId
         if (jobOrderBean.getJobOrdersId() == null || jobOrderBean.getJobOrdersId().isEmpty()) {
-            jobOrderBean.setJobOrdersId(UUID.randomUUID().toString());  // 自動生成 UUID 作為主鍵
+            jobOrderBean.setJobOrdersId(UUID.randomUUID().toString());
         }
-
-        jobOrderBean.setJobOrderDate(LocalDateTime.now());  // 設置當前時間
+        jobOrderBean.setJobOrderDate(LocalDateTime.now());
         jobOrderRepository.save(jobOrderBean);
     }
 
     public void updateOrderFromDTO(JobOrderDTO jobOrderDTO) {
         JobOrderBean jobOrderBean = convertToEntity(jobOrderDTO);
-
-        // 更新時不需生成新 UUID，但確保有 jobOrderDate
         if (jobOrderBean.getJobOrderDate() == null) {
             jobOrderBean.setJobOrderDate(LocalDateTime.now());
         }
-
         jobOrderRepository.save(jobOrderBean);
     }
 
@@ -75,6 +74,8 @@ public class JobOrderService {
         dto.setJobOrderStatus(jobOrderBean.getJobOrderStatus());
         dto.setJobNotes(jobOrderBean.getJobNotes());
         dto.setJobAmount(jobOrderBean.getJobAmount());
+        dto.setJobOrderPaymentMethod(jobOrderBean.getJobOrderPaymentMethod());
+        dto.setJobOrderTaxID(jobOrderBean.getJobOrderTaxID());
         return dto;
     }
 
@@ -87,6 +88,27 @@ public class JobOrderService {
         entity.setJobOrderStatus(jobOrderDTO.getJobOrderStatus());
         entity.setJobNotes(jobOrderDTO.getJobNotes());
         entity.setJobAmount(jobOrderDTO.getJobAmount());
+        entity.setJobOrderPaymentMethod(jobOrderDTO.getJobOrderPaymentMethod());
+        entity.setJobOrderTaxID(jobOrderDTO.getJobOrderTaxID());
         return entity;
     }
+    
+    public JobDetailsDTO getJobDetailsByJobOrderId(String jobOrdersId) {
+        // 查詢對應的 JobsApplication, Users 和 JobsApplicationProject 信息
+        JobOrderBean jobOrder = jobOrderRepository.findById(jobOrdersId).orElseThrow();
+        JobsApplication jobsApplication = jobOrder.getJobsApplication();
+        Jobs jobs = jobsApplication.getJob();
+        Users paymentUser = jobsApplication.getPoster();
+        Users recipientUser = jobsApplication.getApplicant();
+        JobsApplicationProject project = jobsApplication.getJobsApplicationProject();
+
+        return new JobDetailsDTO(
+            jobs.getJobsTitle(),
+            paymentUser.getUserId(),
+            recipientUser.getUserId(),
+            project.getJobsProject(),
+            project.getJobsAmount()
+        );
+    }
+
 }

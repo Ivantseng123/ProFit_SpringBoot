@@ -2,9 +2,9 @@
 <html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>我的錢包</title>
-	<meta name="description" content="" />
+    <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
     <!-- Place favicon.ico in the root directory -->
@@ -23,22 +23,20 @@
     
     <style>
      body {
-    padding-top: 120px; /* 根據導航欄的實際高度進行調整 */
-}
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* 確保頁頭在最上層 */
-}
+        padding-top: 120px; /* 根據導航欄的實際高度進行調整 */
+    }
+    .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000; /* 確保頁頭在最上層 */
+    }
     </style>
 </head>
- <!-- 包含頁頭的區塊 -->
-    <div th:replace="~{model/frontend/headerOtherPage}"></div>
-
 <body>
 
-   
+    <!-- 包含頁頭的區塊 -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
     <div class="container mt-4">
         <!-- 金額總覽區塊 -->
@@ -50,7 +48,7 @@
                             <h4 class="mb-0">可提領金額</h4>
                             <button class="btn btn-danger">提領</button>
                         </div>
-                        <h2 class="mt-2">NT$0</h2>
+                        <h2 class="mt-2">NT$<span th:text="${userBalance}">0</span></h2>
                     </div>
                 </div>
             </div>
@@ -88,7 +86,6 @@
             </div>
         </div>
     </div>
-<!-- End Blog Singel Area -->
 
     <!-- 引用 signModal.html -->
     <div th:replace="~{model/frontend/signModal}"></div>
@@ -108,5 +105,10 @@
     <script th:src="@{/js/frontend/tiny-slider.js}"></script>
     <script th:src="@{/js/frontend/glightbox.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+
+    <!-- 使用者導向我的錢包 -->
+    <a th:href="@{/wallet(userId=${user.id})}">我的錢包</a>
+
 </body>
 </html>
