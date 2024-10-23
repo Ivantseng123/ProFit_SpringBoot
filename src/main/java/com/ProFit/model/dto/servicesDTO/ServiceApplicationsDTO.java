@@ -3,6 +3,8 @@ package com.ProFit.model.dto.servicesDTO;
 import java.time.LocalDateTime;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
+import com.ProFit.model.dto.chatsDTO.ChatDTO;
+import com.ProFit.model.dto.usersDTO.UsersDTO;
 
 public class ServiceApplicationsDTO {
 
@@ -23,6 +25,11 @@ public class ServiceApplicationsDTO {
   private LocalDateTime serviceApplicationDoneDate;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
+
+  // 關聯實體的dto
+  private UsersDTO caseowner;
+  private UsersDTO freelancer;
+  private ServicesDTO service;
 
   public ServiceApplicationsDTO() {
   }
@@ -77,6 +84,16 @@ public class ServiceApplicationsDTO {
     dto.setServiceApplicationDoneDate(serviceApplicationBean.getServiceApplicationDoneDate());
     dto.setCreatedAt(serviceApplicationBean.getCreatedAt());
     dto.setUpdatedAt(serviceApplicationBean.getUpdatedAt());
+
+    if (serviceApplicationBean.getCaseowner() != null) {
+      dto.setCaseowner(new UsersDTO(serviceApplicationBean.getCaseowner()));
+    }
+    if (serviceApplicationBean.getFreelancer() != null) {
+      dto.setFreelancer(new UsersDTO(serviceApplicationBean.getFreelancer()));
+    }
+    if (serviceApplicationBean.getService() != null) {
+      dto.setService(ServicesDTO.fromEntity(serviceApplicationBean.getService()));
+    }
 
     return dto;
   }
@@ -215,6 +232,30 @@ public class ServiceApplicationsDTO {
 
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public UsersDTO getCaseowner() {
+    return caseowner;
+  }
+
+  public void setCaseowner(UsersDTO caseowner) {
+    this.caseowner = caseowner;
+  }
+
+  public UsersDTO getFreelancer() {
+    return freelancer;
+  }
+
+  public void setFreelancer(UsersDTO freelancer) {
+    this.freelancer = freelancer;
+  }
+
+  public ServicesDTO getService() {
+    return service;
+  }
+
+  public void setService(ServicesDTO service) {
+    this.service = service;
   }
 
   @Override

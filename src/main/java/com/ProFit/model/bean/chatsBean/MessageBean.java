@@ -32,7 +32,7 @@ public class MessageBean {
     @JoinColumn(name = "chat_id", insertable = false, updatable = false)
     private ChatBean chat;
 
-    @Column(name = "senderId")
+    @Column(name = "sender_id")
     private Integer senderId;
 
     @Column(name = "content")
