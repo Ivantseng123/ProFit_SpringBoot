@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.google.firebase.remoteconfig.User;
+
 import net.bytebuddy.utility.RandomString;
 
 @Service
@@ -321,6 +323,11 @@ public class UserService implements IUserService {
 	@Override
 	public Users updateUserBalance(Users user) {
 		return usersRepository.save(user); // 使用 usersRepository 進行保存操作
+	}
+
+	public User getUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -3,6 +3,9 @@ package com.ProFit.model.bean.usersBean;
 import java.io.Serializable;
 
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,6 +27,7 @@ public class Employer_profile implements Serializable{
 	private Integer employerProfileId;
 		
 	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@JoinColumn(name="user_id",insertable = false,updatable = false)
 	private Users user;
 	

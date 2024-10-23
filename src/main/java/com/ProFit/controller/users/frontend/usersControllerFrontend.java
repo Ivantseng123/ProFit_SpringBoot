@@ -52,6 +52,8 @@ public class usersControllerFrontend {
 		if (session.getAttribute("CurrentUser") != null) {
 
 			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
+			
+			System.out.println("會員----------------" + userDTO.getEmployer_profile());
 
 			return ResponseEntity.ok(userDTO);
 		} else {
