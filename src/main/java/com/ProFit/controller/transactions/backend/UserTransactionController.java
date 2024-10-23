@@ -37,8 +37,6 @@ public class UserTransactionController {
                 .collect(Collectors.toList());
     }
 
-
-
     // 獲取所有交易數據，使用 DTO
     @GetMapping("/data")
     @ResponseBody

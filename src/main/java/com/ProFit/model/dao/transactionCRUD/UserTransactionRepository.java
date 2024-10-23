@@ -13,4 +13,5 @@ public interface UserTransactionRepository extends JpaRepository<UserTransaction
     List<UserTransactionBean> findByTransactionType(String transactionType);
     List<UserTransactionBean> findByTransactionStatus(String transactionStatus);
     List<UserTransactionBean> findByCreatedAtBetween(LocalDateTime startTimestamp, LocalDateTime endTimestamp);
+	List<UserTransactionBean> findByTransactionTypeAndTransactionStatus(String string, String string2);
 }
