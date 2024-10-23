@@ -318,6 +318,8 @@ CREATE TABLE job_orders (
     job_order_status VARCHAR(10) CHECK (job_order_status IN ('Processing', 'Completed', 'Canceled')) NOT NULL,  -- 申請訂單狀態
     job_notes TEXT,                          -- 訂單備註
     job_amount INT NOT NULL,               -- 訂單總金額，不允許 NULL
+    job_order_payment_method NVARCHAR(20);	--付款方式
+    job_order_taxID INT;					--統編
     FOREIGN KEY (job_application_id) REFERENCES jobs_application(jobs_application_id)  -- 外鍵約束
 );
 
@@ -328,6 +330,7 @@ CREATE TABLE user_transactions (
     user_id INT NOT NULL,                            -- 用戶ID
     transaction_role NVARCHAR(10) NOT NULL,          -- 交易角色
     transaction_type NVARCHAR(10) NOT NULL,          -- 交易類型
+    order_type NVARCHAR(20)							 -- 查詢訂單種類 
     order_id NVARCHAR(50),                           -- 通用的訂單ID
     total_amount int NOT NULL,            -- 交易金額
     platform_fee int NOT NULL DEFAULT 0,  -- 平台抽成
@@ -445,18 +448,5 @@ BEGIN
     SET last_message_at = DATEADD(HOUR, 8, GETDATE())
     WHERE chat_id IN (SELECT chat_id FROM inserted)
 END
-
-
--- 修改用戶交易 查詢訂單種類 --
-ALTER TABLE user_transactions
-ADD order_type NVARCHAR(20)  -- 訂單類型，用來區分不同訂單表
-
--- 新增 job_order_payment_method 欄位
-ALTER TABLE job_orders
-ADD job_order_payment_method NVARCHAR(20);
-
--- 新增 job_order_taxID 欄位
-ALTER TABLE job_orders
-ADD job_order_taxID INT;
 
 

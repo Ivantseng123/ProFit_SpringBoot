@@ -15,7 +15,7 @@ import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 
 @Service
-public class ServiceApplicationService {
+public class serviceApplicationService {
 
   @Autowired
   private ServiceApplicationRepository serviceApplicationRepository;
