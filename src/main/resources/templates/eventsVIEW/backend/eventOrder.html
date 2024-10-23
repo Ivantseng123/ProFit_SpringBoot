@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>活動列表</title>
+    <title>活動參加者列表</title>
     <link rel="stylesheet" th:href="@{/css/events/eventsView.css}">
 </head>
 
@@ -13,42 +13,31 @@
     <main>
         <div class="container pt-5">
             <div class="course-header">
-                <h2>活動列表</h2>
+                <h2>活動參加者列表</h2>
                 <div class="action-buttons">
-                    <a class="create btn btn-warning btn-sm text-white" th:href="@{events/new}">新增</a>
+                    <a class="create btn btn-warning btn-sm text-white" th:href="@{#}">新增</a>
                 </div>
             </div>
 
             <div class="dashboard-header">
-                <h3>查詢活動</h3>
+                <h3>查詢活動參加者</h3>
                 <div class="input-group">
                     <select id="searchCriteria" class="custom-select ">
                         <option value="eventName">活動名稱</option>
-                        <option value="eventStatus">狀態</option>
-                        <option value="eventCategory">活動類別</option>
-                        <option value="eventMajor">專業類別</option>
+                        <option value="participantName">參加者名稱</option>
                     </select>
-                    <input type="text" id="searchInput" placeholder="輸入關鍵字" style="display: block;">
-                    <select id="searchOptions" class="custom-select " style="display: none;"></select>
+                    <input type="text" id="searchInput" placeholder="輸入關鍵字">
                     <button class="search btn btn-primary btn-sm my-sm-0" id="searchBtn">搜尋</button>
                 </div>
             </div>
             
             <div class="table-container" id="searchResult"></div>
-            
-            <div id="majors-data" style="display: none;">
-                <th:block th:each="major : ${majors}">
-                    <div th:value="${major.majorId}" th:data-name="${major.majorName}"></div>
-                </th:block>
-            </div>
-
 
         </div>
 
     </main>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script th:src="@{/js/events/eventsMapping.js}"></script>
-<script th:src="@{/js/events/events.js}"></script>
+<script th:src="@{/js/events/eventOrder.js}"></script>
 
 </html>

@@ -63,8 +63,6 @@ CREATE TABLE password_reset_tokens(
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-
-
 CREATE TABLE jobs (
     jobs_id INT PRIMARY KEY IDENTITY(1,1), 
     jobs_user_id INT,
@@ -73,13 +71,20 @@ CREATE TABLE jobs (
     jobs_application_deadline DATETIME, 
     jobs_description NVARCHAR(MAX), 
     jobs_status TINYINT, 
-    jobs_required_skills NVARCHAR(500), 
-    jobs_location NVARCHAR(100), 
+    jobs_location NVARCHAR(100),
     jobs_max_salary INT, 
     jobs_min_salary INT, 
     jobs_worktime TIME,
     jobs_number_of_openings INT,
     FOREIGN KEY (jobs_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE jobs_major (
+    jobs_id INT PRIMARY KEY,
+    major_id INT PRIMARY KEY,
+    PRIMARY KEY (jobs_id, major_id),
+    FOREIGN KEY (jobs_id) REFERENCES jobs(jobs_id),
+    FOREIGN KEY (major_id) REFERENCES major(major_id)
 );
 
 -- CREATE TABLE [dbo].[jobs_application] (

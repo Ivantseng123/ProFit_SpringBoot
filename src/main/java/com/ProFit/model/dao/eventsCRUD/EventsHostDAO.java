@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 
 @Repository
-public interface EventsHostBeanDAO extends JpaRepository<EventsBean, String> {
+public interface EventsHostDAO extends JpaRepository<EventsBean, String> {
 
 }
