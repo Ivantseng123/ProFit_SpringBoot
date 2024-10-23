@@ -1,7 +1,7 @@
 package com.ProFit.model.dto.jobsDTO;
 
 import com.ProFit.model.bean.jobsBean.JobsApplication;
-
+import com.ProFit.model.bean.jobsBean.Jobs;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.List;
@@ -32,8 +32,8 @@ public class JobsApplicationDTO {
         dto.setJobsApplicationId(entity.getJobsApplicationId());
 
         // 設置職缺ID
-        if (entity.getJobs() != null) {
-            dto.setJobsApplicationJobsId(entity.getJobs().getJobsId());
+        if (entity.getPoster() != null) {
+            dto.setJobsApplicationJobsId(entity.getPoster().getUserId()); // 因為Jobs類中的getter方法就是getJobsId()
         }
 
         // 設置應徵者ID
