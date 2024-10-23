@@ -9,8 +9,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import com.ProFit.model.bean.chatsBean.ChatBean;
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
+import com.ProFit.model.bean.servicesBean.ServiceBean;
+import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dao.chatsCRUD.ChatRepository;
 import com.ProFit.model.dao.servicesCRUD.ServiceApplicationRepository;
+import com.ProFit.model.dao.servicesCRUD.ServiceRepository;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 
@@ -23,23 +28,126 @@ public class ServiceApplicationService {
   @Autowired
   private UsersRepository usersRepository;
 
+  @Autowired
+  private ServiceRepository serviceRepository;
+
+  @Autowired
+  private ChatRepository chatRepository;
+
   // 創建新的服務委託
   @Transactional
   public ServiceApplicationsDTO createServiceApplication(ServiceApplicationBean serviceApplication) {
+    Users caseOwner = usersRepository.findById(serviceApplication.getCaseownerId()).get();
+    Users freelancer = usersRepository.findById(serviceApplication.getFreelancerId()).get();
+    serviceApplication.setCaseowner(caseOwner);
+    serviceApplication.setFreelancer(freelancer);
+
+    serviceApplication.setService(serviceRepository.findById(serviceApplication.getServiceId()).get());
+
+    ChatBean chat = chatRepository.findByUserId1AndUserId2AndServiceId(serviceApplication.getFreelancerId(),
+        serviceApplication.getCaseownerId(), serviceApplication.getServiceId());
+
+    System.out.println(chat);
+
+    if (chat == null) {
+      // 創建新的聊天紀錄
+      chat = new ChatBean();
+      chat.setServiceId(serviceApplication.getServiceId());
+      chat.setUserId1(serviceApplication.getFreelancerId());
+      chat.setUserId2(serviceApplication.getCaseownerId());
+      chat.setCreateAt(LocalDateTime.now());
+      chat.setLastMessageAt(LocalDateTime.now());
+      chat.setStatus(0); // 0 是使用中
+      chat = chatRepository.save(chat);
+    } else {
+      // 最新訊息時間改為 最新委託時間
+      chat.setLastMessageAt(LocalDateTime.now());
+    }
+    serviceApplication.setChatId(chat.getChatId());
+    serviceApplication.setChat(chat);
+
+    serviceApplication.setCreatedAt(LocalDateTime.now());
+    serviceApplication.setUpdatedAt(LocalDateTime.now());
+
     ServiceApplicationBean savedBean = serviceApplicationRepository.save(serviceApplication);
     return ServiceApplicationsDTO.fromEntity(savedBean);
   }
 
   // 更新服務委託
   @Transactional
-  public ServiceApplicationsDTO updateServiceApplication(ServiceApplicationBean serviceApplication) {
+  public ServiceApplicationsDTO updateServiceApplication(ServiceApplicationBean newServiceApplication) {
+
+    // 1. 驗證並取得現有服務委託
     Optional<ServiceApplicationBean> optional = serviceApplicationRepository
-        .findById(serviceApplication.getServiceApplicationId());
-    if (optional.isPresent()) {
-      ServiceApplicationBean updatedBean = serviceApplicationRepository.save(serviceApplication);
-      return ServiceApplicationsDTO.fromEntity(updatedBean);
+        .findById(newServiceApplication.getServiceApplicationId());
+    if (!optional.isPresent()) {
+      throw new RuntimeException("Service application not found");
     }
-    return null;
+    ServiceApplicationBean oldServiceApplication = optional.get();
+
+    try {
+      // 2. 取得並驗證關聯用戶
+      Users caseOwner = usersRepository.findById(newServiceApplication.getCaseownerId())
+          .orElseThrow(() -> new RuntimeException("Case owner not found"));
+      Users freelancer = usersRepository.findById(newServiceApplication.getFreelancerId())
+          .orElseThrow(() -> new RuntimeException("Freelancer not found"));
+
+      // 3. 取得並驗證服務
+      ServiceBean service = serviceRepository.findById(newServiceApplication.getServiceId())
+          .orElseThrow(() -> new RuntimeException("Service not found"));
+
+      // 4. 處理聊天記錄
+      ChatBean chat;
+      if (oldServiceApplication.getChatId() != null) {
+        // 使用現有聊天
+        chat = chatRepository.findById(oldServiceApplication.getChatId())
+            .orElseThrow(() -> new RuntimeException("Existing chat not found"));
+      } else {
+        // 建立新的聊天記錄
+        chat = new ChatBean();
+        chat.setServiceId(newServiceApplication.getServiceId());
+        chat.setUserId1(newServiceApplication.getFreelancerId());
+        chat.setUserId2(newServiceApplication.getCaseownerId());
+        chat.setCreateAt(LocalDateTime.now());
+        chat.setLastMessageAt(LocalDateTime.now());
+        chat.setStatus(0); // 0 是使用中
+        chat = chatRepository.save(chat);
+      }
+
+      // 5. 更新服務委託資訊
+      oldServiceApplication.setCaseowner(caseOwner);
+      oldServiceApplication.setFreelancer(freelancer);
+      oldServiceApplication.setService(service);
+      oldServiceApplication.setChat(chat);
+
+      // 更新其他字段
+      oldServiceApplication.setCaseownerId(newServiceApplication.getCaseownerId());
+      oldServiceApplication.setFreelancerId(newServiceApplication.getFreelancerId());
+      oldServiceApplication.setServiceId(newServiceApplication.getServiceId());
+      oldServiceApplication.setChatId(newServiceApplication.getChatId());
+
+      oldServiceApplication.setServiceApplicationTitle(newServiceApplication.getServiceApplicationTitle());
+      oldServiceApplication.setServiceApplicationSubitem(newServiceApplication.getServiceApplicationSubitem());
+      oldServiceApplication.setServiceApplicationPrice(newServiceApplication.getServiceApplicationPrice());
+      oldServiceApplication.setServiceApplicationAmount(newServiceApplication.getServiceApplicationAmount());
+      oldServiceApplication.setServiceApplicationUnit(newServiceApplication.getServiceApplicationUnit());
+      oldServiceApplication.setServiceApplicationContent(newServiceApplication.getServiceApplicationContent());
+      oldServiceApplication.setAppendixUrl(newServiceApplication.getAppendixUrl());
+      oldServiceApplication.setStatus(newServiceApplication.getStatus());
+      oldServiceApplication.setServiceApplicationMission(newServiceApplication.getServiceApplicationMission());
+      oldServiceApplication.setServiceApplicationDoneDate(newServiceApplication.getServiceApplicationDoneDate());
+      // oldServiceApplication.setCreatedAt(保持不變);
+      oldServiceApplication.setUpdatedAt(LocalDateTime.now());
+
+      // 6. 保存並回傳结果
+      ServiceApplicationBean updatedBean = serviceApplicationRepository.save(oldServiceApplication);
+      return ServiceApplicationsDTO.fromEntity(updatedBean);
+
+    } catch (Exception e) {
+      // 這裡可以根據需要處理不同類型的異常
+      throw new RuntimeException("Failed to update service application: " + e.getMessage(), e);
+    }
+
   }
 
   // 刪除服務委託
