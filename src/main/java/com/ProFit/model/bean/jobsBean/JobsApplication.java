@@ -51,7 +51,7 @@ public class JobsApplication implements java.io.Serializable{
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個職缺對應到多個申請
 	  @JoinColumn(name = "jobs_application_posting_id")
-	  private Users poster;
+	  private Users poster;//不確定是不是Jobs
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對USER表，一個應徵者對應到多個申請
 	  @JoinColumn(name = "jobs_application_member_id")//改名為jobs_application_user_id
@@ -139,15 +139,5 @@ public class JobsApplication implements java.io.Serializable{
 
 	public void setJobsApplicationContract(Blob jobsApplicationContract) {
 		this.jobsApplicationContract = jobsApplicationContract;
-	}
-
-	public JobsApplicationProject getJobsApplicationProject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Jobs getJob() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
