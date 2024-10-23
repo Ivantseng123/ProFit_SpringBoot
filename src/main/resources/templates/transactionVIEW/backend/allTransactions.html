@@ -17,17 +17,17 @@
     <!-- 主內容區域 -->
     <div class="container mt-5">
     
-     <div class="dashboard-header d-flex align-items-center">
-                <h1>金流管理</h1>
-		</div>
-            
+        <div class="dashboard-header d-flex align-items-center">
+            <h1>金流管理</h1>
+        </div>
+        
         <!-- 放款和訂單管理區域 -->
         <div class="row">
             <!-- 本週放款 (左邊) -->
             <div class="col-md-8 table-container mt-5"> 
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="text-center">本週放款</h2>
-                    <!-- 放款按鈕移到右上角 -->
+                    <!-- 放款按鈕 -->
                     <button class="btn btn-success" id="releaseButton">放款</button>
                 </div>
                 <table id="releaseTable" class="table table-bordered table-striped table-hover">
@@ -39,11 +39,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 遍歷 users 列表，顯示每個用戶的數據 -->
+                        <!-- 遍歷 releaseUsers 列表，顯示每個用戶的數據 -->
                         <tr th:each="user : ${releaseUsers}">
                             <td th:text="${user.userId}"></td>
-                            <td th:text="${user.userName}"></td>
-                            <td th:text="${user.userBalance}"></td>
+                            <td th:text="${user.createdAt}"></td>
+                            <td th:text="${user.totalAmount}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,27 +54,43 @@
                 <div class="card card-widget">
                     <div class="card-body">
                         <h5 class="text-muted">訂單管理</h5>
-                        <h2 class="mt-4">5680</h2>
-                        <span>總收入</span>
+                                    
+                        <!-- 課程訂單 -->
                         <div class="mt-4">
-                            <h4>30</h4>
-                            <h6>課程訂單 <span class="pull-right">30%</span></h6>
+                            <h4 th:text="${orderStatistics.courseOrderCount}">30</h4> <!-- 動態顯示課程訂單數 -->
+                            <h6>課程訂單 
+                                <span class="pull-right" th:text="${orderStatistics.formattedCoursePercentage} + '%'"></span>
+                            </h6>
                             <div class="progress mb-3" style="height: 7px">
-                                <div class="progress-bar bg-primary" style="width: 30%;" role="progressbar"></div>
+                                <div class="progress-bar bg-primary" 
+                                     th:style="'width: ' + ${orderStatistics.formattedCoursePercentage} + '%'">
+                                </div>
                             </div>
                         </div>
+
+                        <!-- 職缺訂單 -->
                         <div class="mt-4">
-                            <h4>50</h4>
-                            <h6>職缺訂單 <span class="pull-right">50%</span></h6>
+                            <h4 th:text="${orderStatistics.jobOrderCount}">50</h4> <!-- 動態顯示職缺訂單數 -->
+                            <h6>職缺訂單 
+                                <span class="pull-right" th:text="${orderStatistics.formattedJobPercentage} + '%'"></span>
+                            </h6>
                             <div class="progress mb-3" style="height: 7px">
-                                <div class="progress-bar bg-success" style="width: 50%;" role="progressbar"></div>
+                                <div class="progress-bar bg-primary" 
+                                     th:style="'width: ' + ${orderStatistics.formattedJobPercentage} + '%'">
+                                </div>
                             </div>
                         </div>
+
+                        <!-- 活動訂單 -->
                         <div class="mt-4">
-                            <h4>20</h4>
-                            <h6>活動訂單 <span class="pull-right">20%</span></h6>
+                            <h4 th:text="${orderStatistics.eventOrderCount}">20</h4> <!-- 動態顯示活動訂單數 -->
+                            <h6>活動訂單 
+                                <span class="pull-right" th:text="${orderStatistics.formattedEventPercentage} + '%'"></span>
+                            </h6>
                             <div class="progress mb-3" style="height: 7px">
-                                <div class="progress-bar bg-warning" style="width: 20%;" role="progressbar"></div>
+                                <div class="progress-bar bg-primary" 
+                                     th:style="'width: ' + ${orderStatistics.formattedEventPercentage} + '%'">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -82,9 +98,9 @@
             </div>
         </div>
 
-    <!-- 用戶列表 -->
+        <!-- 用戶列表 -->
         <div class="row mt-5">
-            <div class="col-md-12 table-container"> <!-- 同樣使用 12 格來讓用戶列表佔據整行 -->
+            <div class="col-md-12 table-container">
                 <h2 class="text-center">用戶列表</h2>
                 <table id="userTable" class="table table-bordered table-striped table-hover">
                     <thead>
@@ -138,10 +154,22 @@
 
             // 放款按鈕功能
             $('#releaseButton').click(function() {
-                // 這裡應該調用後端服務來更新交易狀態
-                alert("所有待處理的放款交易已更新為已完成！");
+                $.ajax({
+    url: '/ProFit/releaseTransactions',  // 添加上下文路徑
+    type: 'POST',
+    success: function(response) {
+        if (response === "success") {
+            alert("所有待處理的放款交易已更新為已完成！");
+            location.reload();  // 刷新頁面
+        }
+    },
+    error: function() {
+        alert("更新失敗，請稍後再試。");
+    }
+});
+
             });
         });
     </script>
-</body>
+</body> 
 </html>

@@ -11,6 +11,8 @@ public class JobOrderDTO {
     private String jobOrderStatus;
     private String jobNotes;
     private int jobAmount;
+    private String jobOrderPaymentMethod;
+    private Integer jobOrderTaxID;
 
     // Getter 和 Setter 方法
     public String getJobOrdersId() {
@@ -59,6 +61,22 @@ public class JobOrderDTO {
 
     public void setJobAmount(int jobAmount) {
         this.jobAmount = jobAmount;
+    }
+    
+    public String getJobOrderPaymentMethod() {
+        return jobOrderPaymentMethod;
+    }
+
+    public void setJobOrderPaymentMethod(String jobOrderPaymentMethod) {
+        this.jobOrderPaymentMethod = jobOrderPaymentMethod;
+    }
+
+    public Integer getJobOrderTaxID() {
+        return jobOrderTaxID;
+    }
+
+    public void setJobOrderTaxID(Integer jobOrderTaxID) {
+        this.jobOrderTaxID = jobOrderTaxID;
     }
 
     // 格式化日期方法

@@ -1,8 +1,10 @@
 package com.ProFit.controller.transactions.backend;
 
+import com.ProFit.model.dto.transactionDTO.JobDetailsDTO;
 import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
 import com.ProFit.service.transactionService.JobOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +17,14 @@ import java.util.List;
 @RequestMapping("/jobOrders")
 public class JobOrderController {
 
-    @Autowired
+	@Autowired
     private JobOrderService jobOrderService;
 
-    // 日期時間格式
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @GetMapping
     public String listOrders(Model model) {
-        List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO(); // 改為使用DTO
+        List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO();
         model.addAttribute("orders", orders);
         return "transactionVIEW/backend/jobOrders"; 
     }
@@ -57,13 +58,17 @@ public class JobOrderController {
             @RequestParam("job_application_id") Integer jobApplicationId,
             @RequestParam("job_order_status") String jobOrderStatus,
             @RequestParam("job_notes") String jobNotes,
-            @RequestParam("total_amount") Integer totalAmount) {
+            @RequestParam("total_amount") Integer totalAmount,
+            @RequestParam("job_order_payment_method") String jobOrderPaymentMethod,
+            @RequestParam(value = "job_order_taxID", required = false) Integer jobOrderTaxID) {
 
         JobOrderDTO orderDTO = new JobOrderDTO();
         orderDTO.setJobApplicationId(jobApplicationId);
         orderDTO.setJobOrderStatus(jobOrderStatus);
         orderDTO.setJobNotes(jobNotes);
         orderDTO.setJobAmount(totalAmount);
+        orderDTO.setJobOrderPaymentMethod(jobOrderPaymentMethod);
+        orderDTO.setJobOrderTaxID(jobOrderTaxID);
 
         jobOrderService.insertOrderFromDTO(orderDTO);
         return "redirect:/jobOrders";
@@ -75,7 +80,9 @@ public class JobOrderController {
         @RequestParam("job_application_id") Integer jobApplicationId,
         @RequestParam("job_order_status") String jobOrderStatus,
         @RequestParam("job_notes") String jobNotes,
-        @RequestParam("total_amount") Integer totalAmount) {
+        @RequestParam("total_amount") Integer totalAmount,
+        @RequestParam("job_order_payment_method") String jobOrderPaymentMethod,
+        @RequestParam(value = "job_order_taxID", required = false) Integer jobOrderTaxID) {
 
         JobOrderDTO orderDTO = new JobOrderDTO();
         orderDTO.setJobOrdersId(jobOrdersId);
@@ -83,6 +90,8 @@ public class JobOrderController {
         orderDTO.setJobOrderStatus(jobOrderStatus);
         orderDTO.setJobNotes(jobNotes);
         orderDTO.setJobAmount(totalAmount);
+        orderDTO.setJobOrderPaymentMethod(jobOrderPaymentMethod);
+        orderDTO.setJobOrderTaxID(jobOrderTaxID);
 
         jobOrderService.updateOrderFromDTO(orderDTO);
         return "redirect:/jobOrders";
@@ -93,4 +102,5 @@ public class JobOrderController {
         jobOrderService.deleteOrder(jobOrdersId);
         return "redirect:/jobOrders"; 
     }
+
 }

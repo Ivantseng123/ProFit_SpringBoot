@@ -122,13 +122,13 @@ VALUES
 ('C0104', N'敏捷Scrum實務', 105, 500, N'適合專案經理和團隊領導', N'學習Scrum框架和實施技巧', GETDATE(), DATEADD(month, 2, GETDATE()), DATEADD(month, 4, GETDATE()), 20000, 'Active');
 
 -- 12. course_order 表
-INSERT INTO course_order (course_order_id, course_id, student_id, course_order_price, course_order_create_date, course_order_remark, course_order_status)
+INSERT INTO course_order (course_order_id, course_id, student_id, course_order_price, course_order_create_date, course_order_remark, course_order_status,course_order_payment_method,course_order_taxID)
 VALUES
-('CR100', 'C0100', 101, 15000, GETDATE(), N'期待學習Java進階知識', 'Completed'),
-('CR101', 'C0101', 102, 12000, DATEADD(day, -1, GETDATE()), N'想提升UI設計能力', 'Completed'),
-('CR102', 'C0102', 103, 18000, DATEADD(day, -2, GETDATE()), N'需要學習數據分析技能', 'Pending'),
-('CR103', 'C0103', 104, 10000, DATEADD(day, -3, GETDATE()), N'提升數位行銷能力', 'Completed'),
-('CR104', 'C0104', 105, 20000, GETDATE(), N'學習敏捷專案管理', 'Pending');
+('CR100', 'C0100', 101, 15000, GETDATE(), N'期待學習Java進階知識', 'Completed','testMethod','74568512'),
+('CR101', 'C0101', 102, 12000, DATEADD(day, -1, GETDATE()), N'想提升UI設計能力', 'Completed','testMethod','74568512'),
+('CR102', 'C0102', 103, 18000, DATEADD(day, -2, GETDATE()), N'需要學習數據分析技能', 'Pending','testMethod','74568512'),
+('CR103', 'C0103', 104, 10000, DATEADD(day, -3, GETDATE()), N'提升數位行銷能力', 'Completed','testMethod','74568512'),
+('CR104', 'C0104', 105, 20000, GETDATE(), N'學習敏捷專案管理', 'Pending','testMethod','74568512');
 
 -- 13. course_grade_content 表
 INSERT INTO course_grade_content (course_id, student_id, course_grade_score, course_grade_comment)

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 
 public class CourseOrderDTO {
-	
+
 	private String courseOrderId;
 	private Integer courseOrderPrice;
 	private String courseId;
@@ -21,7 +21,9 @@ public class CourseOrderDTO {
 	private LocalDateTime courseOrderCreateDate;
 	private String courseOrderRemark;
 	private String courseOrderStatus;
-	
+	private String courseOrderPaymentMethod;
+	private Integer courseOrderTaxID;
+
 	public CourseOrderDTO() {
 		super();
 	}
@@ -43,6 +45,24 @@ public class CourseOrderDTO {
 		this.courseOrderCreateDate = courseOrder.getCourseOrderCreateDate();
 		this.courseOrderRemark = courseOrder.getCourseOrderRemark();
 		this.courseOrderStatus = courseOrder.getCourseOrderStatus();
+		this.courseOrderPaymentMethod = courseOrder.getCourseOrderPaymentMethod();
+		this.courseOrderTaxID = courseOrder.getCourseOrderTaxID();
+	}
+
+	public String getCourseOrderPaymentMethod() {
+		return courseOrderPaymentMethod;
+	}
+
+	public void setCourseOrderPaymentMethod(String courseOrderPaymentMethod) {
+		this.courseOrderPaymentMethod = courseOrderPaymentMethod;
+	}
+
+	public Integer getCourseOrderTaxID() {
+		return courseOrderTaxID;
+	}
+
+	public void setCourseOrderTaxID(Integer courseOrderTaxID) {
+		this.courseOrderTaxID = courseOrderTaxID;
 	}
 
 	public String getCourseOrderId() {
@@ -164,7 +184,5 @@ public class CourseOrderDTO {
 	public void setCourseOrderStatus(String courseOrderStatus) {
 		this.courseOrderStatus = courseOrderStatus;
 	}
-	
-	
-	
+
 }

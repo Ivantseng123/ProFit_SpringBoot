@@ -15,18 +15,15 @@
     <!-- 主內容區域 -->
     <div class="container pt-5">
         <main>
-            <div class="dashboard-header d-flex align-items-center ">
+            <div class="dashboard-header d-flex align-items-center">
                 <h1>職缺訂單管理</h1>
                 <div class="ms-auto d-flex">
-				
-				 <!-- 新增訂單按鈕 -->
-            <div class="text-center mb-3">
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">新增訂單</button>
+                    <!-- 新增訂單按鈕 -->
+                    <div class="text-center mb-3">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOrderModal">新增訂單</button>
+                    </div>
+                </div>
             </div>
-         </div>
-		</div>
-            </div>
-
 
             <!-- 新增訂單模態框 -->
             <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel" aria-hidden="true">
@@ -40,7 +37,7 @@
                             <div class="modal-body">
                                 <label for="jobApplicationId">職缺申請ID:</label>
                                 <input type="number" id="jobApplicationId" name="job_application_id" required class="form-control" min="1"><br>
-                                
+
                                 <label for="jobOrderStatus">訂單狀態:</label>
                                 <select id="jobOrderStatus" name="job_order_status" required class="form-select">
                                     <option value="Processing">處理中</option>
@@ -53,6 +50,12 @@
 
                                 <label for="totalAmount">總金額:</label>
                                 <input type="number" id="totalAmount" name="total_amount" required class="form-control" min="0"><br>
+
+                                <label for="jobOrderPaymentMethod">支付方式:</label>
+                                <input type="text" id="jobOrderPaymentMethod" name="job_order_payment_method" class="form-control"><br>
+
+                                <label for="jobOrderTaxID">統一編號:</label>
+                                <input type="number" id="jobOrderTaxID" name="job_order_taxID" class="form-control" min="0"><br>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -74,6 +77,8 @@
                             <th>訂單狀態</th>
                             <th>訂單備註</th>
                             <th>訂單總金額</th>
+                            <th>支付方式</th>
+                            <th>統一編號</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -85,14 +90,22 @@
                             <td th:text="${order.jobOrderStatus}">訂單狀態</td>
                             <td th:text="${order.jobNotes}">訂單備註</td>
                             <td th:text="${order.jobAmount}">總金額</td>
+                            <td th:text="${order.jobOrderPaymentMethod}">支付方式</td>
+                            <td th:text="${order.jobOrderTaxID}">統一編號</td>
                             <td>
                                 <div class="d-flex justify-content-center">
+                                    <!-- 查看按鈕 -->
+                                    <button type="button" class="btn btn-info me-2" onclick="viewJobDetails('${order.jobOrdersId}')">查看</button>
+
+                                    <!-- 編輯按鈕 -->
                                     <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#updateOrderModal"
                                         th:data-jobordersid="${order.jobOrdersId}"
                                         th:data-jobapplicationid="${order.jobApplicationId}"
                                         th:data-joborderstatus="${order.jobOrderStatus}"
                                         th:data-jobnotes="${order.jobNotes}"
                                         th:data-jobamount="${order.jobAmount}"
+                                        th:data-joborderpaymentmethod="${order.jobOrderPaymentMethod}"
+                                        th:data-jobordertaxid="${order.jobOrderTaxID}"
                                         onclick="populateUpdateForm(this)">編輯</button>
 
                                     <form method="post" th:action="@{/jobOrders/delete}" onsubmit="return confirm('確定要刪除這筆訂單嗎？');">
@@ -104,6 +117,29 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- 查看訂單模態框 -->
+            <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewOrderModalLabel">查看訂單詳細信息</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- 顯示詳細信息 -->
+                            <p><strong>職缺名稱:</strong> <span id="viewJobTitle"></span></p>
+                            <p><strong>付款人ID:</strong> <span id="viewPaymentUserId"></span></p>
+                            <p><strong>收款人ID:</strong> <span id="viewRecipientUserId"></span></p>
+                            <p><strong>項目名稱:</strong> <span id="viewProjectName"></span></p>
+                            <p><strong>項目金額:</strong> <span id="viewProjectAmount"></span></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 更新訂單模態框 -->
@@ -133,6 +169,12 @@
 
                                 <label for="updateTotalAmount">總金額:</label>
                                 <input type="number" id="updateTotalAmount" name="total_amount" required class="form-control" min="0"><br>
+
+                                <label for="updateJobOrderPaymentMethod">支付方式:</label>
+                                <input type="text" id="updateJobOrderPaymentMethod" name="job_order_payment_method" class="form-control"><br>
+
+                                <label for="updateJobOrderTaxID">統一編號:</label>
+                                <input type="number" id="updateJobOrderTaxID" name="job_order_taxID" class="form-control" min="0"><br>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -147,6 +189,24 @@
 
    <!-- JavaScript -->
    <script>
+        // 查看詳細信息函數
+        function viewJobDetails(jobOrdersId) {
+            fetch(`/jobOrders/view/${jobOrdersId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('viewJobTitle').textContent = data.jobTitle;
+                    document.getElementById('viewPaymentUserId').textContent = data.paymentUserId;
+                    document.getElementById('viewRecipientUserId').textContent = data.recipientUserId;
+                    document.getElementById('viewProjectName').textContent = data.projectName;
+                    document.getElementById('viewProjectAmount').textContent = data.projectAmount;
+
+                    // 顯示模態框
+                    var viewOrderModal = new bootstrap.Modal(document.getElementById('viewOrderModal'));
+                    viewOrderModal.show();
+                })
+                .catch(error => console.error('Error fetching job details:', error));
+        }
+
         // 填充更新表單
         function populateUpdateForm(button) {
             const jobOrdersId = button.getAttribute("data-jobordersid");
@@ -154,44 +214,27 @@
             const jobOrderStatus = button.getAttribute("data-joborderstatus");
             const jobNotes = button.getAttribute("data-jobnotes");
             const jobAmount = button.getAttribute("data-jobamount");
+            const jobOrderPaymentMethod = button.getAttribute("data-joborderpaymentmethod");
+            const jobOrderTaxID = button.getAttribute("data-jobordertaxid");
 
             document.getElementById('updateJobOrdersId').value = jobOrdersId;
             document.getElementById('updateJobApplicationId').value = jobApplicationId;
             document.getElementById('updateJobOrderStatus').value = jobOrderStatus;
             document.getElementById('updateJobNotes').value = jobNotes;
             document.getElementById('updateTotalAmount').value = jobAmount;
-        }
-
-        // 驗證查詢表單
-        function validateSearchForm() {
-            var startDate = document.getElementById('start_date').value;
-            var endDate = document.getElementById('end_date').value;
-            if (startDate && endDate && startDate > endDate) {
-                alert('開始日期不能晚於結束日期');
-                return false;
-            }
-            return true;
-        }
-
-        // 驗證新增訂單表單
-        function validateAddForm() {
-            var amount = document.getElementById("totalAmount").value;
-            if (amount <= 0) {
-                alert("金額必須大於 0");
-                return false;
-            }
-            return true;
+            document.getElementById('updateJobOrderPaymentMethod').value = jobOrderPaymentMethod;
+            document.getElementById('updateJobOrderTaxID').value = jobOrderTaxID;
         }
 
         // 初始化 DataTables 分頁、排序和搜尋功能
         $(document).ready(function() {
             $('#ordersTable').DataTable({
                 "paging": true,
-                "lengthMenu": [5, 10, 25, 50], // 每頁顯示數量
-                "pageLength": 5,               // 預設每頁顯示 5 筆
-                "searching": true,             // 啟用搜尋
-                "ordering": true,              // 啟用排序
-                "info": true                   // 顯示表格資訊
+                "lengthMenu": [5, 10, 25, 50],
+                "pageLength": 5,
+                "searching": true,
+                "ordering": true,
+                "info": true
             });
         });
     </script>

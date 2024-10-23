@@ -2,8 +2,9 @@ package com.ProFit.model.bean.transactionBean;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
+
+import com.ProFit.model.bean.jobsBean.JobsApplication;
 
 @Entity
 @Table(name = "job_orders")
@@ -28,20 +29,25 @@ public class JobOrderBean {
     @Column(name = "job_amount", nullable = false)
     private int jobAmount;
 
- 
+    @Column(name = "job_order_payment_method")
+    private String jobOrderPaymentMethod;
+
+    @Column(name = "job_order_taxID")
+    private Integer jobOrderTaxID;
+
     // 無參構造函數
-    public JobOrderBean() {
-        
-    }
+    public JobOrderBean() {}
 
     // 全參構造函數
-    public JobOrderBean(int jobApplicationId, String jobOrderStatus, String jobNotes, int jobAmount) {
+    public JobOrderBean(int jobApplicationId, String jobOrderStatus, String jobNotes, int jobAmount, String jobOrderPaymentMethod, Integer jobOrderTaxID) {
         this.jobOrdersId = UUID.randomUUID().toString();  // 自動生成 UUID
         this.jobApplicationId = jobApplicationId;
         this.jobOrderDate = LocalDateTime.now();  // 使用當前時間作為訂單日期
         this.jobOrderStatus = jobOrderStatus;
         this.jobNotes = jobNotes;
         this.jobAmount = jobAmount;
+        this.jobOrderPaymentMethod = jobOrderPaymentMethod;
+        this.jobOrderTaxID = jobOrderTaxID;
     }
 
 
@@ -94,5 +100,24 @@ public class JobOrderBean {
         this.jobAmount = jobAmount;
     }
 
-   
+    public String getJobOrderPaymentMethod() {
+        return jobOrderPaymentMethod;
+    }
+
+    public void setJobOrderPaymentMethod(String jobOrderPaymentMethod) {
+        this.jobOrderPaymentMethod = jobOrderPaymentMethod;
+    }
+
+    public Integer getJobOrderTaxID() {
+        return jobOrderTaxID;
+    }
+
+    public void setJobOrderTaxID(Integer jobOrderTaxID) {
+        this.jobOrderTaxID = jobOrderTaxID;
+    }
+
+	public JobsApplication getJobsApplication() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

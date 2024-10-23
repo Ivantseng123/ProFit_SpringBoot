@@ -140,4 +140,14 @@ public class JobsApplication implements java.io.Serializable{
 	public void setJobsApplicationContract(Blob jobsApplicationContract) {
 		this.jobsApplicationContract = jobsApplicationContract;
 	}
+
+	public JobsApplicationProject getJobsApplicationProject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Jobs getJob() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

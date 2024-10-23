@@ -8,178 +8,191 @@ import java.util.UUID;
 @Table(name = "user_transactions")
 public class UserTransactionBean {
 
-    @Id
-    @Column(name = "transaction_id", updatable = false, nullable = false, length = 50)
-    private String transactionId;  // 交易ID
+	@Id
+	@Column(name = "transaction_id", updatable = false, nullable = false, length = 50)
+	private String transactionId; // 交易ID
 
-    @Column(name = "user_id", nullable = false)
-    private int userId;  // 用戶ID
+	@Column(name = "user_id", nullable = false)
+	private int userId; // 用戶ID
 
-    @Column(name = "transaction_role", nullable = false, length = 10)
-    private String transactionRole;  // 交易角色 (sender/receiver)
+	@Column(name = "transaction_role", nullable = false, length = 10)
+	private String transactionRole; // 交易角色 (sender/receiver)
 
-    @Column(name = "transaction_type", nullable = false, length = 10)
-    private String transactionType;  // 交易類型 (deposit/withdrawal/payment/refund)
+	@Column(name = "transaction_type", nullable = false, length = 10)
+	private String transactionType; // 交易類型 (deposit/withdrawal/payment/refund)
 
-    @Column(name = "order_id", length = 50)
-    private String orderId;  // 訂單ID
+	@Column(name = "order_id", length = 50)
+	private String orderId; // 訂單ID
 
-    @Column(name = "total_amount", nullable = false)
-    private double totalAmount;  // 交易金額
+	@Column(name = "order_type", nullable = false, length = 20)
+	private String orderType; // 新增欄位，表示訂單類型
 
-    @Column(name = "platform_fee", nullable = false)
-    private double platformFee;  // 平台費用
+	@Column(name = "total_amount", nullable = false)
+	private double totalAmount; // 交易金額
 
-    @Column(name = "target_income")
-    private Double targetIncome;  // 實際支付給接收方的金額
+	@Column(name = "platform_fee", nullable = false)
+	private double platformFee; // 平台費用
 
-    @Column(name = "transaction_status", nullable = false, length = 10)
-    private String transactionStatus;  // 交易狀態 (pending/completed/failed)
+	@Column(name = "target_income")
+	private Double targetIncome; // 實際支付給接收方的金額
 
-    @Column(name = "payment_method", nullable = false, length = 20)
-    private String paymentMethod;  // 支付方式
+	@Column(name = "transaction_status", nullable = false, length = 10)
+	private String transactionStatus; // 交易狀態 (pending/completed/failed)
 
-    @Column(name = "reference_id", length = 100)
-    private String referenceId;  // 第三方支付平台參考ID
+	@Column(name = "payment_method", nullable = false, length = 20)
+	private String paymentMethod; // 支付方式
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;  // 交易創建時間
+	@Column(name = "reference_id", length = 100)
+	private String referenceId; // 第三方支付平台參考ID
 
-    @Column(name = "completion_at")
-    private LocalDateTime completionAt;  // 交易完成時間
+	@Column(name = "created_at", nullable = false)
+	private LocalDateTime createdAt; // 交易創建時間
 
-    // Constructors
-    public UserTransactionBean() {
-        // 無參構造函數
-    }
+	@Column(name = "completion_at")
+	private LocalDateTime completionAt; // 交易完成時間
 
-    public UserTransactionBean(int userId, String transactionRole, String transactionType, String orderId, double totalAmount,
-                               double platformFee, Double targetIncome, String transactionStatus, String paymentMethod, String referenceId) {
-        this.userId = userId;
-        this.transactionRole = transactionRole;
-        this.transactionType = transactionType;
-        this.orderId = orderId;
-        this.totalAmount = totalAmount;
-        this.platformFee = platformFee;
-        this.targetIncome = targetIncome;
-        this.transactionStatus = transactionStatus;
-        this.paymentMethod = paymentMethod;
-        this.referenceId = referenceId;
-        this.createdAt = LocalDateTime.now();  // 默認當前時間
-    }
+	// Constructors
+	public UserTransactionBean() {
+		// 無參構造函數
+	}
 
-    @PrePersist
-    public void prePersist() {
-        if (this.transactionId == null) {
-            this.transactionId = UUID.randomUUID().toString();  // 自動生成交易ID
-        }
-        if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();  // 默認設置創建時間
-        }
-    }
+	public UserTransactionBean(int userId, String transactionRole, String transactionType, String orderId,
+			String orderType, double totalAmount, double platformFee, Double targetIncome, String transactionStatus,
+			String paymentMethod, String referenceId) {
+		this.userId = userId;
+		this.transactionRole = transactionRole;
+		this.transactionType = transactionType;
+		this.orderId = orderId;
+		this.orderType = orderType;
+		this.totalAmount = totalAmount;
+		this.platformFee = platformFee; // 確保平台費用的類型正確
+		this.targetIncome = targetIncome; // 這裡允許為 null，因為可以不傳入
+		this.transactionStatus = transactionStatus;
+		this.paymentMethod = paymentMethod;
+		this.referenceId = referenceId;
+		this.createdAt = LocalDateTime.now(); // 默認設置創建時間
+	}
 
-    // Getters and Setters
-    public String getTransactionId() {
-        return transactionId;
-    }
+	@PrePersist
+	public void prePersist() {
+		if (this.transactionId == null) {
+			this.transactionId = UUID.randomUUID().toString(); // 自動生成交易ID
+		}
+		if (this.createdAt == null) {
+			this.createdAt = LocalDateTime.now(); // 默認設置創建時間
+		}
+	}
 
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
+	// Getters and Setters
+	public String getTransactionId() {
+		return transactionId;
+	}
 
-    public int getUserId() {
-        return userId;
-    }
+	public void setTransactionId(String transactionId) {
+		this.transactionId = transactionId;
+	}
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+	public int getUserId() {
+		return userId;
+	}
 
-    public String getTransactionRole() {
-        return transactionRole;
-    }
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
-    public void setTransactionRole(String transactionRole) {
-        this.transactionRole = transactionRole;
-    }
+	public String getTransactionRole() {
+		return transactionRole;
+	}
 
-    public String getTransactionType() {
-        return transactionType;
-    }
+	public void setTransactionRole(String transactionRole) {
+		this.transactionRole = transactionRole;
+	}
 
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
-    }
+	public String getTransactionType() {
+		return transactionType;
+	}
 
-    public String getOrderId() {
-        return orderId;
-    }
+	public void setTransactionType(String transactionType) {
+		this.transactionType = transactionType;
+	}
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
+	public String getOrderId() {
+		return orderId;
+	}
 
-    public double getTotalAmount() {
-        return totalAmount;
-    }
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
+	public String getOrderType() {
+		return orderType;
+	}
 
-    public double getPlatformFee() {
-        return platformFee;
-    }
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
 
-    public void setPlatformFee(double platformFee) {
-        this.platformFee = platformFee;
-    }
+	public double getTotalAmount() {
+		return totalAmount;
+	}
 
-    public Double getTargetIncome() {
-        return targetIncome;
-    }
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 
-    public void setTargetIncome(Double targetIncome) {
-        this.targetIncome = targetIncome;
-    }
+	public double getPlatformFee() {
+		return platformFee;
+	}
 
-    public String getTransactionStatus() {
-        return transactionStatus;
-    }
+	public void setPlatformFee(double platformFee) {
+		this.platformFee = platformFee;
+	}
 
-    public void setTransactionStatus(String transactionStatus) {
-        this.transactionStatus = transactionStatus;
-    }
+	public Double getTargetIncome() {
+		return targetIncome;
+	}
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
+	public void setTargetIncome(Double targetIncome) {
+		this.targetIncome = targetIncome;
+	}
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+	public String getTransactionStatus() {
+		return transactionStatus;
+	}
 
-    public String getReferenceId() {
-        return referenceId;
-    }
+	public void setTransactionStatus(String transactionStatus) {
+		this.transactionStatus = transactionStatus;
+	}
 
-    public void setReferenceId(String referenceId) {
-        this.referenceId = referenceId;
-    }
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+	public String getReferenceId() {
+		return referenceId;
+	}
 
-    public LocalDateTime getCompletionAt() {
-        return completionAt;
-    }
+	public void setReferenceId(String referenceId) {
+		this.referenceId = referenceId;
+	}
 
-    public void setCompletionAt(LocalDateTime completionAt) {
-        this.completionAt = completionAt;
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getCompletionAt() {
+		return completionAt;
+	}
+
+	public void setCompletionAt(LocalDateTime completionAt) {
+		this.completionAt = completionAt;
+	}
 }
