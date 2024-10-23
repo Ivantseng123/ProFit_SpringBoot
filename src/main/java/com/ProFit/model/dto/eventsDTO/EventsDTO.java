@@ -18,6 +18,7 @@ public class EventsDTO {
     private int eventParticipantMaximum;
     private String eventDescription;
     private String eventNote;
+	
 	public String getEventId() {
 		return eventId;
 	}
