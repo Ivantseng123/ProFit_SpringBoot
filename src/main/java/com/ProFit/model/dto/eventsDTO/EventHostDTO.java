@@ -6,8 +6,8 @@ public class EventHostDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String eventId;       // 事件ID
-    private int eventHostId;   // 主办方用户ID
+    private String eventId;
+    private int eventHostId;
 
     public EventHostDTO() {
     }
