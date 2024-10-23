@@ -10,6 +10,7 @@ public class UserTransactionDTO {
     private String transactionRole;  // 交易角色
     private String transactionType;  // 交易類型
     private String orderId;  // 訂單ID
+    private String orderType; 
     private Double totalAmount;  // 交易金額 (改成 Double)
     private Double platformFee;  // 平台費用 (改成 Double)
     private Double targetIncome;  // 實際支付給接收方的金額 (改成 Double)
@@ -30,6 +31,7 @@ public class UserTransactionDTO {
         this.transactionRole = transaction.getTransactionRole();
         this.transactionType = transaction.getTransactionType();
         this.orderId = transaction.getOrderId();
+        this.orderType = transaction.getOrderType();
         this.totalAmount = transaction.getTotalAmount();
         this.platformFee = transaction.getPlatformFee();
         this.targetIncome = transaction.getTargetIncome();
@@ -82,6 +84,14 @@ public class UserTransactionDTO {
         this.orderId = orderId;
     }
 
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+    
     public Double getTotalAmount() {
         return totalAmount;
     }

@@ -445,3 +445,18 @@ BEGIN
     SET last_message_at = DATEADD(HOUR, 8, GETDATE())
     WHERE chat_id IN (SELECT chat_id FROM inserted)
 END
+
+
+-- 修改用戶交易 查詢訂單種類 --
+ALTER TABLE user_transactions
+ADD order_type NVARCHAR(20)  -- 訂單類型，用來區分不同訂單表
+
+-- 新增 job_order_payment_method 欄位
+ALTER TABLE job_orders
+ADD job_order_payment_method NVARCHAR(20);
+
+-- 新增 job_order_taxID 欄位
+ALTER TABLE job_orders
+ADD job_order_taxID INT;
+
+
