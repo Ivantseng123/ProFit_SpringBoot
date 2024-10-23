@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>活動主辦者表格</title>
+    <title>活動參加者表格</title>
     <link rel="stylesheet" th:href="@{/css/events/eventsView.css}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
@@ -13,9 +13,9 @@
     <div th:replace="~{model/layout-static}"></div>
     <main>
         <div class="dashboard-header">
-            <h2 id="eventHostFormTitle"></h2>
+            <h2 id="eventParticipantFormTitle"></h2>
         </div>
-        <form class="form-group form-container" id="eventHostForm">
+        <form class="form-group form-container" id="eventParticipantForm">
             <!-- <input type="hidden" id="eventId" th:value="${event.eventId}">
             <label for="eventName">活動名稱</label>
             <input type="text" id="eventName" name="eventName" th:value="${event.eventName}">
@@ -79,6 +79,6 @@
 
 </body>
 
-<script th:src="@{/js/events/eventHostForm.js}"></script>
+<script th:src="@{/js/events/eventOrderForm.js}"></script>
 
 </html>
