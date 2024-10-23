@@ -143,7 +143,7 @@ public class ServiceController {
 			@RequestPart(required = false) MultipartFile servicePictureURL2,
 			@RequestPart(required = false) MultipartFile servicePictureURL3) {
 
-		System.out.println("gg");
+		// System.out.println("gg");
 
 		try {
 			ServicesDTO serviceDTO = new ServicesDTO();

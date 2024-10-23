@@ -33,6 +33,8 @@
                     <th>金額</th>
                     <th>平台費用</th>
                     <th>實際收入</th>
+                    <th>訂單類型</th> <!-- 調整到前面 -->
+                    <th>訂單ID</th> <!-- 調整到後面 -->
                     <th>狀態</th>
                     <th>創建時間</th>
                     <th>完成時間</th>
@@ -71,6 +73,14 @@
                         金額: <input type="number" id="addAmount" name="totalAmount" required class="form-control" min="1"><br>
                         平台抽成: <input type="number" id="addPlatformFee" name="platformFee" required class="form-control" min="0" step="0.01" readonly><br>
                         實際收入: <input type="number" id="addTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01" readonly><br>
+                        訂單類型: 
+                        <select id="addOrderType" name="orderType" required class="form-select">
+                         	<option value="" selected>無</option>
+                            <option value="course">課程訂單</option>
+                            <option value="event">活動訂單</option>
+                            <option value="job">職缺訂單</option>
+                        </select><br> <!-- 修改訂單類型的選項 -->
+                        訂單ID: <input type="text" id="addOrderId" name="orderId" class="form-control"><br>
                         交易狀態: 
                         <select id="addTransactionStatus" name="transactionStatus" required class="form-select">
                             <option value="pending">待處理</option>
@@ -116,6 +126,14 @@
                         金額: <input type="number" id="updateAmount" name="totalAmount" required class="form-control" min="1"><br>
                         平台抽成: <input type="number" id="updatePlatformFee" name="platformFee" required class="form-control" min="0" step="0.01" readonly><br>
                         實際收入: <input type="number" id="updateTargetIncome" name="targetIncome" class="form-control" min="0" step="0.01" readonly><br>
+                        訂單類型: 
+                        <select id="updateOrderType" name="orderType" required class="form-select">
+                        	<option value="" selected>無</option>
+                            <option value="course">課程訂單</option>
+                            <option value="event">活動訂單</option>
+                            <option value="job">職缺訂單</option>
+                        </select><br> <!-- 修改訂單類型的選項 -->
+                        訂單ID: <input type="text" id="updateOrderId" name="orderId" class="form-control"><br>
                         交易狀態: 
                         <select id="updateTransactionStatus" name="transactionStatus" required class="form-select">
                             <option value="pending">待處理</option>
@@ -156,15 +174,14 @@
 
         // 自動計算平台抽成和實際收入
         $('#addAmount, #updateAmount').on('input', function () {
-    		var totalAmount = $(this).val();  // 獲取輸入的金額
-   			var platformFee = Math.floor(totalAmount * 0.05);  // 平台抽成為5%，取整數
-  			var targetIncome = totalAmount - platformFee;  // 實際收入為金額減去平台抽成
+            var totalAmount = $(this).val();  // 獲取輸入的金額
+            var platformFee = Math.floor(totalAmount * 0.05);  // 平台抽成為5%，取整數
+            var targetIncome = totalAmount - platformFee;  // 實際收入為金額減去平台抽成
 
-   		 // 更新平台抽成和實際收入的輸入框
-  		  	$('#addPlatformFee, #updatePlatformFee').val(platformFee);
-  	 		$('#addTargetIncome, #updateTargetIncome').val(targetIncome);
-		});
-
+            // 更新平台抽成和實際收入的輸入框
+            $('#addPlatformFee, #updatePlatformFee').val(platformFee);
+            $('#addTargetIncome, #updateTargetIncome').val(targetIncome);
+        });
 
         // 重新加載交易記錄
         function loadUserTransactions(userId) {
@@ -198,7 +215,7 @@
                     buttons = `
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#updateModal"
-                                onclick="populateUpdateForm('${transaction.transactionId}', '${transaction.userId}', '${transaction.transactionRole}', '${transaction.transactionType}', '${transaction.totalAmount}', '${transaction.platformFee}', '${transaction.targetIncome}', '${transaction.transactionStatus}', '${transaction.createdAt}', '${transaction.paymentMethod}', '${transaction.referenceId}')">編輯</button>
+                                onclick="populateUpdateForm('${transaction.transactionId}', '${transaction.userId}', '${transaction.transactionRole}', '${transaction.transactionType}', '${transaction.totalAmount}', '${transaction.platformFee}', '${transaction.targetIncome}', '${transaction.orderType}', '${transaction.orderId}', '${transaction.transactionStatus}', '${transaction.createdAt}', '${transaction.paymentMethod}', '${transaction.referenceId}')">編輯</button>
                             <button type="button" class="btn btn-danger" onclick="deleteTransaction('${transaction.transactionId}')">刪除</button>
                         </div>`;
                 } else {
@@ -211,6 +228,8 @@
                     <td>${transaction.totalAmount}</td>
                     <td>${transaction.platformFee}</td>
                     <td>${transaction.targetIncome || '無'}</td>
+                    <td>${transaction.orderType}</td> <!-- 調整到前面 -->
+                    <td>${transaction.orderId}</td> <!-- 調整到後面 -->
                     <td>${transaction.transactionStatus}</td>
                     <td>${transaction.createdAt}</td>
                     <td>${transaction.completionAt || '未完成'}</td>
@@ -283,13 +302,15 @@
         }
 
         // 填充更新表單
-        function populateUpdateForm(transactionId, userId, transactionRole, transactionType, totalAmount, platformFee, targetIncome, transactionStatus, createdAt, paymentMethod, referenceId) {
+        function populateUpdateForm(transactionId, userId, transactionRole, transactionType, totalAmount, platformFee, targetIncome, orderType, orderId, transactionStatus, createdAt, paymentMethod, referenceId) {
             $('#updateTransactionId').val(transactionId);
             $('#updateUserId').val(userId);
             $('#updateTransactionType').val(transactionType);
             $('#updateAmount').val(totalAmount);
             $('#updatePlatformFee').val(platformFee);
             $('#updateTargetIncome').val(targetIncome);
+            $('#updateOrderType').val(orderType);  // 更新訂單類型
+            $('#updateOrderId').val(orderId);  // 更新訂單ID
             $('#updateTransactionStatus').val(transactionStatus);
             $('#updateCreatedAt').val(createdAt);
             $('#updatePaymentMethod').val(paymentMethod);
