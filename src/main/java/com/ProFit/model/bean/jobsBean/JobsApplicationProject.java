@@ -35,7 +35,7 @@ public class JobsApplicationProject {
 //	    @Column(name ="jobs_application_id" )
 //	    private JobsApplication jobsApplicationId;
 	    
-	    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//FK,一個申請對應到一個申請項目
+	    @ManyToOne(fetch = FetchType.LAZY)//FK,一個申請對應到一個申請項目
 	    // cascade = CascadeType.ALL會同步更新刪除
 	    @JoinColumn(name = "jobs_application_id")
 	    private JobsApplication jobsApplication;

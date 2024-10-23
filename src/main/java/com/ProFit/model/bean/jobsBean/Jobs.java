@@ -2,6 +2,7 @@ package com.ProFit.model.bean.jobsBean;
 
 
 import com.ProFit.model.bean.majorsBean.MajorBean;
+import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -73,12 +74,11 @@ public class Jobs implements java.io.Serializable {
     @Column(name = "jobs_number_of_openings")
     private Integer jobsNumberOfOpenings;
 
-    @ManyToMany
-    @JoinTable(name = "jobs_major", joinColumns = @JoinColumn(name = "jobs_id"),
-            inverseJoinColumns = @JoinColumn(name = "major_id"))
-    private List<MajorBean> majors = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "major_category_id")
+    private MajorCategoryBean category;
 
-    @OneToMany(mappedBy = "jobs", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "jobs")
     private List<JobsApplication> applications = new ArrayList<>();
 
     public Jobs() {
@@ -210,12 +210,12 @@ public class Jobs implements java.io.Serializable {
     }
 
 
-    public List<MajorBean> getMajors() {
-        return majors;
+    public MajorCategoryBean getCategory() {
+        return category;
     }
 
-    public void setMajors(List<MajorBean> majors) {
-        this.majors = majors;
+    public void setCategory(MajorCategoryBean category) {
+        this.category = category;
     }
 
     public List<JobsApplication> getApplications() {
@@ -224,11 +224,5 @@ public class Jobs implements java.io.Serializable {
 
     public void setApplications(List<JobsApplication> applications) {
         this.applications = applications;
-    }
-
-    @Transient
-    @JsonIgnore
-    public List<Integer> getMajorIds() {
-        return getMajors().stream().map(MajorBean::getMajorId).collect(Collectors.toList());
     }
 }
