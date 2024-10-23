@@ -72,7 +72,7 @@ public class JobsApplicationController {
 
         JobsApplication jobsApplication = new JobsApplication();
 
-        jobsApplication.setPoster(poster);
+//        jobsApplication.setPoster(poster);
         jobsApplication.setApplicant(applicant);
         jobsApplication.setJobsApplicationDate(jobsApplicationDate);
         jobsApplication.setJobsApplicationStatus(jobsApplicationStatus);

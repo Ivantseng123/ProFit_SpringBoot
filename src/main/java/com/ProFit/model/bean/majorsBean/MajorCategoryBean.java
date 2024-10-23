@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.ProFit.model.bean.coursesBean.CourseBean;
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

@@ -37,9 +37,6 @@ public class MajorBean implements java.io.Serializable {
 	@Column(name = "major_description")
 	private String majorDescription; // 專業描述
 
-	@ManyToMany(mappedBy = "majors")
-	private List<Jobs> jobs = new ArrayList<>();
-
 	// 多對多關係，中介表user_major
 	// 由users表成為關係的所有者，定義了 @JoinTable, 單方向管理這段關係
 	// MajorBean 成為被動方，表明 Users 實體是關係的所有者。
@@ -118,14 +115,6 @@ public class MajorBean implements java.io.Serializable {
 
 	public void setMajorCategory(MajorCategoryBean majorCategory) {
 		this.majorCategory = majorCategory;
-	}
-
-	public List<Jobs> getJobs() {
-		return jobs;
-	}
-
-	public void setJobs(List<Jobs> jobs) {
-		this.jobs = jobs;
 	}
 
 	@Override
