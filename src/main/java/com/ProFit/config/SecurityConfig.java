@@ -32,8 +32,7 @@ public class SecurityConfig {
 	private MemberOAuth2SuccessHandler memberOAuth2SuccessHandler;
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http
-		) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 //		return http.authorizeHttpRequests(registry -> {
 //			registry.requestMatchers("/").permitAll();
@@ -43,12 +42,15 @@ public class SecurityConfig {
 //					.successHandler((request, response, authentication) -> response.sendRedirect("/home"));
 //		}).build();
 
+
 		http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").permitAll())
 				.oauth2Login(oauth2 -> oauth2.loginPage("/oauth2/authorization/google") // 使用 Google OAuth2 登入
 						.userInfoEndpoint(userInfo -> userInfo.userService(memberOAuth2UserService) // 使用自定義的OAuth2UserService
-						).successHandler(memberOAuth2SuccessHandler)); // 使用自定義的成功處理
-
+						).successHandler(memberOAuth2SuccessHandler)) // 使用自定義的成功處理
+				.logout(logout -> logout.logoutUrl("/logout") // 配置登出的 URL
+						.logoutSuccessUrl("/loginPage") // 登出成功後重定向到本地登入頁面								
+				);
 //		http.csrf(csrf -> csrf.disable())
 //				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/loginPage").permitAll() // 目前允許所有請求
 //						.requestMatchers("/").hasAuthority("ROLE_ADMIN").anyRequest().authenticated())

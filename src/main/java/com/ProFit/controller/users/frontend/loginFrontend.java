@@ -42,7 +42,7 @@ public class loginFrontend {
 		if (userService.validateForfrontend(user.get("userEmail"), user.get("userPassword"))) {
 
 			Users user1 = userService.getUserByEmail(user.get("userEmail"));
-			
+					
 			UsersDTO userDTO = modelMapper.map(user1, UsersDTO.class);
 			
 			LocalDateTime now = LocalDateTime.now();
