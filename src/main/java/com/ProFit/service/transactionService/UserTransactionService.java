@@ -102,6 +102,7 @@ public class UserTransactionService {
     }
 
     // 插入交易
+ // 插入交易
     public void insertTransaction(UserTransactionDTO transactionDTO) {
         double platformFee = 0; // 預設平台費用為0
 
@@ -131,12 +132,12 @@ public class UserTransactionService {
         Users user = userService.getUserInfoByID(transactionDTO.getUserId());
         if (user != null) {
             // 根據交易類型調整餘額
-            double totalAmount = transactionDTO.getTargetIncome().doubleValue(); // 確保這裡獲取到的值是 double
+            double target_income = transaction.getTargetIncome(); // 使用交易的target_income
 
             if ("deposit".equals(transactionDTO.getTransactionType())) {
-                user.setUserBalance((int) (user.getUserBalance() + totalAmount)); // 轉換為整數
+                user.setUserBalance((int) (user.getUserBalance() + target_income)); // 轉換為整數
             } else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
-                user.setUserBalance((int) (user.getUserBalance() - totalAmount)); // 轉換為整數
+                user.setUserBalance((int) (user.getUserBalance() - target_income)); // 轉換為整數
             }
 
             // 保存更新後的用戶信息
@@ -152,7 +153,6 @@ public class UserTransactionService {
             generateInvoice(transactionDTO);
         }
     }
-
 
     // 生成發票
     private void generateInvoice(UserTransactionDTO transactionDTO) {
@@ -173,7 +173,7 @@ public class UserTransactionService {
 
     // 更新交易
     public void updateTransaction(UserTransactionDTO transactionDTO) {
-        // 根據 transactionId 查找原有的交易記錄
+        // 查找原有的交易記錄
         UserTransactionBean existingTransaction = transactionRepository.findById(transactionDTO.getTransactionId())
                 .orElseThrow(() -> new RuntimeException("交易記錄不存在，無法更新"));
 
@@ -183,11 +183,11 @@ public class UserTransactionService {
             double oldIncome = existingTransaction.getTargetIncome() != null ? existingTransaction.getTargetIncome() : 0;
             double newIncome = transactionDTO.getTargetIncome() != null ? transactionDTO.getTargetIncome() : 0;
 
-            // 根據交易類型更新餘額
+            // 根據交易類型使用 target_income 更新餘額
             if ("deposit".equals(transactionDTO.getTransactionType())) {
-                user.setUserBalance(user.getUserBalance() + (int) newIncome); // 更新餘額
+                user.setUserBalance(user.getUserBalance() + (int) newIncome - (int) oldIncome); // 調整餘額
             } else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
-                user.setUserBalance(user.getUserBalance() - (int) newIncome); // 更新餘額
+                user.setUserBalance(user.getUserBalance() - (int) newIncome + (int) oldIncome); // 調整餘額
             }
 
             // 保存更新後的用戶信息
@@ -203,9 +203,9 @@ public class UserTransactionService {
         // 更新交易記錄
         existingTransaction.setTransactionRole(transactionDTO.getTransactionRole());
         existingTransaction.setTransactionType(transactionDTO.getTransactionType());
-        existingTransaction.setOrderType(transactionDTO.getOrderType()); // 更新 orderType
+        existingTransaction.setOrderType(transactionDTO.getOrderType());
         existingTransaction.setTotalAmount(transactionDTO.getTotalAmount());
-        existingTransaction.setPlatformFee(platformFee); // 設置更新後的 platformFee
+        existingTransaction.setPlatformFee(platformFee);
         existingTransaction.setTargetIncome(transactionDTO.getTotalAmount() - platformFee); // 更新實際收入
         existingTransaction.setTransactionStatus(transactionDTO.getTransactionStatus());
         existingTransaction.setPaymentMethod(transactionDTO.getPaymentMethod());
