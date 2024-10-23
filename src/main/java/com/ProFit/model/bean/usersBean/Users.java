@@ -97,7 +97,8 @@ public class Users implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "user")
 	private List<Employer_application> employerApplications = new LinkedList<Employer_application>();
 	
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE,mappedBy = "user")
+	@JsonIgnore // 本屬性不要做 JSON 序列化
+	@OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE,mappedBy = "user")
 	private Employer_profile employer_profile;
 
 	 //多對多關係，中介表user_major
@@ -341,6 +342,14 @@ public class Users implements Serializable {
 
 	public void setLoginTime(String localDateTime) {
 		this.loginTime = localDateTime;
+	}
+	
+	public Employer_profile getEmployer_profile() {
+		return employer_profile;
+	}
+
+	public void setEmployer_profile(Employer_profile employer_profile) {
+		this.employer_profile = employer_profile;
 	}
 
 	@Override
