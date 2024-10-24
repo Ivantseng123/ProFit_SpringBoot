@@ -6,13 +6,14 @@ $(document).ready(function () {
     $('.categorySpace').empty();
 
     $.ajax({
-        url: '/ProFit/course/searchCourseByMajorCategory',
+        url: '/ProFit/c/service/api/searchServiceByMajorCategory',
         dataType: 'JSON',
         type: 'GET',
-        success: function (allCourseCategoryList) {
+        success: function (allServiceCategoryList) {
 
+            console.log(allServiceCategoryList)
             // 寫入類別
-            htmlMakerForCategory(allCourseCategoryList);
+            htmlMakerForCategory(allServiceCategoryList);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -34,17 +35,19 @@ $(document).ready(function () {
     $.ajax({
         url: '/ProFit/c/service/api/searchAll',
         data: {
-            
+            "majorCategoryId": 100,
+            "size": 12
         },
         dataType: 'JSON',
         type: 'POST',
-        success: function (searchCoursesPage) {
-            console.log(searchCoursesPage.content);
+        success: function (searchServicesPage) {
+            console.log(searchServicesPage);
+            console.log(searchServicesPage.content);
 
             // 清空當前表格
             $('#search-results').empty();
 
-            htmlMakerForCourses(searchCoursesPage);
+            htmlMakerForServices(searchServicesPage);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -75,30 +78,34 @@ function formatDate(data) {
     return formattedDate;
 }
 
-function htmlMakerForCourses(searchCoursesPage) {
+function htmlMakerForServices(searchServicesPage) {
 
-    searchCoursesPage.content.forEach(function (course) {
+    searchServicesPage.content.forEach(function (service) {
 
         $('#search-results').append(`
-            <div class="col-lg-3 col-md-4 col-12">
+            <div class="col-lg-4 col-md-4 col-12">
                 <div class="single-news wow fadeInUp" data-wow-delay=".3s">
                     <div class="image">
-                         <img class="thumb" src="${course.courseCoverPictureURL}" alt="#">
+                         <img class="thumb" src="${service.servicePictureURL1}" alt="#">
                     </div>
                     <div class="content-body">
-                        <h3 class="title text-center"><a href="#">${course.courseName}</a></h3>
-                        <p class="fs-6 fw-bold">by ${course.courseCreaterName}</p>
+                        <h3 id="serviceTitle" class="title text-center"><a href="#">${service.serviceTitle}</a></h3>
+                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                                <h5 class="coursePrice mb-1">NT$ ${formatPrice(service.servicePrice)} / ${service.serviceUnitName}</h5>
+                        </div>
+                        <p class="fs-6 fw-bold">發布者: ${service.userMajor.user.userName}</p>
+
                         <div class="meta-details">
 
                             <ul>
-                                <li><a href="#"><i class="lni lni-tag"></i>${course.courseCategoryName}</a></li>
-                                <li><a href="#"><i class="lni lni-calendar"></i>${formatDate(course.courseEndDate)}</a></li>
+                                <li><a href="#"><i class="lni lni-tag"></i>${service.userMajor.major.majorName}</a></li>
+                                <!-- <li><a href="#"><i class="lni lni-calendar"></i>${formatDate(service.courseEndDate)}</a></li> -->
                             </ul>
                         </div>
+                        
                         <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <h5 class="coursePrice mb-1">NT$ ${formatPrice(course.coursePrice)}</h5>
-                                <a href="/ProFit/course/${course.courseId}" class="btn btn-warning btn-sm">查看課程</a>
-                        </div>
+                        <a href="/ProFit/course/${service.courseId}" class="btn btn-danger btn-sm">報價詳情</a>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -108,7 +115,7 @@ function htmlMakerForCourses(searchCoursesPage) {
     // 印頁數 (searchCoursesPage.totalPages)
     $('.pagination-list').append(`<li><a id="prev-page" href="#"><i class="lni lni-chevron-left"></i></a></li>`)
 
-    for (let i = 1; i <= searchCoursesPage.totalPages; i++) {
+    for (let i = 1; i <= searchServicesPage.totalPages; i++) {
         $('.pagination-list').append(`<li class="pageBtn" data-pagebtn="${i}"><a href="#">${i}</a></li>`);
     }
 
@@ -125,8 +132,8 @@ function htmlMakerForCourses(searchCoursesPage) {
         })
     }
 
-    var currentPage = searchCoursesPage.number + 1;
-    var totalPages = searchCoursesPage.totalPages;
+    var currentPage = searchServicesPage.number + 1;
+    var totalPages = searchServicesPage.totalPages;
 
     $('#prev-page').click(function (e) {
         e.preventDefault();
@@ -144,24 +151,25 @@ function htmlMakerForCourses(searchCoursesPage) {
 }
 
 function loadThatPage(pageNum) {
+    page = pageNum - 1;
     $.ajax({
         url: '/ProFit/c/service/api/searchAll',
         data: {
-            "pageNumber": pageNum
+            "page": page
         },
         dataType: 'JSON',
         type: 'POST',
-        success: function (searchCoursesPage) {
-            console.log(searchCoursesPage);
+        success: function (searchServicesPage) {
+            console.log(searchServicesPage);
 
             // 清空當前表格
             $('#search-results').empty();
             $('.pagination-list').empty();
 
-            htmlMakerForCourses(searchCoursesPage);
+            htmlMakerForServices(searchServicesPage);
 
             // 更新按鈕狀態
-            updatePaginationButtons(searchCoursesPage);
+            updatePaginationButtons(searchServicesPage);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -174,11 +182,11 @@ function loadThatPage(pageNum) {
 
 }
 
-function updatePaginationButtons(searchCoursesPage) {
+function updatePaginationButtons(searchServicesPage) {
 
     // 禁用「上一頁」按鈕，如果在第一頁
-    let currentPage = searchCoursesPage.number + 1;
-    let totalPages = searchCoursesPage.totalPages;
+    let currentPage = searchServicesPage.number + 1;
+    let totalPages = searchServicesPage.totalPages;
 
     if (currentPage === 1) {
         $('#prev-page').attr('disabled', true);
@@ -196,20 +204,20 @@ function updatePaginationButtons(searchCoursesPage) {
     }
 }
 
-function htmlMakerForCategory(allCourseCategoryList) {
+function htmlMakerForCategory(allServiceCategoryList) {
     let i = 1;
-    allCourseCategoryList.forEach(function (courseCategory) {
+    allServiceCategoryList.forEach(function (serviceCategory) {
         $('.categorySpace').append(`
             <div class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
-                <a href="#courseTop" class="single-cat wow fadeInUp"
+                <a href="#" class="single-cat wow fadeInUp"
                     data-wow-delay=".2s">
                     <div class="top-side text-center">
                         <img class="rounded" style="max-width:50px"
                         src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
-                        <h6 class="categoryId text-center mt-1" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h6>
+                        <h6 class="categoryId text-center mt-1" data-categoryid="${serviceCategory.majorCategoryId}">${serviceCategory.categoryName}</h6>
                     </div>
                     <div class="bottom-side text-center mt-2">
-                        <span></span> <span class="available-job">(${courseCategory.courseNumber}筆)</span>
+                        <span></span> <span class="available-job">(${serviceCategory.serviceCount}筆)</span>
                     </div>
                 </a>
             </div>`);
