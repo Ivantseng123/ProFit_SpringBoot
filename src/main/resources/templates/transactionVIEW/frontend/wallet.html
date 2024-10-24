@@ -4,81 +4,71 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>我的錢包</title>
-    <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- Web Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-        
-    <!-- 套用模板中的樣式 -->
     <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
-    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}">
-    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}">
-    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}">
     <link rel="stylesheet" th:href="@{/css/frontend/main.css}">
-    
     <style>
-     body {
-        padding-top: 120px; /* 根據導航欄的實際高度進行調整 */
-    }
-    .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000; /* 確保頁頭在最上層 */
-    }
+        body {
+            padding-top: 120px;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
 
-    <!-- 包含頁頭的區塊 -->
+    <!-- 引入頁頭 -->
     <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
     <div class="container mt-4">
-        <!-- 金額總覽區塊 -->
-        <div class="row mb-3">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h4 class="mb-0">可提領金額</h4>
-                            <button class="btn btn-danger">提領</button>
-                        </div>
-                        <h2 class="mt-2">NT$<span th:text="${userBalance}">0</span></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
-        <!-- 最近的交易區塊 -->
+        <!-- 最近交易 -->
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">最近的交易</h5>
-                            <div class="d-flex">
-                                <input type="date" id="startDate" class="form-control me-2" placeholder="開始日期">
-                                <input type="date" id="endDate" class="form-control me-2" placeholder="結束日期">
-                                <button class="btn btn-outline-secondary">篩選</button>
-                            </div>
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">最近的交易</h5>
+                        <div class="d-flex">
+                            <input type="date" id="startDate" class="form-control me-2">
+                            <input type="date" id="endDate" class="form-control me-2">
+                            <button id="filterDateBtn" class="btn btn-outline-secondary">篩選</button>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="btn-group mb-3" role="group">
-                            <button type="button" class="btn btn-secondary">全部</button>
-                            <button type="button" class="btn btn-secondary">訂單收入</button>
-                            <button type="button" class="btn btn-secondary">已提領金額</button>
-                            <button type="button" class="btn btn-secondary">未購買成功的退款</button>
-                            <button type="button" class="btn btn-secondary">綜合支付</button>
+                            <button type="button" class="btn btn-secondary" data-type="all">全部</button>
+                            <button type="button" class="btn btn-secondary" data-type="deposit">收入</button>
+                            <button type="button" class="btn btn-secondary" data-type="withdrawal">支出</button>
                         </div>
-                        <!-- 無交易記錄 -->
-                        <div class="text-center">
-                            <img src="/path/to/no-data.png" alt="無交易記錄" class="img-fluid">
+
+                        <!-- 交易記錄列表 -->
+                        <div id="transactionTable">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>交易ID</th>
+                                        <th>完成時間</th>
+                                        <th>交易類型</th>
+                                        <th>金額</th>
+                                        <th>訂單類型</th>
+                                        <th>訂單ID</th>
+                                        <th>交易狀態</th>
+                                        <th>支付方式</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionTableBody">
+                                    <!-- 這裡將由 JavaScript 動態生成 -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="noTransactionsMessage" class="text-center" style="display: none;">
                             <p class="mt-2">無交易記錄</p>
                         </div>
                     </div>
@@ -87,28 +77,104 @@
         </div>
     </div>
 
-    <!-- 引用 signModal.html -->
+    <!-- 引入彈窗、頁尾 -->
     <div th:replace="~{model/frontend/signModal}"></div>
-
-    <!-- 引用 footer.html -->
     <div th:replace="~{model/frontend/footer}"></div>
 
-    <!-- ========================= scroll-top ========================= -->
-    <a href="#" class="scroll-top btn-hover">
-        <i class="lni lni-chevron-up"></i>
-    </a>
-    
-    <!-- 套用模板中的JS腳本 -->
+    <!-- 返回頂部 -->
+    <a href="#" class="scroll-top btn-hover"><i class="lni lni-chevron-up"></i></a>
+
+    <!-- 引入JS腳本 -->
     <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-    <script th:src="@{/js/frontend/wow.min.js}"></script>
-    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
-    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
-    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
 
-    <!-- 使用者導向我的錢包 -->
-    <a th:href="@{/wallet(userId=${user.id})}">我的錢包</a>
+    <!-- 添加按鈕點擊事件 -->
+    <script>
+        $(document).ready(function () {
+    // 頁面加載後自動獲取所有交易
+    fetchAllTransactions();
 
+    // 類型篩選按鈕
+    $('.btn-group button').on('click', function () {
+        var transactionType = $(this).data('type');
+        $.ajax({
+            url: '/ProFit/wallet/filter',
+            method: 'GET',
+            data: { type: transactionType },
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
+            }
+        });
+    });
+
+    // 日期篩選按鈕
+    $('#filterDateBtn').on('click', function () {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        $.ajax({
+            url: '/ProFit/wallet/filterDate',
+            method: 'GET',
+            data: { startDate: startDate, endDate: endDate },
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
+            }
+        });
+    });
+
+    // 自動獲取所有交易的函數
+    function fetchAllTransactions() {
+        $.ajax({
+            url: '/ProFit/wallet/filter',
+            method: 'GET',
+            data: { type: 'all' },  // 獲取所有交易
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
+            }
+        });
+    }
+
+    // 更新表格
+    function updateTransactionTable(transactions) {
+        var tableBody = '';
+        if (transactions.length > 0) {
+            transactions.forEach(function (transaction) {
+                var completionAt = transaction.completionAt ? new Date(transaction.completionAt).toLocaleDateString() : '未完成';
+                tableBody += `
+                    <tr>
+                        <td>${transaction.transactionId}</td>
+                        <td>${completionAt}</td>
+                        <td>${transaction.transactionType}</td>
+                        <td>${transaction.targetIncome}</td>
+                        <td>${transaction.orderType}</td>
+                        <td>${transaction.orderId}</td>
+                        <td>${transaction.transactionStatus}</td>
+                        <td>${transaction.paymentMethod}</td>
+                    </tr>`;
+            });
+            $('#transactionTableBody').html(tableBody);
+            $('#noTransactionsMessage').hide();
+            $('#transactionTable').show();
+        } else {
+            $('#transactionTableBody').empty();
+            $('#transactionTable').hide();
+            $('#noTransactionsMessage').show();
+        }
+    }
+});
+
+    </script>
 </body>
 </html>

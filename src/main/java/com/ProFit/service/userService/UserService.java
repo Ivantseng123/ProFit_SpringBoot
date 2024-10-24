@@ -330,4 +330,9 @@ public class UserService implements IUserService {
 		return null;
 	}
 
+	public Integer getUserBalanceById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
