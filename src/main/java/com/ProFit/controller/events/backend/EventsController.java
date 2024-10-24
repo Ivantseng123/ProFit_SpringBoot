@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
-import com.ProFit.service.eventService.EventsService;
+import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
 //import com.ProFit.service.majorService.IMajorCategoryService;
-
-import jakarta.persistence.criteria.CriteriaBuilder.In;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +21,7 @@ import java.util.stream.Collectors;
 public class EventsController {
 
     @Autowired
-    private EventsService eventsService;
+    private IEventsService eventsService;
 
     @Autowired
     private IMajorService majorService;
@@ -31,12 +29,11 @@ public class EventsController {
     // @Autowired
     // private IMajorCategoryService majorCategoryService;
 
-
     // 主頁面，列出所有活動
     @GetMapping
     public String listEvents(Model model) {
-    	List<MajorDTO> majors = majorService.findAllMajors();
-    	model.addAttribute("majors", majors);
+        List<MajorDTO> majors = majorService.findAllMajors();
+        model.addAttribute("majors", majors);
         return "eventsVIEW/backend/events";
     }
 
@@ -44,8 +41,8 @@ public class EventsController {
     @GetMapping("/new")
     public String newEvent(Model model) {
         EventsDTO event = new EventsDTO();
-    	List<MajorDTO> majors = majorService.findAllMajors();
-    	model.addAttribute("majors", majors);
+        List<MajorDTO> majors = majorService.findAllMajors();
+        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/backend/eventForm";
     }
@@ -55,8 +52,8 @@ public class EventsController {
     public String editEvent(@RequestParam String eventId, Model model) {
         EventsBean eventBean = eventsService.selectEventById(eventId);
         EventsDTO event = eventsService.convertToDTO(eventBean);
-    	List<MajorDTO> majors = majorService.findAllMajors();
-    	model.addAttribute("majors", majors);
+        List<MajorDTO> majors = majorService.findAllMajors();
+        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/backend/eventForm";
     }
@@ -66,34 +63,33 @@ public class EventsController {
     public String viewEvent(@RequestParam String eventId, Model model) {
         EventsBean eventBean = eventsService.selectEventById(eventId);
         EventsDTO event = eventsService.convertToDTO(eventBean);
-    	List<MajorDTO> majors = majorService.findAllMajors();
-    	model.addAttribute("majors", majors);
+        List<MajorDTO> majors = majorService.findAllMajors();
+        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/backend/eventForm";
     }
 
     // 搜尋活動
-    @GetMapping("/search") @ResponseBody
+    @GetMapping("/search")
+    @ResponseBody
     public List<EventsDTO> searchEvents(@RequestParam(required = false) String eventName,
-							    		@RequestParam(required = false) Integer eventStatus,
-							    		@RequestParam(required = false) Integer eventCategory,
-							    		@RequestParam(required = false) Integer eventMajor) {
+            @RequestParam(required = false) Integer eventStatus,
+            @RequestParam(required = false) Integer eventCategory,
+            @RequestParam(required = false) Integer eventMajor) {
         List<EventsBean> eventsList;
-        
-        System.out.println("eventName: " + eventName + " eventStatus: " + eventStatus + " eventCategory: " + eventCategory + " eventMajor: " + eventMajor);
 
         if (eventName != null && !eventName.isEmpty()) {
             eventsList = eventsService.selectEventByName(eventName);
-         } else if (eventStatus != null) {
-             eventsList = eventsService.selectEventByStatus(eventStatus);
-         } else if (eventCategory != null) {
-             eventsList = eventsService.selectEventByCategory(eventCategory);
-         } else if (eventMajor != null) {
-             eventsList = eventsService.selectEventByMajor(eventMajor);
+        } else if (eventStatus != null) {
+            eventsList = eventsService.selectEventByStatus(eventStatus);
+        } else if (eventCategory != null) {
+            eventsList = eventsService.selectEventByCategory(eventCategory);
+        } else if (eventMajor != null) {
+            eventsList = eventsService.selectEventByMajor(eventMajor);
         } else {
             eventsList = eventsService.selectAllEvents();
         }
-        
+
         List<EventsDTO> events = eventsList.stream().map(eventsService::convertToDTO).collect(Collectors.toList());
         return events;
     }
@@ -108,7 +104,7 @@ public class EventsController {
     // 儲存活動
     @PostMapping("/save")
     public ResponseEntity<String> saveEvent(@RequestBody EventsDTO eventsDTO) {
-        EventsBean event = eventsService.convertToEntity(eventsDTO);
+        EventsBean event = eventsService.convertToBean(eventsDTO);
         eventsService.saveEvent(event);
         return ResponseEntity.ok("/ProFit/events");
     }

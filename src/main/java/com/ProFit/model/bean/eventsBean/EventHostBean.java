@@ -10,29 +10,28 @@ import com.ProFit.model.bean.usersBean.Users;
 @Table(name = "event_host")
 public class EventHostBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
+    @EmbeddedId
     private EventHostIdBean id;
-	
-	@ManyToOne
-	@MapsId("eventId")
+
+    @ManyToOne
+    @MapsId("eventId")
     @JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = false)
-    private EventsBean event; 
-	
-	@ManyToOne
-	@MapsId("eventHostId")
-	@JoinColumn(name = "event_host_id", referencedColumnName = "user_id", nullable = false)
-	private Users eventHost;
+    private EventsBean event;
 
-	public EventHostBean() {
-	}
+    @ManyToOne
+    @MapsId("eventHostId")
+    @JoinColumn(name = "event_host_id", referencedColumnName = "user_id", nullable = false)
+    private Users eventHost;
 
+    public EventHostBean() {
+    }
 
     public EventHostBean(EventsBean event, Users eventHost) {
         this.event = event;
         this.eventHost = eventHost;
-		this.id = new EventHostIdBean(event.getEventId(), eventHost.getUserId());
+        this.id = new EventHostIdBean(event.getEventId(), eventHost.getUserId());
     }
 
     public EventsBean getEvent() {
@@ -41,7 +40,7 @@ public class EventHostBean implements Serializable {
 
     public void setEvent(EventsBean event) {
         this.event = event;
-		this.id.setEventId(event.getEventId());
+        this.id.setEventId(event.getEventId());
     }
 
     public Users getEventHost() {
@@ -50,14 +49,13 @@ public class EventHostBean implements Serializable {
 
     public void setEventHost(Users eventHost) {
         this.eventHost = eventHost;
-		this.id.setEventHostId(eventHost.getUserId());
+        this.id.setEventHostId(eventHost.getUserId());
     }
 
-	@Override
-	public String toString() {
-		return "EventHostBean [eventId=" + this.event.getEventId() + ", eventHostId=" + this.eventHost.getUserId() + "]";
-	}
-
-
+    @Override
+    public String toString() {
+        return "EventHostBean [eventId=" + this.event.getEventId() + ", eventHostId=" + this.eventHost.getUserId()
+                + "]";
+    }
 
 }
