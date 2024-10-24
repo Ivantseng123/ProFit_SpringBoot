@@ -9,10 +9,12 @@ import com.ProFit.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserTransactionService {
@@ -285,5 +287,67 @@ public class UserTransactionService {
 
     public void saveUserAccountNumber(String accountNumber) {
         // TODO Auto-generated method stub
+    }
+    
+ // 根據用戶ID獲取該用戶的交易記錄，並轉換成DTO
+    public List<UserTransactionDTO> getUserTransactionDTOByUserId(Integer userId) {
+        List<UserTransactionBean> transactions = transactionRepository.findByUserId(userId);
+        return transactions.stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+    
+    public List<UserTransactionDTO> getTransactionsByType(Integer userId, String transactionType) {
+        return transactionRepository.findByUserIdAndTransactionType(userId, transactionType)
+                .stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserTransactionDTO> getAllTransactionsByUserId(Integer userId) {
+        return transactionRepository.findByUserId(userId)
+                .stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<UserTransactionDTO> getTransactionsByDateRange(Integer userId, LocalDate startDate, LocalDate endDate) {
+        List<UserTransactionBean> transactions = transactionRepository.findByUserIdAndCreatedAtBetween(userId, startDate.atStartOfDay(), endDate.atTime(23, 59, 59));
+        return transactions.stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+    
+ // 根據完成時間篩選交易
+    public List<UserTransactionDTO> getTransactionsByCompletionDateRange(Integer userId, LocalDate startDate, LocalDate endDate) {
+        List<UserTransactionBean> transactions = transactionRepository.findByUserIdAndCompletionAtBetween(
+                userId, startDate.atStartOfDay(), endDate.atTime(23, 59, 59)
+        );
+        return transactions.stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+    
+    // 獲取用戶餘額
+    public Integer getUserBalanceById(Integer userId) {
+        return userService.getUserBalanceById(userId); // 從 UserService 獲取用戶餘額
+    }
+
+    // 獲取即將撥款的交易 (狀態為 pending)
+    public List<UserTransactionDTO> getPendingTransactionsByUserId(Integer userId) {
+        return transactionRepository.findByUserIdAndTransactionTypeAndTransactionStatus(
+                userId, "withdrawal", "pending"
+        ).stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    // 獲取已撥款的交易 (狀態為 completed)
+    public List<UserTransactionDTO> getPaidTransactionsByUserId(Integer userId) {
+        return transactionRepository.findByUserIdAndTransactionTypeAndTransactionStatus(
+                userId, "withdrawal", "completed"
+        ).stream()
+                .map(UserTransactionDTO::new)
+                .collect(Collectors.toList());
     }
 }
