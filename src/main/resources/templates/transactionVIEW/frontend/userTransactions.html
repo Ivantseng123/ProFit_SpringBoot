@@ -1,166 +1,204 @@
 <!DOCTYPE html>
 <html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>進帳管理</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
-    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
-    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
-    <link rel="stylesheet" th:href="@{/css/frontend/main.css}">
-    <style>
-        body {
-            padding-top: 120px;
-        }
-        .card {
-            margin-top: 20px;
-        }
-        .summary-title {
-            font-weight: bold;
-        }
-        .summary-amount {
-            font-size: 24px;
-            font-weight: bold;
-            color: #000;
-        }
-        .account-info {
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        .details-title {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>進帳管理</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{/images/favicon.svg}" />
+<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
+<link rel="stylesheet"
+	href="https://cdn.lineicons.com/4.0/lineicons.css" />
+<link rel="stylesheet" th:href="@{/css/frontend/main.css}">
+<style>
+body {
+	padding-top: 120px;
+}
+
+.card {
+	margin-top: 20px;
+}
+
+.summary-title {
+	font-weight: bold;
+}
+
+.summary-amount {
+	font-size: 24px;
+	font-weight: bold;
+	color: #000;
+}
+
+.account-info {
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.details-title {
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
+</style>
 </head>
 <body>
 
-    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+	<div th:replace="~{model/frontend/headerOtherPage}"></div>
 
-    <div class="container mt-4">
-        <!-- 餘額顯示 -->
-        <div class="card">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <h4 class="summary-title">可提領金額</h4>
-                <div class="summary-amount">
-                    NT$<span th:text="${userBalance}">0</span>
-                </div>
-            </div>
-        </div>
+	<div class="container mt-4">
+		<!-- 餘額顯示 -->
+		<div
+			class="card-body d-flex justify-content-between align-items-center">
+			<div class="d-flex align-items-center">
+				<h4 class="summary-title">可提領金額</h4>
+				<div class="summary-amount ms-3">
+					 NT$<span th:text="${userBalance}">0</span>
+				</div>
+			</div>
+			<button class="btn btn-primary">取款</button>
+		</div>
 
-        <!-- Income Summary -->
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="summary-title">即將撥款</div>
-                        <div class="summary-amount">
-                            NT$<span th:text="${pendingAmount}">0</span>
-                        </div>
-                    </div>
-                    <div class="col-6 text-end">
-                        <div class="summary-title">已撥款</div>
-                        <div class="summary-amount">
-                            NT$<span th:text="${paidAmount}">0</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="account-info">
-                    我的銀行帳戶：<span th:text="${accountNumber}">****5610</span>
-                </div>
-            </div>
-        </div>
+		<!-- Income Summary -->
+		<div class="card">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-6">
+						<div class="summary-title">即將撥款</div>
+						<div class="summary-amount">
+							NT$<span th:text="${pendingAmount}">0</span>
+						</div>
+					</div>
+					<div class="col-6 text-end">
+						<div class="summary-title">已撥款</div>
+						<div class="summary-amount">
+							NT$<span th:text="${paidAmount}">0</span>
+						</div>
+					</div>
+				</div>
+				<div class="account-info">
+					我的銀行帳戶：<span th:text="${accountNumber}">****5610</span>
+				</div>
+			</div>
+		</div>
 
-        <!-- Income Details -->
-        <div class="card">
-            <div class="card-body">
-                <h5 class="details-title">進帳詳情</h5>
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="tab-pending"
-                            data-bs-toggle="tab" data-bs-target="#pending" type="button"
-                            role="tab" aria-controls="pending" aria-selected="true">即將撥款</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="tab-paid" data-bs-toggle="tab"
-                            data-bs-target="#paid" type="button" role="tab"
-                            aria-controls="paid" aria-selected="false">已撥款</button>
-                    </li>
-                </ul>
+		<!-- Income Details -->
+		<div class="card">
+			<div class="card-body">
+				<h5 class="details-title">進帳詳情</h5>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item" role="presentation">
+						<button class="nav-link active" id="tab-pending"
+							data-bs-toggle="tab" data-bs-target="#pending" type="button"
+							role="tab" aria-controls="pending" aria-selected="true">即將撥款</button>
+					</li>
+				</ul>
 
-                <!-- 即將撥款 -->
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="pending" role="tabpanel"
-                        aria-labelledby="tab-pending">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>撥款週期</th>
-                                    <th>訂單編號</th>
-                                    <th>狀態</th>
-                                    <th>撥款金額</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="transaction : ${pendingTransactions}">
-                                    <td th:text="${transaction.completionAt}">2024/10/14 - 2024/10/19</td>
-                                    <td th:text="${transaction.orderId}">ORD123456789</td>
-                                    <td th:text="${transaction.transactionStatus}">已完成</td>
-                                    <td th:text="${transaction.targetIncome}">NT$500</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+				<!-- 即將撥款 -->
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="pending" role="tabpanel"
+						aria-labelledby="tab-pending">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>交易ID</th>
+									<th>創建日期</th>
+									<th>狀態</th>
+									<th>撥款金額</th>
+								</tr>
+							</thead>
+							<tbody id="transactionTableBody">
+								<!-- 交易記錄將由 JavaScript 動態生成 -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                    <!-- 已撥款 -->
-                    <div class="tab-pane fade" id="paid" role="tabpanel"
-                        aria-labelledby="tab-paid">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>撥款週期</th>
-                                    <th>訂單編號</th>
-                                    <th>狀態</th>
-                                    <th>撥款金額</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="transaction : ${paidTransactions}">
-                                    <td th:text="${transaction.completionAt}">2024/10/07 - 2024/10/13</td>
-                                    <td th:text="${transaction.orderId}">ORD987654321</td>
-                                    <td th:text="${transaction.transactionStatus}">已完成</td>
-                                    <td th:text="${transaction.targetIncome}">NT$1,463</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div th:replace="~{model/frontend/footer}"></div>
 
-    <div th:replace="~{model/frontend/footer}"></div>
+	<!-- 確保 jQuery 加載在 Bootstrap 之前 -->
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+	<script th:src="@{/js/frontend/main.js}"></script>
 
-    <!-- 確保 jQuery 加載在 Bootstrap 之前 -->
-    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
-    <script th:src="@{/js/frontend/main.js}"></script>
-
-    <!-- 手動初始化 Bootstrap 的 Tab -->
-    <script>
+	<!-- JavaScript 用於動態獲取和更新交易數據 -->
+	<script>
         $(document).ready(function () {
-            $('#myTab button').on('click', function (event) {
-                event.preventDefault();
-                $(this).tab('show');
-            });
+            // 頁面加載後自動獲取即將撥款的交易記錄
+            fetchPendingTransactions();
+
+            function fetchPendingTransactions() {
+                $.ajax({
+                    url: '/ProFit/transaction/getPendingTransactions',  // 假設的後端路徑
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        updateTransactionTable(response);
+                    },
+                    error: function () {
+                        alert('獲取交易記錄時發生錯誤');
+                    }
+                });
+            }
+			
+            // 更新表格內容
+            function updateTransactionTable(transactions) {
+                var tableBody = '';
+                if (transactions.length > 0) {
+                    transactions.forEach(function (transaction) {
+                        // 日期處理
+                        var createdAt = transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString('zh-TW', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                        }) : '未創建';
+
+                        // 構建表格行
+                        tableBody += `
+                            <tr>
+                                <td>${transaction.transactionId}</td>
+                                <td>${createdAt}</td>
+                                <td>${transaction.transactionStatus}</td>
+                                <td>NT$${transaction.targetIncome}</td>
+                            </tr>`;
+                    });
+
+                    $('#transactionTableBody').html(tableBody);
+                } else {
+                    $('#transactionTableBody').html('<tr><td colspan="4">無交易記錄</td></tr>');
+                }
+            }
         });
+        
+        $(document).ready(function() {
+        // 取款按鈕點擊事件
+        $('.btn-primary').on('click', function() {
+            alert("取款功能暫未實現");
+            // 此處可以加入取款的 AJAX 請求或其他邏輯處理
+        });
+    });
+    $.ajax({
+    url: '/ProFit/transaction/getPendingTransactions',
+    method: 'GET',
+    dataType: 'json',
+    success: function(response) {
+        console.log(response); // 測試是否有正確返回數據
+        updateTransactionTable(response);
+    },
+    error: function() {
+        alert('獲取交易記錄時發生錯誤');
+    }
+});
+    
     </script>
 
 </body>
