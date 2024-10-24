@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const eventPath = "events";
-    
+
     //映射
     function getMapping() {
         const statuses = document.querySelectorAll(".status");
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const value = Number(status.textContent.trim());
             status.textContent = statusMapping[value] !== undefined ? statusMapping[value] : statusMapping.default;
         });
-    
+
         //活動類別映射
         categories.forEach(category => {
             const value = Number(category.textContent.trim());
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 setSelectOption(searchOptions, categoryMapping);
             } else if (criteria === "eventMajor") {
                 setSelectOption(searchOptions, majorMapping);
-            } 
+            }
         }
     });
 
@@ -79,7 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
         queryParams.append(criteria, keyword);
 
         console.log(queryParams.toString());
-        axios.get(eventPath+'/search?' + queryParams.toString())
+
+        //發送axios請求
+        axios.get(eventPath + '/search?' + queryParams.toString())
             .then(response => {
                 console.log(response);
 
@@ -88,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //判斷是否有搜尋結果
                 if (response.data.length === 0) {
-                    $('#searchResult').append(`<p>查無相關活動</p>`);
+                    $('#searchResult').append(`<p class="text-danger">查無相關活動</p>`);
                     return;
                 }
 
@@ -124,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <a class="view btn btn-success btn-sm"
                                     href="${eventPath}/view?eventId=${event.eventId}">詳細資料</a>
                                 <a class="view-host btn btn-success btn-sm"
-                                    href="#">主辦者列表</a>
+                                    href="${eventPath}/host/search?eventId=${event.eventId}">主辦者列表</a>
                                 <a class="view-participant btn btn-success btn-sm"
                                     href="#">參加者列表</a>
                                 <a class="edit btn btn-primary btn-sm"

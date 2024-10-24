@@ -33,9 +33,9 @@
                     <button class="search btn btn-primary btn-sm my-sm-0" id="searchBtn">搜尋</button>
                 </div>
             </div>
-            
+
             <div class="table-container" id="searchResult"></div>
-            
+
             <div id="majors-data" style="display: none;">
                 <th:block th:each="major : ${majors}">
                     <div th:value="${major.majorId}" th:data-name="${major.majorName}"></div>

@@ -15,7 +15,7 @@
             <div class="course-header">
                 <h2>活動主辦者列表</h2>
                 <div class="action-buttons">
-                    <a class="create btn btn-warning btn-sm text-white" th:href="@{#}">新增</a>
+                    <a class="create btn btn-warning btn-sm text-white" th:href="@{events/host/new}">新增</a>
                 </div>
             </div>
 
@@ -23,8 +23,8 @@
                 <h3>查詢活動主辦者</h3>
                 <div class="input-group">
                     <select id="searchCriteria" class="custom-select ">
-                        <option value="eventName">活動名稱</option>
-                        <option value="participantName">主辦者名稱</option>
+                        <option value="eventId">活動ID</option>
+                        <option value="hostId">主辦者ID</option>
                     </select>
                     <input type="text" id="searchInput" placeholder="輸入關鍵字">
                     <button class="search btn btn-primary btn-sm my-sm-0" id="searchBtn">搜尋</button>
