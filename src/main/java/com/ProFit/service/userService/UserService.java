@@ -386,9 +386,14 @@ public class UserService implements IUserService {
 		return null;
 	}
 
+	//前台獲取用戶餘額
 	public Integer getUserBalanceById(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Users user = usersRepository.findById(userId).orElse(null);
+	    if (user != null) {
+	        return user.getUserBalance();
+	    } else {
+	        return null;
+	    }
 	}
 
 }
