@@ -42,7 +42,6 @@ public class MemberOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
 		Map<String, Object> attributes = oAuth2User.getAttributes();
 
-		String googleId = (String) attributes.get("sub");
 		String email = (String) attributes.get("email");
 
 		Optional<Users> optional = userRepository.findByUserEmail(email);

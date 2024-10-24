@@ -22,6 +22,8 @@ import com.ProFit.model.dao.usersCRUD.PwdResetTokenRepository;
 import com.ProFit.model.dto.usersDTO.TokensDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 
+import net.bytebuddy.utility.RandomString;
+
 @Service
 @Transactional
 public class PwdresetService implements IPwdresetService {
@@ -29,8 +31,7 @@ public class PwdresetService implements IPwdresetService {
 	@Autowired
 	private PwdResetTokenRepository pwdRepository;
 
-	@Autowired
-	private PasswordEncoder pwdEncoder;
+	
 
 	// 新增token
 	@Override
@@ -77,17 +78,10 @@ public class PwdresetService implements IPwdresetService {
 	// 產生token
 	@Override
 	public String generateToken() throws NoSuchAlgorithmException {
+		
+		String randomCode = RandomString.make(64);
 
-		// 生成隨機字節數組
-		SecureRandom secureRandom = new SecureRandom();
-		byte[] randomBytes = new byte[32]; // 生成 32 個字節的隨機數據
-		secureRandom.nextBytes(randomBytes);
 
-		// 將字節數組轉換為 Base64 字符串
-		String base64String = Base64.getEncoder().encodeToString(randomBytes);
-
-		String hashedBytes = pwdEncoder.encode(base64String);
-
-		return hashedBytes;
+		return randomCode;
 	}
 }
