@@ -33,9 +33,15 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrderBean, 
         return save(serviceOrder);
     }
 
-
-    // 搜尋 服務訂單
-
     // 搜尋 全部服務訂單
 
+
+    // 搜尋 服務訂單 根據服務id
+
+    // 修改 服務訂單 boolean
+
+    // 刪除 服務訂單 boolean
+
+
+   
 }
