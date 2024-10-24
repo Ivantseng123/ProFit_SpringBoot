@@ -4,7 +4,7 @@
     layout:decorate="~{jobsVIEW/frontEnd/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>職缺列表</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -35,93 +35,24 @@
                 <div class="row">
                     <div class="col-lg-6 col-12">
                         <!-- Single Job -->
-                        <div class="single-job">
+                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index < 4}">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img1.png" alt="#">
+                                <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Software Engineer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+                                <h4><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}" th:text="${job.jobsTitle}">Software Engineer</a></h4>
+                                <p th:text="${job.jobsDescription}">We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
                                     week. All leads are pre-scheduled. </p>
                                 <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York</li>
+                                    <li><i class="lni lni-website"></i> <th:block th:text="${job.jobsWorktime}"></th:block></li>
+                                    <li><i class="lni lni-dollar"></i> <th:block th:text="${'金額' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></th:block></li>
+                                    <li><i class="lni lni-map-marker"></i><th:block th:text="${job.jobsLocation}"></th:block></li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img2.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Graphics Design</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> designhub.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Washington, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Intern</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img3.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Ui/Ux Design</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> uddesign.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img4.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Web Developer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> webinner.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Delaware, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Intern</span></li>
+                                    <li><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}">查看詳情</a></li>
+                                    <li><a href="job-details.html">應徵職缺</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -129,94 +60,24 @@
                     </div>
                     <div class="col-lg-6 col-12">
                         <!-- Single Job -->
-                        <div class="single-job">
+                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index > 3 and iter.index < 8}">
                             <div class="job-image">
-                                <img src="assets/images/jobs/img7.png" alt="#">
+                                <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a href="job-details.html">Digital Marketer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
+                                <h4><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}" th:text="${job.jobsTitle}">Software Engineer</a></h4>
+                                <p th:text="${job.jobsDescription}">We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
                                     week. All leads are pre-scheduled. </p>
                                 <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> marketers.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York, USA</li>
+                                    <li><i class="lni lni-website"></i> <th:block th:text="${job.jobsWorktime}"></th:block></li>
+                                    <li><i class="lni lni-dollar"></i> <th:block th:text="${'金額' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></th:block></li>
+                                    <li><i class="lni lni-map-marker"></i><th:block th:text="${job.jobsLocation}"></th:block></li>
                                 </ul>
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img5.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Sales Manager</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Delaware, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img6.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Product Designer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> winbrans.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> New York, USA</li>
-                                </ul>
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>full time</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- End Single Job -->
-                        <!-- Single Job -->
-                        <div class="single-job">
-                            <div class="job-image">
-                                <img src="assets/images/jobs/img8.png" alt="#">
-                            </div>
-                            <div class="job-content">
-                                <h4><a href="job-details.html">Android Developer</a></h4>
-                                <p>We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
-                                    week. All leads are pre-scheduled. </p>
-                                <ul>
-                                    <li><i class="lni lni-website"></i><a href="#"> androidplex.com</a></li>
-                                    <li><i class="lni lni-dollar"></i> $20k - $25k</li>
-                                    <li><i class="lni lni-map-marker"></i> Cupertino, USA</li>
-                                </ul>
-
-                            </div>
-                            <div class="job-button">
-                                <ul>
-                                    <li><a href="job-details.html">Apply</a></li>
-                                    <li><span>Part Time</span></li>
+                                    <li><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}">查看詳情</a></li>
+                                    <li><a href="job-details.html">應徵職缺</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -228,12 +89,24 @@
                     <div class="col-12">
                         <div class="pagination center">
                             <ul class="pagination-list">
-                                <li><a href="#"><i class="lni lni-arrow-left"></i></a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#"><i class="lni lni-arrow-right"></i></a></li>
+                                <!-- 上一頁 -->
+                                <li th:class="${pageDTO.currentPage == 0} ? 'disabled' : ''">
+                                    <a th:href="@{/front/jobs/list/{page}(page=${pageDTO.currentPage - 1})}" th:if="${pageDTO.currentPage > 0}"><i class="lni lni-arrow-left"></i></a>
+                                    <span th:if="${pageDTO.currentPage == 0}"><i class="lni lni-arrow-left"></i></span>
+                                </li>
+
+                                <!-- 頁碼 -->
+                                <li th:each="pageNum : ${#numbers.sequence(0, pageDTO.totalPage - 1)}"
+                                    th:class="${pageNum == pageDTO.currentPage} ? 'active' : ''">
+                                    <a th:href="@{/front/jobs/list/} + ${pageNum}" th:text="${pageNum + 1}"></a>
+                                </li>
+
+                                <!-- 下一頁 -->
+                                <li th:class="${pageDTO.currentPage == pageDTO.totalPage - 1} ? 'disabled' : ''">
+                                    <a th:href="@{/front/jobs/list/{page}(page=${pageDTO.currentPage + 1})}"
+                                       th:if="${pageDTO.currentPage < pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></a>
+                                    <span th:if="${pageDTO.currentPage == pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></span>
+                                </li>
                             </ul>
                         </div>
                     </div>
