@@ -360,14 +360,13 @@ CREATE TABLE invoices (
 );
 
 
--------------------------------------------以下是10/18新增的委託,委託訂單,聊天室資料表
 -- 合作資料僅限發起人(這裡是案主)可編輯,送出合作邀約,接案客同意合作後,狀態改為不可編輯,案主可 前往付款(新增訂單頁面)
 CREATE TABLE service_application(
 	service_application_id INT IDENTITY(100, 1) NOT NULL PRIMARY KEY,
 	caseowner_user_id INT NOT NULL,			--這裡是 案主 的 user_id
 	freelancer_user_id	INT NOT NULL,		--這裡是 提供服務人(任務客) 的 user_id
-	--service_id INT,						-- 先不要用到--能從這裡拿到 服務 的 資訊
-	jobs_id INT,							--能從這裡拿到 合作的案件(jobs) 的 資訊
+	service_id INT,							--能從這裡拿到 合作的服務(service) 的 資訊
+	-- jobs_id INT,							-- 先不要用到 --能從這裡拿到 合作的案件(jobs) 的 資訊
 
 	chat_id INT,							-- 外鍵，代表這個service_application屬於哪個聊天室。
 
@@ -377,43 +376,64 @@ CREATE TABLE service_application(
 	service_application_price INT NOT NULL,
 	service_application_amount INT NOT NULL,
 	service_application_unit NVARCHAR(50) NOT NULL,
-	service_application_subitem_id INT,						--沒用到,未來擴充用,一個合作可以有多個子項目(欄位跟上面一樣,報價用)
+	--service_application_subitem_id INT,						--沒用到,未來擴充用,一個合作可以有多個子項目(欄位跟上面一樣,報價用)
 
 	service_application_content NVARCHAR(1000),				--合作內容
 	service_application_appendix_url NVARCHAR(max),			--合約附件,存firebase後回傳url
 
-	service_application_status INT DEFAULT 0 NOT NULL,      --狀態: 0草稿、1洽談中(只有發起人能編輯其他欄位,另一人只能更改為完成)、2完成(自動成立訂單service_order)、3婉拒、4關閉(由發起人關閉)
+	service_application_status INT DEFAULT 0 NOT NULL,      --狀態: 0草稿、1洽談中(只有發起人能編輯其他欄位,另一人只能更改為完成)、成立(自動成立訂單service_order，尚未付款)、3婉拒、4關閉(由發起人關閉)、5已完成(訂單完成付款，且接案人完成任務)
 
 	service_application_mission NVARCHAR(50),				-- 接案客需交付項目
 	service_application_done_date DATETIME2,				-- 接案客交付(完成)日期
+
+	created_at DATETIME2 DEFAULT DATEADD(HOUR, 8, GETDATE()),		-- 服務創建日期
+    updated_at DATETIME2 DEFAULT DATEADD(HOUR, 8, GETDATE())		-- 服務更新日期
 );
 
+
+
+-----------------10/22更新的委託 訂單 聊天室表------------------
+-------委託-------------
+ALTER TABLE service_application
+DROP CONSTRAINT DF_service_application_created_at;
+ALTER TABLE service_application
+DROP CONSTRAINT DF_service_application_updated_at; 
+
+ALTER TABLE service_application
+ALTER COLUMN created_at DATETIME2 NOT NULL;
+ALTER TABLE service_application
+ALTER COLUMN updated_at DATETIME2 NOT NULL;
+
+ALTER TABLE service_application
+ADD CONSTRAINT DF_service_application_created_at DEFAULT DATEADD(HOUR, 8, GETDATE()) FOR created_at;
+ALTER TABLE service_application
+ADD CONSTRAINT DF_service_application_updated_at DEFAULT DATEADD(HOUR, 8, GETDATE()) FOR updated_at;
 
 
 -- 依服務委託成立訂單,東榆會從 service_application表 找出付款人跟收款人
 CREATE TABLE service_order(
 	service_order_id NVARCHAR(50) PRIMARY KEY,		-- 服務委託訂單ID，主鍵（PK）
     service_application_id INT NOT NULL,			-- 服務委託ID，外鍵（FK）
-	service_order_payby INT NOT NULL,	 --這裡是 這筆訂單付款人的 user_id
+	service_order_payby INT NOT NULL,	 --這裡是 這筆訂單付款人的 user_id (caseowener_user_id)
     service_order_date DATETIME2 NULL,				-- 申請訂單日期，允許 NULL
     service_order_status VARCHAR(10) CHECK (service_order_status IN ('Processing', 'Completed', 'Canceled')) NOT NULL,  -- 申請訂單狀態
     service_order_notes NVARCHAR(255),                          -- 訂單備註
 	service_order_payment_method NVARCHAR(20),					-- 支付方式
 	service_order_taxID INT,						-- 統一編號(如果需要)
     service_order_amount INT NOT NULL,			 -- 訂單總金額，不允許 NULL
- 
+	created_at DATETIME2 DEFAULT DATEADD(HOUR, 8, GETDATE()),		-- 訂單創建日期
 );
 
 
 
 -----------------------聊天室---------------------------
--- 聊天室一定要有userid1、userid2、jobs_id才能成立
+-- 聊天室一定要有userid1、userid2、service_id才能成立
 -- 可以根據
 CREATE TABLE chat(
 	chat_id INT IDENTITY(1,1) PRIMARY KEY,
-	jobs_id INT NOT NULL,					-- 外鍵，指向 Jobs 表中的 jobs_id，表示該聊天根據哪個 Job 成立。
-	user_id1 INT NOT NULL,					-- 外鍵，指向 User 表中的 user_id，表示參與聊天的其中一個用戶。
-	user_id2 INT NOT NULL,					-- 外鍵，指向 User 表中的 user_id，表示參與聊天的另一個用戶。
+	service_id INT NOT NULL,					-- 外鍵，指向 service表 中的 service_id，表示該聊天根據哪個 service 成立。
+	user_id1 INT NOT NULL,					-- 外鍵，指向 User 表中的 user_id，表示參與聊天的其中一個用戶。  (接案客)
+	user_id2 INT NOT NULL,					-- 外鍵，指向 User 表中的 user_id，表示參與聊天的另一個用戶。	(案主)
 	create_at DATETIME2 DEFAULT DATEADD(HOUR, 8, GETDATE()),			-- 會話開始時間。
 	last_message_at DATETIME2,		-- 最後一條訊息的時間，用於顯示會話最近的活動時間。
 	status INT DEFAULT 0 NOT NULL,			-- 狀態, 分為 0使用中、 1結束、 2封存
@@ -423,19 +443,24 @@ CREATE TABLE chat(
     CONSTRAINT CK_DifferentUsers CHECK (user_id1 <> user_id2)
 );
 
+-- 創建索引以提高查詢效率
+CREATE INDEX idx_chat_service ON chat(service_id);
+CREATE INDEX idx_chat_users ON chat(user_id1, user_id2);
+
+
 CREATE TABLE message(
 	message_id INT IDENTITY(1,1)  PRIMARY KEY,
-	chat_id INT,					-- 外鍵，指向 Chat 表中的 chat_id，用於標識訊息所屬的會話。
-	sender_id INT,					-- 外鍵，指向 User 表中的 user_id，表示發送訊息的用戶。
+	chat_id INT NOT NULL,					-- 外鍵，指向 Chat 表中的 chat_id，用於標識訊息所屬的會話。
+	sender_id INT NOT NULL,					-- 外鍵，指向 User 表中的 user_id，表示發送訊息的用戶。
 	
 	-- 在 message 表中添加一個字段來表示消息類型：
-	message_type VARCHAR(20) DEFAULT 'text' NOT NULL,
+	-- message_type VARCHAR(20) DEFAULT 'text' NOT NULL,
 
 	content NVARCHAR(200),			-- 訊息內容。
 	sent_at DATETIME2 DEFAULT DATEADD(HOUR, 8, GETDATE()),		-- 訊息發送時間。
 	is_read BIT,						-- 布林值，表示該訊息是否已被接收方讀取。
 
-	CONSTRAINT CK_message_type CHECK (message_type IN ('text', 'service_application')),
+	-- CONSTRAINT CK_message_type CHECK (message_type IN ('text', 'service_application')),
 );
 
 -- 在 message 表上創建兩個索引：idx_chat_id 和 idx_sender_id，用於提高查詢效率
@@ -454,5 +479,18 @@ BEGIN
     SET last_message_at = DATEADD(HOUR, 8, GETDATE())
     WHERE chat_id IN (SELECT chat_id FROM inserted)
 END
+
+
+-- 創建觸發器來自動更新 service_application 的 updated_at
+CREATE TRIGGER UpdateServiceApplicationTimestamp
+ON service_application
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE service_application
+    SET updated_at = DATEADD(HOUR, 8, GETDATE())
+    FROM service_application sa
+    INNER JOIN inserted i ON sa.service_application_id = i.service_application_id
+END;
 
 
