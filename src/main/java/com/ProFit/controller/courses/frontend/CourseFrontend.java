@@ -5,23 +5,32 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ProFit.model.bean.coursesBean.CourseOrderBean;
+import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.coursesDTO.CourseGradeContentDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTOFrontend;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
+import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.courseService.IcourseGradeContentService;
 import com.ProFit.service.courseService.IcourseModuleService;
+import com.ProFit.service.courseService.IcourseOrderService;
 import com.ProFit.service.courseService.IcourseService;
 import com.ProFit.service.majorService.IMajorCategoryService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/course")
@@ -39,9 +48,61 @@ public class CourseFrontend {
     @Autowired
     private IcourseGradeContentService courseGradeContentService;
 
+    @Autowired
+    private IcourseOrderService courseOrderService;
+
     @GetMapping("")
     public String courseFrontendPage() {
         return "coursesVIEW/frontend/courseOverView";
+    }
+
+    @GetMapping("/purchase")
+    public String purchaseCoursePage(@RequestParam String courseId, HttpSession session, Model model) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (currentUser != null && courseId != null) {
+
+            CoursesDTO courseDTO = courseService.searchOneCourseById(courseId);
+
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("courseDTO", courseDTO);
+
+            return "coursesVIEW/frontend/coursePurchaseView";
+        }
+
+        return "redirect:/user/profile";
+    }
+
+    // 新增課程訂單的方法
+    @PostMapping("/purchase/add")
+    @ResponseBody
+    public Integer postMethodName(@ModelAttribute CourseOrderBean courseOrder) {
+        try {
+            if (courseOrder != null) {
+
+                courseOrder.setCourseOrderPaymentMethod("綠界");
+                courseOrder.setCourseOrderStatus("Pending");
+
+                Integer statusCode = courseOrderService.insertCourseOrder(courseOrder);
+                // 0:課程不存在
+                // 1:課程進行中
+                // 2:課程還未開課
+                return statusCode;
+            }
+            return null;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    @GetMapping("/searchOne")
+    @ResponseBody
+    public CoursesDTO searchOneCourse(@RequestParam String courseId) {
+
+        CoursesDTO searchOneCourseById = courseService.searchOneCourseById(courseId);
+
+        return searchOneCourseById;
     }
 
     @PostMapping("/searchAll")
@@ -75,7 +136,7 @@ public class CourseFrontend {
     }
 
     @GetMapping("/{courseId}")
-    public String getMethodName(@PathVariable String courseId, Model model) {
+    public String findSingleCourse(@PathVariable String courseId, Model model) {
 
         CoursesDTO courseDTO = courseService.searchOneCourseById(courseId);
 

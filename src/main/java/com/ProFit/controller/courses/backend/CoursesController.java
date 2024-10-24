@@ -207,7 +207,6 @@ public class CoursesController {
      * @return 插入後的 CourseBean 對象
      */
     @PostMapping("/courses/insert")
-    @ResponseBody
     public ResponseEntity<Map<String, String>> insertCourse(
             @ModelAttribute CourseBean courseBean,
             @RequestParam(required = false) String courseModuleNames,
