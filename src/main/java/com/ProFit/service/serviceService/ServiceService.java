@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -155,8 +157,7 @@ public class ServiceService {
 			String oldPictureURL2 = serviceBean.getServicePictureURL2();
 			String oldPictureURL3 = serviceBean.getServicePictureURL3();
 			LocalDateTime oldserviceCreateDate = serviceBean.getServiceCreateDate();
-			
-			
+
 			updateEntityFromDTO(serviceBean, serviceDTO);
 			if (serviceBean.getServicePictureURL1() == null) {
 				serviceBean.setServicePictureURL1(oldPictureURL1);
@@ -285,4 +286,25 @@ public class ServiceService {
 		return convertToPageResponse(servicePage);
 	}
 
+
+
+	//----------------------新增的好用查詢----------
+	// 分頁 多條件 查詢服務
+	public PageResponse<ServicesDTO> searchServicePage(String serviceTitle,
+			String userName,
+			Integer status,
+			Integer userId,
+			List<Integer> majorIdList,
+			Integer majorCategoryId,
+			int page, int size,
+			String sortBy, boolean ascending) {
+
+
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> searchServicePage = serviceRepo.searchServicePage(serviceTitle, userName, status, userId, majorIdList, majorCategoryId, pageable);
+
+		PageResponse<ServicesDTO> serviceDTOPage = convertToPageResponse(searchServicePage);
+
+		return serviceDTOPage;
+	}
 }
