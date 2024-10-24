@@ -16,6 +16,7 @@ public class ServiceOrdersService {
     @Autowired
     private ServiceOrderRepository serviceOrderRepo;
 
+    // 查詢 所有服務訂單 回傳page
     public Page<ServiceOrderBean> findAllByPage(Integer pageNumber) {
         Pageable pgb = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "added");
 

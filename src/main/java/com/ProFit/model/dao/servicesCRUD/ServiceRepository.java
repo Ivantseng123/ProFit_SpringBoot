@@ -67,4 +67,23 @@ public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 	Page<ServiceBean> findServiceByPriceRangeAndStatus(@Param("status")Integer serviceStatus, Integer minPric, Integer maxPric,
 			Pageable pageable);
 
+	// 根據專業類別查詢服務
+
+	// 根據 多條件 查詢服務
+	@Query("SELECT s FROM ServiceBean s JOIN s.userMajor u WHERE " +
+            "(:serviceTitle IS NULL OR s.serviceTitle  LIKE %:serviceTitle%) AND " +
+            "(:userName IS NULL OR u.user.userName LIKE %:userName%) AND " +
+            "(:status IS NULL OR s.serviceStatus  = :status) AND " +
+            "(:userId IS NULL OR u.user.userId  = :userId) AND " +
+            "(:majorIdList IS NULL OR u.major.majorId IN :majorIdList) AND " + 
+			"(:majorCategoryId IS NULL OR u.major.majorCategoryId = :majorCategoryId)")
+	Page<ServiceBean> searchServicePage(
+		@Param("serviceTitle") String serviceTitle,
+        @Param("userName") String userName,
+        @Param("status") Integer status,
+        @Param("userId") Integer userId,
+        @Param("majorIdList") List<Integer> majorIdList,   // majorIdList： MajorId 列表，使用 IN 语句，匹配多个MajorId。
+		@Param("majorCategoryId") Integer majorCategoryId,
+        Pageable pageable
+	);
 }
