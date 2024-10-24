@@ -13,7 +13,7 @@ public class EventOrderBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id 
+	@Id
 	private String eventOrderId;
 
 	@Column(name = "event_order_amount")
@@ -100,8 +100,10 @@ public class EventOrderBean implements Serializable {
 	@Override
 	public String toString() {
 		return "EventOrderBean [eventOrderId=" + eventOrderId + ", eventOrderAmount=" + eventOrderAmount
-				+ ", isEventOrderActive=" + isEventOrderActive + ", eventId=" + this.event.getEventId() + ", eventParticipantId="
-				+ this.participant.getUserId() + ", eventParticipantDate=" + eventParticipantDate + ", eventParticipantNote="
+				+ ", isEventOrderActive=" + isEventOrderActive + ", eventId=" + this.event.getEventId()
+				+ ", eventParticipantId="
+				+ this.participant.getUserId() + ", eventParticipantDate=" + eventParticipantDate
+				+ ", eventParticipantNote="
 				+ eventParticipantNote + "]";
 	}
 

@@ -3,6 +3,7 @@ package com.ProFit.controller.jobs;
 import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.service.jobService.IJobsService;
+import com.ProFit.service.majorService.IMajorCategoryService;
 import com.ProFit.service.userService.IUserService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -23,11 +24,13 @@ public class JobsController {
 
     private final IJobsService jobsService;
     private final IUserService userService;
-    public JobsController(IJobsService jobsService, IUserService userService) {
+    private final IMajorCategoryService categoryService;
+
+    public JobsController(IJobsService jobsService, IUserService userService, IMajorCategoryService categoryService) {
         this.jobsService = jobsService;
         this.userService = userService;
+        this.categoryService = categoryService;
     }
-
 
     //查詢全部
     @GetMapping("/list")
@@ -79,6 +82,7 @@ public class JobsController {
 
         // 創建一個新的Jobs對象並添加到model中
         model.addAttribute("job", new Jobs());
+        model.addAttribute("categories", categoryService.findAllMajorCategories());
         // 返回jobsEdit視圖
         return "jobsVIEW/jobsEdit";
     }
@@ -145,6 +149,7 @@ public class JobsController {
         if (id != null) {
             model.addAttribute("job", jobsService.findById(id).orElse(null));;
         }
+        model.addAttribute("categories", categoryService.findAllMajorCategories());
         return "jobsVIEW/jobsEdit";
     }
 

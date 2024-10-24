@@ -26,7 +26,7 @@ public class JobOrderController {
     public String listOrders(Model model) {
         List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO();
         model.addAttribute("orders", orders);
-        return "transactionVIEW/backend/jobOrders"; 
+        return "transactionVIEW/backend/jobOrders";
     }
 
     @GetMapping("/search")
@@ -49,7 +49,7 @@ public class JobOrderController {
             List<JobOrderDTO> orders = jobOrderService.searchOrdersByCriteriaDTO(jobApplicationId, startDateParsed, endDateParsed, jobOrderStatus);
             model.addAttribute("orders", orders);
         }
-        
+
         return "transactionVIEW/backend/jobOrders";
     }
 
@@ -100,7 +100,7 @@ public class JobOrderController {
     @PostMapping("/delete")
     public String deleteOrder(@RequestParam("job_orders_id") String jobOrdersId) {
         jobOrderService.deleteOrder(jobOrdersId);
-        return "redirect:/jobOrders"; 
+        return "redirect:/jobOrders";
     }
 
 }

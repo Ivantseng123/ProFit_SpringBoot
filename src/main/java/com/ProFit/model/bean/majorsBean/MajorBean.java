@@ -1,8 +1,11 @@
 package com.ProFit.model.bean.majorsBean;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.usersBean.Users;
 
 import jakarta.persistence.CascadeType;

@@ -92,23 +92,7 @@ public class JobOrderService {
         entity.setJobOrderTaxID(jobOrderDTO.getJobOrderTaxID());
         return entity;
     }
-    
-    public JobDetailsDTO getJobDetailsByJobOrderId(String jobOrdersId) {
-        // 查詢對應的 JobsApplication, Users 和 JobsApplicationProject 信息
-        JobOrderBean jobOrder = jobOrderRepository.findById(jobOrdersId).orElseThrow();
-        JobsApplication jobsApplication = jobOrder.getJobsApplication();
-        Jobs jobs = jobsApplication.getJob();
-        Users paymentUser = jobsApplication.getPoster();
-        Users recipientUser = jobsApplication.getApplicant();
-        JobsApplicationProject project = jobsApplication.getJobsApplicationProject();
 
-        return new JobDetailsDTO(
-            jobs.getJobsTitle(),
-            paymentUser.getUserId(),
-            recipientUser.getUserId(),
-            project.getJobsProject(),
-            project.getJobsAmount()
-        );
-    }
+  
 
 }

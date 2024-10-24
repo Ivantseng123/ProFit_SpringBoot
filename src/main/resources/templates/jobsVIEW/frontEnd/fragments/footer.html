@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<!-- Start Footer Area -->
+<body>
+<th:block th:fragment="footer">
+<footer class="footer">
+    <!-- Start Middle Top -->
+    <div class="footer-middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <!-- Single Widget -->
+                    <div class="f-about single-footer">
+                        <div class="logo">
+                            <a th:href="@{/homepage}"><img th:src="@{/images/logo/logo.svg}" alt="Logo"></a>
+                        </div>
+                        <ul class="contact-address">
+                            <li><span>地址：</span> 桃園市中壢區新生路二段421號</li>
+                            <li><span>電子郵件：</span> ispan@gmail.com</li>
+                            <li><span>電話：</span> (03)453-2632</li>
+                        </ul>
+                        <!-- <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="lni lni-facebook-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-twitter-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-linkedin-original"></i></a></li>
+                                <li><a href="#"><i class="lni lni-pinterest"></i></a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+                <div class="col-lg-8 col-12">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>給候選人</h3>
+                                <ul>
+                                    <li><a href="#">用戶儀表板</a></li>
+                                    <li><a href="#">履歷套餐</a></li>
+                                    <li><a href="#">精選職位</a></li>
+                                    <li><a href="#">緊急職位</a></li>
+                                    <li><a href="#">候選人列表</a></li>
+                                    <li><a href="#">候選人網格</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer f-link">
+                                <h3>給雇主</h3>
+                                <ul>
+                                    <li><a href="#">發布新職位</a></li>
+                                    <li><a href="#">雇主列表</a></li>
+                                    <li><a href="#">雇主網格</a></li>
+                                    <li><a href="#">職位套餐</a></li>
+                                    <li><a href="#">職位列表</a></li>
+                                    <li><a href="#">精選職位</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <!-- Single Widget -->
+                            <div class="single-footer newsletter">
+                                <h3>訂閱我們的電子報</h3>
+                                <p>訂閱以獲取最新發布的職位、候選人資訊...</p>
+                                <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
+                                    <input name="EMAIL" placeholder="您的電子郵件地址" class="common-input"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = '您的電子郵件地址'"
+                                        required="" type="email">
+                                    <div class="button"> <button class="btn">立即訂閱！<span
+                                                class="dir-part"></span></button> </div>
+                                </form>
+                            </div>
+                            <!-- End Single Widget -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Footer Middle -->
+    <!-- Start Footer Bottom -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="left">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12">
+                        <div class="right">
+                            <ul>
+                                <li><a href="#">使用條款</a></li>
+                                <li><a href="#">隱私政策</a></li>
+                                <li><a href="#">常見問題</a></li>
+                                <li><a href="#">聯繫我們</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Middle -->
+</footer>
+<!--/ End Footer Area -->
+</th:block>
+</body>
+</html>

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
-import com.ProFit.service.serviceService.ServiceApplicationService;
+import com.ProFit.service.serviceService.ServiceApplicationService1;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpSession;
 public class ServiceApplicationFrontendController {
 
   @Autowired
-  private ServiceApplicationService serviceApplicationService;
+  private ServiceApplicationService1 serviceApplicationService;
 
   // 返回主頁面view
   @GetMapping

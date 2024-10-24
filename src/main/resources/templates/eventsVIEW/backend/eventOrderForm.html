@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動參加者表格</title>
+    <link rel="stylesheet" th:href="@{/css/events/eventsView.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div th:replace="~{model/layout-static}"></div>
+    <main>
+        <div class="dashboard-header">
+            <h2 id="eventParticipantFormTitle"></h2>
+        </div>
+        <form class="form-group form-container" id="eventParticipantForm">
+            <!-- <input type="hidden" id="eventId" th:value="${event.eventId}">
+            <label for="eventName">活動名稱</label>
+            <input type="text" id="eventName" name="eventName" th:value="${event.eventName}">
+            <hr>
+            <label for="isEventActive">狀態</label>
+            <select id="isEventActive" name="isEventActive" th:data-value="${event.isEventActive}">
+            </select>
+            <hr>
+            <label for="eventCategory">活動類別</label>
+            <select id="eventCategory" name="eventCategory" th:data-value="${event.eventCategory}">
+            </select>
+            <hr>
+            <label for="eventMajor">專業類別</label>
+            <select id="eventMajor" name="eventMajor" th:data-value="${event.eventMajorId}">
+            </select>
+            <hr>
+            <label for="eventStartDate">建立日期</label>
+            <input type="datetime-local" id="eventPublishDate" name="eventPublishDate" th:value="${event.eventPublishDate}" disabled>
+            <hr>
+            <label for="eventStartDate">開始日期</label>
+            <input type="datetime-local" id="eventStartDate" name="eventStartDate" th:value="${event.eventStartDate}">
+            <hr>
+            <label for="eventEndDate">結束日期</label>
+            <input type="datetime-local" id="eventEndDate" name="eventEndDate" th:value="${event.eventEndDate}">
+            <hr>
+            <label for="eventPartStartDate">報名開始日期</label>
+            <input type="datetime-local" id="eventPartStartDate" name="eventPartStartDate"
+                th:value="${event.eventPartStartDate}">
+            <hr>
+            <label for="eventPartEndDate">報名結束日期</label>
+            <input type="datetime-local" id="eventPartEndDate" name="eventPartEndDate"
+                th:value="${event.eventPartEndDate}">
+            <hr>
+            <label for="eventAmount">金額</label>
+            <input type="number" id="eventAmount" name="eventAmount" th:value="${event.eventAmount}">
+            <hr>
+            <label for="eventLocation">地點</label>
+            <input type="text" id="eventLocation" name="eventLocation" th:value="${event.eventLocation}">
+            <hr>
+            <label for="eventParticipantMaximum">參加人數上限</label>
+            <input type="number" id="eventParticipantMaximum" name="eventParticipantMaximum"
+                th:value="${event.eventParticipantMaximum}">
+            <hr>
+            <label for="eventDescription">描述</label>
+            <textarea id="eventDescription" name="eventDescription" th:text="${event.eventDescription}"></textarea>
+            <hr>
+            <label for="eventNote">備註</label>
+            <textarea id="eventNote" name="eventNote" th:text="${event.eventNote}"></textarea>
+            <hr> -->
+            <button type="button" id="saveBtn">保存</button>
+            <button type="button" id="cancelBtn">回上一頁</button>
+        </form>
+
+        <!-- <div id="majors-data" style="display: none;">
+            <th:block th:each="major : ${majors}">
+                <div th:value="${major.majorId}" th:data-name="${major.majorName}"></div>
+            </th:block>
+        </div> -->
+
+    </main>
+
+</body>
+
+<script th:src="@{/js/events/eventOrderForm.js}"></script>
+
+</html>

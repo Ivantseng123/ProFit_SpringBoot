@@ -63,23 +63,29 @@ CREATE TABLE password_reset_tokens(
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-
-
 CREATE TABLE jobs (
     jobs_id INT PRIMARY KEY IDENTITY(1,1), 
     jobs_user_id INT,
+    major_category_id INT,
     jobs_title NVARCHAR(100), 
-    jobs_posting_date DATETIME default DATEADD(HOUR, 8, GETDATE()),
-    jobs_application_deadline DATETIME, 
+    jobs_posting_date DATETIME2 default DATEADD(HOUR, 8, GETDATE()),
+    jobs_application_deadline DATETIME2,
     jobs_description NVARCHAR(MAX), 
     jobs_status TINYINT, 
-    jobs_required_skills NVARCHAR(500), 
-    jobs_location NVARCHAR(100), 
+    jobs_location NVARCHAR(100),
     jobs_max_salary INT, 
     jobs_min_salary INT, 
-    jobs_worktime TIME,
+    jobs_worktime NVARCHAR(50),
     jobs_number_of_openings INT,
     FOREIGN KEY (jobs_user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE jobs_major (
+    jobs_id INT PRIMARY KEY,
+    major_id INT PRIMARY KEY,
+    PRIMARY KEY (jobs_id, major_id),
+    FOREIGN KEY (jobs_id) REFERENCES jobs(jobs_id),
+    FOREIGN KEY (major_id) REFERENCES major(major_id)
 );
 
 -- CREATE TABLE [dbo].[jobs_application] (
@@ -318,6 +324,8 @@ CREATE TABLE job_orders (
     job_order_status VARCHAR(10) CHECK (job_order_status IN ('Processing', 'Completed', 'Canceled')) NOT NULL,  -- 申請訂單狀態
     job_notes TEXT,                          -- 訂單備註
     job_amount INT NOT NULL,               -- 訂單總金額，不允許 NULL
+    job_order_payment_method NVARCHAR(20);	--付款方式
+    job_order_taxID INT;					--統編
     FOREIGN KEY (job_application_id) REFERENCES jobs_application(jobs_application_id)  -- 外鍵約束
 );
 
@@ -328,6 +336,7 @@ CREATE TABLE user_transactions (
     user_id INT NOT NULL,                            -- 用戶ID
     transaction_role NVARCHAR(10) NOT NULL,          -- 交易角色
     transaction_type NVARCHAR(10) NOT NULL,          -- 交易類型
+    order_type NVARCHAR(20)							 -- 查詢訂單種類 
     order_id NVARCHAR(50),                           -- 通用的訂單ID
     total_amount int NOT NULL,            -- 交易金額
     platform_fee int NOT NULL DEFAULT 0,  -- 平台抽成
@@ -445,18 +454,5 @@ BEGIN
     SET last_message_at = DATEADD(HOUR, 8, GETDATE())
     WHERE chat_id IN (SELECT chat_id FROM inserted)
 END
-
-
--- 修改用戶交易 查詢訂單種類 --
-ALTER TABLE user_transactions
-ADD order_type NVARCHAR(20)  -- 訂單類型，用來區分不同訂單表
-
--- 新增 job_order_payment_method 欄位
-ALTER TABLE job_orders
-ADD job_order_payment_method NVARCHAR(20);
-
--- 新增 job_order_taxID 欄位
-ALTER TABLE job_orders
-ADD job_order_taxID INT;
 
 

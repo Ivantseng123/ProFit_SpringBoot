@@ -6,35 +6,61 @@ public class EventHostDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String eventId;       // 事件ID
-    private int eventHostId;   // 主办方用户ID
+    private String eventId;
+    private String eventName;
+    private int eventHostId;
+    private String eventHostName;
+    
+    
+	public EventHostDTO() {
+	}
 
-    public EventHostDTO() {
-    }
+	public EventHostDTO(String eventId, String eventName, int eventHostId, String eventHostName) {
+		super();
+		this.eventId = eventId;
+		this.eventName = eventName;
+		this.eventHostId = eventHostId;
+		this.eventHostName = eventHostName;
+	}
 
-    public EventHostDTO(String eventId, int eventHostId) {
-        this.eventId = eventId;
-        this.eventHostId = eventHostId;
-    }
+	public String getEventId() {
+		return eventId;
+	}
 
-    public String getEventId() {
-        return eventId;
-    }
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
+	}
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
+	public String getEventName() {
+		return eventName;
+	}
 
-    public int getEventHostId() {
-        return eventHostId;
-    }
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
 
-    public void setEventHostId(int eventHostId) {
-        this.eventHostId = eventHostId;
-    }
+	public int getEventHostId() {
+		return eventHostId;
+	}
 
-    @Override
-    public String toString() {
-        return "EventHostDTO [eventId=" + eventId + ", eventHostId=" + eventHostId + "]";
-    }
+	public void setEventHostId(int eventHostId) {
+		this.eventHostId = eventHostId;
+	}
+
+	public String getEventHostName() {
+		return eventHostName;
+	}
+
+	public void setEventHostName(String eventHostName) {
+		this.eventHostName = eventHostName;
+	}
+
+	@Override
+	public String toString() {
+		return "EventHostDTO [eventId=" + eventId + ", eventName=" + eventName + ", eventHostId=" + eventHostId
+				+ ", eventHostName=" + eventHostName + "]";
+	}
+
+    
+	
 }

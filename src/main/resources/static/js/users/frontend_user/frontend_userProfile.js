@@ -18,17 +18,14 @@ function getUser() {
 	let user_pictureURL = document.getElementById('user_pictureURL')
 
 	let user_name = document.getElementById('user_name')
-	let user_name_1 = document.getElementById('user_name_1')
 	let user_name_edit = document.getElementById('user_name_edit')
 
 	let user_email = document.getElementById('user_email')
-	let user_email_1 = document.getElementById('user_email_1')
-
+	
 	let user_phoneNumber = document.getElementById('user_phoneNumber')
 	let user_phoneNumber_edit = document.getElementById('user_phoneNumber_edit')
 
 	let user_city = document.getElementById('user_city')
-	let user_city_1 = document.getElementById('user_city_1')
 
 	let last_login_time = document.getElementById('last_login_time')
 
@@ -55,23 +52,18 @@ function getUser() {
 			user_pictureURL.value = user.userPictureURL;
 
 			user_name.innerHTML = user.userName;
-			user_name_1.innerHTML = user.userName;
+
 
 			console.log(user.freelancerLocationPrefer);
 			console.log(user.freelancerExprience);
 
 			user_email.innerHTML = user.userEmail;
-			user_email_1.innerHTML = user.userEmail;
-
+		
 			user.userPhoneNumber && user.userPhoneNumber.trim() !== ''
 				? user_phoneNumber.innerHTML = user.userPhoneNumber
 				: user_phoneNumber.innerHTML = '未填寫';
 
-
-			user.userCity && user.userCity.trim() !== ''
-				? user_city_1.innerHTML = user.userCity
-				: user_city_1.innerHTML = '未填寫';
-
+			
 			user.userCity && user.userCity.trim() !== ''
 				? user_city.innerHTML = user.userCity
 				: user_city.innerHTML = '';

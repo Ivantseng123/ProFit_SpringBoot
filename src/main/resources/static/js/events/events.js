@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const eventPath = "events";
-    
+
     //映射
     function getMapping() {
         const statuses = document.querySelectorAll(".status");
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const value = Number(status.textContent.trim());
             status.textContent = statusMapping[value] !== undefined ? statusMapping[value] : statusMapping.default;
         });
-    
+
         //活動類別映射
         categories.forEach(category => {
             const value = Number(category.textContent.trim());
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 setSelectOption(searchOptions, categoryMapping);
             } else if (criteria === "eventMajor") {
                 setSelectOption(searchOptions, majorMapping);
-            } 
+            }
         }
     });
 
@@ -79,7 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
         queryParams.append(criteria, keyword);
 
         console.log(queryParams.toString());
-        axios.get(eventPath+'/search?' + queryParams.toString())
+
+        //發送axios請求
+        axios.get(eventPath + '/search?' + queryParams.toString())
             .then(response => {
                 console.log(response);
 
@@ -88,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //判斷是否有搜尋結果
                 if (response.data.length === 0) {
-                    $('#searchResult').append(`<p>查無相關活動</p>`);
+                    $('#searchResult').append(`<p class="text-danger">查無相關活動</p>`);
                     return;
                 }
 
@@ -124,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <a class="view btn btn-success btn-sm"
                                     href="${eventPath}/view?eventId=${event.eventId}">詳細資料</a>
                                 <a class="view-host btn btn-success btn-sm"
-                                    href="#">主辦者列表</a>
+                                    href="${eventPath}/host/search?eventId=${event.eventId}">主辦者列表</a>
                                 <a class="view-participant btn btn-success btn-sm"
                                     href="#">參加者列表</a>
                                 <a class="edit btn btn-primary btn-sm"
@@ -146,3 +148,52 @@ document.addEventListener("DOMContentLoaded", function () {
     $('#searchBtn').click();
 
 });
+
+
+/*<table>
+    <tr>
+        <th>ID</th>
+        <th>活動名稱</th>
+        <th>狀態</th>
+        <th>活動類別</th>
+        <th>專業類別</th>
+        <th>刊登日期</th>
+        <th>開始日期</th>
+        <th>結束日期</th>
+        <th>報名開始日期</th>
+        <th>報名結束日期</th>
+        <th>金額</th>
+        <th>地點</th>
+        <th>人數上限</th>
+        <th>描述</th>
+        <th>備註</th>
+        <th>操作</th>
+    </tr>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.eventId}"></td>
+        <td th:text="${event.eventName}"></td>
+        <td class="status" th:text="${event.isEventActive}"></td>
+        <td th:text="${event.eventCategory}"></td>
+        <td th:text="${event.eventMajor.majorName}"></td>
+        <td th:text="${event.eventPublishDate}"></td>
+        <td th:text="${event.eventStartDate}"></td>
+        <td th:text="${event.eventEndDate}"></td>
+        <td th:text="${event.eventPartStartDate}"></td>
+        <td th:text="${event.eventPartEndDate}"></td>
+        <td th:text="${event.eventAmount}"></td>
+        <td th:text="${event.eventLocation}"></td>
+        <td th:text="${event.eventParticipantMaximum}"></td>
+        <td th:text="${event.eventDescription}"></td>
+        <td th:text="${event.eventNote}"></td>
+        <td class="action-buttons">
+            <a class="view btn btn-success btn-sm"
+                th:href="@{/events/view?(eventId=${event.eventId})}">詳細資料</a>
+            <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
+            <a class="view-participant btn btn-success btn-sm" href="#">參加者列表</a>
+            <a class="edit btn btn-primary btn-sm"
+                th:href="@{/events/edit?(eventId=${event.eventId})}">編輯</a>
+            <a class="delete btn btn-danger btn-sm"
+                th:href="@{/events/delete(eventId=${event.eventId})}">刪除</a>
+        </td>
+    </tr>
+</table>*/

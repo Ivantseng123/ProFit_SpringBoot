@@ -3,6 +3,7 @@ package com.ProFit.controller.services.backend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,14 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
-import com.ProFit.service.serviceService.ServiceApplicationService;
+import com.ProFit.service.serviceService.ServiceApplicationService1;
 
 @Controller
 @RequestMapping("/a/serviceApplications")
 public class ServiceApplicationController {
 
   @Autowired
-  private ServiceApplicationService serviceApplicationService;
+  private ServiceApplicationService1 serviceApplicationService;
 
   // 返回主頁視圖
   @GetMapping
@@ -35,7 +36,7 @@ public class ServiceApplicationController {
   }
 
   // 創建新的服務委託
-  @PostMapping
+  @PostMapping("/api")
   @ResponseBody
   public ResponseEntity<ServiceApplicationsDTO> createServiceApplication(
       @RequestBody ServiceApplicationBean serviceApplication) {
@@ -46,11 +47,31 @@ public class ServiceApplicationController {
   // 更新服務委託
   @PutMapping("/api/{id}")
   @ResponseBody
-  public ResponseEntity<ServiceApplicationsDTO> updateServiceApplication(@PathVariable Integer id,
+  public ResponseEntity<?> updateServiceApplication(@PathVariable Integer id,
       @RequestBody ServiceApplicationBean serviceApplication) {
-    serviceApplication.setServiceApplicationId(id);
-    ServiceApplicationsDTO updatedApplication = serviceApplicationService.updateServiceApplication(serviceApplication);
-    return ResponseEntity.ok(updatedApplication);
+
+    try {
+      // // 驗證路徑參數與請求體ID是否匹配
+      // if (!id.equals(serviceApplication.getServiceApplicationId())) {
+      // return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+      // .body("路徑參數ID與請求體ID不匹配");
+      // }
+      // 設置ID確保一致性
+      serviceApplication.setServiceApplicationId(id);
+      // 呼叫服務層方法
+      ServiceApplicationsDTO updatedApplication = serviceApplicationService
+          .updateServiceApplication(serviceApplication);
+      if (updatedApplication != null) {
+        return ResponseEntity.ok(updatedApplication);
+      } else {
+        return ResponseEntity.notFound().build();
+      }
+    } catch (RuntimeException e) {
+      // 根據不同的異常類型返回不同的狀態碼
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("更新失敗: " + e.getMessage());
+    }
+
   }
 
   // 删除服務委託

@@ -2,22 +2,12 @@ package com.ProFit.model.bean.jobsBean;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.List;
 
 import com.ProFit.model.bean.usersBean.Users;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 //	資料型態對應：
 //	INT: Java 的 Integer
 //	NVARCHAR: Java 的 String
@@ -27,7 +17,6 @@ import jakarta.persistence.TemporalType;
 //	如果需要對資料進行隨機存取，byte[] 是更好的選擇。
 //	如果只需要逐個位元組地讀取資料，InputStream 是一個不錯的選擇。
 //	如果需要直接與資料庫進行互動，Blob 是最適合的選擇。
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,7 +40,7 @@ public class JobsApplication implements java.io.Serializable{
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個職缺對應到多個申請
 	  @JoinColumn(name = "jobs_application_posting_id")
-	  private Users poster;
+	  private Jobs jobs;//不確定是不是Jobs
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對USER表，一個應徵者對應到多個申請
 	  @JoinColumn(name = "jobs_application_member_id")//改名為jobs_application_user_id
@@ -76,20 +65,14 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_contract")
 	  private Blob jobsApplicationContract;
 
+	@OneToMany(mappedBy = "jobsApplication")
+	private List<JobsApplicationProject> projects;
+
     //無參建構子
 	public JobsApplication() {
 		super();
 	}
 
-    //全參建構子
-	public JobsApplication(int jobsApplicationId, Users poster, Users applicant, Date jobsApplicationDate, Byte jobsApplicationStatus, Blob jobsApplicationContract) {
-		this.jobsApplicationId = jobsApplicationId;
-		this.poster = poster;
-		this.applicant = applicant;
-		this.jobsApplicationDate = jobsApplicationDate;
-		this.jobsApplicationStatus = jobsApplicationStatus;
-		this.jobsApplicationContract = jobsApplicationContract;
-	}
 
 
 	//getter setter
@@ -101,12 +84,12 @@ public class JobsApplication implements java.io.Serializable{
 		this.jobsApplicationId = jobsApplicationId;
 	}
 
-	public Users getPoster() {
-		return poster;
+	public Jobs getJobs() {
+		return jobs;
 	}
 
-	public void setPoster(Users poster) {
-		this.poster = poster;
+	public void setJobs(Jobs jobs) {
+		this.jobs = jobs;
 	}
 
 	public Users getApplicant() {
@@ -141,13 +124,11 @@ public class JobsApplication implements java.io.Serializable{
 		this.jobsApplicationContract = jobsApplicationContract;
 	}
 
-	public JobsApplicationProject getJobsApplicationProject() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<JobsApplicationProject> getProjects() {
+		return projects;
 	}
 
-	public Jobs getJob() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setProjects(List<JobsApplicationProject> projects) {
+		this.projects = projects;
 	}
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活動主辦者表格</title>
+    <link rel="stylesheet" th:href="@{/css/events/eventsView.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div th:replace="~{model/layout-static}"></div>
+    <main>
+        <div class="dashboard-header">
+            <h2 id="eventHostFormTitle">新增活動主辦</h2>
+        </div>
+        <form class="form-group form-container" id="eventHostForm">
+            <label for="eventId">活動Id</label>
+            <input type="text" id="eventId" th:value="${eventHost.eventId}">
+            <label for="eventHostId">主辦Id</label>
+            <input type="number" id="eventHostId" name="eventName" th:value="${event.eventName}">
+            
+            <button type="button" id="saveBtn">保存</button>
+            <button type="button" id="cancelBtn">回上一頁</button>
+        </form>
+
+    </main>
+
+</body>
+
+<script th:src="@{/js/events/eventHostForm.js}"></script>
+
+</html>
