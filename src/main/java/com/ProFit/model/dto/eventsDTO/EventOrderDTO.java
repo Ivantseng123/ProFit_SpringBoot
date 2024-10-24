@@ -19,8 +19,8 @@ public class EventOrderDTO implements Serializable {
     }
 
     public EventOrderDTO(String eventOrderId, int eventOrderAmount, boolean isEventOrderActive,
-                         LocalDateTime eventParticipantDate, String eventParticipantNote,
-                         String eventId, int participantId) {
+            LocalDateTime eventParticipantDate, String eventParticipantNote,
+            String eventId, int participantId) {
         this.eventOrderId = eventOrderId;
         this.eventOrderAmount = eventOrderAmount;
         this.isEventOrderActive = isEventOrderActive;
@@ -90,6 +90,7 @@ public class EventOrderDTO implements Serializable {
     public String toString() {
         return "EventOrderDTO [eventOrderId=" + eventOrderId + ", eventOrderAmount=" + eventOrderAmount
                 + ", isEventOrderActive=" + isEventOrderActive + ", eventParticipantDate=" + eventParticipantDate
-                + ", eventParticipantNote=" + eventParticipantNote + ", eventId=" + eventId + ", participantId=" + participantId + "]";
+                + ", eventParticipantNote=" + eventParticipantNote + ", eventId=" + eventId + ", participantId="
+                + participantId + "]";
     }
 }

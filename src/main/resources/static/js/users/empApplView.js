@@ -310,7 +310,7 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 		})
 		.catch(error => {
 			console.error('Error fetching Firebase config:', error);
-			submitButton.disabled = false; // 如果 Firebase 配置获取失败，重新启用提交按钮
+			submitButton.disabled = false; 
 		});
 });
 

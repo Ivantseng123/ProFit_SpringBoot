@@ -65,7 +65,7 @@ public class CompanyControllerFrontend {
 			
 			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
 			
-			Employer_profile emp = userDTO.getEmployer_profile();
+			Employer_profile emp = empPfService.getEmpPfInfoByUserId(userDTO.getUserId());
 
 			emp.setEmployerProfileId(emp.getEmployerProfileId());
 			emp.setCompanyCategory(empPfDTO.getCompanyCategory());
@@ -75,9 +75,9 @@ public class CompanyControllerFrontend {
 			emp.setCompanyDescription(empPfDTO.getCompanyDescription());
 			emp.setCompanyPhotoURL(empPfDTO.getCompanyPhotoURL());
 			
-			System.out.println("公司資料-----------" + emp.getCompanyPhotoURL());
-
-			empPfService.updateEmpInfo(emp);
+			Employer_profile emppf = modelMapper.map(emp, Employer_profile.class);
+			
+			empPfService.updateEmpInfo(emppf);
 
 			return ResponseEntity.ok("Updated Successful");
 		}else {
@@ -94,13 +94,21 @@ public class CompanyControllerFrontend {
 		if (session.getAttribute("CurrentUser") != null) {
 
 			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
-				
-			EmpPfDTO empPfDTO = modelMapper.map(userDTO.getEmployer_profile(), EmpPfDTO.class);
 			
-
-			return ResponseEntity.ok(empPfDTO);
+			Employer_profile emppf = empPfService.getEmpPfInfoByUserId(userDTO.getUserId());
+			
+			
+			
+			if(emppf != null) {
+				EmpPfDTO empPfDTO = modelMapper.map(emppf, EmpPfDTO.class);
+				
+				return ResponseEntity.ok(empPfDTO);			
+			}else {
+				return ResponseEntity.status(404).body("Get Company Fail!");
+			}
+				
 		} else {
-			return ResponseEntity.status(404).body("Get Company Fail!");
+			return ResponseEntity.status(404).body("No user Fail!");
 		}
 
 	}

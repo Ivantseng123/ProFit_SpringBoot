@@ -9,14 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.ProFit.model.bean.usersBean.Pwd_reset_tokens;
 import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dao.usersCRUD.PwdResetTokenRepository;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
-import com.google.firebase.remoteconfig.User;
-
 import net.bytebuddy.utility.RandomString;
 
 @Service
@@ -28,6 +28,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	@Autowired
+	private PwdResetTokenRepository pwdResetTokenRepository;
 
 	@Autowired
 	private EmailService emailService;
@@ -281,6 +284,33 @@ public class UserService implements IUserService {
 	}
 
 	@Override
+	public ResponseEntity<?> sendResetToken(String email,String token) {
+		
+		Optional<Users> user = usersRepository.findByUserEmail(email);
+		
+		if (user.isPresent()) {
+			
+			Users existUser = user.get();
+			
+			String confirmationLink = "http://localhost:8080/ProFit/user/resetPwd?userId=" + existUser.getUserId() + "&token="
+					+ token;
+			
+			String content = "<html><body><h3>" + existUser.getUserName() + "，您好!</h3>"
+					+ "<p>為了重設您的密碼, 請點擊下面的按鈕:</p>" + "<a href=\"" + confirmationLink
+					+ "\" style=\"display:inline-block; padding:10px 20px; margin:10px 0; font-size:16px; "
+					+ "color:white; background-color:#007BFF; text-decoration:none; border-radius:5px;\">" + "重設密碼</a>"
+					+ "</body></html>";
+			
+			emailService.sendSimpleHtml(List.of(email), "ProFit 重設密碼", content);
+			
+		}
+
+
+		return ResponseEntity.ok("Verify token by the link sent on your email address");
+
+	}
+
+	@Override
 	public boolean confirmEmail(String confirmationToken) {
 		Optional<Users> optional = usersRepository.findByVerificationCode(confirmationToken);
 
@@ -295,16 +325,32 @@ public class UserService implements IUserService {
 	}
 
 	@Override
+	public boolean confirm_resetToken(Integer userId,String confirmationToken) {
+		
+		Optional<Pwd_reset_tokens> optional = pwdResetTokenRepository.findLatestByUserId(userId);
+
+		if (optional.isPresent()) {
+			
+			String dbtoken= optional.get().getUserTokenHash();
+			
+			System.out.println("Token--------------------" + dbtoken);
+			
+			return pwdEncoder.matches(confirmationToken, dbtoken);
+		}
+		return false;
+	}
+
+	@Override
 	public Users updateUserInfo(Integer userId, String userPictureURL, String userName, String userPhoneNumber,
 			String userCity, String freelancerLocationPrefer, String freelancerExprience, String freelancerIdentity,
 			Integer freelancerProfileStatus, String freelancerDisc) {
-		
+
 		Optional<Users> optional = usersRepository.findById(userId);
 
 		if (optional.isPresent()) {
 			Users user = optional.get();
 //			user.setUserId(user_id);
-			user.setUserName(userName);	
+			user.setUserName(userName);
 			user.setUserPhoneNumber(userPhoneNumber);
 			user.setUserCity(userCity);
 			user.setUserPictureURL(userPictureURL);
@@ -326,6 +372,11 @@ public class UserService implements IUserService {
 	}
 
 	public User getUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getUserBalanceById(Integer userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

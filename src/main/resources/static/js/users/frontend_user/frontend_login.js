@@ -54,7 +54,7 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 				let div = document.getElementById('signUpError');
 				div.innerHTML = '<p style="color: red; font-size: 16px;">信箱已註冊</p>';
 			} else {
-				
+
 				document.getElementById("submitBtn").disabled;
 				$('#signup').modal('hide');
 				alert('註冊成功，請至註冊信箱查看驗證信!');
@@ -154,5 +154,55 @@ function logout(event) {
 			alert('登出失敗，請重試');
 		});
 }
+
+
+document.getElementById("signUp_href").onclick = function() {
+
+	$('#login').modal('hide');
+
+	setTimeout(function() {
+		$('#signup').modal('show');
+	}, 300);
+};
+
+document.getElementById("forgetPwdbtn").onclick = function() {
+
+	$('#login').modal('hide');
+
+	setTimeout(function() {
+		$('#forgetPwd').modal('show');
+	}, 300);
+};
+
+document.getElementById('resetPwdForm').addEventListener('submit', function(e) {
+	e.preventDefault(); // 取消原本 form 表單送的 request
+
+	let email_resetpwd = document.getElementById('email_resetpwd').value;
+
+	const emailData = {
+		'email': email_resetpwd
+	}
+
+	fetch('http://localhost:8080/ProFit/tokens/addToken_frontend', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(emailData)
+	})
+		.then(response => {
+			if (response.ok) {
+				alert("重設密碼連結已寄送，請至信箱查看");
+				$('#forgetPwd').modal('hide');
+			} else {
+
+				alert("信箱錯誤或不存在");
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		});
+
+})
 
 

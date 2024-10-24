@@ -9,9 +9,9 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class EventHostIdBean implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
-	private String eventId;
+    private static final long serialVersionUID = 1L;
+
+    private String eventId;
     private int eventHostId;
 
     public EventHostIdBean() {
@@ -40,8 +40,10 @@ public class EventHostIdBean implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EventHostIdBean)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof EventHostIdBean))
+            return false;
         EventHostIdBean that = (EventHostIdBean) o;
         return eventHostId == that.eventHostId && eventId.equals(that.eventId);
     }
