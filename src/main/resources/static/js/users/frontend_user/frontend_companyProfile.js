@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	getCompany();
+	getCompanyAppl();
 
 });
 
@@ -52,52 +53,101 @@ function getCompany() {
 				//throw new Error('Network response was not ok');
 				console.log("成功取得公司資料");
 				console.log(response);
+				return response.json();
+			} else {
+				return response.text();
 			}
-			return response.json();
 
 		})
 		.then(company => {
 
-			profile_picture.src = company.companyPhotoURL || "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd";
-			profileImagePreview.src = company.companyPhotoURL || "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd";;
 
+
+			profile_picture.src = company.companyPhotoURL || "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fistockphoto-1354776457-612x612.jpg?alt=media&token=9216f75f-2ddb-4730-a001-4b08cba226e0";
+			profileImagePreview.src = company.companyPhotoURL || "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fistockphoto-1354776457-612x612.jpg?alt=media&token=9216f75f-2ddb-4730-a001-4b08cba226e0";;
+
+			if (!company || typeof company !== 'object') {  // 检查 company 是否为 null 或 undefined
+				console.error('Company data is null or not valid.');
+				company_name.innerHTML = '尚未驗證';
+				return; // 如果无效则退出
+			}
 			company_pictureURL.value = company.companyPhotoURL;
 
-			company_name.innerHTML = company.companyName;
-			company_name_edit.value = company.companyName;
 
-			company_address.innerHTML = company.companyAddress;
-			company_address_edit.value = company.companyAddress.substring(0, 3);
-			company_address_edit1.value = company.companyAddress.substring(3);
+			if (company != null) {
+				company_name.innerHTML = company.companyName;
+				company_name_edit.value = company.companyName;
 
-			company_category.innerHTML = company.companyCategory;
-			company_category_edit.value = company.companyCategory;
+				company_address.innerHTML = company.companyAddress;
+				company_address_edit.value = company.companyAddress.substring(0, 3);
+				company_address_edit1.value = company.companyAddress.substring(3);
 
-			company_phoneNumber.innerHTML = company.companyPhoneNumber;
-			company_phoneNumber_edit.value = company.companyPhoneNumber;
+				company_category.innerHTML = company.companyCategory;
+				company_category_edit.value = company.companyCategory;
 
-			company.companyNumberOfemployee && company.companyNumberOfemployee.trim() !== ''
-				? company_numberOfemployee.innerHTML = company.companyNumberOfemployee
-				: company_numberOfemployee.innerHTML = '未填寫';
+				company_phoneNumber.innerHTML = company.companyPhoneNumber;
+				company_phoneNumber_edit.value = company.companyPhoneNumber;
 
-			numberOfemployee_edit.value = company.companyNumberOfemployee;
+				company.companyNumberOfemployee && company.companyNumberOfemployee.trim() !== ''
+					? company_numberOfemployee.innerHTML = company.companyNumberOfemployee
+					: company_numberOfemployee.innerHTML = '未填寫';
 
-
-			company.companyCaptital && company.companyCaptital.trim() !== ''
-				? company_capital.innerHTML = company.companyCaptital + '萬'
-				: company_capital.innerHTML = '未填寫';
+				numberOfemployee_edit.value = company.companyNumberOfemployee;
 
 
-			company_capital_edit.value = company.companyCaptital;
+				company.companyCaptital && company.companyCaptital.trim() !== ''
+					? company_capital.innerHTML = company.companyCaptital + '萬'
+					: company_capital.innerHTML = '未填寫';
 
-			company.companyDescription && company.companyDescription.trim() !== ''
-				? company_description.innerHTML = company.companyDescription
-				: company_description.innerHTML = '未填寫';
 
-			company_description_edit.value = company.companyDescription;
+				company_capital_edit.value = company.companyCaptital;
+
+				company.companyDescription && company.companyDescription.trim() !== ''
+					? company_description.innerHTML = company.companyDescription
+					: company_description.innerHTML = '未填寫';
+
+				company_description_edit.value = company.companyDescription;
+			}
+
 
 		})
-		.catch(error => console.error('Error fetching user data:', error));
+		.catch(error => {
+			console.error('Error fetching', error);
+		});
+
+}
+
+function getCompanyAppl() {
+
+	let application_item = document.getElementById('application_item')
+
+
+	fetch('http://localhost:8080/ProFit/empAppl/getEmpAppl')
+		.then(response => {
+			if (response.ok) {
+				//throw new Error('Network response was not ok');
+				console.log("成功取得公司驗證資料");
+				return response.json();
+			} else {
+				return response.text();
+			}
+
+		})
+		.then(companyAppl => {
+
+			if (!companyAppl || typeof companyAppl !== 'object') {  // 检查 company 是否为 null 或 undefined
+				console.error('companyAppl data is null or not valid.');
+				application_item.innerHTML = '暫無資料';
+				return; // 如果无效则退出
+			}
+
+			application_item.innerHTML = `ID:${companyAppl.employerApplicationId}&nbsp;&nbsp;&nbsp;${companyAppl.companyName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;狀態: ${companyAppl.applicationCheck == 0 ? '未審核' : companyAppl.applicationCheck == 1 ? '通過' : '否決'}`
+
+		})
+		.catch(error => {
+			console.error('Error fetching', error);
+		});
+
 }
 
 $('#fileInput').on('change', function() {
@@ -192,3 +242,142 @@ document.getElementById("toggleButton2").addEventListener("click", function() {
 	userInfo.style.display = "none";
 	companyInfo.style.display = "block";
 });
+
+
+document.getElementById('companyApplForm').addEventListener('submit', async function(e) {
+	e.preventDefault();
+	handleImageUpload_application();
+	getCompanyAppl();
+});
+
+function handleImageUpload_application() {
+	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
+		.then(response => response.json())
+		.then(firebaseConfig => {
+			// 初始化 Firebase
+			firebase.initializeApp(firebaseConfig);
+			const storage = firebase.storage();
+
+			const fileInput = document.getElementById('fileInput0');
+			const fileInput1 = document.getElementById('fileInput1');
+			const fileInput2 = document.getElementById('fileInput2');
+			const files = [fileInput.files[0], fileInput1.files[0], fileInput2.files[0]];
+
+			const uploadPromises = files.map((file, index) => {
+				return new Promise((resolve, reject) => {
+					if (file) {
+						const storageRef = storage.ref('userUpload/' + file.name);
+						const uploadTask = storageRef.put(file);
+
+						uploadTask.on('state_changed',
+							function() {
+								uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+									if (index === 0) {
+										document.getElementById('company_taxID_docURL').value = downloadURL;
+									} else if (index === 1) {
+										document.getElementById('idCard_pictureURL_1').value = downloadURL;
+									} else if (index === 2) {
+										document.getElementById('idCard_pictureURL_2').value = downloadURL;
+									}
+									resolve(); // 上传完成，resolve 该 Promise
+								}).catch(reject); // 处理上传错误
+							}
+						);
+					} else {
+						console.log(`No file selected for input ${index + 1}`);
+						resolve(); // 如果没有文件也resolve, 保证继续执行
+					}
+				});
+			});
+
+
+			Promise.all(uploadPromises)
+				.then(() => {
+					sendForm_application();
+				})
+				.catch(error => {
+					console.error('Error uploading files:', error);
+				});
+		})
+		.catch(error => {
+			console.error('Error fetching Firebase config:', error);
+		});
+}
+
+function sendForm_application() {
+	const company_application = document.getElementById('companyApplForm');
+	let empApplDTO = new FormData(company_application);
+
+	fetch('http://localhost:8080/ProFit/empAppl/addEmpAppl_frontend', {
+		method: 'POST',
+		body: empApplDTO
+	})
+		.then(response => {
+			if (response.ok) {
+				$('#companyAppliction').modal('hide');
+				alert('申請成功');
+				getCompanyAppl()
+			} else {
+				alert('申請失敗，請稍後再試。');
+			}
+		})
+		.catch(error => {
+			console.error('Error:', error);
+			alert('申請請求失敗，請檢查控制台以獲取更多詳細信息。');
+		});
+}
+
+
+$('#fileInput0').on('change', function() {
+	let fileInput = $(this)[0];
+	let previewImage = $('#taxIDImagePreview');
+
+
+	if (fileInput.files && fileInput.files[0]) {
+		let reader = new FileReader();
+
+		reader.onload = function(e) {
+
+			previewImage.attr('src', e.target.result);
+		}
+
+
+		reader.readAsDataURL(fileInput.files[0]);
+	}
+});
+
+
+$('#fileInput1').on('change', function() {
+	let fileInput = $(this)[0];
+	let previewImage = $('#nationalIDPreview1');
+
+
+	if (fileInput.files && fileInput.files[0]) {
+		let reader = new FileReader();
+
+		reader.onload = function(e) {
+
+			previewImage.attr('src', e.target.result);
+		}
+
+
+		reader.readAsDataURL(fileInput.files[0]);
+	}
+});
+
+$('#fileInput2').on('change', function() {
+	let fileInput = $(this)[0];
+	let previewImage = $('#nationalIDPreview2');
+
+	// 確保有文件被選擇
+	if (fileInput.files && fileInput.files[0]) {
+		let reader = new FileReader();
+
+		reader.onload = function(e) {
+			previewImage.attr('src', e.target.result);
+		}
+
+		reader.readAsDataURL(fileInput.files[0]);
+	}
+});
+

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +22,8 @@ import com.ProFit.model.dto.usersDTO.EmpApplDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.userService.IEmpApplService;
 import com.ProFit.service.userService.IEmpPfService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class empApplController {
@@ -138,7 +139,9 @@ public class empApplController {
 
 	@PostMapping("empAppl/checkEmpAppl")
 	@ResponseBody
-	public String CheckEmpAppl(@RequestBody HashMap<String, String> emp) {
+	public String CheckEmpAppl(@RequestBody HashMap<String, String> emp, HttpSession session) {
+		
+		UsersDTO updateUser = (UsersDTO) session.getAttribute("CurrentUser");
 
 		int employer_application_id = Integer.parseInt(emp.get("employer_application_id"));
 		int user_id = Integer.valueOf(emp.get("user_id"));
@@ -177,6 +180,8 @@ public class empApplController {
 				existingProfile.setCompanyTaxID(taxID);
 				
 				empPfService.updateEmpInfo(existingProfile);
+						
+				
 			}else {
 				empPfService.saveEmployerInfo(employer_profile);
 			}

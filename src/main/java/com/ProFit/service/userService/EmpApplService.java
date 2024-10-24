@@ -69,14 +69,14 @@ public class EmpApplService implements IEmpApplService {
 	public boolean updateEmpApplcheck_pass(int employer_application_id, int user_id) {
 
 		Optional<Employer_application> optional = empApplRepository.findById(employer_application_id);
-		
+
 		Optional<Users> optional1 = usersRepository.findById(user_id);
 
 		if (optional.isPresent()) {
 			Employer_application empAppl = optional.get();
 			empAppl.setApplicationCheck(1);
 			empApplRepository.save(empAppl);
-			
+
 			Users user = optional1.get();
 			user.setUserIdentity(2);
 			usersRepository.save(user);
@@ -133,6 +133,20 @@ public class EmpApplService implements IEmpApplService {
 		Page<Employer_application> empApplsPage = empApplRepository.findByUserEmailOrCompanyNameContaining(search,
 				search, pageable);
 		return empApplsPage.map(empAppl -> new EmpApplDTO(empAppl));
+	}
+
+	@Override
+	public Employer_application findLatestByUserId(Integer userId) {
+
+		Optional<Employer_application> empAppl = empApplRepository.findLatestByUserId(userId);
+
+		if (empAppl.isPresent()) {
+
+			return empAppl.get();
+		} else {
+			return null;
+		}
+
 	}
 
 }
