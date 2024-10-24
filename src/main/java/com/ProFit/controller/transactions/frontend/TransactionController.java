@@ -1,27 +1,46 @@
 package com.ProFit.controller.transactions.frontend;
 
+import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.ProFit.service.transactionService.UserTransactionService;
+import com.ProFit.service.userService.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/transaction")
 public class TransactionController {
 
-    // 顯示進帳管理頁面，這裡傳遞靜態的假設數據
-    @GetMapping("")
-    public String showIncomeOverview(Model model) {
-        // 假設初始數據
-        double pendingAmount = 0.0;  // 靜態設置即將撥款的金額
-        double paidAmount = 1963.0;  // 靜態設置已撥款的金額
-        String accountNumber = "****5610";  // 靜態設置帳號
+    @Autowired
+    private UserTransactionService userTransactionService;
 
-        // 將數據傳遞到模板
-        model.addAttribute("pendingAmount", pendingAmount);
-        model.addAttribute("paidAmount", paidAmount);
-        model.addAttribute("accountNumber", accountNumber);
+    @Autowired
+    private UserService userService;
 
-        return "transactionVIEW/frontend/userTransactions"; // 返回前端模板頁面名稱
+    // 顯示進帳管理頁面
+    @GetMapping("/transaction")
+    public String showIncomeOverview(HttpSession session, Model model) {
+        UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+        if (usersDTO == null || usersDTO.getUserId() == null) {
+            return "redirect:/login";
+        }
+        Integer userId = usersDTO.getUserId();
+
+        // 獲取用戶餘額
+        Integer userBalance = userService.getUserBalanceById(userId);
+        model.addAttribute("userBalance", userBalance);
+
+        // 獲取撥款數據 (交易類型為取出且狀態為等待)
+        model.addAttribute("pendingTransactions", userTransactionService.getPendingTransactionsByUserId(userId));
+
+        // 獲取已撥款數據 (交易類型為取出且狀態為完成)
+        model.addAttribute("paidTransactions", userTransactionService.getPaidTransactionsByUserId(userId));
+
+        // 設定假設帳號
+        model.addAttribute("accountNumber", "****5610");
+
+        return "transactionVIEW/frontend/userTransactions"; // 返回模板頁面名稱
     }
+    
 }

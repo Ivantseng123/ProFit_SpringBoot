@@ -12,54 +12,55 @@ import jakarta.persistence.*;
 public class EventsBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id @Column(name="event_id")
+
+	@Id
+	@Column(name = "event_id")
 	private String eventId;
 
-	@Column(name="event_name")
+	@Column(name = "event_name")
 	private String eventName;
 
-	@Column(name="is_event_active")
+	@Column(name = "is_event_active")
 	private int isEventActive;
 
-	@Column(name="event_category")
+	@Column(name = "event_category")
 	private int eventCategory;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_major",insertable = false,updatable = false)
+	@JoinColumn(name = "event_major", insertable = false, updatable = false)
 	private MajorBean eventMajor;
-	
-    @Column(name = "event_major")
+
+	@Column(name = "event_major")
 	private Integer eventMajorId;
-    
-	@Column(name="event_publish_date")
+
+	@Column(name = "event_publish_date")
 	private LocalDateTime eventPublishDate;
 
-	@Column(name="event_start_date")
+	@Column(name = "event_start_date")
 	private LocalDateTime eventStartDate;
 
-	@Column(name="event_end_date")
+	@Column(name = "event_end_date")
 	private LocalDateTime eventEndDate;
 
-	@Column(name="event_part_start_date")
+	@Column(name = "event_part_start_date")
 	private LocalDateTime eventPartStartDate;
 
-	@Column(name="event_part_end_date")
+	@Column(name = "event_part_end_date")
 	private LocalDateTime eventPartEndDate;
 
-	@Column(name="event_amount")
+	@Column(name = "event_amount")
 	private int eventAmount;
 
-	@Column(name="event_location")
+	@Column(name = "event_location")
 	private String eventLocation;
 
-	@Column(name="event_participant_maximum")
+	@Column(name = "event_participant_maximum")
 	private int eventParticipantMaximum;
 
-	@Column(name="event_description")
+	@Column(name = "event_description")
 	private String eventDescription;
-	
-	@Column(name="event_note")
+
+	@Column(name = "event_note")
 	private String eventNote;
 
 	public EventsBean() {
@@ -225,6 +226,4 @@ public class EventsBean implements Serializable {
 				+ eventParticipantMaximum + ", eventDescription=" + eventDescription + ", eventNote=" + eventNote + "]";
 	}
 
-	
-		
 }

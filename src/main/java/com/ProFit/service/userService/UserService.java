@@ -371,4 +371,14 @@ public class UserService implements IUserService {
 		return usersRepository.save(user); // 使用 usersRepository 進行保存操作
 	}
 
+	public User getUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getUserBalanceById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
