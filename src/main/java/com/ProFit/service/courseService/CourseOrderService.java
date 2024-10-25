@@ -21,95 +21,97 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class CourseOrderService implements IcourseOrderService {
-	
+
 	@Autowired
 	private IHcourseOrderDao hcourseOrderDao;
-	
+
 	@Autowired
 	private CourseOrderRepository courseOrderRepo;
-	
+
 	@Autowired
 	private CoursesRepository coursesRepo;
-	
+
 	@Override
 	public Integer insertCourseOrder(CourseOrderBean courseOrder) {
-			
-			Optional<CourseBean> optional = coursesRepo.findById(courseOrder.getCourseId());
-		
-			//確認課程存在 不是返回0
-			if(optional.isPresent()) {
-				CourseBean courseBean = optional.get();
-				String courseStatus = courseBean.getCourseStatus();
-				
-				//確認課程是進行中 不是返回2 是的話返回1
-				if(courseStatus.equals("Active")) {
-					CourseOrderBean insertedCourseOrder = hcourseOrderDao.insertCourseOrder(courseOrder);
-					return 1;
-				}
-				return 2 ;
+
+		Optional<CourseBean> optional = coursesRepo.findById(courseOrder.getCourseId());
+
+		// 確認課程存在 不是返回0
+		if (optional.isPresent()) {
+			CourseBean courseBean = optional.get();
+			String courseStatus = courseBean.getCourseStatus();
+
+			// 確認課程是進行中 不是返回2 是的話返回1
+			if (courseStatus.equals("Active")) {
+				hcourseOrderDao.insertCourseOrder(courseOrder);
+				return 1;
 			}
-			return 0;
+			return 2;
+		}
+		return 0;
 	}
 
 	@Override
 	public void deleteCourseOrderById(String courseOrderId) {
-		if(courseOrderId != null) {			
+		if (courseOrderId != null) {
 			courseOrderRepo.deleteById(courseOrderId);
 		}
 	}
 
 	@Override
 	public boolean updateCourseOrderById(CourseOrderBean newCourseOrder) {
-		if(newCourseOrder != null) {
+		if (newCourseOrder != null) {
 			return hcourseOrderDao.updateCourseOrderById(newCourseOrder);
 		}
-		
+
 		return false;
 	}
 
 	@Override
 	public CourseOrderDTO searchOneCourseOrderById(String courseOrderId) {
-		
-		if(courseOrderId != null) {
-			
+
+		if (courseOrderId != null) {
+
 			Optional<CourseOrderBean> optional = courseOrderRepo.findById(courseOrderId);
-			
-			if(optional.isPresent()) {
+
+			if (optional.isPresent()) {
 				return new CourseOrderDTO(optional.get());
 			}
 		}
-		
+
 		return null;
 	}
 
 	@Override
 	public List<CourseOrderDTO> searchAllCourseOrders() {
-		
+
 		List<CourseOrderBean> allCourseOrders = courseOrderRepo.findAll();
-		
-		List<CourseOrderDTO> courseOrderDTO = allCourseOrders.stream().map(CourseOrderDTO::new).collect(Collectors.toList());
-		
+
+		List<CourseOrderDTO> courseOrderDTO = allCourseOrders.stream().map(CourseOrderDTO::new)
+				.collect(Collectors.toList());
+
 		return courseOrderDTO;
 	}
 
 	@Override
 	public List<CourseOrderDTO> searchAllCourseOrders(String courseId, Integer studentId, String status) {
-		
+
 		List<CourseOrderBean> searchCourseOrders = hcourseOrderDao.searchCourseOrders(courseId, studentId, status);
-		
-		List<CourseOrderDTO> courseOrderDTO = searchCourseOrders.stream().map(CourseOrderDTO::new).collect(Collectors.toList());
-		
+
+		List<CourseOrderDTO> courseOrderDTO = searchCourseOrders.stream().map(CourseOrderDTO::new)
+				.collect(Collectors.toList());
+
 		return courseOrderDTO;
 	}
 
 	@Override
 	public Page<CourseOrderDTO> findMsgByPage(Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber-1, 10,Sort.Direction.DESC,"added");
+		Pageable pgb = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "added");
 
 		Page<CourseOrderBean> courseOrderPage = courseOrderRepo.findAll(pgb);
-		
+
 		Page<CourseOrderDTO> dtoPage = courseOrderPage.map(CourseOrderDTO::new);
-		
+
 		return dtoPage;
 	}
 

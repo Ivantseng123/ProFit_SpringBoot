@@ -35,6 +35,20 @@
         .hero-area.style2 .tns-controls button {
             top: 65%
         }
+
+        .section {
+            padding-top: 50px;
+        }
+
+        #serviceTitle {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .latest-news-area .single-news .content-body .title {
+            font-size: 20px;
+        }
     </style>
 
 </head>
@@ -131,21 +145,81 @@
 
     <section id="courseTop" class="section latest-news-area blog-list">
         <div class="container">
-            <h4 id="courseheader" class="mb-4">最新推薦課程</h4>
             <div class="row">
-                <div class="col-12">
-                    <div id="search-results" class="row">
-
+                <aside class="col-lg-3 col-md-5 col-12">
+                    <div class="sidebar">
+                        <div class="widget search-widget">
+                            <form action="#">
+                                <input type="text" placeholder="服務標題...">
+                                <button type="submit"><i class="lni lni-search-alt"></i></button>
+                            </form>
+                        </div>
+                        <div class="widget categories-widget">
+                            <h5 class="widget-title"><span>專業</span></h5>
+                            <ul class="custom">
+                                <li>
+                                    <a href="#">Announcement<span>26</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Indeed Events<span>30</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Tips & Tricks<span>71</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Experiences<span>56</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Case Studies<span>15</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">Labor Market News<span>12</span></a>
+                                </li>
+                                <li>
+                                    <a href="#">HR Best Practices<span>17</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <div class="widget popular-tag-widget">
+                            <h5 class="widget-title"><span>Popular Tags</span></h5>
+                            <div class="tags">
+                                <a href="#">Jobpress</a>
+                                <a href="#">Design</a>
+                                <a href="#">HR</a>
+                                <a href="#">Recruiter</a>
+                                <a href="#">Interview</a>
+                                <a href="#">Employee</a>
+                                <a href="#">Labor</a>
+                                <a href="#">Salary</a>
+                                <a href="#">Consult</a>
+                                <a href="#">Business</a>
+                                <a href="#">Candidates</a>
+                            </div>
+                        </div> -->
                     </div>
-                    <!-- Pagination -->
-                    <div class="pagination center">
-                        <ul class="pagination-list">
+                </aside>
+                <div class="col-lg-9 col-md-7 col-12">
+                    <h4 id="courseheader" class="mb-4">最新服務</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="search-results" class="row">
 
-                        </ul>
+                            </div>
+                            <!-- Pagination -->
+                            <div class="pagination center">
+                                <ul class="pagination-list">
+
+                                </ul>
+                            </div>
+                            <!--/ End Pagination -->
+                        </div>
                     </div>
-                    <!--/ End Pagination -->
+
                 </div>
+
+
             </div>
+
         </div>
     </section>
     <!-- End Blog Singel Area -->
