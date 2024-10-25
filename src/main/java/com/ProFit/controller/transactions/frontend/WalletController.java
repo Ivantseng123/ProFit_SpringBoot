@@ -1,7 +1,9 @@
 package com.ProFit.controller.transactions.frontend;
 
+import com.ProFit.model.dto.transactionDTO.InvoiceDTO;
 import com.ProFit.model.dto.transactionDTO.UserTransactionDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.ProFit.service.transactionService.InvoiceService;
 import com.ProFit.service.transactionService.UserTransactionService;
 import com.ProFit.service.userService.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -24,12 +26,15 @@ public class WalletController {
 
     @Autowired
     private UserTransactionService userTransactionService;
+    
+    @Autowired
+    private InvoiceService invoiceService;
 
     @GetMapping("/wallet")
     public String showWalletPage(HttpSession session, Model model) {
         UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
         if (usersDTO == null || usersDTO.getUserId() == null) {
-            return "redirect:/login";
+            return "redirect:/user/profile";
         }
         Integer userId = usersDTO.getUserId();
 
@@ -81,5 +86,17 @@ public class WalletController {
 
         List<UserTransactionDTO> transactions = userTransactionService.getTransactionsByCompletionDateRange(userId, startDate, endDate);
         return transactions;
+    }
+    
+    @GetMapping("/wallet/invoices")
+    @ResponseBody
+    public List<InvoiceDTO> getInvoices(HttpSession session) {
+        UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+        if (usersDTO == null || usersDTO.getUserId() == null) {
+            return Collections.emptyList();
+        }
+
+        // 根據用戶ID獲取發票記錄
+        return invoiceService.getInvoicesByUserId(usersDTO.getUserId());
     }
 }

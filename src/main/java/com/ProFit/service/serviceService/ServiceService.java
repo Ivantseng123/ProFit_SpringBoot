@@ -278,6 +278,15 @@ public class ServiceService {
 		return convertToPageResponse(servicePage);
 	}
 
+	// 根據 MajorCategoryID 和 status 查詢服務（分頁）
+	public PageResponse<ServicesDTO> getServicesByMajorCategoryId(Integer categoryId, Integer serviceStatus, int page,
+			int size, String sortBy,
+			boolean ascending) {
+		Pageable pageable = createPageable(page, size, sortBy, ascending);
+		Page<ServiceBean> servicePage = serviceRepo.findByMajorCategoryId(categoryId, serviceStatus, pageable);
+		return convertToPageResponse(servicePage);
+	}
+
 	// 根據用戶ID和專業ID查詢服務（分頁）
 	public PageResponse<ServicesDTO> getServicesByUserIdAndMajorId(Integer userId, Integer majorId, int page, int size,
 			String sortBy, boolean ascending) {
@@ -286,9 +295,7 @@ public class ServiceService {
 		return convertToPageResponse(servicePage);
 	}
 
-
-
-	//----------------------新增的好用查詢----------
+	// ----------------------新增的好用查詢----------
 	// 分頁 多條件 查詢服務
 	public PageResponse<ServicesDTO> searchServicePage(String serviceTitle,
 			String userName,
@@ -299,12 +306,19 @@ public class ServiceService {
 			int page, int size,
 			String sortBy, boolean ascending) {
 
-
 		Pageable pageable = createPageable(page, size, sortBy, ascending);
-		Page<ServiceBean> searchServicePage = serviceRepo.searchServicePage(serviceTitle, userName, status, userId, majorIdList, majorCategoryId, pageable);
+		Page<ServiceBean> searchServicePage = serviceRepo.searchServicePage(serviceTitle, userName, status, userId,
+				majorIdList, majorCategoryId, pageable);
 
 		PageResponse<ServicesDTO> serviceDTOPage = convertToPageResponse(searchServicePage);
 
 		return serviceDTOPage;
 	}
+
+	// 查詢 一個majorId 下的 服務數量
+	public Integer countServiceNumByMajorId(Integer majorId, Integer ServiceStatus) {
+		Integer countBymajorId = serviceRepo.countByMajorIdAndServiceStatus(majorId, ServiceStatus);
+		return countBymajorId;
+	}
 }
+
