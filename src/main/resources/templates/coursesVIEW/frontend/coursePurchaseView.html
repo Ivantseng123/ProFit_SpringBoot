@@ -21,7 +21,11 @@
     <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
     <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
     <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
-
+    <style>
+        .ml-auto {
+            margin-left: auto !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -69,16 +73,16 @@
                                         <div class="form-group">
                                             <label class="fs-5">發票選擇: </label>
                                             <br>
-                                            <input class="fs-5" type="radio" id="personalInvoice" name="invoiceType"
-                                                value="personal"
+                                            <input class="fs-5 mt-2" type="radio" id="personalInvoice"
+                                                name="invoiceType" value="personal"
                                                 style="height: auto; width: auto;vertical-align: middle;">
-                                            <label class="fs-5" for="personalInvoice"
+                                            <label class="fs-5 mt-2" for="personalInvoice"
                                                 style="vertical-align: middle;">個人發票</label>
 
-                                            <input class="fs-5" type="radio" id="businessInvoice" name="invoiceType"
-                                                value="business"
+                                            <input class="fs-5 mt-2" type="radio" id="businessInvoice"
+                                                name="invoiceType" value="business"
                                                 style="height: auto; width: auto;vertical-align: middle;">
-                                            <label class="fs-5" for="businessInvoice"
+                                            <label class="fs-5 mt-2" for="businessInvoice"
                                                 style="vertical-align: middle;">公司發票</label>
                                         </div>
                                     </div>
@@ -94,8 +98,8 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group message">
-                                            <label class="fs-4" for="OrderRemark">訂單備註:(選填)</label>
-                                            <textarea class="fs-4" style="height: auto;" id="orderRemark"
+                                            <label class="fs-5" for="OrderRemark">訂單備註:(選填)</label>
+                                            <textarea class="fs-5" style="height: auto;" id="orderRemark"
                                                 placeholder="請輸入訂單備註"></textarea>
                                         </div>
                                     </div>

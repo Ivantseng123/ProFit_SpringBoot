@@ -61,6 +61,32 @@ $(document).on('click', '.single-cat', function () {
 
 });
 
+$('#searchBtn').click(function () {
+
+    let courseName = $('#id-courseName').val();
+    let courseStatus = $('#id-courseStatus').val();
+    let sortBy = $('#id-sortBy').val();
+
+    loadByConditionsPage(courseName, courseStatus, sortBy);
+
+});
+
+$('#id-courseStatus').change(function () {
+    let courseName = $('#id-courseName').val();
+    let courseStatus = $('#id-courseStatus').val();
+    let sortBy = $('#id-sortBy').val();
+
+    loadByConditionsPage(courseName, courseStatus, sortBy);
+})
+
+$('#id-sortBy').change(function () {
+    let courseName = $('#id-courseName').val();
+    let courseStatus = $('#id-courseStatus').val();
+    let sortBy = $('#id-sortBy').val();
+
+    loadByConditionsPage(courseName, courseStatus, sortBy);
+})
+
 
 function formatPrice(number) {
     return Math.round(number).toLocaleString('zh-TW');
@@ -140,10 +166,17 @@ function htmlMakerForCourses(searchCoursesPage) {
     });
 }
 
-function loadThatPage(pageNum) {
+function loadThatPage(pageNum,) {
+    let courseName = $('#id-courseName').val();
+    let courseStatus = $('#id-courseStatus').val();
+    let sortBy = $('#id-sortBy').val();
+
     $.ajax({
         url: '/ProFit/course/searchAll',
         data: {
+            "courseName": courseName,
+            "courseStatus": courseStatus,
+            "sortBy": sortBy,
             "pageNumber": pageNum
         },
         dataType: 'JSON',
@@ -197,15 +230,14 @@ function htmlMakerForCategory(allCourseCategoryList) {
     let i = 1;
     allCourseCategoryList.forEach(function (courseCategory) {
         $('.categorySpace').append(`
-            <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
-                <a href="#courseTop" class="single-cat wow fadeInUp"
-                    data-wow-delay=".2s">
-                    <div class="top-side text-center">
+            <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column pt-1 mb-2">
+                <a href="#courseTop" class="single-cat wow fadeInUp border border-primary-subtle rounded border-3" data-wow-delay=".2s" style="width: 120px; height: 120px;">
+                    <div class="top-side text-center mt-2">
                         <img class="rounded" style="max-width:50px"
                         src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
                         <h5 class="categoryId text-center mt-1" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h5>
                     </div>
-                    <div class="bottom-side text-center mt-2">
+                    <div class="bottom-side text-center mt-1">
                         <span>課程數:</span> <span class="available-job">${courseCategory.courseNumber}</span>
                     </div>
                 </a>
@@ -256,3 +288,35 @@ function loadThatCategoryPage(categoryId) {
 
 }
 
+function loadByConditionsPage(courseName, courseStatus, sortBy) {
+    $.ajax({
+        url: '/ProFit/course/searchAll',
+        data: {
+            "courseName": courseName,
+            "courseStatus": courseStatus,
+            "sortBy": sortBy
+        },
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (searchCoursesPage) {
+            console.log(searchCoursesPage);
+
+            // 清空當前表格
+            $('#search-results').empty();
+            $('.pagination-list').empty();
+
+            // 寫入查詢結果
+            htmlMakerForCourses(searchCoursesPage);
+
+            // 更新按鈕狀態
+            updatePaginationButtons(searchCoursesPage);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // 處理錯誤
+            console.error('查詢失敗:', textStatus, errorThrown);
+            alert('查詢失敗，請重試。');
+        }
+
+    })
+}

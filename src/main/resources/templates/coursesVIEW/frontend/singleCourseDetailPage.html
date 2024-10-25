@@ -28,8 +28,11 @@
             --bs-accordion-active-bg: #FFEE99;
             /* 展開時背景顏色 */
         }
-    </style>
 
+        .ml-auto {
+            margin-left: auto !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -178,8 +181,12 @@
                                 <h4 id="price" th:data-price="${courseDTO.coursePrice}">NT$</h4>
                             </div>
                             <div class="mt-3">
-                                <a id="buyNow" th:href="@{/course/purchase(courseId=${courseDTO.courseId})}"
-                                    style="width:200px" class="btn btn-primary" type="button">立即購買</a>
+                                <a id="buyNow"
+                                    th:href="${courseDTO.courseStatus == 'Active' ? '/ProFit/course/purchase?courseId=' + courseDTO.courseId : '#'}"
+                                    style="width:200px" class="btn btn-primary" type="button"
+                                    th:text="${courseDTO.courseStatus == 'Active' ? '立即購買' : '未開課'}"
+                                    th:classappend="${courseDTO.courseStatus != 'Active' ? ' disabled' : ''}">
+                                </a>
                             </div>
                         </div>
 
@@ -248,76 +255,76 @@
 
         priceElement.innerHTML += formattedPrice;
 
-        $('#addToCart').click(function () {
+        // $('#addToCart').click(function () {
 
-            let courseId = $('.courseName').data('courseid');
+        //     let courseId = $('.courseName').data('courseid');
 
-            $.ajax({
-                url: '/ProFit/course/searchOne?courseId=' + courseId,
-                dataType: 'JSON',
-                type: 'GET',
-                success: function (courseDTO) {
+        //     $.ajax({
+        //         url: '/ProFit/course/searchOne?courseId=' + courseId,
+        //         dataType: 'JSON',
+        //         type: 'GET',
+        //         success: function (courseDTO) {
 
-                    addToCart(courseDTO);
+        //             addToCart(courseDTO);
 
-                    alert('成功加入購物車');
+        //             alert('成功加入購物車');
 
-                    displayCart();
+        //             displayCart();
 
-                },
-                error: function () {
-                    alert('加入購物車失敗');
-                }
-            })
+        //         },
+        //         error: function () {
+        //             alert('加入購物車失敗');
+        //         }
+        //     })
 
-        });
+        // });
 
-        function addToCart(courseDTO) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // function addToCart(courseDTO) {
+        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // 檢查是否已經有該商品
-            let exists = cart.some(item => item.courseId === courseDTO.courseId);
+        //     // 檢查是否已經有該商品
+        //     let exists = cart.some(item => item.courseId === courseDTO.courseId);
 
-            if (!exists) {
-                cart.push(courseDTO);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                updateAddToCartButton(courseDTO.courseId);  // 更新按鈕狀態
-            } else {
-                alert('這個商品已經在購物車中');
-            }
-        }
+        //     if (!exists) {
+        //         cart.push(courseDTO);
+        //         localStorage.setItem('cart', JSON.stringify(cart));
+        //         updateAddToCartButton(courseDTO.courseId);  // 更新按鈕狀態
+        //     } else {
+        //         alert('這個商品已經在購物車中');
+        //     }
+        // }
 
-        function displayCart() {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart.forEach(course => {
-                // 顯示每個商品的資訊
-                console.log(course.courseName);
-            });
-        }
+        // function displayCart() {
+        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        //     cart.forEach(course => {
+        //         // 顯示每個商品的資訊
+        //         console.log(course.courseName);
+        //     });
+        // }
 
-        function removeFromCart(courseId) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart = cart.filter(course => course.courseId !== courseId);
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
+        // function removeFromCart(courseId) {
+        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        //     cart = cart.filter(course => course.courseId !== courseId);
+        //     localStorage.setItem('cart', JSON.stringify(cart));
+        // }
 
-        function clearCart() {
-            localStorage.removeItem('cart');
-        }
+        // function clearCart() {
+        //     localStorage.removeItem('cart');
+        // }
 
-        function updateAddToCartButton(courseId) {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // function updateAddToCartButton(courseId) {
+        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // 檢查購物車裡面是否已經有該商品
-            let exists = cart.some(item => item.courseId === courseId);
+        //     // 檢查購物車裡面是否已經有該商品
+        //     let exists = cart.some(item => item.courseId === courseId);
 
-            if (exists) {
-                $('#addToCart').text('已經在購物車').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
-                $('#buyNow').text('前往結帳');
-            } else {
-                $('#addToCart').text('加入購物車').prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
-            }
-        }
+        //     if (exists) {
+        //         $('#addToCart').text('已經在購物車').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
+        //         $('#buyNow').text('前往結帳');
+        //     } else {
+        //         $('#addToCart').text('加入購物車').prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
+        //     }
+        // }
     </script>
 </body>
 
