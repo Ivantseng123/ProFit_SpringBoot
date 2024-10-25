@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>ProFit-交易紀錄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{/images/favicon.svg}" />
+<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
+<link rel="stylesheet"
+	href="https://cdn.lineicons.com/4.0/lineicons.css" />
+<link rel="stylesheet" th:href="@{/css/frontend/main.css}">
+<style>
+body {
+	padding-top: 120px;
+	background-color: #f5f7fa;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
+
+.footer {
+	margin-top: 50px;
+}
+
+.card-header h4 {
+	font-size: 1.5rem;
+}
+
+.btn-group button {
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
+}
+</style>
+</head>
+<body>
+
+	<!-- 引入頁頭 -->
+	<div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+	<div class="container mt-4">
+
+		<!-- 最近交易 -->
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<div
+						class="card-header d-flex justify-content-between align-items-center">
+						<h4 class="mb-0">最近的交易</h4>
+					</div>
+					<div class="card-body">
+						<div class="btn-group mb-3" role="group">
+							<button type="button" class="btn btn-secondary" data-type="job">工作訂單</button>
+							<button type="button" class="btn btn-secondary"
+								data-type="service">服務訂單</button>
+							<button type="button" class="btn btn-secondary"
+								data-type="course">課程訂單</button>
+							<button type="button" class="btn btn-secondary" data-type="event">活動訂單</button>
+						</div>
+
+						<!-- 交易記錄列表 -->
+						<div id="transactionTable">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>訂單ID</th>
+										<th>創建時間</th>
+										<th>金額</th>
+										<th>狀態</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="transactionTableBody">
+									<!-- 這裡將由 JavaScript 動態生成 -->
+								</tbody>
+							</table>
+
+						</div>
+						<div id="noTransactionsMessage" class="text-center"
+							style="display: none;">
+							<p class="mt-2">無交易記錄</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 引入彈窗、頁尾 -->
+	<div th:replace="~{model/frontend/signModal}"></div>
+	<div th:replace="~{model/frontend/footer}"></div>
+
+	<!-- 返回頂部 -->
+	<a href="#" class="scroll-top btn-hover"><i
+		class="lni lni-chevron-up"></i></a>
+
+	<!-- 引入JS腳本 -->
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+	<script th:src="@{/js/frontend/main.js}"></script>
+
+	<!-- 添加按鈕點擊事件 -->
+	<script>
+    $(document).ready(function () {
+        // 頁面加載後自動獲取所有 JobOrder
+        fetchJobOrders();
+
+        function fetchJobOrders() {
+            $.ajax({
+                url: '/ProFit/allOrder/jobOrders',  // 這是控制器的 API 路徑
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    updateTransactionTable(response);  // 更新表格
+                },
+                error: function (xhr, status, error) {
+                    console.error('獲取訂單記錄時發生錯誤:', error);
+                }
+            });
+        }
+
+        // 動態生成表格內容
+        function updateTransactionTable(orders) {
+    var tableBody = '';
+    if (orders.length > 0) {
+        orders.forEach(function (order) {
+            var jobOrderDate = order.formattedJobOrderDate || '無';
+            var jobOrderStatus = order.jobOrderStatus || '未知';
+            var jobAmount = order.jobAmount || '0';
+            
+            tableBody += `
+                <tr>
+                    <td>${order.jobOrdersId}</td>
+                    <td>${jobOrderDate}</td>
+                    <td>NT$${jobAmount}</td>
+                    <td>${jobOrderStatus}</td>
+                    <td><button class="btn btn-primary btn-sm">操作</button></td>
+                </tr>`;
+        });
+        $('#transactionTableBody').html(tableBody);
+        $('#noTransactionsMessage').hide();
+        $('#transactionTable').show();
+    } else {
+        $('#transactionTableBody').empty();
+        $('#transactionTable').hide();
+        $('#noTransactionsMessage').show();
+    }
+}
+
+    });
+</script>
+
+</body>
+</html>
