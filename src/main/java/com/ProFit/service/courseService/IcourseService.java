@@ -34,6 +34,6 @@ public interface IcourseService {
 
 	// 查詢全部課程By多條件查詢，並回傳page
 	public Page<CoursesDTO> searchCoursesPage(@Param("courseName") String courseName, String userName, String status,
-			Integer userId, Integer category, String sort, Integer pageNumber, Integer pageSize);
+			Integer userId, Integer category, String sort, String sortBy, Integer pageNumber, Integer pageSize);
 
 }

@@ -113,14 +113,14 @@ public class CourseFrontend {
             @RequestParam(defaultValue = "Active") String courseStatus,
             @RequestParam(required = false) Integer courseMajor,
             @RequestParam(defaultValue = "ASC") String sort,
+            @RequestParam(defaultValue = "courseEndDate") String sortBy,
             @RequestParam(defaultValue = "1") Integer pageNumber,
             @RequestParam(defaultValue = "12") Integer pageSize) {
-
         System.out.println(pageNumber);
 
         Page<CoursesDTO> searchCoursesPage = courseService.searchCoursesPage(courseName, courseCreateUserName,
                 courseStatus, null,
-                courseMajor, sort, pageNumber, pageSize);
+                courseMajor, sort, sortBy, pageNumber, pageSize);
 
         return searchCoursesPage;
     }
