@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(JobsFrontController.URL)
@@ -53,4 +55,15 @@ public class JobsFrontController {
         return "jobsVIEW/frontEnd/jobDetails";
     }
 
+    @GetMapping({"/new", "/edit/{id}"})
+    public String newJobs(Model model, @PathVariable Optional<Integer> id){
+        Jobs jobs = null;
+        if (id.isPresent()){
+            jobs = jobsService.findById(id.get()).orElse(null);
+        } else {
+            jobs = new Jobs();
+        }
+        model.addAttribute("job", jobs);
+        return "jobsVIEW/frontEnd/jobPost";
+    }
 }

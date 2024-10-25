@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title th:text="${courseDTO.courseName}"></title>
+    <title th:text="${serviceDTO.serviceTitle}"></title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
@@ -46,101 +46,103 @@
     <section class="section blog-single">
         <div class="container">
             <div class="mb-3"
-                th:utext="|<a href='/ProFit/course'>全部課程></a> <span>${courseDTO.courseCategoryName}></span> <span>${courseDTO.courseName}</span>|">
+                th:utext="|<a href='/ProFit/c/Service'>所有服務></a> <span>${serviceDTO.userMajor.major.categoryName}></span> <span>${serviceDTO.userMajor.major.majorName}</span>|">
             </div>
             <div class="row">
                 <div class="col-lg-8">
                     <div class="single-inner">
-                        <div class="post-thumbnils">
-                            <img th:src="${courseDTO.courseCoverPictureURL}" alt="#">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="post-thumbnils d-flex justify-content-center align-items-center"  style="height: 100%;">
+                                    <img th:src="${serviceDTO.servicePictureURL1}" alt="#">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 post-details">
+                                <div class="detail-inner">
+                                    <div>
+                                        <h2 class="post-title serviceName" th:text="${serviceDTO.serviceTitle}"
+                                            th:data-serviceid="${serviceDTO.serviceId}"></h2>
+                                    </div>
+                                    <div>
+                                        <ul class="post-meta">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="lni lni-calendar"></i>
+                                                    <span
+                                                        th:text="|更新日期: ${#temporals.format(serviceDTO.serviceUpdateDate, 'yyyy 年 MM 月 dd 日')}|"></span>
+                                                </a>
+                                            </li>
+                                            <hr>
+                                            <li>
+                                                <span>服務報價：</span>
+                                                <span th:text="|$ ${serviceDTO.servicePrice}|" style="font-size: 22px; color: rgb(240, 16, 0); font-weight: 800;"></span>
+                                                <span th:text="|  /  ${serviceDTO.serviceUnitName}"></span>
+                                            </li>
+                                            <hr>
+                                            <!-- <li>
+                                                <span>服務評分：</span>
+                                                <span th:text="|$ ${serviceDTO.servicePrice} / |">132</span>
+                                            </li> -->
+                                            <li>
+                                                <span>執行時間：</span>
+                                                <span th:text="|${serviceDTO.serviceDuration} 天|">123</span>
+                                            </li>
+                            
+                                        </ul>
+                                        <div class="mt-3">
+                                            <a id="sendMsg" href="#" style="width:150px;" class="btn btn-outline-danger" type="button"
+                                                th:text="'諮詢'">
+                                            </a>
+                                            <a id="buyNow" href="#" style="width:150px;" class="btn btn-danger" type="button"
+                                                th:text="'委託合作'">
+                                            </a>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
+
+                    </div>
+
+
+                    <div class="single-inner" style="padding-top: 0; margin-top: 5px;">
+
                         <div class="post-details">
                             <div class="detail-inner">
-                                <h2 class="post-title courseName" th:text="${courseDTO.courseName}"
-                                    th:data-courseid="${courseDTO.courseId}"></h2>
+
                                 <!-- post meta -->
-                                <ul class="custom-flex post-meta">
-                                    <li>
-                                        <a href="#">
-                                            <i class="lni lni-calendar"></i>
-                                            <span
-                                                th:text="|截止日: ${#temporals.format(courseDTO.courseEndDate, 'yyyy 年 MM 月 dd 日')}|"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#commentSpace">
-                                            <i class="lni lni-comments"></i>
-                                            <span th:text="|${courseGradeDTOList.totalElements} 則留言|"></span>
-                                        </a>
-                                    </li>
-                                    <!-- <li>
-                                        <a href="#">
-                                            <i class="lni lni-eye"></i>
-                                            55 次購買
-                                        </a>
-                                    </li> -->
-                                </ul>
-                                <h3 class="mt-3">課程資訊: </h3>
-                                <p th:text="${courseDTO.courseInformation}"></p>
-                                <h3>課程大綱: </h3>
-                                <div class="accordion" id="accordionPanelsStayOpenExample">
-                                    <th:block th:each=" courseModuleDTO,courseModuleStatus : ${CourseModuleDTOList}">
+                                <h3 class="mt-3">服務內容 : </h3>
+                                <p th:text="${serviceDTO.serviceContent}"></p>
+                                
+                                <!-- <h3 class="mt-3">其他服務 : </h3>
+                                <p th:text="${serviceDTO.serviceContent}"></p> -->
 
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    th:data-bs-target="|#panelsStayOpen-collapse${courseModuleStatus.index+1}|"
-                                                    aria-expanded="false"
-                                                    th:aria-controls="|panelsStayOpen-collapse${courseModuleStatus.index+1}|"
-                                                    th:text="|第${courseModuleStatus.index+1}章: ${courseModuleDTO.courseModuleName}|">
-                                                </button>
-                                            </h2>
-                                            <div th:id="|panelsStayOpen-collapse${courseModuleStatus.index+1}|"
-                                                class="accordion-collapse collapse">
-                                                <!-- 遍歷 moduleLessonsMap2 -->
-                                                <th:block th:each="lessonEntry : ${courseModuleDTO.moduleLessonsMap}">
-                                                    <div class="accordion-body d-flex justify-content-between">
-                                                        <!-- 使用 lessonEntry.key 來顯示 lesson ID -->
-                                                        <strong
-                                                            th:text="|單元名稱: ${lessonEntry.value.courseLessonName}|"></strong>
-                                                        <!-- 使用 lessonEntry.value 中的 mediaDuration 屬性顯示學習時長 -->
-                                                        <span
-                                                            th:text="|學習時長: ${lessonEntry.value.mediaDuration} 分鐘|"></span>
-                                                    </div>
-                                                </th:block>
-                                            </div>
-                                        </div>
-                                    </th:block>
+                                <h3 class="mt-3">服務說明: </h3>
+                                <div class="post-thumbnils d-flex justify-content-center align-items-center"  style="height: 100%;">
+                                    <img th:src="${serviceDTO.servicePictureURL1}" alt="#">
                                 </div>
-
-                                <h3 class="mt-3">課程內容: </h3>
-                                <p th:text="${courseDTO.courseDescription}"></p>
-                                <!-- post quote -->
-                                <h3>關於講師: </h3>
-                                <blockquote class="d-flex">
-                                    <div class="rounded-circle overflow-hidden" style="width: 80px; height: 80px;">
-                                        <img class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;"
-                                            th:src="${courseDTO.courseCreaterPictureURL}" alt="">
-                                    </div>
-                                    <div style="margin-left: 20px;">
-                                        <h4 class="" th:text="|講師姓名: ${courseDTO.courseCreaterName}|"></h4>
-                                        <span>擁有10年業界經驗。</span>
-                                        <img class="shape" th:src="@{/images/testimonial/patern1.png}" alt="#">
-                                    </div>
-                                </blockquote>
+                                <div class="post-thumbnils d-flex justify-content-center align-items-center"  style="height: 100%;">
+                                    <img th:src="${serviceDTO.servicePictureURL2}" alt="#">
+                                </div>
+                                <div class="post-thumbnils d-flex justify-content-center align-items-center"  style="height: 100%;">
+                                    <img th:src="${serviceDTO.servicePictureURL3}" alt="#">
+                                </div>
+                                
+                                
                                 <!--post tags -->
-                                <div class="post-tags-media mt-3" id="commentSpace">
+                                <!-- <div class="post-tags-media mt-3" id="commentSpace">
                                     <div class="post-tags popular-tag-widget mb-xl-40">
                                         <h5 class="tag-title">相關專業</h5>
                                         <div class="tags">
                                             <a href="#" th:text="${courseDTO.courseCategoryName}">Popular</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- Comments -->
-                            <div class="post-comments">
+                            <!-- <div class="post-comments">
                                 <h3 class="comment-title"><span>來自其他學生的評價</span></h3>
                                 <ul class="comments-list">
                                     <th:block th:each="courseGradeDTO,status:${courseGradeDTOList}">
@@ -167,29 +169,80 @@
                                         </li>
                                     </th:block>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
                 <aside class="col-lg-4 col-md-12 col-12">
                     <div class="sidebar">
+                        <div class="widget popular-feeds">
+
+                            <div
+                                class="d-flex flex-column justify-content-evenly  align-items-center single-popular-feed">
+                                <div class="rounded-circle overflow-hidden" style="width: 80px; height: 80px;">
+                                    <img class="img-fluid" style="object-fit: cover; width: 100%; height: 100%;"
+                                        th:src="${serviceDTO.userMajor.user.userPictureURL}" alt="">
+                                </div>
+                                <h4 class="" th:text="|${serviceDTO.userMajor.user.userName}|"></h4>
+                            </div>
+
+                            <div class="popular-feed-loop">
+
+                                <div class="single-popular-feed">
+                                    <div class="feed-desc">
+                                        <h6 class="post-title"><a href="#">Tips to write an impressive resume online for
+                                                beginner</a></h6>
+                                        <span class="time"><i class="lni lni-calendar"></i> 05th Nov 2023</span>
+                                    </div>
+                                </div>
+                                <div class="single-popular-feed">
+                                    <div class="feed-desc">
+                                        <h6 class="post-title"><a href="#">10 most important SEO focus areas for
+                                                colleges
+                                                and universities</a></h6>
+                                        <span class="time"><i class="lni lni-calendar"></i> 24th March 2023</span>
+                                    </div>
+                                </div>
+                                <div class="single-popular-feed">
+                                    <div class="feed-desc">
+                                        <h6 class="post-title"><a href="#">7 things you should never say to your boss in
+                                                your joblife</a></h6>
+                                        <span class="time"><i class="lni lni-calendar"></i> 30th Jan 2023</span>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <a id="sendMsg2" href="#" style="width:200px" class="btn btn-outline-danger" type="button"
+                                        th:text="'諮詢'">
+                                    </a>
+                                </div>
+                                <div class="mt-3">
+                                    <a id="buyNow2" href="#" style="width:200px" class="btn btn-danger" type="button"
+                                        th:text="'委託合作'">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="widget search-widget">
                             <h5 class="widget-title"><span>購買這堂課</span></h5>
                             <div class="d-flex">
                                 <p>優惠價:</p>
-                                <h4 id="price" th:data-price="${courseDTO.coursePrice}">NT$</h4>
+                                <h4 id="price" th:data-price="${serviceDTO.servicePrice}">NT$</h4>
                             </div>
                             <div class="mt-3">
-                                <a id="buyNow"
-                                    th:href="${courseDTO.courseStatus == 'Active' ? '/ProFit/course/purchase?courseId=' + courseDTO.courseId : '#'}"
-                                    style="width:200px" class="btn btn-primary" type="button"
-                                    th:text="${courseDTO.courseStatus == 'Active' ? '立即購買' : '未開課'}"
-                                    th:classappend="${courseDTO.courseStatus != 'Active' ? ' disabled' : ''}">
+                                <a id="sendMsg3" href="#" style="width:200px" class="btn btn-outline-danger" type="button"
+                                    th:text="'諮詢'">
+                                </a>
+                            </div>
+                            <div class="mt-3">
+                                <a id="buyNow3" href="#" style="width:200px" class="btn btn-danger" type="button"
+                                    th:text="'委託合作'">
                                 </a>
                             </div>
                         </div>
 
-                        <div class="widget categories-widget">
+                        <!-- <div class="widget categories-widget">
                             <h5 class="widget-title"><span>查看更多專業課程</span></h5>
                             <ul class="custom">
                                 <th:block th:each="courseCategory : ${allCourseCategoryList}">
@@ -200,7 +253,7 @@
                                     </li>
                                 </th:block>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 </aside>
             </div>

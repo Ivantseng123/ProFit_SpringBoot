@@ -104,7 +104,6 @@ public class UserTransactionService {
 	}
 
 	// 插入交易
-	// 插入交易
 	public void insertTransaction(UserTransactionDTO transactionDTO) {
 		double platformFee = 0; // 預設平台費用為0
 
@@ -133,6 +132,15 @@ public class UserTransactionService {
 			} else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
 				user.setUserBalance((int) (user.getUserBalance() - target_income)); // 轉換為整數
 			}
+			
+			 try {
+			        // 保存交易記錄
+			        transactionRepository.save(transaction);
+			        System.out.println("交易已成功保存, 交易ID: " + transaction.getTransactionId());
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			        System.out.println("保存交易失敗: " + e.getMessage());
+			    }
 
 			// 保存更新後的用戶信息
 			userService.updateUserBalance(user);
@@ -143,21 +151,21 @@ public class UserTransactionService {
 
 		// 檢查交易類型是否為 'payment'，並生成發票
 		if ("payment".equals(transactionDTO.getTransactionType())) {
-			transactionDTO.setTransactionId(transaction.getTransactionId());
-			generateInvoice(transactionDTO);
-		}
+	        transactionDTO.setTransactionId(transaction.getTransactionId()); // 保存後獲取交易ID
+	        generateInvoice(transactionDTO); // 傳入 transactionDTO 時已經有交易ID
+	    }
 	}
 
 	// 生成發票
 	private void generateInvoice(UserTransactionDTO transactionDTO) {
-		InvoiceDTO invoiceDTO = new InvoiceDTO();
-		invoiceDTO.setInvoiceNumber(generateInvoiceNumber()); // 生成一個唯一的發票號
-		invoiceDTO.setInvoiceAmount(transactionDTO.getTotalAmount().intValue()); // 使用交易總金額作為發票金額
-		invoiceDTO.setInvoiceStatus("open"); // 設置發票狀態
-		invoiceDTO.setTransactionId(transactionDTO.getTransactionId()); // 設置對應的交易 ID
+	    InvoiceDTO invoiceDTO = new InvoiceDTO();
+	    invoiceDTO.setInvoiceNumber(generateInvoiceNumber()); // 生成一個唯一的發票號
+	    invoiceDTO.setInvoiceAmount(transactionDTO.getTotalAmount().intValue()); // 使用交易總金額作為發票金額
+	    invoiceDTO.setInvoiceStatus("open"); // 設置發票狀態
+	    invoiceDTO.setTransactionId(transactionDTO.getTransactionId()); // 設置對應的交易 ID
 
-		// 調用 InvoiceService 生成發票
-		invoiceService.insertInvoice(invoiceDTO);
+	    // 調用 InvoiceService 生成發票
+	    invoiceService.insertInvoice(invoiceDTO);
 	}
 
 	// 生成唯一發票號的簡單方法
@@ -332,4 +340,65 @@ public class UserTransactionService {
                 userId, "withdrawal", "completed");
         return paidTransactions.stream().mapToDouble(UserTransactionBean::getTargetIncome).sum();
     }
+    
+    // 前台取款
+    public String createWithdrawalTransaction(Integer userId, int amount) {
+        // 獲取當前用戶的可提領金額
+        Users user = userService.getUserInfoByID(userId);
+        int userBalance = user.getUserBalance();
+
+        // 檢查可提領金額是否足夠
+        if (userBalance < amount) {
+            return "error: 可提領金額不足";
+        }
+
+        // 繼續創建取款交易
+        UserTransactionDTO transaction = new UserTransactionDTO();
+        transaction.setUserId(userId);
+        transaction.setTransactionType("withdrawal");
+        transaction.setTotalAmount((double) amount);
+        transaction.setTransactionStatus("pending");
+        transaction.setOrderType("withdrawal");
+        transaction.setPaymentMethod("withdrawal");
+        transaction.setTransactionRole("receiver");
+
+        // 插入交易記錄到資料庫
+        try {
+            insertTransaction(transaction);
+        } catch (Exception e) {
+            return "error: 插入交易記錄失敗，請稍後再試";
+        }
+
+        // 更新用戶餘額
+        user.setUserBalance(userBalance - amount);
+        userService.updateUserBalance(user);
+        
+        return "success";
+    }
+
+    public void deleteTransaction1(String transactionId) {
+        // 查找交易記錄
+        UserTransactionBean transaction = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new RuntimeException("交易記錄不存在，無法刪除"));
+
+        // 獲取交易對應的用戶
+        Users user = userService.getUserInfoByID(transaction.getUserId());
+        if (user != null) {
+            Integer targetIncome = transaction.getTargetIncome().intValue(); // 假設 targetIncome 是整數
+
+            // 根據交易類型調整用戶餘額
+            if ("deposit".equals(transaction.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() - targetIncome);
+            } else if ("withdrawal".equals(transaction.getTransactionType())) {
+                user.setUserBalance(user.getUserBalance() + targetIncome);
+            }
+
+            // 保存更新後的用戶資訊
+            userService.updateUserBalance(user);
+        }
+
+        // 刪除交易記錄
+        transactionRepository.deleteById(transactionId);
+    }
+
 }

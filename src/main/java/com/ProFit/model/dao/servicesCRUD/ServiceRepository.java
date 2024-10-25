@@ -49,6 +49,10 @@ public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 	@Query("SELECT s FROM ServiceBean s WHERE s.userMajor.major.majorCategory.majorCategoryId = :categoryId")
 	Page<ServiceBean> findByMajorCategoryId(@Param("categoryId") Integer categoryId, Pageable pageable);
 
+	// 根據 MajorCategoryID 和 status 查詢服務（分頁）
+	@Query("SELECT s FROM ServiceBean s WHERE s.userMajor.major.majorCategory.majorCategoryId = :categoryId AND s.serviceStatus = :serviceStatus")
+	Page<ServiceBean> findByMajorCategoryId(@Param("categoryId") Integer categoryId, @Param("serviceStatus") Integer serviceStatus, Pageable pageable);
+
 	// 根據用戶ID和專業ID查詢服務（分頁）
 	Page<ServiceBean> findByUserIdAndMajorId(Integer userId, Integer majorId, Pageable pageable);
 
@@ -86,4 +90,8 @@ public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 		@Param("majorCategoryId") Integer majorCategoryId,
         Pageable pageable
 	);
+
+
+	// 查詢 一個majorId 下的 服務數量
+	Integer countByMajorIdAndServiceStatus(Integer majorId, Integer ServiceStatus);
 }

@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    console.log($('#categorySpace').length)
+    // console.log($('#categorySpace').length);
 
     // 清空當前表格
     $('.categorySpace').empty();
@@ -11,7 +11,7 @@ $(document).ready(function () {
         type: 'GET',
         success: function (allServiceCategoryList) {
 
-            console.log(allServiceCategoryList)
+            // console.log(allServiceCategoryList)
             // 寫入類別
             htmlMakerForCategory(allServiceCategoryList);
 
@@ -35,14 +35,14 @@ $(document).ready(function () {
     $.ajax({
         url: '/ProFit/c/service/api/searchAll',
         data: {
-            "majorCategoryId": 100,
+            // "majorCategoryId": 100,
             "size": 12
         },
         dataType: 'JSON',
         type: 'POST',
         success: function (searchServicesPage) {
-            console.log(searchServicesPage);
-            console.log(searchServicesPage.content);
+            // console.log(searchServicesPage);
+            // console.log(searchServicesPage.content);
 
             // 清空當前表格
             $('#search-results').empty();
@@ -67,6 +67,16 @@ $(document).on('click', '.single-cat', function () {
 
 });
 
+$(document).on('click', '.majorId', function () {
+    console.log(this);
+    let majorId = $(this).data('majorid');
+
+    console.log(majorId);
+
+    loadThatMajorPage(majorId);
+
+});
+
 
 function formatPrice(number) {
     return Math.round(number).toLocaleString('zh-TW');
@@ -83,13 +93,13 @@ function htmlMakerForServices(searchServicesPage) {
     searchServicesPage.content.forEach(function (service) {
 
         $('#search-results').append(`
-            <div class="col-lg-4 col-md-4 col-12">
+            <div class="col-lg-3 col-md-4 col-12">
                 <div class="single-news wow fadeInUp" data-wow-delay=".3s">
                     <div class="image">
                          <img class="thumb" src="${service.servicePictureURL1}" alt="#">
                     </div>
                     <div class="content-body">
-                        <h3 id="serviceTitle" class="title text-center"><a href="#">${service.serviceTitle}</a></h3>
+                        <h4 id="serviceTitle" class="title text-center"><a href="#">${service.serviceTitle}</a></h4>
                         <div class="mt-3 d-flex justify-content-between align-items-center">
                                 <h5 class="coursePrice mb-1">NT$ ${formatPrice(service.servicePrice)} / ${service.serviceUnitName}</h5>
                         </div>
@@ -104,7 +114,7 @@ function htmlMakerForServices(searchServicesPage) {
                         </div>
                         
                         <div class="mt-3 d-flex justify-content-between align-items-center">
-                        <a href="/ProFit/course/${service.courseId}" class="btn btn-danger btn-sm">報價詳情</a>
+                        <a href="/ProFit/c/service/${service.serviceId}" class="btn btn-danger btn-sm">報價詳情</a>
                          </div>
                     </div>
                 </div>
@@ -160,7 +170,7 @@ function loadThatPage(pageNum) {
         dataType: 'JSON',
         type: 'POST',
         success: function (searchServicesPage) {
-            console.log(searchServicesPage);
+            // console.log(searchServicesPage);
 
             // 清空當前表格
             $('#search-results').empty();
@@ -217,7 +227,7 @@ function htmlMakerForCategory(allServiceCategoryList) {
                         <h6 class="categoryId text-center mt-1" data-categoryid="${serviceCategory.majorCategoryId}">${serviceCategory.categoryName}</h6>
                     </div>
                     <div class="bottom-side text-center mt-2">
-                        <span></span> <span class="available-job">(${serviceCategory.serviceCount}筆)</span>
+                        <span class="available-job">(${serviceCategory.serviceCount}筆)</span>
                     </div>
                 </a>
             </div>`);
@@ -228,15 +238,16 @@ function htmlMakerForCategory(allServiceCategoryList) {
 
 function loadThatCategoryPage(categoryId) {
 
+    // 根據選擇的 參數 渲染 搜尋結果
     $.ajax({
         url: '/ProFit/c/service/api/searchAll',
         data: {
-            "courseMajor": categoryId
+            "majorCategoryId": categoryId,
         },
         dataType: 'JSON',
         type: 'POST',
-        success: function (searchCoursesPage) {
-            console.log(searchCoursesPage);
+        success: function (searchServicesPage) {
+            // console.log(searchServicesPage);
 
             // 清空當前表格
             $('#search-results').empty();
@@ -247,14 +258,14 @@ function loadThatCategoryPage(categoryId) {
 
             // 寫入標題
             $('#courseheader').append(`
-                <a href="/ProFit/course">全部課程</a>
-                > ${searchCoursesPage.content[0].courseCategoryName}`);
+                <a href="/ProFit/course">所有服務報價</a>
+                > ${searchServicesPage.content[0].userMajor.major.categoryName}`);
 
             // 寫入查詢結果
-            htmlMakerForCourses(searchCoursesPage);
+            htmlMakerForServices(searchServicesPage);
 
             // 更新按鈕狀態
-            updatePaginationButtons(searchCoursesPage);
+            updatePaginationButtons(searchServicesPage);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -265,4 +276,78 @@ function loadThatCategoryPage(categoryId) {
 
     })
 
+    // 根據選擇的專業類別, 更新左側專業選項
+    $.ajax({
+        url: `/ProFit/c/service/api/searchMajorByMajorCategory/${categoryId}`,
+        dataType: 'JSON',
+        type: 'GET',
+        success: function (majorDTOList) {
+            console.log(majorDTOList);
+
+            //更新左側專業選項html
+            // 清空現有的選項
+            let $categoryList = $('.widget.categories-widget ul.custom');
+            $categoryList.empty();
+
+            // 顯示左側專業欄
+            // document.getElementById("majorList").removeAttribute("hidden");
+
+            // 動態添加新的選項
+            majorDTOList.forEach(function (major) {
+                let listItem = `<li>
+                                <a class="majorId" href="#" data-majorid="${major.majorId}">${major.majorName}<span>${major.serviceCount}</span></a>
+                            </li>`;
+                $categoryList.append(listItem);
+            });
+
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // 處理錯誤
+            console.error('查詢失敗:', textStatus, errorThrown);
+            alert('查詢失敗，請重試。');
+        }
+
+    })
+
+}
+
+function loadThatMajorPage(majorId) {
+
+    // 根據選擇的 參數 渲染 搜尋結果
+    $.ajax({
+        url: '/ProFit/c/service/api/searchAll',
+        data: {
+            "majorIdList": [majorId],
+        },
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (searchServicesPage) {
+            // console.log(searchServicesPage);
+
+            // 清空當前表格
+            $('#search-results').empty();
+            $('.pagination-list').empty();
+
+            // 清空當前標題
+            $('#courseheader').empty();
+
+            // 寫入標題
+            $('#courseheader').append(`
+                <a href="/ProFit/course">所有服務報價</a>
+                > ${searchServicesPage.content[0].userMajor.major.categoryName} > ${searchServicesPage.content[0].userMajor.major.majorName}`);
+
+            // 寫入查詢結果
+            htmlMakerForServices(searchServicesPage);
+
+            // 更新按鈕狀態
+            updatePaginationButtons(searchServicesPage);
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            // 處理錯誤
+            console.error('查詢失敗:', textStatus, errorThrown);
+            alert('查詢失敗，請重試。');
+        }
+    })
 }
