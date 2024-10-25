@@ -43,7 +43,7 @@ public class JobsApplicationDTO {
 
         dto.setJobsApplicationDate(entity.getJobsApplicationDate());
         dto.setJobsApplicationStatus(entity.getJobsApplicationStatus());
-        dto.setJobsApplicationContract(entity.getJobsApplicationContract());
+//        dto.setJobsApplicationContract(entity.getJobsApplicationContract());
 
         // 轉換專案列表
 //        if (entity.getProjects() != null) {

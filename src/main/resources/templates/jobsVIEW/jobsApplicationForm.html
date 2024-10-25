@@ -17,38 +17,39 @@
     </ol>
     <div class="card mb-4">
         <div class="card-body">
-            <!-- 職缺表單 -->
+            <!-- 職缺申請表單 -->
             <form id="jobsApplication">
                 <!-- 職缺申請 ID -->
                 <input type="hidden" id="jobsApplicationId" name="jobsApplicationId" th:value="${job.jobsId}" />
 
 
-                <!-- 刊登方 ID -->
+                <!-- 刊登者 -->
                 <div class="mb-3">
-                    <label for="posterId" class="form-label">刊登方 ID</label>
+                    <label for="posterId" class="form-label">刊登者</label>
                     <input type="text" class="form-control" id="posterId" name="posterId" th:value="${job.users.poster}" readonly />
                 </div>
 
-                <!-- 應徵方 ID -->
+                <!-- 應徵者 -->
                 <div class="mb-3">
-                    <label for="applicantId" class="form-label">應徵方 ID</label>
+                    <label for="applicantId" class="form-label">應徵者</label>
                     <input type="text" class="form-control" id="applicantId" name="applicantId" th:value="${job.users.applicant}" readonly />
                 </div>
-                <!-- 發布日期 -->
+
+                <!-- 申請日期 -->
                 <div class="mb-3">
-                    <label for="jobsApplicationDate" class="form-label">發布日期</label>
+                    <label for="jobsApplicationDate" class="form-label">申請日期</label>
                     <input type="date" class="form-control" id="jobsApplicationDate" name="jobsApplicationDate" th:value="${job.jobsApplicationDate}" readonly />
                 </div>
 
                 <!-- 職缺申請狀態 -->
                 <div class="mb-3">
-                    <label for="jobsStatus" class="form-label">職缺狀態</label>
+                    <label for="jobsStatus" class="form-label">職缺申請狀態</label>
                     <input type="text" class="form-control" id="jobsStatus" name="jobsStatus" th:value="${job.jobsStatus == 0 ? '開放中' : '已關閉'}" readonly />
                 </div>
 
-                <!-- 職缺申請合約 -->
+                <!-- 申請合約 -->
                 <div class="mb-3">
-                    <label for="jobsApplicationContract" class="form-label">工作合約</label>
+                    <label for="jobsApplicationContract" class="form-label">申請合約</label>
                     <input type="text" class="form-control" id="jobsApplicationContract" name="jobsApplicationContract" th:value="${job.jobsApplicationContract}" readonly />
                 </div>
 

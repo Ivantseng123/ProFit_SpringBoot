@@ -31,16 +31,13 @@ public class JobsApplicationProject {
 	    @Column(name = "jobs_application_project_id")
 	    private int jobsApplicationProjectId;
 
-	    
-//	    @Column(name ="jobs_application_id" )
-//	    private JobsApplication jobsApplicationId;
-	    
+
 	    @ManyToOne(fetch = FetchType.LAZY)//FK,一個申請對應到一個申請項目
 	    // cascade = CascadeType.ALL會同步更新刪除
 	    @JoinColumn(name = "jobs_application_id")
 	    private JobsApplication jobsApplication;
-	    
-	    
+
+
 	    //一個狀態對應到一個申請項目
 	    @Column(name = "jobs_application_status")
 	    private Byte jobsApplicationStatus = 0;
@@ -50,13 +47,12 @@ public class JobsApplicationProject {
 
 	    @Column(name = "jobs_amount")
 	    private Integer jobsAmount;
-	    
-	    
-	    
-	    
+
+
+
+
 	    public JobsApplicationProject() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 
 
@@ -85,7 +81,7 @@ public class JobsApplicationProject {
 
 		public void setJobsApplication(JobsApplication jobsApplication) {
 			this.jobsApplication = jobsApplication;
-			
+
 		}
 
 
@@ -129,7 +125,7 @@ public class JobsApplicationProject {
 		public void setJobsAmount(Integer jobsAmount) {
 			this.jobsAmount = jobsAmount;
 		}
-	    
-	
+
+
 
 }

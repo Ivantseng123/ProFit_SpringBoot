@@ -81,28 +81,22 @@ CREATE TABLE jobs (
 );
 
 
--- CREATE TABLE [dbo].[jobs_application] (
---     [jobs_application_id]         INT             IDENTITY (1, 1) NOT NULL,
---     [jobs_application_posting_id] INT             NOT NULL,
---     [jobs_application_member_id]  INT             NOT NULL,
---     [jobs_application_date]       DATE            CONSTRAINT [DEFAULT_jobs_application_jobs_application_date] DEFAULT (getdate()) NULL,
---     [jobs_application_status]     TINYINT         DEFAULT ((0)) NULL,
---     [jobs_application_contract]   VARBINARY (MAX) NULL,
---     PRIMARY KEY CLUSTERED ([jobs_application_id] ASC),
---     CONSTRAINT [FK_jobs_application_member_id] FOREIGN KEY ([jobs_application_member_id]) REFERENCES [dbo].[users] ([user_id]),
---     CONSTRAINT [FK_jobs_application_posting_id] FOREIGN KEY ([jobs_application_posting_id]) REFERENCES [dbo].[users] ([user_id])
--- );
+
 CREATE TABLE [dbo].[jobs_application] (
-    [jobs_application_id]         INT             IDENTITY (1, 1) NOT NULL,
-    [jobs_application_posting_id] INT             NOT NULL,
-    [jobs_application_member_id]  INT             NOT NULL,
-    [jobs_application_date]       DATE            CONSTRAINT [DEFAULT_jobs_application_jobs_application_date] DEFAULT (getdate()) NULL,
-    [jobs_application_status]     TINYINT         DEFAULT ((0)) NULL,
-    [jobs_application_contract]   VARBINARY (MAX) NULL,
+    [jobs_application_id]        INT             IDENTITY (1, 1) NOT NULL,
+    [jobs_application_jobs_id]   INT             NOT NULL,
+    [jobs_application_member_id] INT             NOT NULL,
+    [jobs_application_date]      DATETIME2 (7)   CONSTRAINT [DEFAULT_jobs_application_jobs_application_date] DEFAULT (dateadd(hour,(8),getdate())) NULL,
+    [jobs_application_status]    TINYINT         CONSTRAINT [DF_jobs_application_status] DEFAULT ((0)) NULL,
+    [jobs_application_contract]  varchar(MAX) NULL,
     PRIMARY KEY CLUSTERED ([jobs_application_id] ASC),
-    CONSTRAINT [FK_jobs_application_member_id] FOREIGN KEY ([jobs_application_member_id]) REFERENCES [dbo].[users] ([user_id]),
-    CONSTRAINT [FK_jobs_application_posting_id] FOREIGN KEY ([jobs_application_posting_id]) REFERENCES [dbo].[users] ([user_id])
+    FOREIGN KEY ([jobs_application_member_id]) REFERENCES [dbo].[users] ([user_id]),
+    CONSTRAINT [FK_jobs_application_jobs_id] FOREIGN KEY ([jobs_application_jobs_id]) REFERENCES [dbo].[users] ([user_id])
     );
+
+
+GO
+ALTER TABLE [dbo].[jobs_application] NOCHECK CONSTRAINT [FK_jobs_application_jobs_id];
 
 
 

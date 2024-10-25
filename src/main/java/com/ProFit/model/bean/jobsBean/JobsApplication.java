@@ -39,18 +39,12 @@ public class JobsApplication implements java.io.Serializable{
 
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個職缺對應到多個申請
-	  @JoinColumn(name = "jobs_application_posting_id")
+	  @JoinColumn(name = "jobs_application_jobs_id")
 	  private Jobs jobs;//不確定是不是Jobs
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對USER表，一個應徵者對應到多個申請
 	  @JoinColumn(name = "jobs_application_member_id")//改名為jobs_application_user_id
 	  private Users applicant;
-	  
-//	  @Column(name = "jobs_application_posting_id")
-//	  private Integer jobsApplicationPostingId;
-//
-//	  @Column(name = "jobs_application_member_id")
-//	  private Integer jobsApplicationMemberId;
 
 	  @Temporal(TemporalType.DATE)
 	  @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -63,7 +57,7 @@ public class JobsApplication implements java.io.Serializable{
 
 	  @Lob // Use @Lob for Blob data type
 	  @Column(name = "jobs_application_contract")
-	  private Blob jobsApplicationContract;
+	  private String jobsApplicationContract;
 
 	@OneToMany(mappedBy = "jobsApplication")
 	private List<JobsApplicationProject> projects;
@@ -74,8 +68,6 @@ public class JobsApplication implements java.io.Serializable{
 	}
 
 
-
-	//getter setter
 	public int getJobsApplicationId() {
 		return jobsApplicationId;
 	}
@@ -116,11 +108,11 @@ public class JobsApplication implements java.io.Serializable{
 		this.jobsApplicationStatus = jobsApplicationStatus;
 	}
 
-	public Blob getJobsApplicationContract() {
+	public String getJobsApplicationContract() {
 		return jobsApplicationContract;
 	}
 
-	public void setJobsApplicationContract(Blob jobsApplicationContract) {
+	public void setJobsApplicationContract(String jobsApplicationContract) {
 		this.jobsApplicationContract = jobsApplicationContract;
 	}
 

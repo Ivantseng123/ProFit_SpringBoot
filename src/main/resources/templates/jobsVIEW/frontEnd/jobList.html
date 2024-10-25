@@ -14,13 +14,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">職缺列表</h1>
-                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
-                            Business draws on a wide range of different business .</p>
+                        <h1 class="page-title">我們找的就是你</h1>
+                        <p>ProFit秉持著為所有人</p>
+                        <p>提供具有吸引力的職缺</p>
+                        <p>善用平台，掌握競爭力</p>
+                        <p>尋找開放創新的工作環境</p>
+                        <p>替自己打造學習與未來職涯的成長機會！</p>
                     </div>
                     <ul class="breadcrumb-nav">
-                        <li><a th:href="@{/homepage}">Home</a></li>
-                        <li>Job List</li>
+                        <li><a th:href="@{/homepage}">回到首頁</a></li>
+                        <li>職缺列表</li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +38,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-12">
                         <!-- Single Job -->
-                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index < 4}">
+                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index % 2 == 0}">
                             <div class="job-image">
                                 <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>
@@ -60,7 +63,7 @@
                     </div>
                     <div class="col-lg-6 col-12">
                         <!-- Single Job -->
-                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index > 3 and iter.index < 8}">
+                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index % 2 == 1}">
                             <div class="job-image">
                                 <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>

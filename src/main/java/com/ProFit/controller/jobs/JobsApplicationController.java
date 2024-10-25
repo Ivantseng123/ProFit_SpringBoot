@@ -1,9 +1,12 @@
 package com.ProFit.controller.jobs;
 
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.service.jobService.IJobsApplicationService;
+import com.ProFit.service.jobService.JobsService;
 import com.ProFit.service.userService.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -27,7 +31,12 @@ public class JobsApplicationController {
     public JobsApplicationController(IJobsApplicationService jobsApplicationService, IUserService userService) {
         this.jobsApplicationService = jobsApplicationService;
         this.userService = userService;
+
     }
+
+    // 依赖注入
+    @Autowired
+    private JobsService jobsService;
 
     //查詢全部
     @GetMapping("/list")
@@ -57,22 +66,34 @@ public class JobsApplicationController {
     }
 
 
+    // 導向新增頁面
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
+
+        // 創建一個新的JobsApplication對象並添加到model中
+        model.addAttribute("jobApplication", new JobsApplication());
+//        model.addAttribute("categories", categoryService.findAllMajorCategories());
+        // 返回jobsApplicationEdit視圖
+        return "jobsVIEW/jobsApplicationEdit";
+    }
+
+
     // 新增
     @PostMapping("/add")
     public ResponseEntity<JobsApplication> addJobApplication(
-            @RequestParam("jobsApplicationPostingId") Integer jobsApplicationPostingId,
+            @RequestParam("jobsApplicationJobsId") Integer jobsApplicationJobsId,
             @RequestParam("jobsApplicationMemberId") Integer jobsApplicationMemberId,
             @RequestParam("jobsApplicationDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date jobsApplicationDate,
             @RequestParam("jobsApplicationStatus") Byte jobsApplicationStatus,
-            @RequestParam("jobsApplicationContract")Blob jobsApplicationContract) {
+            @RequestParam("jobsApplicationContract")String jobsApplicationContract) {
 
-        //拿到id
-        Users poster = userService.getUserInfoByID(jobsApplicationPostingId);
+        // 获取关联实体
+        Jobs job = jobsService.findById(jobsApplicationJobsId).orElseThrow();
         Users applicant = userService.getUserInfoByID(jobsApplicationMemberId);
 
         JobsApplication jobsApplication = new JobsApplication();
 
-//        jobsApplication.setPoster(poster);
+        jobsApplication.setJobs(job);  // 设置关联的Jobs实体
         jobsApplication.setApplicant(applicant);
         jobsApplication.setJobsApplicationDate(jobsApplicationDate);
         jobsApplication.setJobsApplicationStatus(jobsApplicationStatus);
@@ -83,6 +104,8 @@ public class JobsApplicationController {
         }
 
 
+
+
         //導向查看頁面
         @GetMapping("/view/{id}")
         public String view(@PathVariable("id") Integer id, Model model){
@@ -91,35 +114,28 @@ public class JobsApplicationController {
             }
             return "jobsVIEW/jobsApplicationForm";
         }
-//
-//
-//        //導向更新頁面
-//        @GetMapping("/edit/{id}")
-//        public String edit(@PathVariable("id") Integer id, Model model){
-//            if (id != null) {
-//                model.addAttribute("job", jobsApplicationService.findById(id).orElse(null));;
-//            }
-//            return "jobsVIEW/jobsApplicationEdit";
-//        }
-//
-//
-//        //呈現更新後
-//        @PutMapping("/update/{id}")
-//        public String updateJob(@PathVariable("id") String id, @ModelAttribute Jobs updatedJob,Model model,
-//                @RequestParam("deadline") String deadline) {
-//
-//            //以下遇到時間的設定就用此寫法
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//            try {
-//                java.util.Date dateFinish = formatter.parse(deadline);
-//                updatedJobApplication.setJobsApplicationDeadline(dateFinish);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            jobsApplicationService.update(updatedJobApplication);
-//            return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
-//        }
+
+
+        //導向更新頁面
+        @GetMapping("/edit/{id}")
+        public String edit(@PathVariable("id") Integer id, Model model){
+            if (id != null) {
+                model.addAttribute("job", jobsApplicationService.findById(id).orElse(null));;
+            }
+            return "jobsVIEW/jobsApplicationEdit";
+        }
+
+
+        //呈現更新後
+        @PutMapping("/update/{id}")
+        public String updateJob(@PathVariable("id") String id,
+                                @ModelAttribute JobsApplication updatedJobApplication,
+                                Model model) {
+
+
+            jobsApplicationService.update(updatedJobApplication);
+            return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
+        }
 
 
 }

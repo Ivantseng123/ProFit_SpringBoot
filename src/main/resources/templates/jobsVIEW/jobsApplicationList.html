@@ -11,11 +11,11 @@
 <body>
 <div layout:fragment="content">
     <div class="course-header">
-        <h2>職缺管理功能</h2>
+        <h2>職缺申請列表</h2>
     <!-- 添加"新增"按鈕 -->
-    <a th:href="@{/jobs/add}" class="btn btn-sm btn-success ms-1">
-        <i class="fas fa-plus"></i> 新增職缺申請
-    </a>
+<!--    <a th:href="@{/jobs/add}" class="btn btn-sm btn-success ms-1">-->
+<!--        <i class="fas fa-plus"></i> -->
+<!--    </a>-->
 </div>
 
     <div class="table-container" id="search-results">
@@ -24,19 +24,20 @@
             <thead>
             <tr>
                 <th>編號</th>
-                <th>刊登方</th>
-                <th>應徵方</th>
+                <th>刊登者</th>
+                <th>應徵者</th>
                 <th>申請日期</th>
                 <th>職缺申請狀態</th>
-                <th>申請文件</th>
+                <th>申請合約</th>
             </tr>
             </thead>
             <tbody id="table-body">
             <th:block th:each="jobApplication : ${jobsApplicationList}">
                 <tr>
                     <td th:text="${jobApplication.jobsApplicationId}"></td>
-                    <td th:text="${jobApplication.poster.userName}"></td>
-                    <td th:text="${jobApplication.applicant.userName}"></td>
+                    <td th:text="${jobApplication.jobs.users.userName}"></td>
+<!--                    使用可选链操作符 ?. 来避免空值引起的错误-->
+                    <td th:text="${jobApplication.applicant?.userName}"></td>
                     <td th:text="${jobApplication.jobsApplicationDate}"></td>
                     <td th:text="${jobApplication.jobsApplicationStatus}"></td>
                     <td th:text="${jobApplication.jobsApplicationContract}"></td>
@@ -48,75 +49,58 @@
     </div>
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
-    $(document).ready(function (){
-        const baseUrl = /*[[@{/jobsApplication}]]*/'';
-        console.log(baseUrl);
-        $("#jobsApplicationList").DataTable({//
-            order: [0, 'asc'],
-           columns:[{
-               data: 'jobsApplicationId',
-               className: 'all'
-           },{
-               data: 'poster.userName',
-               className: 'all',
-               // render: function (data, type, row) {
-               //     return row.poster.userName;
-               // }
-           },{
-               data: 'applicant.userName',
-               className: 'all',
-               // render: function (data, type, row) {
-               //     return row.applicant.userName;
-               // }
-           },{
-               data: 'jobsApplicationDate',
-               className: 'all',
-               render: function (data, type, row) {
-                   console.log(row.jobsApplicationDate+'aaa')
-                   return row.jobsApplicationDate;
-               }
-           },{
-               data: 'jobsApplicationContract',
-               className: 'all'
-           },{
-               data: 'jobsApplicationStatus',
-               className: 'all',
-               render: function (data, type, row) {
-                   let result = '';
-                   switch (data) {
-                       case '0':
-                           result = '刊登中';
-                           break;
-                       case '1':
-                           result = '已投遞受理';
-                           break;
-                       case '2':
-                           result = '尚未審核';
-                           break;
-                   }
-                   return result;
-               }
-           },{
-               data: 'actions',
-               defaultContent: '',
-               orderable: false,
-               searchable: false,
-               render : function (data, type, row) {
-                    let result = '';
-
-                    //這裡的class就是bootstrap,就幾乎不用style
-                   //查看
-                    result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i>'
-
-                   //編輯
-                    result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i>\''
-
-                   //刪除
-                   result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i>\''
-                   return result;
-               }
-           }]
-       })
+    $("#jobsApplicationList").DataTable({
+        order: [0, 'asc'],
+        columns:[{
+            data: 'jobsApplicationId',
+            className: 'all'
+        },{
+            data: 'jobs.users.userName',  // 修改这里：正确的属性路径
+            className: 'all'
+        },{
+            data: 'applicant.userName',
+            className: 'all'
+        },{
+            data: 'jobsApplicationDate',
+            className: 'all',
+            render: function (data, type, row) {
+                return row.jobsApplicationDate;
+            }
+        },{
+            data: 'jobsApplicationContract',
+            className: 'all'
+        },{
+            data: 'jobsApplicationStatus',
+            className: 'all',
+            render: function (data, type, row) {
+                let result = '';
+                switch (data) {
+                    case '0':
+                        result = '刊登中';
+                        break;
+                    case '1':
+                        result = '已投遞受理';
+                        break;
+                    case '2':
+                        result = '尚未審核';
+                        break;
+                }
+                return result;
+            }
+        },{
+            data: 'actions',
+            defaultContent: '',
+            orderable: false,
+            searchable: false,
+            render : function (data, type, row) {
+                let result = '';
+                result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i></a>';
+                result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i></a>';
+                result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i></a>';
+                return result;
+            }
+        }]
+    });
 
         $('.deleteBtn').click(function (e){
             e.preventDefault();
@@ -152,7 +136,6 @@
                 }
             });
         })
-    });
 </script>
 </body>
 </html>

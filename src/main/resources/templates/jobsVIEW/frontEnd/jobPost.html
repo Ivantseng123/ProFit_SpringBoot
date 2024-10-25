@@ -35,43 +35,27 @@
                 <div class="col-lg-10 offset-lg-1 col-12">
                     <div class="job-information">
                         <h3 class="title">Job Information</h3>
-                        <form>
+                        <form id="editForm" th:action="${job.jobsId} ? @{/front/jobs/{id}(id=${job.jobsId})} : @{/front/jobs/new}" method="POST">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Job title*</label>
-                                        <input class="form-control" type="text" name="title">
+                                        <label>Job title</label>
+                                        <input class="form-control" type="text" th:field="${job.jobsTitle}" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Category*</label>
-                                        <select class="select">
-                                            <option value="1">UX/UI Designer</option>
-                                            <option value="2">Web Developer</option>
-                                            <option value="3">Web Designer</option>
-                                            <option value="4">Software Developer</option>
-                                            <option value="5">SEO</option>
+                                        <select class="select select2 major_category" th:field="${job.category.majorCategoryId}" required>
+                                            <option th:each="category : ${categories}" th:value="${category.majorCategoryId}" th:text="${category.categoryName}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
-                                        <label>Job Types*</label>
-                                        <select class="select">
-                                            <option value="1">Full Time</option>
-                                            <option value="2">Part Time</option>
-                                            <option value="3">Contract</option>
-                                            <option value="4">Internship</option>
-                                            <option value="5">Office</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Application Deadline</label>
+                                        <label>申請截止日期</label>
                                         <div class="input-group date" id="datetimepicker">
-                                            <input type="text" class="form-control" placeholder="12/11/2020">
+                                            <input type="date" style="padding-top: 12px; padding-bottom: 12px;" class="form-control" placeholder="XXXX/XX/XX" name="deadline" th:value="${job.jobsApplicationDeadline}">
                                             <span class="input-group-addon"></span>
                                             <i class="bx bx-calendar"></i>
                                         </div>
@@ -79,108 +63,55 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
-                                        <label>Salary Currency</label>
-                                        <select class="select">
-                                            <option value="1">Default</option>
-                                            <option value="2">20000 To 30000</option>
-                                            <option value="3">40000 To 50000</option>
-                                            <option value="4">60000 To 70000</option>
-                                            <option value="5">80000 To 90000</option>
-                                        </select>
+                                        <label class="form-label">工作地點</label>
+                                        <input type="text" class="form-control" th:field="${job.jobsLocation}" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">最高薪資</label>
+                                        <input type="text" class="form-control" th:field="${job.jobsMaxSalary}" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">最低薪資</label>
+                                        <input type="text" class="form-control" th:field="${job.jobsMinSalary}" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">工作時間</label>
+                                        <input type="text" class="form-control" th:field="${job.jobsWorktime}" required/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">開放職位數</label>
+                                        <input type="number" class="form-control" th:field="${job.jobsNumberOfOpenings}" required/>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Job Description*</label>
-                                        <textarea name="message" class="form-control" rows="5"></textarea>
+                                        <label>職缺描述</label>
+                                        <textarea class="form-control" rows="5" required th:field="${job.jobsDescription}"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="title">Company Information</h3>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Company Name</label>
-                                        <input class="form-control" type="text" name="Company">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Company Website</label>
-                                        <input class="form-control" type="text" name="Website">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Company Industry</label>
-                                        <input class="form-control" type="text" name="Industry">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Facebook Page (Link)</label>
-                                        <input class="form-control" type="text" name="Link">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Linkedin Page (Link)</label>
-                                        <input class="form-control" type="text" name="Link">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Twitter Page (Link)</label>
-                                        <input class="form-control" type="text" name="Link">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Instagram Page (Link)</label>
-                                        <input class="form-control" type="text" name="Link">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Company Description*</label>
-                                        <textarea name="message" class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="choose-img">
-                                        <p>Logo (Optional)</p>
-                                        <label for="img">Select image:</label>
-                                        <input type="file" id="img" name="img" accept="image/*">
-                                        <p>Maximum file size: 2 MB</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <h3 class="title">Recruiter Information</h3>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input class="form-control" type="text" name="Name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <input class="form-control" type="email" name="email">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group checkboxs">
-                                        <input type="checkbox" class="checkboxs" id="chb2">
-                                        <p>
-                                            By clicking checkbox, you agree to our <a href="terms-conditions.html">Terms
-                                            &
-                                            Conditions</a> And <a href="privacy-policy.html">Privacy Policy.</a>
-                                        </p>
-                                    </div>
-                                </div>
+<!--                            <h3 class="title">Company Information</h3>-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-lg-12">-->
+<!--                                    <div class="choose-img">-->
+<!--                                        <p>Logo (Optional)</p>-->
+<!--                                        <label for="img">Select image:</label>-->
+<!--                                        <input type="file" id="img" name="img" accept="image/*">-->
+<!--                                        <p>Maximum file size: 2 MB</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div>
                                 <div class="col-lg-12 button">
-                                    <button class="btn">
+                                    <button class="btn" type="submit">
                                         Post a Job
                                     </button>
                                 </div>

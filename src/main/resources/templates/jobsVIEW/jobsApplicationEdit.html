@@ -10,93 +10,56 @@
 
 <body>
 <div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
-    <h1 class="mt-4">編輯職缺資訊</h1>
+    <h1 class="mt-4">編輯職缺申請資訊</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a th:href="@{/jobsApplication/list}">職缺申請管理</a></li>
-        <li class="breadcrumb-item active">編輯職缺資訊</li>
+        <li class="breadcrumb-item active">編輯職缺申請資訊</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
-            <!-- 職缺編輯表單 -->
-            <form id="jobForm" th:action="@{/jobs/update/id(id=${job.jobsId})}" method="post">
-                <input type="hidden" th:field="${job.jobsId}"/>
+            <!-- 職缺申請編輯表單 -->
+            <form id="jobApplicationForm" th:action="@{/jobsApplication/update/id(id=${jobApplication.jobsApplicationId})}" method="post">
+                <input type="hidden" th:field="${jobApplication.jobsApplicationId}"/>
                 <input type="hidden" name="_method" value="put"/>
 
-                <!-- 職缺標題 -->
-                <div class="mb-3">
-                    <label class="form-label">職缺標題</label>
-                    <input type="text" class="form-control" th:field="${job.jobsTitle}" required />
-                </div>
+
 
                 <!-- 刊登者 ID（通常不允許編輯） -->
                 <div class="mb-3">
-                    <label class="form-label">發布者 ID</label>
+                    <label class="form-label">刊登者 ID</label>
                     <input type="text" class="form-control" th:field="${job.users.userId}" readonly />
                 </div>
 
-                <!-- 所需技能 -->
+                <!-- 應徵者 ID（通常不允許編輯） -->
                 <div class="mb-3">
-                    <label class="form-label">所需技能</label>
+                    <label class="form-label">應徵者 ID</label>
+                    <input type="text" class="form-control" th:field="${job.users.userId}" readonly />
+                </div>
+
+
+
                 <!--  th:field 就是包含id=""、name=""、value=""等3個集合體-->
-                    <input type="text" class="form-control" th:field="${job.jobsRequiredSkills}" required />
+
+
+
+
+                <!-- 申請日期 -->
+                <div class="mb-3">
+                    <label class="form-label">申請日期</label>
+                    <input type="date" class="form-control" name="deadline" th:value="${jobApplication.jobsApplicationDate}" required />
                 </div>
 
-                <!-- 發布日期（通常不允許編輯） -->
-                <div class="mb-3">
-                    <label class="form-label">發布日期</label>
-                    <input type="date" class="form-control" th:value="${job.jobsPostingDate}" readonly />
-                </div>
-
-                <!-- 申請截止日期 -->
-                <div class="mb-3">
-                    <label class="form-label">申請截止日期</label>
-                    <input type="date" class="form-control" name="deadline" th:value="${job.jobsApplicationDeadline}" required />
-                </div>
-
-                <!-- 職缺描述 -->
-                <div class="mb-3">
-                    <label class="form-label">職缺描述</label>
-                    <textarea class="form-control" rows="3" required th:field="${job.jobsDescription}"></textarea>
-                </div>
-
-                <!-- 工作地點 -->
-                <div class="mb-3">
-                    <label class="form-label">工作地點</label>
-                    <input type="text" class="form-control" th:field="${job.jobsLocation}" required />
-                </div>
 
                 <!-- 職缺狀態 -->
                 <div class="mb-3">
                     <label class="form-label">職缺狀態</label>
-                    <select class="form-control" th:field="${job.jobsStatus}" required>
-                        <option value="0" th:selected="${job.jobsStatus == 0}">開放中</option>
-                        <option value="1" th:selected="${job.jobsStatus == 1}">已關閉</option>
+                    <select class="form-control" th:field="${jobApplication.jobsApplicationStatusStatus}" required>
+                        <option value="0" th:selected="${jobApplication.jobsApplicationStatusStatus == 0}">開放中</option>
+                        <option value="1" th:selected="${jobApplication.jobsApplicationStatusStatus == 1}">已關閉</option>
                     </select>
                 </div>
 
-                <!-- 最高薪資 -->
-                <div class="mb-3">
-                    <label class="form-label">最高薪資</label>
-                    <input type="number" class="form-control" th:field="${job.jobsMaxSalary}" required />
-                </div>
 
-                <!-- 最低薪資 -->
-                <div class="mb-3">
-                    <label class="form-label">最低薪資</label>
-                    <input type="number" class="form-control" th:field="${job.jobsMinSalary}" required />
-                </div>
-
-                <!-- 工作時間 -->
-                <div class="mb-3">
-                    <label class="form-label">工作時間</label>
-                    <input type="text" class="form-control" th:field="${job.jobsWorktime}" required />
-                </div>
-
-                <!-- 開放職位數 -->
-                <div class="mb-3">
-                    <label class="form-label">開放職位數</label>
-                    <input type="number" class="form-control" th:field="${job.jobsNumberOfOpenings}" required />
-                </div>
 
                 <!-- 提交和取消按鈕 -->
                 <button type="submit" class="btn btn-primary">保存更改</button>
