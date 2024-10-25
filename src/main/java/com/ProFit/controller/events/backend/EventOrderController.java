@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-//@RequestMapping("/events")
+@RequestMapping("/events/order")
 public class EventOrderController {
 
 //    @Autowired
