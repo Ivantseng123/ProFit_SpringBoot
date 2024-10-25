@@ -19,35 +19,35 @@ public class EventOrderService {
 
     @Autowired
     private EventOrderDAO eventOrderDAO;
-    
-    //搜尋全部訂單
+
+    // 搜尋全部訂單
     public List<EventOrderBean> selectAllEvents() {
         return eventOrderDAO.findAll();
     }
 
-    //依照ID搜尋訂單
+    // 依照ID搜尋訂單
     public EventOrderBean selectOrderById(String eventOrderId) {
-    	return eventOrderDAO.findById(eventOrderId).orElse(null);
-    }
-    
-    //依照狀態搜尋訂單
-    public List<EventOrderBean> selectOrderByStatus(int isEventOrderActive) {
-    	return eventOrderDAO.findByIsEventOrderActive(isEventOrderActive);
-    }
-    
-    //依照參加者搜尋活動
-    public List<EventsBean> selectEventByParticipant(int eventParticipantId) {
-    	return eventOrderDAO.findByEventParticipantId(eventParticipantId);
-    }
-    
-    //依照活動搜尋參加者
-    public List<Users> selectParticipantByEvent(String eventId) {
-    	return eventOrderDAO.findByEventId(eventId);
+        return eventOrderDAO.findById(eventOrderId).orElse(null);
     }
 
-    //保存活動
+    // 依照狀態搜尋訂單
+    public List<EventOrderBean> selectOrderByStatus(Boolean isEventOrderActive) {
+        return eventOrderDAO.findByIsEventOrderActive(isEventOrderActive);
+    }
+
+    // 依照參加者搜尋活動
+    public List<EventsBean> selectEventByParticipant(int eventParticipantId) {
+        return eventOrderDAO.findByEventParticipantId(eventParticipantId);
+    }
+
+    // 依照活動搜尋參加者
+    public List<Users> selectParticipantByEvent(String eventId) {
+        return eventOrderDAO.findByEventId(eventId);
+    }
+
+    // 保存活動
     public String saveOrder(EventOrderBean order) {
-        if (eventOrderDAO.existsById(order.getEventOrderId())==false) {
+        if (eventOrderDAO.existsById(order.getEventOrderId()) == false) {
             String newOrderId = generateNewEventOrderId();
             order.setEventOrderId(newOrderId);
             order.setEventParticipantDate(LocalDateTime.now());
@@ -57,13 +57,13 @@ public class EventOrderService {
         return order.getEventOrderId();
     }
 
-    //刪除活動
+    // 刪除活動
     public String deleteOrder(String eventOrderId) {
-    	eventOrderDAO.deleteById(eventOrderId);
+        eventOrderDAO.deleteById(eventOrderId);
         return eventOrderId;
     }
-    
-    //將實體轉換成DTO
+
+    // 將實體轉換成DTO
     public EventOrderDTO convertToDTO(EventOrderBean order) {
         if (order == null) {
             return null;
@@ -84,7 +84,7 @@ public class EventOrderService {
         return dto;
     }
 
-    //將DTO轉換成實體
+    // 將DTO轉換成實體
     public EventOrderBean convertToBean(EventOrderDTO orderDTO) {
         EventOrderBean order = new EventOrderBean();
         order.setEventOrderId(orderDTO.getEventOrderId());
@@ -96,11 +96,10 @@ public class EventOrderService {
         order.setEventParticipantId(orderDTO.getParticipantId());
         return order;
     }
-    
-    
+
     private String generateNewEventOrderId() {
-    	String maxEventOrderId = eventOrderDAO.findMaxEventOrderId().getEventOrderId();
-    	int newId = (maxEventOrderId != null) ? Integer.parseInt(maxEventOrderId.replace("EO", "")) + 1 : 1;
-    	return String.format("EO%03d", newId);
+        String maxEventOrderId = eventOrderDAO.findMaxEventOrderId().getEventOrderId();
+        int newId = (maxEventOrderId != null) ? Integer.parseInt(maxEventOrderId.replace("EO", "")) + 1 : 1;
+        return String.format("EO%03d", newId);
     }
 }
