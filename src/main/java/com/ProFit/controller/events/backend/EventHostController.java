@@ -11,7 +11,6 @@ import com.ProFit.model.bean.eventsBean.EventHostIdBean;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.eventsDTO.EventHostDTO;
-import com.ProFit.service.eventService.EventsService;
 import com.ProFit.service.eventService.IEventHostService;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.userService.IUserService;
