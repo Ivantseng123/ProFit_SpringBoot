@@ -1,12 +1,15 @@
 package com.ProFit.model.dao.jobsCRUD;
 
 
-import java.util.List;
 
 import com.ProFit.model.bean.jobsBean.Jobs;
-import org.springframework.data.repository.CrudRepository;
+import com.ProFit.model.bean.usersBean.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface IHJobsDAO extends CrudRepository<Jobs, Integer> {
+public interface IHJobsDAO extends JpaRepository<Jobs, Integer> {
+    List<Jobs> findJobsByUsers(Users user);
 }

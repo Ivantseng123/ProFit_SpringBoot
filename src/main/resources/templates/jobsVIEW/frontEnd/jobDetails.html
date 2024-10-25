@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{jobsVIEW/frontEnd/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>職缺詳細資訊</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumbs-content">
+                        <h1 class="page-title">職缺詳細資訊</h1>
+                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
+                            Business draws on a wide range of different business .</p>
+                    </div>
+                    <ul class="breadcrumb-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="news-standard.html">Blog</a></li>
+                        <li>Job Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- Start Job Details -->
+    <div class="job-details section">
+        <div class="container">
+            <div class="row mb-n5">
+                <!-- Job List Details Start -->
+                <div class="col-lg-8 col-12">
+                    <div class="job-details-inner">
+                        <div class="job-details-head row mx-0">
+                            <div class="company-logo col-auto">
+                                <a href="#" style="border-radius: 4px; overflow: hidden;"><img th:src="@{/images/jobs/img7.png}" alt="#"></a>
+                            </div>
+                            <div class="salary-type col-auto order-sm-3">
+                                <span class="salary-range" th:text="${'金額 ' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></span>
+                                <span class="badge badge-success" th:text="${job.jobsWorktime}">Full Time</span>
+                            </div>
+                            <div class="content col">
+                                <h5 class="title" th:text="${job.jobsTitle}">Website front end development</h5>
+                                <ul class="meta">
+                                    <li><strong class="text-primary"><a href="#"> <th:block th:text="${job.users.userName}"></th:block></a></strong>
+                                    </li>
+                                    <li><i class="lni lni-map-marker"></i> <th:block th:text="${job.jobsLocation}"></th:block></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="job-details-body">
+                            <h6 class="mb-3">Job Description</h6>
+                            <p th:text="${job.jobsDescription}">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique, ex iusto! Tenetur
+                                iusto dolore amet voluptates esse? Ut debitis perferendis, impedit ullam ea officia
+                                sapiente soluta cupiditate molestiae eius enim aut laboriosam, saepe deleniti. Excepturi
+                                nobis amet fugit ipsa corrupti!</p>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Job List Details End -->
+                <!-- Job Sidebar Wrap Start -->
+                <div class="col-lg-4 col-12">
+                    <div class="job-details-sidebar">
+                        <!-- Sidebar (Apply Buttons) Start -->
+                        <div class="sidebar-widget">
+                            <div class="inner">
+                                <div class="row m-n2 button">
+                                    <div class="col-xl-auto col-lg-12 col-sm-auto col-12 p-2">
+                                        <a id="back" href="bookmarked.html" class="d-block btn"><i class="lni lni-arrow-left"></i> 回到職缺列表</a>
+                                    </div>
+                                    <div class="col-xl-auto col-lg-12 col-sm-auto col-12 p-2">
+                                        <a href="job-details.html" class="d-block btn btn-alt">應徵職缺</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sidebar (Apply Buttons) End -->
+                        <!-- Sidebar (Job Overview) Start -->
+                        <div class="sidebar-widget">
+                            <div class="inner">
+                                <h6 class="title">Job Overview</h6>
+                                <ul class="job-overview list-unstyled">
+                                    <li><strong>Published on:</strong> <th:block th:text="${job.jobsPostingDate}"></th:block></li>
+                                    <li><strong>Employment Status:</strong> <th:block th:text="${job.jobsWorktime}"></th:block></li>
+                                    <li><strong>Job Location:</strong> <th:block th:text="${job.jobsLocation}"></th:block></li>
+                                    <li><strong>Salary:</strong> <th:block th:text="${'金額 ' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></th:block></li>
+                                    <li><strong>要求技能</strong> <th:block th:text="${job.category.categoryName}"></th:block></li>
+                                    <li><strong>Application Deadline:</strong> <th:block th:text="${job.jobsApplicationDeadline}"></th:block></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sidebar (Job Overview) End -->
+
+                        <!-- Sidebar (Job Location) Start -->
+<!--                        <div class="sidebar-widget">-->
+<!--                            <div class="inner">-->
+<!--                                <h6 class="title">Job Location</h6>-->
+<!--                                <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="300" id="gmap_canvas" src="https://www.amap.com/" sandbox="" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="#">123movies old site</a><style>.mapouter{position:relative;text-align:right;height:300px;width:100%;}.gmap_canvas {overflow:hidden;background:none!important;height:300px;width:100%;}</style><a href="#">embed google map</a></div></div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <!-- Sidebar (Job Location) End -->
+                    </div>
+                </div>
+                <!-- Job Sidebar Wrap End -->
+
+            </div>
+        </div>
+    </div>
+    <!-- End Job Details -->
+</div>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+    $(document).ready(function (){
+        $("#back").click(function (e){
+            e.preventDefault();
+            history.back();
+        })
+    });
+</script>
+</body>
+</html>
