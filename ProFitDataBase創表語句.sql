@@ -80,13 +80,6 @@ CREATE TABLE jobs (
     FOREIGN KEY (jobs_user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE jobs_major (
-    jobs_id INT PRIMARY KEY,
-    major_id INT PRIMARY KEY,
-    PRIMARY KEY (jobs_id, major_id),
-    FOREIGN KEY (jobs_id) REFERENCES jobs(jobs_id),
-    FOREIGN KEY (major_id) REFERENCES major(major_id)
-);
 
 -- CREATE TABLE [dbo].[jobs_application] (
 --     [jobs_application_id]         INT             IDENTITY (1, 1) NOT NULL,
