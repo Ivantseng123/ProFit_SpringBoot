@@ -2,9 +2,11 @@ package com.ProFit.controller.courses.frontend;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.coursesDTO.CourseGradeContentDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTOFrontend;
+import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.courseService.IcourseGradeContentService;
@@ -29,6 +31,7 @@ import com.ProFit.service.courseService.IcourseModuleService;
 import com.ProFit.service.courseService.IcourseOrderService;
 import com.ProFit.service.courseService.IcourseService;
 import com.ProFit.service.majorService.IMajorCategoryService;
+import com.ProFit.service.utilsService.FirebaseStorageService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -50,6 +53,9 @@ public class CourseFrontend {
 
     @Autowired
     private IcourseOrderService courseOrderService;
+
+    @Autowired
+    private FirebaseStorageService firebaseStorageService;
 
     @GetMapping("")
     public String courseFrontendPage() {
@@ -73,6 +79,33 @@ public class CourseFrontend {
 
         return "redirect:/user/profile";
     }
+
+    // @GetMapping("/watch")
+    // public ResponseEntity<List<CourseOrderDTO>> watchCoursePage(HttpSession
+    // session, @RequestParam String courseId) {
+
+    // UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+    // List<CourseOrderDTO> isCourseAvalible =
+    // courseOrderService.searchAllCourseOrders(courseId,
+    // currentUser.getUserId(), "Completed");
+
+    // if (isCourseAvalible.isEmpty()) {
+    // return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
+
+    // CoursesDTO OneCourse = courseService.searchOneCourseById(courseId);
+
+    // List<CourseModuleDTOFrontend> CourseModuleDTOList =
+    // courseModuleService.searchCourseModulesFrontend(courseId);
+
+    // PageRequest pageRequest = PageRequest.of(0, 3);
+
+    // Page<CourseGradeContentDTO> courseGradeDTOList = courseGradeContentService
+    // .searchCourseGradeContents(courseId, null, pageRequest);
+
+    // return new ResponseEntity<>(OneCourse, HttpStatus.OK);
+    // }
 
     // 新增課程訂單的方法
     @PostMapping("/purchase/add")

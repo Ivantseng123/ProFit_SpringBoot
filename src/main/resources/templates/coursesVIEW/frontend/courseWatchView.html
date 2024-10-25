@@ -98,16 +98,17 @@
                                             </h2>
                                             <div th:id="|panelsStayOpen-collapse${courseModuleStatus.index+1}|"
                                                 class="accordion-collapse collapse">
-                                                <!-- 遍歷 moduleLessonsMap2 -->
+                                                <!-- 遍歷 moduleLessonsMap -->
                                                 <th:block th:each="lessonEntry : ${courseModuleDTO.moduleLessonsMap}">
-                                                    <div class="accordion-body d-flex justify-content-between">
-                                                        <!-- 使用 lessonEntry.key 來顯示 lesson ID -->
-                                                        <strong
-                                                            th:text="|單元名稱: ${lessonEntry.value.courseLessonName}|"></strong>
-                                                        <!-- 使用 lessonEntry.value 中的 mediaDuration 屬性顯示學習時長 -->
-                                                        <span
-                                                            th:text="|學習時長: ${lessonEntry.value.mediaDuration} 分鐘|"></span>
-                                                    </div>
+                                                    <!-- lessonEntry.value 是內層 Map，遍歷這個 Map -->
+                                                    <th:block th:each="entry,status : ${lessonEntry.value.entrySet()}">
+                                                        <div class="accordion-body d-flex justify-content-between">
+                                                            <!-- 課程名稱放左邊 -->
+                                                            <strong th:text="|單元名稱: ${entry.key}|"></strong>
+                                                            <!-- 媒體時長放右邊 -->
+                                                            <span th:text="|學習時長: ${entry.value} 分鐘|"></span>
+                                                        </div>
+                                                    </th:block>
                                                 </th:block>
                                             </div>
                                         </div>

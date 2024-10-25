@@ -96,7 +96,7 @@ public class CourseOrderService implements IcourseOrderService {
 	@Override
 	public List<CourseOrderDTO> searchAllCourseOrders(String courseId, Integer studentId, String status) {
 
-		List<CourseOrderBean> searchCourseOrders = hcourseOrderDao.searchCourseOrders(courseId, studentId, status);
+		List<CourseOrderBean> searchCourseOrders = courseOrderRepo.searchCourseOrders(courseId, studentId, status);
 
 		List<CourseOrderDTO> courseOrderDTO = searchCourseOrders.stream().map(CourseOrderDTO::new)
 				.collect(Collectors.toList());
