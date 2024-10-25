@@ -83,12 +83,12 @@ CREATE TABLE jobs (
 
 
 CREATE TABLE [dbo].[jobs_application] (
-    [jobs_application_id]        INT             IDENTITY (1, 1) NOT NULL,
-    [jobs_application_jobs_id]   INT             NOT NULL,
-    [jobs_application_member_id] INT             NOT NULL,
-    [jobs_application_date]      DATETIME2 (7)   CONSTRAINT [DEFAULT_jobs_application_jobs_application_date] DEFAULT (dateadd(hour,(8),getdate())) NULL,
-    [jobs_application_status]    TINYINT         CONSTRAINT [DF_jobs_application_status] DEFAULT ((0)) NULL,
-    [jobs_application_contract]  varchar(MAX) NULL,
+    [jobs_application_id]        INT           IDENTITY (1, 1) NOT NULL,
+    [jobs_application_jobs_id]   INT           NOT NULL,
+    [jobs_application_member_id] INT           NOT NULL,
+    [jobs_application_date]      DATETIME2 (7) CONSTRAINT [DEFAULT_jobs_application_jobs_application_date] DEFAULT (dateadd(hour,(8),getdate())) NULL,
+    [jobs_application_status]    TINYINT       CONSTRAINT [DF_jobs_application_status] DEFAULT ((0)) NULL,
+    [jobs_application_resume]    VARCHAR (MAX) NULL,
     PRIMARY KEY CLUSTERED ([jobs_application_id] ASC),
     FOREIGN KEY ([jobs_application_member_id]) REFERENCES [dbo].[users] ([user_id]),
     CONSTRAINT [FK_jobs_application_jobs_id] FOREIGN KEY ([jobs_application_jobs_id]) REFERENCES [dbo].[users] ([user_id])
@@ -101,16 +101,22 @@ ALTER TABLE [dbo].[jobs_application] NOCHECK CONSTRAINT [FK_jobs_application_job
 
 
 
-CREATE TABLE jobs_application_project (
-    jobs_application_project_id INT PRIMARY KEY IDENTITY(1,1),
-    jobs_application_id INT,
-    jobs_application_status TINYINT,
-    jobs_project VARCHAR(50),
-    jobs_amount INT,
-    FOREIGN KEY (jobs_application_id) REFERENCES jobs_application(jobs_application_id) 
-);
 
-    -- 專業技能的分類, 一個技能只能屬於一種分類
+
+CREATE TABLE [dbo].[jobs_application_project] (
+    [jobs_application_project_id] INT           IDENTITY (1, 1) NOT NULL,
+    [jobs_application_id]         INT           NULL,
+    [jobs_application_status]     TINYINT       NULL,
+    [jobs_project]                VARCHAR (50)  NULL,
+    [jobs_amount]                 INT           NULL,
+    [jobs_contract]               VARCHAR (MAX) NULL,
+    PRIMARY KEY CLUSTERED ([jobs_application_project_id] ASC),
+    FOREIGN KEY ([jobs_application_id]) REFERENCES [dbo].[jobs_application] ([jobs_application_id])
+    );
+
+
+
+-- 專業技能的分類, 一個技能只能屬於一種分類
 	CREATE TABLE major_category (
 	major_category_id INT primary key,
 	category_name NVARCHAR(24) not null,

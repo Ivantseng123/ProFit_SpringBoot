@@ -25,107 +25,92 @@ import jakarta.persistence.Table;
 public class JobsApplicationProject {
 
 
-
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    @Column(name = "jobs_application_project_id")
-	    private int jobsApplicationProjectId;
-
-
-	    @ManyToOne(fetch = FetchType.LAZY)//FK,一個申請對應到一個申請項目
-	    // cascade = CascadeType.ALL會同步更新刪除
-	    @JoinColumn(name = "jobs_application_id")
-	    private JobsApplication jobsApplication;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "jobs_application_project_id")
+    private int jobsApplicationProjectId;
 
 
-	    //一個狀態對應到一個申請項目
-	    @Column(name = "jobs_application_status")
-	    private Byte jobsApplicationStatus = 0;
-
-	    @Column(name = "jobs_project")
-	    private String jobsProject;
-
-	    @Column(name = "jobs_amount")
-	    private Integer jobsAmount;
+    @ManyToOne(fetch = FetchType.LAZY)//FK,一個申請對應到一個申請項目
+    // cascade = CascadeType.ALL會同步更新刪除
+    @JoinColumn(name = "jobs_application_id")
+    private JobsApplication jobsApplication;
 
 
+    //一個狀態對應到一個申請項目
+    @Column(name = "jobs_application_status")
+    private Byte jobsApplicationStatus = 0;
+
+    @Column(name = "jobs_project")
+    private String jobsProject;
+
+    @Column(name = "jobs_amount")
+    private Integer jobsAmount;
+
+    @Column(name = "jobs_contract")
+    private Integer jobsContract;
 
 
-	    public JobsApplicationProject() {
-			super();
-		}
+    public JobsApplicationProject() {
+        super();
+    }
 
 
+    public int getJobsApplicationProjectId() {
+        return jobsApplicationProjectId;
+    }
 
 
-		public int getJobsApplicationProjectId() {
-			return jobsApplicationProjectId;
-		}
+    public void setJobsApplicationProjectId(int jobsApplicationProjectId) {
+        this.jobsApplicationProjectId = jobsApplicationProjectId;
+    }
 
 
+    public JobsApplication getJobsApplication() {
+        return jobsApplication;
+    }
 
 
-		public void setJobsApplicationProjectId(int jobsApplicationProjectId) {
-			this.jobsApplicationProjectId = jobsApplicationProjectId;
-		}
+    public void setJobsApplication(JobsApplication jobsApplication) {
+        this.jobsApplication = jobsApplication;
+
+    }
 
 
+    public Byte getJobsApplicationStatus() {
+        return jobsApplicationStatus;
+    }
 
 
-		public JobsApplication getJobsApplication() {
-			return jobsApplication;
-		}
+    public void setJobsApplicationStatus(Byte jobsApplicationStatus) {
+        this.jobsApplicationStatus = jobsApplicationStatus;
+    }
 
 
+    public String getJobsProject() {
+        return jobsProject;
+    }
 
 
-		public void setJobsApplication(JobsApplication jobsApplication) {
-			this.jobsApplication = jobsApplication;
-
-		}
-
+    public void setJobsProject(String jobsProject) {
+        this.jobsProject = jobsProject;
+    }
 
 
-
-		public Byte getJobsApplicationStatus() {
-			return jobsApplicationStatus;
-		}
-
+    public Integer getJobsAmount() {
+        return jobsAmount;
+    }
 
 
+    public void setJobsAmount(Integer jobsAmount) {
+        this.jobsAmount = jobsAmount;
+    }
 
-		public void setJobsApplicationStatus(Byte jobsApplicationStatus) {
-			this.jobsApplicationStatus = jobsApplicationStatus;
-		}
+    public Integer getJobsContract() {
+        return jobsContract;
+    }
 
-
-
-
-		public String getJobsProject() {
-			return jobsProject;
-		}
-
-
-
-
-		public void setJobsProject(String jobsProject) {
-			this.jobsProject = jobsProject;
-		}
-
-
-
-
-		public Integer getJobsAmount() {
-			return jobsAmount;
-		}
-
-
-
-
-		public void setJobsAmount(Integer jobsAmount) {
-			this.jobsAmount = jobsAmount;
-		}
-
-
-
+    public void setJobsContract(Integer jobsContract) {
+        this.jobsContract = jobsContract;
+    }
 }
