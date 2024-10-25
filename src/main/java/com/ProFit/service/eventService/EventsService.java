@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dao.eventsCRUD.EventsDAO;
-//import com.ProFit.model.dao.majorsCRUD.MajorRepository;
 
 @Service
 @Transactional
@@ -18,9 +17,6 @@ public class EventsService implements IEventsService {
 
     @Autowired
     private EventsDAO eventsDAO;
-
-    // @Autowired
-    // private MajorRepository majorRepository;
 
     // 搜尋全部活動
     @Override
