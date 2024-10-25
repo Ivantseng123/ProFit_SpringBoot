@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>我的錢包</title>
+    <title>ProFit-交易紀錄</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
     <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
@@ -12,6 +12,7 @@
     <style>
         body {
             padding-top: 120px;
+            background-color: #f5f7fa;
         }
         .header {
             position: fixed;
@@ -19,6 +20,9 @@
             width: 100%;
             z-index: 1000;
         }
+        .footer {
+  			margin-top: 50px;
+		}			
     </style>
 </head>
 <body>
@@ -28,13 +32,12 @@
 
     <div class="container mt-4">
         
-
         <!-- 最近交易 -->
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">最近的交易</h5>
+                        <h4 class="mb-0">交易紀錄</h4>
                         <div class="d-flex">
                             <input type="date" id="startDate" class="form-control me-2">
                             <input type="date" id="endDate" class="form-control me-2">
@@ -44,8 +47,8 @@
                     <div class="card-body">
                         <div class="btn-group mb-3" role="group">
                             <button type="button" class="btn btn-secondary" data-type="all">全部</button>
-                            <button type="button" class="btn btn-secondary" data-type="deposit">收入</button>
-                            <button type="button" class="btn btn-secondary" data-type="withdrawal">支出</button>
+                            <button type="button" class="btn btn-secondary" data-type="deposit">支出</button>
+                            <button type="button" class="btn btn-secondary" data-type="withdrawal">收入</button>
                         </div>
 
                         <!-- 交易記錄列表 -->
@@ -60,7 +63,7 @@
                                         <th>訂單類型</th>
                                         <th>訂單ID</th>
                                         <th>交易狀態</th>
-                                        <th>支付方式</th>
+                                        <th>收支方式</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody">
@@ -70,6 +73,37 @@
                         </div>
                         <div id="noTransactionsMessage" class="text-center" style="display: none;">
                             <p class="mt-2">無交易記錄</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 發票管理區域 -->
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">發票管理</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="invoiceTable">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>發票號碼</th>
+                                        <th>金額</th>
+                                        <th>發行日期</th>
+                                        <th>狀態</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceTableBody">
+                                    <!-- 這裡將由 JavaScript 動態生成 -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="noInvoicesMessage" class="text-center" style="display: none;">
+                            <p class="mt-2">無發票記錄</p>
                         </div>
                     </div>
                 </div>
@@ -92,89 +126,201 @@
     <!-- 添加按鈕點擊事件 -->
     <script>
         $(document).ready(function () {
-    // 頁面加載後自動獲取所有交易
-    fetchAllTransactions();
+            // 頁面加載後自動獲取所有交易
+            fetchAllTransactions();
+            fetchAllInvoices();
 
-    // 類型篩選按鈕
-    $('.btn-group button').on('click', function () {
-        var transactionType = $(this).data('type');
-        $.ajax({
-            url: '/ProFit/wallet/filter',
-            method: 'GET',
-            data: { type: transactionType },
-            dataType: 'json',
-            success: function (response) {
-                updateTransactionTable(response);
-            },
-            error: function () {
-                alert('獲取交易記錄時發生錯誤');
-            }
-        });
-    });
-
-    // 日期篩選按鈕
-    $('#filterDateBtn').on('click', function () {
-        var startDate = $('#startDate').val();
-        var endDate = $('#endDate').val();
-        $.ajax({
-            url: '/ProFit/wallet/filterDate',
-            method: 'GET',
-            data: { startDate: startDate, endDate: endDate },
-            dataType: 'json',
-            success: function (response) {
-                updateTransactionTable(response);
-            },
-            error: function () {
-                alert('獲取交易記錄時發生錯誤');
-            }
-        });
-    });
-
-    // 自動獲取所有交易的函數
-    function fetchAllTransactions() {
-        $.ajax({
-            url: '/ProFit/wallet/filter',
-            method: 'GET',
-            data: { type: 'all' },  // 獲取所有交易
-            dataType: 'json',
-            success: function (response) {
-                updateTransactionTable(response);
-            },
-            error: function () {
-                alert('獲取交易記錄時發生錯誤');
-            }
-        });
-    }
-
-    // 更新表格
-    function updateTransactionTable(transactions) {
-        var tableBody = '';
-        if (transactions.length > 0) {
-            transactions.forEach(function (transaction) {
-                var completionAt = transaction.completionAt ? new Date(transaction.completionAt).toLocaleDateString() : '未完成';
-                tableBody += `
-                    <tr>
-                        <td>${transaction.transactionId}</td>
-                        <td>${completionAt}</td>
-                        <td>${transaction.transactionType}</td>
-                        <td>${transaction.targetIncome}</td>
-                        <td>${transaction.orderType}</td>
-                        <td>${transaction.orderId}</td>
-                        <td>${transaction.transactionStatus}</td>
-                        <td>${transaction.paymentMethod}</td>
-                    </tr>`;
+            // 類型篩選按鈕
+            $('.btn-group button').on('click', function () {
+                var transactionType = $(this).data('type');
+                $.ajax({
+                    url: '/ProFit/wallet/filter',
+                    method: 'GET',
+                    data: { type: transactionType },
+                    dataType: 'json',
+                    success: function (response) {
+                        updateTransactionTable(response);
+                    },
+                    error: function () {
+                        alert('獲取交易記錄時發生錯誤');
+                    }
+                });
             });
-            $('#transactionTableBody').html(tableBody);
-            $('#noTransactionsMessage').hide();
-            $('#transactionTable').show();
-        } else {
-            $('#transactionTableBody').empty();
-            $('#transactionTable').hide();
-            $('#noTransactionsMessage').show();
-        }
-    }
-});
 
+            // 日期篩選按鈕
+            $('#filterDateBtn').on('click', function () {
+                var startDate = $('#startDate').val();
+                var endDate = $('#endDate').val();
+                $.ajax({
+                    url: '/ProFit/wallet/filterDate',
+                    method: 'GET',
+                    data: { startDate: startDate, endDate: endDate },
+                    dataType: 'json',
+                    success: function (response) {
+                        updateTransactionTable(response);
+                    },
+                    error: function () {
+                        alert('獲取交易記錄時發生錯誤');
+                    }
+                });
+            });
+
+            // 自動獲取所有交易的函數
+            function fetchAllTransactions() {
+                $.ajax({
+                    url: '/ProFit/wallet/filter',
+                    method: 'GET',
+                    data: { type: 'all' },  // 獲取所有交易
+                    dataType: 'json',
+                    success: function (response) {
+                        updateTransactionTable(response);
+                    },
+                    error: function () {
+                        alert('獲取交易記錄時發生錯誤');
+                    }
+                });
+            }
+
+             // 自動獲取當前用戶的發票
+        function fetchAllInvoices() {
+            $.ajax({
+                url: '/ProFit/wallet/invoices',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    updateInvoiceTable(response);
+                },
+                error: function () {
+                    alert('獲取發票記錄時發生錯誤');
+                }
+            });
+        }
+
+function translateToChinese(transaction) {
+    var transactionType = {
+        "payment": "支付",
+        "withdrawal": "取出",
+        "deposit": "存入",
+        "refund": "退款"
+    };
+
+    var orderType = {
+        "course": "課程訂單",
+        "job": "工作訂單",
+        "event": "活動訂單",
+        "service": "服務訂單",
+        "withdrawal": "取款"
+    };
+
+    var transactionStatus = {
+        "pending": "等待",
+        "completed": "已完成"
+    };
+
+    var paymentMethod = {
+        "withdrawal": "取出",
+        "deposit": "存入",
+        "refund": "退款",
+        "payment": "支付"
+    };
+
+    return {
+        transactionType: transactionType[transaction.transactionType] || transaction.transactionType,
+        orderType: orderType[transaction.orderType] || transaction.orderType,
+        transactionStatus: transactionStatus[transaction.transactionStatus] || transaction.transactionStatus,
+        paymentMethod: paymentMethod[transaction.paymentMethod] || transaction.paymentMethod
+    };
+}
+
+function updateTransactionTable(transactions) {
+    var completedTransactions = transactions.filter(function (transaction) {
+        return transaction.completionAt;  // 篩選有完成時間的交易
+    });
+
+    var pendingTransactions = transactions.filter(function (transaction) {
+        return !transaction.completionAt;  // 篩選未完成的交易
+    });
+
+    // 按完成時間降序排列（時間越晚的越靠前）
+    completedTransactions.sort(function (a, b) {
+        return new Date(b.completionAt) - new Date(a.completionAt);
+    });
+
+    var tableBody = '';
+
+    // 先渲染完成的交易
+    completedTransactions.forEach(function (transaction) {
+        var completionAt = new Date(transaction.completionAt).toLocaleDateString();
+        var translated = translateToChinese(transaction);
+
+        tableBody += `
+            <tr>
+                <td>${transaction.transactionId}</td>
+                <td>${completionAt}</td>
+                <td>${translated.transactionType}</td>
+                <td>${transaction.targetIncome}</td>
+                <td>${translated.orderType}</td>
+                <td>${transaction.orderId}</td>
+                <td>${translated.transactionStatus}</td>
+                <td>${translated.paymentMethod}</td>
+            </tr>`;
+    });
+
+    // 再渲染未完成的交易
+    pendingTransactions.forEach(function (transaction) {
+        var translated = translateToChinese(transaction);
+
+        tableBody += `
+            <tr>
+                <td>${transaction.transactionId}</td>
+                <td>未完成</td>
+                <td>${translated.transactionType}</td>
+                <td>${transaction.targetIncome}</td>
+                <td>${translated.orderType}</td>
+                <td>${transaction.orderId}</td>
+                <td>${translated.transactionStatus}</td>
+                <td>${translated.paymentMethod}</td>
+            </tr>`;
+    });
+
+    // 更新表格內容
+    if (transactions.length > 0) {
+        $('#transactionTableBody').html(tableBody);
+        $('#noTransactionsMessage').hide();
+        $('#transactionTable').show();
+    } else {
+        $('#transactionTableBody').empty();
+        $('#transactionTable').hide();
+        $('#noTransactionsMessage').show();
+    }
+}
+
+
+            // 更新發票表格
+        function updateInvoiceTable(invoices) {
+            var tableBody = '';
+            if (invoices.length > 0) {
+                invoices.forEach(function (invoice) {
+                    var issuedDate = new Date(invoice.issuedDate).toLocaleDateString();
+                    tableBody += `
+                        <tr>
+                            <td>${invoice.invoiceNumber}</td>
+                            <td>${invoice.invoiceAmount}</td>
+                            <td>${issuedDate}</td>
+                            <td>${invoice.invoiceStatus}</td>
+                        </tr>`;
+                });
+                $('#invoiceTableBody').html(tableBody);
+                $('#noInvoicesMessage').hide();
+                $('#invoiceTable').show();
+            } else {
+                $('#invoiceTableBody').empty();
+                $('#invoiceTable').hide();
+                $('#noInvoicesMessage').show();
+            }
+        }
+    });
     </script>
+
 </body>
 </html>
