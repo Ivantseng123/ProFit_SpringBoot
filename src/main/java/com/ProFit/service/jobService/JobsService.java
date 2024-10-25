@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ProFit.model.bean.jobsBean.Jobs;
+import com.ProFit.model.bean.usersBean.Employer_profile;
 import com.ProFit.model.dao.jobsCRUD.IHJobsDAO;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,5 +58,16 @@ public class JobsService implements IJobsService{
         if(jobs != null) {
             jobsDAO.delete(jobs);
         }
+    }
+
+    @Override
+    public Page<Jobs> findAll(Pageable pageable) {
+        return jobsDAO.findAll(pageable);
+    }
+
+
+    //俊翰使用
+    public List<Jobs> findAllJobsByEmployee(Employer_profile employer){
+        return jobsDAO.findJobsByUsers(employer.getUser());
     }
 }
