@@ -3,6 +3,7 @@ package com.ProFit.service.userService;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import com.ProFit.model.bean.usersBean.Employer_profile;
+import com.ProFit.model.dto.usersDTO.CompanyStatistics;
 import com.ProFit.model.dto.usersDTO.EmpPfDTO;
 
 public interface IEmpPfService {
@@ -24,5 +25,7 @@ public interface IEmpPfService {
 	Page<EmpPfDTO> findEmpPfByPage(Integer pageNumber);
 
 	Page<EmpPfDTO> findEmpPfByPageAndSearch(Integer pageNumber, String search);
+
+	List<CompanyStatistics> getCompanyStatistics();
 
 }

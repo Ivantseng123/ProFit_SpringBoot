@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProFit.model.bean.usersBean.Employer_profile;
 import com.ProFit.model.dao.usersCRUD.EmpPfRepository;
+import com.ProFit.model.dto.usersDTO.CompanyStatistics;
 import com.ProFit.model.dto.usersDTO.EmpPfDTO;
+import com.ProFit.model.dto.usersDTO.UserStatistics;
 
 @Service
 @Transactional
@@ -86,6 +88,11 @@ public class EmpPfService implements IEmpPfService {
 	@Override
 	public Employer_profile getEmpPfInfoByUserId(int user_id) {
 		return empPfRepository.findByUserId(user_id);
+	}
+	
+	@Override
+	public List<CompanyStatistics> getCompanyStatistics() {
+		return empPfRepository.countByCompanyCategory();
 	}
 
 }

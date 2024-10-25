@@ -1,6 +1,8 @@
 package com.ProFit.controller.users.frontend;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.ProFit.service.userService.EmailService;
 import com.ProFit.service.userService.IUserService;
 import com.google.cloud.storage.Acl.User;
 
@@ -37,6 +40,9 @@ public class usersControllerFrontend {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping("user/profile")
 	public String GetUserPage() {
@@ -112,27 +118,24 @@ public class usersControllerFrontend {
 		return ResponseEntity.badRequest().body("Update Failed");
 
 	}
-//
-//	@ResponseBody
-//	@GetMapping("/api/user/page")
-//	public Page<UsersDTO> findByPageApi(@RequestParam Integer pageNumber,
-//			@RequestParam(required = false) String search, @RequestParam(required = false) String userIdentity) {
-//		Page<UsersDTO> page;
-//		
-//		System.out.println("會員身分-----------------------------------:  " + userIdentity);
-//		
-//		if (!userIdentity.isEmpty() ) {
-//			
-//			Integer userIdentity1 = Integer.valueOf(userIdentity);
-//			page = userService.findUserByPageAndSearch(pageNumber, search, userIdentity1);
-//			
-//		}else {
-//			
-//			page = userService.findUserByPageAndSearch(pageNumber, search, null);
-//		}
-//		
-//		
-//		
-//		return page;
-//	}
+	
+	@GetMapping("user/customerService")
+	public String CustomerServicePage() {
+
+		return "usersVIEW/frontendVIEW/customerService";
+	}
+	
+	@PostMapping("user/sendEmail")
+	public ResponseEntity<?> SendEmail(@RequestBody Map<String, String> question) throws UnsupportedEncodingException {
+		
+		String subject = question.get("subject");
+		
+		String email = question.get("email");
+			
+		String content = question.get("content");
+		
+		emailService.sendSimpleHtml(subject, content,email);
+		
+		return ResponseEntity.ok("Send Email Successful");
+	}
 }

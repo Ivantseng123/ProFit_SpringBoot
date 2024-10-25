@@ -1,8 +1,10 @@
 package com.ProFit.controller.users.backend;
 
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.usersBean.Employer_profile;
 import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dto.usersDTO.CompanyStatistics;
 import com.ProFit.model.dto.usersDTO.EmpApplDTO;
 import com.ProFit.model.dto.usersDTO.EmpPfDTO;
+import com.ProFit.model.dto.usersDTO.UserStatistics;
 import com.ProFit.service.userService.IEmpPfService;
 import com.ProFit.service.userService.IUserService;
 
@@ -140,6 +144,12 @@ public class empPfController {
 			page = empPfService.findEmpPfByPage(pageNumber);
 		}
 		return page;
+	}
+	
+	@GetMapping("empPf/statistics")
+	public ResponseEntity<List<CompanyStatistics>> getCompanyStatistics() {
+		List<CompanyStatistics> statistics = empPfService.getCompanyStatistics();
+		return ResponseEntity.ok(statistics);
 	}
 
 }
