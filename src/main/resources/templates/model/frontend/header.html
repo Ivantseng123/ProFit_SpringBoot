@@ -41,9 +41,9 @@
 										<li><a href="#">職位提醒</a></li>
 									</ul>
 								</li>
-								<li class="nav-item"><a href="#">我是雇主</a>
+								<li class="nav-item"><a href="#">找服務報價</a>
 									<ul class="sub-menu">
-										<li><a href="#">發布職位</a></li>
+										<li><a th:href="@{/c/service}">服務總覽</a></li>
 										<li><a href="#">管理職位</a></li>
 										<li><a href="#">管理申請</a></li>
 										<li><a href="#">管理履歷</a></li>
@@ -64,12 +64,17 @@
 										<li><a href="#">部落格單篇側邊欄</a></li>
 									</ul>
 								</li>
-								<li class="nav-item"><a href="http://localhost:8080/ProFit/user/profile">帳戶中心</a>								
+								<li class="nav-item"><a href="http://localhost:8080/ProFit/user/profile">帳戶中心</a>
+									<ul class="sub-menu">
+										<li><a href="http://localhost:8080/ProFit/user/profile">個人資料</a></li>
+										<li><a href="http://localhost:8080/ProFit/emp/CompProfile">店家/公司資訊</a></li>
+									</ul>
+								</li>
 								</li>
 								<li class="nav-item"><a href="#">財務管理</a>
 									<ul class="sub-menu">
-										<li><a th:href="@{/transaction}">我的進帳</a></li>
-										<li><a th:href="@{/wallet}">我的錢包</a></li>
+										<li><a th:href="@{/transaction}">我的錢包</a></li>
+										<li><a th:href="@{/wallet}">交易紀錄</a></li>
 									</ul>
 								</li>
 								<!-- <li class="nav-item"><a href="contact.html">聯繫我們 </a> </li> -->

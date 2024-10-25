@@ -19,7 +19,7 @@ const categoryMapping = {
 }
 
 //活動專業映射
-const majorMapping =[];
+const majorMapping = [];
 const majors = document.getElementById('majors-data').querySelectorAll('div');
 majors.forEach(major => {
     const majorId = major.getAttribute('value');

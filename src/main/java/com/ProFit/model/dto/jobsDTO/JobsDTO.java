@@ -26,7 +26,7 @@ public class JobsDTO {
     private String jobsWorktime;
     private Integer jobsNumberOfOpenings;
     private String companyName; // From Users entity
-//    private List<MajorDTO> majors;
+//  private List<MajorDTO> majors;
 
     public JobsDTO() {
         super();
@@ -51,7 +51,7 @@ public class JobsDTO {
         this.jobsWorktime = jobsWorktime;
         this.jobsNumberOfOpenings = jobsNumberOfOpenings;
         this.companyName = companyName;
-//        this.majors = majors;
+//      this.majors = majors;
     }
 
     // Static method to convert from Jobs entity to JobsDTO
@@ -79,10 +79,8 @@ public class JobsDTO {
 //        if (jobs.getCategory() != null) {
 //            dto.setMajors(jobs.getCategory().stream()
 //                    .map(MajorDTO::fromEntity)
-//                    .collect(Collectors.toList()));
+//                    .collect(Collectors.toList);
 //        }
-
-
         return dto;
     }
 

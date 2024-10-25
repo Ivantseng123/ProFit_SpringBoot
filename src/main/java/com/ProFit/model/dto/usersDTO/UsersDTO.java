@@ -1,5 +1,9 @@
 package com.ProFit.model.dto.usersDTO;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import com.ProFit.model.bean.usersBean.Employer_application;
 import com.ProFit.model.bean.usersBean.Employer_profile;
 import com.ProFit.model.bean.usersBean.Users;
 
@@ -61,7 +65,7 @@ public class UsersDTO {
 //	private List<Employer_application> employerApplications = new LinkedList<Employer_application>();
 //	
 //	
-	private Employer_profile employer_profile;
+	private EmpPfDTO employer_profile;
 
 	
 //	private Set<MajorBean> majors = new LinkedHashSet<MajorBean>(0);
@@ -308,12 +312,12 @@ public class UsersDTO {
 //	}
 
 
-	public Employer_profile getEmployer_profile() {
+	public EmpPfDTO getEmployer_profile() {
 		return employer_profile;
 	}
 
-	public void setEmployer_profile(Employer_profile employer_profile) {
-		this.employer_profile = employer_profile;
+	public void setEmployer_profile(EmpPfDTO emppfDTO) {
+		this.employer_profile = emppfDTO;
 	}
 
 	public String getLoginTime() {

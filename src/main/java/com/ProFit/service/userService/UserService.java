@@ -9,18 +9,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.ProFit.model.bean.usersBean.Pwd_reset_tokens;
 import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dao.usersCRUD.PwdResetTokenRepository;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
-import com.google.firebase.remoteconfig.User;
-
 import net.bytebuddy.utility.RandomString;
 
 @Service
-//@Transactional
+// @Transactional
 public class UserService implements IUserService {
 
 	@Autowired
@@ -28,6 +28,9 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UsersRepository usersRepository;
+
+	@Autowired
+	private PwdResetTokenRepository pwdResetTokenRepository;
 
 	@Autowired
 	private EmailService emailService;
@@ -83,7 +86,7 @@ public class UserService implements IUserService {
 
 		if (optional.isPresent()) {
 			Users user = optional.get();
-//			user.setUserId(user_id);
+			// user.setUserId(user_id);
 			user.setUserName(user_name);
 			user.setUserEmail(user_email);
 			user.setUserPasswordHash(user_passwordHash);
@@ -187,27 +190,35 @@ public class UserService implements IUserService {
 		return null;
 	}
 
-//	public Page<Users> findUserByPage(Integer pageNumber){
-//		Pageable pgb = PageRequest.of(pageNumber-1, 10, Sort.Direction.DESC ,"userId");
-//		Page<Users> page = usersRepository.findAll(pgb);
-//		return page;
-//	}
-//	
-//	public Page<Users> findUserByPageAndSearch(Integer pageNumber, String search) {
-//		Pageable pgb = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
-//		// 这里假设你想搜索 `userName` 或 `userEmail`，可以根据需求修改
-//		Page<Users> page = usersRepository.findByUserNameContainingOrUserEmailContaining(search, search, pgb);
-//		return page;
-//	}
+	// public Page<Users> findUserByPage(Integer pageNumber){
+	// Pageable pgb = PageRequest.of(pageNumber-1, 10, Sort.Direction.DESC
+	// ,"userId");
+	// Page<Users> page = usersRepository.findAll(pgb);
+	// return page;
+	// }
+	//
+	// public Page<Users> findUserByPageAndSearch(Integer pageNumber, String search)
+	// {
+	// Pageable pgb = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC,
+	// "userId");
+	// // 这里假设你想搜索 `userName` 或 `userEmail`，可以根据需求修改
+	// Page<Users> page =
+	// usersRepository.findByUserNameContainingOrUserEmailContaining(search, search,
+	// pgb);
+	// return page;
+	// }
 
-//	@Override
-//	public Page<UsersDTO> findUserByPage(Integer pageNumber) {
-//		Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "userId");
-//		Page<Users> usersPage = usersRepository.findAll(pageable);
-//
-//		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
-//				user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
-//	}
+	// @Override
+	// public Page<UsersDTO> findUserByPage(Integer pageNumber) {
+	// Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC,
+	// "userId");
+	// Page<Users> usersPage = usersRepository.findAll(pageable);
+	//
+	// return usersPage.map(user -> new UsersDTO(user.getUserId(),
+	// user.getUserPictureURL(), user.getUserName(),
+	// user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(),
+	// user.getEnabled()));
+	// }
 
 	@Override
 	public Page<UsersDTO> findUserByPageAndSearch(Integer pageNumber, String search, Integer userIdentity) {
@@ -267,16 +278,45 @@ public class UserService implements IUserService {
 
 		emailService.sendSimpleHtml(List.of(users.getUserEmail()), "ProFit 註冊驗證", content);
 
-//		SimpleMailMessage mailMessage = new SimpleMailMessage();
-//		mailMessage.setTo(users.getUserEmail());
-//		mailMessage.setSubject("註冊完成!");
-//		mailMessage.setText(
-//				"為了啟用您的帳戶, 請點擊此連結 : " + "http://localhost:8080/ProFit/user/confirm-account?token=" + users.getVerificationCode());
-//		emailService.sendEmail(mailMessage);
-//
-//		System.out.println("Confirmation Token: " + users.getVerificationCode());
-//
+		// SimpleMailMessage mailMessage = new SimpleMailMessage();
+		// mailMessage.setTo(users.getUserEmail());
+		// mailMessage.setSubject("註冊完成!");
+		// mailMessage.setText(
+		// "為了啟用您的帳戶, 請點擊此連結 : " +
+		// "http://localhost:8080/ProFit/user/confirm-account?token=" +
+		// users.getVerificationCode());
+		// emailService.sendEmail(mailMessage);
+		//
+		// System.out.println("Confirmation Token: " + users.getVerificationCode());
+		//
 		return ResponseEntity.ok("Verify email by the link sent on your email address");
+
+	}
+
+	@Override
+	public ResponseEntity<?> sendResetToken(String email, String token) {
+
+		Optional<Users> user = usersRepository.findByUserEmail(email);
+
+		if (user.isPresent()) {
+
+			Users existUser = user.get();
+
+			String confirmationLink = "http://localhost:8080/ProFit/user/resetPwd?userId=" + existUser.getUserId()
+					+ "&token="
+					+ token;
+
+			String content = "<html><body><h3>" + existUser.getUserName() + "，您好!</h3>"
+					+ "<p>為了重設您的密碼, 請點擊下面的按鈕:</p>" + "<a href=\"" + confirmationLink
+					+ "\" style=\"display:inline-block; padding:10px 20px; margin:10px 0; font-size:16px; "
+					+ "color:white; background-color:#007BFF; text-decoration:none; border-radius:5px;\">" + "重設密碼</a>"
+					+ "</body></html>";
+
+			emailService.sendSimpleHtml(List.of(email), "ProFit 重設密碼", content);
+
+		}
+
+		return ResponseEntity.ok("Verify token by the link sent on your email address");
 
 	}
 
@@ -295,16 +335,32 @@ public class UserService implements IUserService {
 	}
 
 	@Override
+	public boolean confirm_resetToken(Integer userId, String confirmationToken) {
+
+		Optional<Pwd_reset_tokens> optional = pwdResetTokenRepository.findLatestByUserId(userId);
+
+		if (optional.isPresent()) {
+
+			String dbtoken = optional.get().getUserTokenHash();
+
+			System.out.println("Token--------------------" + dbtoken);
+
+			return pwdEncoder.matches(confirmationToken, dbtoken);
+		}
+		return false;
+	}
+
+	@Override
 	public Users updateUserInfo(Integer userId, String userPictureURL, String userName, String userPhoneNumber,
 			String userCity, String freelancerLocationPrefer, String freelancerExprience, String freelancerIdentity,
 			Integer freelancerProfileStatus, String freelancerDisc) {
-		
+
 		Optional<Users> optional = usersRepository.findById(userId);
 
 		if (optional.isPresent()) {
 			Users user = optional.get();
-//			user.setUserId(user_id);
-			user.setUserName(userName);	
+			// user.setUserId(user_id);
+			user.setUserName(userName);
 			user.setUserPhoneNumber(userPhoneNumber);
 			user.setUserCity(userCity);
 			user.setUserPictureURL(userPictureURL);
@@ -325,7 +381,12 @@ public class UserService implements IUserService {
 		return usersRepository.save(user); // 使用 usersRepository 進行保存操作
 	}
 
-	public User getUserById(Integer userId) {
+	public Users getUserById(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getUserBalanceById(Integer userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

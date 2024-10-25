@@ -57,6 +57,10 @@ public interface IUserService {
 	//用來更新用戶餘額
 	Users updateUserBalance(Users user);
 
+	ResponseEntity<?> sendResetToken(String email, String token);
+
+	boolean confirm_resetToken(Integer userId, String confirmationToken);
+
 	
 
 }

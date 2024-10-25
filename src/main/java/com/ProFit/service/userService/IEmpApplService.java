@@ -1,6 +1,7 @@
 package com.ProFit.service.userService;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -27,5 +28,7 @@ public interface IEmpApplService {
 	Page<EmpApplDTO> findEmpApplByPage(Integer pageNumber);
 
 	Page<EmpApplDTO> findEmpApplByPageAndSearch(Integer pageNumber, String search);
+	
+	Employer_application findLatestByUserId(Integer userId);
 
 }

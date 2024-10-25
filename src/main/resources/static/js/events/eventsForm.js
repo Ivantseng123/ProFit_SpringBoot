@@ -74,9 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //取消
     cancelBtn.addEventListener("click", () => {
-        window.location.href = '/ProFit/events';
+        const confirmation = confirm("確定回到上一頁?");
+        if (!confirmation) {
+            console.log("已取消");
+            return;
+        }
+        window.history.back();
     });
-    
+
     //送出表單
     function submitForm() {
         const eventData = {

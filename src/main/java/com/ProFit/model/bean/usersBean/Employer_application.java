@@ -2,6 +2,9 @@ package com.ProFit.model.bean.usersBean;
 
 import java.io.Serializable;
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,6 +25,7 @@ public class Employer_application implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer employerApplicationId;
 	
+	@JsonIgnore // 本屬性不要做 JSON 序列化
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id",insertable = false,updatable = false)
 	private Users user;

@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
-import com.ProFit.service.serviceService.ServiceApplicationService;
+import com.ProFit.service.serviceService.ServiceApplicationService1;
 
 @Controller
 @RequestMapping("/a/serviceApplications")
 public class ServiceApplicationController {
 
   @Autowired
-  private ServiceApplicationService serviceApplicationService;
+  private ServiceApplicationService1 serviceApplicationService;
 
   // 返回主頁視圖
   @GetMapping
