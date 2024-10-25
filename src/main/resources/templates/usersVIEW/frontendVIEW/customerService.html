@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>Contact Us - JobGrids Job Portal HTML Template.</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+	<!-- Place favicon.ico in the root directory -->
+
+	<!-- Web Font -->
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+		rel="stylesheet">
+
+	<!-- ========================= CSS here ========================= -->
+	<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+	<link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+	<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+</head>
+
+<body>
+
+	<div id="loading-area"></div>
+
+	<!-- 引用 headerOtherPage.html -->
+	<div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+	<section id="contact-us" class="contact-us section">
+		<div class="container">
+			<div class="resume-inner">
+				<div class="row">
+					<!-- Start Main Content -->
+					<div th:replace="~{model/frontend/accountCenterSidebar}"></div>
+					<div class="col-lg-7 col-12">
+						<div class="form-main">
+							<form class="form" id="questionForm">
+								<div class="row">
+									<div class="col-lg-6 col-12">
+										<div class="form-group">
+											<label class="label mb-3">問題類型</label>
+											<select class="form-select" id="question_category">
+												<option value="Bug回報">Bug回報</option>
+												<option value="優化建議">優化建議</option>
+												<option value="檢舉相關">檢舉相關</option>
+												<option value="帳戶相關">帳戶相關</option>
+												<option value="公司驗證相關">公司驗證相關</option>
+												<option value="職缺相關">職缺相關</option>
+												<option value="其他">其他</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="label ">你的信箱</label>
+										<input type="email" placeholder="example@gmail.com" id="sender" readonly>
+									</div>
+
+									<div class="col-12">
+										<div class="form-group message">
+											<textarea name="message" placeholder="問題描述" id="content"></textarea>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-group button">
+											<button type="submit" class="btn ">送出</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 引用 signModal.html -->
+		<div th:replace="~{model/frontend/signModal}"></div>
+
+		<!-- 引用 footer.html -->
+		<div th:replace="~{model/frontend/footer}"></div>
+
+		<!-- ========================= scroll-top ========================= -->
+		<a href="#" class="scroll-top btn-hover">
+			<i class="lni lni-chevron-up"></i>
+		</a>
+
+		<!-- ========================= JS here ========================= -->
+		<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+		<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+		<script th:src="@{/js/frontend/wow.min.js}"></script>
+		<script th:src="@{/js/frontend/tiny-slider.js}"></script>
+		<script th:src="@{/js/frontend/glightbox.min.js}"></script>
+		<script th:src="@{/js/frontend/main.js}"></script>
+		<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+		<script th:src="@{/js/users/frontend_user/customerService.js}"></script>
+</body>
+
+</html>
