@@ -72,7 +72,7 @@ public class EventHostController {
     public String deleteEventHost(@RequestParam String eventId, @RequestParam Integer hostId) {
         EventHostIdBean id = new EventHostIdBean(eventId, hostId);
         eventHostService.deleteEventHost(id);
-        return "redirect:/events";
+        return "redirect:/events/host";
     }
 
     // 儲存活動

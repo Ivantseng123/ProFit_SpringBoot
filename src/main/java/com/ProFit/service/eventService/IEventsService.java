@@ -13,6 +13,9 @@ public interface IEventsService {
 	// 依照ID搜尋活動
 	EventsBean selectEventById(String eventId);
 
+	// 依照完整名稱搜尋活動
+	EventsBean selectEventByFullName(String eventName);
+
 	// 依照名稱搜尋活動
 	List<EventsBean> selectEventByName(String eventName);
 
