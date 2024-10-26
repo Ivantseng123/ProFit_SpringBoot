@@ -14,6 +14,8 @@ public interface EventsDAO extends JpaRepository<EventsBean, String> {
     @Query(value = "SELECT top(1) * FROM events ORDER BY event_id DESC", nativeQuery = true)
     EventsBean findMaxEventId();
 
+    EventsBean findByEventName(String eventName);
+    
     List<EventsBean> findByEventNameContaining(String eventName);
 
     List<EventsBean> findByIsEventActive(int isEventActive);
