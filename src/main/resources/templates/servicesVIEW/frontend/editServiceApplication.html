@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>ProFit-找服務報價</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+    <style>
+        .section {
+            padding-top: 150px;
+        }
+        .inner-section{
+            margin: 10px 0;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+
+    <section class="job-post section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1 col-12">
+                    <div class="job-information">
+                        <!-- 合作資料 -->
+                        <div class="service-application inner-section">
+                            <h3 class="title">合作資料</h3>
+                            <form id="serviceApplicationForm">
+                                <div class="row">
+                                    <!-- 合作名稱 -->
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>合作名稱*</label>
+                                            <input class="form-control" type="text" name="serviceApplicationTitle"
+                                                placeholder="例如: Logo 設計">
+                                        </div>
+                                    </div>
+                                    <!-- 選擇要合作的接案人 -->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>選擇要合作的接案人*</label>
+                                            <select class="form-control" name="freelancerId">
+                                                <option value="102">Alice Brown</option>
+                                                <option value="103">John Doe</option>
+                                                <!-- 其他接案人可以動態生成 -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- 選擇要合作的服務 -->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>選擇要合作的服務*</label>
+                                            <select class="form-control" name="serviceId" id="serviceSelect"
+                                                onchange="displayServiceDetails()">
+                                                <option value="2">網站UI設計</option>
+                                                <option value="3">Logo設計</option>
+                                                <!-- 其他服務可以動態生成 -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- 案件詳情 -->
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>案件詳情</label>
+                                            <div id="serviceDetails">
+                                                <!-- 根據選擇的服務自動顯示 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- 合約報價 -->
+                        <div class="contract-quote inner-section">
+                            <h3 class="title">合約報價</h3>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>項目*</label>
+                                        <input class="form-control" type="text" name="serviceApplicationSubitem"
+                                            placeholder="例如: Logo設計">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="form-group">
+                                        <label>單價*</label>
+                                        <input class="form-control" type="number" name="serviceApplicationPrice"
+                                            placeholder="例如: 500">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="form-group">
+                                        <label>數量*</label>
+                                        <input class="form-control" type="number" name="serviceApplicationAmount"
+                                            placeholder="例如: 1">
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="form-group">
+                                        <label>單位*</label>
+                                        <input class="form-control" type="text" name="serviceApplicationUnit"
+                                            placeholder="例如: 天">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>合約內容*</label>
+                                        <textarea class="form-control" name="serviceApplicationContent" rows="3"
+                                            placeholder="描述合約內容"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>合約附件 (可選)</label>
+                                        <input class="form-control" type="url" name="appendixUrl"
+                                            placeholder="例如: https://firebase.com/doc2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 合約里程碑 -->
+                        <div class="contract-milestone inner-section">
+                            <h3 class="title">合約里程碑</h3>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>需交付項目*</label>
+                                        <input class="form-control" type="text" name="serviceApplicationMission"
+                                            placeholder="例如: 創建公司Logo">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>交付日期*</label>
+                                        <input class="form-control" type="date" name="serviceApplicationDoneDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 提交按鈕 -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button class="btn btn-primary" type="submit">提交合作申請</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModalForNewBs}"></div>
+
+    <!-- 引用 footer.html -->
+    <div th:replace="~{model/frontend/footer}"></div>
+
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/bootstrap.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/service/frontend/editServiceApplication.js}"></script>
+    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+    <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
+    <script>
+        //======== Home Slider
+        var slider = new tns({
+            container: '.home-slider',
+            slideBy: 'page',
+            autoplay: false,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 0,
+            items: 1,
+            nav: false,
+            controls: true,
+            controlsText: [
+                '<i class="lni lni-arrow-left prev"></i>',
+                '<i class="lni lni-arrow-right next"></i>'
+            ],
+            responsive: {
+                1200: {
+                    items: 1,
+                },
+                992: {
+                    items: 1,
+                },
+                0: {
+                    items: 1,
+                }
+
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>
