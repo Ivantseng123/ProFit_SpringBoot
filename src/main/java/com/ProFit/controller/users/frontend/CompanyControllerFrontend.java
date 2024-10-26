@@ -41,11 +41,9 @@ public class CompanyControllerFrontend {
 	private ModelMapper modelMapper;
 
 	@GetMapping("empPf/allCompany")
-	public String GetAllEmpPf(Model model) {
-
-		model.addAttribute("emps", empPfService.getAllEmpInfo());
-
-		return "usersVIEW/AllemployerProfile";
+	public String GetAllCompany() {
+	
+		return "usersVIEW/frontendVIEW/companyPage";
 	}
 
 	
@@ -125,17 +123,17 @@ public class CompanyControllerFrontend {
 
 	}
 
-//	@ResponseBody
-//	@GetMapping("/api/empPf/page")
-//	public Page<EmpPfDTO> findByPageApi(@RequestParam Integer pageNumber,
-//			@RequestParam(required = false) String search) {
-//		Page<EmpPfDTO> page;
-//		if (search != null && !search.isEmpty()) {
-//			page = empPfService.findEmpPfByPageAndSearch(pageNumber, search);
-//		} else {
-//			page = empPfService.findEmpPfByPage(pageNumber);
-//		}
-//		return page;
-//	}
+	@ResponseBody
+	@GetMapping("/api/empPf/page_frontend")
+	public Page<EmpPfDTO> findByPageApi(@RequestParam Integer pageNumber,
+			@RequestParam(required = false) String search) {
+		Page<EmpPfDTO> page;
+		if (search != null && !search.isEmpty()) {
+			page = empPfService.findEmpPfByPageAndSearch(pageNumber, search);
+		} else {
+			page = empPfService.findEmpPfByPage(pageNumber);
+		}
+		return page;
+	}
 
 }
