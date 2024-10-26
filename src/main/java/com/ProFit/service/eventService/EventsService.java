@@ -30,6 +30,12 @@ public class EventsService implements IEventsService {
         return eventsDAO.findById(eventId).orElse(null);
     }
 
+    // 依照完整名稱搜尋活動
+    @Override
+    public EventsBean selectEventByFullName(String eventName) {
+    	return eventsDAO.findByEventName(eventName);
+    }
+
     // 依照名稱搜尋活動
     @Override
     public List<EventsBean> selectEventByName(String eventName) {

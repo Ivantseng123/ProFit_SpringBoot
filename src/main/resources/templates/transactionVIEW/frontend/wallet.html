@@ -13,6 +13,7 @@
         body {
             padding-top: 120px;
             background-color: #f5f7fa;
+            font-size: 1.0rem;
         }
         .header {
             position: fixed;
@@ -63,7 +64,7 @@
                                         <th>訂單類型</th>
                                         <th>訂單ID</th>
                                         <th>交易狀態</th>
-                                        <th>收支方式</th>
+                                        <th>訂單詳情</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody">
@@ -253,6 +254,9 @@ function updateTransactionTable(transactions) {
         var completionAt = new Date(transaction.completionAt).toLocaleDateString();
         var translated = translateToChinese(transaction);
 
+        // 檢查交易類型是否為 "取出"
+        var orderDetail = translated.transactionType === "取出" ? translated.paymentMethod : `<button class="btn btn-primary btn-sm" onclick="viewOrderDetail('${transaction.transactionId}')">查看</button>`;
+
         tableBody += `
             <tr>
                 <td>${transaction.transactionId}</td>
@@ -262,13 +266,16 @@ function updateTransactionTable(transactions) {
                 <td>${translated.orderType}</td>
                 <td>${transaction.orderId}</td>
                 <td>${translated.transactionStatus}</td>
-                <td>${translated.paymentMethod}</td>
+                <td>${orderDetail}</td>
             </tr>`;
     });
 
     // 再渲染未完成的交易
     pendingTransactions.forEach(function (transaction) {
         var translated = translateToChinese(transaction);
+
+        // 檢查交易類型是否為 "取出"
+        var orderDetail = translated.transactionType === "取出" ? translated.paymentMethod : `<button class="btn btn-primary btn-sm" onclick="viewOrderDetail('${transaction.transactionId}')">查看</button>`;
 
         tableBody += `
             <tr>
@@ -279,7 +286,7 @@ function updateTransactionTable(transactions) {
                 <td>${translated.orderType}</td>
                 <td>${transaction.orderId}</td>
                 <td>${translated.transactionStatus}</td>
-                <td>${translated.paymentMethod}</td>
+                <td>${orderDetail}</td>
             </tr>`;
     });
 
@@ -294,6 +301,13 @@ function updateTransactionTable(transactions) {
         $('#noTransactionsMessage').show();
     }
 }
+
+// 定義查看按鈕的功能
+function viewOrderDetail(transactionId) {
+    alert("查看訂單詳情：" + transactionId);
+    // 可以在這裡實現更詳細的查看邏輯，如跳轉至訂單詳情頁面
+}
+
 
 
             // 更新發票表格

@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ProFit.model.bean.eventsBean.EventOrderBean;
-import com.ProFit.model.bean.eventsBean.EventsBean;
-import com.ProFit.model.bean.usersBean.Users;
 
 @Repository
 public interface EventOrderDAO extends JpaRepository<EventOrderBean, String> {
@@ -18,8 +16,8 @@ public interface EventOrderDAO extends JpaRepository<EventOrderBean, String> {
 
 	List<EventOrderBean> findByIsEventOrderActive(Boolean isEventOrderActive);
 
-	List<EventsBean> findByEventParticipantId(int eventParticipantId);
+	List<EventOrderBean> findByEventParticipantId(int eventParticipantId);
 
-	List<Users> findByEventId(String eventId);
+	List<EventOrderBean> findByEventId(String eventId);
 
 }
