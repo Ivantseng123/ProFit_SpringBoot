@@ -7,46 +7,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ProFit.model.bean.usersBean.Users;
-import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.bean.eventsBean.EventOrderBean;
 import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
 import com.ProFit.model.dao.eventsCRUD.EventOrderDAO;
 
 @Service
 @Transactional
-public class EventOrderService {
+public class EventOrderService implements IEventOrderService {
 
     @Autowired
     private EventOrderDAO eventOrderDAO;
 
     // 搜尋全部訂單
-    public List<EventOrderBean> selectAllEvents() {
+    @Override
+	public List<EventOrderBean> selectAllOrders() {
         return eventOrderDAO.findAll();
     }
 
     // 依照ID搜尋訂單
-    public EventOrderBean selectOrderById(String eventOrderId) {
+    @Override
+	public EventOrderBean selectOrderById(String eventOrderId) {
         return eventOrderDAO.findById(eventOrderId).orElse(null);
     }
 
     // 依照狀態搜尋訂單
-    public List<EventOrderBean> selectOrderByStatus(Boolean isEventOrderActive) {
+    @Override
+	public List<EventOrderBean> selectOrderByStatus(Boolean isEventOrderActive) {
         return eventOrderDAO.findByIsEventOrderActive(isEventOrderActive);
     }
 
     // 依照參加者搜尋活動
-    public List<EventsBean> selectEventByParticipant(int eventParticipantId) {
+    @Override
+	public List<EventOrderBean> selectEventByParticipant(int eventParticipantId) {
         return eventOrderDAO.findByEventParticipantId(eventParticipantId);
     }
 
     // 依照活動搜尋參加者
-    public List<Users> selectParticipantByEvent(String eventId) {
+    @Override
+	public List<EventOrderBean> selectParticipantByEvent(String eventId) {
         return eventOrderDAO.findByEventId(eventId);
     }
 
     // 保存活動
-    public String saveOrder(EventOrderBean order) {
+    @Override
+	public String saveOrder(EventOrderBean order) {
         if (eventOrderDAO.existsById(order.getEventOrderId()) == false) {
             String newOrderId = generateNewEventOrderId();
             order.setEventOrderId(newOrderId);
@@ -58,13 +62,15 @@ public class EventOrderService {
     }
 
     // 刪除活動
-    public String deleteOrder(String eventOrderId) {
+    @Override
+	public String deleteOrder(String eventOrderId) {
         eventOrderDAO.deleteById(eventOrderId);
         return eventOrderId;
     }
 
     // 將實體轉換成DTO
-    public EventOrderDTO convertToDTO(EventOrderBean order) {
+    @Override
+	public EventOrderDTO convertToDTO(EventOrderBean order) {
         if (order == null) {
             return null;
         }
@@ -76,16 +82,19 @@ public class EventOrderService {
         dto.setEventOrderActive(order.isEventOrderActive());
         if (order.getEvent() != null) {
             dto.setEventId(order.getEvent().getEventId());
+            dto.setEventName(order.getEvent().getEventName());
         }
         if (order.getParticipant() != null) {
             dto.setParticipantId(order.getParticipant().getUserId());
+            dto.setParticipantName(order.getParticipant().getUserName());
         }
 
         return dto;
     }
 
     // 將DTO轉換成實體
-    public EventOrderBean convertToBean(EventOrderDTO orderDTO) {
+    @Override
+	public EventOrderBean convertToBean(EventOrderDTO orderDTO) {
         EventOrderBean order = new EventOrderBean();
         order.setEventOrderId(orderDTO.getEventOrderId());
         order.setEventOrderAmount(orderDTO.getEventOrderAmount());

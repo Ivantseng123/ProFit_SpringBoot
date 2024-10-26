@@ -12,7 +12,7 @@ function allEmpPf() {
 		"paging": true,
 		"pageLength": 10,
 		lengthChange: false,
-		"ajax": function(data, callback, settings) {
+		"ajax": function(data, callback) {
 			const pageNumber = Math.floor(data.start / data.length) + 1; // 當前頁碼，從1開始
 			const searchValue = data.search.value; // 搜索框中的值
 

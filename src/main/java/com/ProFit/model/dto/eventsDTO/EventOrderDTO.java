@@ -13,84 +13,108 @@ public class EventOrderDTO implements Serializable {
     private LocalDateTime eventParticipantDate;
     private String eventParticipantNote;
     private String eventId;
+    private String eventName;
     private int participantId;
+    private String participantName;
 
     public EventOrderDTO() {
     }
 
-    public EventOrderDTO(String eventOrderId, int eventOrderAmount, boolean isEventOrderActive,
-            LocalDateTime eventParticipantDate, String eventParticipantNote,
-            String eventId, int participantId) {
-        this.eventOrderId = eventOrderId;
-        this.eventOrderAmount = eventOrderAmount;
-        this.isEventOrderActive = isEventOrderActive;
-        this.eventParticipantDate = eventParticipantDate;
-        this.eventParticipantNote = eventParticipantNote;
-        this.eventId = eventId;
-        this.participantId = participantId;
-    }
+	public EventOrderDTO(String eventOrderId, int eventOrderAmount, boolean isEventOrderActive,
+			LocalDateTime eventParticipantDate, String eventParticipantNote, String eventId, String eventName,
+			int participantId, String participantName) {
+		super();
+		this.eventOrderId = eventOrderId;
+		this.eventOrderAmount = eventOrderAmount;
+		this.isEventOrderActive = isEventOrderActive;
+		this.eventParticipantDate = eventParticipantDate;
+		this.eventParticipantNote = eventParticipantNote;
+		this.eventId = eventId;
+		this.eventName = eventName;
+		this.participantId = participantId;
+		this.participantName = participantName;
+	}
 
-    public String getEventOrderId() {
-        return eventOrderId;
-    }
+	public String getEventOrderId() {
+		return eventOrderId;
+	}
 
-    public void setEventOrderId(String eventOrderId) {
-        this.eventOrderId = eventOrderId;
-    }
+	public void setEventOrderId(String eventOrderId) {
+		this.eventOrderId = eventOrderId;
+	}
 
-    public int getEventOrderAmount() {
-        return eventOrderAmount;
-    }
+	public int getEventOrderAmount() {
+		return eventOrderAmount;
+	}
 
-    public void setEventOrderAmount(int eventOrderAmount) {
-        this.eventOrderAmount = eventOrderAmount;
-    }
+	public void setEventOrderAmount(int eventOrderAmount) {
+		this.eventOrderAmount = eventOrderAmount;
+	}
 
-    public boolean isEventOrderActive() {
-        return isEventOrderActive;
-    }
+	public boolean isEventOrderActive() {
+		return isEventOrderActive;
+	}
 
-    public void setEventOrderActive(boolean isEventOrderActive) {
-        this.isEventOrderActive = isEventOrderActive;
-    }
+	public void setEventOrderActive(boolean isEventOrderActive) {
+		this.isEventOrderActive = isEventOrderActive;
+	}
 
-    public LocalDateTime getEventParticipantDate() {
-        return eventParticipantDate;
-    }
+	public LocalDateTime getEventParticipantDate() {
+		return eventParticipantDate;
+	}
 
-    public void setEventParticipantDate(LocalDateTime eventParticipantDate) {
-        this.eventParticipantDate = eventParticipantDate;
-    }
+	public void setEventParticipantDate(LocalDateTime eventParticipantDate) {
+		this.eventParticipantDate = eventParticipantDate;
+	}
 
-    public String getEventParticipantNote() {
-        return eventParticipantNote;
-    }
+	public String getEventParticipantNote() {
+		return eventParticipantNote;
+	}
 
-    public void setEventParticipantNote(String eventParticipantNote) {
-        this.eventParticipantNote = eventParticipantNote;
-    }
+	public void setEventParticipantNote(String eventParticipantNote) {
+		this.eventParticipantNote = eventParticipantNote;
+	}
 
-    public String getEventId() {
-        return eventId;
-    }
+	public String getEventId() {
+		return eventId;
+	}
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
-    }
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
+	}
 
-    public int getParticipantId() {
-        return participantId;
-    }
+	public String getEventName() {
+		return eventName;
+	}
 
-    public void setParticipantId(int participantId) {
-        this.participantId = participantId;
-    }
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
 
-    @Override
-    public String toString() {
-        return "EventOrderDTO [eventOrderId=" + eventOrderId + ", eventOrderAmount=" + eventOrderAmount
-                + ", isEventOrderActive=" + isEventOrderActive + ", eventParticipantDate=" + eventParticipantDate
-                + ", eventParticipantNote=" + eventParticipantNote + ", eventId=" + eventId + ", participantId="
-                + participantId + "]";
-    }
+	public int getParticipantId() {
+		return participantId;
+	}
+
+	public void setParticipantId(int participantId) {
+		this.participantId = participantId;
+	}
+
+	public String getParticipantName() {
+		return participantName;
+	}
+
+	public void setParticipantName(String participantName) {
+		this.participantName = participantName;
+	}
+
+	@Override
+	public String toString() {
+		return "EventOrderDTO [eventOrderId=" + eventOrderId + ", eventOrderAmount=" + eventOrderAmount
+				+ ", isEventOrderActive=" + isEventOrderActive + ", eventParticipantDate=" + eventParticipantDate
+				+ ", eventParticipantNote=" + eventParticipantNote + ", eventId=" + eventId + ", eventName=" + eventName
+				+ ", participantId=" + participantId + ", participantName=" + participantName + "]";
+	}
+
+    
+
 }

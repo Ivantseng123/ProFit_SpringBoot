@@ -55,6 +55,8 @@ public class ServiceFrontendController {
         return "servicesVIEW/frontend/singleServiceDetail";
     }
 
+ 
+
     // RestfulAPI
     @PostMapping("/api/searchAll")
     @ResponseBody
@@ -113,12 +115,13 @@ public class ServiceFrontendController {
     @GetMapping("/api/searchMajorByMajorCategory/{majorCategoryId}")
     @ResponseBody
     public List<Map<String, Object>> searchMajorByMajorCategory(@PathVariable Integer majorCategoryId,
-    @RequestParam(value = "ServiceStatus", defaultValue = "1") Integer serviceStatus) {
+            @RequestParam(value = "ServiceStatus", defaultValue = "1") Integer serviceStatus) {
         List<Map<String, Object>> result = new ArrayList<>();
         List<MajorDTO> majorsByCategoryId = majorService.findMajorsByCategoryId(majorCategoryId);
 
         for (MajorDTO majorDTO : majorsByCategoryId) {
-            Integer countServiceNumByMajorId = serviceService.countServiceNumByMajorId(majorDTO.getMajorId(), serviceStatus);
+            Integer countServiceNumByMajorId = serviceService.countServiceNumByMajorId(majorDTO.getMajorId(),
+                    serviceStatus);
 
             // 自定義 Map 格式，將 MajorDTO 轉換為所需格式
             Map<String, Object> majorInfo = new HashMap<>();

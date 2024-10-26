@@ -1,159 +1,297 @@
 <!DOCTYPE html>
 <html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>ProFit-交易紀錄</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="shortcut icon" type="image/x-icon"
-	th:href="@{/images/favicon.svg}" />
-<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
-<link rel="stylesheet"
-	href="https://cdn.lineicons.com/4.0/lineicons.css" />
-<link rel="stylesheet" th:href="@{/css/frontend/main.css}">
-<style>
-body {
-	padding-top: 120px;
-	background-color: #f5f7fa;
-}
-
-.header {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 1000;
-}
-
-.footer {
-	margin-top: 50px;
-}
-
-.card-header h4 {
-	font-size: 1.5rem;
-}
-
-.btn-group button {
-	font-size: 1rem;
-	padding: 0.5rem 1rem;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>ProFit-交易紀錄</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}">
+    <style>
+        body {
+            padding-top: 120px;
+            background-color: #f5f7fa;
+            font-size: 1.0rem;
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .footer {
+            margin-top: 50px;
+        }
+        .card-header h4 {
+            font-size: 1.5rem;
+        }
+        .btn-group button {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+        }
+        .modal-body p {
+            font-size: 1.2rem;
+        }
+        .left-column, .right-column {
+            display: inline-block;
+            vertical-align: top;
+            width: 48%;
+            padding: 10px;
+        }
+        .right-column {
+            text-align: right;
+        }
+        .modal-footer {
+            justify-content: flex-end;
+        }
+        .modal-lg {
+            max-width: 40%;
+        }
+        .modal-body img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 
-	<!-- 引入頁頭 -->
-	<div th:replace="~{model/frontend/headerOtherPage}"></div>
+    <!-- 引入頁頭 -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
-	<div class="container mt-4">
+    <div class="container mt-4">
 
-		<!-- 最近交易 -->
-		<div class="row">
-			<div class="col">
-				<div class="card">
-					<div
-						class="card-header d-flex justify-content-between align-items-center">
-						<h4 class="mb-0">最近的交易</h4>
-					</div>
-					<div class="card-body">
-						<div class="btn-group mb-3" role="group">
-							<button type="button" class="btn btn-secondary" data-type="job">工作訂單</button>
-							<button type="button" class="btn btn-secondary"
-								data-type="service">服務訂單</button>
-							<button type="button" class="btn btn-secondary"
-								data-type="course">課程訂單</button>
-							<button type="button" class="btn btn-secondary" data-type="event">活動訂單</button>
-						</div>
+        <!-- 最近交易 -->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">最近的交易</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-group mb-3" role="group">
+                            <button type="button" class="btn btn-secondary" data-type="job">工作訂單</button>
+                            <button type="button" class="btn btn-secondary" data-type="service">服務訂單</button>
+                            <button type="button" class="btn btn-secondary" data-type="course">課程訂單</button>
+                            <button type="button" class="btn btn-secondary" data-type="event">活動訂單</button>
+                        </div>
 
-						<!-- 交易記錄列表 -->
-						<div id="transactionTable">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>訂單ID</th>
-										<th>創建時間</th>
-										<th>金額</th>
-										<th>狀態</th>
-										<th>操作</th>
-									</tr>
-								</thead>
-								<tbody id="transactionTableBody">
-									<!-- 這裡將由 JavaScript 動態生成 -->
-								</tbody>
-							</table>
+                        <!-- Modal 模態框結構 -->
+                        <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="orderModalLabel">訂單詳情</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img id="modalCourseCover" src="" alt="課程封面">
+                                        <div class="left-column">
+                                            <p><strong>課程名稱:</strong> <span id="modalCourseName"></span></p>
+                                            <p><strong>訂單ID:</strong> <span id="modalOrderId"></span></p>
+                                            <p><strong>學生名稱:</strong> <span id="modalStudentName"></span></p>
+                                        </div>
+                                        <div class="right-column">
+                                            <p><strong>創建時間:</strong> <span id="modalOrderDate"></span></p>
+                                            <p><strong>狀態:</strong> <span id="modalOrderStatus"></span></p>
+                                            <p><strong>金額:</strong> NT$<span id="modalOrderAmount"></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- 如果訂單狀態是 Pending -->
+                                        <button type="button" class="btn btn-danger" id="cancelOrderBtn" style="display: none;">取消訂單</button>
+                                        <button type="button" class="btn btn-success" id="completeOrderBtn" style="display: none;">完成付款</button>
+                                        <!-- 如果訂單狀態是 Completed -->
+                                        <button type="button" class="btn btn-secondary" id="closeOrderBtn" style="display: none;" data-bs-dismiss="modal">完成訂單</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-						</div>
-						<div id="noTransactionsMessage" class="text-center"
-							style="display: none;">
-							<p class="mt-2">無交易記錄</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <!-- 交易記錄列表 -->
+                        <div id="transactionTable">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>訂單ID</th>
+                                        <th>創建時間</th>
+                                        <th>金額</th>
+                                        <th>狀態</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionTableBody">
+                                    <!-- 這裡將由 JavaScript 動態生成 -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="noTransactionsMessage" class="text-center" style="display: none;">
+                            <p class="mt-2">無交易記錄</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- 引入彈窗、頁尾 -->
-	<div th:replace="~{model/frontend/signModal}"></div>
-	<div th:replace="~{model/frontend/footer}"></div>
+    <!-- 引入彈窗、頁尾 -->
+    <div th:replace="~{model/frontend/signModal}"></div>
+    <div th:replace="~{model/frontend/footer}"></div>
 
-	<!-- 返回頂部 -->
-	<a href="#" class="scroll-top btn-hover"><i
-		class="lni lni-chevron-up"></i></a>
+    <!-- 返回頂部 -->
+    <a href="#" class="scroll-top btn-hover"><i class="lni lni-chevron-up"></i></a>
 
-	<!-- 引入JS腳本 -->
-	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
-	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-	<script th:src="@{/js/frontend/main.js}"></script>
+    <!-- 引入JS腳本 -->
+    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
 
-	<!-- 添加按鈕點擊事件 -->
-	<script>
+    <!-- 添加按鈕點擊事件 -->
+    <script>
     $(document).ready(function () {
-        // 頁面加載後自動獲取所有 JobOrder
-        fetchJobOrders();
+        fetchOrders('job'); // 頁面加載時預設為 Job 訂單
 
-        function fetchJobOrders() {
+        // 訂單按鈕點擊事件
+        $('.btn-group button').on('click', function () {
+            var orderType = $(this).data('type');
+            fetchOrders(orderType);
+        });
+
+        // 根據訂單類型獲取訂單數據
+        function fetchOrders(orderType) {
+            var url = '/ProFit/allOrder/' + orderType + 'Orders';  // 根據訂單類型獲取相應的訂單資料
+
             $.ajax({
-                url: '/ProFit/allOrder/jobOrders',  // 這是控制器的 API 路徑
+                url: url,
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    updateTransactionTable(response);  // 更新表格
+                    updateTransactionTable(response, orderType);  // 更新表格
                 },
                 error: function (xhr, status, error) {
-                    console.error('獲取訂單記錄時發生錯誤:', error);
+                    console.error('獲取訂單資料時發生錯誤:', error);
                 }
             });
         }
 
         // 動態生成表格內容
-        function updateTransactionTable(orders) {
-    var tableBody = '';
-    if (orders.length > 0) {
-        orders.forEach(function (order) {
-            var jobOrderDate = order.formattedJobOrderDate || '無';
-            var jobOrderStatus = order.jobOrderStatus || '未知';
-            var jobAmount = order.jobAmount || '0';
-            
-            tableBody += `
-                <tr>
-                    <td>${order.jobOrdersId}</td>
-                    <td>${jobOrderDate}</td>
-                    <td>NT$${jobAmount}</td>
-                    <td>${jobOrderStatus}</td>
-                    <td><button class="btn btn-primary btn-sm">操作</button></td>
-                </tr>`;
+        function updateTransactionTable(orders, orderType) {
+            var tableBody = '';
+            if (orders.length > 0) {
+            	
+            	orders.sort(function(a, b) {
+            		var dateA = new Date(a.formattedCourseOrderCreateDate || a.formattedJobOrderDate || a.formattedServiceOrderDate || a.formattedEventOrderDate);
+            		var dateB = new Date(b.formattedCourseOrderCreateDate || b.formattedJobOrderDate || b.formattedServiceOrderDate || b.formattedEventOrderDate);
+            		return dateB - dateA; // 降序排序
+        		});
+        
+                orders.forEach(function (order) {
+                    var orderId = '無';
+                    var orderDate = '無';
+                    var orderStatus = '未知';
+                    var orderAmount = '0';
+                    var studentName = '無';
+                    var courseName = '無';
+                    var courseCoverURL = '';
+
+                    // 根據不同訂單類型進行數據匹配
+                    if (orderType === 'job') {
+                        orderId = order.jobOrdersId || '無';
+                        orderDate = order.formattedJobOrderDate || '無';
+                        orderStatus = order.jobOrderStatus || '未知';
+                        orderAmount = order.jobAmount || '0';
+                    } else if (orderType === 'service') {
+                        orderId = order.serviceOrdersId || '無';
+                        orderDate = order.formattedServiceOrderDate || '無';
+                        orderStatus = order.serviceOrderStatus || '未知';
+                        orderAmount = order.serviceAmount || '0';
+                    } else if (orderType === 'course') {
+                        orderId = order.courseOrderId || '無';
+                        orderDate = order.formattedCourseOrderCreateDate || '無';  // 使用格式化的日期
+                        orderStatus = order.courseOrderStatus || '未知';
+                        orderAmount = order.courseOrderPrice || '0';
+                        studentName = order.studentName || '無';
+                        courseName = order.courseName || '無';
+                        courseCoverURL = order.courseCoverPictureURL || '';
+                    } else if (orderType === 'event') {
+                        orderId = order.eventOrderId || '無';
+                        orderDate = order.formattedEventOrderDate || '無';
+                        orderStatus = order.eventOrderStatus || '未知';
+                        orderAmount = order.eventAmount || '0';
+                    }
+
+                    // 構建表格行，加入操作按鈕的點擊事件來顯示模態框
+                    tableBody += `
+                        <tr>
+                            <td>${orderId}</td>
+                            <td>${orderDate}</td>
+                            <td>NT$${orderAmount}</td>
+                            <td>${orderStatus}</td>
+                            <td><button class="btn btn-primary btn-sm" onclick="showOrderModal('${orderId}', '${orderAmount}', '${orderStatus}', '${orderDate}', '${studentName}', '${courseName}', '${courseCoverURL}')">操作</button></td>
+                        </tr>`;
+                });
+
+                $('#transactionTableBody').html(tableBody);
+                $('#noTransactionsMessage').hide();
+                $('#transactionTable').show();
+            } else {
+                $('#transactionTableBody').empty();
+                $('#transactionTable').hide();
+                $('#noTransactionsMessage').show();
+            }
+        }
+    });
+
+    // 顯示模態框並顯示學生名稱和課程資料
+    function showOrderModal(orderId, orderAmount, orderStatus, orderDate, studentName, courseName, courseCoverURL) {
+        $('#modalOrderId').text(orderId);
+        $('#modalOrderAmount').text(orderAmount);
+        $('#modalOrderStatus').text(orderStatus);
+        $('#modalOrderDate').text(orderDate);
+        
+        $('#modalStudentName').text(studentName);
+        $('#modalCourseName').text(courseName);
+        $('#modalCourseCover').attr('src', courseCoverURL);
+
+        // 根據訂單狀態顯示不同的按鈕
+        if (orderStatus === 'Pending') {
+            $('#cancelOrderBtn').show();
+            $('#completeOrderBtn').show();
+            $('#closeOrderBtn').hide();
+        } else if (orderStatus === 'Completed') {
+            $('#cancelOrderBtn').hide();
+            $('#completeOrderBtn').hide();
+            $('#closeOrderBtn').show();
+        }
+
+        // 顯示模態框
+        var modal = new bootstrap.Modal(document.getElementById('orderModal'));
+        modal.show();
+        
+        function deleteOrder(orderId) {
+    if (confirm("確定要刪除此訂單嗎？")) {
+        $.ajax({
+            url: '/ProFit/allOrder/deleteOrder',
+            method: 'POST',
+            data: { orderId: orderId },
+            success: function (response) {
+                if (response === "success") {
+                    alert("訂單已刪除");
+                    $('#orderRow-' + orderId).remove();  // 從表格中移除該訂單行
+                } else {
+                    alert("刪除失敗：" + response);
+                }
+            },
+            error: function () {
+                alert("刪除訂單時發生錯誤，請稍後再試");
+            }
         });
-        $('#transactionTableBody').html(tableBody);
-        $('#noTransactionsMessage').hide();
-        $('#transactionTable').show();
-    } else {
-        $('#transactionTableBody').empty();
-        $('#transactionTable').hide();
-        $('#noTransactionsMessage').show();
     }
 }
-
-    });
-</script>
+    }
+    </script>
 
 </body>
 </html>

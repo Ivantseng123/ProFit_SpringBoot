@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProFit.model.bean.usersBean.Employer_profile;
 import com.ProFit.model.dao.usersCRUD.EmpPfRepository;
+import com.ProFit.model.dto.usersDTO.CompanyStatistics;
 import com.ProFit.model.dto.usersDTO.EmpPfDTO;
+import com.ProFit.model.dto.usersDTO.UserStatistics;
 
 @Service
 @Transactional
@@ -66,6 +68,14 @@ public class EmpPfService implements IEmpPfService {
 
 		return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
 	}
+	
+	@Override
+	public Page<EmpPfDTO> findEmpPfByPage_frontend(Integer pageNumber) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 9, Sort.Direction.DESC, "employerProfileId");
+		Page<Employer_profile> empPfsPage = empPfRepository.findAll(pageable);
+
+		return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
+	}
 
 	@Override
 	public Page<EmpPfDTO> findEmpPfByPageAndSearch(Integer pageNumber, String search) {
@@ -77,15 +87,34 @@ public class EmpPfService implements IEmpPfService {
 			return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
 		}
 
-		Page<Employer_profile> empApplsPage = empPfRepository.findByUserEmailOrCompanyNameContaining(search,
-				search, pageable);
+		Page<Employer_profile> empApplsPage = empPfRepository.findByUserEmailOrCompanyNameContaining(search, search,
+				pageable);
 		return empApplsPage.map(empPf -> new EmpPfDTO(empPf));
 	}
 
+	@Override
+	public Page<EmpPfDTO> findEmpPfByPageAndSearch_frontend(Integer pageNumber, String search) {
+		Pageable pageable = PageRequest.of(pageNumber - 1, 9, Sort.Direction.DESC, "employerProfileId");
+
+		if (search == null || search.isEmpty()) {
+
+			Page<Employer_profile> empPfsPage = empPfRepository.findAll(pageable);
+			return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
+		}
+
+		Page<Employer_profile> empApplsPage = empPfRepository.findByUserEmailOrCompanyNameContaining(search, search,
+				pageable);
+		return empApplsPage.map(empPf -> new EmpPfDTO(empPf));
+	}
 
 	@Override
 	public Employer_profile getEmpPfInfoByUserId(int user_id) {
 		return empPfRepository.findByUserId(user_id);
+	}
+
+	@Override
+	public List<CompanyStatistics> getCompanyStatistics() {
+		return empPfRepository.countByCompanyCategory();
 	}
 
 }

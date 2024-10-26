@@ -6,10 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.ProFit.service.courseService.CourseOrderService;
+import com.ProFit.service.eventService.EventOrderService;
 import com.ProFit.service.transactionService.JobOrderService;
 import com.ProFit.service.userService.UserService;
 
@@ -23,6 +28,12 @@ public class AllOrderController {
 
 	@Autowired
 	private JobOrderService jobOrderService;
+	
+	@Autowired
+	private CourseOrderService courseOrderService;
+	
+	@Autowired
+	private EventOrderService eventOrderService;
 
 	@GetMapping("/allOrder")
 	public String showWalletPage(HttpSession session, Model model) {
@@ -44,11 +55,41 @@ public class AllOrderController {
 	public List<JobOrderDTO> getAllJobOrders(HttpSession session) {
 		UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
 		if (usersDTO == null || usersDTO.getUserId() == null) {
-			return null; // 如果使用者未登入，返回null
+			return null;
 		}
 
 		List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO();
-	    System.out.println("Orders fetched: " + orders); // 用來檢查是否有正確返回資料
 	    return orders;
 	}
+	
+	// 獲取所有 CourseOrder 資料
+	@GetMapping("/allOrder/courseOrders")
+	@ResponseBody
+	public List<CourseOrderDTO> getAllCourseOrders(HttpSession session) {
+	    UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+	    if (usersDTO == null || usersDTO.getUserId() == null) {
+	        return null;
+	    }
+
+	    List<CourseOrderDTO> courseOrders = courseOrderService.searchAllCourseOrders();
+	    return courseOrders;
+	}
+	
+	// 新增刪除訂單的 API
+	@PostMapping("/allOrder/deleteOrder")
+	@ResponseBody
+	public String deleteOrder(@RequestParam String orderId, HttpSession session) {
+	    UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+	    if (usersDTO == null || usersDTO.getUserId() == null) {
+	        return "unauthorized";
+	    }
+
+	    try {
+	        courseOrderService.deleteCourseOrderById(orderId);
+	        return "success";
+	    } catch (Exception e) {
+	        return "error";
+	    }
+	}
+
 }
