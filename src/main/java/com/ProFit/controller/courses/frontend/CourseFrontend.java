@@ -191,4 +191,22 @@ public class CourseFrontend {
         return "coursesVIEW/frontend/singleCourseDetailPage";
     }
 
+    // 回傳已購買課程的Api
+    @GetMapping("/purchasedList")
+    @ResponseBody
+    public List<CourseOrderDTO> getPurchasedListByUserId(HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (currentUser != null) {
+
+            List<CourseOrderDTO> searchCourseOrdersByUserId = courseOrderService.searchAllCourseOrders(null,
+                    currentUser.getUserId(), "Completed");
+
+            return searchCourseOrdersByUserId;
+        }
+
+        return null;
+    }
+
 }
