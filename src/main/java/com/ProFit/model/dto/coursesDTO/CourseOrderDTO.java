@@ -1,6 +1,7 @@
 package com.ProFit.model.dto.coursesDTO;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 
@@ -23,6 +24,7 @@ public class CourseOrderDTO {
 	private String courseOrderStatus;
 	private String courseOrderPaymentMethod;
 	private Integer courseOrderTaxID;
+	private CoursesDTO course;
 
 	public CourseOrderDTO() {
 		super();
@@ -185,4 +187,18 @@ public class CourseOrderDTO {
 		this.courseOrderStatus = courseOrderStatus;
 	}
 
+	//訂單清單的日期格式化
+	public String getFormattedCourseOrderCreateDate() {
+		if (this.courseOrderCreateDate != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			return this.courseOrderCreateDate.format(formatter);
+		} else {
+			return "無";
+		}
+	}
+	
+	//得到訂單日期
+	public void setFormattedCourseOrderCreateDate(String formattedCourseOrderCreateDate) {
+		
+	}
 }
