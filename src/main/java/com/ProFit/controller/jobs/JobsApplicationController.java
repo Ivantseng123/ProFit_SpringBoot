@@ -97,7 +97,7 @@ public class JobsApplicationController {
         jobsApplication.setApplicant(applicant);
         jobsApplication.setJobsApplicationDate(jobsApplicationDate);
         jobsApplication.setJobsApplicationStatus(jobsApplicationStatus);
-        jobsApplication.setJobsApplicationContract(jobsApplicationContract);
+        jobsApplication.setJobsApplicationResume(jobsApplication.getJobsApplicationResume());
 
         JobsApplication savedJobApplication = jobsApplicationService.save(jobsApplication);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedJobApplication);

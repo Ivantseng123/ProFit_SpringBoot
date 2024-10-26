@@ -135,6 +135,10 @@ public class JobsFrontController {
             jobsApplication.setApplicant(userService.getUserInfoByID(101));
             jobsApplication.setJobs(jobsService.findById(id).orElse(null));
 
+            //============上傳合約============
+
+
+
             // 獲取專案根目錄
             String projectPath = new File("").getAbsolutePath();
 
@@ -150,8 +154,9 @@ public class JobsFrontController {
 
             // 保存文件
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            //============上傳履歷============
 
-            jobsApplication.setJobsApplicationContract(fileName);
+            jobsApplication.setJobsApplicationResume(fileName);
         } catch (IOException ignore) {
         }
 

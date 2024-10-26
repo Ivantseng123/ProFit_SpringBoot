@@ -55,9 +55,9 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_status")
 	  private Byte jobsApplicationStatus=0;
 
-	  @Lob // Use @Lob for Blob data type
-	  @Column(name = "jobs_application_contract")
-	  private String jobsApplicationContract;
+
+	  @Column(name = "jobs_application_resume")
+	  private String jobsApplicationResume;
 
 	@OneToMany(mappedBy = "jobsApplication")
 	private List<JobsApplicationProject> projects;
@@ -108,12 +108,12 @@ public class JobsApplication implements java.io.Serializable{
 		this.jobsApplicationStatus = jobsApplicationStatus;
 	}
 
-	public String getJobsApplicationContract() {
-		return jobsApplicationContract;
+	public String getJobsApplicationResume() {
+		return jobsApplicationResume;
 	}
 
-	public void setJobsApplicationContract(String jobsApplicationContract) {
-		this.jobsApplicationContract = jobsApplicationContract;
+	public void setJobsApplicationResume(String jobsApplicationResume) {
+		this.jobsApplicationResume = jobsApplicationResume;
 	}
 
 	public List<JobsApplicationProject> getProjects() {

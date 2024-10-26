@@ -12,10 +12,7 @@
 <div layout:fragment="content">
     <div class="course-header">
         <h2>職缺申請列表</h2>
-    <!-- 添加"新增"按鈕 -->
-<!--    <a th:href="@{/jobs/add}" class="btn btn-sm btn-success ms-1">-->
-<!--        <i class="fas fa-plus"></i> -->
-<!--    </a>-->
+
 </div>
 
     <div class="table-container" id="search-results">
@@ -28,7 +25,7 @@
                 <th>應徵者</th>
                 <th>申請日期</th>
                 <th>職缺申請狀態</th>
-                <th>申請合約</th>
+                <th>申請履歷</th>
             </tr>
             </thead>
             <tbody id="table-body">
@@ -40,7 +37,7 @@
                     <td th:text="${jobApplication.applicant?.userName}"></td>
                     <td th:text="${jobApplication.jobsApplicationDate}"></td>
                     <td th:text="${jobApplication.jobsApplicationStatus}"></td>
-                    <td th:text="${jobApplication.jobsApplicationContract}"></td>
+                    <td th:text="${jobApplication.jobsApplicationResume}"></td>
                     <td></td>
                 </tr>
             </th:block>
@@ -49,13 +46,16 @@
     </div>
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
+    $(document).ready(function (){
+        const baseUrl = /*[[@{/jobs}]]*/'';
+        console.log(baseUrl);
     $("#jobsApplicationList").DataTable({
         order: [0, 'asc'],
         columns:[{
             data: 'jobsApplicationId',
             className: 'all'
         },{
-            data: 'jobs.users.userName',  // 修改这里：正确的属性路径
+            data: 'jobs.users.userName',
             className: 'all'
         },{
             data: 'applicant.userName',
@@ -66,9 +66,6 @@
             render: function (data, type, row) {
                 return row.jobsApplicationDate;
             }
-        },{
-            data: 'jobsApplicationContract',
-            className: 'all'
         },{
             data: 'jobsApplicationStatus',
             className: 'all',
@@ -88,20 +85,30 @@
                 return result;
             }
         },{
+            data: 'jobsApplicationResume',
+            className: 'all'
+        },{
             data: 'actions',
             defaultContent: '',
             orderable: false,
             searchable: false,
             render : function (data, type, row) {
                 let result = '';
+
+                //這裡的class就是bootstrap,就幾乎不用style
                 result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i></a>';
                 result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i></a>';
                 result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i></a>';
+
+                bindDeleteEvent();
                 return result;
             }
         }]
     });
 
+
+
+    function bindDeleteEvent() {
         $('.deleteBtn').click(function (e){
             e.preventDefault();
             let url = $(this).attr('href');
@@ -136,6 +143,12 @@
                 }
             });
         })
+
+
+    }
+
+    bindDeleteEvent();
+    });
 </script>
 </body>
 </html>

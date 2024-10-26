@@ -14,14 +14,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">Post a Job</h1>
-                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
-                            Business draws on a wide range of different business .</p>
+                        <h1 class="page-title">進入投遞程序</h1>
+                        <p>您已進入媒合頁面，敬請耐心填寫</p>
                     </div>
                     <ul class="breadcrumb-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="news-standard.html">Blog</a></li>
-                        <li>Post a Job</li>
+                        <li><a th:href="@{/homepage}">回到首頁</a></li>
+                        <li>職缺應徵中......</li>
                     </ul>
                 </div>
             </div>
@@ -34,13 +32,13 @@
             <div class="row">
                 <div class="col-lg-10 offset-lg-1 col-12">
                     <div class="job-information">
-                        <h3 class="title">Job Information</h3>
+                        <h3 class="title">職缺資訊</h3>
                         <form id="editForm" th:action="@{/front/jobs/view/{id}/new(id=${job.jobsId})}" method="POST" enctype="multipart/form-data">
 <!--                            <input type="hidden" th:field="${user}">-->
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label>Job title</label>
+                                        <label>職缺標題</label>
                                         <input class="form-control" type="text" th:name="${jobsApplication.jobs}" th:value="${job.jobsTitle}" readonly>
                                     </div>
                                 </div>
@@ -49,13 +47,13 @@
                                 <div class="choose-img">
                                     <p>履歷上傳</p>
                                     <input type="file" id="pdf" name="pdf" accept="application/pdf">
-                                    <p>Maximum file size: 2 MB</p>
+                                    <p>檔案上傳限制: 2 MB</p>
                                 </div>
                             </div>
                             <div>
                                 <div class="col-lg-12 button">
                                     <button class="btn" type="submit">
-                                        Post a Job
+                                        送出申請
                                     </button>
                                 </div>
                             </div>
