@@ -93,7 +93,7 @@
                                             <a id="sendMsg" href="#" style="width:150px;" class="btn btn-outline-danger" type="button"
                                                 th:text="'諮詢'">
                                             </a>
-                                            <a id="buyNow" href="#" style="width:150px;" class="btn btn-danger" type="button"
+                                            <a id="buyNow" th:href="${'/ProFit/c/serviceApplication/edit?serviceId=' + serviceDTO.serviceId}" style="width:150px;" class="btn btn-danger" type="button"
                                                 th:text="'委託合作'">
                                             </a>
                                         </div>

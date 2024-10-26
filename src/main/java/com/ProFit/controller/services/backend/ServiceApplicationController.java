@@ -22,7 +22,7 @@ import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 import com.ProFit.service.serviceService.ServiceApplicationService;
 
 @Controller
-@RequestMapping("/a/serviceApplications")
+@RequestMapping("/a/serviceApplication")
 public class ServiceApplicationController {
 
   @Autowired

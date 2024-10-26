@@ -20,31 +20,58 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
+import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
+import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.serviceService.ServiceApplicationService;
+import com.ProFit.service.serviceService.ServiceService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/serviceApplications")
+@RequestMapping("/c/serviceApplication")
 public class ServiceApplicationFrontendController {
 
   @Autowired
   private ServiceApplicationService serviceApplicationService;
 
-  // 返回主頁面view
-  @GetMapping
-  public String showServiceApplicationsPage() {
-    return "servicesVIEW/frontend/serviceApplications";
-  }
+  @Autowired
+  private ServiceService serviceService;
 
   // 獲取當前user 資訊
   private UsersDTO getCurrentUser(HttpSession session) {
     return (UsersDTO) session.getAttribute("CurrentUser");
   }
 
-  // 查找服務委託by Id
+  // 跳轉到 新增/修改 委託的 頁面
+  @GetMapping("/edit")
+  public String showServiceApplicationsPage(@RequestParam Integer serviceId, HttpSession session, Model model) {
+    UsersDTO currentUser = getCurrentUser(session);
+
+    // 若沒有登入
+    if (currentUser == null) {
+      return "redirect:/user/profile";
+    }
+
+    // 驗證目前有登入 以及 有serviceId => 進入新增委託畫面
+    if (serviceId != null) {
+
+      ServicesDTO serviceDTO = serviceService.getServiceById(serviceId);
+
+      model.addAttribute("currentUser", currentUser);
+      model.addAttribute("ServicesDTO", serviceDTO);
+
+      return "servicesVIEW/frontend/editServiceApplication";
+    } else if (serviceId == null) {  // 若 有登入 但沒有serviceId => 進入編輯委託畫面
+      model.addAttribute("currentUser", currentUser);
+      return "servicesVIEW/frontend/editServiceApplication";
+    }
+
+    return "redirect:/user/profile";
+  }
+
+  // 查找服務委託by 委託Id
   @GetMapping("/api/{id}")
   @ResponseBody
   public ResponseEntity<ServiceApplicationsDTO> findServiceApplicationById(@PathVariable Integer id) {
