@@ -402,4 +402,12 @@ public class UserService implements IUserService {
 		}
 	}
 
+	//更新創建課程者的餘額
+	public void updateUserBalance(Integer userId, Double amount) {
+	    Users user = usersRepository.findById(userId).orElse(null);
+	    if (user != null) {
+	        user.setUserBalance(user.getUserBalance() + amount.intValue());
+	        usersRepository.save(user);
+	    }
+	}
 }

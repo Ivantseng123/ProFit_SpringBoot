@@ -62,7 +62,6 @@
     <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
     <div class="container mt-4">
-
         <!-- 最近交易 -->
         <div class="row">
             <div class="col">
@@ -100,10 +99,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <!-- 如果訂單狀態是 Pending -->
                                         <button type="button" class="btn btn-danger" id="cancelOrderBtn" style="display: none;">取消訂單</button>
                                         <button type="button" class="btn btn-success" id="completeOrderBtn" style="display: none;">完成付款</button>
-                                        <!-- 如果訂單狀態是 Completed -->
                                         <button type="button" class="btn btn-secondary" id="closeOrderBtn" style="display: none;" data-bs-dismiss="modal">完成訂單</button>
                                     </div>
                                 </div>
@@ -123,7 +120,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody">
-                                    <!-- 這裡將由 JavaScript 動態生成 -->
+                                    <!-- JavaScript 動態生成 -->
                                 </tbody>
                             </table>
                         </div>
@@ -140,7 +137,6 @@
     <div th:replace="~{model/frontend/signModal}"></div>
     <div th:replace="~{model/frontend/footer}"></div>
 
-    <!-- 返回頂部 -->
     <a href="#" class="scroll-top btn-hover"><i class="lni lni-chevron-up"></i></a>
 
     <!-- 引入JS腳本 -->
@@ -148,81 +144,43 @@
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
 
-    <!-- 添加按鈕點擊事件 -->
+    <!-- JavaScript 點擊事件 -->
     <script>
     $(document).ready(function () {
-        fetchOrders('job'); // 頁面加載時預設為 Job 訂單
+        fetchOrders('job');
 
-        // 訂單按鈕點擊事件
         $('.btn-group button').on('click', function () {
             var orderType = $(this).data('type');
             fetchOrders(orderType);
         });
 
-        // 根據訂單類型獲取訂單數據
         function fetchOrders(orderType) {
-            var url = '/ProFit/allOrder/' + orderType + 'Orders';  // 根據訂單類型獲取相應的訂單資料
-
+            var url = '/ProFit/allOrder/' + orderType + 'Orders';
             $.ajax({
                 url: url,
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    updateTransactionTable(response, orderType);  // 更新表格
+                    updateTransactionTable(response, orderType);
                 },
                 error: function (xhr, status, error) {
-                    console.error('獲取訂單資料時發生錯誤:', error);
+                    console.error('獲取訂單資料錯誤:', error);
                 }
             });
         }
 
-        // 動態生成表格內容
         function updateTransactionTable(orders, orderType) {
             var tableBody = '';
             if (orders.length > 0) {
-            	
-            	orders.sort(function(a, b) {
-            		var dateA = new Date(a.formattedCourseOrderCreateDate || a.formattedJobOrderDate || a.formattedServiceOrderDate || a.formattedEventOrderDate);
-            		var dateB = new Date(b.formattedCourseOrderCreateDate || b.formattedJobOrderDate || b.formattedServiceOrderDate || b.formattedEventOrderDate);
-            		return dateB - dateA; // 降序排序
-        		});
-        
                 orders.forEach(function (order) {
-                    var orderId = '無';
-                    var orderDate = '無';
-                    var orderStatus = '未知';
-                    var orderAmount = '0';
-                    var studentName = '無';
-                    var courseName = '無';
-                    var courseCoverURL = '';
+                    var orderId = order.jobOrdersId || order.serviceOrdersId || order.courseOrderId || order.eventOrderId || '無';
+                    var orderDate = order.formattedJobOrderDate || order.formattedServiceOrderDate || order.formattedCourseOrderCreateDate || order.formattedEventOrderDate || '無';
+                    var orderStatus = order.jobOrderStatus || order.serviceOrderStatus || order.courseOrderStatus || order.eventOrderStatus || '未知';
+                    var orderAmount = order.jobAmount || order.serviceAmount || order.courseOrderPrice || order.eventAmount || '0';
+                    var studentName = order.studentName || '無';
+                    var courseName = order.courseName || '無';
+                    var courseCoverURL = order.courseCoverPictureURL || '/images/default-cover.png';
 
-                    // 根據不同訂單類型進行數據匹配
-                    if (orderType === 'job') {
-                        orderId = order.jobOrdersId || '無';
-                        orderDate = order.formattedJobOrderDate || '無';
-                        orderStatus = order.jobOrderStatus || '未知';
-                        orderAmount = order.jobAmount || '0';
-                    } else if (orderType === 'service') {
-                        orderId = order.serviceOrdersId || '無';
-                        orderDate = order.formattedServiceOrderDate || '無';
-                        orderStatus = order.serviceOrderStatus || '未知';
-                        orderAmount = order.serviceAmount || '0';
-                    } else if (orderType === 'course') {
-                        orderId = order.courseOrderId || '無';
-                        orderDate = order.formattedCourseOrderCreateDate || '無';  // 使用格式化的日期
-                        orderStatus = order.courseOrderStatus || '未知';
-                        orderAmount = order.courseOrderPrice || '0';
-                        studentName = order.studentName || '無';
-                        courseName = order.courseName || '無';
-                        courseCoverURL = order.courseCoverPictureURL || '';
-                    } else if (orderType === 'event') {
-                        orderId = order.eventOrderId || '無';
-                        orderDate = order.formattedEventOrderDate || '無';
-                        orderStatus = order.eventOrderStatus || '未知';
-                        orderAmount = order.eventAmount || '0';
-                    }
-
-                    // 構建表格行，加入操作按鈕的點擊事件來顯示模態框
                     tableBody += `
                         <tr>
                             <td>${orderId}</td>
@@ -244,34 +202,36 @@
         }
     });
 
-    // 顯示模態框並顯示學生名稱和課程資料
     function showOrderModal(orderId, orderAmount, orderStatus, orderDate, studentName, courseName, courseCoverURL) {
         $('#modalOrderId').text(orderId);
         $('#modalOrderAmount').text(orderAmount);
         $('#modalOrderStatus').text(orderStatus);
         $('#modalOrderDate').text(orderDate);
-        
         $('#modalStudentName').text(studentName);
         $('#modalCourseName').text(courseName);
         $('#modalCourseCover').attr('src', courseCoverURL);
 
-        // 根據訂單狀態顯示不同的按鈕
         if (orderStatus === 'Pending') {
             $('#cancelOrderBtn').show();
             $('#completeOrderBtn').show();
             $('#closeOrderBtn').hide();
-        } else if (orderStatus === 'Completed') {
+        } else if (orderStatus === '已付款') {
             $('#cancelOrderBtn').hide();
             $('#completeOrderBtn').hide();
             $('#closeOrderBtn').show();
+        } else {
+            // 隱藏所有按鈕，處理其他狀態
+            $('#cancelOrderBtn').hide();
+            $('#completeOrderBtn').hide();
+            $('#closeOrderBtn').hide();
         }
 
-        // 顯示模態框
         var modal = new bootstrap.Modal(document.getElementById('orderModal'));
         modal.show();
-        
-        function deleteOrder(orderId) {
-    if (confirm("確定要刪除此訂單嗎？")) {
+    }
+
+    $('#cancelOrderBtn').on('click', function () {
+        var orderId = $('#modalOrderId').text();
         $.ajax({
             url: '/ProFit/allOrder/deleteOrder',
             method: 'POST',
@@ -279,7 +239,7 @@
             success: function (response) {
                 if (response === "success") {
                     alert("訂單已刪除");
-                    $('#orderRow-' + orderId).remove();  // 從表格中移除該訂單行
+                    location.reload();
                 } else {
                     alert("刪除失敗：" + response);
                 }
@@ -288,9 +248,49 @@
                 alert("刪除訂單時發生錯誤，請稍後再試");
             }
         });
-    }
-}
-    }
+    });
+
+    // 完成付款
+    $('#completeOrderBtn').on('click', function () {
+        var orderId = $('#modalOrderId').text();
+        $.ajax({
+            url: '/ProFit/allOrder/updateOrderStatus',
+            method: 'POST',
+            data: { orderId: orderId, status: 'Pending' },
+            success: function (response) {
+                if (response === "success") {
+                    alert("付款成功，狀態已更新為已付款");
+                    window.location.href = `/ProFit/test?orderId=${orderId}`;
+                } else {
+                    alert("更新訂單狀態失敗：" + response);
+                }
+            },
+            error: function () {
+                alert("更新訂單狀態時發生錯誤，請稍後再試");
+            }
+        });
+    });
+
+    // 完成訂單
+    $('#closeOrderBtn').on('click', function () {
+        var orderId = $('#modalOrderId').text();
+        $.ajax({
+            url: '/ProFit/allOrder/updateOrderStatus',
+            method: 'POST',
+            data: { orderId: orderId, status: 'Completed' },  // 將狀態設為 "Completed"
+            success: function (response) {
+                if (response === "success") {
+                    alert("訂單已完成，創建課程者已收到款項");
+                    location.reload();
+                } else {
+                    alert("更新訂單狀態失敗：" + response);
+                }
+            },
+            error: function () {
+                alert("更新訂單狀態時發生錯誤，請稍後再試");
+            }
+        });
+    });
     </script>
 
 </body>

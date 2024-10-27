@@ -175,6 +175,28 @@ body {
 
 	<!-- JavaScript 用於動態獲取和更新交易數據 -->
 	<script>
+	
+	// 刪除交易
+    function deleteTransaction(transactionId) {
+    if (confirm("確定要刪除此交易記錄嗎？")) {
+        $.ajax({
+            url: '/ProFit/transaction/delete',
+            method: 'POST',
+            data: { transactionId: transactionId },
+            success: function (response) {
+                if (response === "success") {
+                    alert("交易記錄已刪除");
+                    location.reload();  // 刪除成功後重新加載頁面
+                } else {
+                    alert("刪除失敗：" + response);
+                }
+            },
+            error: function () {
+                alert("刪除時發生錯誤，請稍後再試");
+            }
+        });
+    }
+}
         $(document).ready(function () {
     // 頁面加載後自動獲取即將撥款的交易記錄
     fetchPendingTransactions();
@@ -240,30 +262,31 @@ body {
     }
 
     // 當用戶點擊確認取款按鈕
-    $('#submitWithdraw').on('click', function () {
-        var amount = $('#withdrawAmount').val();  // 獲取輸入的金額
+   $('#submitWithdraw').on('click', function () {
+    var amount = $('#withdrawAmount').val();
 
-        if (amount && amount > 0) {
-            $.ajax({
-                url: '/ProFit/transaction/withdraw',
-                method: 'POST',
-                data: { amount: amount },
-                success: function (response) {
-                    if (response === "success") {
-                        alert('取款成功！');
-                        location.reload();  // 重新加載頁面
-                    } else {
-                        alert('取款失敗: ' + response);  // 顯示具體的錯誤消息
-                    }
-                },
-                error: function () {
-                    alert('取款失敗，請稍後再試');
+    if (amount && amount > 0) {
+        $.ajax({
+            url: '/ProFit/transaction/withdraw',
+            method: 'POST',
+            data: { amount: amount },
+            success: function (response) {
+                if (response === "success") {
+                    alert('取款成功！');
+                    location.reload();
+                } else {
+                    alert(response);  // 顯示後端返回的自訂訊息
                 }
-            });
-        } else {
-            alert('請輸入有效的金額');
-        }
-    });
+            },
+            error: function () {
+                alert('取款失敗，請稍後再試');
+            }
+        });
+    } else {
+        alert('請輸入有效的金額');
+    }
+});
+
 
     // 獲取交易資料
     $.ajax({
@@ -276,29 +299,8 @@ body {
         error: function() {
             alert('獲取交易記錄時發生錯誤');
         }
-    });
+    }); 
 
-    // 刪除交易
-    function deleteTransaction(transactionId) {
-        if (confirm("確定要刪除此交易記錄嗎？")) {
-            $.ajax({
-                url: '/ProFit/transaction/delete',  // 假設的後端API路徑
-                method: 'POST',
-                data: { transactionId: transactionId },
-                success: function (response) {
-                    if (response === "success") {
-                        alert("交易記錄已刪除");
-                        location.reload();  // 刪除成功後重新加載頁面
-                    } else {
-                        alert("刪除失敗：" + response);
-                    }
-                },
-                error: function () {
-                    alert("刪除時發生錯誤，請稍後再試");
-                }
-            });
-        }
-    } 
 });
 
     </script>

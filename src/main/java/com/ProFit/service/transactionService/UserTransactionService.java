@@ -121,6 +121,10 @@ public class UserTransactionService {
 				transactionDTO.getTransactionStatus(), transactionDTO.getPaymentMethod(),
 				transactionDTO.getReferenceId());
 
+		 if ("completed".equals(transactionDTO.getTransactionStatus())) {
+		        transaction.setCompletionAt(LocalDateTime.now());
+		    }
+		
 		// 更新用戶餘額
 		Users user = userService.getUserInfoByID(transactionDTO.getUserId());
 		if (user != null) {

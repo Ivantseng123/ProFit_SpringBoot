@@ -30,6 +30,10 @@ public class CourseOrderService implements IcourseOrderService {
 
 	@Autowired
 	private CoursesRepository coursesRepo;
+	
+	//添加注入
+	@Autowired
+	private CourseOrderRepository courseOrderRepository;
 
 	@Override
 	public Integer insertCourseOrder(CourseOrderBean courseOrder) {
@@ -113,6 +117,38 @@ public class CourseOrderService implements IcourseOrderService {
 		Page<CourseOrderDTO> dtoPage = courseOrderPage.map(CourseOrderDTO::new);
 
 		return dtoPage;
+	}
+	
+	//訂單更新狀態
+	public void updateOrderStatusById(String courseOrderId, String status) {
+	    Optional<CourseOrderBean> optional = courseOrderRepo.findById(courseOrderId);
+	    if (optional.isPresent()) {
+	        CourseOrderBean courseOrder = optional.get();
+	        courseOrder.setCourseOrderStatus(status);
+	        courseOrderRepo.save(courseOrder);
+	    }
+	}
+
+	//改變參數的資料型態
+	public Double getOrderAmountById(String orderId) {
+		Integer courseAmount = courseOrderRepository.findOrderAmountById(orderId);
+	    return courseAmount != null ? courseAmount.doubleValue() : 0.0;
+	}
+
+	// 獲取創建課程的ID
+	public Integer getCreatorUserIdByOrderId(String orderId) {
+	    Optional<CourseOrderBean> optionalOrder = courseOrderRepo.findById(orderId);
+
+	    if (optionalOrder.isPresent()) {
+	        CourseOrderBean courseOrder = optionalOrder.get();
+	        return courseOrder.getCourse().getCourseCreater().getUserId();
+	    }
+	    return null;
+	}
+
+	public Double getOrderAmountByMerchantTradeNo(String merchantTradeNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
