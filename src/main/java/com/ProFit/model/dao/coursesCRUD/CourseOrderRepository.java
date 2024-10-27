@@ -17,4 +17,8 @@ public interface CourseOrderRepository extends JpaRepository<CourseOrderBean, St
             @Param("studentId") Integer studentId,
             @Param("courseOrderStatus") String courseOrderStatus);
 
+    //訂單查詢訂單金額
+     @Query("SELECT c.courseOrderPrice FROM CourseOrderBean c WHERE c.courseOrderId = :orderId")
+     Integer findOrderAmountById(@Param("orderId") String orderId);
+    
 }
