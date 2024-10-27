@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
+import com.ProFit.model.dto.transactionDTO.UserTransactionDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.courseService.CourseOrderService;
 import com.ProFit.service.eventService.EventOrderService;
 import com.ProFit.service.transactionService.JobOrderService;
+import com.ProFit.service.transactionService.UserTransactionService;
 import com.ProFit.service.userService.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +36,9 @@ public class AllOrderController {
 	
 	@Autowired
 	private EventOrderService eventOrderService;
+	
+	@Autowired
+	private UserTransactionService userTransactionService;
 
 	@GetMapping("/allOrder")
 	public String showWalletPage(HttpSession session, Model model) {
@@ -91,5 +96,89 @@ public class AllOrderController {
 	        return "error";
 	    }
 	}
+	
+	//更新訂單狀態
+	@PostMapping("/allOrder/updateOrderStatus")
+	@ResponseBody
+	public String updateOrderStatus(@RequestParam String orderId, @RequestParam String status, HttpSession session) {
+	    UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+	    if (usersDTO == null || usersDTO.getUserId() == null) {
+	        return "unauthorized";
+	    }
 
+	    try {
+	        // 檢查 status，根據不同狀態進行相應操作
+	        if ("Pending".equals(status)) {
+	            // 將狀態從 Pending 更新為 "已付款"
+	            courseOrderService.updateOrderStatusById(orderId, "已付款");
+
+	            // 為付款方新增交易紀錄
+	            UserTransactionDTO transactionDTO = new UserTransactionDTO();
+	            transactionDTO.setUserId(usersDTO.getUserId());
+	            transactionDTO.setTransactionRole("payer"); 
+	            transactionDTO.setTransactionType("payment"); 
+	            String orderType = getOrderTypeByOrderId(orderId);
+	            transactionDTO.setOrderType(orderType);
+	            transactionDTO.setOrderId(orderId);
+	            Double orderAmount = getOrderAmountByOrderId(orderId);
+	            transactionDTO.setTotalAmount(orderAmount);
+	            transactionDTO.setTransactionStatus("completed");
+	            transactionDTO.setPaymentMethod("ECPAY");
+	            userTransactionService.insertTransaction(transactionDTO);
+
+	        } else if ("Completed".equals(status)) {
+	            // 將狀態從 "已付款" 更新為 "Completed"
+	            courseOrderService.updateOrderStatusById(orderId, "Completed");
+
+	            // 為課程創建者新增一筆「存入」的交易紀錄
+	            Integer creatorUserId = courseOrderService.getCreatorUserIdByOrderId(orderId); // 創建者的 ID
+	            Double originalAmount = getOrderAmountByOrderId(orderId);
+	            Double finalAmount = originalAmount * 0.95; // 扣除 5% 手續費
+
+	            UserTransactionDTO transactionDTO = new UserTransactionDTO();
+	            transactionDTO.setUserId(creatorUserId);
+	            transactionDTO.setTransactionRole("收款方");
+	            transactionDTO.setTransactionType("存入");
+	            String orderType = getOrderTypeByOrderId(orderId);
+	            transactionDTO.setOrderType(orderType);
+	            transactionDTO.setOrderId(orderId);
+	            transactionDTO.setTotalAmount(finalAmount);
+	            transactionDTO.setTransactionStatus("已完成");
+	            transactionDTO.setPaymentMethod("存入");
+
+	            userTransactionService.insertTransaction(transactionDTO);
+	            
+	            userService.updateUserBalance(creatorUserId, finalAmount);
+	        }
+
+	        return "success";
+	    } catch (Exception e) {
+	        return "error";
+	    }
+	}
+	
+	// 輔助方法 - 取得訂單類型
+    private String getOrderTypeByOrderId(String orderId) {
+        if (orderId.startsWith("J")) {
+            return "job";
+        } else if (orderId.startsWith("C")) {
+            return "course";
+        } else if (orderId.startsWith("E")) {
+            return "event";
+        }
+        return "unknown"; // 如果無法匹配訂單類型
+    }
+
+    // 輔助方法 - 取得訂單金額並移除小數點
+    private Double getOrderAmountByOrderId(String orderId) {
+        Double amount = 0.0;
+        if (orderId.startsWith("J")) {
+            amount = jobOrderService.getOrderAmountById(orderId); // 假設有這樣的方法
+        } else if (orderId.startsWith("C")) {
+            amount = courseOrderService.getOrderAmountById(orderId);
+        } 
+        return (double) amount.intValue(); // 回傳去除小數點的金額
+    }
+    
+    
 }

@@ -9,15 +9,32 @@
     <div></div>
 
     <script>
-        axios.post("http://localhost:8080/ProFit/tests")
+    // 從 URL 中獲取 orderId 參數
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get("orderId");
+
+    if (!orderId) {
+        console.error("缺少 orderId 參數");
+    } else {
+        // 使用 URLSearchParams 將 orderId 作為表單資料發送
+        const params = new URLSearchParams();
+        params.append("orderId", orderId);
+
+        axios.post("http://localhost:8080/ProFit/tests", params)
         .then(res => {
-            console.log(res)
-            document.querySelector("div").innerHTML += res.data
-            document.querySelector("form").submit();
+            console.log(res);
+            document.querySelector("div").innerHTML += res.data;
+            const form = document.querySelector("form");
+            if (form) {
+                form.submit();
+            } else {
+                console.error("表單生成失敗，無法提交");
+            }
         })
         .catch(err => {
-            console.error(err); 
-        })
+            console.error("請求錯誤：", err);
+        });
+    }
     </script>
 </body>
 </html>
