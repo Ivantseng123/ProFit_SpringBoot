@@ -1,18 +1,141 @@
+$(document).ready(() => {
 
-$(document).ready(function() {
+	document.getElementById('memberProfile').addEventListener('click', function() {
 
-	getUser();
+		$('.col-lg-8').eq(0).empty();
+		htmlMakerForMemberProfile();
 
-});
+	})
 
+	document.getElementById('companyProfile').addEventListener('click', function() {
 
-function getUser() {
+		$('.col-lg-8').eq(0).empty();
+		htmlMakerForCompanyProfile();
 
+	})
 
-	if (localStorage.getItem('isLoggedIn') == null) {
-		alert("請先登入");
-		window.location.href = "http://localhost:8080/ProFit/homepage";
-	}
+	document.getElementById('questionForm').addEventListener('click', function() {
+
+		$('.col-lg-8').eq(0).empty();
+		htmlMakerForQuestionForm();
+		document.getElementById('submitButton').addEventListener('click', function() {
+				
+				console.log('CLICKCLICK');
+
+			
+				let question_category = document.getElementById('question_category').value;
+				let sender = document.getElementById('sender').value;
+				let content = document.getElementById('content').value;
+
+				const question = {
+					'subject': question_category,
+					'email': sender,
+					'content': content
+				}
+
+				fetch('http://localhost:8080/ProFit/user/sendEmail', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(question)
+				})
+					.then(response => {
+						if (response.ok) {
+							alert('發送成功，我們會儘快回覆您！');
+							content.value = '';
+						}
+
+					})
+					.catch(error => console.error('Error fetching data:', error));
+			})
+	})
+
+	
+})
+
+function htmlMakerForMemberProfile() {
+
+	$('.col-lg-8').eq(0).append(`
+		<div class="inner-content">				
+									<div class="personal-top-content">
+										<div class="row">
+											<div class="col-lg-5 col-md-5 col-12">
+												<div class="name-head">
+													<img class="photo mt-2" id="profile_picture" alt="">
+													<h4>
+														<p class="name mt-3" id="user_name"></p>
+													</h4>
+													<div class="d-flex mt-5">
+														<div class="btn btn-primary follow me-2" data-toggle="modal"
+															data-target="#editProfile">編輯資料</div>
+														<div class="btn btn-outline-primary message" data-toggle="modal"
+															data-target="#editPassword">修改密碼</div>
+													</div>
+													<div class="d-flex mt-3 align-items-center border-bottom">
+														<p class="py-2">最近登入時間</p>
+													</div>
+													<div class="d-flex align-items-center border-bottom">
+														<p class="py-2 text-muted" id="last_login_time"></p>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-7 col-md-7 col-12">
+												<div class="content-right">
+													<h5 class="title-main">個人資訊</h5>
+
+													<div class="single-list">
+														<h5 class="title">居住地</h5>
+														<p id="user_city"></p>
+													</div>
+
+													<div class="single-list">
+														<h5 class="title">E-mail</h5>
+														<p id="user_email"></p>
+													</div>
+
+													<div class="single-list">
+														<h5 class="title">手機號碼</h5>
+														<p id="user_phoneNumber"></p>
+													</div>
+
+													<h5 class="title-main mt-3">接案資訊</h5>
+
+													<div class="single-list">
+														<h5 class="title">工作地點偏好</h5>
+														<p id="freelancer_location_prefer"></p>
+													</div>
+
+													<div class="single-list">
+														<h5 class="title">工作經驗</h5>
+														<p id="freelancer_exprience"></p>
+													</div>
+
+													<div class="single-list">
+														<h5 class="title">接案身份</h5>
+														<p id="freelancer_identity"></p>
+													</div>
+
+													<div class="single-list">
+														<h5 class="title">接案狀態</h5>
+														<p id="freelancer_profile_status"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="single-section">
+										<h4>接案描述</h4>
+										<p class="font-size-4 mb-8" id="freelancer_description">A talented professional with an
+											academic background
+											in IT and proven
+											commercial development experience as C++ developer since 1999. Has a sound
+											knowledge of the software
+											development life cycle. Was involved in more than 140 software development
+											outsourcing projects.</p>
+									</div>
+								</div>
+`)
 	let profile_picture = document.getElementById('profile_picture')
 	let profileImagePreview = document.getElementById('profileImagePreview')
 
@@ -117,109 +240,75 @@ function getUser() {
 		.catch(error => console.error('Error fetching user data:', error));
 }
 
-document.getElementById('editPwdForm').addEventListener('submit', function(e) {
+function htmlMakerForCompanyProfile() {
 
-	e.preventDefault(); // 取消原本 form 表單送的 request
-	let user_password_edit = document.getElementById('user_password_edit').value;
-
-	fetch(`http://localhost:8080/ProFit/users/updateuserpwdFrontend?userPassword=${user_password_edit}`, {
-		method: 'PUT'
-	})
-		.then(response => {
-			if (response.ok) {
-				$('#editPassword').modal('hide');
-				alert('更新成功');
-				document.getElementById("editPwdForm").reset();
-			}
-
-		})
-		.catch(error => console.error('Error fetching user data:', error));
-})
-
-
-$('#fileInput').on('change', function() {
-	let fileInput = $(this)[0];
-	let previewImage = $('#profileImagePreview');
-
-	if (fileInput.files && fileInput.files[0]) {
-
-		let reader = new FileReader();
-
-		reader.onload = function(e) {
-
-			previewImage.attr('src', e.target.result);
-		}
-
-		reader.readAsDataURL(fileInput.files[0]);
-	}
-});
-
-
-document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
-
-	e.preventDefault(); // 防止表單提交，等待圖片上傳完成
-	handleImageUpload();
-});
-
-function handleImageUpload() {
-	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
-		.then(response => response.json())
-		.then(firebaseConfig => {
-
-			console.log('配置: ' + firebaseConfig);
-
-			// 初始化 Firebase
-			firebase.initializeApp(firebaseConfig);
-			const storage = firebase.storage();
-			const fileInput = document.getElementById('fileInput');
-			const file = fileInput.files[0];
-
-			if (file) {
-				const storageRef = storage.ref('userUpload/' + file.name);
-				const uploadTask = storageRef.put(file);
-
-				uploadTask.on('state_changed', null, error => {
-					console.error('Upload failed:', error);
-				}, () => {
-					uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-						document.getElementById('user_pictureURL').value = downloadURL;
-						sendForm();
-					});
-				});
-			} else {
-				sendForm();
-			}
-		})
-		.catch(error => {
-			console.error('Error fetching Firebase config:', error);
-		});
-}
-
-function sendForm() {
-	const updateUserinfo = document.getElementById('editProfileForm');
-	let usersDTO = new FormData(updateUserinfo);
-
-	fetch('http://localhost:8080/ProFit/users/updateProfile', {
-		method: 'PUT',
-		body: usersDTO
-	})
-		.then(response => {
-			if (response.ok) {
-				$('#editProfile').modal('hide');
-				alert('更新成功');
-				getUser();
-			} else {
-				alert('更新失敗，請稍後再試。');
-			}
-		})
-		.catch(error => {
-			console.error('Error:', error);
-			alert('更新請求失敗，請檢查控制台以獲取更多詳細信息。');
-		});
-}
-
-function getCompany() {
-
+	$('.col-lg-8').eq(0).append(`
+		<div class="inner-content">
+									<!-- Start Personal Top Content -->
+									<div class="personal-top-content">
+										<div class="row">
+											<div class="col-lg-5 col-md-5 col-12">
+												<div class="name-head">
+													<img class="photo_company mt-2" id="profile_picture_company" alt="">
+													<h3>
+														<p class="name mt-3" id="company_name"></p>
+													</h3>
+													<div class="d-flex mt-3">
+														<div class="btn btn-primary follow me-2" data-toggle="modal"
+															data-target="#editCompProfile">編輯資料</div>
+														<div class="btn btn-outline-primary message" data-toggle="modal"
+															data-target="#companyAppliction">公司驗證</div>
+													</div>
+													<div class="col-12 bg-white p-0 px-2 pb-3 mb-3">
+														<div class="d-flex mt-3 align-items-center border-bottom">
+															<p class="py-2">申請項目</p>
+														</div>
+														<div class="d-flex align-items-center border-bottom">
+															<p class="py-2 text-muted" id="application_item"></p>
+														</div>
+													</div>											
+												</div>
+											</div>
+											<div class="col-lg-7 col-md-7 col-12">
+												<div class="content-right">
+													<h5 class="title-main">店家/公司資訊</h5>											
+													<div class="single-list">
+														<h5 class="title">地址</h5>
+														<p id="company_address"></p>
+													</div>											
+													<div class="single-list">
+														<h5 class="title">分類</h5>
+														<p id="company_category"></p>
+													</div>										
+													<div class="single-list">
+														<h5 class="title">電話</h5>
+														<p id="company_phoneNumber"></p>
+													</div>											
+													<div class="single-list">
+														<h5 class="title">員工數</h5>
+														<p id="company_numberOfemployee"></p>
+													</div>										
+													<div class="single-list">
+														<h5 class="title">資本額</h5>
+														<p id="company_capital"></p>
+													</div>											
+												</div>
+											</div>
+										</div>
+									</div>							
+									<div class="single-section">
+										<h4>簡介</h4>
+										<p class="font-size-4 mb-8" id="company_description">A talented professional with an
+											academic background
+											in IT and proven
+											commercial development experience as C++ developer since 1999. Has a sound
+											knowledge of the software
+											development life cycle. Was involved in more than 140 software development
+											outsourcing projects.</p>
+									</div>
+									
+								</div>
+`)
 	let profile_picture = document.getElementById('profile_picture_company')
 	let profileImagePreview = document.getElementById('profileImagePreview_company')
 
@@ -247,7 +336,6 @@ function getCompany() {
 
 	let company_description = document.getElementById('company_description')
 	let company_description_edit = document.getElementById('company_description_edit')
-
 
 	fetch('http://localhost:8080/ProFit/emp/getCompPfinfo')
 		.then(response => {
@@ -317,10 +405,6 @@ function getCompany() {
 			console.error('Error fetching', error);
 		});
 
-}
-
-function getCompanyAppl() {
-
 	let application_item = document.getElementById('application_item')
 
 
@@ -350,239 +434,69 @@ function getCompanyAppl() {
 			console.error('Error fetching', error);
 		});
 
+
 }
 
-$('#fileInput_company').on('change', function() {
-	let fileInput = $(this)[0];
-	let previewImage = $('#profileImagePreview_company');
+function htmlMakerForQuestionForm() {
 
-	if (fileInput.files && fileInput.files[0]) {
+	$('.col-lg-8').eq(0).append(`
+		<section class="contact-us section">		
+								<div class="form-main">
+									<form class="form" id="questionForm">
+										<div class="row">
+											<div class="col-lg-6 col-12">
+												<div class="form-group">
+													<label class="label mb-3">問題類型</label>
+													<select class="form-select" id="question_category">
+														<option value="Bug回報">Bug回報</option>
+														<option value="優化建議">優化建議</option>
+														<option value="檢舉相關">檢舉相關</option>
+														<option value="帳戶相關">帳戶相關</option>
+														<option value="公司驗證相關">公司驗證相關</option>
+														<option value="職缺相關">職缺相關</option>
+														<option value="其他">其他</option>
+													</select>
+												</div>
+											</div>
 
-		let reader = new FileReader();
+											<div class="form-group">
+												<label class="label ">你的信箱</label>
+												<input type="email" placeholder="example@gmail.com" id="sender" readonly>
+											</div>
 
-		reader.onload = function(e) {
-
-			previewImage.attr('src', e.target.result);
-		}
-
-		reader.readAsDataURL(fileInput.files[0]);
-	}
-});
-
-document.getElementById('editCompProfileForm').addEventListener('submit', async function(e) {
-	e.preventDefault(); // 防止表單提交，等待圖片上傳完成
-	handleImageUpload_company();
-});
-
-function handleImageUpload_company() {
-	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
-		.then(response => response.json())
-		.then(firebaseConfig => {
-
-			// 初始化 Firebase
-			firebase.initializeApp(firebaseConfig);
-			const storage = firebase.storage();
-			const fileInput = document.getElementById('fileInput_company');
-			const file = fileInput.files[0];
-
-			if (file) {
-				const storageRef = storage.ref('userUpload/' + file.name);
-				const uploadTask = storageRef.put(file);
-
-				uploadTask.on('state_changed', null, error => {
-					console.error('Upload failed:', error);
-				}, () => {
-					uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-						document.getElementById('company_pictureURL').value = downloadURL;
-						sendForm_company();
-					});
-				});
-			} else {
-				sendForm_company();
-			}
-		})
-		.catch(error => {
-			console.error('Error fetching Firebase config:', error);
-		});
-}
-
-function sendForm_company() {
-	const updateCompinfo = document.getElementById('editCompProfileForm');
-	let empPfDTO = new FormData(updateCompinfo);
-
-	fetch('http://localhost:8080/ProFit/empPf/updateCompPf', {
-		method: 'PUT',
-		body: empPfDTO
-	})
+											<div class="col-12">
+												<div class="form-group message">
+													<textarea placeholder="問題描述" id="content"></textarea>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-group button">
+													<button type="button" id="submitButton" class="btn ">送出</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+						</section>
+`)
+	fetch('http://localhost:8080/ProFit/user/profileinfo')
 		.then(response => {
 			if (response.ok) {
-				$('#editCompProfile').modal('hide');
-				alert('更新成功');
-				getCompany();
-			} else {
-				alert('更新失敗，請稍後再試。');
+				//throw new Error('Network response was not ok');
+				console.log("成功取得會員資料");
 			}
+			return response.json();
+
 		})
-		.catch(error => {
-			console.error('Error:', error);
-			alert('更新請求失敗，請檢查控制台以獲取更多詳細信息。');
-		});
-}
+		.then(user => {
 
-document.getElementById("toggleButton").addEventListener("click", function() {
-	let companyInfo = document.getElementById("companyInfo");
-	let userInfo = document.getElementById("userInfo");
-
-	companyInfo.style.display = "none";
-	userInfo.style.display = "block";
-});
-
-document.getElementById("toggleButton2").addEventListener("click", function() {
-	let companyInfo = document.getElementById("companyInfo");
-	let userInfo = document.getElementById("userInfo");
-
-	userInfo.style.display = "none";
-	companyInfo.style.display = "block";
-});
+			sender.value = user.userEmail;
 
 
-document.getElementById('companyApplForm').addEventListener('submit', async function(e) {
-	e.preventDefault();
-	handleImageUpload_application();
-	getCompanyAppl();
-});
-
-function handleImageUpload_application() {
-	fetch('http://localhost:8080/ProFit/FirebaseConfigServ')
-		.then(response => response.json())
-		.then(firebaseConfig => {
-			// 初始化 Firebase
-			firebase.initializeApp(firebaseConfig);
-			const storage = firebase.storage();
-
-			const fileInput = document.getElementById('fileInput0');
-			const fileInput1 = document.getElementById('fileInput1');
-			const fileInput2 = document.getElementById('fileInput2');
-			const files = [fileInput.files[0], fileInput1.files[0], fileInput2.files[0]];
-
-			const uploadPromises = files.map((file, index) => {
-				return new Promise((resolve, reject) => {
-					if (file) {
-						const storageRef = storage.ref('userUpload/' + file.name);
-						const uploadTask = storageRef.put(file);
-
-						uploadTask.on('state_changed',
-							function() {
-								uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-									if (index === 0) {
-										document.getElementById('company_taxID_docURL').value = downloadURL;
-									} else if (index === 1) {
-										document.getElementById('idCard_pictureURL_1').value = downloadURL;
-									} else if (index === 2) {
-										document.getElementById('idCard_pictureURL_2').value = downloadURL;
-									}
-									resolve(); // 上传完成，resolve 该 Promise
-								}).catch(reject); // 处理上传错误
-							}
-						);
-					} else {
-						console.log(`No file selected for input ${index + 1}`);
-						resolve(); // 如果没有文件也resolve, 保证继续执行
-					}
-				});
-			});
-
-
-			Promise.all(uploadPromises)
-				.then(() => {
-					sendForm_application();
-				})
-				.catch(error => {
-					console.error('Error uploading files:', error);
-				});
 		})
-		.catch(error => {
-			console.error('Error fetching Firebase config:', error);
-		});
+		.catch(error => console.error('Error fetching user data:', error));
+		
 }
-
-function sendForm_application() {
-	const company_application = document.getElementById('companyApplForm');
-	let empApplDTO = new FormData(company_application);
-
-	fetch('http://localhost:8080/ProFit/empAppl/addEmpAppl_frontend', {
-		method: 'POST',
-		body: empApplDTO
-	})
-		.then(response => {
-			if (response.ok) {
-				$('#companyAppliction').modal('hide');
-				alert('申請成功');
-				getCompanyAppl()
-			} else {
-				alert('申請失敗，請稍後再試。');
-			}
-		})
-		.catch(error => {
-			console.error('Error:', error);
-			alert('申請請求失敗，請檢查控制台以獲取更多詳細信息。');
-		});
-}
-
-
-$('#fileInput0').on('change', function() {
-	let fileInput = $(this)[0];
-	let previewImage = $('#taxIDImagePreview');
-
-
-	if (fileInput.files && fileInput.files[0]) {
-		let reader = new FileReader();
-
-		reader.onload = function(e) {
-
-			previewImage.attr('src', e.target.result);
-		}
-
-
-		reader.readAsDataURL(fileInput.files[0]);
-	}
-});
-
-
-$('#fileInput1').on('change', function() {
-	let fileInput = $(this)[0];
-	let previewImage = $('#nationalIDPreview1');
-
-
-	if (fileInput.files && fileInput.files[0]) {
-		let reader = new FileReader();
-
-		reader.onload = function(e) {
-
-			previewImage.attr('src', e.target.result);
-		}
-
-
-		reader.readAsDataURL(fileInput.files[0]);
-	}
-});
-
-$('#fileInput2').on('change', function() {
-	let fileInput = $(this)[0];
-	let previewImage = $('#nationalIDPreview2');
-
-	// 確保有文件被選擇
-	if (fileInput.files && fileInput.files[0]) {
-		let reader = new FileReader();
-
-		reader.onload = function(e) {
-			previewImage.attr('src', e.target.result);
-		}
-
-		reader.readAsDataURL(fileInput.files[0]);
-	}
-});
-
 
 
 
