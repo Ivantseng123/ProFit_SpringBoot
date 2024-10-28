@@ -70,7 +70,7 @@
                                     <li>
                                         <a href="#commentSpace">
                                             <i class="lni lni-comments"></i>
-                                            <span th:text="|${courseGradeDTOList.totalElements} 則留言|"></span>
+                                            <span th:text="|${courseGradeDTOList.totalElements} 則評論|"></span>
                                         </a>
                                     </li>
                                     <!-- <li>
@@ -242,8 +242,6 @@
                 }
             });
 
-            // let courseId = $('.courseName').data('courseid');
-            // updateAddToCartButton(courseId);
 
         });
 
@@ -253,77 +251,6 @@
         var formattedPrice = new Number(coursePrice).toLocaleString('zh-TW');
 
         priceElement.innerHTML += formattedPrice;
-
-        // $('#addToCart').click(function () {
-
-        //     let courseId = $('.courseName').data('courseid');
-
-        //     $.ajax({
-        //         url: '/ProFit/course/searchOne?courseId=' + courseId,
-        //         dataType: 'JSON',
-        //         type: 'GET',
-        //         success: function (courseDTO) {
-
-        //             addToCart(courseDTO);
-
-        //             alert('成功加入購物車');
-
-        //             displayCart();
-
-        //         },
-        //         error: function () {
-        //             alert('加入購物車失敗');
-        //         }
-        //     })
-
-        // });
-
-        // function addToCart(courseDTO) {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        //     // 檢查是否已經有該商品
-        //     let exists = cart.some(item => item.courseId === courseDTO.courseId);
-
-        //     if (!exists) {
-        //         cart.push(courseDTO);
-        //         localStorage.setItem('cart', JSON.stringify(cart));
-        //         updateAddToCartButton(courseDTO.courseId);  // 更新按鈕狀態
-        //     } else {
-        //         alert('這個商品已經在購物車中');
-        //     }
-        // }
-
-        // function displayCart() {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        //     cart.forEach(course => {
-        //         // 顯示每個商品的資訊
-        //         console.log(course.courseName);
-        //     });
-        // }
-
-        // function removeFromCart(courseId) {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        //     cart = cart.filter(course => course.courseId !== courseId);
-        //     localStorage.setItem('cart', JSON.stringify(cart));
-        // }
-
-        // function clearCart() {
-        //     localStorage.removeItem('cart');
-        // }
-
-        // function updateAddToCartButton(courseId) {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        //     // 檢查購物車裡面是否已經有該商品
-        //     let exists = cart.some(item => item.courseId === courseId);
-
-        //     if (exists) {
-        //         $('#addToCart').text('已經在購物車').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
-        //         $('#buyNow').text('前往結帳');
-        //     } else {
-        //         $('#addToCart').text('加入購物車').prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
-        //     }
-        // }
     </script>
 </body>
 
