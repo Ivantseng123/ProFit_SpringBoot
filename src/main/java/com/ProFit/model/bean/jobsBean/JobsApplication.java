@@ -1,7 +1,6 @@
 package com.ProFit.model.bean.jobsBean;
 
-import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.ProFit.model.bean.usersBean.Users;
@@ -59,6 +58,9 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_resume")
 	  private String jobsApplicationResume;
 
+//	@Column(name = "jobs_application_contract)
+//	private String jobsApplicationContract;
+
 	@OneToMany(mappedBy = "jobsApplication")
 	private List<JobsApplicationProject> projects;
 
@@ -115,6 +117,14 @@ public class JobsApplication implements java.io.Serializable{
 	public void setJobsApplicationResume(String jobsApplicationResume) {
 		this.jobsApplicationResume = jobsApplicationResume;
 	}
+
+//	public String getJobsApplicationContract() {
+//		return jobsApplicationContract;
+//	}
+//
+//	public void setJobsApplicationResume(String jobsApplicationContract) {
+//		this.jobsApplicationContract = jobsApplicationContract;
+//	}
 
 	public List<JobsApplicationProject> getProjects() {
 		return projects;

@@ -84,7 +84,7 @@ public class JobsApplicationProjectController {
 //    @GetMapping("/view/{id}")
 //    public String view(@PathVariable("id") Integer id, Model model){
 //        if (id != null) {
-//            model.addAttribute("job", jobsService.findById(id).orElse(null));;
+//            model.addAttribute("job", jobsApplicationService.findById(id).orElse(null));;
 //        }
 //        return "jobsVIEW/jobsApplicationProjectForm";
 //    }

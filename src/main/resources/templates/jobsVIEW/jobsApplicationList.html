@@ -47,7 +47,7 @@
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
     $(document).ready(function (){
-        const baseUrl = /*[[@{/jobs}]]*/'';
+        const baseUrl = /*[[@{/jobsApplication}]]*/'';
         console.log(baseUrl);
     $("#jobsApplicationList").DataTable({
         order: [0, 'asc'],
@@ -73,13 +73,13 @@
                 let result = '';
                 switch (data) {
                     case '0':
-                        result = '刊登中';
-                        break;
-                    case '1':
                         result = '已投遞受理';
                         break;
+                    case '1':
+                        result = '已錄取';
+                        break;
                     case '2':
-                        result = '尚未審核';
+                        result = '未錄取';
                         break;
                 }
                 return result;

@@ -21,6 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 			if (!response.ok) {
 				let div = document.getElementById('loginError');
 				div.innerHTML = '<p style="color: red; font-size: 16px;">帳號或密碼錯誤</p>';
+				alert('登入失敗');
 			} else {
 
 				$('#login').modal('hide');
@@ -32,7 +33,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 		})
 		.catch(error => {
 			console.error('Error:', error);
-
+			alert('登入失敗');
 		});
 
 

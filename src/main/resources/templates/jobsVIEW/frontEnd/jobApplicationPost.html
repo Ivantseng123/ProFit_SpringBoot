@@ -14,12 +14,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">進入投遞程序</h1>
-                        <p>您已進入媒合頁面，敬請耐心填寫</p>
+                        <h1 class="page-title">進入投遞程序...</h1>
+                        <p>您已在媒合頁面，敬請耐心填寫相關資料。</p>
                     </div>
                     <ul class="breadcrumb-nav">
                         <li><a th:href="@{/homepage}">回到首頁</a></li>
-                        <li>職缺應徵中......</li>
+                        <li>職缺應徵中</li>
                     </ul>
                 </div>
             </div>
@@ -43,11 +43,32 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!--&lt;!&ndash;合約上傳-->
+
+                            <div class="col-lg-12">
+                                <div class="choose-img">
+                                    <p>合約上傳</p>
+                                    <input type="file" id="doc" name="doc" accept="application/doc">
+                                    <p>檔案上傳限制: 2 MB</p>
+                                </div>
+                            </div>
+
+                            <!--&lt;!&ndash;履歷上傳-->
                             <div class="col-lg-12">
                                 <div class="choose-img">
                                     <p>履歷上傳</p>
                                     <input type="file" id="pdf" name="pdf" accept="application/pdf">
                                     <p>檔案上傳限制: 2 MB</p>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-group checkboxs">
+                                    <input type="checkbox" class="checkboxs" id="chb2">
+                                    <p>
+                                        請點擊勾選，表示您同意我們的 <a href="terms-conditions.html">會員守則條款</a> 以及 <a href="privacy-policy.html">隱私權政策。</a>
+                                    </p>
                                 </div>
                             </div>
                             <div>
