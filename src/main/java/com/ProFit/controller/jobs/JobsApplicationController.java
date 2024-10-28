@@ -139,5 +139,4 @@ public class JobsApplicationController {
             return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
         }
 
-
 }
