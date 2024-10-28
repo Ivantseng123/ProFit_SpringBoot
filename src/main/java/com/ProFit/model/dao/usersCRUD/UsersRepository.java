@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UserStatistics_registerTime;
 
 public interface UsersRepository extends JpaRepository<Users, Integer> {
 
@@ -35,6 +36,13 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 			+ "WHEN u.userIdentity = 2 THEN '企業' " + "WHEN u.userIdentity = 3 THEN '管理員' "
 			+ "WHEN u.userIdentity = 4 THEN '超級管理員' END, COUNT(u)) " + "FROM Users u GROUP BY u.userIdentity")
 	List<UserStatistics> countByUserIdentity();
+
+	@Query("SELECT new com.ProFit.model.dto.usersDTO.UserStatistics_registerTime(CAST(u.userRegisterTime AS date), COUNT(u)) " +
+		       "FROM Users u " +
+		       "GROUP BY CAST(u.userRegisterTime AS date) " +
+		       "ORDER BY CAST(u.userRegisterTime AS date)")
+		List<UserStatistics_registerTime> getUserStatisticsByDate();
+
 
 	// 用來更新用戶餘額
 

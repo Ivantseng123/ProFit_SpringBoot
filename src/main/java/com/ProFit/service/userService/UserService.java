@@ -1,8 +1,12 @@
 package com.ProFit.service.userService;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +21,7 @@ import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.PwdResetTokenRepository;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UserStatistics_registerTime;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import net.bytebuddy.utility.RandomString;
 
@@ -372,23 +377,27 @@ public class UserService implements IUserService {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<UserStatistics> getUserStatistics() {
 		return usersRepository.countByUserIdentity();
 	}
+	
+	@Override
+	public List<UserStatistics_registerTime> getUserStatisticsByDate() {
+        return usersRepository.getUserStatisticsByDate();
+    }
 
 	// 用來更新用戶餘額的方法
 	@Override
 	public Users updateUserBalance(Users user) {
 		return usersRepository.save(user); // 使用 usersRepository 進行保存操作
 	}
-
+	
 	public Users getUserById(Integer userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 	// 前台獲取用戶餘額
 	public Integer getUserBalanceById(Integer userId) {
@@ -400,12 +409,12 @@ public class UserService implements IUserService {
 		}
 	}
 
-	//更新創建課程者的餘額
+	// 更新創建課程者的餘額
 	public void updateUserBalance(Integer userId, Double amount) {
-	    Users user = usersRepository.findById(userId).orElse(null);
-	    if (user != null) {
-	        user.setUserBalance(user.getUserBalance() + amount.intValue());
-	        usersRepository.save(user);
-	    }
+		Users user = usersRepository.findById(userId).orElse(null);
+		if (user != null) {
+			user.setUserBalance(user.getUserBalance() + amount.intValue());
+			usersRepository.save(user);
+		}
 	}
 }

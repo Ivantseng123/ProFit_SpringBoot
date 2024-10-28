@@ -234,19 +234,22 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 })
 
 function downloadLogs() {
-	fetch('http://localhost:8080/ProFit/logs/export/xml')
-		.then(response => response.blob())
+	fetch("http://localhost:8080/ProFit/download/logs")
+		.then(response => {
+			if (!response.ok) throw new Error("Network response was not ok.");
+			return response.blob();
+		})
 		.then(blob => {
 			const url = window.URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.style.display = 'none';
+			const a = document.createElement("a");
 			a.href = url;
-			a.download = 'logs.xml';
+			a.download = "aop-logs.csv";
 			document.body.appendChild(a);
 			a.click();
+			a.remove();
 			window.URL.revokeObjectURL(url);
 		})
-		.catch(error => console.error('Error downloading logs:', error));
+		.catch(error => console.error("Error downloading the log file:", error));
 }
 
 function oneClickInsert() {
