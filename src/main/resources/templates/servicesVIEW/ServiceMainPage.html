@@ -38,14 +38,26 @@
           </div>
         </div>
       </form>
-      <div class="mb-3">
-        <label for="sortOrder" class="form-label">排序：</label>
-        <select id="sortOrder" class="form-select">
-          <option value="serviceId,true">ID 升序</option>
-          <option value="serviceId,false">ID 降序</option>
-          <option value="serviceUpdateDate,true">更新日期升序</option>
-          <option value="serviceUpdateDate,false" selected>更新日期降序</option>
-        </select>
+      <div class="d-flex">
+        <div class="mb-3">
+          <label for="status" class="form-label">狀態：</label>
+          <select id="status" class="form-select">
+            <option value="3">全部</option>
+            <option value="0">審核中</option>
+            <option value="1">啟用</option>
+            <option value="2">關閉</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="sortOrder" class="form-label">排序：</label>
+          <select id="sortOrder" class="form-select">
+            <option value="serviceId,true">ID 升序</option>
+            <option value="serviceId,false">ID 降序</option>
+            <option value="serviceUpdateDate,true">更新日期升序</option>
+            <option value="serviceUpdateDate,false" selected>更新日期降序</option>
+          </select>
+        </div>
+
       </div>
     </div>
 
@@ -94,6 +106,8 @@
       Loading...
     </div>
   </div>
+
+
 
   <!-- 服務詳情模態框 -->
   <div class="modal fade" id="staticBackdrop-view" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -148,6 +162,13 @@
         });
 
         document.getElementById('sortOrder').addEventListener('change', function () {
+
+          currentPage = 0;
+          loadServices();
+        });
+
+        document.getElementById('status').addEventListener('change', function () {
+
           currentPage = 0;
           loadServices();
         });
@@ -157,12 +178,17 @@
         const serviceId = document.getElementById('serviceId').value;
         const serviceTitle = document.getElementById('serviceTitle').value;
         const [sortBy, ascending] = document.getElementById('sortOrder').value.split(',');
+        const status = document.getElementById('status').value;
+        // console.log(serviceId)
+        // console.log(serviceTitle)
+        // console.log([sortBy, ascending])
+        // console.log(status)
 
         let url;
         if (serviceId) {
           url = `/ProFit/service/api/${serviceId}`;
-        } else if (serviceTitle) {
-          url = `/ProFit/service/api/search?title=${encodeURIComponent(serviceTitle)}&page=${currentPage}&size=${pageSize}&sortBy=${sortBy}&ascending=${ascending}`;
+        } else if (serviceTitle || status) {
+          url = `/ProFit/service/api/searchAll?serviceTitle=${encodeURIComponent(serviceTitle)}&status=${status}&page=${currentPage}&size=${pageSize}&sortBy=${sortBy}&ascending=${ascending}`
         } else {
           url = `/ProFit/service/api/list?page=${currentPage}&size=${pageSize}&sortBy=${sortBy}&ascending=${ascending}`;
         }
@@ -200,7 +226,24 @@
                       <td>$${service.servicePrice} / ${service.serviceUnitName}</td>
                       <td>${service.userMajor.user.userName}</td>
                       <td>${new Date(service.serviceUpdateDate).toLocaleString()}</td>
-                      <td>${getStatusText(service.serviceStatus)}</td>
+                      <td> 
+                        <div>
+                          <input type="radio" id="statusPending_${service.serviceId}" name="status_${service.serviceId}" value="0"
+                                            ${service.serviceStatus == 0 ? 'checked' : ''}>
+                          <label for="statusPending_${service.serviceId}">審核中</label>
+                        </div>
+                        <div>
+                          <input type="radio" id="statusActive_${service.serviceId}" name="status_${service.serviceId}" value="1"
+                              ${service.serviceStatus == 1 ? 'checked' : ''}>
+                          <label for="statusActive_${service.serviceId}">啟用</label>
+                        </div>
+                        <div>
+                          <input type="radio" id="statusClosed_${service.serviceId}" name="status_${service.serviceId}" value="2"
+                              ${service.serviceStatus == 2 ? 'checked' : ''}>
+                          <label for="statusClosed_${service.serviceId}">關閉</label>
+                        </div>
+                        <hr>
+                        <button onclick="updateServiceStatus(${service.serviceId})" class="btn btn-sm btn-warning">更改</button>
                       <td>
                           <button onclick="viewService(${service.serviceId})" class="btn btn-sm btn-success">查看</button>
                           <button onclick="editService(${service.serviceId})" class="btn btn-sm btn-primary">編輯</button>
@@ -320,6 +363,34 @@
             .catch(error => console.error('Error:', error));
         }
       }
+
+      // 更新服務狀態
+      function updateServiceStatus(serviceId) {
+        // 取得選中的單選按鈕的值
+        const selectedStatus = document.querySelector(`input[name="status_${serviceId}"]:checked`).value;
+
+        // 發送 AJAX 請求更新服務狀態
+        fetch(`/ProFit/service/api/${serviceId}/${selectedStatus}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ serviceStatus: selectedStatus })
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.message === "OK") {
+              alert("狀態已更新成功");
+            } else {
+              alert("狀態更新失敗");
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert("發生錯誤，請稍後再試");
+          });
+      }
+
     </script>
 
 

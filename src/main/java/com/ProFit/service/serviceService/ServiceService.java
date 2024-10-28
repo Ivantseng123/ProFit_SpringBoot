@@ -148,7 +148,7 @@ public class ServiceService {
 
 	// 修改(更新)服務
 	public ServicesDTO updateService(ServicesDTO serviceDTO) {
-		System.out.println("aa ");
+		// System.out.println("aa ");
 		Optional<ServiceBean> optional = serviceRepo.findById(serviceDTO.getServiceId());
 		if (optional.isPresent()) {
 			ServiceBean serviceBean = optional.get();
@@ -171,6 +171,21 @@ public class ServiceService {
 			if (serviceBean.getServiceCreateDate() == null) {
 				serviceBean.setServiceCreateDate(oldserviceCreateDate);
 			}
+			System.out.println(serviceBean);
+			ServiceBean updatedBean = serviceRepo.save(serviceBean);
+			return ServicesDTO.fromEntity(updatedBean);
+		}
+		return null;
+	}
+
+	// 修改(更新)服務狀態
+	public ServicesDTO updateServiceStatus(ServicesDTO serviceDTO) {
+		Optional<ServiceBean> optional = serviceRepo.findById(serviceDTO.getServiceId());
+		if (optional.isPresent()) {
+			ServiceBean serviceBean = optional.get();
+
+			serviceBean.setServiceStatus(serviceDTO.getServiceStatus());
+
 			System.out.println(serviceBean);
 			ServiceBean updatedBean = serviceRepo.save(serviceBean);
 			return ServicesDTO.fromEntity(updatedBean);
@@ -321,4 +336,3 @@ public class ServiceService {
 		return countBymajorId;
 	}
 }
-

@@ -51,14 +51,15 @@ public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 
 	// 根據 MajorCategoryID 和 status 查詢服務（分頁）
 	@Query("SELECT s FROM ServiceBean s WHERE s.userMajor.major.majorCategory.majorCategoryId = :categoryId AND s.serviceStatus = :serviceStatus")
-	Page<ServiceBean> findByMajorCategoryId(@Param("categoryId") Integer categoryId, @Param("serviceStatus") Integer serviceStatus, Pageable pageable);
+	Page<ServiceBean> findByMajorCategoryId(@Param("categoryId") Integer categoryId,
+			@Param("serviceStatus") Integer serviceStatus, Pageable pageable);
 
 	// 根據用戶ID和專業ID查詢服務（分頁）
 	Page<ServiceBean> findByUserIdAndMajorId(Integer userId, Integer majorId, Pageable pageable);
 
-	// 根據服務ID刪除服務
+	//
 
-//	----------------------------------------------------------------------
+	// ----------------------------------------------------------------------
 	// 前台查尋功能，status為 1 時才能讓其他會員查詢到
 
 	// 根據專業ID查詢開放的服務（分頁）
@@ -68,29 +69,28 @@ public interface ServiceRepository extends JpaRepository<ServiceBean, Integer> {
 
 	// 根據專業ID查詢開放的服務（分頁）
 	@Query(value = "SELECT * FROM service s WHERE service_status = :status AND service_price >= :minPric AND service_price <= :maxPric", nativeQuery = true)
-	Page<ServiceBean> findServiceByPriceRangeAndStatus(@Param("status")Integer serviceStatus, Integer minPric, Integer maxPric,
+	Page<ServiceBean> findServiceByPriceRangeAndStatus(@Param("status") Integer serviceStatus, Integer minPric,
+			Integer maxPric,
 			Pageable pageable);
 
 	// 根據專業類別查詢服務
 
 	// 根據 多條件 查詢服務
 	@Query("SELECT s FROM ServiceBean s JOIN s.userMajor u WHERE " +
-            "(:serviceTitle IS NULL OR s.serviceTitle  LIKE %:serviceTitle%) AND " +
-            "(:userName IS NULL OR u.user.userName LIKE %:userName%) AND " +
-            "(:status IS NULL OR s.serviceStatus  = :status) AND " +
-            "(:userId IS NULL OR u.user.userId  = :userId) AND " +
-            "(:majorIdList IS NULL OR u.major.majorId IN :majorIdList) AND " + 
+			"(:serviceTitle IS NULL OR s.serviceTitle  LIKE %:serviceTitle%) AND " +
+			"(:userName IS NULL OR u.user.userName LIKE %:userName%) AND " +
+			"(:status IS NULL OR s.serviceStatus  = :status) AND " +
+			"(:userId IS NULL OR u.user.userId  = :userId) AND " +
+			"(:majorIdList IS NULL OR u.major.majorId IN :majorIdList) AND " +
 			"(:majorCategoryId IS NULL OR u.major.majorCategoryId = :majorCategoryId)")
 	Page<ServiceBean> searchServicePage(
-		@Param("serviceTitle") String serviceTitle,
-        @Param("userName") String userName,
-        @Param("status") Integer status,
-        @Param("userId") Integer userId,
-        @Param("majorIdList") List<Integer> majorIdList,   // majorIdList： MajorId 列表，使用 IN 语句，匹配多个MajorId。
-		@Param("majorCategoryId") Integer majorCategoryId,
-        Pageable pageable
-	);
-
+			@Param("serviceTitle") String serviceTitle,
+			@Param("userName") String userName,
+			@Param("status") Integer status,
+			@Param("userId") Integer userId,
+			@Param("majorIdList") List<Integer> majorIdList, // majorIdList： MajorId 列表，使用 IN 语句，匹配多个MajorId。
+			@Param("majorCategoryId") Integer majorCategoryId,
+			Pageable pageable);
 
 	// 查詢 一個majorId 下的 服務數量
 	Integer countByMajorIdAndServiceStatus(Integer majorId, Integer ServiceStatus);

@@ -1,8 +1,12 @@
 package com.ProFit.controller.services.frontend;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,14 +22,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
+import com.ProFit.model.dto.chatsDTO.ChatUserDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
+import com.ProFit.model.dto.majorsDTO.PageResponse;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.ProFit.service.chatService.ChatService;
 import com.ProFit.service.serviceService.ServiceApplicationService;
 import com.ProFit.service.serviceService.ServiceService;
+import com.ProFit.service.utilsService.FirebaseStorageService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -39,33 +50,76 @@ public class ServiceApplicationFrontendController {
   @Autowired
   private ServiceService serviceService;
 
+  @Autowired
+  private ChatService chatService;
+
+  @Autowired
+  private FirebaseStorageService firebaseStorageService;
+
   // 獲取當前user 資訊
   private UsersDTO getCurrentUser(HttpSession session) {
     return (UsersDTO) session.getAttribute("CurrentUser");
   }
 
-  // 跳轉到 新增/修改 委託的 頁面
-  @GetMapping("/edit")
-  public String showServiceApplicationsPage(@RequestParam Integer serviceId, HttpSession session, Model model) {
+  // 跳轉到 新增 委託的 頁面
+  @GetMapping("/add")
+  public String showAddServiceApplicationsPage(@RequestParam Integer serviceId, HttpSession session, Model model) {
     UsersDTO currentUser = getCurrentUser(session);
 
-    // 若沒有登入
-    if (currentUser == null) {
-      return "redirect:/user/profile";
+    try {
+      // 若沒有登入
+      if (currentUser == null) {
+        return "redirect:/user/profile";
+      }
+
+      // 驗證目前有登入 以及 有serviceId => 進入新增委託畫面
+      if (serviceId != null) {
+        ServicesDTO serviceDTO = serviceService.getServiceById(serviceId);
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("ServicesDTO", serviceDTO);
+
+        return "servicesVIEW/frontend/editServiceApplication";
+      } else if (serviceId == null) { // 若 有登入 但沒有serviceId => 進入編輯委託畫面
+        model.addAttribute("currentUser", currentUser);
+        return "servicesVIEW/frontend/editServiceApplication";
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    // 驗證目前有登入 以及 有serviceId => 進入新增委託畫面
-    if (serviceId != null) {
+    return "redirect:/user/profile";
+  }
 
-      ServicesDTO serviceDTO = serviceService.getServiceById(serviceId);
+  // 跳轉到 修改 委託的 頁面
+  @GetMapping("/edit")
+  public String showEditServiceApplicationsPage(@RequestParam Integer serviceApplicationId, HttpSession session,
+      Model model) {
+    UsersDTO currentUser = getCurrentUser(session);
+    ServiceApplicationsDTO serviceApplicationDTO = serviceApplicationService
+        .findServiceApplicationById(serviceApplicationId);
 
-      model.addAttribute("currentUser", currentUser);
-      model.addAttribute("ServicesDTO", serviceDTO);
+    try {
+      // 若沒有登入
+      if (currentUser == null) {
+        return "redirect:/user/profile";
+      }
 
-      return "servicesVIEW/frontend/editServiceApplication";
-    } else if (serviceId == null) {  // 若 有登入 但沒有serviceId => 進入編輯委託畫面
-      model.addAttribute("currentUser", currentUser);
-      return "servicesVIEW/frontend/editServiceApplication";
+      // 驗證目前有登入 以及 有serviceApplication => 進入修改委託畫面
+      if (serviceApplicationDTO != null) {
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("serviceApplicationDTO", serviceApplicationDTO);
+
+        return "servicesVIEW/frontend/editServiceApplication";
+      } else if (serviceApplicationDTO == null) { // 若 有登入 但沒有serviceId => 進入編輯委託畫面
+        model.addAttribute("currentUser", currentUser);
+        return "servicesVIEW/frontend/editServiceApplication";
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     return "redirect:/user/profile";
@@ -83,7 +137,7 @@ public class ServiceApplicationFrontendController {
     }
   }
 
-  // 根据目前session的userid = caseowneruserid查询服務委託
+  // 根据目前session的userid = caseowneruserid 查询服務委託
   @GetMapping("/api/caseowner")
   @ResponseBody
   public ResponseEntity<Page<ServiceApplicationsDTO>> findByCaseownerId(HttpSession session, Pageable pageable) {
@@ -96,7 +150,7 @@ public class ServiceApplicationFrontendController {
     return ResponseEntity.ok(applications);
   }
 
-  // 根据目前session的userid = freelanceruserid查询服務委託
+  // 根据目前session的userid = freelanceruserid 查询服務委託
   @GetMapping("/api/freelancer")
   @ResponseBody
   public ResponseEntity<Page<ServiceApplicationsDTO>> findByFreelancerId(HttpSession session, Pageable pageable) {
@@ -140,16 +194,37 @@ public class ServiceApplicationFrontendController {
   }
 
   // 創建新的服務委託
-  @PostMapping
+  @PostMapping("/api")
   @ResponseBody
   public ResponseEntity<ServiceApplicationsDTO> createServiceApplication(
-      @RequestBody ServiceApplicationBean serviceApplication,
+      @ModelAttribute ServiceApplicationBean serviceApplication,
+      @RequestParam("appendixFile") MultipartFile file,
       HttpSession session) {
+    // 獲取當前用戶
     UsersDTO currentUser = getCurrentUser(session);
     if (currentUser == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
+    // 將當前用戶設置為委託的擁有者
     serviceApplication.setCaseownerId(currentUser.getUserId());
+
+    // 檢查是否有上傳文件
+    if (!file.isEmpty()) {
+      try {
+
+        // 文件存儲邏輯（存儲在firebase）
+        String URL = firebaseStorageService.uploadFile(file);
+        serviceApplication.setAppendixUrl(URL);
+
+      } catch (Exception e) {
+        // 處理文件上傳錯誤
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      }
+    }
+
+    // 創建服務委託
     ServiceApplicationsDTO createdApplication = serviceApplicationService.createServiceApplication(serviceApplication);
     return new ResponseEntity<>(createdApplication, HttpStatus.CREATED);
   }
@@ -180,4 +255,32 @@ public class ServiceApplicationFrontendController {
       return ResponseEntity.ok(false);
     }
   }
+
+  // 查詢 與 currentUser 有共同聊天室的 user(freelancer)
+  @GetMapping("/api/userChatList/{currentUserId}")
+  @ResponseBody
+  public List<ChatUserDTO> getCurrentUserChatUserList(@PathVariable Integer currentUserId) {
+
+    // Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC,
+    // "lastMessageAt"));
+
+    List<ChatUserDTO> currentUserChatUserList = chatService.getCurrentUserChatUserList(currentUserId);
+    return currentUserChatUserList;
+  }
+
+  // 查詢 這個freelancer 有的服務
+  @GetMapping("/api/ServiceList/{freelancerId}")
+  @ResponseBody
+  public PageResponse<ServicesDTO> getServiceListByFreelancerId(@PathVariable Integer freelancerId) {
+
+    // Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC,
+    // "lastMessageAt"));
+
+    PageResponse<ServicesDTO> servicesDTO = serviceService.searchServicePage(null, null, 1, freelancerId, null, null, 0,
+        20,
+        "serviceUpdateDate", false);
+
+    return servicesDTO;
+  }
+
 }

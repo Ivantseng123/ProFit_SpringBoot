@@ -7,13 +7,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ProFit.model.bean.usersBean.Employer_profile;
+import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.EmpPfRepository;
 import com.ProFit.model.dto.usersDTO.CompanyStatistics;
 import com.ProFit.model.dto.usersDTO.EmpPfDTO;
 import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UsersDTO;
+
+import jakarta.persistence.criteria.Join;
 
 @Service
 @Transactional
@@ -68,7 +73,7 @@ public class EmpPfService implements IEmpPfService {
 
 		return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
 	}
-	
+
 	@Override
 	public Page<EmpPfDTO> findEmpPfByPage_frontend(Integer pageNumber) {
 		Pageable pageable = PageRequest.of(pageNumber - 1, 9, Sort.Direction.DESC, "employerProfileId");
@@ -93,19 +98,44 @@ public class EmpPfService implements IEmpPfService {
 	}
 
 	@Override
-	public Page<EmpPfDTO> findEmpPfByPageAndSearch_frontend(Integer pageNumber, String search) {
-		Pageable pageable = PageRequest.of(pageNumber - 1, 9, Sort.Direction.DESC, "employerProfileId");
+	public Page<EmpPfDTO> findEmpPfByPageAndSearch_frontend(Integer pageNumber, String search, String address, String category) {
+	    Pageable pageable = PageRequest.of(pageNumber - 1, 10, Sort.Direction.DESC, "employerProfileId");
 
-		if (search == null || search.isEmpty()) {
+	    // 初始化Specification
+	    Specification<Employer_profile> spec = Specification.where(null);
 
-			Page<Employer_profile> empPfsPage = empPfRepository.findAll(pageable);
-			return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
-		}
+	    // 加入 search 查詢條件（不依賴其他條件）
+	    if (search != null && !search.isEmpty()) {
+	        spec = spec.and((root, query, criteriaBuilder) -> {
+	            Join<Object, Object> userJoin = root.join("user");
+	            return criteriaBuilder.or(
+	                criteriaBuilder.like(userJoin.get("userEmail"), "%" + search + "%"),
+	                criteriaBuilder.like(root.get("companyName"), "%" + search + "%")
+	            );
+	        });
+	    }
 
-		Page<Employer_profile> empApplsPage = empPfRepository.findByUserEmailOrCompanyNameContaining(search, search,
-				pageable);
-		return empApplsPage.map(empPf -> new EmpPfDTO(empPf));
+	    // 加入 address 查詢條件
+	    if (address != null && !address.isEmpty()) {
+	        spec = spec.and((root, query, criteriaBuilder) ->
+	            criteriaBuilder.like(root.get("companyAddress"), address + "%")
+	        );
+	    }
+
+	    // 加入 category 查詢條件
+	    if (category != null && !category.isEmpty()) {
+	        spec = spec.and((root, query, criteriaBuilder) ->
+	            criteriaBuilder.equal(root.get("companyCategory"), category)
+	        );
+	    }
+
+	    // 使用指定的查詢條件查詢數據庫並映射到DTO
+	    Page<Employer_profile> empPfsPage = empPfRepository.findAll(spec, pageable);
+	    return empPfsPage.map(empPf -> new EmpPfDTO(empPf));
 	}
+
+
+
 
 	@Override
 	public Employer_profile getEmpPfInfoByUserId(int user_id) {
