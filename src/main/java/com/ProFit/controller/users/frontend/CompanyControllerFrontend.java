@@ -36,33 +36,30 @@ public class CompanyControllerFrontend {
 
 	@Autowired
 	private IUserService userService;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@GetMapping("empPf/allCompany")
 	public String GetAllCompany() {
-	
+
 		return "usersVIEW/frontendVIEW/companyPage";
 	}
 
-	
 	@GetMapping("emp/CompProfile")
 	public String GetUserPage() {
 
 		return "usersVIEW/frontendVIEW/companyProfile";
 	}
-	
+
 	@PutMapping("empPf/updateCompPf")
 	@ResponseBody
 	public ResponseEntity<?> UpdateComPf(@ModelAttribute EmpPfDTO empPfDTO, HttpSession session) {
 
-	
-		
 		if (session.getAttribute("CurrentUser") != null) {
-			
+
 			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
-			
+
 			Employer_profile emp = empPfService.getEmpPfInfoByUserId(userDTO.getUserId());
 
 			emp.setEmployerProfileId(emp.getEmployerProfileId());
@@ -72,18 +69,17 @@ public class CompanyControllerFrontend {
 			emp.setCompanyCaptital(empPfDTO.getCompanyCaptital());
 			emp.setCompanyDescription(empPfDTO.getCompanyDescription());
 			emp.setCompanyPhotoURL(empPfDTO.getCompanyPhotoURL());
-			
+
 			Employer_profile emppf = modelMapper.map(emp, Employer_profile.class);
-			
+
 			empPfService.updateEmpInfo(emppf);
 
 			return ResponseEntity.ok("Updated Successful");
-		}else {
-			
+		} else {
+
 			return ResponseEntity.badRequest().body("Updated Failed");
 		}
 
-		
 	}
 
 	@GetMapping("emp/getCompPfinfo")
@@ -92,19 +88,17 @@ public class CompanyControllerFrontend {
 		if (session.getAttribute("CurrentUser") != null) {
 
 			UsersDTO userDTO = (UsersDTO) session.getAttribute("CurrentUser");
-			
+
 			Employer_profile emppf = empPfService.getEmpPfInfoByUserId(userDTO.getUserId());
-			
-			
-			
-			if(emppf != null) {
+
+			if (emppf != null) {
 				EmpPfDTO empPfDTO = modelMapper.map(emppf, EmpPfDTO.class);
-				
-				return ResponseEntity.ok(empPfDTO);			
-			}else {
+
+				return ResponseEntity.ok(empPfDTO);
+			} else {
 				return ResponseEntity.status(404).body("Get Company Fail!");
 			}
-				
+
 		} else {
 			return ResponseEntity.status(404).body("No user Fail!");
 		}
@@ -125,14 +119,13 @@ public class CompanyControllerFrontend {
 
 	@ResponseBody
 	@GetMapping("/api/empPf/page_frontend")
-	public Page<EmpPfDTO> findByPageApi(@RequestParam Integer pageNumber,
-			@RequestParam(required = false) String search) {
+	public Page<EmpPfDTO> findByPageApi(@RequestParam Integer pageNumber, @RequestParam(required = false) String search,
+			@RequestParam(required = false) String address, @RequestParam(required = false) String category) {
+
 		Page<EmpPfDTO> page;
-		if (search != null && !search.isEmpty()) {
-			page = empPfService.findEmpPfByPageAndSearch(pageNumber, search);
-		} else {
-			page = empPfService.findEmpPfByPage(pageNumber);
-		}
+	
+		page = empPfService.findEmpPfByPageAndSearch_frontend(pageNumber, search, address, category);
+		
 		return page;
 	}
 

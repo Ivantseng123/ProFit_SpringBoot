@@ -52,8 +52,7 @@ public class EmailService {
 			helper.setTo(fromEmail);
 			helper.setSubject(subject);
 			helper.setText(content, true);
-
-			// 使用从 application.properties 注入的邮箱地址
+		
 			helper.setFrom(fromEmail, "ProFit User: " + senderEmail);
 
 			javaMailSender.send(message);
