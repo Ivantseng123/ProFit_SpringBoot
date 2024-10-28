@@ -1,5 +1,8 @@
 package com.ProFit.service.serviceService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ProFit.model.bean.servicesBean.ServiceOrderBean;
 import com.ProFit.model.dao.servicesCRUD.ServiceOrderRepository;
+import com.ProFit.model.dto.servicesDTO.ServiceOrdersDTO;
 
 @Service
 public class ServiceOrdersService {
@@ -28,4 +32,10 @@ public class ServiceOrdersService {
         return serviceOrderPage;
     }
 
+    public List<ServiceOrdersDTO> getAllServiceOrdersAsDTO() {
+        List<ServiceOrderBean> serviceOrders = serviceOrderRepo.findAll();
+        return serviceOrders.stream()
+                .map(ServiceOrdersDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
 }

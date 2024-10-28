@@ -3,7 +3,7 @@ package com.ProFit.model.dto.coursesDTO;
 import com.ProFit.model.bean.coursesBean.CourseLessonBean;
 
 public class CourseLessonDTO {
-	
+
 	private Integer courseLessonId;
 	private Integer courseModuleId;
 	private String courseModuleName;
@@ -14,11 +14,11 @@ public class CourseLessonDTO {
 	private String lessonMediaUrl;
 	private String lessonMediaType;
 	private Integer mediaDuration;
-	
+
 	public CourseLessonDTO() {
-		
+
 	}
-	
+
 	public CourseLessonDTO(CourseLessonBean courseLesson) {
 		this.courseLessonId = courseLesson.getCourseLessonId();
 		this.courseModuleId = courseLesson.getCourseModuleId();
@@ -111,6 +111,5 @@ public class CourseLessonDTO {
 	public void setMediaDuration(Integer mediaDuration) {
 		this.mediaDuration = mediaDuration;
 	}
-	
-	
+
 }
