@@ -24,6 +24,13 @@ $(document).ready(() => {
         });
     })
 
+    let params = new URLSearchParams(window.location.search);
+    let isCourse = params.get('clickCourse');
+
+    if (isCourse) {
+        $('#courseCenter').click();
+    }
+
 })
 
 function htmlMakerForUserBoughtCourse(searchCourseOrdersByUserId) {
@@ -55,14 +62,15 @@ function htmlMakerForUserBoughtCourse(searchCourseOrdersByUserId) {
                         <h5 class="fw-bold mb-0">${courseOrderDTO.courseName}</h5>
                     </div>
                     <div class="col-md-1 text-center d-flex align-items-center justify-content-center">
-                        <span class="badge bg-primary">Full-Time</span>
+                        <h4 class="badge rounded-pill bg-primary">${courseOrderDTO.courseCategoryName}</h4>
                     </div>
                     <div class="col-md-3 text-center d-flex align-items-center justify-content-center">
                         <span class="mb-0">${formatDate(courseOrderDTO.courseOrderCreateDate)}</span>
                     </div>
-                    <div class="col-md-2 text-center d-flex align-items-center justify-content-center">
-                        <a class="btn btn-warning btn-sm">前往上課</a>
-                    </div
+                    <div class="col-md-2 text-center d-flex flex-column align-items-center justify-content-center">
+                        <a href="/ProFit/course/${courseOrderDTO.courseId}" class="btn btn-success btn-sm mb-2">查看課程</a>
+                        <a href="/ProFit/course/watch?courseId=${courseOrderDTO.courseId}" class="btn btn-warning btn-sm">前往上課</a>
+                    </div>
                 </div>
             `)
     })
