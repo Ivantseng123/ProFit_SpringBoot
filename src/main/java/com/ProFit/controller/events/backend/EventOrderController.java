@@ -24,7 +24,7 @@ public class EventOrderController {
     // 主頁面，列出所有訂單
     @GetMapping
     public String listOrder(Model model) {
-        return "eventOrderVIEW/backend/eventOrder";
+        return "eventsVIEW/backend/eventOrder";
     }
 
     // 新增訂單
@@ -32,7 +32,7 @@ public class EventOrderController {
     public String newOrder(Model model) {
         EventOrderDTO order = new EventOrderDTO();
         model.addAttribute("order", order);
-        return "eventOrderVIEW/backend/eventOrderForm";
+        return "eventsVIEW/backend/eventOrderForm";
     }
 
     // 編輯訂單
@@ -41,7 +41,7 @@ public class EventOrderController {
         EventOrderBean eventOrderBean = eventOrderService.selectOrderById(eventOrderId);
         EventOrderDTO order = eventOrderService.convertToDTO(eventOrderBean);
         model.addAttribute("order", order);
-        return "eventOrderVIEW/backend/eventOrderForm";
+        return "eventsVIEW/backend/eventOrderForm";
     }
 
     // 檢視訂單
@@ -50,24 +50,24 @@ public class EventOrderController {
         EventOrderBean eventOrderBean = eventOrderService.selectOrderById(eventOrderId);
         EventOrderDTO order = eventOrderService.convertToDTO(eventOrderBean);
         model.addAttribute("order", order);
-        return "eventOrderVIEW/backend/eventOrderForm";
+        return "eventsVIEW/backend/eventOrderForm";
     }
 
     // 搜尋訂單
     @GetMapping("/search") @ResponseBody
     public List<EventOrderDTO> searchOrder(@RequestParam(required = false) Boolean eventOrderStatus,
-							    		@RequestParam(required = false) Integer eventParticipantId,
-							    		@RequestParam(required = false) String eventId) {
+    									@RequestParam(required = false) String eventId,
+							    		@RequestParam(required = false) Integer eventParticipantId) {
         List<EventOrderBean> eventOrderList;
         
-        System.out.println("eventOrderStatus: " + eventOrderStatus + " eventParticipantId: " + eventParticipantId + " eventId: " + eventId);
+        System.out.println("eventOrderStatus: " + eventOrderStatus + " eventId: " + eventId + " eventParticipantId: " + eventParticipantId);
 
         if (eventOrderStatus != null) {
              eventOrderList = eventOrderService.selectOrderByStatus(eventOrderStatus);
-         } else if (eventParticipantId != null) {
+        } else if (eventId != null && !eventId.isEmpty()) {
+        	eventOrderList = eventOrderService.selectParticipantByEvent(eventId);
+        } else if (eventParticipantId != null) {
              eventOrderList = eventOrderService.selectEventByParticipant(eventParticipantId);
-         } else if (eventId != null && !eventId.isEmpty()) {
-             eventOrderList = eventOrderService.selectParticipantByEvent(eventId);
         } else {
             eventOrderList = eventOrderService.selectAllOrders();
         }

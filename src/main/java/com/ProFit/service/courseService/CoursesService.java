@@ -102,4 +102,12 @@ public class CoursesService implements IcourseService {
 		return courseDTOPage;
 	}
 
+	@Override
+	public List<Object[]> getCourseCountByCategoryName() {
+
+		List<Object[]> courseCountByCategoryName = courseRepo.getCourseCountByCategoryName();
+
+		return courseCountByCategoryName;
+	}
+
 }

@@ -181,9 +181,9 @@
                             </div>
                             <div class="mt-3">
                                 <a id="buyNow"
-                                    th:href="${courseDTO.courseStatus == 'Active' ? '/ProFit/course/purchase?courseId=' + courseDTO.courseId : '#'}"
+                                    th:href="${isPurchased ? '/ProFit/user/profile?clickCourse=true' : (courseDTO.courseStatus == 'Active' ? '/ProFit/course/purchase?courseId=' + courseDTO.courseId : '#')}"
                                     style="width:200px" class="btn btn-primary" type="button"
-                                    th:text="${courseDTO.courseStatus == 'Active' ? '立即購買' : '未開課'}"
+                                    th:text="${isPurchased ? '已購買，前往課程中心' : (courseDTO.courseStatus == 'Active' ? '立即購買' : '未開課')}"
                                     th:classappend="${courseDTO.courseStatus != 'Active' ? ' disabled' : ''}">
                                 </a>
                             </div>

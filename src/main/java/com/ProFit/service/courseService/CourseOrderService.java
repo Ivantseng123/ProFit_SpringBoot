@@ -30,8 +30,8 @@ public class CourseOrderService implements IcourseOrderService {
 
 	@Autowired
 	private CoursesRepository coursesRepo;
-	
-	//添加注入
+
+	// 添加注入
 	@Autowired
 	private CourseOrderRepository courseOrderRepository;
 
@@ -118,32 +118,43 @@ public class CourseOrderService implements IcourseOrderService {
 
 		return dtoPage;
 	}
-	
-	//訂單更新狀態
+
+	// 訂單更新狀態
 	public void updateOrderStatusById(String courseOrderId, String status) {
-	    Optional<CourseOrderBean> optional = courseOrderRepo.findById(courseOrderId);
-	    if (optional.isPresent()) {
-	        CourseOrderBean courseOrder = optional.get();
-	        courseOrder.setCourseOrderStatus(status);
-	        courseOrderRepo.save(courseOrder);
-	    }
+		Optional<CourseOrderBean> optional = courseOrderRepo.findById(courseOrderId);
+		if (optional.isPresent()) {
+			CourseOrderBean courseOrder = optional.get();
+			courseOrder.setCourseOrderStatus(status);
+			courseOrderRepo.save(courseOrder);
+		}
 	}
 
-	//改變參數的資料型態
+	// 改變參數的資料型態
 	public Double getOrderAmountById(String orderId) {
 		Integer courseAmount = courseOrderRepository.findOrderAmountById(orderId);
-	    return courseAmount != null ? courseAmount.doubleValue() : 0.0;
+		return courseAmount != null ? courseAmount.doubleValue() : 0.0;
 	}
 
 	// 獲取創建課程的ID
 	public Integer getCreatorUserIdByOrderId(String orderId) {
-	    Optional<CourseOrderBean> optionalOrder = courseOrderRepo.findById(orderId);
+		Optional<CourseOrderBean> optionalOrder = courseOrderRepo.findById(orderId);
 
-	    if (optionalOrder.isPresent()) {
-	        CourseOrderBean courseOrder = optionalOrder.get();
-	        return courseOrder.getCourse().getCourseCreater().getUserId();
-	    }
-	    return null;
+		if (optionalOrder.isPresent()) {
+			CourseOrderBean courseOrder = optionalOrder.get();
+			return courseOrder.getCourse().getCourseCreater().getUserId();
+		}
+		return null;
+	}
+
+	public List<Object[]> getCourseOrderAnalysis() {
+		List<Object[]> courseOrderAnalysis = courseOrderRepo.getCourseOrderAnalysis();
+
+		return courseOrderAnalysis;
+	}
+
+	public List<Object[]> getTop10Courses() {
+		List<Object[]> top10Courses = courseOrderRepo.getTop10Courses();
+		return top10Courses;
 	}
 
 	public Double getOrderAmountByMerchantTradeNo(String merchantTradeNo) {

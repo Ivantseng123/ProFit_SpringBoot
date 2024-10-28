@@ -23,8 +23,9 @@
                 <h3>查詢活動參加者</h3>
                 <div class="input-group">
                     <select id="searchCriteria" class="custom-select ">
-                        <option value="eventName">活動名稱</option>
-                        <option value="participantName">參加者名稱</option>
+                        <option value="eventOrderStatus">活動狀態</option>
+                        <option value="eventId">活動ID</option>
+                        <option value="eventParticipantId">參加者ID</option>
                     </select>
                     <input type="text" id="searchInput" placeholder="輸入關鍵字">
                     <button class="search btn btn-primary btn-sm my-sm-0" id="searchBtn">搜尋</button>
@@ -33,6 +34,9 @@
             
             <div class="table-container" id="searchResult"></div>
 
+            <div>
+                <button type="button" id="cancelBtn">回上一頁</button>
+            </div>
         </div>
 
     </main>
