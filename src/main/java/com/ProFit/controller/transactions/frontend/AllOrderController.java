@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
+import com.ProFit.model.dto.servicesDTO.ServiceOrdersDTO;
 import com.ProFit.model.dto.transactionDTO.JobOrderDTO;
 import com.ProFit.model.dto.transactionDTO.UserTransactionDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.courseService.CourseOrderService;
 import com.ProFit.service.eventService.EventOrderService;
+import com.ProFit.service.serviceService.ServiceOrdersService;
 import com.ProFit.service.transactionService.JobOrderService;
 import com.ProFit.service.transactionService.UserTransactionService;
 import com.ProFit.service.userService.UserService;
@@ -39,6 +41,9 @@ public class AllOrderController {
 	
 	@Autowired
 	private UserTransactionService userTransactionService;
+	
+	@Autowired
+	private ServiceOrdersService serviceOrdersService;
 
 	@GetMapping("/allOrder")
 	public String showWalletPage(HttpSession session, Model model) {
@@ -65,6 +70,19 @@ public class AllOrderController {
 
 		List<JobOrderDTO> orders = jobOrderService.getAllOrdersAsDTO();
 	    return orders;
+	}
+	
+	// 獲取所有 ServiceOrder 資料
+	@GetMapping("/allOrder/serviceOrders")
+	@ResponseBody
+	public List<ServiceOrdersDTO> getAllServiceOrders(HttpSession session) {
+	    UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+	    if (usersDTO == null || usersDTO.getUserId() == null) {
+	        return null;
+	    }
+
+	    List<ServiceOrdersDTO> serviceOrders = serviceOrdersService.getAllServiceOrdersAsDTO();
+	    return serviceOrders;
 	}
 	
 	// 獲取所有 CourseOrder 資料

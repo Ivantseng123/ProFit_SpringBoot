@@ -52,6 +52,30 @@
                             <button type="button" class="btn btn-secondary" data-type="withdrawal">收入</button>
                         </div>
 
+						<!-- Modal 模態框結構 -->
+                        <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="orderModalLabel">訂單詳情</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img id="modalCourseCover" src="" alt="課程封面" class="img-fluid mb-3">
+                                        <p><strong>名稱:</strong> <span id="modalCourseName"></span></p>
+                                        <p><strong>訂單ID:</strong> <span id="modalOrderId"></span></p>
+                                        <p><strong>用戶:</strong> <span id="modalStudentName"></span></p>
+                                        <p><strong>創建時間:</strong> <span id="modalOrderDate"></span></p>
+                                        <p><strong>狀態:</strong> <span id="modalOrderStatus"></span></p>
+                                        <p><strong>金額:</strong> NT$<span id="modalOrderAmount"></span></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        						
                         <!-- 交易記錄列表 -->
                         <div id="transactionTable">
                             <table class="table">
@@ -119,178 +143,164 @@
     <!-- 返回頂部 -->
     <a href="#" class="scroll-top btn-hover"><i class="lni lni-chevron-up"></i></a>
 
-    <!-- 引入JS腳本 -->
-    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+    <!-- 引入JS腳本 -->	
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
 
     <!-- 添加按鈕點擊事件 -->
-    <script>
-        $(document).ready(function () {
-            // 頁面加載後自動獲取所有交易
-            fetchAllTransactions();
-            fetchAllInvoices();
+<script>
+$(document).ready(function () {
+    // 頁面加載後自動獲取所有交易和發票
+    fetchAllTransactions();
+    fetchAllInvoices();
+    fetchAllCourseOrders();
 
-            // 類型篩選按鈕
-            $('.btn-group button').on('click', function () {
-                var transactionType = $(this).data('type');
-                $.ajax({
-                    url: '/ProFit/wallet/filter',
-                    method: 'GET',
-                    data: { type: transactionType },
-                    dataType: 'json',
-                    success: function (response) {
-                        updateTransactionTable(response);
-                    },
-                    error: function () {
-                        alert('獲取交易記錄時發生錯誤');
-                    }
-                });
-            });
-
-            // 日期篩選按鈕
-            $('#filterDateBtn').on('click', function () {
-                var startDate = $('#startDate').val();
-                var endDate = $('#endDate').val();
-                $.ajax({
-                    url: '/ProFit/wallet/filterDate',
-                    method: 'GET',
-                    data: { startDate: startDate, endDate: endDate },
-                    dataType: 'json',
-                    success: function (response) {
-                        updateTransactionTable(response);
-                    },
-                    error: function () {
-                        alert('獲取交易記錄時發生錯誤');
-                    }
-                });
-            });
-
-            // 自動獲取所有交易的函數
-            function fetchAllTransactions() {
-                $.ajax({
-                    url: '/ProFit/wallet/filter',
-                    method: 'GET',
-                    data: { type: 'all' },  // 獲取所有交易
-                    dataType: 'json',
-                    success: function (response) {
-                        updateTransactionTable(response);
-                    },
-                    error: function () {
-                        alert('獲取交易記錄時發生錯誤');
-                    }
-                });
+    // 類型篩選按鈕
+    $('.btn-group button').on('click', function () {
+        var transactionType = $(this).data('type');
+        $.ajax({
+            url: '/ProFit/wallet/filter',
+            method: 'GET',
+            data: { type: transactionType },
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
             }
+        });
+    });
 
-             // 自動獲取當前用戶的發票
-        function fetchAllInvoices() {
-            $.ajax({
-                url: '/ProFit/wallet/invoices',
-                method: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    updateInvoiceTable(response);
-                },
-                error: function () {
-                    alert('獲取發票記錄時發生錯誤');
-                }
-            });
-        }
+    // 日期篩選按鈕
+    $('#filterDateBtn').on('click', function () {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        $.ajax({
+            url: '/ProFit/wallet/filterDate',
+            method: 'GET',
+            data: { startDate: startDate, endDate: endDate },
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
+            }
+        });
+    });
 
-function translateToChinese(transaction) {
-    var transactionType = {
-        "payment": "支付",
-        "withdrawal": "取出",
-        "deposit": "存入",
-        "refund": "退款"
-    };
+    // 自動獲取所有交易的函數
+    function fetchAllTransactions() {
+        $.ajax({
+            url: '/ProFit/wallet/filter',
+            method: 'GET',
+            data: { type: 'all' },
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
+            }
+        });
+    }
 
-    var orderType = {
-        "course": "課程訂單",
-        "job": "工作訂單",
-        "event": "活動訂單",
-        "service": "服務訂單",
-        "withdrawal": "取款"
-    };
+    // 自動獲取當前用戶的發票
+    function fetchAllInvoices() {
+        $.ajax({
+            url: '/ProFit/wallet/invoices',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateInvoiceTable(response);
+            },
+            error: function () {
+                alert('獲取發票記錄時發生錯誤');
+            }
+        });
+    }
 
-    var transactionStatus = {
-        "pending": "等待",
-        "completed": "已完成"
-    };
+    // 自動獲取所有課程訂單的函數
+    function fetchAllCourseOrders() {
+        $.ajax({
+            url: '/ProFit/wallet/courseOrders',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                window.courseOrders = response;
+                console.log("獲取的課程訂單資料:", window.courseOrders);
+                window.courseOrders.forEach(order => {
+                    console.log("訂單 ID:", order.courseOrderId);
+                });
+            },
+            error: function () {
+                alert('獲取課程訂單資料時發生錯誤');
+            }
+        });
+    }
 
-    var paymentMethod = {
-        "withdrawal": "取出",
-        "deposit": "存入",
-        "refund": "退款",
-        "payment": "支付"
-    };
+    // 翻譯交易內容為中文
+    function translateToChinese(transaction) {
+        var transactionType = {
+            "payment": "支付",
+            "withdrawal": "取出",
+            "deposit": "存入",
+            "refund": "退款"
+        };
 
-    return {
-        transactionType: transactionType[transaction.transactionType] || transaction.transactionType,
-        orderType: orderType[transaction.orderType] || transaction.orderType,
-        transactionStatus: transactionStatus[transaction.transactionStatus] || transaction.transactionStatus,
-        paymentMethod: paymentMethod[transaction.paymentMethod] || transaction.paymentMethod
-    };
-}
+        var transactionStatus = {
+            "pending": "等待",
+            "completed": "已完成"
+        };
 
-function updateTransactionTable(transactions) {
+        return {
+            transactionType: transactionType[transaction.transactionType] || transaction.transactionType,
+            transactionStatus: transactionStatus[transaction.transactionStatus] || transaction.transactionStatus
+        };
+    }
+
+    // 更新交易表格
+    // 更新交易表格
+    function updateTransactionTable(transactions) {
     var completedTransactions = transactions.filter(function (transaction) {
         return transaction.completionAt;  // 篩選有完成時間的交易
     });
 
-    var pendingTransactions = transactions.filter(function (transaction) {
-        return !transaction.completionAt;  // 篩選未完成的交易
-    });
-
-    // 按完成時間降序排列（時間越晚的越靠前）
     completedTransactions.sort(function (a, b) {
         return new Date(b.completionAt) - new Date(a.completionAt);
     });
 
     var tableBody = '';
 
-    // 先渲染完成的交易
     completedTransactions.forEach(function (transaction) {
         var completionAt = new Date(transaction.completionAt).toLocaleDateString();
         var translated = translateToChinese(transaction);
 
-        // 檢查交易類型是否為 "取出"
-        var orderDetail = translated.transactionType === "取出" ? translated.paymentMethod : `<button class="btn btn-primary btn-sm" onclick="viewOrderDetail('${transaction.transactionId}')">查看</button>`;
+        // 確保 orderTypeText 和 orderId 存在並有值
+        var orderTypeText = "課程訂單"; // 這裡假設所有訂單都是課程訂單
+        var orderId = transaction.orderId || "未知ID"; // 確保 orderId 有值
+        var totalAmount = transaction.totalAmount || transaction.targetIncome || "無金額"; // 顯示 totalAmount 或 targetIncome，若無則顯示"無金額"
+
+        // 檢查 orderDetail 按鈕能正常綁定事件
+        var orderDetail = `<button class="btn btn-primary btn-sm" onclick="viewOrderDetail('${transaction.transactionId}', '${orderId}')">查看</button>`;
 
         tableBody += `
             <tr>
                 <td>${transaction.transactionId}</td>
                 <td>${completionAt}</td>
                 <td>${translated.transactionType}</td>
-                <td>${transaction.targetIncome}</td>
-                <td>${translated.orderType}</td>
-                <td>${transaction.orderId}</td>
+                <td>${totalAmount}</td>
+                <td>${orderTypeText}</td>
+                <td>${orderId}</td>
                 <td>${translated.transactionStatus}</td>
                 <td>${orderDetail}</td>
             </tr>`;
     });
 
-    // 再渲染未完成的交易
-    pendingTransactions.forEach(function (transaction) {
-        var translated = translateToChinese(transaction);
-
-        // 檢查交易類型是否為 "取出"
-        var orderDetail = translated.transactionType === "取出" ? translated.paymentMethod : `<button class="btn btn-primary btn-sm" onclick="viewOrderDetail('${transaction.transactionId}')">查看</button>`;
-
-        tableBody += `
-            <tr>
-                <td>${transaction.transactionId}</td>
-                <td>未完成</td>
-                <td>${translated.transactionType}</td>
-                <td>${transaction.targetIncome}</td>
-                <td>${translated.orderType}</td>
-                <td>${transaction.orderId}</td>
-                <td>${translated.transactionStatus}</td>
-                <td>${orderDetail}</td>
-            </tr>`;
-    });
-
-    // 更新表格內容
     if (transactions.length > 0) {
         $('#transactionTableBody').html(tableBody);
         $('#noTransactionsMessage').hide();
@@ -302,39 +312,56 @@ function updateTransactionTable(transactions) {
     }
 }
 
-// 定義查看按鈕的功能
-function viewOrderDetail(transactionId) {
-    alert("查看訂單詳情：" + transactionId);
-    // 可以在這裡實現更詳細的查看邏輯，如跳轉至訂單詳情頁面
+   // 定義查看按鈕的功能，顯示模態框並根據 transactionId 和 orderId 查找資料
+    window.viewOrderDetail = function(transactionId, orderId) {
+    // 根據 orderId 在 courseOrders 資料中查找訂單資料
+    var courseOrder = window.courseOrders.find(order => order.courseOrderId === orderId);
+
+    if (courseOrder) {
+        $('#modalCourseCover').attr('src', courseOrder.courseCoverPictureURL || '');
+        $('#modalCourseName').text(courseOrder.courseName || '無資料');
+        $('#modalOrderId').text(courseOrder.courseOrderId || '無資料');
+        $('#modalStudentName').text(courseOrder.studentName || '無資料');
+        $('#modalOrderDate').text(courseOrder.courseOrderCreateDate || '無資料');
+        $('#modalOrderStatus').text(courseOrder.courseOrderStatus || '無資料');
+        $('#modalOrderAmount').text(courseOrder.courseOrderPrice || '無資料');
+        $('#orderModal').modal('show');
+    } else {
+        alert('未找到對應的訂單資料');
+    }
 }
 
 
+    // 更新發票表格
+    function updateInvoiceTable(invoices) {
+        invoices.sort(function (a, b) {
+            return new Date(b.issuedDate) - new Date(a.issuedDate);
+        });
 
-            // 更新發票表格
-        function updateInvoiceTable(invoices) {
-            var tableBody = '';
-            if (invoices.length > 0) {
-                invoices.forEach(function (invoice) {
-                    var issuedDate = new Date(invoice.issuedDate).toLocaleDateString();
-                    tableBody += `
-                        <tr>
-                            <td>${invoice.invoiceNumber}</td>
-                            <td>${invoice.invoiceAmount}</td>
-                            <td>${issuedDate}</td>
-                            <td>${invoice.invoiceStatus}</td>
-                        </tr>`;
-                });
-                $('#invoiceTableBody').html(tableBody);
-                $('#noInvoicesMessage').hide();
-                $('#invoiceTable').show();
-            } else {
-                $('#invoiceTableBody').empty();
-                $('#invoiceTable').hide();
-                $('#noInvoicesMessage').show();
-            }
+        var tableBody = '';
+        if (invoices.length > 0) {
+            invoices.forEach(function (invoice) {
+                var issuedDate = new Date(invoice.issuedDate).toLocaleDateString();
+                tableBody += `
+                    <tr>
+                        <td>${invoice.invoiceNumber}</td>
+                        <td>${invoice.invoiceAmount}</td>
+                        <td>${issuedDate}</td>
+                        <td>${invoice.invoiceStatus}</td>
+                    </tr>`;
+            });
+            $('#invoiceTableBody').html(tableBody);
+            $('#noInvoicesMessage').hide();
+            $('#invoiceTable').show();
+        } else {
+            $('#invoiceTableBody').empty();
+            $('#invoiceTable').hide();
+            $('#noInvoicesMessage').show();
         }
-    });
-    </script>
+    }
+});
+</script>
+
 
 </body>
 </html>

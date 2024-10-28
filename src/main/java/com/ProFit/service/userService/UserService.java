@@ -246,8 +246,6 @@ public class UserService implements IUserService {
 					user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
 		}
 
-		System.out.println("呼叫方法--------------------------------");
-		System.out.println("傳入參數-------------------------------- " + search + " " + userIdentity);
 		Page<Users> usersPage = usersRepository.findBySearchAndUserIdentity(search, userIdentity, pageable);
 		return usersPage.map(user -> new UsersDTO(user.getUserId(), user.getUserPictureURL(), user.getUserName(),
 				user.getUserEmail(), user.getUserIdentity(), user.getUserRegisterTime(), user.getEnabled()));
