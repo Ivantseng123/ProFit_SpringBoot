@@ -45,16 +45,17 @@ public class usersController {
 		return "usersVIEW/Allusers";
 	}
 
-//	// 全部會員
-//	@GetMapping(path = "user/alluser")
-//	@ResponseBody
-//	public List<UsersDTO> GetAlluser() {
-//
-//		List<UsersDTO> userlist = userService.getAllUserInfo().stream().map(UsersDTO::new) // 使用 DTO 的構造函數
-//				.collect(Collectors.toList());
-//
-//		return userlist;
-//	}
+	// // 全部會員
+	// @GetMapping(path = "user/alluser")
+	// @ResponseBody
+	// public List<UsersDTO> GetAlluser() {
+	//
+	// List<UsersDTO> userlist =
+	// userService.getAllUserInfo().stream().map(UsersDTO::new) // 使用 DTO 的構造函數
+	// .collect(Collectors.toList());
+	//
+	// return userlist;
+	// }
 
 	// 新增會員
 	@PostMapping(path = "user/adduser")
@@ -103,8 +104,8 @@ public class usersController {
 
 		UsersDTO user = new UsersDTO(userService.getUserInfoByID(user_id));
 
-//		System.out.println(user);
-//		System.out.println(user.getUserEmail());
+		// System.out.println(user);
+		// System.out.println(user.getUserEmail());
 		return user;
 
 	}
@@ -152,7 +153,7 @@ public class usersController {
 			@RequestParam(required = false) String userIdentity) {
 		Page<UsersDTO> page;
 
-		if (!userIdentity.isEmpty()) {
+		if (userIdentity != null && !userIdentity.isEmpty()) {
 
 			Integer userIdentity1 = Integer.valueOf(userIdentity);
 			page = userService.findUserByPageAndSearch(pageNumber, search, userIdentity1);

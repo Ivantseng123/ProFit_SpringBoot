@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>ProFit-建立服務</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+  <!-- Place favicon.ico in the root directory -->
+
+  <!-- Web Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.css}" />
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+  <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+  <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+
+</head>
+
+
+<body>
+
+  <div id="loading-area"></div>
+
+  <!-- 引用 headerOtherPage.html -->
+  <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+  <section class="job-post section">
+    <div class="container">
+
+
+      <div class="container pt-5">
+        <div id="tabs">
+          <ul>
+            <li><a href="#createServiceTab">新增服務</a></li>
+          </ul>
+
+          <!-- 生成測試數據按鈕 -->
+          <button id="generateTestDataBtn" class="btn btn-secondary mb-3">一鍵填入資料</button>
+
+          <div id="createServiceTab">
+            <div class="form-container">
+              <form id="serviceForm" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="serviceTitle">服務名稱:</label>
+                  <input type="text" id="serviceTitle" name="serviceTitle" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="userMajor">服務提供者(會員-專業):</label>
+                  <select id="userMajor" name="userMajor" class="form-control">
+                    <option value="">請選擇會員-專業</option>
+                    <!-- 這裡需要動態加載會員-專業選項 -->
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="servicePrice">服務報價(元):</label>
+                  <input type="number" id="servicePrice" name="servicePrice" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="serviceUnitName">單位:</label>
+                  <input type="text" id="serviceUnitName" name="serviceUnitName" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="serviceDuration">執行時間(天):</label>
+                  <input type="number" step="0.1" id="serviceDuration" name="serviceDuration" class="form-control">
+                </div>
+
+
+                <div class="form-group">
+                  <label for="serviceContent">服務內容:</label>
+                  <textarea id="serviceContent" name="serviceContent" class="form-control" rows="4"></textarea>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="servicePictureURL1">服務圖片 1:</label>
+                  <img id="preview1" src="" alt="" hidden>
+                  <input type="file" id="servicePictureURL1" name="servicePictureURL1" accept=".jpg, .jpeg, .png"
+                    class="form-control-file">
+                </div>
+
+                <div class="form-group">
+                  <label for="servicePictureURL2">服務圖片 2:</label>
+                  <img id="preview2" src="" alt="" hidden>
+                  <input type="file" id="servicePictureURL2" name="servicePictureURL2" accept=".jpg, .jpeg, .png"
+                    class="form-control-file">
+                </div>
+
+                <div class="form-group">
+                  <label for="servicePictureURL3">服務圖片 3:</label>
+                  <img id="preview3" src="" alt="" hidden>
+                  <input type="file" id="servicePictureURL3" name="servicePictureURL3" accept=".jpg, .jpeg, .png"
+                    class="form-control-file">
+                </div>
+
+                <div class="form-group">
+                  <label for="serviceCreateDate">創建日期: (自動帶入)</label>
+                  <input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                  <label for="serviceStatus">服務狀態:</label>
+                  <select id="serviceStatus" name="serviceStatus" class="form-control">
+                    <option value="">請選擇狀態</option>
+                    <option value="0">審核中</option>
+                    <option value="1" selected>啟用</option>
+                    <option value="2">已關閉</option>
+                  </select>
+                </div>
+
+                <div style="text-align: right;">
+                  <button type="button" class="btn btn-secondary" id="cancelCreate">取消新增</button>
+                  <button type="button" class="btn btn-primary" id="submitService">新增服務</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+  </section>
+
+  <!-- 引用 signModal.html -->
+  <div th:replace="~{model/frontend/signModalForNewBs}"></div>
+
+  <!-- 引用 footer.html -->
+  <div th:replace="~{model/frontend/footer}"></div>
+
+
+  <!-- ========================= scroll-top ========================= -->
+  <a href="#" class="scroll-top btn-hover">
+    <i class="lni lni-chevron-up"></i>
+  </a>
+
+  <!-- 引入 axios 庫 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- ========================= JS here ========================= -->
+  <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+  <script th:src="@{/js/frontend/bootstrap.js}"></script>
+  <script th:src="@{/js/frontend/wow.min.js}"></script>
+  <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+  <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+  <script th:src="@{/js/frontend/main.js}"></script>
+  <script th:src="@{/js/service/frontend/editServiceApplication.js}"></script>
+  <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+  <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
+  <script>
+    //======== Home Slider
+    var slider = new tns({
+      container: '.home-slider',
+      slideBy: 'page',
+      autoplay: false,
+      autoplayButtonOutput: false,
+      mouseDrag: true,
+      gutter: 0,
+      items: 1,
+      nav: false,
+      controls: true,
+      controlsText: [
+        '<i class="lni lni-arrow-left prev"></i>',
+        '<i class="lni lni-arrow-right next"></i>'
+      ],
+      responsive: {
+        1200: {
+          items: 1,
+        },
+        992: {
+          items: 1,
+        },
+        0: {
+          items: 1,
+        }
+
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

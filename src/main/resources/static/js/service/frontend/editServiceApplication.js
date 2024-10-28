@@ -30,11 +30,11 @@ $(document).ready(function () {
 
         // 將數據填入表單
         // 填入接案人
-        document.getElementById('freelancer').innerHTML = `<option value=${servicesDTO.userMajor.user.userId}>${servicesDTO.userMajor.user.userName}</option>`;
+        document.getElementById('freelancer').innerHTML = `<option selected value=${servicesDTO.userMajor.user.userId}>${servicesDTO.userMajor.user.userName}</option>`;
         // 填入合作名稱
         document.getElementById('serviceApplicationTitle').value = serviceApplicationDTO.serviceApplicationTitle;
         // 填入服務選項
-        document.getElementById('serviceSelect').innerHTML = `<option value=${servicesDTO.serviceId}>${servicesDTO.serviceTitle}</option>`;
+        document.getElementById('serviceSelect').innerHTML = `<option selected value=${servicesDTO.serviceId}>${servicesDTO.serviceTitle}</option>`;
 
         // 填入合同資料
         document.getElementsByName('serviceApplicationSubitem')[0].value = serviceApplicationDTO.serviceApplicationSubitem;
@@ -58,9 +58,9 @@ $(document).ready(function () {
 
 
         // 將欄位設置為只讀
-        document.getElementById('freelancer').setAttribute('disabled', true);
+        document.getElementById('freelancer').setAttribute('readonly', true);
         document.getElementById('serviceApplicationTitle').setAttribute('readonly', true);
-        document.getElementById('serviceSelect').setAttribute('disabled', true);
+        document.getElementById('serviceSelect').setAttribute('readonly', true);
     }
 
 
@@ -180,40 +180,86 @@ document.getElementsByName('serviceApplicationAmount')[0].addEventListener('chan
 })
 
 
-// 表單提交監聽器
-document.getElementById('serviceApplicationForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // 防止表單自動提交
 
+// 表單提交
+if (serviceApplicationDTO != null) {
+    document.getElementById('serviceApplicationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    //轉換date到localdatetime
-    const date = document.getElementById('serviceApplicationDate').value;
-    let localDateTime = `${date}T00:00`
-    document.getElementById('localDateTimeInput').value = localDateTime;
+        //轉換date到localdatetime
+        const date = document.getElementById('serviceApplicationDate').value;
+        let localDateTime = `${date}T00:00`
+        document.getElementById('localDateTimeInput').value = localDateTime;
 
-    let form = document.getElementById('serviceApplicationForm');
-    let formData = new FormData(form); // 創建FormData物件，將表單的所有資料包含在內
+        let form = document.getElementById('serviceApplicationForm');
+        let formData = new FormData(form); // 創建FormData物件，將表單的所有資料包含在內
+        console.log(formData);
 
-    // 發送Ajax請求
-    axios.post('/ProFit/c/serviceApplication/api', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data' // 確保正確的Content-Type
-        }
-    })
-        .then(function (response) {
-            console.log(response.data);
-            alert("服務委託創建成功！");
+        console.log(serviceApplicationDTO.serviceApplicationId);
 
-            // 頁面跳轉,跳回相同頁面,但是帶著serviceApplicationDTO
-            // 自動填入serviceApplicationDTO到欄位中
-            // 可以編輯合約, 但是 freelancer、title、service 變為readonly
-            // 跳轉回同一頁面，帶著 serviceApplicationId
-            window.location.href = `/ProFit/c/serviceApplication/edit?serviceApplicationId=${response.data.serviceApplicationId}`;
-
-
-
+        // 發送Ajax請求
+        axios.put(`/ProFit/c/serviceApplication/api/${serviceApplicationDTO.serviceApplicationId}`,
+            formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data' // 確保正確的Content-Type
+            }
         })
-        .catch(function (error) {
-            console.error('提交失敗:', error);
-            alert("提交失敗，請稍後再試。");
-        });
-});
+            .then(function (response) {
+                console.log(response.data);
+                alert("服務委託更新成功！");
+
+                // 頁面跳轉,跳回相同頁面,但是帶著serviceApplicationDTO
+                // 自動填入serviceApplicationDTO到欄位中
+                // 可以編輯合約, 但是 freelancer、title、service 變為readonly
+                // 跳轉回同一頁面，帶著 serviceApplicationId
+                window.location.href = `/ProFit/c/serviceApplication/edit?serviceApplicationId=${response.data.serviceApplicationId}`;
+
+            })
+            .catch(function (error) {
+                console.error('提交失敗:', error);
+                alert("提交失敗，請稍後再試。");
+            });
+
+    })
+
+} else {
+    // 表單提交監聽器
+    document.getElementById('serviceApplicationForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // 防止表單自動提交
+
+
+        //轉換date到localdatetime
+        const date = document.getElementById('serviceApplicationDate').value;
+        let localDateTime = `${date}T00:00`
+        document.getElementById('localDateTimeInput').value = localDateTime;
+
+        let form = document.getElementById('serviceApplicationForm');
+        let formData = new FormData(form); // 創建FormData物件，將表單的所有資料包含在內
+
+        // 發送Ajax請求
+        axios.post('/ProFit/c/serviceApplication/api', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data' // 確保正確的Content-Type
+            }
+        })
+            .then(function (response) {
+                console.log(response.data);
+                alert("服務委託創建成功！");
+
+                // 頁面跳轉,跳回相同頁面,但是帶著serviceApplicationDTO
+                // 自動填入serviceApplicationDTO到欄位中
+                // 可以編輯合約, 但是 freelancer、title、service 變為readonly
+                // 跳轉回同一頁面，帶著 serviceApplicationId
+                window.location.href = `/ProFit/c/serviceApplication/edit?serviceApplicationId=${response.data.serviceApplicationId}`;
+
+
+
+            })
+            .catch(function (error) {
+                console.error('提交失敗:', error);
+                alert("提交失敗，請稍後再試。");
+            });
+    });
+}
+
+
