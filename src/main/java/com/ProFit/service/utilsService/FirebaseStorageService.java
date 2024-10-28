@@ -68,4 +68,14 @@ public class FirebaseStorageService {
 
         return signUrl.toString();
     }
+
+    // 取出檔案名稱
+    public String extractFileNameFromUrl(String url) {
+
+        if (url != null && !url.isEmpty()) {
+            return url.substring(url.lastIndexOf("/") + 1);
+        } else {
+            return null;
+        }
+    }
 }
