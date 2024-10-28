@@ -68,7 +68,7 @@ public class SecurityConfig {
 		return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
 	}
 
-	@Bean
+	/*@Bean
 	UserDetailsService userDetailsService() {
 		return new MemeberUserDetailsService();
 	}
@@ -82,5 +82,5 @@ public class SecurityConfig {
 		authProvider.setPasswordEncoder(passwordEncoder); // 用來比對密碼
 
 		return new ProviderManager(authProvider);
-	}
+	}*/
 }
