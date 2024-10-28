@@ -36,4 +36,7 @@ public interface IcourseService {
 	public Page<CoursesDTO> searchCoursesPage(@Param("courseName") String courseName, String userName, String status,
 			Integer userId, Integer category, String sort, String sortBy, Integer pageNumber, Integer pageSize);
 
+	// 查詢課程數量By MajorCategory (儀表板用)
+	List<Object[]> getCourseCountByCategoryName();
+
 }

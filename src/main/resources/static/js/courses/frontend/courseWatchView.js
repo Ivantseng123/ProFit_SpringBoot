@@ -33,7 +33,7 @@ $(document).ready(function () {
                 ${courseMap.currentCourse.courseInformation}
                 `);
 
-            // 动态生成 accordion 的内容
+            // 動態生成 accordion 的内容
             let accordionContent = '';
 
             courseMap.courseModuleDTOList.forEach((courseModuleDTO, index) => {
