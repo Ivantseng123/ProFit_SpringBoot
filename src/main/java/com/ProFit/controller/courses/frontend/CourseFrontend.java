@@ -1,6 +1,8 @@
 package com.ProFit.controller.courses.frontend;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,14 @@ import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.coursesDTO.CourseGradeContentDTO;
+import com.ProFit.model.dto.coursesDTO.CourseLessonDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTOFrontend;
 import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.courseService.IcourseGradeContentService;
+import com.ProFit.service.courseService.IcourseLessonService;
 import com.ProFit.service.courseService.IcourseModuleService;
 import com.ProFit.service.courseService.IcourseOrderService;
 import com.ProFit.service.courseService.IcourseService;
@@ -57,6 +61,9 @@ public class CourseFrontend {
     @Autowired
     private FirebaseStorageService firebaseStorageService;
 
+    @Autowired
+    private IcourseLessonService courseLessonService;
+
     @GetMapping("")
     public String courseFrontendPage() {
         return "coursesVIEW/frontend/courseOverView";
@@ -80,32 +87,49 @@ public class CourseFrontend {
         return "redirect:/user/profile";
     }
 
-    // @GetMapping("/watch")
-    // public ResponseEntity<List<CourseOrderDTO>> watchCoursePage(HttpSession
-    // session, @RequestParam String courseId) {
+    @GetMapping("/watch")
+    public String watchCoursePage(HttpSession session) {
 
-    // UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
 
-    // List<CourseOrderDTO> isCourseAvalible =
-    // courseOrderService.searchAllCourseOrders(courseId,
-    // currentUser.getUserId(), "Completed");
+        if (currentUser != null) {
 
-    // if (isCourseAvalible.isEmpty()) {
-    // return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+            return "coursesVIEW/frontend/courseWatchView";
+        }
 
-    // CoursesDTO OneCourse = courseService.searchOneCourseById(courseId);
+        return "redirect:/user/profile";
 
-    // List<CourseModuleDTOFrontend> CourseModuleDTOList =
-    // courseModuleService.searchCourseModulesFrontend(courseId);
+    }
 
-    // PageRequest pageRequest = PageRequest.of(0, 3);
+    @GetMapping("/watch/{courseId}")
+    public ResponseEntity<Map<String, Object>> watchCoursePage(HttpSession session, @PathVariable String courseId) {
 
-    // Page<CourseGradeContentDTO> courseGradeDTOList = courseGradeContentService
-    // .searchCourseGradeContents(courseId, null, pageRequest);
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
 
-    // return new ResponseEntity<>(OneCourse, HttpStatus.OK);
-    // }
+        List<CourseOrderDTO> isCourseAvalible = courseOrderService.searchAllCourseOrders(courseId,
+                currentUser.getUserId(), "Completed");
+
+        if (isCourseAvalible.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        CoursesDTO currentCourse = courseService.searchOneCourseById(courseId);
+
+        List<CourseModuleDTOFrontend> courseModuleDTOList = courseModuleService.searchCourseModulesFrontend(courseId);
+
+        PageRequest pageRequest = PageRequest.of(0, 3);
+
+        Page<CourseGradeContentDTO> courseGradeDTOList = courseGradeContentService
+                .searchCourseGradeContents(courseId, null, pageRequest);
+
+        Map<String, Object> courseMap = new HashMap<String, Object>();
+        courseMap.put("currentUser", currentUser);
+        courseMap.put("currentCourse", currentCourse);
+        courseMap.put("courseModuleDTOList", courseModuleDTOList);
+        courseMap.put("courseGradeDTOList", courseGradeDTOList);
+
+        return new ResponseEntity<>(courseMap, HttpStatus.OK);
+    }
 
     // 新增課程訂單的方法
     @PostMapping("/purchase/add")
@@ -204,6 +228,30 @@ public class CourseFrontend {
                     currentUser.getUserId(), "Completed");
 
             return searchCourseOrdersByUserId;
+        }
+
+        return null;
+    }
+
+    // 回傳30分鐘有效的單元影片url
+    @GetMapping("/lessons/{lessonId}")
+    @ResponseBody
+    public Map<String, String> getLessonVideoURL(@PathVariable Integer lessonId, HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (currentUser != null) {
+            CourseLessonDTO currentLesson = courseLessonService.searchOneCourseLessonById(lessonId);
+
+            String fileNameFromUrl = firebaseStorageService.extractFileNameFromUrl(currentLesson.getLessonMediaUrl());
+
+            if (fileNameFromUrl != null) {
+                String timeSensitiveUrl = firebaseStorageService.generateTimeSensitiveUrl(fileNameFromUrl);
+                Map<String, String> response = new HashMap<>();
+                response.put("url", timeSensitiveUrl);
+                return response;
+            }
+            return null;
         }
 
         return null;
