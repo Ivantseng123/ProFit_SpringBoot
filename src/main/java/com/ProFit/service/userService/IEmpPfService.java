@@ -28,7 +28,7 @@ public interface IEmpPfService {
 
 	List<CompanyStatistics> getCompanyStatistics();
 
-	Page<EmpPfDTO> findEmpPfByPageAndSearch_frontend(Integer pageNumber, String search);
+	Page<EmpPfDTO> findEmpPfByPageAndSearch_frontend(Integer pageNumber, String search,String address, String category);
 
 	Page<EmpPfDTO> findEmpPfByPage_frontend(Integer pageNumber);
 

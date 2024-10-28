@@ -50,6 +50,7 @@
 
 						<span>地區: </span> <select class="form-select" id="city"
 							style="width: 150px;">
+							<option value="">所有</option>
 							<option value="臺北市">臺北市</option>
 							<option value="新北市">新北市</option>
 							<option value="基隆市">基隆市</option>
@@ -73,6 +74,7 @@
 							<option value="臺東縣">臺東縣</option>
 						</select> <span class="ml-3">產業:</span> <select class="form-select"
 							id="category" name="companyCategory" style="width: 200px;">
+							<option value="">所有</option>
 							<option value="農、林、漁、牧業">農、林、漁、牧業</option>
 							<option value="礦業及土石採取業">礦業及土石採取業</option>
 							<option value="製造業">製造業</option>
@@ -122,6 +124,50 @@
 	<a href="#" class="scroll-top btn-hover"> <i
 		class="lni lni-chevron-up"></i>
 	</a>
+
+	<div class="modal fade form-modal" id="cardModal" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog max-width-px-840 position-relative">
+			<button type="button"
+				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+				data-dismiss="modal">
+				<i class="lni lni-close"></i>
+			</button>
+			<div class="login-modal-main">
+				<div class="row no-gutters">
+					<div class="col-12">
+						<div class="row">
+							<div class="heading">
+								<h5 class="modal-title" id="cardModalLabel">公司資料</h5>
+							</div>
+							<div class="modal-body">
+								<img id="modalPhoto" src="" alt="公司照片"
+									style="width: 100%; height: 280px;" class="mb-3">
+								<h5 id="modalCompanyName"></h5>
+								<p id="modalCompanyAddress"></p>
+								<p id="modalCompanyCategory"></p>
+								<p id="modalCompanyPhoneNumber"></p>
+								<p>
+									資本額: <span id="modalCompanyCaptital"></span> 萬
+								</p>
+								<p>
+									員工人數: <span id="modalCompanyNumberOfEmployee"></span>
+								</p>
+								<p>
+									公司簡介: <span id="modalCompanyDescription"></span>
+								</p>
+								<p>
+									建立者: <span id="modalUserName"></span>
+								</p>
+								<p id="modalUserEmail"></p>
+								<div id="mapContainer" style="width: 100%; height: 400px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<!-- ========================= JS here ========================= -->

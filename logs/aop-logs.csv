@@ -1,0 +1,40 @@
+2024-10-28T23:19:37.844659447,userCharts,usersVIEW/menber_company_Chart,/ProFit/user/charts
+2024-10-28T23:19:39.127640059,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-28T23:19:39.225067213,getUserStatistics,<200 OK OK,[com.ProFit.model.dto.usersDTO.UserStatistics@628cfe33, com.ProFit.model.dto.usersDTO.UserStatistics@6fb9dfa, com.ProFit.model.dto.usersDTO.UserStatistics@3ae2a9f7, com.ProFit.model.dto.usersDTO.UserStatistics@559685ed],[]>,/ProFit/user/statistics
+2024-10-28T23:19:39.228303563,getUserStatistics_registerTime,<200 OK OK,[com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@5d323b0a, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@76ac200d, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@2ec93ba, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@2f581074, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@637e84fe, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@74c56cd4, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@125250b5, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@7de6293b, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@6a281b0d, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@35d47950, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@350350a7, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@796008cd, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@53ba949f, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@45326941, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@6a9b8f28],[]>,/ProFit/user/registration_statistics
+2024-10-28T23:19:39.271570083,getCompanyStatistics,<200 OK OK,[com.ProFit.model.dto.usersDTO.CompanyStatistics@5deafa6f, com.ProFit.model.dto.usersDTO.CompanyStatistics@7279f931, com.ProFit.model.dto.usersDTO.CompanyStatistics@65766f14, com.ProFit.model.dto.usersDTO.CompanyStatistics@606e309a, com.ProFit.model.dto.usersDTO.CompanyStatistics@6a5d877a],[]>,/ProFit/empPf/statistics
+2024-10-28T23:20:32.370745380,AlluserPage,usersVIEW/Allusers,/ProFit/user/alluserPage
+2024-10-28T23:20:32.514673463,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-28T23:20:33.082305627,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:20:33.621612006,downloadCsvFile,<200 OK OK,InputStream resource [resource loaded through InputStream],[Content-Disposition:"attachment; filename=aop-logs.csv", Content-Type:"application/octet-stream"]>,/ProFit/download/logs
+2024-10-28T23:25:20.610555739,InsertUser,新增成功,/ProFit/user/adduser
+2024-10-28T23:25:21.067044807,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:25:22.626075954,userCharts,usersVIEW/menber_company_Chart,/ProFit/user/charts
+2024-10-28T23:25:23.654581904,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-28T23:25:23.712631731,getUserStatistics_registerTime,<200 OK OK,[com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@4fece15, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@36882dbe, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@7882121d, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@34b90638, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@4645f8dc, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@3157d877, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@59ad36ba, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@25596371, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@4c33ec1e, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@4328118f, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@7380f7b6, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@1dac505c, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@4e2c1ceb, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@4d0bc8c8, com.ProFit.model.dto.usersDTO.UserStatistics_registerTime@3942bb98],[]>,/ProFit/user/registration_statistics
+2024-10-28T23:25:23.716258408,getUserStatistics,<200 OK OK,[com.ProFit.model.dto.usersDTO.UserStatistics@6afcf176, com.ProFit.model.dto.usersDTO.UserStatistics@7546896a, com.ProFit.model.dto.usersDTO.UserStatistics@2e81d93b, com.ProFit.model.dto.usersDTO.UserStatistics@3323b968],[]>,/ProFit/user/statistics
+2024-10-28T23:25:23.792352234,getCompanyStatistics,<200 OK OK,[com.ProFit.model.dto.usersDTO.CompanyStatistics@299f3243, com.ProFit.model.dto.usersDTO.CompanyStatistics@3a2b57a5, com.ProFit.model.dto.usersDTO.CompanyStatistics@1054eb6b, com.ProFit.model.dto.usersDTO.CompanyStatistics@6e7c2289, com.ProFit.model.dto.usersDTO.CompanyStatistics@3e21182f],[]>,/ProFit/empPf/statistics
+2024-10-28T23:25:47.077708421,AlluserPage,usersVIEW/Allusers,/ProFit/user/alluserPage
+2024-10-28T23:25:47.181433604,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-28T23:25:47.653813187,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:25:49.628945318,findByPageApi,Page 3 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:25:51.409719444,findByPageApi,Page 2 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:26:04.598131791,DeleteUser,Ok,/ProFit/user/deleteuser
+2024-10-28T23:26:09.770988720,AlluserPage,usersVIEW/Allusers,/ProFit/user/alluserPage
+2024-10-28T23:26:09.909728875,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-28T23:26:10.392869872,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:26:12.413972646,findByPageApi,Page 3 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:26:14.938995373,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:26:16.561255220,AlluserPage,usersVIEW/Allusers,/ProFit/user/alluserPage
+2024-10-28T23:26:16.716561547,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-28T23:26:17.213451112,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-28T23:26:28.510310923,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-28T23:26:28.744192153,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-28T23:26:30.818875911,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-28T23:26:30.884101808,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-28T23:26:30.884251533,GetUser,<200 OK OK,Users [user_id=105, user_name=漢堡2, user_email=johnyu91308@gmail.com, user_passwordHash=15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225, user_phoneNumber=0917-276358, user_city=花蓮縣, user_identity=3, user_register_time=2024-08-30 11:15:46, user_pictureURL=https://lh3.googleusercontent.com/a/ACg8ocLr_Bzp808n3MKAaQuHyXKx26wd6jmOqUZS2p6ITzFE4D1Zdno=s96-c, user_balance=0, freelancer_location_prefer=新北市, freelancer_exprience=7-8年工作經驗, freelancer_identity=學生, freelancer_profile_status=1, freelancer_disc=],[]>,/ProFit/user/profileinfo
+2024-10-28T23:26:41.219149808,GetComp,<404 NOT_FOUND Not Found,Get Company Fail!,[]>,/ProFit/emp/getCompPfinfo
+2024-10-28T23:26:41.262159691,GetEmpAppl,<400 BAD_REQUEST Bad Request,Get applicatiob Failed,[]>,/ProFit/empAppl/getEmpAppl
+2024-10-28T23:27:24.790042454,GetAllCompany,usersVIEW/frontendVIEW/companyPage,/ProFit/empPf/allCompany
+2024-10-28T23:27:24.858394478,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-28T23:27:25.354787538,findByPageApi,Page 1 of 2 containing com.ProFit.model.dto.usersDTO.EmpPfDTO instances,/ProFit/api/empPf/page_frontend

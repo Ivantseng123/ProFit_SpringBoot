@@ -55,8 +55,6 @@ public class ServiceFrontendController {
         return "servicesVIEW/frontend/singleServiceDetail";
     }
 
- 
-
     // RestfulAPI
     @PostMapping("/api/searchAll")
     @ResponseBody
@@ -82,6 +80,15 @@ public class ServiceFrontendController {
                 userId, majorIdList, majorCategoryId, page, size, sortBy, ascending);
 
         return ResponseEntity.ok(searchServicePage);
+    }
+
+    // 查單筆 Service
+    @GetMapping("/api/{serviceId}")
+    @ResponseBody
+    public ServicesDTO singleServiceDetail(@PathVariable Integer serviceId, Model model) {
+        ServicesDTO serviceDTO = serviceService.getServiceById(serviceId);
+
+        return serviceDTO;
     }
 
     @GetMapping("/api/searchServiceByMajorCategory")

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
 import com.ProFit.service.serviceService.ServiceApplicationService;
+import com.ProFit.service.utilsService.FirebaseStorageService;
 
 @Controller
 @RequestMapping("/a/serviceApplication")
@@ -27,6 +30,9 @@ public class ServiceApplicationController {
 
   @Autowired
   private ServiceApplicationService serviceApplicationService;
+
+  @Autowired
+  private FirebaseStorageService firebaseStorageService;
 
   // 返回主頁視圖
   @GetMapping
@@ -39,7 +45,23 @@ public class ServiceApplicationController {
   @PostMapping("/api")
   @ResponseBody
   public ResponseEntity<ServiceApplicationsDTO> createServiceApplication(
-      @RequestBody ServiceApplicationBean serviceApplication) {
+      @ModelAttribute ServiceApplicationBean serviceApplication,
+      @RequestParam("appendixFile") MultipartFile file) {
+
+    // 檢查是否有上傳文件
+    if (!file.isEmpty()) {
+      try {
+        // 文件存儲邏輯（存儲在firebase）
+        String URL = firebaseStorageService.uploadFile(file);
+        serviceApplication.setAppendixUrl(URL);
+
+      } catch (Exception e) {
+        // 處理文件上傳錯誤
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      }
+    }
+
     ServiceApplicationsDTO createdApplication = serviceApplicationService.createServiceApplication(serviceApplication);
     return ResponseEntity.ok(createdApplication);
   }

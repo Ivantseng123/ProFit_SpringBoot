@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -191,6 +192,38 @@ public class ServiceController {
 		}
 	}
 
+	// 更新服務狀態(不更新UpdateTime)
+	@PutMapping("/api/{serviceId}/{serviceStatus}")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> updateServiceStatus(@PathVariable Integer serviceId,
+			@PathVariable("serviceStatus") Integer serviceStatus) {
+
+		try {
+			ServicesDTO serviceDTO = new ServicesDTO();
+			serviceDTO.setServiceId(serviceId);
+			serviceDTO.setServiceStatus(serviceStatus);
+
+			// System.out.println(serviceDTO);
+			// 更新服務
+			ServicesDTO updatedService = serviceService.updateServiceStatus(serviceDTO);
+			// System.out.println(updatedService);
+
+			if (updatedService != null) {
+				Map<String, String> response = new HashMap<>();
+				response.put("message", "OK");
+				response.put("serviceId", updatedService.getServiceId().toString());
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Map<String, String> errorResponse = new HashMap<>();
+			errorResponse.put("error", e.getMessage());
+			return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	// 刪除服務的方法
 	@DeleteMapping("/api/{serviceId}")
 	@ResponseBody
@@ -250,6 +283,35 @@ public class ServiceController {
 		PageResponse<ServicesDTO> response = serviceService.getServicesServiceTitleContaining(title, page, size, sortBy,
 				ascending);
 		return ResponseEntity.ok(response);
+	}
+
+	// 根據多條件查詢
+	@GetMapping("/api/searchAll")
+	@ResponseBody
+	public ResponseEntity<PageResponse<ServicesDTO>> searchAllServices(
+			@RequestParam(required = false) String serviceTitle,
+			@RequestParam(required = false) String userName,
+			@RequestParam(defaultValue = "3") Integer status,
+			@RequestParam(required = false) Integer userId,
+			@RequestParam(required = false) List<Integer> majorIdList,
+			@RequestParam(required = false) Integer majorCategoryId,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "12") int size,
+			@RequestParam(defaultValue = "serviceUpdateDate") String sortBy,
+			@RequestParam(defaultValue = "false") boolean ascending) {
+
+		// System.out.println(page);
+		// System.out.println("serviceTitle " + serviceTitle);
+		// System.out.println(majorIdList);
+
+		if (!Arrays.asList(0, 1, 2).contains(status)) {
+			status = null;
+		}
+
+		PageResponse<ServicesDTO> searchServicePage = serviceService.searchServicePage(serviceTitle, userName, status,
+				userId, majorIdList, majorCategoryId, page, size, sortBy, ascending);
+
+		return ResponseEntity.ok(searchServicePage);
 	}
 
 	// ...

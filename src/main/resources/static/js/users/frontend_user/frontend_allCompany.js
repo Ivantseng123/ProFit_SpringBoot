@@ -1,8 +1,13 @@
 let currentPage = 1;
 const pageSize = 9;
 
-function fetchData(searchValue = '') {
-	fetch(`http://localhost:8080/ProFit/api/empPf/page_frontend?pageNumber=${currentPage}&search=${encodeURIComponent(searchValue)}`)
+function fetchData(searchValue = '', address = '', category = '') {
+	const encodedAddress = address ? encodeURIComponent(address) : '';
+	const encodedCategory = category ? encodeURIComponent(category) : '';
+	const encodedSearchValue = searchValue ? encodeURIComponent(searchValue) : '';
+
+
+	fetch(`http://localhost:8080/ProFit/api/empPf/page_frontend?pageNumber=${currentPage}&search=${encodedSearchValue}&address=${encodedAddress}&category=${encodedCategory}`)
 		.then(response => response.json())
 		.then(result => {
 			const empPf = result.content;
@@ -13,7 +18,8 @@ function fetchData(searchValue = '') {
 			empPf.forEach(item => {
 				const card = `
 				<div class="col-md-6 mb-4"> <!-- 每行兩個卡片 -->
-				           <div class="card">
+				            <div class="card" data-bs-toggle="modal" data-bs-target="#cardModal" onclick="showModal('${item.companyPhotoURL}', '${item.companyName}', '${item.companyAddress}', 
+								'${item.companyCategory}', '${item.companyCaptital}', '${item.companyNumberOfemployee}', '${item.companyPhoneNumber}', '${item.companyDescription}', '${item.userName}', '${item.userEmail}')">
 				               <div class="card-body d-flex align-items-center">
 				                   <img class="photo" src="${item.companyPhotoURL}" alt="${item.companyName}">
 								   <div class="ml-3">
@@ -74,7 +80,11 @@ function updatePagination(totalRecords) {
 document.getElementById('searchButton').addEventListener('click', function() {
 	currentPage = 1; // 搜尋時回到第一頁
 	const searchValue = document.getElementById('searchInput').value;
-	fetchData(searchValue);
+	const address = document.getElementById('city').value;
+	const category = document.getElementById('category').value;
+
+	console.log(address);
+	fetchData(searchValue, address, category);
 });
 
 document.getElementById('prevPage').addEventListener('click', function() {
@@ -92,3 +102,46 @@ document.getElementById('nextPage').addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {
 	fetchData(); // 頁面加載時初始化資料
 });
+
+function showModal(photoURL, name, address, category, capital, numberOfEmployee, phoneNumber, description, userName, userEmail) {
+	// 設置 modal 的內容
+	document.getElementById('modalPhoto').src = photoURL;
+	document.getElementById('modalCompanyName').textContent = name;
+	document.getElementById('modalCompanyAddress').textContent = address;
+	document.getElementById('modalCompanyCategory').textContent = category;
+	document.getElementById('modalCompanyCaptital').textContent = capital;
+	document.getElementById('modalCompanyNumberOfEmployee').textContent = numberOfEmployee;
+	document.getElementById('modalCompanyPhoneNumber').textContent = phoneNumber;
+	document.getElementById('modalCompanyDescription').textContent = description;
+	document.getElementById('modalUserName').textContent = userName;
+	document.getElementById('modalUserEmail').textContent = userEmail;
+
+
+	$('#cardModal').modal('show');
+	
+	// 調用示例
+	loadMap(address); // 替換為動態公司地址
+}
+
+function loadMap(address) {
+    const mapContainer = document.getElementById('mapContainer');
+    
+    // 使用 encodeURIComponent 編碼地址
+    const encodedAddress = encodeURIComponent(address);
+    
+    // Google 地圖嵌入 URL 格式
+    const iframe = `<iframe 
+                      width="100%" 
+                      height="350" 
+                      frameborder="0" 
+                      style="border:0" 
+                      src="https://www.google.com/maps?q=${encodedAddress}&output=embed" 
+                      allowfullscreen>
+                    </iframe>`;
+                    
+    mapContainer.innerHTML = iframe; // 將地圖 iframe 添加到容器中
+}
+
+
+
+

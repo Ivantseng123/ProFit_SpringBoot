@@ -192,8 +192,23 @@ public class CourseFrontend {
         return allCourseCategoryList;
     }
 
+    // 回傳單筆課程相關資訊 確認登入狀態，判斷是否已經購買
     @GetMapping("/{courseId}")
-    public String findSingleCourse(@PathVariable String courseId, Model model) {
+    public String findSingleCourse(@PathVariable String courseId, Model model, HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        boolean isPurchased = false;
+
+        if (currentUser != null) {
+            List<CourseOrderDTO> isCoursePurchased = courseOrderService.searchAllCourseOrders(courseId,
+                    currentUser.getUserId(), "Complete");
+            if (!isCoursePurchased.isEmpty()) {
+                isPurchased = true;
+            }
+        }
+
+        model.addAttribute("isPurchased", isPurchased);
 
         CoursesDTO courseDTO = courseService.searchOneCourseById(courseId);
 
