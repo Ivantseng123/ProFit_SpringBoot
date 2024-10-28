@@ -116,10 +116,6 @@ public class JobsApplicationController {
             return "jobsVIEW/jobsApplicationForm";
         }
 
-
-
-
-
         //導向更新頁面
         @GetMapping("/edit/{id}")
         public String edit(@PathVariable("id") Integer id, Model model){
@@ -128,7 +124,6 @@ public class JobsApplicationController {
             }
             return "jobsVIEW/jobsApplicationEdit";
         }
-
 
         //呈現更新後
         @PutMapping("/update/{id}")

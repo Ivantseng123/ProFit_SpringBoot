@@ -57,6 +57,41 @@ public class JobsApplicationProjectController {
     }
 
 
+    //導向查看頁面
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("jobApplicationProject", jobsApplicationProjectService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsApplicationProjectForm";
+    }
+
+    //導向更新頁面
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        if (id != null) {
+            model.addAttribute("jobApplicationProject", jobsApplicationProjectService.findById(id).orElse(null));;
+        }
+        return "jobsVIEW/jobsApplicationProjectEdit";
+    }
+
+
+    //呈現更新後
+    @PutMapping("/update/{id}")
+    public String updateJobApplicationProject(
+                            @PathVariable("id") Integer id,
+                            @RequestParam("status") Byte status,
+                            Model model) {
+        JobsApplicationProject jobsApplicationProject = jobsApplicationProjectService.findById(id).orElse(null);
+        if (jobsApplicationProject != null){
+            jobsApplicationProject.setJobsApplicationStatus(status);
+            jobsApplicationProjectService.update(jobsApplicationProject);
+        }
+
+        return "redirect:/jobsApplicationProject/list" ;//只要跟Date相關的就用redirect:轉回到頁面
+    }
+
+
 //    // 新增
 //    @PostMapping("/add")
 //    public ResponseEntity<JobsApplicationProject> addJobApplicationProject(

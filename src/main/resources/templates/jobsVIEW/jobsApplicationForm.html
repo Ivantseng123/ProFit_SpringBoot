@@ -45,9 +45,9 @@
                 <div class="mb-3">
                     <label for="jobsStatus" class="form-label">職缺申請狀態</label>
                     <input type="text" class="form-control" id="jobsStatus" name="jobsStatus"
-                           th:value="${jobApplication.jobsApplicationStatus == 0 ? '刊登中' :
-                 jobApplication.jobsApplicationStatus == 1 ? '已投遞受理' :
-                 jobApplication.jobsApplicationStatus == 2 ? '尚未審核' : '未知狀態'}" readonly />
+                           th:value="${jobApplication.jobsApplicationStatus == 0 ? '已投遞受理中' :
+                 jobApplication.jobsApplicationStatus == 1 ? '已錄取' :
+                 jobApplication.jobsApplicationStatus == 2 ? '未錄取' : '未知狀態'}" readonly />
                 </div>
 
                 <!-- 申請合約 -->

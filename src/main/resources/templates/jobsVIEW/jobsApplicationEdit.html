@@ -55,9 +55,9 @@
                 <div class="mb-3">
                     <label class="form-label">職缺申請狀態</label>
                     <select class="form-control" name="status" th:value="${jobApplication.jobsApplicationStatus}" required>
-                        <option value="0" th:selected="${jobApplication.jobsApplicationStatus == 0}">刊登中</option>
-                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 1}">已投遞受理</option>
-                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 2}">尚未審核</option>
+                        <option value="0" th:selected="${jobApplication.jobsApplicationStatus == 0}">已投遞受理中</option>
+                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 1}">已錄取</option>
+                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 2}">未錄取</option>
                     </select>
                 </div>
 
