@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>ProFit-找服務報價</title>
+    <title>ProFit-建立委託</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
@@ -26,8 +26,29 @@
         .section {
             padding-top: 150px;
         }
-        .inner-section{
+
+        .inner-section {
             margin: 10px 0;
+        }
+
+        .form-control {
+            font-size: 18px;
+        }
+
+        .job-post .job-information .form-group label {
+            font-size: 18px;
+        }
+
+        .job-post .job-information .form-group input {
+            font-size: 18px;
+        }
+
+        .job-post .job-information .form-group textarea {
+            font-size: 18px;
+        }
+
+        .inner-section h3 {
+            border-left: 4px solid #e1264a;
         }
     </style>
 
@@ -44,29 +65,32 @@
 
     <section class="job-post section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1 col-12">
-                    <div class="job-information">
-                        <!-- 合作資料 -->
-                        <div class="service-application inner-section">
-                            <h3 class="title">合作資料</h3>
-                            <form id="serviceApplicationForm">
+
+            <div class="col-lg-10 offset-lg-1 col-12">
+                <div class="row">
+                    <h3 id="pageTitle">建立委託內容</h3>
+                    <form id="serviceApplicationForm" enctype="multipart/form-data" method="post">
+                        <div class="job-information">
+
+                            <!-- 合作資料 -->
+
+                            <div class="service-application inner-section">
+                                <h3 class="title">合作資料</h3>
+
                                 <div class="row">
                                     <!-- 合作名稱 -->
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>合作名稱*</label>
                                             <input class="form-control" type="text" name="serviceApplicationTitle"
-                                                placeholder="例如: Logo 設計">
+                                                id="serviceApplicationTitle" placeholder="例如: Logo 設計">
                                         </div>
                                     </div>
                                     <!-- 選擇要合作的接案人 -->
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label>選擇要合作的接案人*</label>
-                                            <select class="form-control" name="freelancerId">
-                                                <option value="102">Alice Brown</option>
-                                                <option value="103">John Doe</option>
+                                            <select id="freelancer" class="form-control" name="freelancerId">
                                                 <!-- 其他接案人可以動態生成 -->
                                             </select>
                                         </div>
@@ -75,103 +99,133 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
                                             <label>選擇要合作的服務*</label>
-                                            <select class="form-control" name="serviceId" id="serviceSelect"
-                                                onchange="displayServiceDetails()">
-                                                <option value="2">網站UI設計</option>
-                                                <option value="3">Logo設計</option>
+                                            <select class="form-control" name="serviceId" id="serviceSelect">
                                                 <!-- 其他服務可以動態生成 -->
                                             </select>
                                         </div>
                                     </div>
                                     <!-- 案件詳情 -->
                                     <div class="col-lg-12">
-                                        <div class="form-group">
+                                        <div style="border: 1px solid black;" class="form-group">
                                             <label>案件詳情</label>
-                                            <div id="serviceDetails">
+                                            <div style="font-size: 20px;" id="serviceDetails">
                                                 <!-- 根據選擇的服務自動顯示 -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
 
-                        <!-- 合約報價 -->
-                        <div class="contract-quote inner-section">
-                            <h3 class="title">合約報價</h3>
+                            </div>
+
+
+                            <hr style="color: brown; opacity: 0.5;">
+                            <br>
+                            <!-- 合約報價 -->
+                            <div class="contract-quote inner-section">
+                                <h3 class="title">合約報價</h3>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-group">
+                                            <label>項目*</label>
+                                            <input class="form-control" type="text" name="serviceApplicationSubitem"
+                                                placeholder="例如: Logo設計">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6">
+                                        <div class="form-group">
+                                            <label>單價*</label>
+                                            <input class="form-control" type="number" name="serviceApplicationPrice"
+                                                placeholder="例如: 500">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6">
+                                        <div class="form-group">
+                                            <label>數量*</label>
+                                            <input class="form-control" type="number" name="serviceApplicationAmount"
+                                                placeholder="例如: 1">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-6">
+                                        <div class="form-group">
+                                            <label>單位*</label>
+                                            <input class="form-control" type="text" name="serviceApplicationUnit"
+                                                placeholder="例如: 天">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>合約內容</label>
+                                            <textarea class="form-control" name="serviceApplicationContent" rows="3"
+                                                placeholder="描述合約內容"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>合約附件 (可選)</label>
+                                            <input class="form-control" type="file" name="appendixFile"
+                                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                                            <a class="form-control" target="_blank" href="" name="appendixUrl">
+                                                <p name="appendixUrl2" type="text"></p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <hr style="color: brown; opacity: 0.5;">
+                            <br>
+                            <!-- 合約里程碑 -->
+                            <div class="contract-milestone inner-section">
+                                <h3 class="title">合約里程碑</h3>
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="form-group">
+                                            <label>需交付項目*</label>
+                                            <input class="form-control" type="text" name="serviceApplicationMission"
+                                                placeholder="例如: 創建公司Logo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="form-group">
+                                            <label>交付日期*</label>
+                                            <input class="form-control" type="date" name="serviceApplicationDate"
+                                                id="serviceApplicationDate">
+                                            <!-- 隱藏的 LocalDateTime 字段 -->
+                                            <input type="hidden" id="localDateTimeInput"
+                                                name="serviceApplicationDoneDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="form-group">
+                                            <label>預計撥款金額</label>
+                                            <input class="form-control" type="number" readonly
+                                                name="serviceApplicationTotalPrice">
+                                        </div>
+                                        <input type="hidden" id="status" value="1" name="status">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- 提交按鈕 -->
                             <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>項目*</label>
-                                        <input class="form-control" type="text" name="serviceApplicationSubitem"
-                                            placeholder="例如: Logo設計">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="form-group">
-                                        <label>單價*</label>
-                                        <input class="form-control" type="number" name="serviceApplicationPrice"
-                                            placeholder="例如: 500">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="form-group">
-                                        <label>數量*</label>
-                                        <input class="form-control" type="number" name="serviceApplicationAmount"
-                                            placeholder="例如: 1">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="form-group">
-                                        <label>單位*</label>
-                                        <input class="form-control" type="text" name="serviceApplicationUnit"
-                                            placeholder="例如: 天">
-                                    </div>
-                                </div>
                                 <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>合約內容*</label>
-                                        <textarea class="form-control" name="serviceApplicationContent" rows="3"
-                                            placeholder="描述合約內容"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>合約附件 (可選)</label>
-                                        <input class="form-control" type="url" name="appendixUrl"
-                                            placeholder="例如: https://firebase.com/doc2">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 合約里程碑 -->
-                        <div class="contract-milestone inner-section">
-                            <h3 class="title">合約里程碑</h3>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>需交付項目*</label>
-                                        <input class="form-control" type="text" name="serviceApplicationMission"
-                                            placeholder="例如: 創建公司Logo">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
-                                    <div class="form-group">
-                                        <label>交付日期*</label>
-                                        <input class="form-control" type="date" name="serviceApplicationDoneDate">
-                                    </div>
+                                    <button id="submit" class="btn btn-outline-primary" type="submit">發送委託合作</button>
+                                    <a href=""></a>
+                                    <!-- 只有編輯時才有下面兩個按鈕 -->
+                                    <!-- 跳往 與該接案人此服務 的聊天室 -->
+                                    <a id="to-chatroom" hidden href="#" style="width:120px;"
+                                        class="btn btn-outline-danger" type="button" target="_blank" th:text="'聊聊洽談'">
+                                    </a>
+                                    <!-- 跳往訂單成立頁面 -->
+                                    <a id="create-order-page" hidden href="#" style="width:120px;"
+                                        class="btn btn-primary" type="button" th:text="'前往付款'">
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- 提交按鈕 -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <button class="btn btn-primary" type="submit">提交合作申請</button>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -190,6 +244,17 @@
     <a href="#" class="scroll-top btn-hover">
         <i class="lni lni-chevron-up"></i>
     </a>
+
+
+    <!-- 用 thymeleaf 取出 Model 資料存成變數 -->
+    <script th:inline="javascript">
+        const currentUser = /*[[${currentUser}]]*/ 'default currentUser';
+        let servicesDTO = /*[[${ServicesDTO}]]*/ 'default ServicesDTO';
+        const serviceApplicationDTO = /*[[${serviceApplicationDTO}]]*/ 'default serviceApplicationDTO';
+    </script>
+
+    <!-- 引入 axios 庫 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- ========================= JS here ========================= -->
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
