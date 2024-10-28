@@ -93,4 +93,9 @@ public class JobOrderService {
         return entity;
     }
 
+	public Double getOrderAmountById(String orderId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

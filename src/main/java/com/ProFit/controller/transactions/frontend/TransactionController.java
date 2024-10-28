@@ -79,6 +79,11 @@ public class TransactionController {
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
 
         Integer userId = currentUser.getUserId();
+        
+        Integer userBalance = userService.getUserBalanceById(userId);
+        if (userBalance != null && amount > userBalance) {
+            return "餘額不足，請重新輸入金額";  // 返回更友善的提示訊息
+        }
         // 呼叫服務層邏輯來插入一筆取款交易
         String result = userTransactionService.createWithdrawalTransaction(userId, amount);
 
