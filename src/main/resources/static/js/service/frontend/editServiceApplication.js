@@ -171,6 +171,15 @@ function displayServiceDetails(service) {
     serviceDetailsDiv.innerHTML = detailsHTML;  // 將詳情插入到 div 中
 }
 
+// 填價錢算總價
+document.getElementsByName('serviceApplicationPrice')[0].addEventListener('change', function () {
+    document.getElementsByName('serviceApplicationTotalPrice')[0].value = document.getElementsByName('serviceApplicationPrice')[0].value * document.getElementsByName('serviceApplicationAmount')[0].value;
+})
+document.getElementsByName('serviceApplicationAmount')[0].addEventListener('change', function () {
+    document.getElementsByName('serviceApplicationTotalPrice')[0].value = document.getElementsByName('serviceApplicationPrice')[0].value * document.getElementsByName('serviceApplicationAmount')[0].value;
+})
+
+
 // 表單提交監聽器
 document.getElementById('serviceApplicationForm').addEventListener('submit', function (event) {
     event.preventDefault(); // 防止表單自動提交
