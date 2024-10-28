@@ -1,20 +1,7 @@
-$(document).ready(function() {
+/*function getCompany() {
 
-	getCompany();
-	getCompanyAppl();
-
-});
-
-
-function getCompany() {
-
-
-	if (localStorage.getItem('isLoggedIn') == null) {
-		alert("請先登入");
-		window.location.href = "http://localhost:8080/ProFit/homepage";
-	}
-	let profile_picture = document.getElementById('profile_picture')
-	let profileImagePreview = document.getElementById('profileImagePreview')
+	let profile_picture = document.getElementById('profile_picture_company')
+	let profileImagePreview = document.getElementById('profileImagePreview_company')
 
 	let company_pictureURL = document.getElementById('company_pictureURL')
 
@@ -41,11 +28,6 @@ function getCompany() {
 	let company_description = document.getElementById('company_description')
 	let company_description_edit = document.getElementById('company_description_edit')
 
-	//let freelancer_location_prefer = document.getElementById('freelancer_location_prefer')
-	//let freelancer_exprience = document.getElementById('freelancer_exprience')
-	//let freelancer_identity = document.getElementById('freelancer_identity')
-	//let freelancer_profile_status = document.getElementById('freelancer_profile_status')
-	//let freelancer_description = document.getElementById('freelancer_description')
 
 	fetch('http://localhost:8080/ProFit/emp/getCompPfinfo')
 		.then(response => {
@@ -150,7 +132,7 @@ function getCompanyAppl() {
 
 }
 
-$('#fileInput').on('change', function() {
+$('#fileInput_company').on('change', function() {
 	let fileInput = $(this)[0];
 	let previewImage = $('#profileImagePreview');
 
@@ -379,5 +361,5 @@ $('#fileInput2').on('change', function() {
 
 		reader.readAsDataURL(fileInput.files[0]);
 	}
-});
+});*/
 
