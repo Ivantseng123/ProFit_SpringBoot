@@ -1,0 +1,29 @@
+<configuration>
+    <property name="AOP_LOG_PATH" value="logs/aop-logs.log" />
+
+    <!-- Console Appender 用於輸出其他日誌 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 定義 AOP 專用的文件 Appender -->
+    <appender name="AOP_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${AOP_LOG_PATH}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 設定 AOP Logger，將 com.example.aop 包的所有日誌輸出到 AOP_FILE 中 -->
+    <logger name="com.ProFit.config" level="INFO" additivity="false">
+        <appender-ref ref="AOP_FILE" />
+    </logger>
+
+    <!-- 其他日誌的根 Logger，將輸出到 CONSOLE -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

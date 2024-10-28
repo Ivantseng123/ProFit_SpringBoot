@@ -232,6 +232,23 @@ document.getElementById('insertform').addEventListener('submit', function(e) {
 
 
 })
+
+function downloadLogs() {
+	fetch('http://localhost:8080/ProFit/logs/export/xml')
+		.then(response => response.blob())
+		.then(blob => {
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.style.display = 'none';
+			a.href = url;
+			a.download = 'logs.xml';
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+		})
+		.catch(error => console.error('Error downloading logs:', error));
+}
+
 function oneClickInsert() {
 	document.getElementById('user_name').value = '馬邦德';
 	document.getElementById('user_email').value = 'mabund@gmail.com';
