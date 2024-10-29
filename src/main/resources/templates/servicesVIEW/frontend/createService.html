@@ -35,104 +35,136 @@
 
   <section class="job-post section">
     <div class="container">
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1 col-12">
+          <div class="job-information">
+            <div class="d-flex  justify-content-between">
+              <h3 class="title">新增服務</h3>
 
-
-      <div class="container pt-5">
-        <div id="tabs">
-          <ul>
-            <li><a href="#createServiceTab">新增服務</a></li>
-          </ul>
-
-          <!-- 生成測試數據按鈕 -->
-          <button id="generateTestDataBtn" class="btn btn-secondary mb-3">一鍵填入資料</button>
-
-          <div id="createServiceTab">
-            <div class="form-container">
-              <form id="serviceForm" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label for="serviceTitle">服務名稱:</label>
-                  <input type="text" id="serviceTitle" name="serviceTitle" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label for="userMajor">服務提供者(會員-專業):</label>
-                  <select id="userMajor" name="userMajor" class="form-control">
-                    <option value="">請選擇會員-專業</option>
-                    <!-- 這裡需要動態加載會員-專業選項 -->
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="servicePrice">服務報價(元):</label>
-                  <input type="number" id="servicePrice" name="servicePrice" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label for="serviceUnitName">單位:</label>
-                  <input type="text" id="serviceUnitName" name="serviceUnitName" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label for="serviceDuration">執行時間(天):</label>
-                  <input type="number" step="0.1" id="serviceDuration" name="serviceDuration" class="form-control">
-                </div>
-
-
-                <div class="form-group">
-                  <label for="serviceContent">服務內容:</label>
-                  <textarea id="serviceContent" name="serviceContent" class="form-control" rows="4"></textarea>
-                </div>
-
-
-                <div class="form-group">
-                  <label for="servicePictureURL1">服務圖片 1:</label>
-                  <img id="preview1" src="" alt="" hidden>
-                  <input type="file" id="servicePictureURL1" name="servicePictureURL1" accept=".jpg, .jpeg, .png"
-                    class="form-control-file">
-                </div>
-
-                <div class="form-group">
-                  <label for="servicePictureURL2">服務圖片 2:</label>
-                  <img id="preview2" src="" alt="" hidden>
-                  <input type="file" id="servicePictureURL2" name="servicePictureURL2" accept=".jpg, .jpeg, .png"
-                    class="form-control-file">
-                </div>
-
-                <div class="form-group">
-                  <label for="servicePictureURL3">服務圖片 3:</label>
-                  <img id="preview3" src="" alt="" hidden>
-                  <input type="file" id="servicePictureURL3" name="servicePictureURL3" accept=".jpg, .jpeg, .png"
-                    class="form-control-file">
-                </div>
-
-                <div class="form-group">
-                  <label for="serviceCreateDate">創建日期: (自動帶入)</label>
-                  <input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control" readonly>
-                </div>
-
-                <div class="form-group">
-                  <label for="serviceStatus">服務狀態:</label>
-                  <select id="serviceStatus" name="serviceStatus" class="form-control">
-                    <option value="">請選擇狀態</option>
-                    <option value="0">審核中</option>
-                    <option value="1" selected>啟用</option>
-                    <option value="2">已關閉</option>
-                  </select>
-                </div>
-
-                <div style="text-align: right;">
-                  <button type="button" class="btn btn-secondary" id="cancelCreate">取消新增</button>
-                  <button type="button" class="btn btn-primary" id="submitService">新增服務</button>
-                </div>
-              </form>
+              <!-- 生成測試數據按鈕 -->
+              <button id="generateTestDataBtn" class="btn btn-secondary mb-3">一鍵填入資料</button>
             </div>
+
+            <div id="createServiceTab">
+              <div class="form-container">
+                <form id="serviceForm" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="serviceTitle">服務名稱:</label>
+                        <input required type="text" id="serviceTitle" name="serviceTitle" class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                      <div class="form-group">
+                        <label for="major">專業:</label>
+                        <select required id="userMajor" name="userMajor" class="select form-control">
+                          <option value="">請選擇專業</option>
+                          <!-- 這裡需要動態加載會員-專業選項 -->
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-lg-4 col-md-6">
+                        <div class="form-group">
+                          <label for="servicePrice">服務報價(元):</label>
+                          <input required type="number" id="servicePrice" name="servicePrice" class="form-control">
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4 col-md-6">
+                        <div class="form-group">
+                          <label for="serviceUnitName">單位:</label>
+                          <input required type="text" id="serviceUnitName" name="serviceUnitName" class="form-control">
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4 col-md-6">
+                        <div class="form-group">
+                          <label for="serviceDuration">執行時間(天):</label>
+                          <input required type="number" step="0.1" id="serviceDuration" name="serviceDuration"
+                            class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="serviceContent">服務內容:</label>
+                        <textarea id="serviceContent" name="serviceContent" class="form-control" rows="4"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="servicePictureURL1">服務圖片 1:</label>
+                        <img id="preview1" src="" alt="" hidden>
+                        <input required type="file" id="servicePictureURL1" name="servicePictureURL1"
+                          accept=".jpg, .jpeg, .png" class="form-control-file">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="servicePictureURL2">服務圖片 2:</label>
+                        <img id="preview2" src="" alt="" hidden>
+                        <input type="file" id="servicePictureURL2" name="servicePictureURL2" accept=".jpg, .jpeg, .png"
+                          class="form-control-file">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="servicePictureURL3">服務圖片 3:</label>
+                        <img id="preview3" src="" alt="" hidden>
+                        <input type="file" id="servicePictureURL3" name="servicePictureURL3" accept=".jpg, .jpeg, .png"
+                          class="form-control-file">
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                      <div class="form-group">
+                        <label for="serviceCreateDate">創建日期: (自動帶入)</label>
+                        <input type="text" id="serviceCreateDate" name="serviceCreateDate" class="form-control"
+                          readonly>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                      <div class="form-group" hidden>
+                        <label for="serviceStatus">服務狀態:</label>
+                        <select id="serviceStatus" name="serviceStatus" class="select form-control">
+                          <option value="">請選擇狀態</option>
+                          <option value="0" selected>審核中</option>
+                          <option value="1">啟用</option>
+                          <option value="2">已關閉</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12 button" style="text-align: right;">
+                      <button type="button" class="btn btn-secondary" id="cancelCreate">取消新增</button>
+                      <button type="submit" class="btn btn-primary" id="submitService">新增服務</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
-
-
-
       </div>
+    </div>
   </section>
+
+
+  <!-- 用 thymeleaf 取出 Model 資料存成變數 -->
+  <script th:inline="javascript">
+    const currentUser = /*[[${currentUser}]]*/ 'default currentUser';
+  </script>
 
   <!-- 引用 signModal.html -->
   <div th:replace="~{model/frontend/signModalForNewBs}"></div>
@@ -156,7 +188,7 @@
   <script th:src="@{/js/frontend/tiny-slider.js}"></script>
   <script th:src="@{/js/frontend/glightbox.min.js}"></script>
   <script th:src="@{/js/frontend/main.js}"></script>
-  <script th:src="@{/js/service/frontend/editServiceApplication.js}"></script>
+  <script th:src="@{/js/service/frontend/createService.js}"></script>
   <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
   <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
   <script>

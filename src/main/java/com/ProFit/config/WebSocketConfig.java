@@ -2,12 +2,14 @@ package com.ProFit.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
 @EnableWebSocketMessageBroker
+@Controller
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Override
   public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -28,8 +30,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // 註冊 WebSocket 端點
     // 客戶端通過這個端點連接到 WebSocket 服務器
     // withSockJS() 提供 SockJS 回退機制
-    registry.addEndpoint("/ws")
-        // .setAllowedOrigins("*") // 設置允許的來源
+    registry.addEndpoint("/chatWebsocket")
+        .setAllowedOriginPatterns("*") // 設置允許的來源
         .withSockJS(); // 啟用 SockJS 支持
   }
 }

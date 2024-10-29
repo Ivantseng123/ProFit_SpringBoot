@@ -38,3 +38,664 @@
 2024-10-28T23:27:24.790042454,GetAllCompany,usersVIEW/frontendVIEW/companyPage,/ProFit/empPf/allCompany
 2024-10-28T23:27:24.858394478,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
 2024-10-28T23:27:25.354787538,findByPageApi,Page 1 of 2 containing com.ProFit.model.dto.usersDTO.EmpPfDTO instances,/ProFit/api/empPf/page_frontend
+2024-10-29T09:25:16.468372400,listMajorCategories,majorsVIEW/backend/MajorCategoryMainPage,/ProFit/majorCategory/
+2024-10-29T09:25:17.363609900,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:25:17.573958500,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T09:25:22.744968600,listMajorCategories,majorsVIEW/backend/MajorCategoryMainPage,/ProFit/majorCategory/
+2024-10-29T09:25:22.855670900,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:25:22.986602800,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T09:25:35.085476300,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:25:35.871249300,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:25:39.935533800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:25:40.068519900,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:25:41.156570900,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:25:41.157170400,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T09:25:41.228456700,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:25:48.552894,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T09:25:49.860412700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:25:52.838029300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:25:52.881602400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:25:52.881602400,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:25:56.678819600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@1848f7d,/ProFit/c/service/api/userId
+2024-10-29T09:25:58.013280400,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@21f50a72],/ProFit/course/purchasedList
+2024-10-29T09:25:59.379859900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@24d1198c,/ProFit/c/service/api/userId
+2024-10-29T09:26:07.362621100,courseFrontendPage,coursesVIEW/frontend/courseOverView,/ProFit/course
+2024-10-29T09:26:08.321255300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:26:08.700981500,searchCourseByMajorCategory,[com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@35671ebd, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@47a579c6, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@6af29ff1, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@ef54972, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@3ea3ce7, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@6f6d1e15, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@111e191e, com.ProFit.model.dto.coursesDTO.CourseCategoryDTO@35846c96],/ProFit/course/searchCourseByMajorCategory
+2024-10-29T09:26:09.270777900,searchAllCourses,Page 1 of 2 containing com.ProFit.model.dto.coursesDTO.CoursesDTO instances,/ProFit/course/searchAll
+2024-10-29T09:26:16.171451600,listMajorPage,majorsVIEW/backend/MajorMainPage,/ProFit/major/
+2024-10-29T09:26:16.249848900,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:16.375599900,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T09:26:16.568671800,listAllMajors,<200 OK OK,[com.ProFit.model.dto.majorsDTO.MajorDTO@15a1dee9, com.ProFit.model.dto.majorsDTO.MajorDTO@2f7caf21, com.ProFit.model.dto.majorsDTO.MajorDTO@7fe4aa88, com.ProFit.model.dto.majorsDTO.MajorDTO@ef9361d, com.ProFit.model.dto.majorsDTO.MajorDTO@15b4e7bd, com.ProFit.model.dto.majorsDTO.MajorDTO@5ffb578d, com.ProFit.model.dto.majorsDTO.MajorDTO@5911610, com.ProFit.model.dto.majorsDTO.MajorDTO@429f8161, com.ProFit.model.dto.majorsDTO.MajorDTO@70240f80, com.ProFit.model.dto.majorsDTO.MajorDTO@75667936],[]>,/ProFit/major/api/list
+2024-10-29T09:26:19.460507300,listUserMajor,majorsVIEW/backend/UserMajorMainPage,/ProFit/userMajors/
+2024-10-29T09:26:19.531083200,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:20.259348700,getAllUserMajors,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@3610e520,[]>,/ProFit/userMajors/api/list
+2024-10-29T09:26:21.653434100,listServices,servicesVIEW/ServiceMainPage,/ProFit/service/
+2024-10-29T09:26:21.756257800,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:22.253226600,searchAllServices,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@5371f73d,[]>,/ProFit/service/api/searchAll
+2024-10-29T09:26:26.107165800,listEvents,eventsVIEW/backend/events,/ProFit/events
+2024-10-29T09:26:26.381322300,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:26.895288800,searchEvents,[com.ProFit.model.dto.eventsDTO.EventsDTO@35d09e28, com.ProFit.model.dto.eventsDTO.EventsDTO@34f91e1, com.ProFit.model.dto.eventsDTO.EventsDTO@7dffe81c, com.ProFit.model.dto.eventsDTO.EventsDTO@7d6bbf4f, com.ProFit.model.dto.eventsDTO.EventsDTO@4c7b5f14],/ProFit/events/search
+2024-10-29T09:26:28.402483500,listEventHost,eventsVIEW/backend/eventHost,/ProFit/events/host
+2024-10-29T09:26:28.458354500,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:29.301084700,searchEventHost,[EventHostDTO [eventId=EV100, eventName=科技大會, eventHostId=100, eventHostName=John Doe], EventHostDTO [eventId=EV101, eventName=金融講座, eventHostId=101, eventHostName=Jane Smith], EventHostDTO [eventId=EV102, eventName=人工智慧工作坊, eventHostId=102, eventHostName=Alice Brown], EventHostDTO [eventId=EV103, eventName=數據科學訓練營, eventHostId=103, eventHostName=Bob Johnson], EventHostDTO [eventId=EV104, eventName=網頁開發研討會, eventHostId=104, eventHostName=Charlie Davis]],/ProFit/events/host/search
+2024-10-29T09:26:30.089523700,listOrder,eventsVIEW/backend/eventOrder,/ProFit/events/order
+2024-10-29T09:26:30.141360600,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:31.041590,searchOrder,[EventOrderDTO [eventOrderId=EO100, eventOrderAmount=500, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV100, eventName=科技大會, participantId=100, participantName=John Doe], EventOrderDTO [eventOrderId=EO101, eventOrderAmount=700, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV101, eventName=金融講座, participantId=101, participantName=Jane Smith], EventOrderDTO [eventOrderId=EO102, eventOrderAmount=300, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV102, eventName=人工智慧工作坊, participantId=102, participantName=Alice Brown], EventOrderDTO [eventOrderId=EO103, eventOrderAmount=800, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV103, eventName=數據科學訓練營, participantId=103, participantName=Bob Johnson], EventOrderDTO [eventOrderId=EO104, eventOrderAmount=400, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Pending, eventId=EV104, eventName=網頁開發研討會, participantId=104, participantName=Charlie Davis]],/ProFit/events/order/search
+2024-10-29T09:26:34.470228900,listJobs,jobsVIEW/jobsList,/ProFit/jobs/list
+2024-10-29T09:26:36.458883800,listOrder,eventsVIEW/backend/eventOrder,/ProFit/events/order
+2024-10-29T09:26:36.502014600,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:37.366160700,searchOrder,[EventOrderDTO [eventOrderId=EO100, eventOrderAmount=500, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV100, eventName=科技大會, participantId=100, participantName=John Doe], EventOrderDTO [eventOrderId=EO101, eventOrderAmount=700, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV101, eventName=金融講座, participantId=101, participantName=Jane Smith], EventOrderDTO [eventOrderId=EO102, eventOrderAmount=300, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV102, eventName=人工智慧工作坊, participantId=102, participantName=Alice Brown], EventOrderDTO [eventOrderId=EO103, eventOrderAmount=800, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Confirmed, eventId=EV103, eventName=數據科學訓練營, participantId=103, participantName=Bob Johnson], EventOrderDTO [eventOrderId=EO104, eventOrderAmount=400, isEventOrderActive=true, eventParticipantDate=2024-10-17T03:00:17, eventParticipantNote=Pending, eventId=EV104, eventName=網頁開發研討會, participantId=104, participantName=Charlie Davis]],/ProFit/events/order/search
+2024-10-29T09:26:38.416930,listJobs,jobsVIEW/jobsList,/ProFit/jobs/list
+2024-10-29T09:26:38.617104100,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:40.006493600,AlluserPage,usersVIEW/Allusers,/ProFit/user/alluserPage
+2024-10-29T09:26:40.063622600,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:40.557163200,findByPageApi,Page 1 of 3 containing com.ProFit.model.dto.usersDTO.UsersDTO instances,/ProFit/api/user/page
+2024-10-29T09:26:45.032154,listJobs,jobsVIEW/jobsApplicationProjectList,/ProFit/jobsApplicationProject/list
+2024-10-29T09:26:45.110470600,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:53.149405600,listMajorPage,majorsVIEW/backend/MajorMainPage,/ProFit/major/
+2024-10-29T09:26:53.187996200,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:53.314553200,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T09:26:53.508092100,listAllMajors,<200 OK OK,[com.ProFit.model.dto.majorsDTO.MajorDTO@5ddb32d8, com.ProFit.model.dto.majorsDTO.MajorDTO@49079516, com.ProFit.model.dto.majorsDTO.MajorDTO@3b48d54, com.ProFit.model.dto.majorsDTO.MajorDTO@407e9c3b, com.ProFit.model.dto.majorsDTO.MajorDTO@44372b1e, com.ProFit.model.dto.majorsDTO.MajorDTO@316da9ab, com.ProFit.model.dto.majorsDTO.MajorDTO@16944cff, com.ProFit.model.dto.majorsDTO.MajorDTO@22bf8552, com.ProFit.model.dto.majorsDTO.MajorDTO@5f2d35c0, com.ProFit.model.dto.majorsDTO.MajorDTO@3d1ff7f],[]>,/ProFit/major/api/list
+2024-10-29T09:26:58.739753800,listUserMajor,majorsVIEW/backend/UserMajorMainPage,/ProFit/userMajors/
+2024-10-29T09:26:58.844063900,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T09:26:59.512005800,getAllUserMajors,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@7b1e4fdd,[]>,/ProFit/userMajors/api/list
+2024-10-29T09:27:05.993550500,searchAllCourses,Page 2 of 2 containing com.ProFit.model.dto.coursesDTO.CoursesDTO instances,/ProFit/course/searchAll
+2024-10-29T09:27:09.515446200,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:27:09.552082700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:27:09.552388900,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:27:24.418180500,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:33:38.359635800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:33:38.482308500,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:33:38.482308500,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T09:33:40.324883,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:33:40.431619400,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:33:41.267672900,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:33:41.269279900,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T09:33:41.422261100,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:33:51.332793300,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T09:33:52.535850400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:33:55.849201500,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:34:37.267570400,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T09:34:37.275548300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:34:37.363272500,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:34:37.363272500,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T09:34:44.082801500,Login_frontend,<404 NOT_FOUND Not Found,Login Failed,[]>,/ProFit/login_frontend
+2024-10-29T09:34:47.566011800,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T09:34:49.088702200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:34:50.534477600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:34:50.616956700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:34:50.616956700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:43:45.929859700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:43:46.018768800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:43:46.019755300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:43:47.259814400,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:45:20.123122100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:45:20.217096,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:45:20.217096,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:45:23.003676500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:45:23.073325200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:45:23.075302400,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:45:26.254422200,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:45:26.372970600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:45:27.774306900,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:46:38.764220100,findServiceApplicationById,<200 OK OK,ServiceApplicationsDTO{serviceApplicationId=101, caseownerId=101, freelancerId=102, serviceId=2, chatId=2, serviceApplicationTitle='Logo設計', serviceApplicationSubitem='Logo創建', serviceApplicationPrice=500, serviceApplicationAmount=1, serviceApplicationUnit='專案', serviceApplicationContent='設計企業Logo', appendixUrl='https://firebase.com/doc2', status=0, serviceApplicationMission='創建公司Logo', serviceApplicationDoneDate=2024-12-01T00:00, createdAt=2024-10-21T16:51:44.646666700, updatedAt=2024-10-21T16:51:44.646666700},[]>,/ProFit/a/serviceApplication/api/101
+2024-10-29T09:48:50.760882400,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:48:50.879559600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:48:51.876616700,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:48:51.980305500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:48:54.664449500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:48:54.745233800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:48:54.745233800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:48:56.227183200,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:50:09.639605500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:50:09.709419700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:50:09.709419700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:50:10.300524,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:50:10.364428900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:50:10.365389800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:50:11.640062700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:50:11.899502800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:50:11.899502800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:50:15.278524600,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@3a3f16c1],/ProFit/course/purchasedList
+2024-10-29T09:50:15.971530900,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:52:26.729852800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:52:26.840556100,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:52:26.840556100,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T09:52:28.118730600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:52:28.374094200,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:52:29.756505300,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:52:29.756505300,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T09:52:29.906128200,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T09:52:35.965548600,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T09:52:37.226032300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:52:37.911837300,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:52:38.186104500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:52:39.451565300,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:56:47.573211400,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:56:49.897210200,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:56:50.053791200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:56:53.705611300,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:56:53.996104600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:56:55.511949600,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:57:06.181277600,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:57:59.896983400,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:58:04.681047700,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:58:06.661880500,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:58:06.796490,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:58:09.100808700,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:58:09.212509900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:58:10.366817300,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:58:22.049767,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:58:34.241483400,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:59:36.784552400,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T09:59:36.896254700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:59:37.657960,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:59:37.736664400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:59:37.736664400,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:59:38.360159800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:59:38.435956100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:59:38.435956100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:59:39.817163200,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T09:59:40.077917500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T09:59:40.077917500,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T09:59:42.329468100,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T09:59:43.297002700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:03:53.034351700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:03:53.114137700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:03:53.114137700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T10:03:53.671142400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:03:53.755891600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:03:53.757886600,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T10:03:55.705844600,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:03:56.838943500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:06:35.637173,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:06:35.936373200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:17:41.257394100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:17:41.374082700,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:17:41.374082700,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:17:41.914636500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:17:42.001378,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:17:43.000353600,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T10:17:43.000353600,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:17:43.162918900,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:17:47.680167600,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T10:17:48.669547900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:17:50.221953800,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T10:17:50.538550300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:17:55.002369700,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:17:55.985388400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:19:07.233040900,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T10:19:07.238996500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:19:07.341736300,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:19:07.341736300,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:19:14.147375900,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T10:19:14.991062,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:19:16.393747600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:19:16.463561,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:19:16.463561,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T10:19:19.034956,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:19:19.152641400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:20:21.407890600,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T10:20:21.414006600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:20:21.498648600,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:20:21.498648600,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:21:25.725008700,getChatUsers,<401 UNAUTHORIZED Unauthorized,[]>,/ProFit/c/chat/api/users
+2024-10-29T10:22:08.889181900,getChatUsers,<401 UNAUTHORIZED Unauthorized,[]>,/ProFit/c/chat/api/users
+2024-10-29T10:23:26.456624900,getChatUsers,<200 OK OK,[]>,/ProFit/c/chat/api/users
+2024-10-29T10:23:50.224181800,getChatUsers,<200 OK OK,[]>,/ProFit/c/chat/api/users
+2024-10-29T10:24:05.629501700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:24:06.050492200,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:24:09.216570900,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:24:09.215586700,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T10:24:09.393100900,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:24:15.815156400,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T10:24:16.626054700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:24:17.778925400,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:24:18.771511800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:25:58.703799700,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:25:59.602102600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:25:59.680893100,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@5bdfbd86, com.ProFit.model.dto.chatsDTO.ChatUserDTO@1b4184bd, com.ProFit.model.dto.chatsDTO.ChatUserDTO@7979ad45],[]>,/ProFit/c/chat/api/users
+2024-10-29T10:29:12.248727,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:29:12.537461800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:29:12.592162900,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@6da850ef, com.ProFit.model.dto.chatsDTO.ChatUserDTO@6f34d6c3, com.ProFit.model.dto.chatsDTO.ChatUserDTO@3a23f704],[]>,/ProFit/c/chat/api/users
+2024-10-29T10:29:22.655386900,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:29:23.185269900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:29:23.237091900,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@7e2eed2, com.ProFit.model.dto.chatsDTO.ChatUserDTO@7bc94acb, com.ProFit.model.dto.chatsDTO.ChatUserDTO@5f9da43b],[]>,/ProFit/c/chat/api/users
+2024-10-29T10:40:19.441142500,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T10:40:19.449117100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:40:19.591202800,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:40:19.591202800,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:40:27.674638800,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T10:40:28.640103200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:40:32.532971900,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:40:32.627719300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:40:32.627719300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=null, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=null],[]>,/ProFit/user/profileinfo
+2024-10-29T10:40:33.837644900,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:40:34.942887300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:40:34.992358900,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@7f4e877, com.ProFit.model.dto.chatsDTO.ChatUserDTO@3c3adb9, com.ProFit.model.dto.chatsDTO.ChatUserDTO@6443a748],[]>,/ProFit/c/chat/api/users
+2024-10-29T10:46:29.508359600,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T10:46:29.514341900,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:46:29.650208500,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:46:29.650208500,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:46:31.559847900,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T10:46:31.564835300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:46:31.666614,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:46:32.669926900,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T10:46:32.669926900,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:46:32.832492600,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:46:39.090551700,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T10:46:40.169460300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:46:41.189351,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:46:42.203435600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:46:42.235428700,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@169379, com.ProFit.model.dto.chatsDTO.ChatUserDTO@9a7d868, com.ProFit.model.dto.chatsDTO.ChatUserDTO@24f56ea],[]>,/ProFit/c/chat/api/users
+2024-10-29T10:47:12.815434700,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T10:47:12.952069500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:47:48.102411500,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:47:48.224086800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:47:48.292925300,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@69dcd5c9, com.ProFit.model.dto.chatsDTO.ChatUserDTO@2cde5696, com.ProFit.model.dto.chatsDTO.ChatUserDTO@6ac9f4c2],[]>,/ProFit/c/chat/api/users
+2024-10-29T10:51:13.005718,getMethodName,redirect:/user/profile,/ProFit/c/chat
+2024-10-29T10:51:13.011701900,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T10:51:13.137366800,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T10:51:13.137366800,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T10:51:22.108343200,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T10:51:22.910852,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:51:23.745104100,getMethodName,chatVIEW/frontend/chatRoomVIEW,/ProFit/c/chat
+2024-10-29T10:51:24.108658700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T10:51:24.161515700,getChatUsers,<200 OK OK,[com.ProFit.model.dto.chatsDTO.ChatUserDTO@6e90b06a, com.ProFit.model.dto.chatsDTO.ChatUserDTO@48374c04, com.ProFit.model.dto.chatsDTO.ChatUserDTO@3faaf2a7],[]>,/ProFit/c/chat/api/users
+2024-10-29T11:03:37.356318800,listJobs,jobsVIEW/jobsList,/ProFit/jobs/list
+2024-10-29T11:03:38.180122200,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T11:26:47.976558400,listUserMajor,majorsVIEW/backend/UserMajorMainPage,/ProFit/userMajors/
+2024-10-29T11:26:48.368348700,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T11:26:49.174947900,getAllUserMajors,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@3979f0d8,[]>,/ProFit/userMajors/api/list
+2024-10-29T11:26:49.959458300,listMajorPage,majorsVIEW/backend/MajorMainPage,/ProFit/major/
+2024-10-29T11:26:50.029272300,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T11:26:50.161456800,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T11:26:50.356345300,listAllMajors,<200 OK OK,[com.ProFit.model.dto.majorsDTO.MajorDTO@67ef4eb0, com.ProFit.model.dto.majorsDTO.MajorDTO@5dd1e9b3, com.ProFit.model.dto.majorsDTO.MajorDTO@6f03b4f2, com.ProFit.model.dto.majorsDTO.MajorDTO@614e885f, com.ProFit.model.dto.majorsDTO.MajorDTO@7c49d008, com.ProFit.model.dto.majorsDTO.MajorDTO@2e072243, com.ProFit.model.dto.majorsDTO.MajorDTO@5cd1a755, com.ProFit.model.dto.majorsDTO.MajorDTO@49c8d0e0, com.ProFit.model.dto.majorsDTO.MajorDTO@7bb38041, com.ProFit.model.dto.majorsDTO.MajorDTO@6cb1b04e],[]>,/ProFit/major/api/list
+2024-10-29T11:26:53.673321600,listServices,servicesVIEW/ServiceMainPage,/ProFit/service/
+2024-10-29T11:26:53.768069800,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T11:26:54.263736100,searchAllServices,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@3ece6675,[]>,/ProFit/service/api/searchAll
+2024-10-29T11:26:57.525420800,listMajorPage,majorsVIEW/backend/MajorMainPage,/ProFit/major/
+2024-10-29T11:26:57.559331100,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T11:26:57.689545600,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T11:26:57.878394700,listAllMajors,<200 OK OK,[com.ProFit.model.dto.majorsDTO.MajorDTO@3e53f02b, com.ProFit.model.dto.majorsDTO.MajorDTO@58e46404, com.ProFit.model.dto.majorsDTO.MajorDTO@549b3a1d, com.ProFit.model.dto.majorsDTO.MajorDTO@58abcf31, com.ProFit.model.dto.majorsDTO.MajorDTO@79d8aea7, com.ProFit.model.dto.majorsDTO.MajorDTO@2e721dc, com.ProFit.model.dto.majorsDTO.MajorDTO@fa1a84f, com.ProFit.model.dto.majorsDTO.MajorDTO@9f52ccd, com.ProFit.model.dto.majorsDTO.MajorDTO@35e416c2, com.ProFit.model.dto.majorsDTO.MajorDTO@eb62863],[]>,/ProFit/major/api/list
+2024-10-29T11:27:17.729492400,getMajorById,<200 OK OK,com.ProFit.model.dto.majorsDTO.MajorDTO@57fa80c,[]>,/ProFit/major/api/101
+2024-10-29T11:27:48.944608100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:27:49.100193,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T11:27:49.100193,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T11:27:54.585494500,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T11:27:55.933893800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:27:59.224524300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@6333722b,/ProFit/c/service/api/userId
+2024-10-29T11:28:01.869739300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@2ad73912,/ProFit/c/service/api/userId
+2024-10-29T11:28:02.436941700,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@1cb34db6],/ProFit/course/purchasedList
+2024-10-29T11:28:03.489036,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@3bdb6a94,/ProFit/c/service/api/userId
+2024-10-29T11:28:05.659873300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@2aa61302,/ProFit/c/service/api/userId
+2024-10-29T11:28:06.998939100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:28:07.112593200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:28:07.112593200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:28:08.598891500,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@6ccfad7f],/ProFit/course/purchasedList
+2024-10-29T11:28:09.542826500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4dc0547f,/ProFit/c/service/api/userId
+2024-10-29T11:30:45.793642900,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:30:45.864061800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:30:45.864061800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:30:48.331613600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@1959e1bb,/ProFit/c/service/api/userId
+2024-10-29T11:34:33.297434600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:34:33.383182700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:34:33.384178900,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:34:36.702780400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@6d854200,/ProFit/c/service/api/userId
+2024-10-29T11:34:39.699603,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@282b1635],/ProFit/course/purchasedList
+2024-10-29T11:34:40.580177400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@61ab72f,/ProFit/c/service/api/userId
+2024-10-29T11:35:21.694749400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:35:21.765559100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:35:21.765559100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:35:23.397377900,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@25d9812a],/ProFit/course/purchasedList
+2024-10-29T11:35:24.377022900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@1c34e9a3,/ProFit/c/service/api/userId
+2024-10-29T11:35:26.047345400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:35:26.119169200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:35:26.119169200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:35:28.144925300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@44e5feac,/ProFit/c/service/api/userId
+2024-10-29T11:35:29.523625100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:35:29.764790400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:35:29.766783200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:35:31.751580200,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@42536140,/ProFit/c/service/api/userId
+2024-10-29T11:36:10.975817600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:36:11.082635400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:36:11.083118100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:36:12.803422300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@21104759,/ProFit/c/service/api/userId
+2024-10-29T11:36:22.812138100,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@57ebbb60],/ProFit/course/purchasedList
+2024-10-29T11:36:23.920644,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@79f2bd35,/ProFit/c/service/api/userId
+2024-10-29T11:40:25.229161200,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:40:25.278030,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:40:25.278030,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:40:28.376575100,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@7eca58e7,/ProFit/c/service/api/userId
+2024-10-29T11:41:45.525070700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:41:45.562942700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:41:45.562942700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:41:47.710274400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@202ca45f,/ProFit/c/service/api/userId
+2024-10-29T11:41:54.553023700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:41:54.593913800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:41:54.593913800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:41:56.898332400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@60a9881c,/ProFit/c/service/api/userId
+2024-10-29T11:42:50.253168400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:42:50.290069900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:42:50.290069900,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:42:51.793362,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@3cecebb8,/ProFit/c/service/api/userId
+2024-10-29T11:43:38.956637,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:43:38.998145300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:43:38.998145300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:43:40.862294200,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@202d8f85,/ProFit/c/service/api/userId
+2024-10-29T11:44:22.426371400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:44:22.475241200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:44:22.475241200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:44:23.730766600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@29f38c5b,/ProFit/c/service/api/userId
+2024-10-29T11:45:03.059285200,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:45:03.098179300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:45:03.098179300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:45:04.506078400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@28899d69,/ProFit/c/service/api/userId
+2024-10-29T11:45:27.030347100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:45:27.065252600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:45:27.066250,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:45:28.925300800,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@74f3c742,/ProFit/c/service/api/userId
+2024-10-29T11:45:51.796063300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:45:51.838947500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:45:51.838947500,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:45:54.100386900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@3b267551,/ProFit/c/service/api/userId
+2024-10-29T11:46:38.296864100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:46:38.337752800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:46:38.337752800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:46:39.867643500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@555fe946,/ProFit/c/service/api/userId
+2024-10-29T11:47:07.545241400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:47:07.586131900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:47:07.586131900,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:47:09.487940400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@6e1b9c29,/ProFit/c/service/api/userId
+2024-10-29T11:47:21.386863,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:47:21.428700700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:47:21.428700700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:47:23.273710500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@52aa9a46,/ProFit/c/service/api/userId
+2024-10-29T11:48:34.172812600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:48:34.219572100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:48:34.219572100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:48:36.027700800,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@7b0d6e85,/ProFit/c/service/api/userId
+2024-10-29T11:49:35.217882100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:49:35.272734800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:49:35.272734800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:49:37.192850600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4f93f2af,/ProFit/c/service/api/userId
+2024-10-29T11:49:47.787344600,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:49:47.830231200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:49:47.830231200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:49:49.709387,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@706d9285,/ProFit/c/service/api/userId
+2024-10-29T11:53:28.500422500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T11:53:28.550297800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T11:53:28.550297800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T11:53:30.335255100,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@29298ede,/ProFit/c/service/api/userId
+2024-10-29T11:53:57.171949800,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@257fcaf7],/ProFit/course/purchasedList
+2024-10-29T11:53:58.618768700,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@6164f98,/ProFit/c/service/api/userId
+2024-10-29T12:00:42.833102800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:00:42.910864400,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T12:00:42.910864400,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T12:00:44.415502,ServicesByUserId,null,/ProFit/c/service/api/userId
+2024-10-29T12:00:46.696789900,ServicesByUserId,null,/ProFit/c/service/api/userId
+2024-10-29T12:00:51.411793,ServicesByUserId,null,/ProFit/c/service/api/userId
+2024-10-29T12:01:20.143925100,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T12:01:21.474190400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:01:22.547067900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@47dad7e0,/ProFit/c/service/api/userId
+2024-10-29T12:01:24.929131400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@5a115d0e,/ProFit/c/service/api/userId
+2024-10-29T12:01:26.055891200,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@4c1803ad],/ProFit/course/purchasedList
+2024-10-29T12:01:27.183019,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@5d33f6c5,/ProFit/c/service/api/userId
+2024-10-29T12:02:18.084648500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:02:18.164436300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:02:18.164436300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:02:25.748925400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@838ac2a,/ProFit/c/service/api/userId
+2024-10-29T12:03:02.697015900,deleteService,<204 NO_CONTENT No Content,[]>,/ProFit/c/service/api/16
+2024-10-29T12:03:04.129179700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:03:04.218940,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:03:04.219995800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:03:06.634930600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@7cee3e07,/ProFit/c/service/api/userId
+2024-10-29T12:03:11.982610700,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@3fc9ee48],/ProFit/course/purchasedList
+2024-10-29T12:03:13.025900400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@300d42ba,/ProFit/c/service/api/userId
+2024-10-29T12:03:53.316409100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:03:53.408162100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:03:53.408922500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:03:55.099139900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@13c8c40d,/ProFit/c/service/api/userId
+2024-10-29T12:03:56.088956700,deleteService,<204 NO_CONTENT No Content,[]>,/ProFit/c/service/api/17
+2024-10-29T12:03:58.726299900,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:03:58.814956800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:03:58.814956800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:04:00.652830500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@ea6aa3f,/ProFit/c/service/api/userId
+2024-10-29T12:06:18.246232400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:06:18.344967500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:06:18.344967500,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:06:20.615224300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@24324d60,/ProFit/c/service/api/userId
+2024-10-29T12:06:24.982866300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@15d69927,/ProFit/c/service/api/userId
+2024-10-29T12:06:40.130964800,listJobs,jobsVIEW/jobsList,/ProFit/jobs/list
+2024-10-29T12:06:40.261617100,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:06:41.946712400,listJobs,jobsVIEW/jobsList,/ProFit/jobs/list
+2024-10-29T12:06:42.007549700,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:06:47.520248800,listJobs,jobsVIEW/jobsList,/ProFit/jobs/list
+2024-10-29T12:06:47.586069500,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:06:50.031783500,listJobs,jobsVIEW/jobsApplicationProjectList,/ProFit/jobsApplicationProject/list
+2024-10-29T12:06:50.145112300,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:06:54.036221200,coursesPage,coursesVIEW/backend/courseView,/ProFit/courses
+2024-10-29T12:06:54.410902800,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:06:55.361692100,searchAllCourses,[com.ProFit.model.dto.coursesDTO.CoursesDTO@5f38a56, com.ProFit.model.dto.coursesDTO.CoursesDTO@2a52ebfb, com.ProFit.model.dto.coursesDTO.CoursesDTO@28b3de47, com.ProFit.model.dto.coursesDTO.CoursesDTO@5d7ebf34, com.ProFit.model.dto.coursesDTO.CoursesDTO@44c63ff7, com.ProFit.model.dto.coursesDTO.CoursesDTO@79f619a7, com.ProFit.model.dto.coursesDTO.CoursesDTO@4f01a138, com.ProFit.model.dto.coursesDTO.CoursesDTO@67ae30f3, com.ProFit.model.dto.coursesDTO.CoursesDTO@12628276, com.ProFit.model.dto.coursesDTO.CoursesDTO@5b108abc, com.ProFit.model.dto.coursesDTO.CoursesDTO@195af887, com.ProFit.model.dto.coursesDTO.CoursesDTO@f656af7, com.ProFit.model.dto.coursesDTO.CoursesDTO@992385f, com.ProFit.model.dto.coursesDTO.CoursesDTO@568816bb],/ProFit/courses/search
+2024-10-29T12:06:57.740133,listMajorPage,majorsVIEW/backend/MajorMainPage,/ProFit/major/
+2024-10-29T12:06:57.790996300,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:06:57.929711300,getAllMajorCategories,<200 OK OK,[MajorCategoryBean [majorCategoryId=100, categoryName=軟體開發], MajorCategoryBean [majorCategoryId=200, categoryName=設計], MajorCategoryBean [majorCategoryId=300, categoryName=數據分析], MajorCategoryBean [majorCategoryId=400, categoryName=行銷], MajorCategoryBean [majorCategoryId=500, categoryName=專案管理], MajorCategoryBean [majorCategoryId=600, categoryName=翻譯寫作], MajorCategoryBean [majorCategoryId=700, categoryName=影像製作], MajorCategoryBean [majorCategoryId=800, categoryName=生活服務]],[]>,/ProFit/majorCategory/api/list
+2024-10-29T12:06:58.151670400,listAllMajors,<200 OK OK,[com.ProFit.model.dto.majorsDTO.MajorDTO@184a7d0, com.ProFit.model.dto.majorsDTO.MajorDTO@710ce3c4, com.ProFit.model.dto.majorsDTO.MajorDTO@30ba7545, com.ProFit.model.dto.majorsDTO.MajorDTO@2c09143d, com.ProFit.model.dto.majorsDTO.MajorDTO@8978c4b, com.ProFit.model.dto.majorsDTO.MajorDTO@1e935c5e, com.ProFit.model.dto.majorsDTO.MajorDTO@7de01294, com.ProFit.model.dto.majorsDTO.MajorDTO@192c49e9, com.ProFit.model.dto.majorsDTO.MajorDTO@2d6d6b53, com.ProFit.model.dto.majorsDTO.MajorDTO@2998a30c],[]>,/ProFit/major/api/list
+2024-10-29T12:17:04.181627800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:17:04.294305,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T12:17:04.294305,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T12:17:06.609540600,ServicesByUserId,null,/ProFit/c/service/api/userId
+2024-10-29T12:17:14.025445,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T12:17:15.128652800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:17:16.022203800,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@6bab83e2,/ProFit/c/service/api/userId
+2024-10-29T12:17:24.151760,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:17:25.124886200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:20:26.274163400,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:20:27.370670900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:21:08.139515,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:21:08.198358100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:21:25.019167500,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:21:25.076015900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:23:18.577474800,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:23:19.678826100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:23:42.309384,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:23:42.364217800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:24:21.894457200,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:24:21.935372700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:29:09.059728200,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:29:09.961434800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:30:01.931027700,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:30:01.995955400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:30:17.141311500,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:30:17.204298400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:30:40.782539100,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:30:40.841382,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:30:54.481978,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:30:54.540807300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:31:31.974792,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:31:32.018675400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:32:04.649874400,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:32:04.706723200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:32:37.460045400,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:32:39.511066,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:32:40.250126,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:32:51.275338800,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:32:51.343158200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:33:10.293151700,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:33:10.351546200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:34:00.589374900,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:34:00.654201900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:34:11.336391100,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:34:11.392213300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:35:35.461699500,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:35:35.757210200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:38:32.422007100,findServiceApplicationById,<200 OK OK,ServiceApplicationsDTO{serviceApplicationId=101, caseownerId=101, freelancerId=102, serviceId=2, chatId=2, serviceApplicationTitle='Logo設計', serviceApplicationSubitem='Logo創建', serviceApplicationPrice=500, serviceApplicationAmount=1, serviceApplicationUnit='專案', serviceApplicationContent='設計企業Logo', appendixUrl='https://firebase.com/doc2', status=0, serviceApplicationMission='創建公司Logo', serviceApplicationDoneDate=2024-12-01T00:00, createdAt=2024-10-21T16:51:44.646666700, updatedAt=2024-10-21T16:51:44.646666700},[]>,/ProFit/a/serviceApplication/api/101
+2024-10-29T12:38:53.937675700,getServiceById,<200 OK OK,servicesDTO [serviceId=2, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@1faaa135, serviceTitle=網站UI設計, serviceContent=為您的網站提供現代化、用戶友好的UI設計, servicePrice=4000, serviceUnitName=專案, serviceDuration=20.0, serviceCreateDate=2024-09-23T15:58:22.630, serviceUpdateDate=2024-10-09T00:48:38.328581800, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/034483b170d84f29a0a83ac86f1e8ea9.jpg, servicePictureURL2=http://example.com/ui2.jpg, servicePictureURL3=http://example.com/ui3.jpg, serviceStatus=1],[]>,/ProFit/service/api/2
+2024-10-29T12:47:22.469651,createServiceFrontendPage,redirect:/user/profile,/ProFit/c/service/add
+2024-10-29T12:47:22.475604300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:47:22.541430300,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T12:47:22.541430300,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T12:47:30.487464600,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T12:47:31.648624900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:47:33.374248,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@5b2420ec,/ProFit/c/service/api/userId
+2024-10-29T12:47:36.080651600,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@5ce65a85],/ProFit/course/purchasedList
+2024-10-29T12:47:36.939536200,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@22f08823,/ProFit/c/service/api/userId
+2024-10-29T12:47:37.908298700,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@42206dff],/ProFit/course/purchasedList
+2024-10-29T12:47:39.447503600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@79de39bc,/ProFit/c/service/api/userId
+2024-10-29T12:49:16.818174200,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4f2fd73d,/ProFit/c/service/api/userId
+2024-10-29T12:49:18.047850800,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:49:18.973612400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:50:13.671022300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:50:13.705929200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:50:13.705929200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:50:16.823232500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@16b6b5fa,/ProFit/c/service/api/userId
+2024-10-29T12:50:25.086738100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:50:25.121646400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:50:25.121646400,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:50:26.997569900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4daf29ec,/ProFit/c/service/api/userId
+2024-10-29T12:50:46.511311700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:50:46.554150800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:50:46.554150800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:50:47.916100200,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@158c1eed,/ProFit/c/service/api/userId
+2024-10-29T12:51:01.138415500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:51:01.179333800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:51:01.179333800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:51:03.058005400,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4fbf936d,/ProFit/c/service/api/userId
+2024-10-29T12:51:53.287018500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:51:53.330901500,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:51:53.331899300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:51:55.379224600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@13e59ce4,/ProFit/c/service/api/userId
+2024-10-29T12:51:56.358196800,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:51:57.248220200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:51:58.800302700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:51:58.832217700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:51:58.832217700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:52:48.656591800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:52:48.708454300,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T12:52:48.708454300,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T12:52:49.690347300,ServicesByUserId,null,/ProFit/c/service/api/userId
+2024-10-29T12:52:51.684395700,ServicesByUserId,null,/ProFit/c/service/api/userId
+2024-10-29T12:53:18.378177400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:53:18.473807300,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T12:53:19.375933100,homepage,model/frontend/homepage,/ProFit/homepage
+2024-10-29T12:53:19.376930800,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T12:53:19.541490900,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T12:53:24.886991800,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T12:53:25.694427300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:53:27.069941700,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T12:53:27.164706600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:53:27.165687200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T12:53:28.581085900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@39eeca7d,/ProFit/c/service/api/userId
+2024-10-29T12:53:29.576726100,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:53:30.745132500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:54:40.019489900,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:54:40.094306500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:56:16.016906700,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T12:56:17.122276400,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T12:56:17.943674200,getAllUserMajors,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@3cc064cc,[]>,/ProFit/userMajors/api/list
+2024-10-29T12:56:52.987794300,listUserMajor,majorsVIEW/backend/UserMajorMainPage,/ProFit/userMajors/
+2024-10-29T12:56:53.304580500,getSessionAttribute,<404 NOT_FOUND Not Found,[]>,/ProFit/login/getUserSession
+2024-10-29T12:56:54.066883600,getAllUserMajors,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@7464dfb9,[]>,/ProFit/userMajors/api/list
+2024-10-29T12:59:55.934722800,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@7874ee50,[]>,/ProFit/userMajors/api/user/105
+2024-10-29T13:04:48.085563700,createServiceFrontendPage,redirect:/user/profile,/ProFit/c/service/add
+2024-10-29T13:04:48.091495900,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:04:48.199208900,getSessionAttributeFrontend,<404 NOT_FOUND Not Found,Login status: False,[]>,/ProFit/login/checklogin
+2024-10-29T13:04:48.199208900,GetUser,<404 NOT_FOUND Not Found,Get User Fail!,[]>,/ProFit/user/profileinfo
+2024-10-29T13:04:54.668497,Login_frontend,<200 OK OK,Login Successful,[]>,/ProFit/login_frontend
+2024-10-29T13:04:55.554143,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:04:59.437238300,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@649b91c0,/ProFit/c/service/api/userId
+2024-10-29T13:05:01.232517,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:05:01.542935100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:05:01.873053700,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@5c676f2d,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:06:42.138001100,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:06:43.029427,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:06:43.371996,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@66632727,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:07:47.568823300,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:07:47.691809700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:07:48.025480700,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@625d362a,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:10:55.428373800,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:10:56.574656800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:10:56.907033300,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@7d01d349,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:13:13.064449200,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:13:14.210469500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:13:14.542622300,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@54d1bdcf,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:18:15.822772100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:18:15.918515700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:18:15.919513300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:18:17.576460900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4b50ca65,/ProFit/c/service/api/userId
+2024-10-29T13:18:18.743131600,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:18:19.647785,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:18:19.972480100,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@6becbcde,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:19:03.613117200,addService,<200 OK OK,servicesDTO [serviceId=18, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@36e9fd24, serviceTitle=日文文章翻譯, serviceContent=1231, servicePrice=1, serviceUnitName=字, serviceDuration=10.0, serviceCreateDate=2024-10-29T13:18:57.830919100, serviceUpdateDate=2024-10-29T13:18:57.830919100, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/41b366a342634058ab9e7dbbfb909094.jpg, servicePictureURL2=https://storage.googleapis.com/profit-323fb.appspot.com/ca0ecec4281c47369f3b5b034a719222.jpg, servicePictureURL3=https://storage.googleapis.com/profit-323fb.appspot.com/d670b7752f5c430fb839cd1e8daec926.PNG, serviceStatus=0],[]>,/ProFit/c/service/api
+2024-10-29T13:19:05.246617700,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:19:05.538961600,addService,<200 OK OK,servicesDTO [serviceId=19, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@750ca621, serviceTitle=日文文章翻譯, serviceContent=1231, servicePrice=1, serviceUnitName=字, serviceDuration=10.0, serviceCreateDate=2024-10-29T13:19:00.404971200, serviceUpdateDate=2024-10-29T13:19:00.404971200, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/ae977ef7b3fc4fd59ed6e350a173b443.jpg, servicePictureURL2=https://storage.googleapis.com/profit-323fb.appspot.com/1395c2a5e2f642b89b48991e1cf1577a.jpg, servicePictureURL3=https://storage.googleapis.com/profit-323fb.appspot.com/134bcba675594fe9a12a246f96d352dc.PNG, serviceStatus=0],[]>,/ProFit/c/service/api
+2024-10-29T13:19:05.595033700,addService,<200 OK OK,servicesDTO [serviceId=20, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@533d4704, serviceTitle=日文文章翻譯, serviceContent=1231, servicePrice=1, serviceUnitName=字, serviceDuration=10.0, serviceCreateDate=2024-10-29T13:18:59.886986900, serviceUpdateDate=2024-10-29T13:18:59.886986900, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/4e9abb99e8514246b56b4037f71a1704.jpg, servicePictureURL2=https://storage.googleapis.com/profit-323fb.appspot.com/636c321f6124428ab04bf17288b4e44c.jpg, servicePictureURL3=https://storage.googleapis.com/profit-323fb.appspot.com/21dbfff07a794b4bb2bd1bf01b985f01.PNG, serviceStatus=0],[]>,/ProFit/c/service/api
+2024-10-29T13:19:06.564068200,addService,<200 OK OK,servicesDTO [serviceId=21, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@2169c48b, serviceTitle=日文文章翻譯, serviceContent=1231, servicePrice=1, serviceUnitName=字, serviceDuration=10.0, serviceCreateDate=2024-10-29T13:19:00.649281200, serviceUpdateDate=2024-10-29T13:19:00.649281200, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/f25742e52e0445e380bca58a9285c00f.jpg, servicePictureURL2=https://storage.googleapis.com/profit-323fb.appspot.com/b43452a735714d9b814c2b97efc606d6.jpg, servicePictureURL3=https://storage.googleapis.com/profit-323fb.appspot.com/64b32c18e32a4efcbad436d8941586ab.PNG, serviceStatus=0],[]>,/ProFit/c/service/api
+2024-10-29T13:19:07.667658,addService,<200 OK OK,servicesDTO [serviceId=22, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@1d54f02b, serviceTitle=日文文章翻譯, serviceContent=1231, servicePrice=1, serviceUnitName=字, serviceDuration=10.0, serviceCreateDate=2024-10-29T13:19:01.962641, serviceUpdateDate=2024-10-29T13:19:01.962641, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/e942b74690c347caa21f10b39de3318d.jpg, servicePictureURL2=https://storage.googleapis.com/profit-323fb.appspot.com/39178ad2c8684ea0ac5a8dcaa1354415.jpg, servicePictureURL3=https://storage.googleapis.com/profit-323fb.appspot.com/75d4318947a3409bb74201d72a4d15f9.PNG, serviceStatus=0],[]>,/ProFit/c/service/api
+2024-10-29T13:19:08.017402600,addService,<200 OK OK,servicesDTO [serviceId=23, userMajor=com.ProFit.model.dto.majorsDTO.UserMajorDTO@1ffec1b9, serviceTitle=日文文章翻譯, serviceContent=1231, servicePrice=1, serviceUnitName=字, serviceDuration=10.0, serviceCreateDate=2024-10-29T13:19:02.214985800, serviceUpdateDate=2024-10-29T13:19:02.214985800, servicePictureURL1=https://storage.googleapis.com/profit-323fb.appspot.com/b061d63d08df443b8034b28a78165667.jpg, servicePictureURL2=https://storage.googleapis.com/profit-323fb.appspot.com/d8ca76ec0879420dab6ad4db68f0a4f1.jpg, servicePictureURL3=https://storage.googleapis.com/profit-323fb.appspot.com/42919e5f345c4dfd8a07a3b300dcc8ca.PNG, serviceStatus=0],[]>,/ProFit/c/service/api
+2024-10-29T13:19:09.801958300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:19:10.126044500,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@6b565fe2,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:19:20.052957200,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:19:20.140722900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:19:20.141720400,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:19:21.935548,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@49fe13d6,/ProFit/c/service/api/userId
+2024-10-29T13:19:29.595223900,deleteService,<204 NO_CONTENT No Content,[]>,/ProFit/c/service/api/23
+2024-10-29T13:19:30.503528100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:19:30.573339900,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:19:30.574337200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:19:32.512025700,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@26929a32,/ProFit/c/service/api/userId
+2024-10-29T13:19:46.369824200,deleteService,<204 NO_CONTENT No Content,[]>,/ProFit/c/service/api/22
+2024-10-29T13:19:47.067539200,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:19:47.142340200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:19:47.143336900,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:19:48.729045900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@1375445d,/ProFit/c/service/api/userId
+2024-10-29T13:26:26.376812300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:26:26.482531600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:26:26.482531600,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:26:28.296488900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@15bf239e,/ProFit/c/service/api/userId
+2024-10-29T13:26:30.499869300,deleteService,<204 NO_CONTENT No Content,[]>,/ProFit/c/service/api/18
+2024-10-29T13:26:31.433718600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4871b3f8,/ProFit/c/service/api/userId
+2024-10-29T13:26:51.944293600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@3a088fdc,/ProFit/c/service/api/userId
+2024-10-29T13:26:53.321438800,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:26:53.414145500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:26:53.415143200,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:26:54.877621,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@52f921ef,/ProFit/c/service/api/userId
+2024-10-29T13:27:05.430641600,findSingleCourse,coursesVIEW/frontend/singleCourseDetailPage,/ProFit/course/19
+2024-10-29T13:27:07.156855400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:27:07.224714100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:27:07.224714100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:27:09.167666500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@765305de,/ProFit/c/service/api/userId
+2024-10-29T13:27:38.333819200,deleteService,<204 NO_CONTENT No Content,[]>,/ProFit/c/service/api/20
+2024-10-29T13:27:39.128870500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@2846dc6d,/ProFit/c/service/api/userId
+2024-10-29T13:29:39.183340600,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:29:40.121116200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:29:40.455113700,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@d8c2cac,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:31:34.390531600,createServiceFrontendPage,servicesVIEW/frontend/createService,/ProFit/c/service/add
+2024-10-29T13:31:34.705951300,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:31:35.036167800,getUserMajorsByUserId,<200 OK OK,com.ProFit.model.dto.majorsDTO.PageResponse@2cda8af6,[]>,/ProFit/c/service/api/user/189
+2024-10-29T13:33:20.772731300,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:33:20.861494500,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:33:20.862492800,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:33:22.796613800,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@22ff9b92,/ProFit/c/service/api/userId
+2024-10-29T13:33:32.604539500,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:33:32.675352,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:33:32.676349500,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:33:34.366955600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@7af89998,/ProFit/c/service/api/userId
+2024-10-29T13:35:38.960071100,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:35:39.035868700,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:35:39.035868700,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:35:40.633789500,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@38314d14,/ProFit/c/service/api/userId
+2024-10-29T13:35:41.563675200,singleServiceDetailPage,servicesVIEW/frontend/singleServiceDetail,/ProFit/c/service/21
+2024-10-29T13:35:41.690129600,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:36:00.436163400,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:36:00.510964100,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:36:00.510964100,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:36:00.987018,GetUserPage,usersVIEW/frontendVIEW/memberProfile,/ProFit/user/profile
+2024-10-29T13:36:01.064809800,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:36:01.065808300,GetUser,<200 OK OK,Users [user_id=189, user_name=謝家任, user_email=1323@gmail.com, user_passwordHash=$2a$10$yAJaD/f6xg/6hwRhPOjg3emaX9CXXez5y0iDN9Mgsx4zwAzi7Ovf2, user_phoneNumber=0912-345678, user_city=桃園市, user_identity=1, user_register_time=2024-10-24 12:27:03, user_pictureURL=https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Frui-silvestre-hAMJpesMeDE-unsplash.jpg?alt=media&token=414b42d3-d266-4a77-8725-ed265bf70a1b, user_balance=0, freelancer_location_prefer=null, freelancer_exprience=null, freelancer_identity=null, freelancer_profile_status=0, freelancer_disc=數據分析 - 使用 Python 和 SQL 為企業提供數據處理和分析服務，幫助解讀銷售數據並制定數據驅動的決策。],[]>,/ProFit/user/profileinfo
+2024-10-29T13:36:02.741780600,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@4ffd9672,/ProFit/c/service/api/userId
+2024-10-29T13:36:04.219099300,singleServiceDetailPage,servicesVIEW/frontend/singleServiceDetail,/ProFit/c/service/21
+2024-10-29T13:36:04.365697200,getSessionAttributeFrontend,<200 OK OK,Login status: TRUE,[]>,/ProFit/login/checklogin
+2024-10-29T13:36:21.851866100,getPurchasedListByUserId,[com.ProFit.model.dto.coursesDTO.CourseOrderDTO@3a36cb1f],/ProFit/course/purchasedList
+2024-10-29T13:36:23.487707900,ServicesByUserId,com.ProFit.model.dto.majorsDTO.PageResponse@116766c5,/ProFit/c/service/api/userId

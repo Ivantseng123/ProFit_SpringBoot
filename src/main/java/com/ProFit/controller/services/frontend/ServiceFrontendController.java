@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,11 +28,13 @@ import com.ProFit.model.bean.servicesBean.ServiceBean;
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.model.dto.majorsDTO.PageResponse;
+import com.ProFit.model.dto.majorsDTO.UserMajorDTO;
 import com.ProFit.model.dto.servicesDTO.ServiceCategoryDTO;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.majorService.MajorCategoryService;
 import com.ProFit.service.majorService.MajorService;
+import com.ProFit.service.majorService.UserMajorService;
 import com.ProFit.service.serviceService.ServiceService;
 import com.ProFit.service.utilsService.FirebaseStorageService;
 
@@ -53,13 +56,28 @@ public class ServiceFrontendController {
     @Autowired
     private FirebaseStorageService firebaseStorageService;
 
+    @Autowired
+    private UserMajorService userMajorService;
+
     @GetMapping("")
     public String serviceFrontendPage() {
         return "servicesVIEW/frontend/serviceOverView";
     }
 
+    // 獲取當前user 資訊
+    private UsersDTO getCurrentUser(HttpSession session) {
+        return (UsersDTO) session.getAttribute("CurrentUser");
+    }
+
+    // 跳到新增服務頁面
     @GetMapping("/add")
-    public String createServiceFrontendPage() {
+    public String createServiceFrontendPage(HttpSession session, Model model) {
+        UsersDTO currentUser = getCurrentUser(session);
+        // 若沒有登入
+        if (currentUser == null) {
+            return "redirect:/user/profile";
+        }
+        model.addAttribute("currentUser", currentUser);
         return "servicesVIEW/frontend/createService";
     }
 
@@ -73,6 +91,7 @@ public class ServiceFrontendController {
     }
 
     // RestfulAPI
+    // 查全部
     @PostMapping("/api/searchAll")
     @ResponseBody
     public ResponseEntity<PageResponse<ServicesDTO>> searchAllServices(
@@ -129,7 +148,7 @@ public class ServiceFrontendController {
     // 新增服務的方法
     @PostMapping("/api")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> addService(@RequestParam("serviceTitle") String serviceTitle,
+    public ResponseEntity<ServicesDTO> addService(@RequestParam("serviceTitle") String serviceTitle,
             @RequestParam("serviceContent") String serviceContent, @RequestParam("servicePrice") Integer servicePrice,
             @RequestParam("serviceUnitName") String serviceUnitName,
             @RequestParam("serviceDuration") Double serviceDuration,
@@ -167,16 +186,21 @@ public class ServiceFrontendController {
             ServicesDTO createdService = serviceService.addService(serviceBean, userId, majorId);
 
             // 返回 JSON 響應
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "OK");
-            response.put("serviceId", createdService.getServiceId().toString());
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            return new ResponseEntity<ServicesDTO>(createdService, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 修改服務
+
+    // 刪除服務
+    @DeleteMapping("/api/{serviceId}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteService(@PathVariable Integer serviceId) {
+        serviceService.deleteService(serviceId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/api/searchServiceByMajorCategory")
@@ -229,5 +253,16 @@ public class ServiceFrontendController {
 
         return result;
     }
+
+    // 根據使用者ID取得關聯的專業（分頁）
+	@GetMapping("/api/user/{userId}")
+	@ResponseBody
+	public ResponseEntity<PageResponse<UserMajorDTO>> getUserMajorsByUserId(@PathVariable Integer userId,
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+			@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "true") boolean ascending) {
+		PageResponse<UserMajorDTO> response = userMajorService.getUserMajorsByUserId(userId, page, size, sortBy,
+				ascending);
+		return ResponseEntity.ok(response);
+	}
 
 }

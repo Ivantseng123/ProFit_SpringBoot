@@ -190,8 +190,10 @@
     <!-- 引用 headerOtherPage.html -->
     <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
-
-
+    <!-- 將用戶信息存儲為 JavaScript 變數 -->
+    <script th:inline="javascript">
+        const currentUser = /*[[${currentUser}]]*/ null;
+    </script>
 
     <div class="section message-area">
         <div class="container">
@@ -203,18 +205,20 @@
                             <div class="modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="chat-header">
+                                        <!-- 搜索框 -->
                                         <div class="msg-search">
-                                            <input type="text" class="form-control" placeholder="Search..."
+                                            <input type="text" class="form-control" placeholder="搜尋..."
                                                 id="search-input">
                                         </div>
-                                        <ul class="nav nav-tabs" id="chatTabs">
+                                        <!-- 標籤頁 -->
+                                        <ul class="nav nav-tabs" role="tablist">
                                             <li class="nav-item">
                                                 <a class="nav-link active" id="Open-tab" data-bs-toggle="tab"
-                                                    href="#Open">開啟中</a>
+                                                    href="#Open" role="tab">開啟中</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" id="Closed-tab" data-bs-toggle="tab"
-                                                    href="#Closed">已關閉</a>
+                                                <a class="nav-link" id="Closed-tab" data-bs-toggle="tab" href="#Closed"
+                                                    role="tab">已關閉</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -225,13 +229,13 @@
                                                 <!-- 開啟中的聊天列表 -->
                                                 <div class="tab-pane fade show active" id="Open" role="tabpanel">
                                                     <div id="active-chat-list" class="chat-list">
-                                                        <!-- 動態加入聊天用戶 -->
+                                                        <!-- 動態加載的聊天列表 -->
                                                     </div>
                                                 </div>
                                                 <!-- 已關閉的聊天列表 -->
                                                 <div class="tab-pane fade" id="Closed" role="tabpanel">
                                                     <div id="closed-chat-list" class="chat-list">
-                                                        <!-- 動態加入已關閉聊天 -->
+                                                        <!-- 動態加載的已關閉聊天列表 -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,43 +255,45 @@
                                             <div class="col-8">
                                                 <div class="d-flex align-items-center">
                                                     <span id="back-button" class="chat-icon">
-                                                        <img src="/images/back-arrow.svg" class="img-fluid">
+                                                        <img src="/images/back-arrow.svg" class="img-fluid" alt="返回">
                                                     </span>
                                                     <div class="flex-shrink-0">
                                                         <img id="chat-user-avatar" src="/images/default-avatar.png"
-                                                            class="img-fluid">
+                                                            class="img-fluid" alt="用戶頭像">
                                                     </div>
                                                     <div class="flex-grow-1 ms-3">
-                                                        <h3 id="chat-user-name"></h3>
-                                                        <p id="chat-service-title"></p>
+                                                        <h6 id="chat-user-name" class="mb-0"></h6>
+                                                        <small id="chat-title" class="text-muted"></small>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- 聊天內容區域 -->
+                                    <!-- 聊天消息區域 -->
                                     <div class="modal-body">
-                                        <div class="msg-body" id="message-container">
-                                            <!-- 動態加入消息 -->
+                                        <div id="message-container" class="msg-body">
+                                            <!-- 動態加載的消息內容 -->
                                         </div>
                                     </div>
 
                                     <!-- 發送消息區域 -->
                                     <div class="send-box">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="message-input"
-                                                placeholder="輸入訊息...">
-                                            <button class="btn btn-primary" type="button" id="send-button">發送</button>
-                                        </div>
-                                        <div class="send-btns">
+                                        <form id="message-form" class="mb-0">
+                                            <div class="input-group">
+                                                <input type="text" id="message-input" class="form-control"
+                                                    placeholder="輸入訊息...">
+                                                <button type="submit" class="btn btn-primary">發送</button>
+                                            </div>
+                                        </form>
+                                        <div class="send-btns mt-2">
                                             <div class="attach">
                                                 <div class="button-wrapper">
-                                                    <label for="upload" class="btn btn-outline-secondary btn-sm">
-                                                        <span class="bi bi-paperclip"></span>
+                                                    <label class="btn btn-outline-secondary btn-sm">
+                                                        <i class="bi bi-paperclip"></i>
                                                         附加檔案
+                                                        <input type="file" id="upload" class="d-none">
                                                     </label>
-                                                    <input type="file" id="upload" class="d-none">
                                                 </div>
                                             </div>
                                         </div>
@@ -311,7 +317,7 @@
                 </div>
                 <div class="modal-body">
                     <div id="service-list" class="list-group">
-                        <!-- 動態加入服務列表 -->
+                        <!-- 動態加載的服務列表 -->
                     </div>
                 </div>
             </div>
@@ -326,9 +332,7 @@
 
 
     <!-- 必要的 Script -->
-    <script th:inline="javascript">
-        const currentUserId = /*[[${#authentication.principal.id}]]*/ null;
-    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
@@ -342,7 +346,7 @@
     <script th:src="@{/js/frontend/tiny-slider.js}"></script>
     <script th:src="@{/js/frontend/glightbox.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
-    <script src="@{/js/chat/frontend/chat.js}"></script>
+    <script th:src="@{/js/chat/frontend/chat.js}"></script>
     <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
     <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
 

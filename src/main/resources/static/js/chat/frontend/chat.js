@@ -1,208 +1,200 @@
 /**
- * 全局變量
+ * 全局變量聲明
  */
 let stompClient = null;
 let currentChatId = null;
-let currentUserId = null;
-let activeUsersList = [];
-let selectedUserId = null;
 
 /**
- * 頁面加載時的初始化
+ * 頁面初始化
  */
 document.addEventListener('DOMContentLoaded', function () {
-  currentUserId = document.getElementById('current-user-id')?.value;
 
-  if (currentUserId) {
-    initialize();
-  } else {
-    console.error('No user ID found');
+  console.log(currentUser);
+
+  // 檢查用戶是否存在
+  if (!currentUser || !currentUser.userId) {
+    console.error('未找到用戶信息');
+    window.location.href = '/login';
+    return;
   }
+
+  // 初始化各項功能
+  initializeWebSocket();
+  initializeEventListeners();
+  loadChatUsers();
 });
 
 /**
- * 初始化所有功能
- */
-function initialize() {
-  connectWebSocket();
-  initializeEventListeners();
-  loadChatUsers();
-}
-
-/**
- * 初始化所有事件監聽器
+ * 初始化事件監聽器
  */
 function initializeEventListeners() {
-  // 發送消息按鈕
-  document.getElementById('send-button')?.addEventListener('click', sendMessage);
+  // 搜索功能
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', function (e) {
+      filterChatList(e.target.value);
+    });
+  }
 
-  // 消息輸入框的Enter鍵處理
-  document.getElementById('message-input')?.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+  // 消息發送表單
+  const messageForm = document.getElementById('message-form');
+  if (messageForm) {
+    messageForm.addEventListener('submit', function (e) {
       e.preventDefault();
       sendMessage();
-    }
-  });
+    });
+  }
 
-  // 搜索功能
-  document.getElementById('search-input')?.addEventListener('input', function (e) {
-    filterChatList(e.target.value);
-  });
-
-  // 返回按鈕
-  document.getElementById('back-button')?.addEventListener('click', function () {
-    hideChatBox();
-    showChatList();
-  });
+  // 消息輸入框 Enter 鍵處理
+  const messageInput = document.getElementById('message-input');
+  if (messageInput) {
+    messageInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  }
 }
 
 /**
- * WebSocket連接設置
+ * 初始化 WebSocket 連接
  */
-function connectWebSocket() {
-  const socket = new SockJS('/ws');
+function initializeWebSocket() {
+
+  const wsUrl = window.location.protocol === 'https:'
+    ? 'wss://' + window.location.host + '/chatWebsocket'
+    : 'ws://' + window.location.host + '/chatWebsocket';
+
+  const socket = new SockJS('/chatWebsocket');
   stompClient = Stomp.over(socket);
 
-  // WebSocket連接配置
-  const connectCallback = function (frame) {
-    console.log('Connected to WebSocket');
-    stompClient.subscribe('/user/' + currentUserId + '/queue/messages', onMessageReceived);
+  // 配置連接選項
+  const connectHeaders = {
+    userId: currentUser.userId
   };
 
-  const errorCallback = function (error) {
-    console.error('WebSocket connection error:', error);
-    // 5秒後嘗試重新連接
-    setTimeout(connectWebSocket, 5000);
-  };
+  // 配置 STOMP 客戶端
+  stompClient.debug = null;  // 關閉調試信息
 
-  // 連接WebSocket
-  stompClient.connect({}, connectCallback, errorCallback);
+  // 建立連接
+  stompClient.connect(connectHeaders,
+    // 連接成功回調
+    function (frame) {
+      console.log('WebSocket 連接成功:', frame);
+
+      // 訂閱個人消息
+      stompClient.subscribe('/user/' + currentUser.userId + '/queue/messages',
+        onMessageReceived);
+
+      // // 訂閱系統廣播
+      // stompClient.subscribe('/topic/system', function (message) {
+      //   console.log('系統消息:', message.body);
+      // });
+
+      // 如果有當前聊天，訂閱聊天室
+      if (currentChatId) {
+        subscribeToChatRoom(currentChatId);
+      }
+    },
+    // 連接錯誤回調
+    function (error) {
+      console.error('WebSocket 連接錯誤:', error);
+      // 5秒後重試連接
+      setTimeout(function () {
+        if (!stompClient || !stompClient.connected) {
+          console.log('嘗試重新連接...');
+          initializeWebSocket();
+        }
+      }, 5000);
+    }
+  );
+
+  // 添加連接關閉處理
+  socket.onclose = function () {
+    console.log('WebSocket 連接已關閉');
+    setTimeout(function () {
+      if (!stompClient || !stompClient.connected) {
+        console.log('嘗試重新連接...');
+        initializeWebSocket();
+      }
+    }, 5000);
+  };
 }
+
+
 
 /**
  * 載入聊天用戶列表
  */
 function loadChatUsers() {
-  fetch('/api/chat/users')
-    .then(response => response.json())
+  fetch('/ProFit/c/chat/api/users')
+    .then(handleResponse)
     .then(users => {
-      activeUsersList = users;
-      renderChatList(users);
+      renderChatUsers(users);
     })
     .catch(error => {
-      console.error('Error loading chat users:', error);
-      showErrorMessage('載入聊天列表失敗');
+      console.error('載入聊天用戶列表失敗:', error);
+      showErrorMessage('載入用戶列表失敗，請重試');
     });
 }
 
 /**
- * 渲染聊天列表
+ * 渲染聊天用戶列表
  */
-function renderChatList(users) {
-  const activeChatList = document.getElementById('active-chat-list');
-  if (!activeChatList) return;
+function renderChatUsers(users) {
+  const chatList = document.getElementById('chat-users-list');
+  if (!chatList) return;
 
-  const usersHTML = users.map(user => `
-        <div class="chat-item d-flex align-items-center" 
-             onclick="selectUser(${user.userId})" 
-             data-user-id="${user.userId}">
-            <div class="flex-shrink-0">
-                <img src="${user.userPictureURL || '/images/default-avatar.png'}" 
-                     class="rounded-circle" 
-                     alt="${user.userName}"
-                     style="width: 50px; height: 50px;">
-            </div>
-            <div class="flex-grow-1 ms-3">
-                <h6 class="mb-0">${user.userName}</h6>
-                <p class="mb-0 small text-muted">
-                    ${formatDateTime(user.lastChatTime)}
-                </p>
+  const usersHtml = users.map(user => `
+        <div class="chat-user" onclick="selectUser(${user.userId})" data-user-id="${user.userId}">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <img src="${user.userPictureURL || '/images/default-avatar.png'}" 
+                         class="rounded-circle" 
+                         alt="${user.userName}"
+                         style="width: 50px; height: 50px;">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-0">${user.userName}</h6>
+                    <small class="text-muted">
+                        ${formatDateTime(user.lastChatTime)}
+                    </small>
+                </div>
             </div>
         </div>
     `).join('');
 
-  activeChatList.innerHTML = usersHTML;
+  chatList.innerHTML = usersHtml;
 }
 
 /**
  * 選擇聊天用戶
  */
 function selectUser(userId) {
-  selectedUserId = userId;
-  const user = activeUsersList.find(u => u.userId === userId);
+  if (userId === currentUser.userId) return;
 
-  if (!user) {
-    console.error('User not found');
-    return;
-  }
-
-  // 載入該用戶的服務列表
-  fetch(`/api/services/user/${userId}`)
-    .then(response => response.json())
-    .then(services => {
-      showServiceSelectionModal(services, user);
-    })
-    .catch(error => {
-      console.error('Error loading services:', error);
-      showErrorMessage('載入服務列表失敗');
-    });
-}
-
-/**
- * 顯示服務選擇模態框
- */
-function showServiceSelectionModal(services, user) {
-  const serviceList = document.getElementById('service-list');
-  if (!serviceList) return;
-
-  serviceList.innerHTML = services.map(service => `
-        <button type="button" 
-                class="list-group-item list-group-item-action"
-                onclick="initializeChat(${service.serviceId}, ${user.userId})">
-            <h6 class="mb-1">${service.serviceTitle}</h6>
-            <p class="mb-1 small">${service.serviceDescription || ''}</p>
-        </button>
-    `).join('');
-
-  const serviceModal = new bootstrap.Modal(document.getElementById('serviceModal'));
-  serviceModal.show();
-}
-
-/**
- * 初始化聊天
- */
-function initializeChat(serviceId, userId) {
-  fetch('/api/chat/create', {
+  // 載入或創建聊天
+  fetch('/ProFit/c/chat/api/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      serviceId: serviceId,
-      freelancerId: userId,
-      caseOwnerId: currentUserId
+      userId1: currentUser.userId,
+      userId2: userId
     })
   })
-    .then(response => response.json())
+    .then(handleResponse)
     .then(chat => {
       currentChatId = chat.chatId;
-
-      // 隱藏服務選擇模態框
-      const serviceModal = bootstrap.Modal.getInstance(document.getElementById('serviceModal'));
-      serviceModal.hide();
-
-      // 更新聊天界面
       updateChatUI(chat);
-
-      // 載入聊天記錄
       loadChatHistory(chat.chatId);
-
-      // 訂閱聊天室消息
       subscribeToChatRoom(chat.chatId);
     })
     .catch(error => {
-      console.error('Error initializing chat:', error);
-      showErrorMessage('初始化聊天失敗');
+      console.error('創建聊天失敗:', error);
+      showErrorMessage('無法創建聊天，請重試');
     });
 }
 
@@ -211,32 +203,50 @@ function initializeChat(serviceId, userId) {
  */
 function updateChatUI(chat) {
   // 更新聊天標題
-  document.getElementById('chat-user-name').textContent =
-    chat.freelancer ? chat.freelancer.userName : '';
-  document.getElementById('chat-service-title').textContent =
-    chat.service ? chat.service.serviceTitle : '';
+  const chatTitle = document.getElementById('chat-title');
+  if (chatTitle) {
+    const otherUser = chat.userId1 === currentUser.userId ? chat.user2 : chat.user1;
+    chatTitle.textContent = otherUser.userName;
+  }
 
-  // 顯示聊天框
-  showChatBox();
-  hideChatList();
+  // 激活選中的用戶
+  document.querySelectorAll('.chat-user').forEach(el => {
+    el.classList.remove('active');
+  });
+  const selectedUser = document.querySelector(`[data-user-id="${chat.userId2}"]`);
+  if (selectedUser) {
+    selectedUser.classList.add('active');
+  }
+
+  // 顯示聊天區域
+  const chatBox = document.querySelector('.chatbox');
+  if (chatBox) {
+    chatBox.classList.add('active');
+  }
 }
 
 /**
- * 載入聊天歷史記錄
+ * 載入聊天歷史
  */
 function loadChatHistory(chatId) {
   const messageContainer = document.getElementById('message-container');
-  messageContainer.innerHTML = ''; // 清空現有消息
+  if (!messageContainer) return;
 
-  fetch(`/api/chat/${chatId}/messages`)
-    .then(response => response.json())
+  // 清空現有消息
+  messageContainer.innerHTML = '<div class="messages-loading">載入中...</div>';
+
+  fetch(`/ProFit/c/chat/api/${chatId}/messages`)
+    .then(handleResponse)
     .then(messages => {
-      messages.forEach(message => displayMessage(message));
+      messageContainer.innerHTML = '';
+      messages.forEach(message => {
+        displayMessage(message);
+      });
       scrollToBottom();
     })
     .catch(error => {
-      console.error('Error loading chat history:', error);
-      showErrorMessage('載入聊天記錄失敗');
+      console.error('載入聊天記錄失敗:', error);
+      messageContainer.innerHTML = '<div class="messages-error">載入失敗，請重試</div>';
     });
 }
 
@@ -258,19 +268,20 @@ function subscribeToChatRoom(chatId) {
  */
 function sendMessage() {
   const messageInput = document.getElementById('message-input');
-  const content = messageInput.value.trim();
+  if (!messageInput) return;
 
+  const content = messageInput.value.trim();
   if (!content || !currentChatId) return;
 
   const message = {
     chatId: currentChatId,
-    senderId: currentUserId,
+    senderId: currentUser.userId,
     content: content,
     sentAt: new Date().toISOString()
   };
 
   stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(message));
-  messageInput.value = ''; // 清空輸入框
+  messageInput.value = '';
 }
 
 /**
@@ -278,9 +289,13 @@ function sendMessage() {
  */
 function displayMessage(message) {
   const messageContainer = document.getElementById('message-container');
-  const isOwnMessage = message.senderId === parseInt(currentUserId);
+  if (!messageContainer) return;
 
-  // 檢查是否為服務申請消息
+  const isOwnMessage = message.senderId === currentUser.userId;
+  const messageElement = document.createElement('div');
+  messageElement.className = `message ${isOwnMessage ? 'sent' : 'received'}`;
+
+  // 判斷是否為服務申請消息
   const isServiceApplication = message.content.startsWith('[SERVICE_APPLICATION]');
   let content = message.content;
 
@@ -288,16 +303,16 @@ function displayMessage(message) {
     content = createServiceApplicationMessage(message);
   }
 
-  const messageElement = `
-        <div class="message ${isOwnMessage ? 'sent' : 'received'}">
-            <div class="message-content ${isServiceApplication ? 'service-application' : ''}">
-                ${content}
-                <span class="time">${formatDateTime(message.sentAt)}</span>
+  messageElement.innerHTML = `
+        <div class="message-content ${isServiceApplication ? 'service-application' : ''}">
+            ${content}
+            <div class="message-time">
+                ${formatDateTime(message.sentAt)}
             </div>
         </div>
     `;
 
-  messageContainer.insertAdjacentHTML('beforeend', messageElement);
+  messageContainer.appendChild(messageElement);
   scrollToBottom();
 }
 
@@ -309,7 +324,7 @@ function createServiceApplicationMessage(message) {
   return `
         <div class="service-application-content">
             <i class="bi bi-file-earmark-text"></i>
-            <a href="/service-application/${message.referenceId}">
+            <a href="/service-application/${message.referenceId}" target="_blank">
                 ${content}
             </a>
         </div>
@@ -317,14 +332,14 @@ function createServiceApplicationMessage(message) {
 }
 
 /**
- * 處理服務申請相關消息
+ * 處理服務申請消息
  */
 function handleServiceApplication(serviceApplication) {
   if (!currentChatId) return;
 
   const message = {
     chatId: currentChatId,
-    senderId: currentUserId,
+    senderId: currentUser.userId,
     content: `[SERVICE_APPLICATION]${serviceApplication.serviceApplicationTitle}`,
     referenceId: serviceApplication.serviceApplicationId
   };
@@ -347,38 +362,49 @@ function formatDateTime(dateTime) {
 
 function scrollToBottom() {
   const messageContainer = document.getElementById('message-container');
-  messageContainer.scrollTop = messageContainer.scrollHeight;
+  if (messageContainer) {
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  }
 }
 
-function showChatBox() {
-  document.querySelector('.chatbox').classList.add('active');
-}
-
-function hideChatBox() {
-  document.querySelector('.chatbox').classList.remove('active');
-}
-
-function showChatList() {
-  document.querySelector('.chatlist').classList.add('active');
-}
-
-function hideChatList() {
-  document.querySelector('.chatlist').classList.remove('active');
+function handleResponse(response) {
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return response.json();
 }
 
 function showErrorMessage(message) {
-  // 可以使用 Bootstrap Toast 或其他提示元件
-  alert(message);
+  // 可以使用 Toast 或其他提示元件
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+  errorDiv.role = 'alert';
+  errorDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+  document.body.insertAdjacentElement('afterbegin', errorDiv);
+
+  // 3秒後自動關閉
+  setTimeout(() => {
+    errorDiv.remove();
+  }, 3000);
 }
 
 /**
- * 過濾聊天列表
+ * 聊天列表過濾功能
  */
 function filterChatList(searchTerm) {
-  const filteredUsers = activeUsersList.filter(user =>
-    user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-  renderChatList(filteredUsers);
+  const chatUsers = document.querySelectorAll('.chat-user');
+  chatUsers.forEach(userElement => {
+    const userName = userElement.querySelector('h6').textContent.toLowerCase();
+    if (userName.includes(searchTerm.toLowerCase())) {
+      userElement.style.display = '';
+    } else {
+      userElement.style.display = 'none';
+    }
+  });
 }
 
 /**
@@ -390,17 +416,3 @@ function onMessageReceived(payload) {
     displayMessage(message);
   }
 }
-
-
-
-////////////////////////////////////
-// WebSocket連接管理
-// 聊天用戶列表載入和過濾
-// 服務選擇功能
-// 消息發送和接收
-// 聊天歷史記錄載入
-// 服務申請消息的特殊處理
-// UI交互和動畫效果
-// 錯誤處理和提示
-// 響應式設計支持
-// 實用工具函數
