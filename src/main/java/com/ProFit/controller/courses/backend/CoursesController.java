@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -88,16 +89,25 @@ public class CoursesController {
     // 搜尋全部的方法
     @GetMapping("/courses/search")
     @ResponseBody
-    public List<CoursesDTO> searchAllCourses(
+    public Page<CoursesDTO> searchAllCourses(
             @RequestParam(required = false) String courseName,
             @RequestParam(required = false) String courseCreateUserName,
             @RequestParam(required = false) String courseStatus,
             @RequestParam(required = false) Integer courseCreateUserId,
-            @RequestParam(required = false) Integer courseMajor) {
-        List<CoursesDTO> corusesDTOList = courseService.searchCourses(courseName, courseCreateUserName, courseStatus,
-                courseCreateUserId, courseMajor);
+            @RequestParam(required = false) Integer courseMajor,
+            @RequestParam(defaultValue = "ASC") String sort,
+            @RequestParam(defaultValue = "courseEndDate") String sortBy,
+            @RequestParam(defaultValue = "1") Integer pageNumber,
+            @RequestParam(defaultValue = "5") Integer pageSize) {
 
-        return corusesDTOList;
+        // List<CoursesDTO> corusesDTOList = courseService.searchCourses(courseName,
+        // courseCreateUserName, courseStatus,
+        // courseCreateUserId, courseMajor);
+
+        Page<CoursesDTO> coursesDTOList = courseService.searchCoursesPage(courseName, courseCreateUserName,
+                courseStatus, courseCreateUserId, courseMajor, sort, sortBy, pageNumber, pageSize);
+
+        return coursesDTOList;
 
     }
 

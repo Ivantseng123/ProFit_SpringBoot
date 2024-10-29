@@ -166,7 +166,7 @@ function htmlMakerForCourses(searchCoursesPage) {
     });
 }
 
-function loadThatPage(pageNum,) {
+function loadThatPage(pageNum) {
     let courseName = $('#id-courseName').val();
     let courseStatus = $('#id-courseStatus').val();
     let sortBy = $('#id-sortBy').val();

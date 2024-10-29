@@ -6,6 +6,7 @@
     <title>ProFit</title>
     <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
     <link rel="stylesheet" th:href="@{/css/model.css}">
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
 </head>
 
 <body>
@@ -17,9 +18,6 @@
             <h2>課程管理功能</h2>
             <span><a th:href="@{/courses/addCourse}"><button id="createBtn">新增課程</button></a></span>
         </div>
-
-
-
 
         <div class="dashboard-header">
             <h3 style="margin-top: 0px;">查詢課程</h3>
@@ -62,12 +60,23 @@
         </div>
 
         <div class="table-container" id="search-results"></div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example" class="mt-2">
+            <ul class="pagination justify-content-center">
+
+            </ul>
+        </nav>
+        <!--/ End Pagination -->
+
     </div>
     <script>
         var contextPath = 'http://localhost:8080/ProFit';
     </script>
     <script th:src="@{/js/courses/courseView.js}"></script>
     <script th:src="@{/js/popup.js}"></script>
+    <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

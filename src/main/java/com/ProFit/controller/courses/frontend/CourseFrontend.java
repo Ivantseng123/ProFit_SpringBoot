@@ -175,7 +175,6 @@ public class CourseFrontend {
             @RequestParam(defaultValue = "courseEndDate") String sortBy,
             @RequestParam(defaultValue = "1") Integer pageNumber,
             @RequestParam(defaultValue = "12") Integer pageSize) {
-        System.out.println(pageNumber);
 
         Page<CoursesDTO> searchCoursesPage = courseService.searchCoursesPage(courseName, courseCreateUserName,
                 courseStatus, null,
