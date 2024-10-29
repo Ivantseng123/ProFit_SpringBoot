@@ -135,11 +135,24 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<!-- WebSocket 依賴 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+
+		<!-- STOMP 依賴 -->
+    	<dependency>
+       		<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-reactor-netty</artifactId>
+    	</dependency>
+
+		<!-- 如果使用 SockJS -->
+    	<dependency>
+        	<groupId>org.webjars</groupId>
+        	<artifactId>sockjs-client</artifactId>
+        	<version>1.5.1</version>
+    	</dependency>
 
 		<!--
 		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->

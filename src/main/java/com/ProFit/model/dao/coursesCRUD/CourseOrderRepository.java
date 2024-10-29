@@ -38,4 +38,10 @@ public interface CourseOrderRepository extends JpaRepository<CourseOrderBean, St
                         + "GROUP BY c.courseName "
                         + "ORDER BY totalCount DESC")
         List<Object[]> getTop10Courses();
+        
+        
+        //訂單管理 顯示登入用戶的訂單詳情
+        @Query("SELECT c FROM CourseOrderBean c WHERE c.student.userId = :userId")
+        List<CourseOrderBean> findOrdersByUserId(@Param("userId") Integer userId);
+
 }

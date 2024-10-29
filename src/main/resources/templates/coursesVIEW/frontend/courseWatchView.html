@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title text="上課頁面"></title>
+    <title>上課頁面</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
@@ -31,6 +31,12 @@
 
         .ml-auto {
             margin-left: auto !important;
+        }
+
+        .star {
+            cursor: pointer;
+            font-size: 2rem;
+            /* 調整星星大小 */
         }
     </style>
 </head>
@@ -65,7 +71,12 @@
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link" id="course-comments-tab" data-bs-toggle="tab"
                                             data-bs-target="#course-comments" type="button" role="tab"
-                                            aria-controls="course-comments" aria-selected="false">學生評價</button>
+                                            aria-controls="course-comments" aria-selected="false">學生評論</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="course-addComment-tab" data-bs-toggle="tab"
+                                            data-bs-target="#course-addComment" type="button" role="tab"
+                                            aria-controls="course-addComment" aria-selected="false">新增評論</button>
                                     </li>
                                 </ul>
 
@@ -122,6 +133,46 @@
                                             <ul class="comments-list">
                                                 <!-- 評價內容 -->
                                             </ul>
+                                        </div>
+                                    </div>
+                                    <!-- 新增課程評論 -->
+                                    <div class="tab-pane fade" id="course-addComment" role="tabpanel"
+                                        aria-labelledby="course-addComment-tab">
+                                        <!-- Comments -->
+                                        <div class="container my-4">
+                                            <h3 class="text-center mb-4"><span>留下您的心得</span></h3>
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <form id="myForm">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">評分:</label>
+                                                            <div id="star-rating" class="d-flex justify-content-center">
+                                                                <span class="star" data-value="1"><i
+                                                                        class="fa-regular fa-star"></i></span>
+                                                                <span class="star" data-value="2"><i
+                                                                        class="fa-regular fa-star"></i></span>
+                                                                <span class="star" data-value="3"><i
+                                                                        class="fa-regular fa-star"></i></span>
+                                                                <span class="star" data-value="4"><i
+                                                                        class="fa-regular fa-star"></i></span>
+                                                                <span class="star" data-value="5"><i
+                                                                        class="fa-regular fa-star"></i></span>
+                                                            </div>
+                                                            <input type="hidden" id="courseGradeScore" required />
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="courseGradeComment"
+                                                                class="form-label">評論內容:</label>
+                                                            <textarea id="courseGradeComment" class="form-control"
+                                                                rows="3" required></textarea>
+                                                        </div>
+
+                                                        <button type="button" id="submitButton" class="btn btn-primary"
+                                                            disabled>提交評論</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

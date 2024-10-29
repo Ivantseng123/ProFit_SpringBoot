@@ -1,3 +1,21 @@
+$(document).ready(function() {
+
+	/*localStorage.removeItem('isLoggedIn');*/
+
+	let params = new URLSearchParams(window.location.search);
+	let loginStatus = params.get('login');
+
+	console.log(loginStatus);
+
+	if (loginStatus == 'false') {
+		alert("請先登入");
+		$('#login').modal('show');
+	}
+
+	getSession();
+
+});
+
 document.getElementById('loginForm').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
 	let userEmail = document.getElementById('email').value;
@@ -44,6 +62,11 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 	const signUpForm = document.getElementById('signUpForm');
 	const usersDTO = new FormData(signUpForm);
 
+	const submitButton = document.getElementById('submitBtn');
+	const spinner = document.getElementById('spinner');
+	submitButton.disabled = true;
+	spinner.style.display = 'inline-block';
+
 	fetch('http://localhost:8080/ProFit/user/register', {
 		method: 'POST',
 		body: usersDTO
@@ -64,17 +87,13 @@ document.getElementById('signUpForm').addEventListener('submit', function(e) {
 		})
 		.catch(error => {
 			console.error('Error:', error);
+		}).finally(() => {
+
+			spinner.style.display = 'none';
+			submitButton.disabled = false;
 		});
 
 })
-
-$(document).ready(function() {
-
-	/*localStorage.removeItem('isLoggedIn');*/
-
-	getSession();
-
-});
 
 function getSession() {
 	fetch('http://localhost:8080/ProFit/login/checklogin', {
@@ -88,13 +107,15 @@ function getSession() {
 				localStorage.removeItem('isLoggedIn')
 				throw new Error('No Login');
 			}
-			return response.text();
+			return response.json();
 		})
 		.then(data => {
 
-			console.log(data);
+			console.log(data.userName);
 
 			localStorage.setItem('isLoggedIn', 'true');
+
+			localStorage.setItem('userName', data.userName);
 
 			console.log("登入狀態: " + localStorage.getItem('isLoggedIn'));
 
@@ -111,23 +132,40 @@ function getSession() {
 function initializeAuthButton() {
 	// 模擬用戶登入狀態，這裡用 localStorage 模擬，可根據實際情況修改
 	let isLoggedIn = localStorage.getItem('isLoggedIn');
+	let username = localStorage.getItem('userName'); // 取得 username
 
 	// 獲取按鈕元素
 	const authButton = document.getElementById('authButton');
 	const authText = document.getElementById('authText');
+	const signupButton = document.getElementById('signupButton');
+	const usernameDisplay = document.getElementById('usernameDisplay');
 
 	// 根據登入狀態顯示按鈕
 	if (isLoggedIn === 'true') {
 		authText.textContent = '登出';
-		authButton.setAttribute('href', ''); // 登出後可以設置登出動作
-		authButton.removeAttribute('data-target'); // 移除data-target属性 // 移除登入事件
+		authButton.setAttribute('href', ''); // 設置登出動作
+		authButton.removeAttribute('data-target'); // 移除登入事件
 		authButton.addEventListener('click', logout); // 綁定登出事件
+
+		// 隱藏註冊按鈕並顯示使用者名稱
+		signupButton.style.display = 'none';
+		usernameDisplay.textContent = username;
+		usernameDisplay.style.display = 'inline';
 	} else {
 		authText.textContent = '登入';
 		authButton.setAttribute('data-target', '#login');
 		authButton.removeEventListener('click', logout); // 移除登出事件
+
+		// 顯示註冊按鈕並隱藏使用者名稱
+		signupButton.style.display = 'inline';
+		usernameDisplay.style.display = 'none';
 	}
 }
+
+
+
+
+
 
 // 登出功能
 function logout(event) {
@@ -142,6 +180,7 @@ function logout(event) {
 				// 清除登入狀態
 				localStorage.removeItem('isLoggedIn');
 				localStorage.removeItem('sessionValue');
+				localStorage.removeItem('userName');
 				alert('你已成功登出');
 				getSession();
 				window.location.href = 'http://localhost:8080/ProFit/homepage';
@@ -182,6 +221,11 @@ document.getElementById('resetPwdForm').addEventListener('submit', function(e) {
 	const emailData = {
 		'email': email_resetpwd
 	}
+	
+	const submitButton = document.getElementById('submitBtn_resetpwd');
+	const spinner = document.getElementById('spinner_resetpwd');
+	submitButton.disabled = true;
+	spinner.style.display = 'inline-block';
 
 	fetch('http://localhost:8080/ProFit/tokens/addToken_frontend', {
 		method: 'POST',
@@ -201,6 +245,10 @@ document.getElementById('resetPwdForm').addEventListener('submit', function(e) {
 		})
 		.catch(error => {
 			console.error('Error:', error);
+		}).finally(() => {
+
+			spinner.style.display = 'none';
+			submitButton.disabled = false;
 		});
 
 })

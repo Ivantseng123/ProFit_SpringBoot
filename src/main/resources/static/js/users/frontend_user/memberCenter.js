@@ -19,39 +19,49 @@ $(document).ready(() => {
 		$('.col-lg-8').eq(0).empty();
 		htmlMakerForQuestionForm();
 		document.getElementById('submitButton').addEventListener('click', function() {
-				
-				console.log('CLICKCLICK');
 
-			
-				let question_category = document.getElementById('question_category').value;
-				let sender = document.getElementById('sender').value;
-				let content = document.getElementById('content').value;
+			console.log('CLICKCLICK');
 
-				const question = {
-					'subject': question_category,
-					'email': sender,
-					'content': content
-				}
 
-				fetch('http://localhost:8080/ProFit/user/sendEmail', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(question)
-				})
-					.then(response => {
-						if (response.ok) {
-							alert('發送成功，我們會儘快回覆您！');
-							content.value = '';
-						}
+			let question_category = document.getElementById('question_category').value;
+			let sender = document.getElementById('sender').value;
+			let content = document.getElementById('content').value;
 
-					})
-					.catch(error => console.error('Error fetching data:', error));
+			const question = {
+				'subject': question_category,
+				'email': sender,
+				'content': content
+			}
+
+
+			const submitButton = document.getElementById('submitButton');
+			const spinner = document.getElementById('spinner');
+			submitButton.disabled = true;
+			spinner.style.display = 'inline-block';
+
+			fetch('http://localhost:8080/ProFit/user/sendEmail', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(question)
 			})
+				.then(response => {
+					if (response.ok) {
+						alert('發送成功，我們會儘快回覆您！');
+						content.value = '';
+					}
+				})
+				.catch(error => console.error('Error fetching data:', error))
+				.finally(() => {
+
+					spinner.style.display = 'none';
+					submitButton.disabled = false;
+				});
+		})
 	})
 
-	
+
 })
 
 function htmlMakerForMemberProfile() {
@@ -470,9 +480,12 @@ function htmlMakerForQuestionForm() {
 												</div>
 											</div>
 											<div class="col-12">
-												<div class="form-group button">
-													<button type="button" id="submitButton" class="btn ">送出</button>
-												</div>
+											    <div class="form-group button">
+											        <button id="submitButton" type="submit" class="btn"> 
+											            <span id="spinner" class="spinner-border spinner-border-sm" style="display: none;"></span> 
+											            送出
+											        </button>
+											    </div>
 											</div>
 										</div>
 									</form>
@@ -495,7 +508,7 @@ function htmlMakerForQuestionForm() {
 
 		})
 		.catch(error => console.error('Error fetching user data:', error));
-		
+
 }
 
 

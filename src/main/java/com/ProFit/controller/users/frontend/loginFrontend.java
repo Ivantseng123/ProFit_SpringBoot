@@ -50,10 +50,6 @@ public class loginFrontend {
 			String loginTime = now.format(dateFormatter);
 			
 			userDTO.setLoginTime(loginTime);
-			
-			System.out.println("登入時間-------------------" + userDTO.getLoginTime());
-			
-			System.out.println("登入成功");
 
 			session.setAttribute("CurrentUser", userDTO);
 
@@ -67,10 +63,14 @@ public class loginFrontend {
 	}
 
 	@GetMapping("login/checklogin")
+	@ResponseBody
 	public ResponseEntity<?> getSessionAttributeFrontend(HttpSession session) {
 
 		if (session.getAttribute("CurrentUser") != null) {
-			return ResponseEntity.ok("Login status: TRUE");
+			
+			UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
+			
+			return ResponseEntity.ok(usersDTO);
 		} else {
 			return ResponseEntity.status(404).body("Login status: False");
 		}
