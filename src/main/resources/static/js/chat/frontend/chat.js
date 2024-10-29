@@ -63,10 +63,10 @@ function initializeEventListeners() {
 function initializeWebSocket() {
 
   const wsUrl = window.location.protocol === 'https:'
-    ? 'wss://' + window.location.host + '/chatWebsocket'
-    : 'ws://' + window.location.host + '/chatWebsocket';
+    ? 'wss://' + window.location.host + '/ProFit/chatWebsocket'
+    : 'ws://' + window.location.host + '/ProFit/chatWebsocket';
 
-  const socket = new SockJS('/chatWebsocket');
+  const socket = new SockJS('http://localhost:8080/ProFit/chatWebsocket');
   stompClient = Stomp.over(socket);
 
   // 配置連接選項
