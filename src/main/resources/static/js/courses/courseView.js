@@ -135,7 +135,7 @@ $(document).on('click', '.delete', function () {
 				if (response) {
 					window.alert('課程刪除成功');
 					console.log('新增的课程信息:', response);
-					window.location.href = contextPath + '/courses?clickButton=true';
+					window.location.href = contextPath + '/b/courses?clickButton=true';
 				} else {
 					window.alert('課程刪除失敗');
 				}

@@ -211,18 +211,16 @@ function updatePaginationButtons(searchCoursesPage) {
     let totalPages = searchCoursesPage.totalPages;
 
     if (currentPage === 1) {
-        $('#prev-page').attr('disabled', true);
-        // $('#prev-page').empty();
+        $('#prev-page').addClass('disabled'); // 增加 disabled class
     } else {
-        $('#prev-page').attr('disabled', false);
+        $('#prev-page').removeClass('disabled'); // 移除 disabled class
     }
 
     // 禁用「下一頁」按鈕，如果在最後一頁
     if (currentPage === totalPages) {
-        $('#next-page').attr('disabled', true);
-        // $('#next-page').empty();
+        $('#next-page').addClass('disabled'); // 增加 disabled class
     } else {
-        $('#next-page').attr('disabled', false);
+        $('#next-page').removeClass('disabled'); // 移除 disabled class
     }
 }
 

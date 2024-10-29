@@ -59,9 +59,10 @@
 							<label for="courseCategory">課程類別:</label> <select id="courseCategory" name="courseCategory"
 								required>
 								<option value="">請選擇類別</option>
-							<th:block th:each="majorCategory : ${allMajorCategoriesList}">
-								<option th:value="${majorCategory.majorCategoryId}" th:text="${majorCategory.categoryName}"></option>
-							</th:block>
+								<th:block th:each="majorCategory : ${allMajorCategoriesList}">
+									<option th:value="${majorCategory.majorCategoryId}"
+										th:text="${majorCategory.categoryName}"></option>
+								</th:block>
 							</select>
 						</div>
 						<div class="form-group">
@@ -106,11 +107,11 @@
 							</select>
 						</div>
 						<div style="text-align: right;">
-							<a th:href="@{/courses}"><button class="btn btn-danger" id='cancelBtn' type="button"
+							<a th:href="@{/b/courses}"><button class="btn btn-danger" id='cancelBtn' type="button"
 									style="margin-right:370px;">取消新增</button></a>
 							<button class="btn btn-success" id="switchBtn" name="switchBtn" type="button">新增章節</button>
 							<div class="d-flex justify-content-center mb-3">
-							    <button type="button" id="generateCourseData" class="btn btn-info">生成課程測試資料</button>
+								<button type="button" id="generateCourseData" class="btn btn-info">生成課程測試資料</button>
 							</div>
 						</div>
 					</form>
