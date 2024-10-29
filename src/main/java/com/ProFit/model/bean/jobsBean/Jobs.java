@@ -27,6 +27,7 @@ public class Jobs implements java.io.Serializable {
     @Column(name = "jobs_id")
     private Integer jobsId;
 
+    //刊登者
     @ManyToOne(fetch = FetchType.EAGER)//FK，對User表，一個公司（user）可以有po很多職缺
     @JoinColumn(name = "jobs_user_id")
     private Users users;//請跟我有關聯的表格組員修改他們的關係語句
