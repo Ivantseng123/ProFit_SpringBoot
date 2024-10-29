@@ -48,7 +48,7 @@ function alluser() {
 				render: function(data) {
 
 					return `<div class="rounded-circle overflow-hidden ms-2" style="width: 60px; height: 60px;">
-						<img src="${data || 'https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd'}" class="img-fluid" alt="" style="object-fit: cover; width: 100%; height: 100%;">
+						<img src="${data || 'https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd'}" class="img-fluid">
 					</div>`
 						;
 				}

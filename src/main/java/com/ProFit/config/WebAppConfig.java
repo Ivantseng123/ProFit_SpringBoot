@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.ProFit.controller.interceptor.LoginInterceptor;
+import com.ProFit.controller.interceptor.LoginInterceptor_frontend;
 
 //相當於mvc-servlet.xml的Java程式組態
 @Configuration
@@ -28,12 +29,20 @@ public class WebAppConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/Users/ivantseng/Desktop/photos/");
     }
 
-//	@Autowired
-//	private LoginInterceptor loginInterceptor;
-//
+	@Autowired
+	private LoginInterceptor loginInterceptor;
+	
+	@Autowired
+	private LoginInterceptor_frontend loginInterceptor_frontend;
+
 //	@Override
 //	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(loginInterceptor).addPathPatterns("/**") // 過濾所有請求
+//		registry.addInterceptor(loginInterceptor).addPathPatterns("/","/user/alluserPage","/user/adduser","/user/deleteuser","/getUserPage","/getuser/{userId}","/users/updateuser","/users/updateuserpwd","/api/user/page","/user/charts","/user/statistics","/user/registration_statistics") // 過濾所有請求
 //				.excludePathPatterns("/loginPage","/login","/js/users/Login.js"); // 排除登入頁面
+//		
+//		registry.addInterceptor(loginInterceptor_frontend).addPathPatterns("/user/profile") // 過濾所有請求
+//				.excludePathPatterns("/homepage","/login_frontend","/js/users/frontend_login.js"); // 排除登入頁面
 //	}
+	
+	
 }

@@ -8,11 +8,6 @@ $(document).ready(function() {
 
 function getUser() {
 
-
-	if (localStorage.getItem('isLoggedIn') == null) {
-		alert("請先登入");
-		window.location.href = "http://localhost:8080/ProFit/homepage";
-	}
 	let profile_picture = document.getElementById('profile_picture')
 	let profileImagePreview = document.getElementById('profileImagePreview')
 
@@ -53,6 +48,11 @@ function getUser() {
 			user_pictureURL.value = user.userPictureURL;
 
 			user_name.innerHTML = user.userName;
+			
+			localStorage.setItem('userName', user.userName);
+			const usernameDisplay = document.getElementById('usernameDisplay');
+			let username = localStorage.getItem('userName');
+			usernameDisplay.textContent = username;
 
 
 			console.log(user.freelancerLocationPrefer);
@@ -159,6 +159,7 @@ document.getElementById('editProfileForm').addEventListener('submit', async func
 
 	e.preventDefault(); // 防止表單提交，等待圖片上傳完成
 	handleImageUpload();
+
 });
 
 function handleImageUpload() {
@@ -582,7 +583,6 @@ $('#fileInput2').on('change', function() {
 		reader.readAsDataURL(fileInput.files[0]);
 	}
 });
-
 
 
 
