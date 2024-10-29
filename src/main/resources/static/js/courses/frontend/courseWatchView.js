@@ -3,6 +3,75 @@ $(document).ready(function () {
     let params = new URLSearchParams(window.location.search);
     let courseId = params.get('courseId');
 
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('courseGradeScore');
+    const submitButton = document.getElementById('submitButton');
+
+    let currentRating = 0; // 目前的評分
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = parseInt(star.getAttribute('data-value'));
+
+            // 檢查是否點擊同一顆星星
+            if (currentRating === rating) {
+                // 清空選中的星星
+                ratingInput.value = '';
+                currentRating = 0;
+            } else {
+                // 更新評分
+                ratingInput.value = rating;
+                currentRating = rating;
+            }
+
+            // 更新星星的樣式
+            stars.forEach(s => {
+                s.innerHTML = '<i class="fa-regular fa-star"></i>'; // 未選中狀態
+            });
+            for (let i = 0; i < currentRating; i++) {
+                stars[i].innerHTML = '<i class="fa-solid fa-star" style="color: #FFD43B;"></i>'; // 選中狀態
+            }
+
+            // 根據評分更新按鈕狀態
+            submitButton.disabled = currentRating === 0; // 當評分為0時禁用按鈕
+        });
+    });
+
+    $('#submitButton').click(function () {
+        let courseGradeComment = $('#courseGradeComment').val();
+
+        $.ajax({
+            url: "/ProFit/course/addcourseGrade",
+            data: {
+                "courseGradeScore": currentRating,
+                "courseId": courseId,
+                "courseGradeComment": courseGradeComment
+            },
+            dataType: "JSON",
+            type: "POST",
+            success: function (res) {
+                if (res) {
+                    alert('新增成功');
+                    // 清空表單
+                    $('#courseGradeComment').val(''); // 清空評論內容
+                    $('#courseGradeScore').val(''); // 清空評分（隱藏輸入框）
+                    currentRating = 0; // 重置當前評分
+
+                    // 重置星星樣式
+                    $('.star').each(function () {
+                        $(this).html('<i class="fa-regular fa-star"></i>'); // 恢復未選中狀態
+                    });
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // 處理錯誤
+                console.error('新增失敗:', textStatus, errorThrown);
+                console.error('後端返回:', jqXHR.responseText); // 這會顯示後端的錯誤信息
+                alert('新增失敗，請重試。');
+            }
+        })
+    })
+
     $.ajax({
         url: "/ProFit/course/watch/" + courseId,
         dataType: "JSON",
@@ -136,6 +205,7 @@ $(document).ready(function () {
         }
 
     })
+
 
 
     $(document).on('click', '.playLessonBtn', function () {

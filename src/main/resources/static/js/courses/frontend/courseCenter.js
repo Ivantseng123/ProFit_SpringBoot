@@ -13,7 +13,7 @@ $(document).ready(() => {
                 console.log(searchCourseOrdersByUserId);
 
                 // 寫入類別
-                htmlMakerForUserBoughtCourse(searchCourseOrdersByUserId);
+                htmlMakerForCourses(searchCourseOrdersByUserId);
 
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -33,7 +33,7 @@ $(document).ready(() => {
 
 })
 
-function htmlMakerForUserBoughtCourse(searchCourseOrdersByUserId) {
+function htmlMakerForCourses(searchCourseOrdersByUserId) {
 
     $('.col-lg-8').eq(0).append(`
         <div class="inner-content">

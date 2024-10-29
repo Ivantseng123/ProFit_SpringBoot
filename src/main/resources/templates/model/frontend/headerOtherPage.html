@@ -16,20 +16,8 @@
 						</button>
 						<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 							<ul id="nav" class="navbar-nav ml-auto">
-								<li class="nav-item"><a class="active" th:href="@{/homepage}">首頁</a></li>
-								<!-- <li class="nav-item"><a href="#">頁面</a>
-                                   <ul class="sub-menu">
-                                        <li><a href="about-us.html">關於我們</a></li>
-                                        <li><a href="job-list.html">職位列表</a></li>
-                                        <li><a href="job-details.html">職位詳情</a></li>
-                                        <li><a href="resume.html">履歷頁</a></li>
-                                        <li><a href="privacy-policy.html">隱私政策</a></li>
-                                        <li><a href="faq.html">常見問題</a></li>
-                                        <li><a href="pricing.html">我們的價格</a></li>
-                                        <li><a href="404.html">404 錯誤</a></li>
-                                        <li><a href="mail-success.html">郵件成功</a></li>
-                                   </ul>
-                                </li> -->
+								<li class="nav-item"><a th:href="@{/homepage}">首頁</a></li>
+
 								<li class="nav-item"><a href="#">我要接案</a>
 									<ul class="sub-menu">
 										<li><a href="#">瀏覽職位</a></li>
@@ -59,10 +47,11 @@
 										<li><a href="#">部落格網格側邊欄</a></li>
 										<li><a href="#">部落格單篇</a></li>
 										<li><a href="#">部落格單篇側邊欄</a></li>
-									</ul></li>
-								<li class="nav-item"><a href="http://localhost:8080/ProFit/empPf/allCompany">找公司</a></li>
-								<li class="nav-item"><a
-									href="http://localhost:8080/ProFit/user/profile">帳戶中心</a></li>
+									</ul>
+								</li>
+								<li class="nav-item"><a href="http://localhost:8080/ProFit/empPf/allCompany">找公司</a>
+								</li>
+								<li class="nav-item"><a href="http://localhost:8080/ProFit/user/profile">帳戶中心</a></li>
 								<li class="nav-item"><a href="#">財務管理</a>
 									<ul class="sub-menu">
 										<li><a th:href="@{/allOrder}">我的訂單</a></li>
@@ -92,3 +81,29 @@
 	<!-- navbar area -->
 </header>
 <!-- End Header Area -->
+<script defer>
+	document.addEventListener("DOMContentLoaded", function () {
+		// 取得所有的 nav-item 的 a 標籤
+		const navLinks = document.querySelectorAll("#nav .nav-item a");
+
+		// 取得目前的網址
+		const currentUrl = window.location.href;
+
+		navLinks.forEach(function (link) {
+			// 如果目前的網址包含 a 標籤的 href，就加上 active class
+			if (currentUrl.includes(link.href)) {
+				link.classList.add("active");
+
+				// 如果該 a 標籤在子選單內，向上找到上一層的 ul，再到上一層的 li 裡面的 a 標籤並加上 active
+				let parentLi = link.closest('ul').closest('li'); // 找到上一層的 li
+				if (parentLi) {
+					const parentLink = parentLi.querySelector('a');
+					if (parentLink) {
+						parentLink.classList.add('active');
+					}
+				}
+			}
+		});
+	});
+
+</script>

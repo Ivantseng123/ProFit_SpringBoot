@@ -58,6 +58,17 @@ $(document).ready(function () {
 
     });
 
+    // 排序跟搜尋
+    // 查詢按鈕點擊事件
+    $('#searchBtn').click(function () {
+        loadServices();
+    });
+
+    // 當排序方式變更時觸發
+    $('#id-sortBy').change(function () {
+        loadServices();
+    });
+
 })
 
 $(document).on('click', '.single-cat', function () {
@@ -109,7 +120,7 @@ function htmlMakerForServices(searchServicesPage) {
 
                             <ul>
                                 <li><a href="#"><i class="lni lni-tag"></i>${service.userMajor.major.majorName}</a></li>
-                                <!-- <li><a href="#"><i class="lni lni-calendar"></i>${formatDate(service.courseEndDate)}</a></li> -->
+                                <li><a href="#"><i class="lni lni-calendar"></i>${formatDate(service.serviceUpdateDate)}</a></li>
                             </ul>
                         </div>
                         
@@ -121,6 +132,8 @@ function htmlMakerForServices(searchServicesPage) {
             </div>
         `);
     });
+
+
 
     // 印頁數 (searchCoursesPage.totalPages)
     $('.pagination-list').append(`<li><a id="prev-page" href="#"><i class="lni lni-chevron-left"></i></a></li>`)
@@ -157,6 +170,76 @@ function htmlMakerForServices(searchServicesPage) {
         if (currentPage < totalPages) {
             loadThatPage(currentPage + 1);
         }
+    });
+}
+
+// 載入服務函數
+function loadServices(pageNum = 0) {
+    let serviceTitle = $('#id-serviceTitle').val(); // 獲取標題關鍵字
+    let sortBy = $('#id-sortBy').val(); // 獲取排序方式
+
+    $.ajax({
+        url: '/ProFit/c/service/api/searchAll',
+        data: {
+            "serviceTitle": serviceTitle, // 傳遞標題關鍵字
+            "sortBy": sortBy, // 傳遞排序方式
+            "page": pageNum
+        },
+        dataType: 'JSON',
+        type: 'POST',
+        success: function (searchServicesPage) {
+            // 清空當前表格
+            $('#search-results').empty();
+            $('.pagination-list').empty();
+
+            // 渲染服務列表
+            htmlMakerForServices(searchServicesPage);
+
+            // 更新分頁按鈕
+            updatePaginationButtons(searchServicesPage);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error('查詢失敗:', textStatus, errorThrown);
+            alert('查詢失敗，請重試。');
+        }
+    });
+}
+
+// 更新分頁按鈕
+function updatePaginationButtons(searchServicesPage) {
+    let currentPage = searchServicesPage.number + 1;
+    let totalPages = searchServicesPage.totalPages;
+
+    $('.pagination-list').empty();
+    $('.pagination-list').append(`<li><a id="prev-page" href="#"><i class="lni lni-chevron-left"></i></a></li>`);
+
+    for (let i = 1; i <= totalPages; i++) {
+        $('.pagination-list').append(`<li class="pageBtn" data-pagebtn="${i}"><a href="#">${i}</a></li>`);
+    }
+
+    $('.pagination-list').append(`<li><a id="next-page" href="#"><i class="lni lni-chevron-right"></i></a></li>`);
+
+    // 上一頁按鈕點擊事件
+    $('#prev-page').click(function (e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            loadServices(currentPage - 1);
+        }
+    });
+
+    // 下一頁按鈕點擊事件
+    $('#next-page').click(function (e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+            loadServices(currentPage + 1);
+        }
+    });
+
+    // 分頁按鈕點擊事件
+    $('.pageBtn').click(function (e) {
+        e.preventDefault();
+        let pageID = $(this).data('pagebtn');
+        loadServices(pageID - 1);
     });
 }
 
