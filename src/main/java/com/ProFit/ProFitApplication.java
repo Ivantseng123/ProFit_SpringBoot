@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource({"classpath:db-secrets.properties","classpath:OAuth2-Credential.properties"})
+@PropertySource({"classpath:db-secrets.properties","classpath:OAuth2-Credential.properties","classpath:smtpConfig.properties"})
 public class ProFitApplication {
 
 	public static void main(String[] args) {

@@ -23,6 +23,10 @@
     <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
 
     <style>
+        .ml-auto {
+            margin-left: auto !important;
+        }
+
         .hero-area.style2 .hero-inner .hero-text {
             margin-top: 120px;
         }
@@ -47,7 +51,15 @@
         }
 
         .latest-news-area .single-news .content-body .title {
-            font-size: 20px;
+            font-size: 18px;
+        }
+
+        .sidebar .widget .widget-title {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .widget {
+            padding: 20px;
         }
     </style>
 
@@ -60,26 +72,6 @@
     <!-- 引用 headerOtherPage.html -->
     <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
-    <!-- Start Breadcrumbs -->
-    <!-- <div class="breadcrumbs overlay">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">Blog Grid Sidebar</h1>
-                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
-                            Business draws on a wide range of different business .</p>
-                    </div>
-                    <ul class="breadcrumb-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li>Blog Grid Sidebar</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- End Breadcrumbs -->
 
     <!-- Start Hero Area -->
     <section class="hero-area style2">
@@ -92,9 +84,137 @@
                             <div class="col-lg-8 co-12">
                                 <div class="inner-content" style="padding-left: 30px;">
                                     <div class="hero-text">
-                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">提升你的職業技能</h1>
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">尋找需要的專業類別</h1>
                                         <div class="cat-head">
                                             <div class="row categorySpace">
+                                                <!-- <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-1.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="100">軟體開發</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(2筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-2.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="200">設計</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(1筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-3.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="300">數據分析</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(2筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-4.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="400">行銷</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(1筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-5.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="500">專案管理</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(1筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-6.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="600">翻譯寫作</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(1筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-7.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="700">影像製作</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(0筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div
+                                                    class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
+                                                    <a href="#" class="single-cat wow fadeInUp" data-wow-delay=".2s"
+                                                        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                                        <div class="top-side text-center">
+                                                            <img class="rounded" style="max-width:50px"
+                                                                src="http://localhost:8080/ProFit/images/major/category-8.png"
+                                                                alt="#">
+                                                            <h6 class="categoryId text-center mt-1"
+                                                                data-categoryid="800">居家清潔</h6>
+                                                        </div>
+                                                        <div class="bottom-side text-center mt-2">
+                                                            <span></span> <span class="available-job">(0筆)</span>
+                                                        </div>
+                                                    </a>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <!-- <div class="button wow fadeInUp" data-wow-delay=".7s">
@@ -146,18 +266,18 @@
     <section id="courseTop" class="section latest-news-area blog-list">
         <div class="container">
             <div class="row">
-                <aside class="col-lg-3 col-md-5 col-12">
+                <aside id="majorList" class="col-lg-2 col-md-5 col-12">
                     <div class="sidebar">
-                        <div class="widget search-widget">
+                        <!-- <div class="widget search-widget">
                             <form action="#">
                                 <input type="text" placeholder="服務標題...">
                                 <button type="submit"><i class="lni lni-search-alt"></i></button>
                             </form>
-                        </div>
+                        </div> -->
                         <div class="widget categories-widget">
                             <h5 class="widget-title"><span>專業</span></h5>
-                            <ul class="custom">
-                                <li>
+                            <ul class="custom majorlistul">
+                                <!-- <li>
                                     <a href="#">Announcement<span>26</span></a>
                                 </li>
                                 <li>
@@ -177,7 +297,7 @@
                                 </li>
                                 <li>
                                     <a href="#">HR Best Practices<span>17</span></a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <!-- <div class="widget popular-tag-widget">
@@ -198,8 +318,26 @@
                         </div> -->
                     </div>
                 </aside>
-                <div class="col-lg-9 col-md-7 col-12">
-                    <h4 id="courseheader" class="mb-4">最新服務</h4>
+                <div class="col-lg-10 col-md-7 col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 id="courseheader" class="mb-4">所有服務</h5>
+                        <div class="input group d-flex align-items-center">
+                            <span class="me-3 fs-5 d-flex align-items-center">依標題查詢:
+                                <input class="form-control d-inline" type=" text" id="id-serviceTitle"
+                                    style="width: 150px;" />
+                                <i id="searchBtn" class="fa-solid fa-magnifying-glass btn btn-primary btn-lg"></i>
+                            </span>
+
+                            <span class="me-3 fs-5 d-flex align-items-center">排序方法:
+                                <select class="fs-4" id="id-sortBy" style="width: 150px;">
+                                    <option value="serviceUpdateDate">依更新日期</option>
+                                    <option value="servicePrice">依價格</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <div class="col-12">
                             <div id="search-results" class="row">
@@ -230,6 +368,7 @@
     <!-- 引用 footer.html -->
     <div th:replace="~{model/frontend/footer}"></div>
 
+
     <!-- ========================= scroll-top ========================= -->
     <a href="#" class="scroll-top btn-hover">
         <i class="lni lni-chevron-up"></i>
@@ -244,6 +383,7 @@
     <script th:src="@{/js/frontend/main.js}"></script>
     <script th:src="@{/js/service/frontend/serviceOverView.js}"></script>
     <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+    <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
     <script>
         //======== Home Slider
         var slider = new tns({
@@ -274,6 +414,8 @@
             }
         });
     </script>
+
+
 </body>
 
 </html>

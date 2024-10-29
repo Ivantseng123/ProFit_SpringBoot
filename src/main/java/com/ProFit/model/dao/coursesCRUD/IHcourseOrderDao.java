@@ -21,6 +21,7 @@ public interface IHcourseOrderDao {
 	// 查詢全部
 	public List<CourseOrderBean> searchCourseOrders();
 
-	// 查詢全部By courseOrderId
-	public List<CourseOrderBean> searchCourseOrders(String courseId,Integer studentId,String status);
+	// // 查詢全部By courseOrderId
+	// public List<CourseOrderBean> searchCourseOrders(String courseId,Integer
+	// studentId,String status);
 }

@@ -417,3 +417,7 @@ db-secrets.properties
 .vscode/
 
 OAuth2-Credential.properties
+
+smtpConfig.properties
+
+aop-logs.csv

@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UserStatistics_registerTime;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 public interface IUserService {
 
@@ -60,6 +62,10 @@ public interface IUserService {
 	ResponseEntity<?> sendResetToken(String email, String token);
 
 	boolean confirm_resetToken(Integer userId, String confirmationToken);
+
+	List<UserStatistics> getUserStatistics();
+
+	List<UserStatistics_registerTime> getUserStatisticsByDate();
 
 	
 

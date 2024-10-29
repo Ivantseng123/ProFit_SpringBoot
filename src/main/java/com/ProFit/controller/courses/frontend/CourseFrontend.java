@@ -1,10 +1,15 @@
 package com.ProFit.controller.courses.frontend;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,19 +21,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ProFit.model.bean.coursesBean.CourseGradeContentBean;
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
 import com.ProFit.model.dto.coursesDTO.CourseGradeContentDTO;
+import com.ProFit.model.dto.coursesDTO.CourseLessonDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
 import com.ProFit.model.dto.coursesDTO.CourseModuleDTOFrontend;
+import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.courseService.IcourseGradeContentService;
+import com.ProFit.service.courseService.IcourseLessonService;
 import com.ProFit.service.courseService.IcourseModuleService;
 import com.ProFit.service.courseService.IcourseOrderService;
 import com.ProFit.service.courseService.IcourseService;
 import com.ProFit.service.majorService.IMajorCategoryService;
+import com.ProFit.service.utilsService.FirebaseStorageService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -51,6 +61,12 @@ public class CourseFrontend {
     @Autowired
     private IcourseOrderService courseOrderService;
 
+    @Autowired
+    private FirebaseStorageService firebaseStorageService;
+
+    @Autowired
+    private IcourseLessonService courseLessonService;
+
     @GetMapping("")
     public String courseFrontendPage() {
         return "coursesVIEW/frontend/courseOverView";
@@ -72,6 +88,50 @@ public class CourseFrontend {
         }
 
         return "redirect:/user/profile";
+    }
+
+    @GetMapping("/watch")
+    public String watchCoursePage(HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (currentUser != null) {
+
+            return "coursesVIEW/frontend/courseWatchView";
+        }
+
+        return "redirect:/user/profile";
+
+    }
+
+    @GetMapping("/watch/{courseId}")
+    public ResponseEntity<Map<String, Object>> watchCoursePage(HttpSession session, @PathVariable String courseId) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        List<CourseOrderDTO> isCourseAvalible = courseOrderService.searchAllCourseOrders(courseId,
+                currentUser.getUserId(), "Completed");
+
+        if (isCourseAvalible.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        CoursesDTO currentCourse = courseService.searchOneCourseById(courseId);
+
+        List<CourseModuleDTOFrontend> courseModuleDTOList = courseModuleService.searchCourseModulesFrontend(courseId);
+
+        PageRequest pageRequest = PageRequest.of(0, 3);
+
+        Page<CourseGradeContentDTO> courseGradeDTOList = courseGradeContentService
+                .searchCourseGradeContents(courseId, null, pageRequest);
+
+        Map<String, Object> courseMap = new HashMap<String, Object>();
+        courseMap.put("currentUser", currentUser);
+        courseMap.put("currentCourse", currentCourse);
+        courseMap.put("courseModuleDTOList", courseModuleDTOList);
+        courseMap.put("courseGradeDTOList", courseGradeDTOList);
+
+        return new ResponseEntity<>(courseMap, HttpStatus.OK);
     }
 
     // 新增課程訂單的方法
@@ -135,8 +195,23 @@ public class CourseFrontend {
         return allCourseCategoryList;
     }
 
+    // 回傳單筆課程相關資訊 確認登入狀態，判斷是否已經購買
     @GetMapping("/{courseId}")
-    public String findSingleCourse(@PathVariable String courseId, Model model) {
+    public String findSingleCourse(@PathVariable String courseId, Model model, HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        boolean isPurchased = false;
+
+        if (currentUser != null) {
+            List<CourseOrderDTO> isCoursePurchased = courseOrderService.searchAllCourseOrders(courseId,
+                    currentUser.getUserId(), "Complete");
+            if (!isCoursePurchased.isEmpty()) {
+                isPurchased = true;
+            }
+        }
+
+        model.addAttribute("isPurchased", isPurchased);
 
         CoursesDTO courseDTO = courseService.searchOneCourseById(courseId);
 
@@ -145,7 +220,7 @@ public class CourseFrontend {
 
         List<CourseModuleDTOFrontend> CourseModuleDTOList = courseModuleService.searchCourseModulesFrontend(courseId);
 
-        PageRequest pageRequest = PageRequest.of(0, 3);
+        PageRequest pageRequest = PageRequest.of(0, 5);
 
         Page<CourseGradeContentDTO> courseGradeDTOList = courseGradeContentService
                 .searchCourseGradeContents(courseId, null, pageRequest);
@@ -156,6 +231,71 @@ public class CourseFrontend {
         model.addAttribute("courseGradeDTOList", courseGradeDTOList);
 
         return "coursesVIEW/frontend/singleCourseDetailPage";
+    }
+
+    // 回傳已購買課程的Api
+    @GetMapping("/purchasedList")
+    @ResponseBody
+    public List<CourseOrderDTO> getPurchasedListByUserId(HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (currentUser != null) {
+
+            List<CourseOrderDTO> searchCourseOrdersByUserId = courseOrderService.searchAllCourseOrders(null,
+                    currentUser.getUserId(), "Completed");
+
+            return searchCourseOrdersByUserId;
+        }
+
+        return null;
+    }
+
+    // 回傳30分鐘有效的單元影片url
+    @GetMapping("/lessons/{lessonId}")
+    @ResponseBody
+    public Map<String, String> getLessonVideoURL(@PathVariable Integer lessonId, HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (currentUser != null) {
+            CourseLessonDTO currentLesson = courseLessonService.searchOneCourseLessonById(lessonId);
+
+            String fileNameFromUrl = firebaseStorageService.extractFileNameFromUrl(currentLesson.getLessonMediaUrl());
+
+            if (fileNameFromUrl != null) {
+                String timeSensitiveUrl = firebaseStorageService.generateTimeSensitiveUrl(fileNameFromUrl);
+                Map<String, String> response = new HashMap<>();
+                response.put("url", timeSensitiveUrl);
+                return response;
+            }
+            return null;
+        }
+
+        return null;
+    }
+
+    @PostMapping("/addcourseGrade")
+    @ResponseBody
+    public boolean insertCourseGrade(
+            @ModelAttribute CourseGradeContentBean courseGradeContent, HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (courseGradeContent != null) {
+
+            courseGradeContent.setStudentId(currentUser.getUserId());
+
+            CourseGradeContentBean insertCourseGradeContent = courseGradeContentService
+                    .insertCourseGradeContent(courseGradeContent);
+
+            if (insertCourseGradeContent != null) {
+                return true;
+
+            }
+        }
+        return false;
+
     }
 
 }

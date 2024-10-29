@@ -41,13 +41,13 @@
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                                     <label class="form-check-label" for="flexCheckDefault">記住密碼</label>
                                 </div>
-                                <a href="" class="font-size-3 text-dodger line-height-reset">忘記密碼？</a>
+                                <a id="forgetPwdbtn" href="" class="font-size-3 text-dodger line-height-reset">忘記密碼？</a>
                             </div>
                             <div class="form-group mb-8 button">
                                 <button class="btn" type="submit">登入</button>
                             </div>
                             <p class="text-center create-new-account">
-                                還沒有帳戶? <a href="#">建立一個免費帳戶</a>
+                                還沒有帳戶? <a id="signUp_href" href="#">建立一個免費帳戶</a>
                             </p>
                         </form>
                     </div>
@@ -145,3 +145,38 @@
     </div>
 </div>
 <!-- End Signup Modal -->
+
+
+
+<div class="modal fade form-modal" id="forgetPwd" tabindex="-1" aria-hidden="true" style="z-index: 1060; overflow:auto">
+    <div class="modal-dialog max-width-px-840 position-relative">
+        <button type="button"
+            class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+            data-dismiss="modal">
+            <i class="lni lni-close"></i>
+        </button>
+        <div class="login-modal-main">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="heading">
+                            <h3>忘記密碼</h3>
+                            <p>使用註冊信箱重設密碼</p>
+                        </div>
+                        <form id="resetPwdForm">
+                            <div class="form-group">
+                                <label for="email_resetpwd" class="label mt-3">E-mail</label> <input type="email"
+                                    class="form-control" placeholder="example@gmail.com" id="email_resetpwd">
+                            </div>
+                            <div class="form-group mb-8 button">
+                                <button class="btn" id="submitBtn_resetpwd" type="submit"><span id="spinner_resetpwd"
+                                        class="spinner-border spinner-border-sm"
+                                        style="display: none;"></span>確定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

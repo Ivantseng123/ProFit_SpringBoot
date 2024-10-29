@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -29,7 +31,7 @@ public class TransactionController {
     public String showIncomeOverview(HttpSession session, Model model) {
         UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
         if (usersDTO == null || usersDTO.getUserId() == null) {
-            return "redirect:/login";
+            return "redirect:/user/profile";
         }
         Integer userId = usersDTO.getUserId();
 
@@ -71,5 +73,35 @@ public class TransactionController {
         return userTransactionService.getPendingTransactionsByUserId(userId);
     }
 
-    
+    @PostMapping("/transaction/withdraw")
+    @ResponseBody
+    public String handleWithdrawRequest(@RequestParam("amount") int amount, HttpSession session) {
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        Integer userId = currentUser.getUserId();
+        
+        Integer userBalance = userService.getUserBalanceById(userId);
+        if (userBalance != null && amount > userBalance) {
+            return "餘額不足，請重新輸入金額";  // 返回更友善的提示訊息
+        }
+        // 呼叫服務層邏輯來插入一筆取款交易
+        String result = userTransactionService.createWithdrawalTransaction(userId, amount);
+
+        if ("success".equals(result)) {
+            return "success";
+        } else {
+            return result;  // 返回具體的錯誤消息
+        }
+    }
+
+    @PostMapping("/transaction/delete")
+    @ResponseBody
+    public String deleteTransaction1(@RequestParam("transactionId") String transactionId) {
+        try {
+            userTransactionService.deleteTransaction1(transactionId); // 調用服務層刪除交易記錄
+            return "success";
+        } catch (Exception e) {
+            return "error: " + e.getMessage();
+        }
+    }
 }

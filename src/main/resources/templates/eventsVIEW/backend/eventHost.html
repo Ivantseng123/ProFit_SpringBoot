@@ -15,7 +15,7 @@
             <div class="course-header">
                 <h2>活動主辦者列表</h2>
                 <div class="action-buttons">
-                    <a class="create btn btn-warning btn-sm text-white" th:href="@{events/host/new}">新增</a>
+                    <a class="create btn btn-warning btn-sm text-white" th:href="@{host/new}">新增</a>
                 </div>
             </div>
 
@@ -30,9 +30,10 @@
                     <button class="search btn btn-primary btn-sm my-sm-0" id="searchBtn">搜尋</button>
                 </div>
             </div>
-            
+
             <div class="table-container" id="searchResult"></div>
 
+            <button type="button" id="cancelBtn">回上一頁</button>
         </div>
 
     </main>

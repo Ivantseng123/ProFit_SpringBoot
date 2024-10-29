@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>ProFit-聊天室</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+
+
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/chats/chatView.css}" />
+
+
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+    <style>
+        /* .ml-auto {
+            margin-left: auto !important;
+        }
+
+        .msg-body ul {
+            padding: 0 10px;
+        }
+
+        #chat-box {
+            margin-top: 55px;
+        } */
+
+        /* 聊天室整體樣式 */
+        .chat-area {
+            display: flex;
+            height: 80vh;
+            background: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 左側聊天列表樣式 */
+        .chatlist {
+            width: 30%;
+            border-right: 1px solid #eee;
+        }
+
+        .chat-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .msg-search {
+            margin-bottom: 15px;
+        }
+
+        .chat-list {
+            padding: 0;
+            margin: 0;
+        }
+
+        .chat-list .chat-item {
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f5f5f5;
+            transition: background-color 0.3s;
+        }
+
+        .chat-list .chat-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .chat-list .chat-item.active {
+            background-color: #e9ecef;
+        }
+
+        /* 右側聊天區域樣式 */
+        .chatbox {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-head {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .msg-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        /* 消息樣式 */
+        .message {
+            max-width: 75%;
+            margin-bottom: 20px;
+            clear: both;
+        }
+
+        .message.sent {
+            float: right;
+        }
+
+        .message.received {
+            float: left;
+        }
+
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .message.sent .message-content {
+            background: #007bff;
+            color: white;
+        }
+
+        .time {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* 發送區域樣式 */
+        .send-box {
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .send-btns {
+            margin-top: 10px;
+        }
+
+        /* 服務申請消息樣式 */
+        .message-content.service-application {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+        }
+
+        .message-content.service-application a {
+            color: #1976d2;
+            text-decoration: none;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .chat-area {
+                flex-direction: column;
+            }
+
+            .chatlist,
+            .chatbox {
+                width: 100%;
+            }
+
+            .chatlist {
+                height: 30vh;
+            }
+        }
+    </style>
+
+</head>
+
+
+
+
+<body>
+
+    <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+    <!-- 將用戶信息存儲為 JavaScript 變數 -->
+    <script th:inline="javascript">
+        const currentUser = /*[[${currentUser}]]*/ null;
+    </script>
+
+    <div class="section message-area">
+        <div class="container">
+            <div class="row">
+                <div id="chat-box" class="col-12">
+                    <div class="chat-area">
+                        <!-- 左側聊天列表 -->
+                        <div class="chatlist">
+                            <div class="modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="chat-header">
+                                        <!-- 搜索框 -->
+                                        <div class="msg-search">
+                                            <input type="text" class="form-control" placeholder="搜尋..."
+                                                id="search-input">
+                                        </div>
+                                        <!-- 標籤頁 -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="Open-tab" data-bs-toggle="tab"
+                                                    href="#Open" role="tab">開啟中</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="Closed-tab" data-bs-toggle="tab" href="#Closed"
+                                                    role="tab">已關閉</a>
+                                            </li>
+                                        </ul>
+                                        <div id="chat-users-list"></div>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="chat-lists">
+                                            <div class="tab-content" id="myTabContent">
+                                                <!-- 開啟中的聊天列表 -->
+                                                <div class="tab-pane fade show active" id="Open" role="tabpanel">
+                                                    <div id="active-chat-list" class="chat-list">
+                                                        <!-- 動態加載的聊天列表 -->
+                                                    </div>
+                                                </div>
+                                                <!-- 已關閉的聊天列表 -->
+                                                <div class="tab-pane fade" id="Closed" role="tabpanel">
+                                                    <div id="closed-chat-list" class="chat-list">
+                                                        <!-- 動態加載的已關閉聊天列表 -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右側聊天區域 -->
+                        <div class="chatbox">
+                            <div class="modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <!-- 聊天頭部 -->
+                                    <div class="msg-head">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="d-flex align-items-center">
+                                                    <span id="back-button" class="chat-icon">
+                                                        <img src="/images/back-arrow.svg" class="img-fluid" alt="返回">
+                                                    </span>
+                                                    <div class="flex-shrink-0">
+                                                        <img id="chat-user-avatar" src="/images/default-avatar.png"
+                                                            class="img-fluid" alt="用戶頭像">
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6 id="chat-user-name" class="mb-0"></h6>
+                                                        <small id="chat-title" class="text-muted"></small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 聊天消息區域 -->
+                                    <div class="modal-body">
+                                        <div id="message-container" class="msg-body">
+                                            <!-- 動態加載的消息內容 -->
+                                        </div>
+                                    </div>
+
+                                    <!-- 發送消息區域 -->
+                                    <div class="send-box">
+                                        <form id="message-form" class="mb-0">
+                                            <div class="input-group">
+                                                <input type="text" id="message-input" class="form-control"
+                                                    placeholder="輸入訊息...">
+                                                <button type="submit" class="btn btn-primary">發送</button>
+                                            </div>
+                                        </form>
+                                        <div class="send-btns mt-2">
+                                            <div class="attach">
+                                                <div class="button-wrapper">
+                                                    <label class="btn btn-outline-secondary btn-sm">
+                                                        <i class="bi bi-paperclip"></i>
+                                                        附加檔案
+                                                        <input type="file" id="upload" class="d-none">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 服務選擇模態框 -->
+    <div class="modal fade" id="serviceModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">選擇服務</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="service-list" class="list-group">
+                        <!-- 動態加載的服務列表 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModalForNewBs}"></div>
+
+
+    <!-- 必要的 Script -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/bootstrap.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/chat/frontend/chat.js}"></script>
+    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+    <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script>
+        //======== Home Slider
+        var slider = new tns({
+            container: '.home-slider',
+            slideBy: 'page',
+            autoplay: false,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 0,
+            items: 1,
+            nav: false,
+            controls: true,
+            controlsText: [
+                '<i class="lni lni-arrow-left prev"></i>',
+                '<i class="lni lni-arrow-right next"></i>'
+            ],
+            responsive: {
+                1200: {
+                    items: 1,
+                },
+                992: {
+                    items: 1,
+                },
+                0: {
+                    items: 1,
+                }
+
+            }
+        });
+
+        jQuery(document).ready(function () {
+
+            $(".chat-list a").click(function () {
+                $(".chatbox").addClass('showbox');
+                return false;
+            });
+
+            $(".chat-icon").click(function () {
+                $(".chatbox").removeClass('showbox');
+            });
+
+
+        }); s
+    </script>
+</body>
+
+</html>

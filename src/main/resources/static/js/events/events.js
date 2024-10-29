@@ -126,23 +126,47 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <a class="view btn btn-success btn-sm"
                                     href="${eventPath}/view?eventId=${event.eventId}">詳細資料</a>
                                 <a class="view-host btn btn-success btn-sm"
-                                    href="${eventPath}/host/search?eventId=${event.eventId}">主辦者列表</a>
+                                    href="${eventPath}/host?eventId=${event.eventId}">主辦者列表</a>
                                 <a class="view-participant btn btn-success btn-sm"
-                                    href="#">參加者列表</a>
+                                    href="${eventPath}/order?eventId=${event.eventId}">參加者列表</a>
                                 <a class="edit btn btn-primary btn-sm"
                                     href="${eventPath}/edit?eventId=${event.eventId}">編輯</a>
                                 <a class="delete btn btn-danger btn-sm"
-                                    href="${eventPath}/delete?eventId=${event.eventId}">刪除</a>
+                                    data-eventId="${event.eventId}">刪除</a>
                             </td>
                         </tr>
                     `);
                 });
                 getMapping();
+                $('.delete').on('click', event => {
+                    event.preventDefault();
+                    const eventId = $(event.currentTarget).attr('data-eventId');
+                    console.log('刪除活動', eventId);
+                    deleteEvent(eventId);
+                });
             })
             .catch(error => {
                 console.error('搜尋發生錯誤:', error);
             });
     });
+
+    //刪除活動
+    function deleteEvent(eventId) {
+        const confirmation = confirm("確定要刪除這個活動嗎？");
+
+        if (confirmation) {
+            // 发送删除请求
+            axios.delete(`${eventPath}/delete?eventId=${eventId}`)
+                .then(response => {
+                    console.log('删除成功', response);
+                    window.location.href = `${eventPath}`;
+                })
+                .catch(error => {
+                    console.error('刪除發生錯誤:', error);
+                    alert('有關聯資料，無法刪除');
+                });
+        }
+    }
 
     //載入頁面讀取全部資料
     $('#searchBtn').click();

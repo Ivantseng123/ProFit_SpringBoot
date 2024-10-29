@@ -3,11 +3,15 @@ package com.ProFit.service.utilsService;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.Storage.SignUrlOption;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.net.URL;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class FirebaseStorageService {
@@ -50,5 +54,28 @@ public class FirebaseStorageService {
         String publicUrl = String.format("https://storage.googleapis.com/%s/%s", bucketName, blob.getName());
 
         return publicUrl;
+    }
+
+    // 生成前台用戶專用的時效性 URL
+    public String generateTimeSensitiveUrl(String fileName) {
+        Blob blob = storage.get(bucketName, fileName);
+        if (blob == null) {
+            throw new IllegalArgumentException("File not found: " + fileName);
+        }
+
+        // 設定簽名 URL 的過期時間，例如 1 小時
+        URL signUrl = blob.signUrl(30, TimeUnit.MINUTES, SignUrlOption.withV4Signature());
+
+        return signUrl.toString();
+    }
+
+    // 取出檔案名稱
+    public String extractFileNameFromUrl(String url) {
+
+        if (url != null && !url.isEmpty()) {
+            return url.substring(url.lastIndexOf("/") + 1);
+        } else {
+            return null;
+        }
     }
 }

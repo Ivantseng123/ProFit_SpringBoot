@@ -37,23 +37,33 @@ public class AllTransactionController {
         // 獲取訂單類型的統計信息
         Map<String, Object> orderStatistics = transactionService.getOrderStatistics();
 
-        // 格式化各類收入百分比
-        double courseOrderIncome = (double) orderStatistics.get("courseOrderIncome");
-        double jobOrderIncome = (double) orderStatistics.get("jobOrderIncome");
-        double eventOrderIncome = (double) orderStatistics.get("eventOrderIncome");
-        double totalIncome = (double) orderStatistics.get("totalIncome");
+        // 確保所有收入值非空，並賦予預設值0
+        double courseOrderIncome = (double) orderStatistics.getOrDefault("courseOrderIncome", 0.0);
+        double jobOrderIncome = (double) orderStatistics.getOrDefault("jobOrderIncome", 0.0);
+        double eventOrderIncome = (double) orderStatistics.getOrDefault("eventOrderIncome", 0.0);
+        double serviceOrderIncome = (double) orderStatistics.getOrDefault("serviceOrderIncome", 0.0); 
+        double totalIncome = courseOrderIncome + jobOrderIncome + eventOrderIncome + serviceOrderIncome;
 
+        // 防止 totalIncome 為零的情況，避免百分比計算出錯
+        if (totalIncome == 0) {
+            totalIncome = 1;  // 設置為 1 避免除以 0
+        }
+
+        // 計算並格式化各類收入百分比
         String formattedCoursePercentage = String.format("%.2f", (courseOrderIncome / totalIncome) * 100);
         String formattedJobPercentage = String.format("%.2f", (jobOrderIncome / totalIncome) * 100);
         String formattedEventPercentage = String.format("%.2f", (eventOrderIncome / totalIncome) * 100);
+        String formattedServicePercentage = String.format("%.2f", (serviceOrderIncome / totalIncome) * 100);
 
+        // 添加數據到 orderStatistics Map
         orderStatistics.put("formattedCoursePercentage", formattedCoursePercentage);
         orderStatistics.put("formattedJobPercentage", formattedJobPercentage);
         orderStatistics.put("formattedEventPercentage", formattedEventPercentage);
+        orderStatistics.put("formattedServicePercentage", formattedServicePercentage);
 
         model.addAttribute("orderStatistics", orderStatistics);
 
-        // 本週放款用戶列表，將交易轉換為 DTO
+        // 本週放款用戶列表，轉換為 DTO
         List<UserTransactionDTO> releaseTransactions = transactionService.getPendingReleaseUsers()
                 .stream()
                 .map(UserTransactionDTO::new)
@@ -62,6 +72,8 @@ public class AllTransactionController {
 
         return "transactionVIEW/backend/allTransactions"; 
     }
+
+
     
     @PostMapping("/releaseTransactions")
     @ResponseBody

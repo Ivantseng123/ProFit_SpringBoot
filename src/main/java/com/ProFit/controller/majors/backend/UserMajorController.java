@@ -20,7 +20,7 @@ public class UserMajorController {
 	// 跳轉到主頁面
 	@GetMapping("/")
 	public String listUserMajor() {
-		return "majorsVIEW/UserMajorMainPage"; // 返回主頁面的視圖名稱
+		return "majorsVIEW/backend/UserMajorMainPage"; // 返回主頁面的視圖名稱
 	}
 
 	// 取得所有使用者-專業關聯（分頁）

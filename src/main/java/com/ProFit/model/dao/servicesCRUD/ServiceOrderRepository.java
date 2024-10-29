@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ProFit.model.bean.majorsBean.MajorBean;
 import com.ProFit.model.bean.servicesBean.ServiceOrderBean;
+import com.ProFit.model.dto.servicesDTO.ServiceOrdersDTO;
 
 public interface ServiceOrderRepository extends JpaRepository<ServiceOrderBean, String> {
 
@@ -43,5 +45,6 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrderBean, 
     // 刪除 服務訂單 boolean
 
 
-   
+    @Query("SELECT o FROM ServiceOrderBean o WHERE o.serviceApplication.caseownerId = :caseownerId")
+    List<ServiceOrderBean> findByCaseownerId(@Param("caseownerId") Integer caseownerId);
 }

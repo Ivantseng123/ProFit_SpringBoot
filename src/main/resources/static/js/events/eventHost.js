@@ -1,7 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const eventHostPath = "events/host";
-    
+    const eventHostPath = "host";
+
+    //取消
+    cancelBtn.addEventListener("click", () => {
+        const confirmation = confirm("確定回到上一頁?");
+        if (!confirmation) {
+            console.log("已取消");
+            return;
+        }
+        window.history.back();
+    });
+
     //搜尋
     document.getElementById('searchBtn').addEventListener('click', event => {
 
@@ -17,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(queryParams.toString());
 
         //發送axios請求
-        axios.get(eventHostPath+'/search?' + queryParams.toString())
+        axios.get(eventHostPath + '/search?' + queryParams.toString())
             .then(response => {
                 console.log(response);
 
@@ -38,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <th>活動名稱</th>
                                             <th>主辦ID</th>
                                             <th>主辦名稱</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody id="table-body">
@@ -55,19 +66,24 @@ document.addEventListener("DOMContentLoaded", function () {
                             <td class="eventHostName">${eventHost.eventHostName}</td>
                             <td class="action-buttons">
                                 <a class="delete btn btn-danger btn-sm"
-                                    href="${eventPath}/delete?eventId=${eventHost.eventId}&eventHostId=${eventHost.eventHostId}">刪除</a>
+                                    href="${eventHostPath}/delete?eventId=${eventHost.eventId}&eventHostId=${eventHost.eventHostId}">刪除</a>
                             </td>
                         </tr>
                     `);
                 });
-                getMapping();
             })
             .catch(error => {
                 console.error('搜尋發生錯誤:', error);
             });
     });
 
-    //載入頁面讀取全部資料
+    //載入頁面讀取資料
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get('eventId');
+    if (value) {
+        document.getElementById('searchCriteria').value = 'eventId';                
+        document.getElementById('searchInput').value = value;
+    }
     $('#searchBtn').click();
 
 });

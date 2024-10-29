@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>我的錢包</title>
+    <title>ProFit-交易紀錄</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
     <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}">
@@ -12,6 +12,8 @@
     <style>
         body {
             padding-top: 120px;
+            background-color: #f5f7fa;
+            font-size: 1.0rem;
         }
         .header {
             position: fixed;
@@ -19,6 +21,9 @@
             width: 100%;
             z-index: 1000;
         }
+        .footer {
+  			margin-top: 50px;
+		}			
     </style>
 </head>
 <body>
@@ -28,13 +33,12 @@
 
     <div class="container mt-4">
         
-
         <!-- 最近交易 -->
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">最近的交易</h5>
+                        <h4 class="mb-0">交易紀錄</h4>
                         <div class="d-flex">
                             <input type="date" id="startDate" class="form-control me-2">
                             <input type="date" id="endDate" class="form-control me-2">
@@ -44,10 +48,34 @@
                     <div class="card-body">
                         <div class="btn-group mb-3" role="group">
                             <button type="button" class="btn btn-secondary" data-type="all">全部</button>
-                            <button type="button" class="btn btn-secondary" data-type="deposit">收入</button>
-                            <button type="button" class="btn btn-secondary" data-type="withdrawal">支出</button>
+                            <button type="button" class="btn btn-secondary" data-type="deposit">支出</button>
+                            <button type="button" class="btn btn-secondary" data-type="withdrawal">收入</button>
                         </div>
 
+						<!-- Modal 模態框結構 -->
+                        <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="orderModalLabel">訂單詳情</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img id="modalCourseCover" src="" alt="課程封面" class="img-fluid mb-3">
+                                        <p><strong>名稱:</strong> <span id="modalCourseName"></span></p>
+                                        <p><strong>訂單ID:</strong> <span id="modalOrderId"></span></p>
+                                        <p><strong>用戶:</strong> <span id="modalStudentName"></span></p>
+                                        <p><strong>創建時間:</strong> <span id="modalOrderDate"></span></p>
+                                        <p><strong>狀態:</strong> <span id="modalOrderStatus"></span></p>
+                                        <p><strong>金額:</strong> NT$<span id="modalOrderAmount"></span></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        						
                         <!-- 交易記錄列表 -->
                         <div id="transactionTable">
                             <table class="table">
@@ -60,7 +88,7 @@
                                         <th>訂單類型</th>
                                         <th>訂單ID</th>
                                         <th>交易狀態</th>
-                                        <th>支付方式</th>
+                                        <th>訂單詳情</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody">
@@ -75,6 +103,37 @@
                 </div>
             </div>
         </div>
+
+        <!-- 發票管理區域 -->
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">發票管理</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="invoiceTable">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>發票號碼</th>
+                                        <th>金額</th>
+                                        <th>發行日期</th>
+                                        <th>狀態</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceTableBody">
+                                    <!-- 這裡將由 JavaScript 動態生成 -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="noInvoicesMessage" class="text-center" style="display: none;">
+                            <p class="mt-2">無發票記錄</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 引入彈窗、頁尾 -->
@@ -84,16 +143,20 @@
     <!-- 返回頂部 -->
     <a href="#" class="scroll-top btn-hover"><i class="lni lni-chevron-up"></i></a>
 
-    <!-- 引入JS腳本 -->
-    <script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+    <!-- 引入JS腳本 -->	
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
     <script th:src="@{/js/frontend/main.js}"></script>
 
     <!-- 添加按鈕點擊事件 -->
-    <script>
-        $(document).ready(function () {
-    // 頁面加載後自動獲取所有交易
+<script>
+$(document).ready(function () {
+    // 頁面加載後自動獲取所有交易和發票
     fetchAllTransactions();
+    fetchAllInvoices();
+    fetchAllCourseOrders();
 
     // 類型篩選按鈕
     $('.btn-group button').on('click', function () {
@@ -135,7 +198,7 @@
         $.ajax({
             url: '/ProFit/wallet/filter',
             method: 'GET',
-            data: { type: 'all' },  // 獲取所有交易
+            data: { type: 'all' },
             dataType: 'json',
             success: function (response) {
                 updateTransactionTable(response);
@@ -146,35 +209,159 @@
         });
     }
 
-    // 更新表格
+    // 自動獲取當前用戶的發票
+    function fetchAllInvoices() {
+        $.ajax({
+            url: '/ProFit/wallet/invoices',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateInvoiceTable(response);
+            },
+            error: function () {
+                alert('獲取發票記錄時發生錯誤');
+            }
+        });
+    }
+
+    // 自動獲取所有課程訂單的函數
+    function fetchAllCourseOrders() {
+        $.ajax({
+            url: '/ProFit/wallet/courseOrders',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                window.courseOrders = response;
+                console.log("獲取的課程訂單資料:", window.courseOrders);
+                window.courseOrders.forEach(order => {
+                    console.log("訂單 ID:", order.courseOrderId);
+                });
+            },
+            error: function () {
+                alert('獲取課程訂單資料時發生錯誤');
+            }
+        });
+    }
+
+    // 翻譯交易內容為中文
+    function translateToChinese(transaction) {
+        var transactionType = {
+            "payment": "支付",
+            "withdrawal": "取出",
+            "deposit": "存入",
+            "refund": "退款"
+        };
+
+        var transactionStatus = {
+            "pending": "等待",
+            "completed": "已完成"
+        };
+
+        return {
+            transactionType: transactionType[transaction.transactionType] || transaction.transactionType,
+            transactionStatus: transactionStatus[transaction.transactionStatus] || transaction.transactionStatus
+        };
+    }
+
+    // 更新交易表格
+    // 更新交易表格
     function updateTransactionTable(transactions) {
+    var completedTransactions = transactions.filter(function (transaction) {
+        return transaction.completionAt;  // 篩選有完成時間的交易
+    });
+
+    completedTransactions.sort(function (a, b) {
+        return new Date(b.completionAt) - new Date(a.completionAt);
+    });
+
+    var tableBody = '';
+
+    completedTransactions.forEach(function (transaction) {
+        var completionAt = new Date(transaction.completionAt).toLocaleDateString();
+        var translated = translateToChinese(transaction);
+
+        // 確保 orderTypeText 和 orderId 存在並有值
+        var orderTypeText = "課程訂單"; // 這裡假設所有訂單都是課程訂單
+        var orderId = transaction.orderId || "未知ID"; // 確保 orderId 有值
+        var totalAmount = transaction.totalAmount || transaction.targetIncome || "無金額"; // 顯示 totalAmount 或 targetIncome，若無則顯示"無金額"
+
+        // 檢查 orderDetail 按鈕能正常綁定事件
+        var orderDetail = `<button class="btn btn-primary btn-sm" onclick="viewOrderDetail('${transaction.transactionId}', '${orderId}')">查看</button>`;
+
+        tableBody += `
+            <tr>
+                <td>${transaction.transactionId}</td>
+                <td>${completionAt}</td>
+                <td>${translated.transactionType}</td>
+                <td>${totalAmount}</td>
+                <td>${orderTypeText}</td>
+                <td>${orderId}</td>
+                <td>${translated.transactionStatus}</td>
+                <td>${orderDetail}</td>
+            </tr>`;
+    });
+
+    if (transactions.length > 0) {
+        $('#transactionTableBody').html(tableBody);
+        $('#noTransactionsMessage').hide();
+        $('#transactionTable').show();
+    } else {
+        $('#transactionTableBody').empty();
+        $('#transactionTable').hide();
+        $('#noTransactionsMessage').show();
+    }
+}
+
+   // 定義查看按鈕的功能，顯示模態框並根據 transactionId 和 orderId 查找資料
+    window.viewOrderDetail = function(transactionId, orderId) {
+    // 根據 orderId 在 courseOrders 資料中查找訂單資料
+    var courseOrder = window.courseOrders.find(order => order.courseOrderId === orderId);
+
+    if (courseOrder) {
+        $('#modalCourseCover').attr('src', courseOrder.courseCoverPictureURL || '');
+        $('#modalCourseName').text(courseOrder.courseName || '無資料');
+        $('#modalOrderId').text(courseOrder.courseOrderId || '無資料');
+        $('#modalStudentName').text(courseOrder.studentName || '無資料');
+        $('#modalOrderDate').text(courseOrder.courseOrderCreateDate || '無資料');
+        $('#modalOrderStatus').text(courseOrder.courseOrderStatus || '無資料');
+        $('#modalOrderAmount').text(courseOrder.courseOrderPrice || '無資料');
+        $('#orderModal').modal('show');
+    } else {
+        alert('未找到對應的訂單資料');
+    }
+}
+
+
+    // 更新發票表格
+    function updateInvoiceTable(invoices) {
+        invoices.sort(function (a, b) {
+            return new Date(b.issuedDate) - new Date(a.issuedDate);
+        });
+
         var tableBody = '';
-        if (transactions.length > 0) {
-            transactions.forEach(function (transaction) {
-                var completionAt = transaction.completionAt ? new Date(transaction.completionAt).toLocaleDateString() : '未完成';
+        if (invoices.length > 0) {
+            invoices.forEach(function (invoice) {
+                var issuedDate = new Date(invoice.issuedDate).toLocaleDateString();
                 tableBody += `
                     <tr>
-                        <td>${transaction.transactionId}</td>
-                        <td>${completionAt}</td>
-                        <td>${transaction.transactionType}</td>
-                        <td>${transaction.targetIncome}</td>
-                        <td>${transaction.orderType}</td>
-                        <td>${transaction.orderId}</td>
-                        <td>${transaction.transactionStatus}</td>
-                        <td>${transaction.paymentMethod}</td>
+                        <td>${invoice.invoiceNumber}</td>
+                        <td>${invoice.invoiceAmount}</td>
+                        <td>${issuedDate}</td>
+                        <td>${invoice.invoiceStatus}</td>
                     </tr>`;
             });
-            $('#transactionTableBody').html(tableBody);
-            $('#noTransactionsMessage').hide();
-            $('#transactionTable').show();
+            $('#invoiceTableBody').html(tableBody);
+            $('#noInvoicesMessage').hide();
+            $('#invoiceTable').show();
         } else {
-            $('#transactionTableBody').empty();
-            $('#transactionTable').hide();
-            $('#noTransactionsMessage').show();
+            $('#invoiceTableBody').empty();
+            $('#invoiceTable').hide();
+            $('#noInvoicesMessage').show();
         }
     }
 });
+</script>
 
-    </script>
+
 </body>
 </html>

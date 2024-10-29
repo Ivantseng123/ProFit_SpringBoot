@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -81,6 +82,7 @@ public class CoursesService implements IcourseService {
 	}
 
 	@Override
+	@Cacheable
 	public Page<CoursesDTO> searchCoursesPage(String courseName, String userName, String status, Integer userId,
 			Integer category, String sort, String sortBy, Integer pageNumber, Integer pageSize) {
 
@@ -98,6 +100,14 @@ public class CoursesService implements IcourseService {
 		Page<CoursesDTO> courseDTOPage = searchCoursesPage.map(CoursesDTO::new);
 
 		return courseDTOPage;
+	}
+
+	@Override
+	public List<Object[]> getCourseCountByCategoryName() {
+
+		List<Object[]> courseCountByCategoryName = courseRepo.getCourseCountByCategoryName();
+
+		return courseCountByCategoryName;
 	}
 
 }

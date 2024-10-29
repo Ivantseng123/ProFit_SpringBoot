@@ -1,6 +1,7 @@
 package com.ProFit.model.dto.coursesDTO;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 
@@ -11,6 +12,7 @@ public class CourseOrderDTO {
 	private String courseId;
 	private String courseName;
 	private Integer coursePrice;
+	private String courseCategoryName;
 	private String courseCoverPictureURL;
 	private Integer studentId;
 	private String studentName;
@@ -23,6 +25,7 @@ public class CourseOrderDTO {
 	private String courseOrderStatus;
 	private String courseOrderPaymentMethod;
 	private Integer courseOrderTaxID;
+	private CoursesDTO course;
 
 	public CourseOrderDTO() {
 		super();
@@ -35,6 +38,7 @@ public class CourseOrderDTO {
 		this.courseId = courseOrder.getCourse().getCourseId();
 		this.courseName = courseOrder.getCourse().getCourseName();
 		this.coursePrice = courseOrder.getCourse().getCoursePrice();
+		this.courseCategoryName = courseOrder.getCourse().getMajorCategory().getCategoryName();
 		this.courseCoverPictureURL = courseOrder.getCourse().getCourseCoverPictureURL();
 		this.studentId = courseOrder.getStudentId();
 		this.studentName = courseOrder.getStudnt().getUserName();
@@ -47,6 +51,14 @@ public class CourseOrderDTO {
 		this.courseOrderStatus = courseOrder.getCourseOrderStatus();
 		this.courseOrderPaymentMethod = courseOrder.getCourseOrderPaymentMethod();
 		this.courseOrderTaxID = courseOrder.getCourseOrderTaxID();
+	}
+
+	public String getCourseCategoryName() {
+		return courseCategoryName;
+	}
+
+	public void setCourseCategoryName(String courseCategoryName) {
+		this.courseCategoryName = courseCategoryName;
 	}
 
 	public String getCourseOrderPaymentMethod() {
@@ -185,4 +197,18 @@ public class CourseOrderDTO {
 		this.courseOrderStatus = courseOrderStatus;
 	}
 
+	// 訂單清單的日期格式化
+	public String getFormattedCourseOrderCreateDate() {
+		if (this.courseOrderCreateDate != null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+			return this.courseOrderCreateDate.format(formatter);
+		} else {
+			return "無";
+		}
+	}
+
+	// 得到訂單日期
+	public void setFormattedCourseOrderCreateDate(String formattedCourseOrderCreateDate) {
+
+	}
 }

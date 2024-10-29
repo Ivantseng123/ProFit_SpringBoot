@@ -1,3 +1,15 @@
+$(document).ready(function() {
+	let params = new URLSearchParams(window.location.search);
+	let loginStatus = params.get('login');
+	
+	console.log(loginStatus);
+	
+	if(loginStatus == 'false'){
+		alert("請先登入");
+	}
+});
+
+
 document.getElementById('loginForm').addEventListener('submit', function(e) {
 	e.preventDefault(); // 取消原本 form 表單送的 request
 	let userEmail = document.getElementById('username').value;
@@ -35,6 +47,6 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
 })
 
 function oneClickInsert() {
-	document.getElementById('username').value = 'admin@gmail.com';
-	document.getElementById('password').value = 'admin';
+	document.getElementById('username').value = 'admin';
+	document.getElementById('password').value = 'adminProFit';
 }

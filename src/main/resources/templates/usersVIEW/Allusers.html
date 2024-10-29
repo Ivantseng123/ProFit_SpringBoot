@@ -7,6 +7,9 @@
 <link rel="stylesheet" th:href="@{/css/users/userVIEW.css}" />
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/2.1.7/css/dataTables.bootstrap5.css" />
+<style>
+
+</style>
 </head>
 
 <body>
@@ -17,14 +20,16 @@
 		<div class="dashboard-header d-flex align-items-center">
 			<h2>會員列表</h2>
 			<div class="ms-auto d-flex">
-				<select id="userIdentityFilter" class="form-select me-3" style="width: 150px;">
+				<button class="btn btn-primary w-100 me-3" onclick="downloadLogs()">Log日誌</button>
+				<select id="userIdentityFilter" class="form-select me-3"
+					style="width: 150px;">
 					<option value="">所有</option>
 					<option value="1">應徵者</option>
 					<option value="2">企業</option>
 					<option value="3">管理員</option>
 					<option value="4">超級管理員</option>
 				</select>
-				<button class="btn btn-primary w-50" onclick="togglePopup()">新增會員</button>
+				<button class="btn btn-primary w-100" onclick="togglePopup()">新增會員</button>
 			</div>
 		</div>
 		<div>

@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Static Navigation - SB Admin</title>
-<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-<link th:href="@{/css/model/styles.css}" rel="stylesheet" />
-<link th:href="@{/css/model.css}" rel="stylesheet">
-<script src="https://kit.fontawesome.com/4caf09a569.js"
-	crossorigin="anonymous"></script>
-<style>
-#layoutSidenav_nav {
-	position: fixed;
-	top: 0;
-	height: 100%;
-}
 
-#layoutSidenav_content {
-	margin-left: 232px; /* 調整為 Sidebar 的寬度 */
-	padding: 20px; /* 添加內邊距 */
-	flex-grow: 1; /* 使主內容區域自動填滿剩餘空間 */
-}
-</style>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Static Navigation - SB Admin</title>
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/model/styles.css}" rel="stylesheet" />
+	<link th:href="@{/css/model.css}" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/4caf09a569.js" crossorigin="anonymous"></script>
+	<style>
+		#layoutSidenav_nav {
+			position: fixed;
+			top: 0;
+			height: 100%;
+		}
+
+		#layoutSidenav_content {
+			margin-left: 232px;
+			/* 調整為 Sidebar 的寬度 */
+			padding: 20px;
+			/* 添加內邊距 */
+			flex-grow: 1;
+			/* 使主內容區域自動填滿剩餘空間 */
+		}
+	</style>
 </head>
+
 <body>
-	<nav
-		class="sb-topnav navbar navbar-expand navbar-dark bg-dark sticky-top">
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark sticky-top">
 		<!-- Navbar Brand-->
 		<a class="navbar-brand ps-3" th:href="@{/}">ProFit</a>
 		<!-- Sidebar Toggle-->
-		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-			id="sidebarToggle" href="#!">
+		<button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
 			<i class="fas fa-bars"></i>
 		</button>
 		<!-- Navbar Search-->
@@ -68,23 +69,32 @@
 	</nav>
 	<div id="layoutSidenav">
 		<div id="layoutSidenav_nav">
-			<nav class="sb-sidenav accordion sb-sidenav-dark"
-				id="sidenavAccordion">
+			<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
 				<div class="sb-sidenav-menu">
 					<div class="nav">
 						<div class="sb-sidenav-menu-heading">Core</div>
-						<a class="nav-link" th:href="@{/}">
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseLayouts0" aria-expanded="false" aria-controls="collapseLayouts0">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-tachometer-alt"></i>
 							</div> Dashboard
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
 						</a>
+						<div class="collapse" id="collapseLayouts0" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="http://localhost:8080/ProFit/user/charts">會員/公司</a>
+								<a class="nav-link" href="http://localhost:8080/ProFit/courses/dashboard">課程儀表板</a>
+							</nav>
+						</div>
 
 
 						<div class="sb-sidenav-menu-heading">Function</div>
 
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-							data-bs-target="#collapseLayouts" aria-expanded="false"
-							aria-controls="collapseLayouts">
+							data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
 							<div class="sb-nav-link-icon">
 								<i class="fa-regular fa-user"></i>
 							</div> 會員管理
@@ -92,23 +102,18 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts"
-							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link"
-									href="http://localhost:8080/ProFit/user/alluserPage">會員列表</a> <a
-									class="nav-link"
-									href="http://localhost:8080/ProFit/tokens/alltokenPage">Token列表</a>
-								<a class="nav-link"
-									href="http://localhost:8080/ProFit/empAppls/allEmpAppl">企業申請列表</a>
-								<a class="nav-link"
-									href="http://localhost:8080/ProFit/empPf/allempPf">企業列表</a>
+								<a class="nav-link" href="http://localhost:8080/ProFit/user/alluserPage">會員列表</a> <a
+									class="nav-link" href="http://localhost:8080/ProFit/tokens/alltokenPage">Token列表</a>
+								<a class="nav-link" href="http://localhost:8080/ProFit/empAppls/allEmpAppl">企業申請列表</a>
+								<a class="nav-link" href="http://localhost:8080/ProFit/empPf/allempPf">企業列表</a>
 							</nav>
 						</div>
 
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-							data-bs-target="#collapseLayouts1" aria-expanded="false"
-							aria-controls="collapseLayouts1">
+							data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts1">
 							<div class="sb-nav-link-icon">
 								<i class="fa-solid fa-briefcase"></i>
 							</div> 職缺管理
@@ -116,11 +121,10 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts1"
-							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link"
-									href="http://localhost:8080/ProFit/jobs/list#">職缺列表</a> <a
+								<a class="nav-link" href="http://localhost:8080/ProFit/jobs/list#">職缺列表</a> <a
 									class="nav-link"
 									href="http://localhost:8080/ProFit/jobsApplication/list#">職缺申請列表</a>
 								<a class="nav-link"
@@ -129,8 +133,7 @@
 						</div>
 
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-							data-bs-target="#collapseLayouts2" aria-expanded="false"
-							aria-controls="collapseLayouts2">
+							data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts2">
 							<div class="sb-nav-link-icon">
 								<i class="fa-regular fa-file-code"></i>
 							</div> 技能服務管理
@@ -138,20 +141,18 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts2"
-							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<!-- <a class="nav-link" href="http://localhost:8080/ProFit/majorCategory/">專業類別</a> -->
 								<a class="nav-link" href="http://localhost:8080/ProFit/major/">專業管理</a>
-								<a class="nav-link"
-									href="http://localhost:8080/ProFit/userMajors/">會員專業管理</a> <a
+								<a class="nav-link" href="http://localhost:8080/ProFit/userMajors/">會員專業管理</a> <a
 									class="nav-link" href="http://localhost:8080/ProFit/service/">技能服務管理</a>
 							</nav>
 						</div>
 
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-							data-bs-target="#collapseLayouts3" aria-expanded="false"
-							aria-controls="collapseLayouts3">
+							data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
 							<div class="sb-nav-link-icon">
 								<i class="fa-brands fa-leanpub"></i>
 							</div> 課程管理
@@ -159,18 +160,17 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts3"
-							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" th:href="@{/courses}">查詢所有課程</a> <a
-									class="nav-link" th:href="@{/courses/addCourse}">新增課程</a> <a
-									class="nav-link" th:href="@{/courseOrders}">查詢所有課程訂單</a>
+								<a class="nav-link" th:href="@{/courses}">查詢所有課程</a> <a class="nav-link"
+									th:href="@{/courses/addCourse}">新增課程</a> <a class="nav-link"
+									th:href="@{/courseOrders}">查詢所有課程訂單</a>
 							</nav>
 						</div>
 
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-							data-bs-target="#collapseLayouts4" aria-expanded="false"
-							aria-controls="collapseLayouts4">
+							data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
 							<div class="sb-nav-link-icon">
 								<i class=" fa-solid fa-people-group"></i>
 							</div> 活動管理
@@ -178,18 +178,18 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts4"
-							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<a class="nav-link" th:href="@{/events}">活動列表</a>
 								<a class="nav-link" th:href="@{/events/host}">活動主辦列表</a>
+								<a class="nav-link" th:href="@{/events/order}">活動訂單列表</a>
 							</nav>
 						</div>
 
 
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-							data-bs-target="#collapseLayouts5" aria-expanded="false"
-							aria-controls="collapseLayouts5">
+							data-bs-target="#collapseLayouts5" aria-expanded="false" aria-controls="collapseLayouts5">
 							<div class="sb-nav-link-icon">
 								<i class="fa-regular fa-dollar-sign"></i>
 							</div> 交易管理
@@ -197,12 +197,12 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts5"
-							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+						<div class="collapse" id="collapseLayouts5" aria-labelledby="headingOne"
+							data-bs-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" th:href="@{/jobOrders}">訂單系統</a> <a
-									class="nav-link" th:href="@{/allTransactions}">交易管理</a> <a
-									class="nav-link" th:href="@{/invoices}">發票系統</a>
+								<a class="nav-link" th:href="@{/jobOrders}">訂單系統</a> <a class="nav-link"
+									th:href="@{/allTransactions}">交易管理</a> <a class="nav-link"
+									th:href="@{/invoices}">發票系統</a>
 							</nav>
 						</div>
 
@@ -244,11 +244,9 @@
 				</div>
 				<div class="sb-sidenav-footer">
 					<a href="http://localhost:8080/ProFit/logout" class="sidebar-link">
-						<img
-						src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkiiSGuZZHAXgwIk9YzTjQjmMxxwne2-1VlQ&s"
-						alt="" width="32" height="32" class="rounded-circle me-2"
-						id="userImage"> <strong id="userName">登入者</strong> <i
-						class="fa-solid fa-right-from-bracket"></i> <span>登出</span>
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkiiSGuZZHAXgwIk9YzTjQjmMxxwne2-1VlQ&s"
+							alt="" width="32" height="32" class="rounded-circle me-2" id="userImage"> <strong
+							id="userName">登入者</strong> <i class="fa-solid fa-right-from-bracket"></i> <span>登出</span>
 					</a>
 				</div>
 			</nav>
@@ -264,4 +262,5 @@
 			<script th:src="@{/js/axios.min.js}"></script>
 			<script th:src="@{/js/users/home.js}"></script>
 </body>
+
 </html>

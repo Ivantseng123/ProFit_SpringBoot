@@ -8,25 +8,30 @@ import com.ProFit.model.dto.coursesDTO.CourseOrderDTO;
 
 public interface IcourseOrderService {
 
-	//新增課程訂單
+	// 新增課程訂單
 	public Integer insertCourseOrder(CourseOrderBean courseOrder);
-	
-	//刪除課程訂單by Id
+
+	// 刪除課程訂單by Id
 	public void deleteCourseOrderById(String courseOrderId);
-	
-	//修改課程訂單
+
+	// 修改課程訂單
 	public boolean updateCourseOrderById(CourseOrderBean newCourseOrder);
-	
-	//查詢單筆課程訂單By courseId
+
+	// 查詢單筆課程訂單By courseId
 	public CourseOrderDTO searchOneCourseOrderById(String courseOrderId);
-	
-	//查詢全部訂單
+
+	// 查詢全部訂單
 	public List<CourseOrderDTO> searchAllCourseOrders();
-	
-	//查詢全部訂單By多條件查詢
-	public List<CourseOrderDTO> searchAllCourseOrders(String courseId,Integer studentId,String status);
-	
-	//查詢結果以分頁顯示
+
+	// 查詢全部訂單By多條件查詢
+	public List<CourseOrderDTO> searchAllCourseOrders(String courseId, Integer studentId, String status);
+
+	// 查詢結果以分頁顯示
 	public Page<CourseOrderDTO> findMsgByPage(Integer pageNumber);
-	
+
+	// 分析課程購買情況 By 課程分類
+	List<Object[]> getCourseOrderAnalysis();
+
+	List<Object[]> getTop10Courses();
+
 }

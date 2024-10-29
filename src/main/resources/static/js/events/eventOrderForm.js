@@ -1,111 +1,66 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // const currentURL = window.location.pathname;
-    // const titleElement = document.getElementById('eventFormTitle');
-    // const isEventActiveSelect = document.getElementById('isEventActive');
-    // const eventCategorySelect = document.getElementById('eventCategory');
-    // const eventMajorSelect = document.getElementById('eventMajor');
-    // const inputs = document.querySelectorAll('#eventForm input, #eventForm select, #eventForm textarea');
-    // const saveBtn = document.getElementById("saveBtn");
-    // const cancelBtn = document.getElementById("cancelBtn");
+    const currentURL = window.location.pathname;
+    const titleElement = document.getElementById('eventOrderFormTitle');
+    const inputs = document.querySelectorAll('#eventOrderForm input, #eventOrderForm select, #eventOrderForm textarea');
+    const saveBtn = document.getElementById("saveBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
 
-    // //填入選項
-    // Object.keys(statusMapping).forEach(key => {
-    //     if (key !== 'default') {
-    //         const option = document.createElement('option');
-    //         option.value = key;
-    //         option.text = statusMapping[key];
-    //         //初始選項
-    //         if (key === isEventActiveSelect.dataset.value) {
-    //             option.selected = true;
-    //         }
-    //         isEventActiveSelect.appendChild(option);
-    //     }
-    // });
-
-    // Object.keys(categoryMapping).forEach(key => {
-    //     if (key !== 'default') {
-    //         const option = document.createElement('option');
-    //         option.value = key;
-    //         option.text = categoryMapping[key];
-    //         //初始選項
-    //         if (key === eventCategorySelect.dataset.value) {
-    //             option.selected = true;
-    //         }
-    //         eventCategorySelect.appendChild(option);
-    //     }
-    // });
-
-    // Object.keys(majorMapping).forEach(key => {
-    //     if (key !== 'default') {
-    //         const option = document.createElement('option');
-    //         option.value = key;
-    //         option.text = majorMapping[key];
-    //         //初始選項
-    //         if (key === eventMajorSelect.dataset.value) {
-    //             option.selected = true;
-    //         }
-    //         eventMajorSelect.appendChild(option);
-    //     }
-    // });
-
-    // //設定標題文字
-    // if (currentURL.includes('/edit')) {
-    //     titleElement.textContent = '編輯活動';
-    // } else if (currentURL.includes('/new')) {
-    //     titleElement.textContent = '新增活動';
-    // } else if (currentURL.includes('/view')) {
-    //     titleElement.textContent = '檢視活動';
-    //     saveBtn.style.display = 'none';
-    //     inputs.forEach(input => {
-    //         input.setAttribute('disabled', true);
-    //     });
-    // }
-
-    // //保存
-    // saveBtn.addEventListener("click", () => {
-    //     const confirmation = confirm("確定保存?");
-    //     if (!confirmation) {
-    //         console.log("保存已取消");
-    //         return;
-    //     }
-    //     submitForm();
-    // });
-
-    // //取消
-    // cancelBtn.addEventListener("click", () => {
-    //     window.location.href = '/ProFit/events';
-    // });
+    console.log(currentURL);
     
-    // //送出表單
-    // function submitForm() {
-    //     const eventData = {
-    //         eventId: document.getElementById("eventId").value || 'new',
-    //         eventName: document.getElementById("eventName").value,
-    //         isEventActive: document.getElementById("isEventActive").value,
-    //         eventCategory: document.getElementById("eventCategory").value,
-    //         eventMajorId: document.getElementById("eventMajor").value,
-    //         eventPublishDate: document.getElementById("eventPublishDate").value,
-    //         eventStartDate: document.getElementById("eventStartDate").value,
-    //         eventEndDate: document.getElementById("eventEndDate").value,
-    //         eventPartStartDate: document.getElementById("eventPartStartDate").value,
-    //         eventPartEndDate: document.getElementById("eventPartEndDate").value,
-    //         eventAmount: document.getElementById("eventAmount").value,
-    //         eventLocation: document.getElementById("eventLocation").value,
-    //         eventParticipantMaximum: document.getElementById("eventParticipantMaximum").value,
-    //         eventDescription: document.getElementById("eventDescription").value,
-    //         eventNote: document.getElementById("eventNote").value
-    //     };
+    //設定標題文字
+    if (currentURL.includes('/edit')) {
+        titleElement.textContent = '編輯參加者';
+    } else if (currentURL.includes('/new')) {
+        titleElement.textContent = '新增參加者';
+    } else if (currentURL.includes('/view')) {
+        titleElement.textContent = '檢視參加者';
+        saveBtn.style.display = 'none';
+        inputs.forEach(input => {
+            input.setAttribute('disabled', true);
+        });
+    }
 
-    //     console.log(eventData);
+    //保存
+    saveBtn.addEventListener("click", () => {
+        const confirmation = confirm("確定保存?");
+        if (!confirmation) {
+            console.log("保存已取消");
+            return;
+        }
+        submitForm();
+    });
 
-    //     axios.post('/ProFit/events/save', eventData)
-    //         .then(function (response) {
-    //             window.location.href = response.data;
-    //         })
-    //         .catch(function (error) {
-    //             console.error('There was an error!', error);
-    //         });
-    // }
+    //取消
+    cancelBtn.addEventListener("click", () => {
+        const confirmation = confirm("確定回到上一頁?");
+        if (!confirmation) {
+            console.log("已取消");
+            return;
+        }
+        window.history.back();
+    });
 
+    //送出表單
+    function submitForm() {
+        const eventOrderData = {
+            eventOrderId: document.getElementById("eventOrderId").value || 'new',
+            eventId: document.getElementById("eventId").value,
+            participantId: document.getElementById("participantId").value,
+            eventOrderAmount: document.getElementById("eventOrderAmount").value,
+            eventOrderActive: document.getElementById("isEventOrderActive").value,
+            eventParticipantDate: document.getElementById("eventParticipantDate").value,
+            eventParticipantNote: document.getElementById("eventParticipantNote").value
+        };
+
+    console.log(eventOrderData);
+
+    axios.post('/ProFit/events/order/save', eventOrderData)
+        .then(function (response) {
+            window.location.href = response.data;
+        })
+        .catch(function (error) {
+            console.error('There was an error!', error);
+        });
+    };
 });

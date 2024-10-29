@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.ProFit.model.bean.chatsBean.ChatBean;
 import com.ProFit.model.bean.servicesBean.ServiceBean;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
+import com.ProFit.model.dto.usersDTO.UsersDTO;
 
 public class ChatDTO {
 
@@ -20,7 +21,9 @@ public class ChatDTO {
   private LocalDateTime lastMessageAt;
   private Integer status;
   //
-  private ServiceBean service;
+  private UsersDTO freelancer; // userId1
+  private UsersDTO caseowner; // userId2
+  private ServicesDTO service;
   private List<MessageDTO> messages;
 
   // 无参构造函数
@@ -29,7 +32,8 @@ public class ChatDTO {
 
   // 全参数构造函数
   public ChatDTO(Integer chatId, Integer serviceId, Integer userId1, Integer userId2, LocalDateTime createAt,
-      LocalDateTime lastMessageAt, Integer status, ServiceBean service, List<MessageDTO> messages) {
+      LocalDateTime lastMessageAt, Integer status, UsersDTO freelancer, UsersDTO caseowner, ServicesDTO service,
+      List<MessageDTO> messages) {
     this.chatId = chatId;
     this.serviceId = serviceId;
     this.userId1 = userId1;
@@ -37,6 +41,8 @@ public class ChatDTO {
     this.createAt = createAt;
     this.lastMessageAt = lastMessageAt;
     this.status = status;
+    this.freelancer = freelancer;
+    this.caseowner = caseowner;
     this.service = service;
     this.messages = messages;
   }
@@ -46,18 +52,30 @@ public class ChatDTO {
     if (chatBean == null)
       return null;
 
-    return new ChatDTO(
-        chatBean.getChatId(),
-        chatBean.getServiceId(),
-        chatBean.getUserId1(),
-        chatBean.getUserId2(),
-        chatBean.getCreateAt(),
-        chatBean.getLastMessageAt(),
-        chatBean.getStatus(),
-        chatBean.getService() != null ? chatBean.getService() : null,
-        chatBean.getMessages() != null
-            ? chatBean.getMessages().stream().map(MessageDTO::fromEntity).collect(Collectors.toList())
-            : null);
+    ChatDTO chatDTO = new ChatDTO();
+    chatDTO.setChatId(chatBean.getChatId());
+    chatDTO.setServiceId(chatBean.getServiceId());
+    chatDTO.setUserId1(chatBean.getUserId1());
+    chatDTO.setUserId2(chatBean.getUserId2());
+    chatDTO.setCreateAt(chatBean.getCreateAt());
+    chatDTO.setLastMessageAt(chatBean.getLastMessageAt());
+    chatDTO.setStatus(chatBean.getStatus());
+
+    //
+    if (chatBean.getUserId1() != null) {
+      chatDTO.setFreelancer(new UsersDTO(chatBean.getUser1()));
+    }
+    if (chatBean.getUserId2() != null) {
+      chatDTO.setCaseowner(new UsersDTO(chatBean.getUser2()));
+    }
+    if (chatBean.getService() != null) {
+      chatDTO.setService(ServicesDTO.fromEntity(chatBean.getService()));
+    }
+    if (chatBean.getMessages() != null) {
+      chatDTO.setMessages(chatBean.getMessages().stream().map(MessageDTO::fromEntity).collect(Collectors.toList()));
+    }
+
+    return chatDTO;
   }
 
   /**
@@ -70,17 +88,27 @@ public class ChatDTO {
     if (chatBean == null)
       return null;
 
-    return new ChatDTO(
-        chatBean.getChatId(),
-        chatBean.getServiceId(),
-        chatBean.getUserId1(),
-        chatBean.getUserId2(),
-        chatBean.getCreateAt(),
-        chatBean.getLastMessageAt(),
-        chatBean.getStatus(),
-        chatBean.getService() != null ? chatBean.getService() : null,
-        null // 不載入訊息列表
-    );
+    ChatDTO chatDTO = new ChatDTO();
+    chatDTO.setChatId(chatBean.getChatId());
+    chatDTO.setServiceId(chatBean.getServiceId());
+    chatDTO.setUserId1(chatBean.getUserId1());
+    chatDTO.setUserId2(chatBean.getUserId2());
+    chatDTO.setCreateAt(chatBean.getCreateAt());
+    chatDTO.setLastMessageAt(chatBean.getLastMessageAt());
+    chatDTO.setStatus(chatBean.getStatus());
+
+    //
+    if (chatBean.getUserId1() != null) {
+      chatDTO.setFreelancer(new UsersDTO(chatBean.getUser1()));
+    }
+    if (chatBean.getUserId2() != null) {
+      chatDTO.setCaseowner(new UsersDTO(chatBean.getUser2()));
+    }
+    if (chatBean.getService() != null) {
+      chatDTO.setService(ServicesDTO.fromEntity(chatBean.getService()));
+    }
+
+    return chatDTO;
   }
 
   /**
@@ -94,6 +122,8 @@ public class ChatDTO {
     if (chatBean == null)
       return null;
 
+    ChatDTO chatDTO = new ChatDTO();
+
     List<MessageDTO> latestMessages = null;
     if (chatBean.getMessages() != null) {
       latestMessages = chatBean.getMessages().stream()
@@ -102,17 +132,28 @@ public class ChatDTO {
           .map(MessageDTO::fromEntity)
           .collect(Collectors.toList());
     }
+    chatDTO.setMessages(latestMessages);
 
-    return new ChatDTO(
-        chatBean.getChatId(),
-        chatBean.getServiceId(),
-        chatBean.getUserId1(),
-        chatBean.getUserId2(),
-        chatBean.getCreateAt(),
-        chatBean.getLastMessageAt(),
-        chatBean.getStatus(),
-        chatBean.getService() != null ? chatBean.getService() : null,
-        latestMessages);
+    chatDTO.setChatId(chatBean.getChatId());
+    chatDTO.setServiceId(chatBean.getServiceId());
+    chatDTO.setUserId1(chatBean.getUserId1());
+    chatDTO.setUserId2(chatBean.getUserId2());
+    chatDTO.setCreateAt(chatBean.getCreateAt());
+    chatDTO.setLastMessageAt(chatBean.getLastMessageAt());
+    chatDTO.setStatus(chatBean.getStatus());
+
+    //
+    if (chatBean.getUserId1() != null) {
+      chatDTO.setFreelancer(new UsersDTO(chatBean.getUser1()));
+    }
+    if (chatBean.getUserId2() != null) {
+      chatDTO.setCaseowner(new UsersDTO(chatBean.getUser2()));
+    }
+    if (chatBean.getService() != null) {
+      chatDTO.setService(ServicesDTO.fromEntity(chatBean.getService()));
+    }
+
+    return chatDTO;
   }
 
   /**
@@ -203,11 +244,27 @@ public class ChatDTO {
     this.status = status;
   }
 
-  public ServiceBean getService() {
+  public UsersDTO getFreelancer() {
+    return freelancer;
+  }
+
+  public void setFreelancer(UsersDTO freelancer) {
+    this.freelancer = freelancer;
+  }
+
+  public UsersDTO getCaseowner() {
+    return caseowner;
+  }
+
+  public void setCaseowner(UsersDTO caseowner) {
+    this.caseowner = caseowner;
+  }
+
+  public ServicesDTO getService() {
     return service;
   }
 
-  public void setService(ServiceBean service) {
+  public void setService(ServicesDTO service) {
     this.service = service;
   }
 

@@ -14,7 +14,9 @@ public class EmpPfDTO {
 	private Integer userId;
 
 	private String userEmail;
-
+	
+	private String userName;
+	
 	private String companyName;
 
 	private String companyAddress;
@@ -46,6 +48,10 @@ public class EmpPfDTO {
 		if (emp.getUser() != null) {
 			this.userEmail = emp.getUser().getUserEmail();
 		}
+		
+		if (emp.getUser() != null) {
+			this.userName = emp.getUser().getUserName();
+		}
 
 		this.companyName = emp.getCompanyName();
 		this.companyAddress = emp.getCompanyAddress();
@@ -56,6 +62,14 @@ public class EmpPfDTO {
 		this.companyCaptital = emp.getCompanyCaptital();
 		this.companyDescription = emp.getCompanyDescription();
 		this.companyPhotoURL = emp.getCompanyPhotoURL();
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public EmpPfDTO(Integer user_id, String company_name, String company_address, String company_category,

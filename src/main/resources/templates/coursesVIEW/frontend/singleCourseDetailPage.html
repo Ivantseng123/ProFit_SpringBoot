@@ -70,7 +70,7 @@
                                     <li>
                                         <a href="#commentSpace">
                                             <i class="lni lni-comments"></i>
-                                            <span th:text="|${courseGradeDTOList.totalElements} 則留言|"></span>
+                                            <span th:text="|${courseGradeDTOList.totalElements} 則評論|"></span>
                                         </a>
                                     </li>
                                     <!-- <li>
@@ -98,17 +98,16 @@
                                             </h2>
                                             <div th:id="|panelsStayOpen-collapse${courseModuleStatus.index+1}|"
                                                 class="accordion-collapse collapse">
-                                                <!-- 遍歷 moduleLessonsMap -->
+                                                <!-- 遍歷 moduleLessonsMap2 -->
                                                 <th:block th:each="lessonEntry : ${courseModuleDTO.moduleLessonsMap}">
-                                                    <!-- lessonEntry.value 是內層 Map，遍歷這個 Map -->
-                                                    <th:block th:each="entry,status : ${lessonEntry.value.entrySet()}">
-                                                        <div class="accordion-body d-flex justify-content-between">
-                                                            <!-- 課程名稱放左邊 -->
-                                                            <strong th:text="|單元名稱: ${entry.key}|"></strong>
-                                                            <!-- 媒體時長放右邊 -->
-                                                            <span th:text="|學習時長: ${entry.value} 分鐘|"></span>
-                                                        </div>
-                                                    </th:block>
+                                                    <div class="accordion-body d-flex justify-content-between">
+                                                        <!-- 使用 lessonEntry.key 來顯示 lesson ID -->
+                                                        <strong
+                                                            th:text="|單元名稱: ${lessonEntry.value.courseLessonName}|"></strong>
+                                                        <!-- 使用 lessonEntry.value 中的 mediaDuration 屬性顯示學習時長 -->
+                                                        <span
+                                                            th:text="|學習時長: ${lessonEntry.value.mediaDuration} 分鐘|"></span>
+                                                    </div>
                                                 </th:block>
                                             </div>
                                         </div>
@@ -182,9 +181,9 @@
                             </div>
                             <div class="mt-3">
                                 <a id="buyNow"
-                                    th:href="${courseDTO.courseStatus == 'Active' ? '/ProFit/course/purchase?courseId=' + courseDTO.courseId : '#'}"
+                                    th:href="${isPurchased ? '/ProFit/user/profile?clickCourse=true' : (courseDTO.courseStatus == 'Active' ? '/ProFit/course/purchase?courseId=' + courseDTO.courseId : '#')}"
                                     style="width:200px" class="btn btn-primary" type="button"
-                                    th:text="${courseDTO.courseStatus == 'Active' ? '立即購買' : '未開課'}"
+                                    th:text="${isPurchased ? '已購買，前往課程中心' : (courseDTO.courseStatus == 'Active' ? '立即購買' : '未開課')}"
                                     th:classappend="${courseDTO.courseStatus != 'Active' ? ' disabled' : ''}">
                                 </a>
                             </div>
@@ -243,8 +242,6 @@
                 }
             });
 
-            // let courseId = $('.courseName').data('courseid');
-            // updateAddToCartButton(courseId);
 
         });
 
@@ -254,77 +251,6 @@
         var formattedPrice = new Number(coursePrice).toLocaleString('zh-TW');
 
         priceElement.innerHTML += formattedPrice;
-
-        // $('#addToCart').click(function () {
-
-        //     let courseId = $('.courseName').data('courseid');
-
-        //     $.ajax({
-        //         url: '/ProFit/course/searchOne?courseId=' + courseId,
-        //         dataType: 'JSON',
-        //         type: 'GET',
-        //         success: function (courseDTO) {
-
-        //             addToCart(courseDTO);
-
-        //             alert('成功加入購物車');
-
-        //             displayCart();
-
-        //         },
-        //         error: function () {
-        //             alert('加入購物車失敗');
-        //         }
-        //     })
-
-        // });
-
-        // function addToCart(courseDTO) {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        //     // 檢查是否已經有該商品
-        //     let exists = cart.some(item => item.courseId === courseDTO.courseId);
-
-        //     if (!exists) {
-        //         cart.push(courseDTO);
-        //         localStorage.setItem('cart', JSON.stringify(cart));
-        //         updateAddToCartButton(courseDTO.courseId);  // 更新按鈕狀態
-        //     } else {
-        //         alert('這個商品已經在購物車中');
-        //     }
-        // }
-
-        // function displayCart() {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        //     cart.forEach(course => {
-        //         // 顯示每個商品的資訊
-        //         console.log(course.courseName);
-        //     });
-        // }
-
-        // function removeFromCart(courseId) {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        //     cart = cart.filter(course => course.courseId !== courseId);
-        //     localStorage.setItem('cart', JSON.stringify(cart));
-        // }
-
-        // function clearCart() {
-        //     localStorage.removeItem('cart');
-        // }
-
-        // function updateAddToCartButton(courseId) {
-        //     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        //     // 檢查購物車裡面是否已經有該商品
-        //     let exists = cart.some(item => item.courseId === courseId);
-
-        //     if (exists) {
-        //         $('#addToCart').text('已經在購物車').prop('disabled', true).removeClass('btn-success').addClass('btn-secondary');
-        //         $('#buyNow').text('前往結帳');
-        //     } else {
-        //         $('#addToCart').text('加入購物車').prop('disabled', false).removeClass('btn-secondary').addClass('btn-success');
-        //     }
-        // }
     </script>
 </body>
 

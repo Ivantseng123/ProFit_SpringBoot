@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge" />
-<title>進帳管理</title>
+<title>ProFit-我的錢包</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="shortcut icon" type="image/x-icon"
 	th:href="@{/images/favicon.svg}" />
@@ -13,7 +13,9 @@
 <link rel="stylesheet" th:href="@{/css/frontend/main.css}">
 <style>
 body {
-	padding-top: 120px;
+    padding-top: 120px;
+    background-color: #f5f7fa;
+    font-size: 1.0rem;
 }
 
 .card {
@@ -46,6 +48,10 @@ body {
 	width: 100%;
 	z-index: 1000;
 }
+
+.footer {
+    margin-top: 50px;
+}
 </style>
 </head>
 <body>
@@ -53,16 +59,49 @@ body {
 	<div th:replace="~{model/frontend/headerOtherPage}"></div>
 
 	<div class="container mt-4">
+		
+		<h4 id="courseheader">我的錢包</h4>
 		<!-- 餘額顯示 -->
-		<div
-			class="card-body d-flex justify-content-between align-items-center">
-			<div class="d-flex align-items-center">
-				<h4 class="summary-title">可提領金額</h4>
-				<div class="summary-amount ms-3">
-					 NT$<span th:text="${userBalance}">0</span>
+		<div class="card">
+			<div
+				class="card-body d-flex justify-content-between align-items-center">
+				<div class="d-flex align-items-center">
+					<h4 class="summary-title">可提領金額</h4>
+					<div class="summary-amount ms-3">
+						NT$<span th:text="${userBalance}">0</span>
+					</div>
+				</div>
+				<button class="btn btn-primary" data-bs-toggle="modal"
+					data-bs-target="#withdrawModal">取款</button>
+			</div>
+		</div>
+
+		<!-- 取款模態框 -->
+		<div class="modal fade" id="withdrawModal" tabindex="-1"
+			aria-labelledby="withdrawModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="withdrawModalLabel">輸入取款金額</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="withdrawForm">
+							<div class="mb-3">
+								<label for="withdrawAmount" class="form-label">金額</label> <input
+									type="number" class="form-control" id="withdrawAmount"
+									name="amount" required>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">取消</button>
+						<button type="button" id="submitWithdraw" class="btn btn-primary">確認取款</button>
+					</div>
 				</div>
 			</div>
-			<button class="btn btn-primary">取款</button>
 		</div>
 
 		<!-- Income Summary -->
@@ -111,6 +150,7 @@ body {
 									<th>創建日期</th>
 									<th>狀態</th>
 									<th>撥款金額</th>
+									<th>刪除操作</th>
 								</tr>
 							</thead>
 							<tbody id="transactionTableBody">
@@ -129,76 +169,140 @@ body {
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
 	<script th:src="@{/js/frontend/main.js}"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 	<!-- JavaScript 用於動態獲取和更新交易數據 -->
 	<script>
-        $(document).ready(function () {
-            // 頁面加載後自動獲取即將撥款的交易記錄
-            fetchPendingTransactions();
-
-            function fetchPendingTransactions() {
-                $.ajax({
-                    url: '/ProFit/transaction/getPendingTransactions',  // 假設的後端路徑
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        updateTransactionTable(response);
-                    },
-                    error: function () {
-                        alert('獲取交易記錄時發生錯誤');
-                    }
-                });
-            }
-			
-            // 更新表格內容
-            function updateTransactionTable(transactions) {
-                var tableBody = '';
-                if (transactions.length > 0) {
-                    transactions.forEach(function (transaction) {
-                        // 日期處理
-                        var createdAt = transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString('zh-TW', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit'
-                        }) : '未創建';
-
-                        // 構建表格行
-                        tableBody += `
-                            <tr>
-                                <td>${transaction.transactionId}</td>
-                                <td>${createdAt}</td>
-                                <td>${transaction.transactionStatus}</td>
-                                <td>NT$${transaction.targetIncome}</td>
-                            </tr>`;
-                    });
-
-                    $('#transactionTableBody').html(tableBody);
+	
+	// 刪除交易
+    function deleteTransaction(transactionId) {
+    if (confirm("確定要刪除此交易記錄嗎？")) {
+        $.ajax({
+            url: '/ProFit/transaction/delete',
+            method: 'POST',
+            data: { transactionId: transactionId },
+            success: function (response) {
+                if (response === "success") {
+                    alert("交易記錄已刪除");
+                    location.reload();  // 刪除成功後重新加載頁面
                 } else {
-                    $('#transactionTableBody').html('<tr><td colspan="4">無交易記錄</td></tr>');
+                    alert("刪除失敗：" + response);
                 }
+            },
+            error: function () {
+                alert("刪除時發生錯誤，請稍後再試");
             }
         });
-        
-        $(document).ready(function() {
-        // 取款按鈕點擊事件
-        $('.btn-primary').on('click', function() {
-            alert("取款功能暫未實現");
-            // 此處可以加入取款的 AJAX 請求或其他邏輯處理
+    }
+}
+        $(document).ready(function () {
+    // 頁面加載後自動獲取即將撥款的交易記錄
+    fetchPendingTransactions();
+
+    function fetchPendingTransactions() {
+        $.ajax({
+            url: '/ProFit/transaction/getPendingTransactions',  // 假設的後端路徑
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateTransactionTable(response);
+            },
+            error: function () {
+                alert('獲取交易記錄時發生錯誤');
+            }
         });
-    });
-    $.ajax({
-    url: '/ProFit/transaction/getPendingTransactions',
-    method: 'GET',
-    dataType: 'json',
-    success: function(response) {
-        console.log(response); // 測試是否有正確返回數據
-        updateTransactionTable(response);
-    },
-    error: function() {
-        alert('獲取交易記錄時發生錯誤');
+    }
+    
+    function translateStatus(status) {
+        var statusMap = {
+            "pending": "等待中",
+            "completed": "已完成",
+            "failed": "失敗",
+            "canceled": "已取消"
+        };
+        return statusMap[status] || status;  // 如果沒有對應的翻譯，返回原狀態
+    }
+
+    // 更新表格內容
+    function updateTransactionTable(transactions) {
+        var tableBody = '';
+        if (transactions.length > 0) {
+            transactions.forEach(function (transaction) {
+                // 日期處理
+                var createdAt = transaction.createdAt ? new Date(transaction.createdAt).toLocaleDateString('zh-TW', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }) : '未創建';
+
+                // 翻譯狀態為中文
+                var translatedStatus = translateStatus(transaction.transactionStatus);
+
+                // 構建表格行，添加刪除按鈕
+                tableBody += `
+                    <tr>
+                        <td>${transaction.transactionId}</td>
+                        <td>${createdAt}</td>
+                        <td>${translatedStatus}</td>
+                        <td>NT$${transaction.targetIncome}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" onclick="deleteTransaction('${transaction.transactionId}')">
+                                刪除
+                            </button>
+                        </td>
+                    </tr>`;
+            });
+
+            $('#transactionTableBody').html(tableBody);
+        } else {
+            $('#transactionTableBody').html('<tr><td colspan="5">無交易記錄</td></tr>');
+        }
+    }
+
+    // 當用戶點擊確認取款按鈕
+   $('#submitWithdraw').on('click', function () {
+    var amount = $('#withdrawAmount').val();
+
+    if (amount && amount > 0) {
+        $.ajax({
+            url: '/ProFit/transaction/withdraw',
+            method: 'POST',
+            data: { amount: amount },
+            success: function (response) {
+                if (response === "success") {
+                    alert('取款成功！');
+                    location.reload();
+                } else {
+                    alert(response);  // 顯示後端返回的自訂訊息
+                }
+            },
+            error: function () {
+                alert('取款失敗，請稍後再試');
+            }
+        });
+    } else {
+        alert('請輸入有效的金額');
     }
 });
-    
+
+
+    // 獲取交易資料
+    $.ajax({
+        url: '/ProFit/transaction/getPendingTransactions',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            updateTransactionTable(response);
+        },
+        error: function() {
+            alert('獲取交易記錄時發生錯誤');
+        }
+    }); 
+
+});
+
     </script>
 
 </body>

@@ -1,6 +1,7 @@
 package com.ProFit.controller.users.backend;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UserStatistics_registerTime;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.userService.IUserService;
 import com.google.cloud.storage.Acl.User;
@@ -43,16 +46,17 @@ public class usersController {
 		return "usersVIEW/Allusers";
 	}
 
-//	// 全部會員
-//	@GetMapping(path = "user/alluser")
-//	@ResponseBody
-//	public List<UsersDTO> GetAlluser() {
-//
-//		List<UsersDTO> userlist = userService.getAllUserInfo().stream().map(UsersDTO::new) // 使用 DTO 的構造函數
-//				.collect(Collectors.toList());
-//
-//		return userlist;
-//	}
+	// // 全部會員
+	// @GetMapping(path = "user/alluser")
+	// @ResponseBody
+	// public List<UsersDTO> GetAlluser() {
+	//
+	// List<UsersDTO> userlist =
+	// userService.getAllUserInfo().stream().map(UsersDTO::new) // 使用 DTO 的構造函數
+	// .collect(Collectors.toList());
+	//
+	// return userlist;
+	// }
 
 	// 新增會員
 	@PostMapping(path = "user/adduser")
@@ -70,8 +74,6 @@ public class usersController {
 
 		return "信箱已註冊";
 	}
-
-	
 
 	// 刪除會員
 	@DeleteMapping(path = "user/deleteuser")
@@ -103,8 +105,8 @@ public class usersController {
 
 		UsersDTO user = new UsersDTO(userService.getUserInfoByID(user_id));
 
-//		System.out.println(user);
-//		System.out.println(user.getUserEmail());
+		// System.out.println(user);
+		// System.out.println(user.getUserEmail());
 		return user;
 
 	}
@@ -119,12 +121,13 @@ public class usersController {
 		Integer userIdentity = Integer.valueOf(usersDTO.getUserIdentity());
 		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance());
 		Integer freelancerProfileStatus = Integer.valueOf(usersDTO.getFreelancerProfileStatus());
+		Integer status = Integer.valueOf(usersDTO.getEnabled());
 
 		return userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(),
 				usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(), usersDTO.getUserPhoneNumber(),
 				usersDTO.getUserCity(), userIdentity, userBalance, usersDTO.getFreelancerLocationPrefer(),
 				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus,
-				usersDTO.getFreelancerDisc(),usersDTO.getEnabled());
+				usersDTO.getFreelancerDisc(), status);
 	}
 
 	// 編輯會員
@@ -148,24 +151,39 @@ public class usersController {
 
 	@ResponseBody
 	@GetMapping("/api/user/page")
-	public Page<UsersDTO> findByPageApi(@RequestParam Integer pageNumber,
-			@RequestParam(required = false) String search, @RequestParam(required = false) String userIdentity) {
+	public Page<UsersDTO> findByPageApi(@RequestParam Integer pageNumber, @RequestParam(required = false) String search,
+			@RequestParam(required = false) String userIdentity) {
 		Page<UsersDTO> page;
-		
-		System.out.println("會員身分-----------------------------------:  " + userIdentity);
-		
-		if (!userIdentity.isEmpty() ) {
-			
+
+		if (userIdentity != null && !userIdentity.isEmpty()) {
+
 			Integer userIdentity1 = Integer.valueOf(userIdentity);
 			page = userService.findUserByPageAndSearch(pageNumber, search, userIdentity1);
-			
-		}else {
-			
+
+		} else {
+
 			page = userService.findUserByPageAndSearch(pageNumber, search, null);
 		}
-		
-		
-		
+
 		return page;
 	}
+
+	// 會員儀表板
+	@GetMapping(path = "user/charts")
+	public String userCharts() {
+
+		return "usersVIEW/menber_company_Chart";
+	}
+
+	@GetMapping("user/statistics")
+	public ResponseEntity<List<UserStatistics>> getUserStatistics() {
+		List<UserStatistics> statistics = userService.getUserStatistics();
+		return ResponseEntity.ok(statistics);
+	}
+	
+	@GetMapping("user/registration_statistics")
+	public ResponseEntity<List<UserStatistics_registerTime>> getUserStatistics_registerTime() {
+		List<UserStatistics_registerTime> statistics = userService.getUserStatisticsByDate();
+        return ResponseEntity.ok(statistics);
+    }
 }

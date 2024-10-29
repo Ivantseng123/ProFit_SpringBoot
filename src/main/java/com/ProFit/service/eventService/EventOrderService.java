@@ -7,116 +7,108 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ProFit.model.bean.eventsBean.EventsBean;
-import com.ProFit.model.dto.eventsDTO.EventsDTO;
-import com.ProFit.model.dao.eventsCRUD.EventsDAO;
-//import com.ProFit.model.dao.majorsCRUD.MajorRepository;
+import com.ProFit.model.bean.eventsBean.EventOrderBean;
+import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
+import com.ProFit.model.dao.eventsCRUD.EventOrderDAO;
 
 @Service
 @Transactional
-public class EventOrderService {
+public class EventOrderService implements IEventOrderService {
 
-//    @Autowired
-//    private EventsDAO eventsDAO;
-//    
-////    @Autowired
-////    private MajorRepository majorRepository;
-//
-//    //搜尋全部活動
-//    public List<EventsBean> selectAllEvents() {
-//        return eventsDAO.findAll();
-//    }
-//
-//    //依照ID搜尋活動
-//    public EventsBean selectEventById(String eventId) {
-//    	return eventsDAO.findById(eventId).orElse(null);
-//    }
-//    
-//    //依照名稱搜尋活動
-//    public List<EventsBean> selectEventByName(String eventName) {
-//    	return eventsDAO.findByEventNameContaining(eventName);
-//    }
-//    //依照狀態搜尋活動
-//    public List<EventsBean> selectEventByStatus(int isEventActive) {
-//    	return eventsDAO.findByIsEventActive(isEventActive);
-//    }
-//    //依照類別搜尋活動
-//    public List<EventsBean> selectEventByCategory(int eventCategory) {
-//    	return eventsDAO.findByEventCategory(eventCategory);
-//    }
-//    //依照專業搜尋活動
-//    public List<EventsBean> selectEventByMajor(int eventMajor) {
-//    	return eventsDAO.findByEventMajorId(eventMajor);
-//    }
-//
-//    //保存活動
-//    public String saveEvent(EventsBean event) {
-//        if (eventsDAO.existsById(event.getEventId())==false) {
-//            String newEventId = generateNewEventId();
-//            event.setEventId(newEventId);
-//            event.setEventPublishDate(LocalDateTime.now());
-//        }
-//        System.out.println(event);
-//        eventsDAO.save(event);
-//        return event.getEventId();
-//    }
-//
-//    //刪除活動
-//    public String deleteEvent(String eventId) {
-//        eventsDAO.deleteById(eventId);
-//        return eventId;
-//    }
-//    
-//    //將實體轉換成DTO
-//    public EventsDTO convertToDTO(EventsBean event) {
-//        if (event == null) {
-//            return null;
-//        }
-//        EventsDTO dto = new EventsDTO();
-//        dto.setEventId(event.getEventId());
-//        dto.setEventName(event.getEventName());
-//        dto.setIsEventActive(event.getIsEventActive());
-//        dto.setEventCategory(event.getEventCategory());
-//        dto.setEventMajorId(event.getEventMajor() != null ? event.getEventMajor().getMajorId() : null);
-//        dto.setEventPublishDate(event.getEventPublishDate());
-//        dto.setEventStartDate(event.getEventStartDate());
-//        dto.setEventEndDate(event.getEventEndDate());
-//        dto.setEventPartStartDate(event.getEventPartStartDate());
-//        dto.setEventPartEndDate(event.getEventPartEndDate());
-//        dto.setEventAmount(event.getEventAmount());
-//        dto.setEventLocation(event.getEventLocation());
-//        dto.setEventParticipantMaximum(event.getEventParticipantMaximum());
-//        dto.setEventDescription(event.getEventDescription());
-//        dto.setEventNote(event.getEventNote());
-//        return dto;
-//    }
-//
-//    //將DTO轉換成實體
-//    public EventsBean convertToEntity(EventsDTO eventDTO) {
-//        EventsBean event = new EventsBean();
-//        event.setEventId(eventDTO.getEventId());
-//        event.setEventName(eventDTO.getEventName());
-//        event.setIsEventActive(eventDTO.getIsEventActive());
-//        event.setEventCategory(eventDTO.getEventCategory());
-////        event.setEventMajor(majorRepository.findById(eventDTO.getEventMajorId()).get());
-//        event.setEventMajorId(eventDTO.getEventMajorId());
-//        event.setEventPublishDate(eventDTO.getEventPublishDate());
-//        event.setEventStartDate(eventDTO.getEventStartDate());
-//        event.setEventEndDate(eventDTO.getEventEndDate());
-//        event.setEventPartStartDate(eventDTO.getEventPartStartDate());
-//        event.setEventPartEndDate(eventDTO.getEventPartEndDate());
-//        event.setEventAmount(eventDTO.getEventAmount());
-//        event.setEventLocation(eventDTO.getEventLocation());
-//        event.setEventParticipantMaximum(eventDTO.getEventParticipantMaximum());
-//        event.setEventDescription(eventDTO.getEventDescription());
-//        event.setEventNote(eventDTO.getEventNote());
-//        return event;
-//    }
-//    
-//    
-//    private String generateNewEventId() {
-//    	String maxEventId = eventsDAO.findMaxEventId().getEventId();
-//    	int newId = (maxEventId != null) ? Integer.parseInt(maxEventId.replace("EV", "")) + 1 : 1;
-//    	return String.format("EV%03d", newId);
-//    }
+    @Autowired
+    private EventOrderDAO eventOrderDAO;
+
+    // 搜尋全部訂單
+    @Override
+	public List<EventOrderBean> selectAllOrders() {
+        return eventOrderDAO.findAll();
+    }
+
+    // 依照ID搜尋訂單
+    @Override
+	public EventOrderBean selectOrderById(String eventOrderId) {
+        return eventOrderDAO.findById(eventOrderId).orElse(null);
+    }
+
+    // 依照狀態搜尋訂單
+    @Override
+	public List<EventOrderBean> selectOrderByStatus(Boolean isEventOrderActive) {
+        return eventOrderDAO.findByIsEventOrderActive(isEventOrderActive);
+    }
+
+    // 依照參加者搜尋活動
+    @Override
+	public List<EventOrderBean> selectEventByParticipant(int eventParticipantId) {
+        return eventOrderDAO.findByEventParticipantId(eventParticipantId);
+    }
+
+    // 依照活動搜尋參加者
+    @Override
+	public List<EventOrderBean> selectParticipantByEvent(String eventId) {
+        return eventOrderDAO.findByEventId(eventId);
+    }
+
+    // 保存活動
+    @Override
+	public String saveOrder(EventOrderBean order) {
+        if (eventOrderDAO.existsById(order.getEventOrderId()) == false) {
+            String newOrderId = generateNewEventOrderId();
+            order.setEventOrderId(newOrderId);
+            order.setEventParticipantDate(LocalDateTime.now());
+        }
+        System.out.println(order);
+        eventOrderDAO.save(order);
+        return order.getEventOrderId();
+    }
+
+    // 刪除活動
+    @Override
+	public String deleteOrder(String eventOrderId) {
+        eventOrderDAO.deleteById(eventOrderId);
+        return eventOrderId;
+    }
+
+    // 將實體轉換成DTO
+    @Override
+	public EventOrderDTO convertToDTO(EventOrderBean order) {
+        if (order == null) {
+            return null;
+        }
+        EventOrderDTO dto = new EventOrderDTO();
+        dto.setEventOrderId(order.getEventOrderId());
+        dto.setEventOrderAmount(order.getEventOrderAmount());
+        dto.setEventParticipantDate(order.getEventParticipantDate());
+        dto.setEventParticipantNote(order.getEventParticipantNote());
+        dto.setEventOrderActive(order.isEventOrderActive());
+        if (order.getEvent() != null) {
+            dto.setEventId(order.getEvent().getEventId());
+            dto.setEventName(order.getEvent().getEventName());
+        }
+        if (order.getParticipant() != null) {
+            dto.setParticipantId(order.getParticipant().getUserId());
+            dto.setParticipantName(order.getParticipant().getUserName());
+        }
+
+        return dto;
+    }
+
+    // 將DTO轉換成實體
+    @Override
+	public EventOrderBean convertToBean(EventOrderDTO orderDTO) {
+        EventOrderBean order = new EventOrderBean();
+        order.setEventOrderId(orderDTO.getEventOrderId());
+        order.setEventOrderAmount(orderDTO.getEventOrderAmount());
+        order.setEventParticipantDate(orderDTO.getEventParticipantDate());
+        order.setEventParticipantNote(orderDTO.getEventParticipantNote());
+        order.setEventOrderActive(orderDTO.isEventOrderActive());
+        order.setEventId(orderDTO.getEventId());
+        order.setEventParticipantId(orderDTO.getParticipantId());
+        return order;
+    }
+
+    private String generateNewEventOrderId() {
+        String maxEventOrderId = eventOrderDAO.findMaxEventOrderId().getEventOrderId();
+        int newId = (maxEventOrderId != null) ? Integer.parseInt(maxEventOrderId.replace("EO", "")) + 1 : 1;
+        return String.format("EO%03d", newId);
+    }
 }

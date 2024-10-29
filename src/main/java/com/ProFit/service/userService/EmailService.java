@@ -1,6 +1,9 @@
 package com.ProFit.service.userService;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -23,7 +26,10 @@ public class EmailService {
 		this.javaMailSender = javaMailSender;
 	}
 
-	@Async //非同步發送郵件
+	@Value("${spring.mail.username}")
+	private String fromEmail;
+
+	@Async // 非同步發送郵件
 	public void sendSimpleHtml(Collection<String> receivers, String subject, String content) {
 		try {
 			MimeMessage message = javaMailSender.createMimeMessage();
@@ -37,7 +43,24 @@ public class EmailService {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	@Async // 非同步發送郵件
+	public void sendSimpleHtml(String subject, String content, String senderEmail) throws UnsupportedEncodingException {
+		try {
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message);
+			helper.setTo(fromEmail);
+			helper.setSubject(subject);
+			helper.setText(content, true);
+		
+			helper.setFrom(fromEmail, "ProFit User: " + senderEmail);
+
+			javaMailSender.send(message);
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 //	@Async
 //	public void sendMixedHtml(Collection<String> receivers, String subject, String htmlContent, Collection<DataSource> attachments) {
 //	    try {
@@ -78,7 +101,7 @@ public class EmailService {
 //	        throw new RuntimeException(e);
 //	    }
 //	}
-	
+
 //	@Async
 //	public void sendEmail(SimpleMailMessage email) {
 //		javaMailSender.send(email);

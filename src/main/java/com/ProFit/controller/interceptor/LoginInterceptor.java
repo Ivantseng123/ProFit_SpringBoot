@@ -17,7 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("user_email") == null) {
-			response.sendRedirect(request.getContextPath() + "/loginPage");
+			response.sendRedirect(request.getContextPath() + "/loginPage?login=false");
 			
 //			if (!request.getRequestURI().startsWith("/ProFit/js/")) {
 //				response.sendRedirect(request.getContextPath() + "/loginPage");

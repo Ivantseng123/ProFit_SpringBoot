@@ -13,7 +13,7 @@ public class EventOrderBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id	@Column(name = "event_order_Id")
 	private String eventOrderId;
 
 	@Column(name = "event_order_amount")
@@ -28,25 +28,37 @@ public class EventOrderBean implements Serializable {
 	@Column(name = "event_participant_note")
 	private String eventParticipantNote;
 
-	@ManyToOne
-	@JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = false)
+//	@ManyToOne
+//	@JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "event_id", insertable = false, updatable = false)
 	private EventsBean event;
+	
+	@Column(name = "event_id")
+	private String eventId;
 
-	@ManyToOne
-	@JoinColumn(name = "event_participant_id", referencedColumnName = "user_id", nullable = false)
+//	@ManyToOne
+//	@JoinColumn(name = "event_participant_id", referencedColumnName = "user_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "event_participant_id", insertable = false, updatable = false)
 	private Users participant;
+	
+	@Column(name = "event_participant_id")
+	private Integer eventParticipantId;
 
 	public EventOrderBean() {
 	}
 
-	public EventOrderBean(String eventOrderId, int eventOrderAmount, boolean isEventOrderActive, String eventId,
-			int eventParticipantId, LocalDateTime eventParticipantDate, String eventParticipantNote) {
+	public EventOrderBean(String eventOrderId, int eventOrderAmount, boolean isEventOrderActive,
+			LocalDateTime eventParticipantDate, String eventParticipantNote, EventsBean event, Users participant) {
 		super();
 		this.eventOrderId = eventOrderId;
 		this.eventOrderAmount = eventOrderAmount;
 		this.isEventOrderActive = isEventOrderActive;
 		this.eventParticipantDate = eventParticipantDate;
 		this.eventParticipantNote = eventParticipantNote;
+		this.event = event;
+		this.participant = participant;
 	}
 
 	public String getEventOrderId() {
@@ -73,14 +85,6 @@ public class EventOrderBean implements Serializable {
 		this.isEventOrderActive = isEventOrderActive;
 	}
 
-	public EventsBean getEvent() {
-		return event;
-	}
-
-	public Users getEventParticipant() {
-		return participant;
-	}
-
 	public LocalDateTime getEventParticipantDate() {
 		return eventParticipantDate;
 	}
@@ -97,14 +101,46 @@ public class EventOrderBean implements Serializable {
 		this.eventParticipantNote = eventParticipantNote;
 	}
 
+	public EventsBean getEvent() {
+		return event;
+	}
+
+	public void setEvent(EventsBean event) {
+		this.event = event;
+	}
+
+	public String getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
+	}
+
+	public Users getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(Users participant) {
+		this.participant = participant;
+	}
+
+	public Integer getEventParticipantId() {
+		return eventParticipantId;
+	}
+
+	public void setEventParticipantId(Integer eventParticipantId) {
+		this.eventParticipantId = eventParticipantId;
+	}
+
 	@Override
 	public String toString() {
 		return "EventOrderBean [eventOrderId=" + eventOrderId + ", eventOrderAmount=" + eventOrderAmount
-				+ ", isEventOrderActive=" + isEventOrderActive + ", eventId=" + this.event.getEventId()
-				+ ", eventParticipantId="
-				+ this.participant.getUserId() + ", eventParticipantDate=" + eventParticipantDate
-				+ ", eventParticipantNote="
-				+ eventParticipantNote + "]";
+				+ ", isEventOrderActive=" + isEventOrderActive + ", eventParticipantDate=" + eventParticipantDate
+				+ ", eventParticipantNote=" + eventParticipantNote + ", event=" + event + ", eventId=" + eventId
+				+ ", participant=" + participant + ", eventParticipantId=" + eventParticipantId + "]";
 	}
+
+	
 
 }

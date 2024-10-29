@@ -3,28 +3,17 @@ package com.ProFit.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import com.ProFit.security.oauth.MemberOAuth2SuccessHandler;
 import com.ProFit.security.oauth.MemeberOAuth2UserService;
-import com.ProFit.security.oauth.MemeberUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	@Autowired
-	private MemeberUserDetailsService customUserDetailsService;
-
+	
 	@Autowired
 	private MemeberOAuth2UserService memberOAuth2UserService;
 
@@ -68,7 +57,7 @@ public class SecurityConfig {
 		return (web) -> web.ignoring().requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
 	}
 
-	@Bean
+	/*@Bean
 	UserDetailsService userDetailsService() {
 		return new MemeberUserDetailsService();
 	}
@@ -82,5 +71,5 @@ public class SecurityConfig {
 		authProvider.setPasswordEncoder(passwordEncoder); // 用來比對密碼
 
 		return new ProviderManager(authProvider);
-	}
+	}*/
 }
