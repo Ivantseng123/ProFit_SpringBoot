@@ -81,6 +81,24 @@ public class ServiceFrontendController {
         return "servicesVIEW/frontend/createService";
     }
 
+    // 跳到編輯服務頁面
+    @GetMapping("/edit/{serviceId}")
+    public String editServiceFrontendPage(@PathVariable Integer serviceId, HttpSession session, Model model) {
+        UsersDTO currentUser = getCurrentUser(session);
+        // 若沒有登入
+        if (currentUser == null) {
+            return "redirect:/user/profile";
+        }
+
+        ServicesDTO serviceDTO = serviceService.getServiceById(serviceId);
+        if (serviceDTO != null) {
+            model.addAttribute("serviceDTO", serviceDTO);
+        }
+
+        model.addAttribute("currentUser", currentUser);
+        return "servicesVIEW/frontend/createService";
+    }
+
     @GetMapping("/{serviceId}")
     public String singleServiceDetailPage(@PathVariable Integer serviceId, Model model) {
         ServicesDTO serviceDTO = serviceService.getServiceById(serviceId);
@@ -255,14 +273,14 @@ public class ServiceFrontendController {
     }
 
     // 根據使用者ID取得關聯的專業（分頁）
-	@GetMapping("/api/user/{userId}")
-	@ResponseBody
-	public ResponseEntity<PageResponse<UserMajorDTO>> getUserMajorsByUserId(@PathVariable Integer userId,
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-			@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "true") boolean ascending) {
-		PageResponse<UserMajorDTO> response = userMajorService.getUserMajorsByUserId(userId, page, size, sortBy,
-				ascending);
-		return ResponseEntity.ok(response);
-	}
+    @GetMapping("/api/user/{userId}")
+    @ResponseBody
+    public ResponseEntity<PageResponse<UserMajorDTO>> getUserMajorsByUserId(@PathVariable Integer userId,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "true") boolean ascending) {
+        PageResponse<UserMajorDTO> response = userMajorService.getUserMajorsByUserId(userId, page, size, sortBy,
+                ascending);
+        return ResponseEntity.ok(response);
+    }
 
 }

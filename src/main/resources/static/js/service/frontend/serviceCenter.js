@@ -95,7 +95,7 @@ function htmlMakerForServices(searchServicesByUserId) {
                         <span class="mb-0">狀態: ${getStatusText(servicesDTO.serviceStatus)}</span>
                     </div>
                     <div class="col-md-2 text-center d-flex flex-column align-items-center justify-content-center">
-                        <a href="/ProFit/course/${servicesDTO.serviceId}" class="btn btn-success btn-sm mb-2">修改服務</a>
+                        <a href="/ProFit/c/service/edit/${servicesDTO.serviceId}" target="_blank" class="btn btn-success btn-sm mb-2">修改服務</a>
                         <a href="#" onclick="deleteService(event, ${servicesDTO.serviceId})" class="btn btn-danger btn-sm">刪除服務</a>
                     </div>
                 </div>
