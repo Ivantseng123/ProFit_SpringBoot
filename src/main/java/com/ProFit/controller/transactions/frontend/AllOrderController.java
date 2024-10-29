@@ -81,9 +81,11 @@ public class AllOrderController {
 	        return null;
 	    }
 
-	    List<ServiceOrdersDTO> serviceOrders = serviceOrdersService.getAllServiceOrdersAsDTO();
+	    // 根據 caseownerId 過濾訂單
+	    List<ServiceOrdersDTO> serviceOrders = serviceOrdersService.getServiceOrdersByCaseownerId(usersDTO.getUserId());
 	    return serviceOrders;
 	}
+
 	
 	// 獲取所有 CourseOrder 資料
 	@GetMapping("/allOrder/courseOrders")
@@ -94,8 +96,8 @@ public class AllOrderController {
 	        return null;
 	    }
 
-	    List<CourseOrderDTO> courseOrders = courseOrderService.searchAllCourseOrders();
-	    return courseOrders;
+	    Integer userId = usersDTO.getUserId();
+	    return courseOrderService.getOrdersByUserId(userId);
 	}
 	
 	// 新增刪除訂單的 API
@@ -128,7 +130,7 @@ public class AllOrderController {
 	        // 檢查 status，根據不同狀態進行相應操作
 	        if ("Pending".equals(status)) {
 	            // 將狀態從 Pending 更新為 "已付款"
-	            courseOrderService.updateOrderStatusById(orderId, "已付款");
+	            courseOrderService.updateOrderStatusById(orderId, "paid");
 
 	            // 為付款方新增交易紀錄
 	            UserTransactionDTO transactionDTO = new UserTransactionDTO();
@@ -155,14 +157,14 @@ public class AllOrderController {
 
 	            UserTransactionDTO transactionDTO = new UserTransactionDTO();
 	            transactionDTO.setUserId(creatorUserId);
-	            transactionDTO.setTransactionRole("收款方");
-	            transactionDTO.setTransactionType("存入");
+	            transactionDTO.setTransactionRole("receiver");
+	            transactionDTO.setTransactionType("deposit");
 	            String orderType = getOrderTypeByOrderId(orderId);
 	            transactionDTO.setOrderType(orderType);
 	            transactionDTO.setOrderId(orderId);
 	            transactionDTO.setTotalAmount(finalAmount);
-	            transactionDTO.setTransactionStatus("已完成");
-	            transactionDTO.setPaymentMethod("存入");
+	            transactionDTO.setTransactionStatus("completed");
+	            transactionDTO.setPaymentMethod("deposit");
 
 	            userTransactionService.insertTransaction(transactionDTO);
 	            

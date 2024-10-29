@@ -162,4 +162,12 @@ public class CourseOrderService implements IcourseOrderService {
 		return null;
 	}
 
+	//訂單管理 顯示登入用戶的訂單詳情
+	public List<CourseOrderDTO> getOrdersByUserId(Integer userId) {
+	    List<CourseOrderBean> courseOrders = courseOrderRepository.findOrdersByUserId(userId);
+	    return courseOrders.stream()
+	                       .map(CourseOrderDTO::new)
+	                       .collect(Collectors.toList());
+	}
+
 }
