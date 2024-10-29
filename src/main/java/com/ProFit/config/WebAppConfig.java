@@ -1,5 +1,7 @@
 package com.ProFit.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -34,14 +36,62 @@ public class WebAppConfig implements WebMvcConfigurer {
 	
 	@Autowired
 	private LoginInterceptor_frontend loginInterceptor_frontend;
-
+	
+	 List<String> pathPatterns_backend = List.of(
+		        "/", 
+		        "/user/alluserPage", 
+		        "/user/adduser", 
+		        "/user/deleteuser", 
+		        "/getUserPage", 
+		        "/getuser/", 
+		        "/users/updateuser", 
+		        "/users/updateuserpwd", 
+		        "/api/user/page", 
+		        "/user/charts", 
+		        "/user/statistics", 
+		        "/user/registration_statistics",
+		        "/tokens/alltokenPage",
+		        "/tokens/addToken",
+		        "/tokens/deletetoken",
+		        "/api/token/page",
+		        "/download/logs",
+		        "/empPf/allempPf",
+		        "/empPf/addEmpPf",
+		        "/empPf/deleteEmpPf",
+		        "/empPf/updateEmpPf",
+		        "/getEmpPfPage",
+		        "/getempPf/",
+		        "/api/empPf/page",
+		        "/empAppls/allEmpAppl",
+		        "/empAppl/addEmpAppl",
+		        "/empAppl/deleteEmpAppl",
+		        "/empAppl/updateEmpAppl",
+		        "/getEmpApplPage",
+		        "/getempAppl/",
+		        "/empAppl/checkEmpAppl",
+		        "/api/empAppl/page"
+		    );
+	
+	 List<String> pathPatterns_frontend = List.of(
+			 	"/user/profile",
+			 	"/user/profileinfo",
+			 	"/users/updateProfile",
+			 	"/users/updateuserpwdFrontend",
+			 	"/user/customerService",
+			 	"/user/sendEmail",
+			 	"/empAppl/addEmpAppl_frontend",
+			 	"/empAppl/getEmpAppl",
+			 	"/empPf/updateCompPf",
+			 	"/emp/getCompPfinfo"	 	
+		    );
+	
 //	@Override
 //	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(loginInterceptor).addPathPatterns("/","/user/alluserPage","/user/adduser","/user/deleteuser","/getUserPage","/getuser/{userId}","/users/updateuser","/users/updateuserpwd","/api/user/page","/user/charts","/user/statistics","/user/registration_statistics") // 過濾所有請求
-//				.excludePathPatterns("/loginPage","/login","/js/users/Login.js"); // 排除登入頁面
+//		registry.addInterceptor(loginInterceptor).addPathPatterns(pathPatterns_backend);
+//				//.excludePathPatterns("/loginPage","/login","/js/users/Login.js"); // 排除登入頁面
 //		
-//		registry.addInterceptor(loginInterceptor_frontend).addPathPatterns("/user/profile") // 過濾所有請求
-//				.excludePathPatterns("/homepage","/login_frontend","/js/users/frontend_login.js"); // 排除登入頁面
+//		registry.addInterceptor(loginInterceptor_frontend).addPathPatterns(pathPatterns_frontend);
+//				//.excludePathPatterns("/homepage","/login_frontend","/js/users/frontend_login.js"); // 排除登入頁面
 //	}
 	
 	

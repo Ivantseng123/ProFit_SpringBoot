@@ -80,7 +80,7 @@ public class loginFrontend {
 	public ResponseEntity<?> LogoutFrontend(HttpSession session) {
 
 		if (session.getAttribute("CurrentUser") != null) {
-			session.invalidate();
+			session.removeAttribute("CurrentUser");  // 僅移除 CurrentUser 屬性
 			System.out.println("登出成功");
 			return ResponseEntity.ok("登出成功");
 		}

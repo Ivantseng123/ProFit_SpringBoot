@@ -80,11 +80,14 @@ public class loginController {
 		}
 	}
 	
-	@GetMapping("/logout")
+	@GetMapping("/logout_backend")
 	public String Logout(HttpSession session) {
 
 		if (session.getAttribute("user_email") != null) {
-			session.invalidate();
+			session.removeAttribute("user_email");
+			session.removeAttribute("user_name");
+			session.removeAttribute("user_pictureURL");
+			session.removeAttribute("user_identity");
 		}
 		return "redirect:/loginPage";
 
