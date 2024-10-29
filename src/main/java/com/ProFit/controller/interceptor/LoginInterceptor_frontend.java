@@ -7,22 +7,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Component
-public class LoginInterceptor implements HandlerInterceptor {
+public class LoginInterceptor_frontend implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		// 判斷 session 中是否有 "user_email" 的 key
 		HttpSession session = request.getSession();
 
-		if (session.getAttribute("user_email") == null) {
-			response.sendRedirect(request.getContextPath() + "/loginPage?login=false");
+		if (session.getAttribute("CurrentUser") == null) {
+			response.sendRedirect(request.getContextPath() + "/homepage?login=false");
 			
-//			if (!request.getRequestURI().startsWith("/ProFit/js/")) {
-//				response.sendRedirect(request.getContextPath() + "/loginPage");
-//				return false; // 返回 false 阻止請求繼續
-//			}
 		}
 		return true; // 返回 true 繼續請求
 	}

@@ -120,12 +120,13 @@ public class usersController {
 		Integer userIdentity = Integer.valueOf(usersDTO.getUserIdentity());
 		Integer userBalance = Integer.valueOf(usersDTO.getUserBalance());
 		Integer freelancerProfileStatus = Integer.valueOf(usersDTO.getFreelancerProfileStatus());
+		Integer status = Integer.valueOf(usersDTO.getEnabled());
 
 		return userService.updateUserInfo(userId, usersDTO.getUserPictureURL(), usersDTO.getUserName(),
 				usersDTO.getUserEmail(), usersDTO.getUserPasswordHash(), usersDTO.getUserPhoneNumber(),
 				usersDTO.getUserCity(), userIdentity, userBalance, usersDTO.getFreelancerLocationPrefer(),
 				usersDTO.getFreelancerExprience(), usersDTO.getFreelancerIdentity(), freelancerProfileStatus,
-				usersDTO.getFreelancerDisc(), usersDTO.getEnabled());
+				usersDTO.getFreelancerDisc(), status);
 	}
 
 	// 編輯會員
