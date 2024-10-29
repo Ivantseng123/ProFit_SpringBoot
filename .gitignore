@@ -419,3 +419,5 @@ db-secrets.properties
 OAuth2-Credential.properties
 
 smtpConfig.properties
+
+aop-logs.csv
