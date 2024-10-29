@@ -13,30 +13,32 @@
     <div th:replace="~{model/layout-static}"></div>
     <main>
         <div class="dashboard-header">
-            <h2 id="eventOrderForm"></h2>
+            <h2 id="eventOrderFormTitle"></h2>
         </div>
         <form class="form-group form-container" id="eventOrderForm">
-            <input type="hidden" id="eventOrderId" name="eventOrderId">
+            <input type="hidden" id="eventOrderId" name="eventOrderId" th:value="${order.eventOrderId}">
             <label for="eventId">活動ID</label>
-            <input type="text" id="eventId" name="eventId">
+            <input type="text" id="eventId" name="eventId" th:value="${order.eventId}">
             <hr>
             <label for="participantId">參加者ID</label>
-            <input type="text" id="participantId" name="participantId">
+            <input type="text" id="participantId" name="participantId" th:value="${order.participantId}">
             <hr>
             <label for="eventOrderAmount">訂單金額</label>
-            <input type="number" id="eventOrderAmount" name="eventOrderAmount">
+            <input type="number" id="eventOrderAmount" name="eventOrderAmount" th:value="${order.eventOrderAmount}">
             <hr>
             <label for="isEventOrderActive">訂單狀態</label>
             <select id="isEventOrderActive" name="isEventOrderActive">
-                <option value="true">已完成</option>
-                <option value="false">未完成</option>
+                <option value="true" th:selected="${order.eventOrderActive == true}">已完成</option>
+                <option value="false" th:selected="${order.eventOrderActive == false}">未完成</option>
             </select>
             <hr>
             <label for="eventParticipantDate">參加日期</label>
-            <input type="datetime-local" id="eventParticipantDate" name="eventParticipantDate">
+            <input type="datetime-local" id="eventParticipantDate" name="eventParticipantDate"
+                th:value="${order.eventParticipantDate}">
             <hr>
             <label for="eventParticipantNote">參加者備註</label>
-            <textarea id="eventParticipantNote" name="eventParticipantNote"></textarea>
+            <textarea id="eventParticipantNote" name="eventParticipantNote"
+                th:text="${order.eventParticipantNote}"></textarea>
             <hr>
             <button type="button" id="saveBtn">保存</button>
             <button type="button" id="cancelBtn">回上一頁</button>

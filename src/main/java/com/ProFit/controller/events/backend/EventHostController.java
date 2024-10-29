@@ -49,15 +49,15 @@ public class EventHostController {
     @GetMapping("/search")
     @ResponseBody
     public List<EventHostDTO> searchEventHost(@RequestParam(required = false) String eventId,
-            @RequestParam(required = false) Integer userId) {
+            @RequestParam(required = false) Integer hostId) {
         List<EventHostBean> eventHostList;
 
-        System.out.println("eventId: " + eventId + " userId: " + userId);
+        System.out.println("eventId: " + eventId + " hostId: " + hostId);
 
         if (eventId != null && !eventId.isEmpty()) {
             eventHostList = eventHostService.selectByEvent(eventId);
-        } else if (userId != null) {
-            eventHostList = eventHostService.selectByHost(userId);
+        } else if (hostId != null) {
+            eventHostList = eventHostService.selectByHost(hostId);
         } else {
             eventHostList = eventHostService.selectAllEventHost();
         }
@@ -69,8 +69,8 @@ public class EventHostController {
 
     // 刪除活動
     @GetMapping("/delete")
-    public String deleteEventHost(@RequestParam String eventId, @RequestParam Integer hostId) {
-        EventHostIdBean id = new EventHostIdBean(eventId, hostId);
+    public String deleteEventHost(@RequestParam String eventId, @RequestParam Integer eventHostId) {
+        EventHostIdBean id = new EventHostIdBean(eventId, eventHostId);
         eventHostService.deleteEventHost(id);
         return "redirect:/events/host";
     }

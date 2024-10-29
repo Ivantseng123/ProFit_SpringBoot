@@ -88,7 +88,7 @@ public class EventOrderController {
     public ResponseEntity<String> saveOrder(@RequestBody EventOrderDTO eventOrderDTO) {
         EventOrderBean order = eventOrderService.convertToBean(eventOrderDTO);
         eventOrderService.saveOrder(order);
-        return ResponseEntity.ok("/ProFit/eventOrder");
+        return ResponseEntity.ok("/ProFit/events/order");
     }
     
 }

@@ -66,12 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         <tr>
                             <td class="eventOrderId">${eventOrder.eventOrderId}</td>
                             <td class="eventOrderAmount">${eventOrder.eventOrderAmount}</td>
-                            <td class="isEventOrderActive">${eventOrder.isEventOrderActive}</td>
+                            <td class="isEventOrderActive">${eventOrder.eventOrderActive}</td>
                             <td class="eventParticipantDate">${eventOrder.eventParticipantDate}</td>
                             <td class="eventId">${eventOrder.eventId}</td>
                             <td class="eventName">${eventOrder.eventName}</td>
-                            <td class="eventParticipantId">${eventOrder.eventParticipantId}</td>
-                            <td class="eventParticipantName">${eventOrder.eventParticipantName}</td>
+                            <td class="eventParticipantId">${eventOrder.participantId}</td>
+                            <td class="eventParticipantName">${eventOrder.participantName}</td>
                             <td class="action-buttons">
                                 <a class="view btn btn-success btn-sm"
                                     href="${eventOrderPath}/view?eventOrderId=${eventOrder.eventOrderId}">詳細資料</a>
@@ -98,6 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //載入頁面讀取全部資料
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get('eventId');
+    if (value) {
+        document.getElementById('searchCriteria').value = 'eventId';                
+        document.getElementById('searchInput').value = value;
+    }
     $('#searchBtn').click();
 
 });
