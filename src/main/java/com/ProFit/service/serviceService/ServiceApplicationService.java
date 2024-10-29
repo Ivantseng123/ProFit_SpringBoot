@@ -93,8 +93,11 @@ public class ServiceApplicationService {
           .orElseThrow(() -> new RuntimeException("Freelancer not found"));
 
       // 3. 取得並驗證服務
-      ServiceBean service = serviceRepository.findById(newServiceApplication.getServiceId())
-          .orElseThrow(() -> new RuntimeException("Service not found"));
+      ServiceBean service = new ServiceBean();
+      if (newServiceApplication.getServiceId() != null) {
+        service = serviceRepository.findById(newServiceApplication.getServiceId())
+            .orElseThrow(() -> new RuntimeException("Service not found"));
+      }
 
       // 4. 處理聊天記錄
       ChatBean chat;
@@ -121,10 +124,18 @@ public class ServiceApplicationService {
       oldServiceApplication.setChat(chat);
 
       // 更新其他字段
-      oldServiceApplication.setCaseownerId(newServiceApplication.getCaseownerId());
-      oldServiceApplication.setFreelancerId(newServiceApplication.getFreelancerId());
-      oldServiceApplication.setServiceId(newServiceApplication.getServiceId());
-      oldServiceApplication.setChatId(newServiceApplication.getChatId());
+      if (newServiceApplication.getCaseownerId() != null) {
+        oldServiceApplication.setCaseownerId(newServiceApplication.getCaseownerId());
+      }
+      if (newServiceApplication.getFreelancerId() != null) {
+        oldServiceApplication.setFreelancerId(newServiceApplication.getFreelancerId());
+      }
+      if (newServiceApplication.getServiceId() != null) {
+        oldServiceApplication.setServiceId(newServiceApplication.getServiceId());
+      }
+      if (newServiceApplication.getChatId() != null) {
+        oldServiceApplication.setChatId(newServiceApplication.getChatId());
+      }
 
       oldServiceApplication.setServiceApplicationTitle(newServiceApplication.getServiceApplicationTitle());
       oldServiceApplication.setServiceApplicationSubitem(newServiceApplication.getServiceApplicationSubitem());
