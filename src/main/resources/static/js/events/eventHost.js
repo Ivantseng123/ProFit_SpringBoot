@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <td class="eventHostName">${eventHost.eventHostName}</td>
                             <td class="action-buttons">
                                 <a class="delete btn btn-danger btn-sm"
-                                    href="${eventPath}/delete?eventId=${eventHost.eventId}&eventHostId=${eventHost.eventHostId}">刪除</a>
+                                    href="${eventHostPath}/delete?eventId=${eventHost.eventId}&eventHostId=${eventHost.eventHostId}">刪除</a>
                             </td>
                         </tr>
                     `);
@@ -77,7 +77,13 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     });
 
-    //載入頁面讀取全部資料
+    //載入頁面讀取資料
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get('eventId');
+    if (value) {
+        document.getElementById('searchCriteria').value = 'eventId';                
+        document.getElementById('searchInput').value = value;
+    }
     $('#searchBtn').click();
 
 });

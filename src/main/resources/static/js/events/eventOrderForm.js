@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const saveBtn = document.getElementById("saveBtn");
     const cancelBtn = document.getElementById("cancelBtn");
 
+    console.log(currentURL);
+    
     //設定標題文字
     if (currentURL.includes('/edit')) {
         titleElement.textContent = '編輯參加者';
@@ -38,29 +40,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         window.history.back();
     });
-    
+
     //送出表單
     function submitForm() {
         const eventOrderData = {
-                eventOrderId: document.getElementById("eventOrderId").value || 'new',
-                eventId: document.getElementById("eventId").value,
-                participantId: document.getElementById("participantId").value,
-                eventOrderAmount: document.getElementById("eventOrderAmount").value,
-                isEventOrderActive: document.getElementById("isEventOrderActive").value,
-                eventParticipantDate: document.getElementById("eventParticipantDate").value,
-                eventParticipantNote: document.getElementById("eventParticipantNote").value
-            };
+            eventOrderId: document.getElementById("eventOrderId").value || 'new',
+            eventId: document.getElementById("eventId").value,
+            participantId: document.getElementById("participantId").value,
+            eventOrderAmount: document.getElementById("eventOrderAmount").value,
+            eventOrderActive: document.getElementById("isEventOrderActive").value,
+            eventParticipantDate: document.getElementById("eventParticipantDate").value,
+            eventParticipantNote: document.getElementById("eventParticipantNote").value
         };
 
-        console.log(eventOrderData);
+    console.log(eventOrderData);
 
-        axios.post('/ProFit/events/order/save', eventOrderData)
-            .then(function (response) {
-                window.location.href = response.data;
-            })
-            .catch(function (error) {
-                console.error('There was an error!', error);
-            });
-    }
-
+    axios.post('/ProFit/events/order/save', eventOrderData)
+        .then(function (response) {
+            window.location.href = response.data;
+        })
+        .catch(function (error) {
+            console.error('There was an error!', error);
+        });
+    };
 });
