@@ -37,7 +37,11 @@ public class ServiceOrdersDTO {
     this.createdAt = createdAt;
   }
 
-  // 静态工厂方法
+  public ServiceOrdersDTO(ServiceOrderBean order) {
+	// TODO Auto-generated constructor stub
+}
+
+// 静态工厂方法
   public static ServiceOrdersDTO fromEntity(ServiceOrderBean serviceOrderBean) {
     if (serviceOrderBean == null)
       return null;

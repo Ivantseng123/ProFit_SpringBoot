@@ -38,4 +38,11 @@ public class ServiceOrdersService {
                 .map(ServiceOrdersDTO::fromEntity)
                 .collect(Collectors.toList());
     }
+    
+    public List<ServiceOrdersDTO> getServiceOrdersByCaseownerId(Integer caseownerId) {
+        List<ServiceOrderBean> orders = serviceOrderRepo.findByCaseownerId(caseownerId);
+        return orders.stream()
+                     .map(order -> new ServiceOrdersDTO(order))  // 將每個 ServiceOrder 轉換為 DTO
+                     .collect(Collectors.toList());
+    }
 }
