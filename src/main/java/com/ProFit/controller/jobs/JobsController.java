@@ -76,7 +76,7 @@ public class JobsController {
 
 
 
-    // 導向新增頁面
+    // 導向新增/更新頁面
     @GetMapping("/add")
     public String showAddForm(Model model) {
 

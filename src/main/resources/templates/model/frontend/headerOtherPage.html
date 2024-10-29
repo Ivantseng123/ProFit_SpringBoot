@@ -5,18 +5,16 @@
 			<div class="row align-items-center">
 				<div class="col-lg-12">
 					<nav class="navbar navbar-expand-lg">
-						<a class="navbar-brand logo" th:href="@{/homepage}"> <img
-							class="logo1" th:src="@{/images/logo/logo.svg}" alt="Logo" />
+						<a class="navbar-brand logo" th:href="@{/homepage}"> <img class="logo1"
+								th:src="@{/images/logo/logo.svg}" alt="Logo" />
 						</a>
-						<button class="navbar-toggler" type="button"
-							data-toggle="collapse" data-target="#navbarSupportedContent"
-							aria-controls="navbarSupportedContent" aria-expanded="false"
-							aria-label="Toggle navigation">
+						<button class="navbar-toggler" type="button" data-toggle="collapse"
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+							aria-expanded="false" aria-label="Toggle navigation">
 							<span class="toggler-icon"></span> <span class="toggler-icon"></span>
 							<span class="toggler-icon"></span>
 						</button>
-						<div class="collapse navbar-collapse sub-menu-bar"
-							id="navbarSupportedContent">
+						<div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
 							<ul id="nav" class="navbar-nav ml-auto">
 								<li class="nav-item"><a th:href="@{/homepage}">首頁</a></li>
 								<li class="nav-item"><a href="#">我要接案</a>
@@ -25,7 +23,8 @@
 										<li><a href="#">瀏覽分類</a></li>
 										<li><a href="#">新增履歷</a></li>
 										<li><a href="#">職位提醒</a></li>
-									</ul></li>
+									</ul>
+								</li>
 								<li class="nav-item"><a href="#">找服務報價</a>
 									<ul class="sub-menu">
 										<li><a th:href="@{/c/service}">服務總覽</a></li>
@@ -33,42 +32,45 @@
 										<li><a href="#">管理申請</a></li>
 										<li><a href="#">管理履歷</a></li>
 										<li><a href="#">瀏覽履歷</a></li>
-									</ul></li>
+									</ul>
+								</li>
 								<li class="nav-item"><a href="#">找課程</a>
 									<ul class="sub-menu">
 										<li><a th:href="@{/course}">課程總覽</a></li>
 										<!-- <li><a href="#">我是學生</a></li>
 										<li><a href="#">我要創立課程</a></li> -->
-									</ul></li>
+									</ul>
+								</li>
 								<li class="nav-item"><a href="#">找活動</a>
 									<ul class="sub-menu">
 										<li><a href="#">部落格網格側邊欄</a></li>
 										<li><a href="#">部落格單篇</a></li>
 										<li><a href="#">部落格單篇側邊欄</a></li>
-									</ul></li>
-								<li class="nav-item"><a
-									href="http://localhost:8080/ProFit/empPf/allCompany">找公司</a></li>
-								<li class="nav-item"><a
-									href="http://localhost:8080/ProFit/user/profile">帳戶中心</a></li>
+									</ul>
+								</li>
+								<li class="nav-item"><a href="http://localhost:8080/ProFit/empPf/allCompany">找公司</a>
+								</li>
+								<li class="nav-item"><a href="http://localhost:8080/ProFit/user/profile">帳戶中心</a></li>
 								<li class="nav-item"><a href="#">財務管理</a>
 									<ul class="sub-menu">
 										<li><a th:href="@{/allOrder}">我的訂單</a></li>
 										<li><a th:href="@{/transaction}">我的錢包</a></li>
 										<li><a th:href="@{/wallet}">交易紀錄</a></li>
-									</ul></li>
+									</ul>
+								</li>
 								<!-- <li class="nav-item"><a href="contact.html">聯繫我們 </a> </li> -->
 							</ul>
 						</div>
 						<!-- navbar collapse -->
 						<div class="button" style="width: 350px; ">
-							<a th:href="@{/c/chat}" class="login"><i
-								class="lni lni-envelope"></i><span>訊息</span></a> <a
-								href="javascript:" id="authButton" data-toggle="modal"
-								data-target="#login" class="login"> <i
-								class="lni lni-lock-alt"></i><span id="authText">登入</span>
-							</a> <a href="javascript:" data-toggle="modal"
-								data-target="#signup" id="signupButton" class="btn">註冊</a> <p
-								id="usernameDisplay" class="d-flex align-items-center" style="display: none; width: 100px;"></p>
+							<a th:href="@{/c/chat}" class="login"><i class="lni lni-envelope"></i><span>訊息</span></a> <a
+								href="javascript:" id="authButton" data-toggle="modal" data-target="#login"
+								data-bs-toggle="modal" data-bs-target="#login" class="login"> <i
+									class="lni lni-lock-alt"></i><span id="authText">登入</span>
+							</a> <a href="javascript:" data-toggle="modal" data-target="#signup" data-bs-toggle="modal"
+								data-bs-target="#signup" id="signupButton" class="btn">註冊</a>
+							<p id="usernameDisplay" class="d-flex align-items-center"
+								style="display: none; width: 100px;"></p>
 						</div>
 					</nav>
 					<!-- navbar -->

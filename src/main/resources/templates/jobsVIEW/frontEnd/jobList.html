@@ -14,13 +14,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">職缺列表</h1>
-                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
-                            Business draws on a wide range of different business .</p>
+                        <h1 class="page-title">我們找的就是你</h1>
+                        <p>ProFit秉持著為所有人</p>
+                        <p>提供具有吸引力的職缺</p>
+                        <p>善用平台，掌握競爭力</p>
+                        <p>尋找開放創新的工作環境</p>
+                        <p>替自己打造學習與未來職涯的成長機會！</p>
                     </div>
                     <ul class="breadcrumb-nav">
-                        <li><a th:href="@{/homepage}">Home</a></li>
-                        <li>Job List</li>
+                        <li><a th:href="@{/homepage}">回到首頁</a></li>
+                        <li>職缺列表</li>
                     </ul>
                 </div>
             </div>
@@ -30,17 +33,36 @@
 
     <!-- Start Find Job Area -->
     <section class="find-job job-list section">
+
+        <div class="search-job">
+            <div class="container">
+                <div class="search-nner">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-xs-12">
+                            <input type="text" class="form-control" placeholder="關鍵字: Name, Tag">
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-xs-12">
+                            <input type="text" class="form-control" placeholder="地點: City, State, Zip">
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-12 button">
+                            <button type="submit" class="btn btn-common float-right">搜尋</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container">
             <div class="single-head">
                 <div class="row">
                     <div class="col-lg-6 col-12">
                         <!-- Single Job -->
-                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index < 4}">
+                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index % 2 == 0}">
                             <div class="job-image">
                                 <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}" th:text="${job.jobsTitle}">Software Engineer</a></h4>
+                                <h4><a th:href="@{/public/front/jobs/view/{id}(id=${job.jobsId})}" th:text="${job.jobsTitle}">Software Engineer</a></h4>
                                 <p th:text="${job.jobsDescription}">We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
                                     week. All leads are pre-scheduled. </p>
                                 <ul>
@@ -51,8 +73,8 @@
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}">查看詳情</a></li>
-                                    <li><a href="job-details.html">應徵職缺</a></li>
+                                    <li><a th:href="@{/public/front/jobs/view/{id}(id=${job.jobsId})}">查看詳情</a></li>
+                                    <li><a th:href="@{/front/jobs/view/{id}/new(id=${job.jobsId})}">應徵職缺</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -60,12 +82,12 @@
                     </div>
                     <div class="col-lg-6 col-12">
                         <!-- Single Job -->
-                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index > 3 and iter.index < 8}">
+                        <div class="single-job" th:each="job, iter : ${jobs}" th:if="${iter.index % 2 == 1}">
                             <div class="job-image">
                                 <img th:src="@{/images/jobs/img7.png}" alt="#">
                             </div>
                             <div class="job-content">
-                                <h4><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}" th:text="${job.jobsTitle}">Software Engineer</a></h4>
+                                <h4><a th:href="@{/public/front/jobs/view/{id}(id=${job.jobsId})}" th:text="${job.jobsTitle}">Software Engineer</a></h4>
                                 <p th:text="${job.jobsDescription}">We are looking for Enrollment Advisors who are looking to take 30-35 appointments per
                                     week. All leads are pre-scheduled. </p>
                                 <ul>
@@ -76,8 +98,8 @@
                             </div>
                             <div class="job-button">
                                 <ul>
-                                    <li><a th:href="@{/front/jobs/view/{id}(id=${job.jobsId})}">查看詳情</a></li>
-                                    <li><a href="job-details.html">應徵職缺</a></li>
+                                    <li><a th:href="@{/public/front/jobs/view/{id}(id=${job.jobsId})}">查看詳情</a></li>
+                                    <li><a th:href="@{/front/jobs/view/{id}/new(id=${job.jobsId})}">應徵職缺</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -91,19 +113,19 @@
                             <ul class="pagination-list">
                                 <!-- 上一頁 -->
                                 <li th:class="${pageDTO.currentPage == 0} ? 'disabled' : ''">
-                                    <a th:href="@{/front/jobs/list/{page}(page=${pageDTO.currentPage - 1})}" th:if="${pageDTO.currentPage > 0}"><i class="lni lni-arrow-left"></i></a>
+                                    <a th:href="@{/public/front/jobs/list/{page}(page=${pageDTO.currentPage - 1})}" th:if="${pageDTO.currentPage > 0}"><i class="lni lni-arrow-left"></i></a>
                                     <span th:if="${pageDTO.currentPage == 0}"><i class="lni lni-arrow-left"></i></span>
                                 </li>
 
                                 <!-- 頁碼 -->
                                 <li th:each="pageNum : ${#numbers.sequence(0, pageDTO.totalPage - 1)}"
                                     th:class="${pageNum == pageDTO.currentPage} ? 'active' : ''">
-                                    <a th:href="@{/front/jobs/list/} + ${pageNum}" th:text="${pageNum + 1}"></a>
+                                    <a th:href="@{/public/front/jobs/list/} + ${pageNum}" th:text="${pageNum + 1}"></a>
                                 </li>
 
                                 <!-- 下一頁 -->
                                 <li th:class="${pageDTO.currentPage == pageDTO.totalPage - 1} ? 'disabled' : ''">
-                                    <a th:href="@{/front/jobs/list/{page}(page=${pageDTO.currentPage + 1})}"
+                                    <a th:href="@{/public/front/jobs/list/{page}(page=${pageDTO.currentPage + 1})}"
                                        th:if="${pageDTO.currentPage < pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></a>
                                     <span th:if="${pageDTO.currentPage == pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></span>
                                 </li>

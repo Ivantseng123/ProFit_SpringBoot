@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{jobsVIEW/frontEnd/profileLayout}">
+<head>
+  <meta charset="UTF-8">
+  <title>職缺列表</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="job-items">
+      <div class="manage-content" th:each="jobsApplication : ${applications}">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-5 col-md-5">
+            <div class="title-img">
+              <div class="can-img">
+                <img src="assets/images/jobs/manage-job1.png" alt="#">
+              </div>
+              <h3 th:text="${jobsApplication.jobs.jobsTitle}">Mechanical Engineer <span th:text="jobsApplication.jobs.users.employer_profile.companyName">Conzio construction</span></h3>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <p><span class="time" th:text="${jobsApplication.jobs.jobsWorktime}">Full-Time</span></p>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <p th:text="${jobsApplication.jobsApplicationDate}">Nov 14th, 2023</p>
+          </div>
+          <div class="col-lg-2 col-md-2" th:if="${user.userIdentity == 1 or user.userIdentity == 2}">
+            <p th:if="${jobsApplication.jobsApplicationStatus == 0}">已投遞受理</p>
+            <p th:if="${jobsApplication.jobsApplicationStatus == 1}">已錄取</p>
+            <p th:if="${jobsApplication.jobsApplicationStatus == 2}">未錄取</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination left pagination-md-center">
+      <ul class="pagination-list">
+        <!-- 上一頁 -->
+        <li th:class="${pageDTO.currentPage == 0} ? 'disabled' : ''">
+          <a th:href="@{/front/profile/applications/{page}(page=${pageDTO.currentPage - 1})}" th:if="${pageDTO.currentPage > 0}"><i class="lni lni-arrow-left"></i></a>
+          <span th:if="${pageDTO.currentPage == 0}"><i class="lni lni-arrow-left"></i></span>
+        </li>
+
+        <!-- 頁碼 -->
+        <li th:each="pageNum : ${#numbers.sequence(0, pageDTO.totalPage - 1)}"
+            th:class="${pageNum == pageDTO.currentPage} ? 'active' : ''">
+          <a th:href="@{/front/profile/applications} + ${pageNum}" th:text="${pageNum + 1}"></a>
+        </li>
+
+        <!-- 下一頁 -->
+        <li th:class="${pageDTO.currentPage == pageDTO.totalPage - 1} ? 'disabled' : ''">
+          <a th:href="@{/front/profile/applications/{page}(page=${pageDTO.currentPage + 1})}"
+             th:if="${pageDTO.currentPage < pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></a>
+          <span th:if="${pageDTO.currentPage == pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></span>
+        </li>
+      </ul>
+    </div>
+    <!-- End Pagination -->
+</div>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+  // $(document).ready(function (){
+  //
+  // });
+</script>
+</body>
+</html>
