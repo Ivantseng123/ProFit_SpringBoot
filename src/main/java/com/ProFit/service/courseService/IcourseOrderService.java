@@ -29,4 +29,9 @@ public interface IcourseOrderService {
 	// 查詢結果以分頁顯示
 	public Page<CourseOrderDTO> findMsgByPage(Integer pageNumber);
 
+	// 分析課程購買情況 By 課程分類
+	List<Object[]> getCourseOrderAnalysis();
+
+	List<Object[]> getTop10Courses();
+
 }

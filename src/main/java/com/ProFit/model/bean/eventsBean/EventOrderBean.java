@@ -13,7 +13,7 @@ public class EventOrderBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id	@Column(name = "event_order_Id")
 	private String eventOrderId;
 
 	@Column(name = "event_order_amount")
@@ -43,7 +43,7 @@ public class EventOrderBean implements Serializable {
 	@JoinColumn(name = "event_participant_id", insertable = false, updatable = false)
 	private Users participant;
 	
-	@Column(name = "event_major")
+	@Column(name = "event_participant_id")
 	private Integer eventParticipantId;
 
 	public EventOrderBean() {

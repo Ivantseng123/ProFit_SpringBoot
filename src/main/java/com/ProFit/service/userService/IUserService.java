@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UserStatistics_registerTime;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 public interface IUserService {
 
@@ -63,6 +64,8 @@ public interface IUserService {
 	boolean confirm_resetToken(Integer userId, String confirmationToken);
 
 	List<UserStatistics> getUserStatistics();
+
+	List<UserStatistics_registerTime> getUserStatisticsByDate();
 
 	
 

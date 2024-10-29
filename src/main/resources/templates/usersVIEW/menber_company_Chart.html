@@ -12,19 +12,26 @@
 	<div th:replace="~{model/layout-static}"></div>
 	<div class="container-fluid pt-5">
 		<div class="row">
-			<!-- 第一個圖表及標題 -->
-			<div class="col-lg-5 col-md-9 d-flex flex-column align-items-center ms-5">
+			<!-- 第一行 -->
+			<div class="col-lg-6 col-md-6 d-flex flex-column align-items-center mb-4">
 				<h2 class="text-center mb-3">會員分類圖表</h2>
-				<canvas id="memberChart" style="width:100%; height:300px;"></canvas>
+				<canvas id="memberChart" style="width:100%; height:2	00px;"></canvas>
 			</div>
+			<div class="col-lg-6 col-md-6 d-flex flex-column align-items-center mb-4">
+				<h2 class="text-center mb-3">會員註冊圖表</h2>
+				<canvas id="registerChart" style="width:100%; height:700px;"></canvas>
+			</div>
+		</div>
 
-			<!-- 第二個圖表及標題 -->
-			<div class="col-lg-5 col-md-9 d-flex flex-column align-items-center ms-auto me-5">
+		<div class="row">
+			<!-- 第二行 -->
+			<div class="col-lg-6 col-md-6 d-flex flex-column align-items-center mb-4">
 				<h2 class="text-center mb-3">公司分類圖表</h2>
-				<canvas id="companyChart" style="width:100%; height:100%;"></canvas>
+				<canvas id="companyChart" style="width:100%; height:700px;"></canvas>
 			</div>
 		</div>
 	</div>
+
 
 
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>

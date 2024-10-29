@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.usersDTO.UserStatistics;
+import com.ProFit.model.dto.usersDTO.UserStatistics_registerTime;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.userService.IUserService;
 import com.google.cloud.storage.Acl.User;
@@ -178,4 +179,10 @@ public class usersController {
 		List<UserStatistics> statistics = userService.getUserStatistics();
 		return ResponseEntity.ok(statistics);
 	}
+	
+	@GetMapping("user/registration_statistics")
+	public ResponseEntity<List<UserStatistics_registerTime>> getUserStatistics_registerTime() {
+		List<UserStatistics_registerTime> statistics = userService.getUserStatisticsByDate();
+        return ResponseEntity.ok(statistics);
+    }
 }

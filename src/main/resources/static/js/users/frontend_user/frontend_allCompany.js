@@ -119,14 +119,29 @@ function showModal(photoURL, name, address, category, capital, numberOfEmployee,
 
 	$('#cardModal').modal('show');
 	
-	loadMap(address);
+	// 調用示例
+	loadMap(address); // 替換為動態公司地址
 }
 
 function loadMap(address) {
-	const encodedAddress = encodeURIComponent(address);
-	const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345094547!2d144.95373531568276!3d-37.816279979751465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11d3a1%3A0x5045675218ce6e0!2sCompany+Name!5e0!3m2!1sen!2sau!4v1612292180525!5m2!1sen!2sau"`;
-	//const mapUrl = `https://www.google.com/maps/embed/v1/place`;
-	document.getElementById('googleMap').src = mapUrl;
+    const mapContainer = document.getElementById('mapContainer');
+    
+    // 使用 encodeURIComponent 編碼地址
+    const encodedAddress = encodeURIComponent(address);
+    
+    // Google 地圖嵌入 URL 格式
+    const iframe = `<iframe 
+                      width="100%" 
+                      height="350" 
+                      frameborder="0" 
+                      style="border:0" 
+                      src="https://www.google.com/maps?q=${encodedAddress}&output=embed" 
+                      allowfullscreen>
+                    </iframe>`;
+                    
+    mapContainer.innerHTML = iframe; // 將地圖 iframe 添加到容器中
 }
+
+
 
 
