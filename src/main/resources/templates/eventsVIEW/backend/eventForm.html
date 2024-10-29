@@ -17,6 +17,8 @@
         </div>
         <form class="form-group form-container" id="eventForm">
             <input type="hidden" id="eventId" th:value="${event.eventId}">
+            <input type="hidden" id="eventPublishDate" name="eventPublishDate"
+                th:value="${event.eventPublishDate}">
             <label for="eventName">活動名稱</label>
             <input type="text" id="eventName" name="eventName" th:value="${event.eventName}">
             <hr>
@@ -31,10 +33,6 @@
             <label for="eventMajor">專業類別</label>
             <select id="eventMajor" name="eventMajor" th:data-value="${event.eventMajorId}">
             </select>
-            <hr>
-            <label for="eventStartDate">建立日期</label>
-            <input type="datetime-local" id="eventPublishDate" name="eventPublishDate"
-                th:value="${event.eventPublishDate}" disabled>
             <hr>
             <label for="eventStartDate">開始日期</label>
             <input type="datetime-local" id="eventStartDate" name="eventStartDate" th:value="${event.eventStartDate}">
