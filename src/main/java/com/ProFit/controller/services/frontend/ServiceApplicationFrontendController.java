@@ -181,15 +181,39 @@ public class ServiceApplicationFrontendController {
   @PutMapping("/api/{id}")
   @ResponseBody
   public ResponseEntity<ServiceApplicationsDTO> updateServiceApplication(@PathVariable Integer id,
-      @RequestBody ServiceApplicationBean serviceApplication,
+      @ModelAttribute ServiceApplicationBean serviceApplication,
+      @RequestParam("appendixFile") MultipartFile file,
       HttpSession session) {
+    // 獲取當前用戶
     UsersDTO currentUser = getCurrentUser(session);
     if (currentUser == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
+    // 將當前用戶設置為委託的擁有者
+    serviceApplication.setCaseownerId(currentUser.getUserId());
+
+    // 檢查是否有上傳文件
+    if (!file.isEmpty()) {
+      try {
+
+        // 文件存儲邏輯（存儲在firebase）
+        String URL = firebaseStorageService.uploadFile(file);
+        serviceApplication.setAppendixUrl(URL);
+
+      } catch (Exception e) {
+        // 處理文件上傳錯誤
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      }
+    }
+
     // 這裡可以加入更詳細的權限檢查邏輯
     serviceApplication.setServiceApplicationId(id);
+
+    System.out.println(serviceApplication);
     ServiceApplicationsDTO updatedApplication = serviceApplicationService.updateServiceApplication(serviceApplication);
+    System.out.println(updatedApplication);
     return ResponseEntity.ok(updatedApplication);
   }
 
