@@ -27,7 +27,7 @@ function getServicesAndRender() {
 
       console.log(searchServicesByUserId);
 
-      // 寫入類別
+      // 寫入服務
       htmlMakerForServices(searchServicesByUserId.content);
 
     },

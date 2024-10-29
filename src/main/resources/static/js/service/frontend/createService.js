@@ -109,7 +109,7 @@ function loadUserMajors() {
                 option.value = item.major.majorId;
                 option.setAttribute('data-user-id', item.user.userId);
                 option.setAttribute('data-major-id', item.major.majorId);
-                if ( serviceDTO!=null && serviceDTO.userMajor.major.majorId == item.major.majorId) {
+                if (serviceDTO != null && serviceDTO.userMajor.major.majorId == item.major.majorId) {
                     option.setAttribute('selected', true);
                 }
 

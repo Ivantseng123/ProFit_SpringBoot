@@ -131,6 +131,7 @@ function loadChatUsers() {
   fetch('/ProFit/c/chat/api/users')
     .then(handleResponse)
     .then(users => {
+      // console.log(users);
       renderChatUsers(users);
     })
     .catch(error => {
@@ -145,7 +146,6 @@ function loadChatUsers() {
 function renderChatUsers(users) {
   const chatList = document.getElementById('chat-users-list');
   if (!chatList) return;
-
   const usersHtml = users.map(user => `
         <div class="chat-user" onclick="selectUser(${user.userId})" data-user-id="${user.userId}">
             <div class="d-flex align-items-center">
@@ -165,6 +165,7 @@ function renderChatUsers(users) {
         </div>
     `).join('');
 
+  console.log(usersHtml);
   chatList.innerHTML = usersHtml;
 }
 
