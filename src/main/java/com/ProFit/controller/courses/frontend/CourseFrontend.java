@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ProFit.model.bean.coursesBean.CourseGradeContentBean;
 import com.ProFit.model.bean.coursesBean.CourseOrderBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CourseCategoryDTO;
@@ -217,7 +220,7 @@ public class CourseFrontend {
 
         List<CourseModuleDTOFrontend> CourseModuleDTOList = courseModuleService.searchCourseModulesFrontend(courseId);
 
-        PageRequest pageRequest = PageRequest.of(0, 3);
+        PageRequest pageRequest = PageRequest.of(0, 5);
 
         Page<CourseGradeContentDTO> courseGradeDTOList = courseGradeContentService
                 .searchCourseGradeContents(courseId, null, pageRequest);
@@ -270,6 +273,29 @@ public class CourseFrontend {
         }
 
         return null;
+    }
+
+    @PostMapping("/addcourseGrade")
+    @ResponseBody
+    public boolean insertCourseGrade(
+            @ModelAttribute CourseGradeContentBean courseGradeContent, HttpSession session) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        if (courseGradeContent != null) {
+
+            courseGradeContent.setStudentId(currentUser.getUserId());
+
+            CourseGradeContentBean insertCourseGradeContent = courseGradeContentService
+                    .insertCourseGradeContent(courseGradeContent);
+
+            if (insertCourseGradeContent != null) {
+                return true;
+
+            }
+        }
+        return false;
+
     }
 
 }
