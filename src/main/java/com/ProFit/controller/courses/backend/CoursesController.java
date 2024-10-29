@@ -49,7 +49,7 @@ public class CoursesController {
     @Autowired
     private FirebaseStorageService firebaseStorageService;
 
-    @GetMapping("/courses")
+    @GetMapping("/b/courses")
     public String coursesPage(Model model) {
 
         List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream()
@@ -60,7 +60,7 @@ public class CoursesController {
         return "coursesVIEW/backend/courseView";
     }
 
-    @GetMapping("/courses/addCourse")
+    @GetMapping("/b/courses/addCourse")
     public String addCoursePage(Model model) {
 
         List<CourseCategoryDTO> allMajorCategoriesList = majorCategoryService.findAllMajorCategories().stream()

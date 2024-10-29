@@ -43,7 +43,6 @@ import com.ProFit.service.utilsService.FirebaseStorageService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/course")
 public class CourseFrontend {
 
     @Autowired
@@ -67,12 +66,12 @@ public class CourseFrontend {
     @Autowired
     private IcourseLessonService courseLessonService;
 
-    @GetMapping("")
+    @GetMapping("/course")
     public String courseFrontendPage() {
         return "coursesVIEW/frontend/courseOverView";
     }
 
-    @GetMapping("/purchase")
+    @GetMapping("/course/purchase")
     public String purchaseCoursePage(@RequestParam String courseId, HttpSession session, Model model) {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
@@ -90,7 +89,7 @@ public class CourseFrontend {
         return "redirect:/user/profile";
     }
 
-    @GetMapping("/watch")
+    @GetMapping("/course/watch")
     public String watchCoursePage(HttpSession session) {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
@@ -104,7 +103,7 @@ public class CourseFrontend {
 
     }
 
-    @GetMapping("/watch/{courseId}")
+    @GetMapping("/course/watch/{courseId}")
     public ResponseEntity<Map<String, Object>> watchCoursePage(HttpSession session, @PathVariable String courseId) {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
@@ -135,7 +134,7 @@ public class CourseFrontend {
     }
 
     // 新增課程訂單的方法
-    @PostMapping("/purchase/add")
+    @PostMapping("/course/purchase/add")
     @ResponseBody
     public Integer postMethodName(@ModelAttribute CourseOrderBean courseOrder) {
         try {
@@ -156,7 +155,7 @@ public class CourseFrontend {
         }
     }
 
-    @GetMapping("/searchOne")
+    @GetMapping("/course/searchOne")
     @ResponseBody
     public CoursesDTO searchOneCourse(@RequestParam String courseId) {
 
@@ -165,7 +164,7 @@ public class CourseFrontend {
         return searchOneCourseById;
     }
 
-    @PostMapping("/searchAll")
+    @PostMapping("/course/searchAll")
     @ResponseBody
     public Page<CoursesDTO> searchAllCourses(
             @RequestParam(required = false) String courseName,
@@ -185,7 +184,7 @@ public class CourseFrontend {
         return searchCoursesPage;
     }
 
-    @GetMapping("/searchCourseByMajorCategory")
+    @GetMapping("/course/searchCourseByMajorCategory")
     @ResponseBody
     public List<CourseCategoryDTO> searchCourseByMajorCategory() {
 
@@ -196,7 +195,7 @@ public class CourseFrontend {
     }
 
     // 回傳單筆課程相關資訊 確認登入狀態，判斷是否已經購買
-    @GetMapping("/{courseId}")
+    @GetMapping("/course/{courseId}")
     public String findSingleCourse(@PathVariable String courseId, Model model, HttpSession session) {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
@@ -234,7 +233,7 @@ public class CourseFrontend {
     }
 
     // 回傳已購買課程的Api
-    @GetMapping("/purchasedList")
+    @GetMapping("/c/course/purchasedList")
     @ResponseBody
     public List<CourseOrderDTO> getPurchasedListByUserId(HttpSession session) {
 
@@ -252,7 +251,7 @@ public class CourseFrontend {
     }
 
     // 回傳30分鐘有效的單元影片url
-    @GetMapping("/lessons/{lessonId}")
+    @GetMapping("/course/lessons/{lessonId}")
     @ResponseBody
     public Map<String, String> getLessonVideoURL(@PathVariable Integer lessonId, HttpSession session) {
 
@@ -275,7 +274,7 @@ public class CourseFrontend {
         return null;
     }
 
-    @PostMapping("/addcourseGrade")
+    @PostMapping("/course/addcourseGrade")
     @ResponseBody
     public boolean insertCourseGrade(
             @ModelAttribute CourseGradeContentBean courseGradeContent, HttpSession session) {
