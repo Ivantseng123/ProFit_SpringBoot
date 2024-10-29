@@ -13,7 +13,7 @@
     <div class="course-header">
         <h2>職缺申請列表</h2>
 
-</div>
+    </div>
 
     <div class="table-container" id="search-results">
 
@@ -26,6 +26,7 @@
                 <th>申請日期</th>
                 <th>職缺申請狀態</th>
                 <th>申請履歷</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody id="table-body">
@@ -33,7 +34,7 @@
                 <tr>
                     <td th:text="${jobApplication.jobsApplicationId}"></td>
                     <td th:text="${jobApplication.jobs.users.userName}"></td>
-<!--                    使用可选链操作符 ?. 来避免空值引起的错误-->
+                    <!--                    使用可选链操作符 ?. 来避免空值引起的错误-->
                     <td th:text="${jobApplication.applicant?.userName}"></td>
                     <td th:text="${jobApplication.jobsApplicationDate}"></td>
                     <td th:text="${jobApplication.jobsApplicationStatus}"></td>
@@ -46,108 +47,113 @@
     </div>
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
-    $(document).ready(function (){
+
+    $(document).ready(function () {
         const baseUrl = /*[[@{/jobsApplication}]]*/'';
         console.log(baseUrl);
-    $("#jobsApplicationList").DataTable({
-        order: [0, 'asc'],
-        columns:[{
-            data: 'jobsApplicationId',
-            className: 'all'
-        },{
-            data: 'jobs.users.userName',
-            className: 'all'
-        },{
-            data: 'applicant.userName',
-            className: 'all'
-        },{
-            data: 'jobsApplicationDate',
-            className: 'all',
-            render: function (data, type, row) {
-                return row.jobsApplicationDate;
-            }
-        },{
-            data: 'jobsApplicationStatus',
-            className: 'all',
-            render: function (data, type, row) {
-                let result = '';
-                switch (data) {
-                    case '0':
-                        result = '已投遞受理中';
-                        break;
-                    case '1':
-                        result = '已錄取';
-                        break;
-                    case '2':
-                        result = '未錄取';
-                        break;
+        let table = $("#jobsApplicationList").DataTable({
+            order: [0, 'asc'],
+            columns: [{
+                data: 'jobsApplicationId',
+                className: 'all'
+            }, {
+                data: 'jobs.users.userName',
+                className: 'all'
+            }, {
+                data: 'applicant.userName',
+                className: 'all'
+            }, {
+                data: 'jobsApplicationDate',
+                className: 'all',
+                render: function (data, type, row) {
+                    return row.jobsApplicationDate;
                 }
-                return result;
-            }
-        },{
-            data: 'jobsApplicationResume',
-            className: 'all'
-        },{
-            data: 'actions',
-            defaultContent: '',
-            orderable: false,
-            searchable: false,
-            render : function (data, type, row) {
-                let result = '';
+            }, {
+                data: 'jobsApplicationStatus',
+                className: 'all',
+                render: function (data, type, row) {
+                    let result = '';
+                    switch (data) {
+                        case '0':
+                            result = '已投遞受理中';
+                            break;
+                        case '1':
+                            result = '已錄取';
+                            break;
+                        case '2':
+                            result = '未錄取';
+                            break;
+                    }
+                    return result;
+                }
+            }, {
+                data: 'jobsApplicationResume',
+                className: 'all'
+            }, {
+                data: 'actions',
+                defaultContent: '',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    let result = '';
 
-                //這裡的class就是bootstrap,就幾乎不用style
-                result += '<a class="btn btn-sm btn-primary" href="'+ baseUrl + '/view/' + row.jobsApplicationId +'"><i class="fas fa-search"></i></a>';
-                result += '<a class="btn btn-sm btn-success ms-1" href="'+ baseUrl + '/edit/' + row.jobsApplicationId +'"><i class="fas fa-pen"></i></a>';
-                result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" href="'+ baseUrl + '/delete/' + row.jobsApplicationId +'"><i class="fas fa-trash"></i></a>';
+                    //這裡的class就是bootstrap,就幾乎不用style
+                    result += '<a class="btn btn-sm btn-primary" href="' + baseUrl + '/view/' + row.jobsApplicationId + '"><i class="fas fa-search"></i></a>';
+                    result += '<a class="btn btn-sm btn-success ms-1" href="' + baseUrl + '/edit/' + row.jobsApplicationId + '"><i class="fas fa-pen"></i></a>';
+                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" data-id="' + row.jobsApplicationId +'" href="' + baseUrl + '/delete/' + row.jobsApplicationId + '"><i class="fas fa-trash"></i></a>';
 
-                bindDeleteEvent();
-                return result;
-            }
-        }]
-    });
+                    return result;
+                }
+            }]
+        });
 
-
-
-    function bindDeleteEvent() {
-        $('.deleteBtn').click(function (e){
+        // 使用事件委派來處理刪除按鈕點擊
+        $('#jobsApplicationList').on('click', '.deleteBtn', function (e) {
             e.preventDefault();
-            let url = $(this).attr('href');
+            const id = $(this).data('id');
+            const deleteUrl = `${baseUrl}/delete/${id}`;
+
             Swal.fire({
                 icon: "question",
                 title: "確認刪除？",
                 showCancelButton: true,
                 confirmButtonText: "確認",
+                cancelButtonText: "取消"
             }).then((result) => {
                 if (result.isConfirmed) {
-
-                    //fetch開始是ajax
-                    fetch(url, {
-                        method: 'DELETE'
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        } else {
-                            Swal.fire({//Swal.fire呼叫api的寫法
-                                icon: "success",
-                                title: "刪除成功",
-                                showConfirmButton: true,
-                            }).then(() => {
-                                window.location.reload();
-                            });
+                    fetch(deleteUrl, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
                         }
                     })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                    });
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('刪除失敗');
+                            }
+                            return response;
+                        })
+                        .then(() => {
+                            Swal.fire({
+                                icon: "success",
+                                title: "刪除成功",
+                                showConfirmButton: true
+                            }).then(() => {
+                                // 重新加載表格數據而不是整個頁面
+                                window.location.reload();
+                            });
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: "error",
+                                title: "刪除失敗",
+                                text: error.message,
+                                showConfirmButton: true
+                            });
+                        });
                 }
             });
-        })
-
-
-    }
-
-    bindDeleteEvent();
+        });
     });
 </script>
 </body>
