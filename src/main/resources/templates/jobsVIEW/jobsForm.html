@@ -30,7 +30,7 @@
 
                 <!-- 刊登方 ID -->
                 <div class="mb-3">
-                    <label for="jobsUserId" class="form-label">刊登方 ID</label>
+                    <label for="jobsUserId" class="form-label">刊登者 ID</label>
                     <input type="text" class="form-control" id="jobsUserId" name="jobsUserId" th:value="${job.users.userId}" readonly />
                 </div>
 
@@ -67,7 +67,7 @@
                 <!-- 職缺狀態 -->
                 <div class="mb-3">
                     <label for="jobsStatus" class="form-label">職缺狀態</label>
-                    <input type="text" class="form-control" id="jobsStatus" name="jobsStatus" th:value="${job.jobsStatus == 0 ? '開放中' : '已關閉'}" readonly />
+                    <input type="text" class="form-control" id="jobsStatus" name="jobsStatus" th:value="${job.jobsStatus == 0 ? '刊登中' : '已下架'}" readonly />
                 </div>
 
                 <!-- 最高薪資 -->

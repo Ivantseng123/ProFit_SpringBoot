@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">進入投遞程序...</h1>
+                        <h1 class="page-title">親愛的會員用戶，您已進入投遞程序...</h1>
                         <p>您已在媒合頁面，敬請耐心填寫相關資料。</p>
                     </div>
                     <ul class="breadcrumb-nav">
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-lg-10 offset-lg-1 col-12">
                     <div class="job-information">
-                        <h3 class="title">職缺資訊</h3>
+                        <h3 class="title">應徵職缺資訊</h3>
                         <form id="editForm" th:action="@{/front/jobs/view/{id}/new(id=${job.jobsId})}" method="POST" enctype="multipart/form-data">
 <!--                            <input type="hidden" th:field="${user}">-->
                             <div class="row">
@@ -46,13 +46,13 @@
 
                             <!--&lt;!&ndash;合約上傳-->
 
-                            <div class="col-lg-12">
-                                <div class="choose-img">
-                                    <p>合約上傳</p>
-                                    <input type="file" id="doc" name="doc" accept="application/doc">
-                                    <p>檔案上傳限制: 2 MB</p>
-                                </div>
-                            </div>
+<!--                            <div class="col-lg-12">-->
+<!--                                <div class="choose-img">-->
+<!--                                    <p>合約上傳</p>-->
+<!--                                    <input type="file" id="doc" name="doc" accept="application/doc">-->
+<!--                                    <p>檔案上傳限制: 2 MB</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <!--&lt;!&ndash;履歷上傳-->
                             <div class="col-lg-12">

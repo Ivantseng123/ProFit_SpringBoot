@@ -1,5 +1,6 @@
 package com.ProFit.model.bean.jobsBean;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,10 +17,6 @@ import jakarta.persistence.*;
 //	如果需要對資料進行隨機存取，byte[] 是更好的選擇。
 //	如果只需要逐個位元組地讀取資料，InputStream 是一個不錯的選擇。
 //	如果需要直接與資料庫進行互動，Blob 是最適合的選擇。
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 //@Setter
@@ -62,7 +59,7 @@ public class JobsApplication implements java.io.Serializable{
 //	private String jobsApplicationContract;
 
 	@OneToMany(mappedBy = "jobsApplication")
-	private List<JobsApplicationProject> projects;
+	private List<JobsApplicationProject> projects = new ArrayList<>();
 
     //無參建構子
 	public JobsApplication() {

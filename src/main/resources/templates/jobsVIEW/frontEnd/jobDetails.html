@@ -70,7 +70,7 @@
                             <div class="inner">
                                 <div class="row m-n2 button">
                                     <div class="col-xl-auto col-lg-12 col-sm-auto col-12 p-2">
-                                        <a id="back" href="bookmarked.html" class="d-block btn"><i class="lni lni-arrow-left"></i> 回到職缺列表</a>
+                                        <a id="back" th:href="@{/public/front/jobs/list/0}" class="d-block btn"><i class="lni lni-arrow-left"></i> 回到職缺列表</a>
                                     </div>
                                     <div class="col-xl-auto col-lg-12 col-sm-auto col-12 p-2">
                                         <a th:href="@{/front/jobs/view/{id}/new(id=${job.jobsId})}" class="d-block btn btn-alt">應徵職缺</a>
@@ -86,7 +86,7 @@
                                 <ul class="job-overview list-unstyled">
                                     <li><strong>刊登日期:</strong> <th:block th:text="${job.jobsPostingDate}"></th:block></li>
                                     <li><strong>截止日期:</strong> <th:block th:text="${job.jobsApplicationDeadline}"></th:block></li>
-                                    <li><strong>職缺狀態:</strong> <th:block th:text="${job.jobsWorktime}"></th:block></li>
+                                    <li><strong>工作時間:</strong> <th:block th:text="${job.jobsWorktime}"></th:block></li>
                                     <li><strong>工作地點:</strong> <th:block th:text="${job.jobsLocation}"></th:block></li>
                                     <li><strong>薪資範圍:</strong> <th:block th:text="${'金額 ' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></th:block></li>
                                     <li><strong>要求技能:</strong> <th:block th:text="${job.category.categoryName}"></th:block></li>

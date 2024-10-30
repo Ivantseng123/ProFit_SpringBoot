@@ -97,7 +97,11 @@ public class JobsFrontController {
 
     //新增
     @PostMapping({"/front/jobs/new", "/front/jobs/edit/{id}"})
-    public String addJobs(Model model, @ModelAttribute Jobs jobs, @RequestParam String deadline){
+    public String addJobs(HttpSession session, Model model, @ModelAttribute Jobs jobs, @RequestParam String deadline){
+        UsersDTO user = (UsersDTO) session.getAttribute("CurrentUser");
+        if (user != null){
+            jobs.setUsers(userService.getUserInfoByID(user.getUserId()));
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date dateFinish = formatter.parse(deadline);

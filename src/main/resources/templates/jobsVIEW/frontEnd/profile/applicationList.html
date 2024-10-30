@@ -26,10 +26,11 @@
           <div class="col-lg-3 col-md-3">
             <p th:text="${jobsApplication.jobsApplicationDate}">Nov 14th, 2023</p>
           </div>
-          <div class="col-lg-2 col-md-2" th:if="${user.userIdentity == 1 or user.userIdentity == 2}">
+          <div class="col-lg-2 col-md-2">
             <p th:if="${jobsApplication.jobsApplicationStatus == 0}">已投遞受理</p>
             <p th:if="${jobsApplication.jobsApplicationStatus == 1}">已錄取</p>
             <p th:if="${jobsApplication.jobsApplicationStatus == 2}">未錄取</p>
+            <p th:if="${jobsApplication.jobsApplicationStatus == 3}">已取消</p>
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@
         <!-- 頁碼 -->
         <li th:each="pageNum : ${#numbers.sequence(0, pageDTO.totalPage - 1)}"
             th:class="${pageNum == pageDTO.currentPage} ? 'active' : ''">
-          <a th:href="@{/front/profile/applications} + ${pageNum}" th:text="${pageNum + 1}"></a>
+          <a th:href="@{/front/profile/applications/} + ${pageNum}" th:text="${pageNum + 1}"></a>
         </li>
 
         <!-- 下一頁 -->

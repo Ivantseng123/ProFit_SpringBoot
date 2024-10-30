@@ -8,6 +8,7 @@ import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
 import com.ProFit.service.userService.IUserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,11 +65,20 @@ public class JobsApplicationService implements IJobsApplicationService{
         }
     }
 
-    public List<JobsApplication> findByUserId(Integer userId, Pageable pageable) {
+    public Page<JobsApplication> findCompanyByUserId(Integer userId, Pageable pageable) {
         Users users = usersRepository.findById(userId).orElse(null);
-        List<JobsApplication> applications = new ArrayList<>();
+        Page<JobsApplication> applications = null;
         if (users != null && (users.getUserIdentity() == 2 || users.getUserIdentity() == 1)) {
             applications = jobsApplicationDAO.findJobsApplicationsByApplicant(users, pageable);
+        }
+        return applications;
+    }
+
+    public Page<JobsApplication> findApplicantByUserId(Integer userId, Pageable pageable) {
+        Users users = usersRepository.findById(userId).orElse(null);
+        Page<JobsApplication> applications = null;
+        if (users != null && (users.getUserIdentity() == 2)) {
+            applications = jobsApplicationDAO.findByJobs_Users_UserId(users.getUserId(), pageable);
         }
         return applications;
     }
