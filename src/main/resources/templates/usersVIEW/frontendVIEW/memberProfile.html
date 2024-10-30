@@ -2,67 +2,70 @@
 <html lang="zxx" xmlns:th="http://www.thymeleaf.org/">
 
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="x-ua-compatible" content="ie=edge" />
-	<title>ProFit-會員頁面</title>
-	<meta name="description" content="" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
-	<!-- Place favicon.ico in the root directory -->
+<meta charset="utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" />
+<title>ProFit-會員頁面</title>
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" type="image/x-icon"
+	th:href="@{/images/favicon.svg}" />
+<!-- Place favicon.ico in the root directory -->
 
-	<!-- Web Font -->
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-		rel="stylesheet">
+<!-- Web Font -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+	rel="stylesheet">
 
-	<!-- ========================= CSS here ========================= -->
-	<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
-	<link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
-	<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
-	<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
-	<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
-	<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
-	<style>
-		@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+<!-- ========================= CSS here ========================= -->
+<link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+<link rel="stylesheet"
+	href="https://cdn.lineicons.com/4.0/lineicons.css" />
+<link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+<link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-		.photo {
-			width: 150px;
-			height: 150px;
-			border-radius: 50%;
-			object-fit: cover;
-		}
+.photo {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+}
 
-		.photo_company {
-			width: 150px;
-			height: 150px;	
-			object-fit: cover;
-		}
+.photo_company {
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+}
 
-		.photo_edit {
-			width: 150px;
-			height: 150px;
-			border-radius: 50%;
-			object-fit: cover;
-		}
+.photo_edit {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+}
 
-		.photo_edit_company {
-			width: 150px;
-			height: 150px;
+.photo_edit_company {
+	width: 150px;
+	height: 150px;
+}
 
-		}
+p {
+	font-size: large;
+}
 
-		p {
-			font-size: large;
-		}
-
-		input[type="file"]::file-selector-button {
-			background-color: rgb(98, 160, 234);
-			color: white;
-			padding: 10px 20px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-	</style>
+input[type="file"]::file-selector-button {
+	background-color: rgb(98, 160, 234);
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -93,8 +96,8 @@
 											<div class="d-flex mt-5">
 												<div class="btn btn-primary follow me-2" data-toggle="modal"
 													data-target="#editProfile">編輯資料</div>
-												<div class="btn btn-outline-primary message" data-toggle="modal"
-													data-target="#editPassword">修改密碼</div>
+												<div class="btn btn-outline-primary message"
+													data-toggle="modal" data-target="#editPassword">修改密碼</div>
 											</div>
 											<div class="d-flex mt-3 align-items-center border-bottom">
 												<p class="py-2">最近登入時間</p>
@@ -150,12 +153,11 @@
 							</div>
 							<div class="single-section">
 								<h4>接案描述</h4>
-								<p class="font-size-4 mb-8" id="freelancer_description">A talented professional with an
-									academic background
-									in IT and proven
-									commercial development experience as C++ developer since 1999. Has a sound
-									knowledge of the software
-									development life cycle. Was involved in more than 140 software development
+								<p class="font-size-4 mb-8" id="freelancer_description">A
+									talented professional with an academic background in IT and
+									proven commercial development experience as C++ developer since
+									1999. Has a sound knowledge of the software development life
+									cycle. Was involved in more than 140 software development
 									outsourcing projects.</p>
 							</div>
 						</div>
@@ -175,10 +177,12 @@
 	<div th:replace="~{model/frontend/footer}"></div>
 
 	<!-- ========================= scroll-top ========================= -->
-	<a href="#" class="scroll-top btn-hover"> <i class="lni lni-chevron-up"></i>
+	<a href="#" class="scroll-top btn-hover"> <i
+		class="lni lni-chevron-up"></i>
 	</a>
 
-	<div class="modal fade form-modal" id="editPassword" tabindex="-1" aria-hidden="true">
+	<div class="modal fade form-modal" id="editPassword" tabindex="-1"
+		aria-hidden="true">
 		<div class="modal-dialog max-width-px-840 position-relative">
 			<button type="button"
 				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -203,8 +207,9 @@
 								<div class="form-group">
 									<label for="ConfirmPassword_edit" class="label">確認密碼</label>
 									<div class="position-relative">
-										<input type="password" class="form-control" placeholder="再次輸入密碼"
-											id="ConfirmPassword_edit" required oninput="setCustomValidity('');"
+										<input type="password" class="form-control"
+											placeholder="再次輸入密碼" id="ConfirmPassword_edit" required
+											oninput="setCustomValidity('');"
 											onchange="if(document.getElementById('user_password_edit').value != document.getElementById('ConfirmPassword_edit').value){setCustomValidity('密碼不吻合');}">
 									</div>
 								</div>
@@ -212,6 +217,10 @@
 									<button class="btn" type="submit">確定</button>
 								</div>
 							</form>
+							<div class="mt-3">
+								<button class="btn btn-secondary" type="button"
+									id="oneclick_editpwd">一鍵輸入</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -219,7 +228,8 @@
 		</div>
 	</div>
 
-	<div class="modal fade form-modal" id="editProfile" tabindex="-1" aria-hidden="true">
+	<div class="modal fade form-modal" id="editProfile" tabindex="-1"
+		aria-hidden="true">
 		<div class="modal-dialog modal-lg max-width-px-840 position-relative">
 			<button type="button"
 				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -235,26 +245,27 @@
 							</div>
 							<form id="editProfileForm">
 								<div class="form-group">
-									<input type="hidden" name="userPictureURL" id="user_pictureURL" value=""> <label
-										class="label" for="">會員頭貼:</label>
+									<input type="hidden" name="userPictureURL" id="user_pictureURL"
+										value=""> <label class="label" for="">會員頭貼:</label>
 
 									<div class="d-flex justify-content-center">
-										<img id="profileImagePreview" src="" alt="Profile Image" class="photo_edit" />
+										<img id="profileImagePreview" src="" alt="Profile Image"
+											class="photo_edit" />
 									</div>
-									<input class="mt-3 mb-3" type="file" id="fileInput" accept="image/*"
-										name="imgfile" />
+									<input class="mt-3 mb-3" type="file" id="fileInput"
+										accept="image/*" name="imgfile" />
 								</div>
 								<div class="form-group">
 									<label for="user_name_edit" class="label"><em
-											class="text-danger pr-1">*</em>名稱</label>
+										class="text-danger pr-1">*</em>名稱</label>
 									<div class="position-relative">
-										<input type="text" class="form-control" placeholder="修改名稱" id="user_name_edit"
-											name="userName" required>
+										<input type="text" class="form-control" placeholder="修改名稱"
+											id="user_name_edit" name="userName" required>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="user_phoneNumber_edit" class="label"><em
-											class="text-danger pr-1">*</em>手機號碼</label>
+										class="text-danger pr-1">*</em>手機號碼</label>
 									<div class="position-relative d-flex align-items-center">
 										<input type="text" class="form-control" placeholder="修改會員手機號碼"
 											id="user_phoneNumber_edit" name="userPhoneNumber" required>
@@ -263,10 +274,11 @@
 								<div class="form-group">
 									<label class="label"><em class="text-danger pr-1">*</em>居住地</label>
 									<div class="position-relative">
-										<select class="form-select" id="user_city_edit" name="userCity">
+										<select class="form-select" id="user_city_edit"
+											name="userCity">
 											<option value="臺北市">臺北市</option>
 											<option value="新北市">新北市</option>
-											<option value="基隆市">基隆市</option>
+											<option id="keelung" value="基隆市">基隆市</option>
 											<option value="桃園市">桃園市</option>
 											<option value="桃園市">桃園市</option>
 											<option value="新竹縣">新竹縣</option>
@@ -291,21 +303,23 @@
 								<div class="form-group">
 									<label class="label">接案狀態</label>
 									<div>
-										<input type="radio" class="form-check-input" id="statusChoice1"
-											name="freelancerProfileStatus" value="0" required /> <label
-											for="statusChoice1">關閉</label> <input type="radio" class="form-check-input"
-											id="statusChoice2" name="freelancerProfileStatus" value="1" required />
-										<label for="statusChoice2">開啓</label>
+										<input type="radio" class="form-check-input"
+											id="statusChoice1" name="freelancerProfileStatus" value="0"
+											required /> <label for="statusChoice1">關閉</label> <input
+											type="radio" class="form-check-input" id="statusChoice2"
+											name="freelancerProfileStatus" value="1" required /> <label
+											for="statusChoice2">開啓</label>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="label"><em class="text-danger pr-1">*</em>工作地點偏好</label>
 									<div class="position-relative">
-										<select class="form-select" id="freelancer_location_prefer_edit"
+										<select class="form-select"
+											id="freelancer_location_prefer_edit"
 											name="freelancerLocationPrefer" style="margin-bottom: 20px">
 											<!-- 城市選項 -->
 											<option value="臺北市">臺北市</option>
-											<option value="新北市">新北市</option>
+											<option id="new_taipei" value="新北市">新北市</option>
 											<option value="基隆市">基隆市</option>
 											<option value="桃園市">桃園市</option>
 											<option value="新竹縣">新竹縣</option>
@@ -336,7 +350,7 @@
 											<option value="無工作經驗">無工作經驗</option>
 											<option value="0-1年工作經驗">0-1年工作經驗</option>
 											<option value="1-2年工作經驗">1-2年工作經驗</option>
-											<option value="2-3年工作經驗">2-3年工作經驗</option>
+											<option id="worke_exprience" value="2-3年工作經驗">2-3年工作經驗</option>
 											<option value="3-4年工作經驗">3-4年工作經驗</option>
 											<option value="4-5年工作經驗">4-5年工作經驗</option>
 											<option value="5-6年工作經驗">5-6年工作經驗</option>
@@ -350,33 +364,40 @@
 								<div class="form-group">
 									<label class="label"><em class="text-danger pr-1">*</em>接案身份</label>
 									<div class="position-relative">
-										<input type="radio" id="identityChoice4" class="form-check-input"
-											name="freelancerIdentity" value="個人兼職" /> <label
-											for="identityChoice1">個人兼職</label> <input type="radio" id="identityChoice5"
-											class="form-check-input" name="freelancerIdentity" value="工作室" /> <label
-											for="identityChoice2">工作室</label> <input type="radio" id="identityChoice6"
-											class="form-check-input" name="freelancerIdentity" value="學生" /> <label
+										<input type="radio" id="identityChoice4"
+											class="form-check-input" name="freelancerIdentity"
+											value="個人兼職" /> <label for="identityChoice1">個人兼職</label> <input
+											type="radio" id="identityChoice5" class="form-check-input"
+											name="freelancerIdentity" value="工作室" /> <label
+											for="identityChoice2">工作室</label> <input type="radio"
+											id="identityChoice6" class="form-check-input"
+											name="freelancerIdentity" value="學生" /> <label
 											for="identityChoice3">學生</label>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="freelancer_disc_edit" class="label">接案描述</label>
 									<div class="position-relative">
-										<textarea rows="7" cols="30" class="form-control" id="freelancer_disc_edit"
-											name="freelancerDisc"></textarea>
+										<textarea rows="7" cols="30" class="form-control"
+											id="freelancer_disc_edit" name="freelancerDisc"></textarea>
 									</div>
 								</div>
 								<div class="form-group mb-8 button">
 									<button class="btn" type="submit">確定</button>
 								</div>
 							</form>
+							<div class="mt-3">
+								<button class="btn btn-secondary" type="button"
+									id="oneclick_editprofile">一鍵輸入</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade form-modal" id="editCompProfile" tabindex="-1" aria-hidden="true">
+	<div class="modal fade form-modal" id="editCompProfile" tabindex="-1"
+		aria-hidden="true">
 		<div class="modal-dialog modal-lg max-width-px-840 position-relative">
 			<button type="button"
 				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -392,19 +413,20 @@
 							</div>
 							<form id="editCompProfileForm">
 								<div class="form-group">
-									<input type="hidden" name="companyPhotoURL" id="company_pictureURL" value=""> <label
-										class="label" for="">公司照片:</label>
+									<input type="hidden" name="companyPhotoURL"
+										id="company_pictureURL" value=""> <label class="label"
+										for="">公司照片:</label>
 
 									<div class="d-flex justify-content-center">
-										<img id="profileImagePreview_company" src="" alt="Profile Image"
-											class="photo_edit_company" />
+										<img id="profileImagePreview_company" src=""
+											alt="Profile Image" class="photo_edit_company" />
 									</div>
-									<input class="mt-3 mb-3" type="file" id="fileInput_company" accept="image/*"
-										name="imgfile" />
+									<input class="mt-3 mb-3" type="file" id="fileInput_company"
+										accept="image/*" name="imgfile" />
 								</div>
 								<div class="form-group">
 									<label for="user_name_edit" class="label"><em
-											class="text-danger pr-1">*</em>名稱(請至公司驗證填寫)</label>
+										class="text-danger pr-1">*</em>名稱(請至公司驗證填寫)</label>
 									<div class="position-relative">
 										<input type="text" class="form-control" placeholder="請至公司驗證填寫"
 											id="company_name_edit" name="companyName" readonly>
@@ -413,8 +435,8 @@
 								<div class="form-group">
 									<label class="label"><em class="text-danger pr-1">*</em>地址(請至公司驗證填寫)</label>
 									<div class="position-relative">
-										<select class="form-select" id="company_address_edit" name="companyAddress"
-											disabled>
+										<select class="form-select" id="company_address_edit"
+											name="companyAddress" disabled>
 											<option value="臺北市">臺北市</option>
 											<option value="新北市">新北市</option>
 											<option value="基隆市">基隆市</option>
@@ -438,22 +460,24 @@
 											<option value="臺東縣">臺東縣</option>
 										</select>
 										<div class="position-relative mt-3">
-											<input type="text" class="form-control" placeholder="請至公司驗證填寫"
-												id="company_address_edit1" name="companyAddress1" readonly>
+											<input type="text" class="form-control"
+												placeholder="請至公司驗證填寫" id="company_address_edit1"
+												name="companyAddress1" readonly>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="label">分類</label>
 									<div class="position-relative">
-										<select class="form-select" id="company_category_edit" name="companyCategory">
+										<select class="form-select" id="company_category_edit"
+											name="companyCategory">
 											<option value="農、林、漁、牧業">農、林、漁、牧業</option>
 											<option value="礦業及土石採取業">礦業及土石採取業</option>
 											<option value="製造業">製造業</option>
 											<option value="水電燃氣業">水電燃氣業</option>
 											<option value="營造及工程">營造及工程業</option>
 											<option value="批發、零售及餐飲業">批發、零售及餐飲業</option>
-											<option value="運輸、倉儲及通信">運輸、倉儲及通信業</option>
+											<option id="category_onclick" value="運輸、倉儲及通信">運輸、倉儲及通信業</option>
 											<option value="金融、保險及不動產業">金融、保險及不動產業</option>
 											<option value="專業、科學及技術服務業">專業、科學及技術服務業</option>
 											<option value="文化、運動、休閒及其他服務業">文化、運動、休閒及其他服務業</option>
@@ -477,7 +501,7 @@
 											name="companyNumberOfemployee" style="margin-bottom: 20px">
 											<option value="1-10">1-10</option>
 											<option value="11-50">11-50</option>
-											<option value="51-200">51-200</option>
+											<option id="numberOfemployee_oneclick" value="51-200">51-200</option>
 											<option value="201-500">201-500</option>
 											<option value="501-1000">501-1000</option>
 											<option value="1001-5000">1001-5000</option>
@@ -490,29 +514,34 @@
 									<div class="position-relative">
 										<div class="input-group mb-3">
 											<input class="form-control" type="text" placeholder="修改公司資本額"
-												id="company_capital_edit" name="companyCaptital">
-											<span class="input-group-text">萬</span>
+												id="company_capital_edit" name="companyCaptital"> <span
+												class="input-group-text">萬</span>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="freelancer_disc_edit" class="label">簡介</label>
 									<div class="position-relative">
-										<textarea rows="10" cols="50" class="form-control" id="company_description_edit"
-											name="companyDescription"></textarea>
+										<textarea rows="10" cols="50" class="form-control"
+											id="company_description_edit" name="companyDescription"></textarea>
 									</div>
 								</div>
 								<div class="form-group mb-8 button">
 									<button class="btn" type="submit">確定</button>
 								</div>
 							</form>
+							<div class="mt-3">
+								<button class="btn btn-secondary" type="button"
+									id="oneclick_editcompany">一鍵輸入</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal fade form-modal" id="companyAppliction" tabindex="-1" aria-hidden="true">
+	<div class="modal fade form-modal" id="companyAppliction" tabindex="-1"
+		aria-hidden="true">
 		<div class="modal-dialog modal-lg max-width-px-840 position-relative">
 			<button type="button"
 				class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -530,7 +559,7 @@
 
 								<div class="form-group">
 									<label for="user_name_edit" class="label"><em
-											class="text-danger pr-1">*</em>名稱</label>
+										class="text-danger pr-1">*</em>名稱</label>
 									<div class="position-relative">
 										<input type="text" class="form-control" placeholder="公司名稱"
 											id="company_name_application" name="companyName">
@@ -541,7 +570,8 @@
 									<div>
 										<div class="position-relative d-flex align-items-center">
 											<input type="text" class="form-control" placeholder="公司電話"
-												id="company_phoneNumber_application" name="companyPhoneNumber">
+												id="company_phoneNumber_application"
+												name="companyPhoneNumber">
 										</div>
 									</div>
 								</div>
@@ -549,8 +579,8 @@
 									<label class="label"><em class="text-danger pr-1">*</em>地址</label>
 									<div class="position-relative">
 										<select class="form-select" id="company_address_application"
-											name="companyAddress"> >
-											<option value="臺北市">臺北市</option>
+											name="companyAddress">
+											<option id="taipei" value="臺北市">臺北市</option>
 											<option value="新北市">新北市</option>
 											<option value="基隆市">基隆市</option>
 											<option value="桃園市">桃園市</option>
@@ -590,7 +620,7 @@
 											<option value="批發、零售及餐飲業">批發、零售及餐飲業</option>
 											<option value="運輸、倉儲及通信">運輸、倉儲及通信業</option>
 											<option value="金融、保險及不動產業">金融、保險及不動產業</option>
-											<option value="專業、科學及技術服務業">專業、科學及技術服務業</option>
+											<option id="category_oneclick2" value="專業、科學及技術服務業">專業、科學及技術服務業</option>
 											<option value="文化、運動、休閒及其他服務業">文化、運動、休閒及其他服務業</option>
 											<option value="其他">其他</option>
 										</select>
@@ -605,17 +635,18 @@
 										</div>
 										<div class="position-relative d-flex align-items-center">
 											<input type="text" class="form-control" placeholder="公司統編"
-												id="company_phoneNumber_application" name="companyTaxID">
+												id="company_taxID_application" name="companyTaxID">
 										</div>
 										<div class="form-group">
-											<input type="hidden" name="companyTaxIdDocURL" id="company_taxID_docURL">
-											<label class="label mt-2" for="">統編文件</label>
+											<input type="hidden" name="companyTaxIdDocURL"
+												id="company_taxID_docURL"> <label class="label mt-2"
+												for="">統編文件</label>
 											<div class="d-flex justify-content-center">
 												<img id="taxIDImagePreview" src="" alt="Profile Image"
 													class="photo_edit_company" />
 											</div>
-											<input class="mt-3 mb-3" type="file" id="fileInput0" accept="image/*"
-												name="imgfile" />
+											<input class="mt-3 mb-3" type="file" id="fileInput0"
+												accept="image/*" name="imgfile" />
 										</div>
 									</div>
 									<div id="userInfo" style="display: none;">
@@ -625,26 +656,28 @@
 												class="btn btn-link ml-auto text-decoration-none">改用統編文件驗證</button>
 										</div>
 										<div class="position-relative d-flex align-items-center">
-											<input type="text" class="form-control" placeholder="負責人身分證字號"
-												id="user_national_id" name="userNationalId">
+											<input type="text" class="form-control"
+												placeholder="負責人身分證字號" id="user_national_id"
+												name="userNationalId">
 										</div>
 										<div class="form-group">
-											<input type="hidden" name="idCardPictureURL1" id="idCard_pictureURL_1">
-											<input type="hidden" name="idCardPictureURL2" id="idCard_pictureURL_2">
-											<label class="label mt-2" for="">身份證正面</label>
+											<input type="hidden" name="idCardPictureURL1"
+												id="idCard_pictureURL_1"> <input type="hidden"
+												name="idCardPictureURL2" id="idCard_pictureURL_2"> <label
+												class="label mt-2" for="">身份證正面</label>
 											<div class="d-flex justify-content-center">
 												<img id="nationalIDPreview1" src="" alt="Profile Image"
 													class="photo_edit_company" />
 											</div>
-											<input class="mt-3 mb-3" type="file" id="fileInput1" accept="image/*"
-												name="imgfile" />
-											<label class="label" for="">身份證反面</label>
+											<input class="mt-3 mb-3" type="file" id="fileInput1"
+												accept="image/*" name="imgfile" /> <label class="label"
+												for="">身份證反面</label>
 											<div class="d-flex justify-content-center">
 												<img id="nationalIDPreview2" src="" alt="Profile Image"
 													class="photo_edit_company" />
 											</div>
-											<input class="mt-3 mb-3" type="file" id="fileInput2" accept="image/*"
-												name="imgfile" />
+											<input class="mt-3 mb-3" type="file" id="fileInput2"
+												accept="image/*" name="imgfile" />
 										</div>
 									</div>
 								</div>
@@ -652,6 +685,10 @@
 									<button class="btn" type="submit">確定</button>
 								</div>
 							</form>
+							<div class="mt-3">
+								<button class="btn btn-secondary" type="button"
+									id="oneclick_companyAppl">一鍵輸入</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -666,8 +703,10 @@
 	<script th:src="@{/js/frontend/tiny-slider.js}"></script>
 	<script th:src="@{/js/frontend/glightbox.min.js}"></script>
 	<script th:src="@{/js/frontend/main.js}"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+	<script
+		src="https://www.gstatic.com/firebasejs/9.21.0/firebase-storage-compat.js"></script>
 	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
 	<script th:src="@{/js/users/frontend_user/frontend_userProfile.js}"></script>
 
