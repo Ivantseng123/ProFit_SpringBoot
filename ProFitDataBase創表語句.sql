@@ -63,22 +63,26 @@ CREATE TABLE password_reset_tokens(
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE jobs (
-    jobs_id INT PRIMARY KEY IDENTITY(1,1), 
-    jobs_user_id INT,
-    major_category_id INT,
-    jobs_title NVARCHAR(100), 
-    jobs_posting_date DATETIME2 default DATEADD(HOUR, 8, GETDATE()),
-    jobs_application_deadline DATETIME2,
-    jobs_description NVARCHAR(MAX), 
-    jobs_status TINYINT, 
-    jobs_location NVARCHAR(100),
-    jobs_max_salary INT, 
-    jobs_min_salary INT, 
-    jobs_worktime NVARCHAR(50),
-    jobs_number_of_openings INT,
-    FOREIGN KEY (jobs_user_id) REFERENCES users(user_id)
+CREATE TABLE [dbo].[jobs] (
+    [jobs_id]                   INT            IDENTITY (1, 1) NOT NULL,
+    [jobs_user_id]              INT            NULL,
+    [jobs_title]                NVARCHAR (100) NULL,
+    [jobs_posting_date]         DATETIME2 (7)  CONSTRAINT [DF_jobs_jobs_posting_date] DEFAULT (dateadd(hour,(8),getdate())) NULL,
+    [jobs_application_deadline] DATETIME2 (7)  NULL,
+    [jobs_description]          NVARCHAR (MAX) NULL,
+    [jobs_status]               TINYINT        NULL,
+    [jobs_required_skills]      NVARCHAR (500) NULL,
+    [jobs_location]             NVARCHAR (100) NULL,
+    [jobs_max_salary]           INT            NULL,
+    [jobs_min_salary]           INT            NULL,
+    [jobs_worktime]             NVARCHAR (50)  NULL,
+    [jobs_number_of_openings]   INT            NULL,
+    [major_category_id]         INT            NULL,
+    PRIMARY KEY CLUSTERED ([jobs_id] ASC),
+    FOREIGN KEY ([jobs_user_id]) REFERENCES [dbo].[users] ([user_id])
 );
+
+
 
 
 

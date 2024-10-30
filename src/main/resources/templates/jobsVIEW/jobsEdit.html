@@ -88,8 +88,8 @@
                 <div class="mb-3">
                     <label class="form-label">職缺狀態</label>
                     <select class="form-control select2" th:field="${job.jobsStatus}" required>
-                        <option value="0" th:selected="${job.jobsStatus == 0}">開放中</option>
-                        <option value="1" th:selected="${job.jobsStatus == 1}">已關閉</option>
+                        <option value="0" th:selected="${job.jobsStatus == 0}">刊登中</option>
+                        <option value="1" th:selected="${job.jobsStatus == 1}">已下架</option>
                     </select>
                 </div>
 
