@@ -5,6 +5,8 @@ $(document).ready(function () {
     console.log(serviceApplicationDTO);
 
     let freelancerHTML = ``;
+    let caseownerId = currentUser.userId;
+
 
     //如果沒帶委託資料進來，則自動帶入 接案人 及 服務, (可以改變)
     if (servicesDTO != null) {
@@ -13,19 +15,36 @@ $(document).ready(function () {
         freelancerHTML = `<option value=${servicesDTO.userMajor.user.userId}>${servicesDTO.userMajor.user.userName}</option>`;
 
         document.getElementById('serviceSelect').innerHTML = `<option value=${servicesDTO.serviceId}>${servicesDTO.serviceTitle}</option>`;
+
+        document.getElementById('to-chatroom').hidden = false;
+        document.getElementById('to-chatroom').href = `/ProFit/c/chat/add?serviceId=${servicesDTO.serviceId}&freelancerId=${servicesDTO.userMajor.user.userId}`;
     }
+
 
     // 如果帶著委託資料進來, 自動填入資料, 且不能改變接案人及服務
     if (serviceApplicationDTO != null) {
         // console.log("有帶serviceApplicationDTO進來");
 
-        document.getElementById('pageTitle').innerText = '委託洽談中';
         servicesDTO = serviceApplicationDTO.service;
 
         // 表單按鈕變更
         document.getElementById('submit').innerText = '儲存變更';
         document.getElementById('to-chatroom').hidden = false;
-        document.getElementById('create-order-page').hidden = false;
+        if (serviceApplicationDTO.status == 1) {
+            document.getElementById('pageTitle').innerText = '委託洽談中';
+        } else if (serviceApplicationDTO.status == 2) {
+            document.getElementById('pageTitle').innerText = '委託已接受(待案主付款成立)';
+            document.getElementById('create-order-page').hidden = false;
+            document.getElementById('submit').hidden = true;
+        } else if (serviceApplicationDTO.status == 3) {
+            document.getElementById('pageTitle').innerText = '委託已婉拒';
+        } else if (serviceApplicationDTO.status == 4) {
+            document.getElementById('pageTitle').innerText = '委託已關閉';
+        } else if (serviceApplicationDTO.status == 5) {
+            document.getElementById('pageTitle').innerText = '委託已成立';
+        } else if (serviceApplicationDTO.status == 6) {
+            document.getElementById('pageTitle').innerText = '委託已結案';
+        }
 
 
         // 將數據填入表單
@@ -63,13 +82,66 @@ $(document).ready(function () {
         document.getElementById('serviceSelect').setAttribute('readonly', true);
     }
 
+    
 
-    // 生成帶入的服務詳情
-    displayServiceDetails(servicesDTO);
+    // 如果是接案人進入頁面，則全都不能用，且只有接受跟婉拒按鈕
+    if (serviceApplicationDTO!=null && currentUser.userId == serviceApplicationDTO.freelancerId) {
+        console.log(serviceApplicationDTO)
+
+        caseownerId = serviceApplicationDTO.caseownerId;
+        // 填入案主
+        document.getElementById('freelancer-top').innerText = "委託申請人";
+        document.getElementById('serviceSelect-top').innerText = "合作的服務";
+        document.getElementById('freelancer').innerHTML = `<option selected value=${serviceApplicationDTO.service.userMajor.user.userId}>${serviceApplicationDTO.caseowner.userName}</option>`;
+        // 設置欄位只讀
+        document.getElementsByName('serviceApplicationSubitem')[0].setAttribute('readonly', true);
+        document.getElementsByName('serviceApplicationPrice')[0].setAttribute('readonly', true);
+        document.getElementsByName('serviceApplicationAmount')[0].setAttribute('readonly', true);
+        document.getElementsByName('serviceApplicationUnit')[0].setAttribute('readonly', true);
+        document.getElementsByName('serviceApplicationContent')[0].setAttribute('readonly', true);
+        document.getElementsByName('appendixFile')[0].setAttribute('hidden', true);
+        document.getElementsByName('serviceApplicationMission')[0].setAttribute('readonly', true);
+        document.getElementById('serviceApplicationDate').setAttribute('readonly', true);
+        document.getElementsByName('serviceApplicationTotalPrice')[0].setAttribute('readonly', true);
+
+        document.getElementById('freelancer').setAttribute('disabled', true);
+        document.getElementById('serviceApplicationTitle').setAttribute('disabled', true);
+        document.getElementById('serviceSelect').setAttribute('disabled', true);
+
+        
+
+        // 生成帶入的服務詳情
+        displayServiceDetails(serviceApplicationDTO.service);
+
+        // 更改按鈕選項及連結
+        document.getElementById('submit').hidden = true
+        document.getElementById('create-order-page').hidden = true;
+        document.getElementById('to-chatroom').href = '/ProFit/c/chat';
+        if (serviceApplicationDTO.status == 1) { //洽談中
+            // 接受按鈕
+            const acceptButton = document.getElementById('accept-button');
+            acceptButton.hidden = false;
+            // 婉拒按鈕
+        } else if (serviceApplicationDTO.status == 2) { // 已接受
+            
+        } else if (serviceApplicationDTO.status == 3) { // 已婉拒
+        } else if (serviceApplicationDTO.status == 4) { // 已關閉
+        } else if (serviceApplicationDTO.status == 5) { // 已成立
+        } else if (serviceApplicationDTO.status == 6) { // 已結案
+        }
+
+
+    } else {
+        // 生成帶入的服務詳情
+        displayServiceDetails(servicesDTO);
+
+    }
+
+
 
 
     // 動態生成 要合作的接案人 選項
-    let caseownerId = currentUser.userId;
+
     // let freelancerId = servicesDTO.userMajor.user.userId;
 
     axios({

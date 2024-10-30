@@ -7,85 +7,102 @@ $(document).ready(() => {
     // 渲染基本結構
     renderServiceApplicationCenter();
 
-    // 拿到當前用戶的所有專業
+    // 初始載入預設標籤內容（送出的委託）
+    loadSentApplications();
 
-
-    // 拿到當前用戶 送出的所有委託 並渲染, 用caseownerId查
-    // 可以 查看 編輯 刪除
-    // getServiceApplicationsAndRender();
-
-    // 拿到當前用戶 收到的所有委託申請 並渲染, 用freelancerId查
-    // 可以 同意申請(更改狀態), 拒絕(更改狀態)
-    // getReceiveServiceApplicationsAndRender();
+    // 初始化標籤切換事件
+    initializeTabEvents();
 
   })
 });
 
+/**
+ * 初始化標籤切換事件
+ */
+function initializeTabEvents() {
+  // 使用事件委派，監聽整個 applicationTabs 容器
+  $('#applicationTabs').on('click', 'button', function (e) {
+    e.preventDefault();
+
+    // 移除所有標籤的 active 類
+    $('#applicationTabs button').removeClass('active');
+    // 添加當前標籤的 active 類
+    $(this).addClass('active');
+
+    // 獲取目標面板的 id
+    const targetId = $(this).data('bs-target');
+
+    // 隱藏所有面板
+    $('.tab-pane').removeClass('show active');
+    // 顯示目標面板
+    $(targetId).addClass('show active');
+
+    // 根據點擊的標籤載入對應內容
+    if ($(this).attr('id') === 'sent-tab') {
+      loadSentApplications();
+    } else if ($(this).attr('id') === 'received-tab') {
+      loadReceivedApplications();
+    }
+  });
+}
 
 /**
  * 渲染服務申請中心的基本結構
  */
 function renderServiceApplicationCenter() {
   $('.col-lg-8').eq(0).append(`
-        <div class="inner-content">
-            <div class="card">
-                <div class="card-body">
-                    <!-- 標題 -->
-                    <div class="row border-bottom pb-3 mb-3">
-                        <div class="col-md-12">
-                            <h5>委託管理中心</h5>
-                        </div>
-                    </div>
+      <div class="inner-content">
+          <div class="card">
+              <div class="card-body">
+                  <!-- 標題 -->
+                  <div class="row border-bottom pb-3 mb-3">
+                      <div class="col-md-12">
+                          <h5>委託管理中心</h5>
+                      </div>
+                  </div>
 
-                    <!-- Tab 列 -->
-                    <ul class="nav nav-tabs" id="applicationTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="sent-tab" data-bs-toggle="tab" 
-                                    data-bs-target="#sent" type="button" role="tab">
-                                送出的委託
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="received-tab" data-bs-toggle="tab" 
-                                    data-bs-target="#received" type="button" role="tab">
-                                收到的委託
-                            </button>
-                        </li>
-                    </ul>
+                  <!-- Tab 列 -->
+                  <ul class="nav nav-tabs mb-3" id="applicationTabs" role="tablist">
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link active" id="sent-tab" data-bs-toggle="tab" 
+                                  data-bs-target="#sent" type="button" role="tab" 
+                                  aria-controls="sent" aria-selected="true">
+                              送出的委託
+                          </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="received-tab" data-bs-toggle="tab" 
+                                  data-bs-target="#received" type="button" role="tab" 
+                                  aria-controls="received" aria-selected="false">
+                              收到的委託
+                          </button>
+                      </li>
+                  </ul>
 
-                    <!-- Tab 內容 -->
-                    <div class="tab-content" id="applicationTabContent">
-                        <!-- 送出的委託 -->
-                        <div class="tab-pane fade show active" id="sent" role="tabpanel">
-                            <div class="sent-applications-list mt-3">
-                                <!-- 這裡將動態填充送出的委託 -->
-                            </div>
-                        </div>
+                  <!-- Tab 內容 -->
+                  <div class="tab-content" id="applicationTabContent">
+                      <!-- 送出的委託 -->
+                      <div class="tab-pane fade show active" id="sent" role="tabpanel" 
+                           aria-labelledby="sent-tab">
+                          <div class="sent-applications-list mt-3">
+                              <!-- 這裡將動態填充送出的委託 -->
+                          </div>
+                      </div>
 
-                        <!-- 收到的委託 -->
-                        <div class="tab-pane fade" id="received" role="tabpanel">
-                            <div class="received-applications-list mt-3">
-                                <!-- 這裡將動態填充收到的委託 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `);
-
-  // 添加標籤切換事件監聽
-  $('#applicationTabs button').on('click', function (e) {
-    e.preventDefault();
-    console.log(this)
-    if ($(this).attr('id') === 'sent-tab') {
-
-      loadSentApplications();
-    } else {
-      loadReceivedApplications();
-    }
-  });
+                      <!-- 收到的委託 -->
+                      <div class="tab-pane fade" id="received" role="tabpanel" 
+                           aria-labelledby="received-tab">
+                          <div class="received-applications-list mt-3">
+                              <!-- 這裡將動態填充收到的委託 -->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  `);
 }
+
 
 /**
  * 載入送出的委託
@@ -157,7 +174,7 @@ function renderSentApplications(applications) {
                 <div class="col-md-2">
                     <button class="btn btn-info btn-sm" 
                             onclick="viewApplication(${application.serviceApplicationId})">
-                        查看
+                        編輯
                     </button>
                     ${application.status === 1 ? `
                         <button class="btn btn-danger btn-sm" 
@@ -165,6 +182,19 @@ function renderSentApplications(applications) {
                             取消
                         </button>
                     ` : ''}
+                    ${application.status === 2 ? `
+                      <button class="btn btn-danger btn-sm" 
+                              onclick="completeApplication(${application.serviceApplicationId})">
+                          取消
+                      </button>
+                  ` : ''}
+                    ${application.status === 4 || application.status === 3 ? `
+                      <button class="btn btn-secondary btn-sm" 
+                              onclick="deleteApplication(${application.serviceApplicationId})">
+                          刪除
+                      </button>
+                  ` : ''}
+                  
                 </div>
             </div>
         `);
@@ -184,40 +214,46 @@ function renderReceivedApplications(applications) {
   }
 
   applications.forEach(application => {
-    container.append(`
-            <div class="row align-items-center border-bottom py-3">
-                <div class="col-md-3">
-                    <h6 class="mb-0">${application.applicationTitle}</h6>
-                </div>
-                <div class="col-md-2">
-                    <span>${formatDate(application.applicationDate)}</span>
-                </div>
-                <div class="col-md-2">
-                    <span class="badge ${getStatusBadgeClass(application.status)}">
-                        ${getApplicationStatus(application.status)}
-                    </span>
-                </div>
-                <div class="col-md-3">
-                    <span>委託金額: $${application.price}</span>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-info btn-sm" 
-                            onclick="viewApplication(${application.applicationId})">
-                        查看
-                    </button>
-                    ${application.status === 0 ? `
-                        <button class="btn btn-success btn-sm" 
-                                onclick="acceptApplication(${application.applicationId})">
-                            接受
-                        </button>
-                        <button class="btn btn-danger btn-sm" 
-                                onclick="rejectApplication(${application.applicationId})">
-                            拒絕
-                        </button>
-                    ` : ''}
-                </div>
+    if (application.status != 0 || application.status != 4) {
+      container.append(`
+        <div class="row align-items-center border-bottom py-3">
+            <div class="col-md-3">
+                <h6 class="mb-0">${application.serviceApplicationTitle}</h6>
+                 <span>${formatDate(application.updatedAt)}</span>
             </div>
-        `);
+            <div class="col-md-2">
+                <h6 class="mb-0">${application.caseowner.userName}</h6>
+                <span>${application.service.serviceTitle}</span>
+            </div>
+            <div class="col-md-2">
+                <span class="badge ${getStatusBadgeClass(application.status)}" data-${application.serviceApplicationId}-status="${application.status}">
+                    ${getApplicationStatus(application.status)}
+                </span>
+            </div>
+            <div class="col-md-3">
+                <span>委託單價: $${application.serviceApplicationPrice} / ${application.serviceApplicationUnit}</span>
+                <span>委託總額: $${application.serviceApplicationPrice * application.serviceApplicationAmount}</span>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-info btn-sm" 
+                        onclick="viewApplication(${application.serviceApplicationId})">
+                    查看
+                </button>
+                ${application.status === 1 ? `
+                    <button class="btn btn-success btn-sm" 
+                            onclick="acceptApplication(${application.serviceApplicationId})">
+                        同意
+                    </button>
+                    <button class="btn btn-danger btn-sm" 
+                          onclick="rejectApplication(${application.serviceApplicationId})">
+                      婉拒
+                  </button>
+                ` : ''}
+            </div>
+        </div>
+    `);
+    }
+
   });
 }
 
@@ -230,19 +266,48 @@ function viewApplication(applicationId) {
 
 function cancelApplication(applicationId) {
   if (confirm('確定要取消此委託嗎？')) {
-    updateApplicationStatus(applicationId, 3); // 3 代表取消
+    updateApplicationStatus(applicationId, 4); // 4 代表取消
   }
 }
 
 function acceptApplication(applicationId) {
   if (confirm('確定要接受此委託嗎？')) {
-    updateApplicationStatus(applicationId, 1); // 1 代表接受
+    updateApplicationStatus(applicationId, 2); // 2 代表接受
   }
 }
 
 function rejectApplication(applicationId) {
   if (confirm('確定要拒絕此委託嗎？')) {
-    updateApplicationStatus(applicationId, 2); // 2 代表拒絕
+    updateApplicationStatus(applicationId, 3); // 3 代表拒絕
+  }
+}
+
+function completeApplication(applicationId) {
+  if (confirm('付款後即成立委託')) {
+    
+  }
+  
+}
+
+function deleteApplication(applicationId) {
+  if (confirm('確定要刪除此委託嗎？')) {
+    // 刪除委託
+    $.ajax({
+      url: `/ProFit/c/serviceApplication/${applicationId}`,
+      type: 'DELETE',
+      success: function (result) {
+        if (result) {
+          alert('委託已成功刪除');
+          // 可以在這裡重新載入列表或移除該委託項目
+          loadSentApplications(); // 例如重新載入委託列表
+        } else {
+          alert('無法刪除此委託，可能權限不足或狀態不符');
+        }
+      },
+      error: function () {
+        alert('刪除委託失敗，請重試');
+      }
+    });
   }
 }
 
@@ -250,11 +315,11 @@ function rejectApplication(applicationId) {
  * 更新委託狀態
  */
 function updateApplicationStatus(applicationId, status) {
+  console.log(status)
   $.ajax({
-    url: `/ProFit/c/serviceApplication/api/${applicationId}/status`,
+    url: `/ProFit/c/serviceApplication/api/${applicationId}/status?status=${status}`,
     type: 'PUT',
     contentType: 'application/json',
-    data: JSON.stringify({ status: status }),
     success: function () {
       alert('狀態更新成功');
       // 重新載入當前頁面
