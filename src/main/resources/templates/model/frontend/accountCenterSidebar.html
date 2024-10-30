@@ -24,14 +24,14 @@
 									<li><a href="job-alerts.html"><i class="lni lni-briefcase"></i> Job Alerts</a></li>
 									<li><a href="change-password.html"><i class="lni lni-lock"></i> Change Password</a></li>
 									<li><a href="index.html"><i class="lni lni-upload"></i> Sign Out</a></li>-->
-			<th:block th:if="${user != null and user.userIdentity == 2}">
+			<th:block th:if="${session.CurrentUser != null and session.CurrentUser.userIdentity == 2}">
 				<li class="heading">職缺管理</li>
 				<li><a th:href="@{/front/profile/applicationsReturn/0}"><i class="lni lni-bookmark"></i>管理職缺申請</a></li>
-				<li><a th:href="@{/}"><i class="lni lni-envelope"></i>管理發布職缺</a></li>
+				<!--                    <li><a th:href="@{/}"><i class="lni lni-envelope"></i>管理發布職缺</a></li>-->
 			</th:block>
-			<th:block th:if="${user != null and (user.userIdentity == 1 or user.userIdentity == 2)}">
+			<th:block th:if="${session.CurrentUser != null and (session.CurrentUser.userIdentity == 2 or session.CurrentUser.userIdentity == 1)}">
 				<li class="heading">管理應徵</li>
-				<li><a th:href="@{/front/profile/applications/0}"><i class="lni lni-bookmark"></i>我的應徵紀錄</a></li>
+				<li><a th:href="@{/}"><i class="lni lni-bookmark"></i>我的應徵紀錄</a></li>
 			</th:block>
 		</ul>
 	</div>
