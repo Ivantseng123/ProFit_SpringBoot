@@ -2,6 +2,8 @@ package com.ProFit.controller.chats.frontend;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -26,21 +28,25 @@ public class ChatWebSocketController {
    * @param principal  當前用戶信息
    * @return 保存後的消息
    */
-  @MessageMapping("/chat.sendMessage")
-  @SendTo("/topic/messages")
+  @MessageMapping("/chat.sendMessage/{chatId}")
+  @SendTo("/topic/chat/{chatId}") // 修改：改為發送到特定聊天室
   public MessageDTO sendMessage(@Payload MessageDTO messageDTO,
+      @DestinationVariable Integer chatId,
       Principal principal) {
+    // 設置消息的聊天室ID
+    messageDTO.setChatId(chatId);
     return chatService.saveMessage(messageDTO);
   }
 
   /**
    * 處理發送服務申請相關的消息
    */
-  @MessageMapping("/chat.serviceApplication")
-  @SendTo("/topic/messages")
-  public MessageDTO sendServiceApplication(@Payload MessageDTO messageDTO) {
-    // 添加服務申請相關的標記
+  @MessageMapping("/chat.serviceApplication/{chatId}")
+  @SendTo("/topic/chat/{chatId}") // 修改：改為發送到特定聊天室
+  public MessageDTO sendServiceApplication(@Payload MessageDTO messageDTO,
+      @DestinationVariable Integer chatId) {
     messageDTO.setContent("[SERVICE_APPLICATION]" + messageDTO.getContent());
+    messageDTO.setChatId(chatId);
     return chatService.saveMessage(messageDTO);
   }
 
@@ -53,9 +59,13 @@ public class ChatWebSocketController {
    */
   @MessageMapping("/chat.join")
   @SendTo("/topic/chat/{chatId}")
-  public String joinChat(@DestinationVariable Integer chatId,
+  public MessageDTO joinChat(@DestinationVariable Integer chatId,
       Principal principal) {
-    return principal.getName() + " joined the chat";
+    MessageDTO joinMessage = new MessageDTO();
+    joinMessage.setChatId(chatId);
+    joinMessage.setContent(principal.getName() + " 加入聊天室");
+    joinMessage.setSentAt(LocalDateTime.now());
+    return joinMessage;
   }
 
   /**

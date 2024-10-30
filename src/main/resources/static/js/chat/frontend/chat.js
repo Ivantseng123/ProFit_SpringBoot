@@ -3,6 +3,8 @@
  */
 let stompClient = null;
 let currentChatId = null;
+let currentServiceId = null;
+let freelancerId = null;
 
 /**
  * 頁面初始化
@@ -22,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeWebSocket();
   initializeEventListeners();
   loadChatUsers();
+
+  // 載入最新的聊天室
+  loadLatestChatRoom();
 });
 
 /**
@@ -62,10 +67,6 @@ function initializeEventListeners() {
  */
 function initializeWebSocket() {
 
-  const wsUrl = window.location.protocol === 'https:'
-    ? 'wss://' + window.location.host + '/ProFit/chatWebsocket'
-    : 'ws://' + window.location.host + '/ProFit/chatWebsocket';
-
   const socket = new SockJS('http://localhost:8080/ProFit/chatWebsocket');
   stompClient = Stomp.over(socket);
 
@@ -82,15 +83,6 @@ function initializeWebSocket() {
     // 連接成功回調
     function (frame) {
       console.log('WebSocket 連接成功:', frame);
-
-      // 訂閱個人消息
-      stompClient.subscribe('/user/' + currentUser.userId + '/queue/messages',
-        onMessageReceived);
-
-      // // 訂閱系統廣播
-      // stompClient.subscribe('/topic/system', function (message) {
-      //   console.log('系統消息:', message.body);
-      // });
 
       // 如果有當前聊天，訂閱聊天室
       if (currentChatId) {
@@ -123,6 +115,32 @@ function initializeWebSocket() {
 }
 
 
+/**
+ * 載入最新的聊天室
+ */
+function loadLatestChatRoom() {
+  fetch('/ProFit/c/chat/api/latest') //  API 可返回最新聊天室 Page<chatDto>
+    .then(handleResponse)
+    .then(page => {
+      let chat = page.content[0];
+      console.log(chat);
+      if (chat && chat.chatId) {
+        currentChatId = chat.chatId;
+        // console.log("載入最新的聊天室:", chat);
+        updateChatUI(chat);
+        loadChatHistory(chat.chatId);
+        subscribeToChatRoom(chat.chatId);
+      } else {
+        console.log("沒有找到最新的聊天室");
+      }
+    })
+    .catch(error => {
+      console.error("載入最新聊天室失敗:", error);
+      showErrorMessage("無法載入最新聊天室，請重試");
+    });
+}
+
+
 
 /**
  * 載入聊天用戶列表
@@ -132,6 +150,7 @@ function loadChatUsers() {
     .then(handleResponse)
     .then(users => {
       // console.log(users);
+      // 渲染聊天用戶列表
       renderChatUsers(users);
     })
     .catch(error => {
@@ -144,10 +163,29 @@ function loadChatUsers() {
  * 渲染聊天用戶列表
  */
 function renderChatUsers(users) {
+  console.log(users);
   const chatList = document.getElementById('chat-users-list');
-  if (!chatList) return;
-  const usersHtml = users.map(user => `
-        <div class="chat-user" onclick="selectUser(${user.userId})" data-user-id="${user.userId}">
+  // 安全檢查
+  if (!chatList) {
+    console.error('找不到用戶列表容器元素');
+    return;
+  }
+  // 清空現有內容
+  chatList.innerHTML = '';
+
+  // 創建並添加用戶列表項
+  users.forEach(user => {
+    // 跳過當前用戶
+    if (user.userId === currentUser.userId) return;
+
+    // 創建用戶列表項
+    const userElement = document.createElement('div');
+    userElement.className = 'chat-user';
+    userElement.setAttribute('data-user-id', user.userId);
+    userElement.onclick = () => selectUser(user.userId);
+
+    // 設置用戶列表項內容
+    userElement.innerHTML = `
             <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                     <img src="${user.userPictureURL || '/images/default-avatar.png'}" 
@@ -157,38 +195,116 @@ function renderChatUsers(users) {
                 </div>
                 <div class="flex-grow-1 ms-3">
                     <h6 class="mb-0">${user.userName}</h6>
-                    <small class="text-muted">
-                        ${formatDateTime(user.lastChatTime)}
-                    </small>
+                    <small class="text-muted">${formatDateTime(user.lastChatTime)}</small>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
 
-  console.log(usersHtml);
-  chatList.innerHTML = usersHtml;
+    // 添加到容器中
+    chatList.appendChild(userElement);
+  });
+
 }
 
 /**
  * 選擇聊天用戶
  */
 function selectUser(userId) {
+  // 檢查是否選擇自己
   if (userId === currentUser.userId) return;
 
-  // 載入或創建聊天
+  // 載入這個user有的服務
+  // 載入用戶的服務列表
+  loadUserServices(userId).then(() => {
+    freelancerId = userId;
+  })
+
+}
+
+/**
+ * 載入用戶服務列表
+ * @param {number} userId - 用戶ID
+ * @returns {Promise} 返回請求Promise
+ */
+function loadUserServices(userId) {
+  return fetch(`/ProFit/c/chat/api/user/${userId}/services`)
+    .then(handleResponse)
+    .then(servicePage => {
+      // 更新服務選擇下拉選單
+      updateServiceSelection(servicePage.content);
+    });
+}
+
+
+/**
+ * 更新服務選擇UI
+ * @param {Array} services - 服務列表
+ */
+function updateServiceSelection(services) {
+  const serviceList = document.getElementById('service-list');
+  if (!serviceList) return;
+
+  // 清空現有選項
+  serviceList.innerHTML = '';
+
+  // console.log(services[0]);
+
+  // 添加服務選項
+  services.forEach(service => {
+    const serviceItem = document.createElement('div');
+    serviceItem.className = 'list-group-item';
+    serviceItem.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="mb-1">${service.serviceTitle}</h6>
+                    <p class="mb-1 small">${service.userMajor.major.majorName}</p>
+                    <small class="text-muted">價格: $${service.servicePrice} / ${service.serviceUnitName}</small>
+                </div>
+                <button class="btn btn-primary btn-sm" 
+                        onclick="selectService(${service.serviceId})">
+                    選擇
+                </button>
+            </div>
+        `;
+    serviceList.appendChild(serviceItem);
+  });
+
+  // 顯示服務選擇模態框
+  const serviceModal = new bootstrap.Modal(document.getElementById('serviceModal'));
+  serviceModal.show();
+
+}
+
+/**
+ * 選擇服務
+ * @param {number} serviceId - 服務ID
+ */
+function selectService(serviceId) {
+  // 隱藏服務選擇模態框
+  const serviceModal = bootstrap.Modal.getInstance(document.getElementById('serviceModal'));
+  serviceModal.hide();
+
+  // 設置當前選中的服務ID
+  currentServiceId = serviceId;
+
+  // 可以在這裡添加其他處理邏輯
+  // 例如：更新UI顯示當前選中的服務
+  // 載入聊天(根據userId、currentUser.userId、serviceId)
   fetch('/ProFit/c/chat/api/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      userId1: currentUser.userId,
-      userId2: userId
+      userId1: freelancerId,
+      userId2: currentUser.userId,
+      serviceId: currentServiceId
     })
   })
     .then(handleResponse)
     .then(chat => {
       currentChatId = chat.chatId;
+      console.log(chat);
       updateChatUI(chat);
       loadChatHistory(chat.chatId);
       subscribeToChatRoom(chat.chatId);
@@ -197,17 +313,35 @@ function selectUser(userId) {
       console.error('創建聊天失敗:', error);
       showErrorMessage('無法創建聊天，請重試');
     });
+
+  ;
+
 }
+
+
 
 /**
  * 更新聊天界面
  */
 function updateChatUI(chat) {
-  // 更新聊天標題
+
+
+  // 更新聊天對象名 頭像
+  const chatUserAvatar = document.getElementById('chat-user-avatar');
+  const chatUserName = document.getElementById('chat-user-name');
+  if (chatUserName && chatUserAvatar) {
+    const otherUser = chat.userId1 === currentUser.userId ? chat.caseowner : chat.freelancer;
+    chatUserName.textContent = otherUser.userName;
+    chatUserAvatar.src = otherUser.userPictureURL;
+  }
+  // 更新聊天 標題(服務)
+  const chatTitleHref = document.getElementById('chat-title-href');
+  const chatTitleDetail = document.getElementById('chat-title-detail');
   const chatTitle = document.getElementById('chat-title');
-  if (chatTitle) {
-    const otherUser = chat.userId1 === currentUser.userId ? chat.user2 : chat.user1;
-    chatTitle.textContent = otherUser.userName;
+  if (chatTitle && chatTitleDetail && chatTitleHref) {
+    chatTitle.textContent = chat.service.serviceTitle;
+    chatTitleDetail.innerText = `$${chat.service.servicePrice} / ${chat.service.serviceUnitName}`;
+    chatTitleHref.href = `/ProFit/c/service/${chat.service.serviceId}`;
   }
 
   // 激活選中的用戶
@@ -256,11 +390,21 @@ function loadChatHistory(chatId) {
  */
 function subscribeToChatRoom(chatId) {
   if (stompClient && stompClient.connected) {
+    console.log(`訂閱聊天室: ${chatId}`);
+
+    // 訂閱聊天室消息
     stompClient.subscribe(`/topic/chat/${chatId}`, function (message) {
+      console.log('收到消息:', message);
       const messageData = JSON.parse(message.body);
       displayMessage(messageData);
       scrollToBottom();
     });
+
+    // 發送加入聊天室的消息
+    stompClient.send(`/app/chat.join/${chatId}`, {}, JSON.stringify({
+      chatId: chatId
+    }));
+
   }
 }
 
@@ -281,7 +425,7 @@ function sendMessage() {
     sentAt: new Date().toISOString()
   };
 
-  stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(message));
+  stompClient.send(`/app/chat.sendMessage/${currentChatId}`, {}, JSON.stringify(message));
   messageInput.value = '';
 }
 
@@ -345,7 +489,7 @@ function handleServiceApplication(serviceApplication) {
     referenceId: serviceApplication.serviceApplicationId
   };
 
-  stompClient.send("/app/chat.serviceApplication", {}, JSON.stringify(message));
+  stompClient.send(`/app/chat.serviceApplication/${chatId}`, {}, JSON.stringify(message));
 }
 
 /**
@@ -362,9 +506,12 @@ function formatDateTime(dateTime) {
 }
 
 function scrollToBottom() {
-  const messageContainer = document.getElementById('message-container');
+  const messageContainer = document.getElementById('message-box');
   if (messageContainer) {
-    messageContainer.scrollTop = messageContainer.scrollHeight;
+    console.log(messageContainer.scrollHeight);
+    requestAnimationFrame(() => {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    });
   }
 }
 
