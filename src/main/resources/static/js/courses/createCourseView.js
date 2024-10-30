@@ -1,22 +1,22 @@
 $(document).ready(function () {
-    
-	  // 生成課程測試資料
-	    $("#generateCourseData").click(function () {
-	        $("#courseName").val("面向GTP編程");
-	        $("#courseCategory").val("100"); // 程式設計
-	        $("#courseCreateUserId").val("101");
-	        $("#courseInformation").val("這是一個測試課程資訊。");
-	        $("#courseStartDate").val("2024-10-07T09:00");
-	        $("#courseEndDate").val("2024-12-31T17:00");
-	        $("#courseDescription").val("Claude其實更好用");
-	        $("#coursePrice").val("9999");
-	        $("#courseStatus").val("Active");
-	    });
 
-		// 生成章節測試資料
-		$("#generateModuleData").click(function () {
-		    var rowCount = $("#users tbody tr").length + 1; // 獲取當前行數，確保不會與現有行數衝突
-		    var newRow = `
+    // 生成課程測試資料
+    $("#generateCourseData").click(function () {
+        $("#courseName").val("面向GTP編程");
+        $("#courseCategory").val("100"); // 程式設計
+        $("#courseCreateUserId").val("101");
+        $("#courseInformation").val("這是一個測試課程資訊。");
+        $("#courseStartDate").val("2024-10-07T09:00");
+        $("#courseEndDate").val("2024-12-31T17:00");
+        $("#courseDescription").val("Claude其實更好用");
+        $("#coursePrice").val("9999");
+        $("#courseStatus").val("Active");
+    });
+
+    // 生成章節測試資料
+    $("#generateModuleData").click(function () {
+        var rowCount = $("#users tbody tr").length + 1; // 獲取當前行數，確保不會與現有行數衝突
+        var newRow = `
 		        <tr>
 		            <td style="text-align: center">${rowCount}</td>
 		            <td class="courseModuleName">拿出魔法小卡準備訂閱</td>
@@ -27,16 +27,16 @@ $(document).ready(function () {
 		            </td>
 		        </tr>
 		    `;
-		    // 在章節表格中插入測試資料
-		    $("#users tbody").append(newRow);
+        // 在章節表格中插入測試資料
+        $("#users tbody").append(newRow);
 
-		    // 新增生成的編輯和刪除按鈕的事件
-		    $("#users tbody tr:last-child .edit").on("click", editModule);
-		    $("#users tbody tr:last-child .save").on("click", saveModule);
-		    $("#users tbody tr:last-child .delete").on("click", deleteModule);
-		});
-	
-	// 初始化標籤頁
+        // 新增生成的編輯和刪除按鈕的事件
+        $("#users tbody tr:last-child .edit").on("click", editModule);
+        $("#users tbody tr:last-child .save").on("click", saveModule);
+        $("#users tbody tr:last-child .delete").on("click", deleteModule);
+    });
+
+    // 初始化標籤頁
     $("#tabs").tabs();
 
     // 初始化對話框（如果需要）
@@ -86,8 +86,8 @@ $(document).ready(function () {
             let coursePrice = $('#coursePrice').val();
             let courseStatus = $('#courseStatus').val();
             let courseModuleNames = Array.from(document.getElementsByClassName('courseModuleName')).map(element => element.textContent.trim());
-	
-			console.log(courseModuleNames);
+
+            console.log(courseModuleNames);
             // 格式化日期
             courseStartDate = convertToSQLDateTimeFormat(courseStartDate);
             courseEndDate = convertToSQLDateTimeFormat(courseEndDate);
@@ -107,8 +107,8 @@ $(document).ready(function () {
             formData.set('courseDescription', courseDescription);
             formData.set('coursePrice', coursePrice);
             formData.set('courseStatus', courseStatus);
-			// 將 courseModuleNames 轉換為 JSON 字符串並加入 FormData
-			formData.set('courseModuleNames', JSON.stringify(courseModuleNames));
+            // 將 courseModuleNames 轉換為 JSON 字符串並加入 FormData
+            formData.set('courseModuleNames', JSON.stringify(courseModuleNames));
 
             // 發送 AJAX 請求
             $.ajax({
@@ -123,7 +123,7 @@ $(document).ready(function () {
                         window.alert('課程新增成功');
                         console.log('新增的課程信息:', response);
                         // 跳轉回課程列表
-                        window.location.href = contextPath + '/courses?clickButton=true';
+                        window.location.href = contextPath + '/b/courses?clickButton=true';
                     } else {
                         window.alert('課程新增失敗');
                     }

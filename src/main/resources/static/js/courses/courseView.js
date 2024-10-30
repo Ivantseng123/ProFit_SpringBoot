@@ -3,6 +3,8 @@ $('#searchBtn').click(function () {
 	// 清空當前表格
 	$('#search-results').empty();
 
+	$('.pagination').empty();
+
 	$('#search-results').append(`	<div class="text-center">
 	  <div class="spinner-border" role="status">
 	    <span class="visually-hidden">Loading...</span>
@@ -29,6 +31,8 @@ $('#searchBtn').click(function () {
 			// 清空當前表格
 			$('#search-results').empty();
 
+			$('.pagination').empty();
+
 			let tableHtml = `<h3>搜尋結果如下 :</h3>
         	                <table>
         	                    <thead>
@@ -51,7 +55,7 @@ $('#searchBtn').click(function () {
 
 			$('#search-results').append(tableHtml);
 
-			response.forEach(function (course) {
+			response.content.forEach(function (course) {
 				console.log("Serialized JSON: " + course.courseCreaterName);
 
 				// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
@@ -81,6 +85,11 @@ $('#searchBtn').click(function () {
 							</tr>
 						`);
 			});
+
+			printPageNumber(response);
+
+			// 更新按鈕狀態
+			updatePaginationButtons(response);
 
 
 		},
@@ -126,7 +135,7 @@ $(document).on('click', '.delete', function () {
 				if (response) {
 					window.alert('課程刪除成功');
 					console.log('新增的课程信息:', response);
-					window.location.href = contextPath + '/courses?clickButton=true';
+					window.location.href = contextPath + '/b/courses?clickButton=true';
 				} else {
 					window.alert('課程刪除失敗');
 				}
@@ -243,3 +252,153 @@ $(document).on('click', '.view', function () {
 		}
 	});
 });
+
+function printPageNumber(searchCoursesPage) {
+	// 印頁數 (searchCoursesPage.totalPages)
+	$('.pagination').append(`<li class="page-item"><a class="page-link" id="prev-page" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></i></a></li>`)
+
+	for (let i = 1; i <= searchCoursesPage.totalPages; i++) {
+		$('.pagination').append(`<li class="page-item pageBtn" data-pagebtn="${i}"><a class="page-link" href="#">${i}</a></li>`);
+	}
+
+	$('.pagination').append(`<li class="page-item"><a class="page-link" id="next-page" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`)
+
+	let pageBtns = document.getElementsByClassName('pageBtn');
+
+	for (let i = 0; i < pageBtns.length; i++) {
+		pageBtns[i].addEventListener('click', function (e) {
+			e.preventDefault();
+			let pageID = this.getAttribute('data-pagebtn');
+			console.log('pageID: ' + pageID)
+			loadThatPage(pageID)
+		})
+	}
+
+	var currentPage = searchCoursesPage.number + 1;
+	var totalPages = searchCoursesPage.totalPages;
+
+	$('#prev-page').click(function (e) {
+		e.preventDefault();
+		if (currentPage > 1) {
+			loadThatPage(currentPage - 1);
+		}
+	});
+
+	$('#next-page').click(function (e) {
+		e.preventDefault();
+		if (currentPage < totalPages) {
+			loadThatPage(currentPage + 1);
+		}
+	});
+}
+
+function updatePaginationButtons(searchCoursesPage) {
+	// 禁用「上一頁」按鈕，如果在第一頁
+	let currentPage = searchCoursesPage.number + 1;
+	let totalPages = searchCoursesPage.totalPages;
+
+	if (currentPage === 1) {
+		$('#prev-page').addClass('disabled'); // 增加 disabled class
+	} else {
+		$('#prev-page').removeClass('disabled'); // 移除 disabled class
+	}
+
+	// 禁用「下一頁」按鈕，如果在最後一頁
+	if (currentPage === totalPages) {
+		$('#next-page').addClass('disabled'); // 增加 disabled class
+	} else {
+		$('#next-page').removeClass('disabled'); // 移除 disabled class
+	}
+}
+
+function loadThatPage(pageNum) {
+
+	let data = {
+		courseMajor: $('#id-courseMajor').val(),
+		courseName: $('#id-courseName').val(),
+		courseStatus: $('#id-courseStatus').val(),
+		courseCreateUserId: $('#id-courseCreateUserId').val(),
+		courseCreateUserName: $('#id-courseCreateUserName').val(),
+		pageNumber: pageNum
+	};
+
+	$.ajax({
+		url: '/ProFit/courses/search',
+		data: data,
+		dataType: 'JSON',
+		type: 'GET',
+		success: function (response) {
+			console.log(response);
+
+			// 清空當前表格
+			$('#search-results').empty();
+
+			$('.pagination').empty();
+
+			let tableHtml = `<h3>搜尋結果如下 :</h3>
+        	                <table>
+        	                    <thead>
+        	                        <tr>
+        	                            <th>ID</th>
+										<th>課程封面</th>
+        	                            <th>課程名稱</th>
+        	                            <th>課程創建者</th>
+        	                            <th>課程資訊</th>
+										<th>章節數量</th>
+										<th>章節操作</th>
+        	                            <th>價格</th>
+        	                            <th>狀態</th>
+        	                            <th>操作</th>
+        	                        </tr>
+        	                    </thead>
+        	                    <tbody id="table-body">
+        	                    </tbody>
+        	                </table>`;
+
+			$('#search-results').append(tableHtml);
+
+			response.content.forEach(function (course) {
+				console.log("Serialized JSON: " + course.courseCreaterName);
+
+				// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
+				// let orderButton = '';
+				// if (course.courseStatus === 'Active') {
+				// 	orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
+				// }
+
+				$('#table-body').append(` 
+							<tr>
+								<td class="result-courseId" name="courseId">${course.courseId}</td>
+								<td><img id="currentCoverImage" src="${course.courseCoverPictureURL}" alt="目前沒有圖片" style="max-width: 200px; height: auto;" /></td>
+								<td class="result-courseName" name="courseName">${course.courseName}</td>
+								<td>${course.courseCreaterName}</td>
+								<td>${course.courseInformation}</td>
+								<td>${course.courseModuleNumber}</td>
+								<td><a href="${contextPath}/courseModules?courseId=${course.courseId}"><button class="viewModules btn btn-info btn-sm">查看</button></a></td>
+								<td>${course.coursePrice}</td>
+								<td class="status">${course.courseStatus}</td>
+								<td>
+									<button class="view btn btn-success btn-sm">查看</button>
+									<a href="${contextPath}/courseGrades?courseId=${course.courseId}"><button class="btn btn-warning btn-sm">評論</button></a>
+									<br/><br/>
+									<button class="edit btn btn-primary btn-sm">編輯</button>
+									<button class="delete btn btn-danger btn-sm">刪除</button>
+								</td>
+							</tr>
+						`);
+			});
+
+			printPageNumber(response);
+
+			// 更新按鈕狀態
+			updatePaginationButtons(response);
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			// 處理錯誤
+			console.error('查詢失敗:', textStatus, errorThrown);
+			alert('查詢失敗，請重試。');
+		}
+
+	})
+}

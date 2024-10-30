@@ -1,38 +1,38 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // 獲取URL中的參數
     let params = new URLSearchParams(window.location.search);
     let oldCourseId = params.get('courseId');
 
     // 如果 courseId 存在且不為空字串，則發送 AJAX 請求獲取課程信息
     if (oldCourseId) {
-		
+
         $.ajax({
             url: contextPath + '/courses/search/' + oldCourseId, // 使用 contextPath 和路徑變數
             dataType: 'json',
             type: 'GET',
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-				
-				// 獲取課程數據
-				    let course = response.course;
 
-				    // 獲取所有課程類別
-				    let majorCategories = response.majorCategories;
+                // 獲取課程數據
+                let course = response.course;
 
-				    // 日期格式處理
-				    let courseStartDate = `${course.courseStartDate.split('.')[0]}`;
-				    let courseEndDate = `${course.courseEndDate.split('.')[0]}`;
-				    let courseStartDateTime = `${courseStartDate}`;
-				    let courseEndDateTime = `${courseEndDate}`;
+                // 獲取所有課程類別
+                let majorCategories = response.majorCategories;
 
-				    // 動態生成課程類別的選項
-				    let majorCategoryOptions = '<option value="">請選擇類別</option>';
-				    majorCategories.forEach(function(category) {
-				        let selected = course.courseCategoryId === category.majorCategoryId ? 'selected' : '';
-				        majorCategoryOptions += `<option value="${category.majorCategoryId}" ${selected}>${category.categoryName}</option>`;
-				    });
+                // 日期格式處理
+                let courseStartDate = `${course.courseStartDate.split('.')[0]}`;
+                let courseEndDate = `${course.courseEndDate.split('.')[0]}`;
+                let courseStartDateTime = `${courseStartDate}`;
+                let courseEndDateTime = `${courseEndDate}`;
 
-				
+                // 動態生成課程類別的選項
+                let majorCategoryOptions = '<option value="">請選擇類別</option>';
+                majorCategories.forEach(function (category) {
+                    let selected = course.courseCategoryId === category.majorCategoryId ? 'selected' : '';
+                    majorCategoryOptions += `<option value="${category.majorCategoryId}" ${selected}>${category.categoryName}</option>`;
+                });
+
+
                 $('.form-container').append(`
                     <form>
                         <div class="form-group">
@@ -98,7 +98,7 @@ $(document).ready(function() {
                             </select>
                         </div>
                         <div class="form-group">
-                            <a href="${contextPath}/courses"><button id='cancelBtn' type="button" style="margin-right:330px;">取消修改</button></a>
+                            <a href="${contextPath}/b/courses"><button id='cancelBtn' type="button" style="margin-right:330px;">取消修改</button></a>
                             <button id="editBtn" name="editBtn" type="submit" >修改課程</button>
                         </div>
                     </form>
@@ -123,7 +123,7 @@ $(document).ready(function() {
                 $('#courseMajor').val(course.courseCategoryId);
                 $('#courseStatus').val(course.courseStatus);
             },
-            error: function(error) {
+            error: function (error) {
                 console.error('Error fetching course for editing:', error);
             }
         });
@@ -137,18 +137,18 @@ function convertToSQLDateTimeFormat(datetimeLocal) {
 };
 
 // 執行修改課程
-$(document).on('click', '#editBtn', function(event) {
+$(document).on('click', '#editBtn', function (event) {
     event.preventDefault(); // 防止表單默認提交行為
-    
+
     // 獲取 URL 中的 courseId 參數
     let params = new URLSearchParams(window.location.search);
     let oldCourseId = params.get('courseId');
-    
+
     if (!oldCourseId) {
         alert('無法獲取課程 ID');
         return;
     }
-    
+
     // 獲取表單元素的值
     let courseStartDate = $('#courseStartDate').val();
     let courseEndDate = $('#courseEndDate').val();
@@ -183,16 +183,16 @@ $(document).on('click', '#editBtn', function(event) {
         processData: false,  // 告訴 jQuery 不要處理數據
         contentType: false,  // 告訴 jQuery 不要設置 contentType
         type: 'POST', // 使用 POST 方法
-        success: function(response) {
+        success: function (response) {
             if (response) {
                 window.alert('課程修改成功');
                 console.log('更新成功:', response);
-                window.location.href = contextPath + '/courses?clickButton=true';
+                window.location.href = contextPath + '/b/courses?clickButton=true';
             } else {
                 window.alert('課程修改失敗');
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('發生錯誤:', error);
             alert('課程修改失敗，請重試。');
         }

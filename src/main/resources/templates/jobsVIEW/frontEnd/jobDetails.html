@@ -14,14 +14,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title">職缺詳細資訊</h1>
-                        <p>Business plan draws on a wide range of knowledge from different business<br> disciplines.
-                            Business draws on a wide range of different business .</p>
+                        <h1 class="page-title">最新、最快、最詳盡</h1>
+                        <p>你想要的都聚焦在此</p>
                     </div>
                     <ul class="breadcrumb-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="news-standard.html">Blog</a></li>
-                        <li>Job Details</li>
+                        <li><a th:href="@{/homepage}">回到首頁</a></li>
+                        <li>職缺詳細資訊</li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +52,7 @@
                             </div>
                         </div>
                         <div class="job-details-body">
-                            <h6 class="mb-3">Job Description</h6>
+                            <h6 class="mb-3">職缺描述</h6>
                             <p th:text="${job.jobsDescription}">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique, ex iusto! Tenetur
                                 iusto dolore amet voluptates esse? Ut debitis perferendis, impedit ullam ea officia
                                 sapiente soluta cupiditate molestiae eius enim aut laboriosam, saepe deleniti. Excepturi
@@ -75,7 +73,7 @@
                                         <a id="back" href="bookmarked.html" class="d-block btn"><i class="lni lni-arrow-left"></i> 回到職缺列表</a>
                                     </div>
                                     <div class="col-xl-auto col-lg-12 col-sm-auto col-12 p-2">
-                                        <a href="job-details.html" class="d-block btn btn-alt">應徵職缺</a>
+                                        <a th:href="@{/front/jobs/view/{id}/new(id=${job.jobsId})}" class="d-block btn btn-alt">應徵職缺</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,14 +82,14 @@
                         <!-- Sidebar (Job Overview) Start -->
                         <div class="sidebar-widget">
                             <div class="inner">
-                                <h6 class="title">Job Overview</h6>
+                                <h6 class="title">概況</h6>
                                 <ul class="job-overview list-unstyled">
-                                    <li><strong>Published on:</strong> <th:block th:text="${job.jobsPostingDate}"></th:block></li>
-                                    <li><strong>Employment Status:</strong> <th:block th:text="${job.jobsWorktime}"></th:block></li>
-                                    <li><strong>Job Location:</strong> <th:block th:text="${job.jobsLocation}"></th:block></li>
-                                    <li><strong>Salary:</strong> <th:block th:text="${'金額 ' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></th:block></li>
-                                    <li><strong>要求技能</strong> <th:block th:text="${job.category.categoryName}"></th:block></li>
-                                    <li><strong>Application Deadline:</strong> <th:block th:text="${job.jobsApplicationDeadline}"></th:block></li>
+                                    <li><strong>刊登日期:</strong> <th:block th:text="${job.jobsPostingDate}"></th:block></li>
+                                    <li><strong>截止日期:</strong> <th:block th:text="${job.jobsApplicationDeadline}"></th:block></li>
+                                    <li><strong>職缺狀態:</strong> <th:block th:text="${job.jobsWorktime}"></th:block></li>
+                                    <li><strong>工作地點:</strong> <th:block th:text="${job.jobsLocation}"></th:block></li>
+                                    <li><strong>薪資範圍:</strong> <th:block th:text="${'金額 ' + job.jobsMinSalary + ' - ' + job.jobsMaxSalary}"></th:block></li>
+                                    <li><strong>要求技能:</strong> <th:block th:text="${job.category.categoryName}"></th:block></li>
                                 </ul>
                             </div>
                         </div>

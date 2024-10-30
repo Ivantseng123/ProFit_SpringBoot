@@ -1,7 +1,6 @@
 package com.ProFit.model.bean.jobsBean;
 
-import java.sql.Blob;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import com.ProFit.model.bean.usersBean.Users;
@@ -39,18 +38,12 @@ public class JobsApplication implements java.io.Serializable{
 
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對Jobs表，一個職缺對應到多個申請
-	  @JoinColumn(name = "jobs_application_posting_id")
+	  @JoinColumn(name = "jobs_application_jobs_id")
 	  private Jobs jobs;//不確定是不是Jobs
 
 	  @ManyToOne(fetch = FetchType.LAZY)//FK，對USER表，一個應徵者對應到多個申請
 	  @JoinColumn(name = "jobs_application_member_id")//改名為jobs_application_user_id
 	  private Users applicant;
-	  
-//	  @Column(name = "jobs_application_posting_id")
-//	  private Integer jobsApplicationPostingId;
-//
-//	  @Column(name = "jobs_application_member_id")
-//	  private Integer jobsApplicationMemberId;
 
 	  @Temporal(TemporalType.DATE)
 	  @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -61,9 +54,12 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_status")
 	  private Byte jobsApplicationStatus=0;
 
-	  @Lob // Use @Lob for Blob data type
-	  @Column(name = "jobs_application_contract")
-	  private Blob jobsApplicationContract;
+
+	  @Column(name = "jobs_application_resume")
+	  private String jobsApplicationResume;
+
+//	@Column(name = "jobs_application_contract)
+//	private String jobsApplicationContract;
 
 	@OneToMany(mappedBy = "jobsApplication")
 	private List<JobsApplicationProject> projects;
@@ -74,8 +70,6 @@ public class JobsApplication implements java.io.Serializable{
 	}
 
 
-
-	//getter setter
 	public int getJobsApplicationId() {
 		return jobsApplicationId;
 	}
@@ -116,13 +110,21 @@ public class JobsApplication implements java.io.Serializable{
 		this.jobsApplicationStatus = jobsApplicationStatus;
 	}
 
-	public Blob getJobsApplicationContract() {
-		return jobsApplicationContract;
+	public String getJobsApplicationResume() {
+		return jobsApplicationResume;
 	}
 
-	public void setJobsApplicationContract(Blob jobsApplicationContract) {
-		this.jobsApplicationContract = jobsApplicationContract;
+	public void setJobsApplicationResume(String jobsApplicationResume) {
+		this.jobsApplicationResume = jobsApplicationResume;
 	}
+
+//	public String getJobsApplicationContract() {
+//		return jobsApplicationContract;
+//	}
+//
+//	public void setJobsApplicationResume(String jobsApplicationContract) {
+//		this.jobsApplicationContract = jobsApplicationContract;
+//	}
 
 	public List<JobsApplicationProject> getProjects() {
 		return projects;

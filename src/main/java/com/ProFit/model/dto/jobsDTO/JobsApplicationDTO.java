@@ -1,10 +1,8 @@
 package com.ProFit.model.dto.jobsDTO;
 
 import com.ProFit.model.bean.jobsBean.JobsApplication;
-import com.ProFit.model.bean.jobsBean.Jobs;
 import java.sql.Blob;
-import java.sql.Date;
-import java.util.List;
+import java.util.Date;
 
 /**
  * 求職申請DTO類
@@ -43,7 +41,7 @@ public class JobsApplicationDTO {
 
         dto.setJobsApplicationDate(entity.getJobsApplicationDate());
         dto.setJobsApplicationStatus(entity.getJobsApplicationStatus());
-        dto.setJobsApplicationContract(entity.getJobsApplicationContract());
+//        dto.setJobsApplicationContract(entity.getJobsApplicationContract());
 
         // 轉換專案列表
 //        if (entity.getProjects() != null) {

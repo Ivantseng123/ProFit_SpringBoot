@@ -16,7 +16,7 @@ public interface CoursesRepository extends JpaRepository<CourseBean, String> {
         @Query("SELECT c FROM CourseBean c JOIN c.courseCreater u WHERE " +
                         "(:courseName IS NULL OR c.courseName LIKE %:courseName%) AND " +
                         "(:userName IS NULL OR u.userName LIKE %:userName%) AND " +
-                        "(:status IS NULL OR c.courseStatus = :status) AND " +
+                        "(:status IS NULL OR :status = '' OR c.courseStatus = :status) AND " +
                         "(:userId IS NULL OR c.courseCreateUserId = :userId) AND " +
                         "(:category IS NULL OR c.courseCategory = :category)")
         Page<CourseBean> searchCoursesPage(

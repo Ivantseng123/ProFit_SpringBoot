@@ -5,7 +5,7 @@ $(document).ready(() => {
         $('.col-lg-8').eq(0).empty();
 
         $.ajax({
-            url: '/ProFit/course/purchasedList',
+            url: '/ProFit/c/course/purchasedList',
             dataType: 'JSON',
             type: 'GET',
             success: function (searchCourseOrdersByUserId) {

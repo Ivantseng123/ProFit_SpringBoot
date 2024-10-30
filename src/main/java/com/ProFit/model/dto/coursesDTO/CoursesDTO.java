@@ -33,7 +33,7 @@ public class CoursesDTO {
 		this.courseCreaterId = courseBean.getCourseCreater().getUserId().toString();
 		this.courseCreaterName = courseBean.getCourseCreater().getUserName();
 		this.courseCreaterPictureURL = courseBean.getCourseCreater().getUserPictureURL();
-		this.courseCreaterIntroduce = courseBean.getCourseCreater().getFreelancerExprience();
+		this.courseCreaterIntroduce = courseBean.getCourseCreater().getFreelancerDisc();
 		this.courseCategoryId = courseBean.getMajorCategory().getMajorCategoryId();
 		this.courseCategoryName = courseBean.getMajorCategory().getCategoryName();
 		this.courseModuleNumber = courseBean.getCourseModules().size();

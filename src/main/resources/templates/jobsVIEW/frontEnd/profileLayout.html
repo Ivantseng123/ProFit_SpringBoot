@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Job List - JobGrids Job Portal HTML Template.</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg" />
+    <!-- Place favicon.ico in thㄑㄑe root directory -->
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.min.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+
+</head>
+
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">
+    You are using an <strong>outdated</strong> browser. Please
+    <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+    your experience and security.
+</p>
+<![endif]-->
+
+<div id="loading-area"></div>
+
+<th:block th:replace="~{jobsVIEW/frontEnd/fragments/header :: ~{header}}"></th:block>
+
+<div class="manage-applications section">
+    <div class="container">
+        <div class="alerts-inner">
+            <div class="row">
+                <!-- Start Main Content -->
+                <div class="col-lg-4 col-12">
+                    <div th:replace="~{jobsVIEW/frontEnd/fragments/accountCenterSidebar :: ~{accountCenterSidebar}}"></div>
+                </div>
+                    <!-- End Main Content -->
+                <div class="col-lg-8 col-12">
+                    <div layout:fragment="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="~{jobsVIEW/frontEnd/fragments/signModal :: signModal}"></th:block>
+
+<th:block th:replace="~{jobsVIEW/frontEnd/fragments/signModalForNewBs :: signModalForNewBs}"></th:block>
+
+<th:block th:replace="~{jobsVIEW/frontEnd/fragments/footer :: footer}"></th:block>
+
+<!-- ========================= scroll-top ========================= -->
+<a href="#" class="scroll-top btn-hover">
+    <i class="lni lni-chevron-up"></i>
+</a>
+
+<!-- ========================= JS here ========================= -->
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
+<script th:src="@{/js/frontend/wow.min.js}"></script>
+<script th:src="@{/js/frontend/tiny-slider.js}"></script>
+<script th:src="@{/js/frontend/glightbox.min.js}"></script>
+<script th:src="@{/js/frontend/main.js}"></script>
+<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+<th:block layout:fragment="script"></th:block>
+</body>
+
+</html>
