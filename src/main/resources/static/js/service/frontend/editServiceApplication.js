@@ -32,6 +32,7 @@ $(document).ready(function () {
         document.getElementById('to-chatroom').hidden = false;
         if (serviceApplicationDTO.status == 1) {
             document.getElementById('pageTitle').innerText = '委託洽談中';
+            document.getElementById('to-chatroom').href = `/ProFit/c/chat/add?serviceId=${servicesDTO.serviceId}&freelancerId=${servicesDTO.userMajor.user.userId}`;
         } else if (serviceApplicationDTO.status == 2) {
             document.getElementById('pageTitle').innerText = '委託已接受(待案主付款成立)';
             document.getElementById('create-order-page').hidden = false;
