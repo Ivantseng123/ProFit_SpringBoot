@@ -18,9 +18,29 @@
         </a>
     </div>
 
-    <div class="table-container" id="search-results">
-
-        <table id="jobsList" class="display table table-striped table-hover nowrap">
+    <div class="table-container col-12" id="search-results">
+        <div class="container-fluid col-12">
+            <div class="row">
+                <!-- 第一個圖表及標題 -->
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title text-center mb-3">職缺技能分佈</h2>
+                            <canvas id="myChart" style="max-width: 791px;max-height: 379px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 pt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title text-center mb-3">應徵類別統計</h2>
+                            <canvas id="orderAnalysis" style="max-width: 791px;max-height: 379px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="jobsList" class="display table table-striped table-hover nowrap col-12">
             <thead>
             <tr>
                 <th>編號</th>
@@ -30,6 +50,7 @@
                 <th>截止日期</th>
                 <th>狀態</th>
                 <th>職缺數量</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody id="table-body">
@@ -52,8 +73,31 @@
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
     $(document).ready(function (){
         const baseUrl = /*[[@{/jobs}]]*/'';
+        const applicationBaseUrl = /*[[@{/jobsApplication}]]*/'';
         console.log(baseUrl);
         $("#jobsList").DataTable({
+            language: {
+                "processing": "處理中...",
+                "loadingRecords": "載入中...",
+                "lengthMenu": "顯示 _MENU_ 項結果",
+                "zeroRecords": "沒有符合的結果",
+                "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+                "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+                "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+                "infoPostFix": "",
+                "search": "搜尋:",
+                "paginate": {
+                    "first": "第一頁",
+                    "previous": "上一頁",
+                    "next": "下一頁",
+                    "last": "最後一頁"
+                },
+                "aria": {
+                    "sortAscending": ": 升冪排列",
+                    "sortDescending": ": 降冪排列"
+                },
+                "emptyTable": "目前沒有資料",
+            },
             order: [0, 'asc'],
            columns:[{
                data: 'jobsId',
@@ -156,6 +200,117 @@
         }
 
         bindDeleteEvent();
+
+        //職缺類別分布
+        fetch(baseUrl + '/jobsCategoryAnalysis')
+            .then(response => response.json())
+            .then(dataList => {
+                // 從返回的 Map 中提取 labels 和 data
+
+                const ctx = document.getElementById('myChart');
+
+                new Chart(ctx, {
+                    type: 'pie', // 修改圖表類型為 'pie'
+                    data: {
+                        labels: dataList.map(item => item.categoryName),  // 設置課程分類名稱為標籤
+                        datasets: [{
+                            label: '職缺技能分佈',
+                            data: dataList.map(item => item.totalCount), // 設置每個分類的課程數量
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'], // 使用循環顏色
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    font: {
+                                        size: 20 // 調整標籤字體大小
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        //應徵類別統計
+        fetch(applicationBaseUrl + '/analysis')
+            .then(response => response.json())
+            .then(dataList => {
+                console.log('Fetched data:', dataList);
+
+                // 從列表中提取分類名稱和數量
+                const labels = dataList.map(item => item.categoryName);
+                const counts = dataList.map(item => item.totalCount);
+
+                // 根據每個分類創建獨立的數據集
+                const datasets = labels.map((label, index) => ({
+                    label: label,  // 分類名稱作為標籤
+                    data: [counts[index]],  // 該分類的數量
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'][index % 6],
+                    borderWidth: 1
+                }));
+
+                // 獲取 canvas 元素並創建圖表
+                const ctx = document.getElementById('orderAnalysis');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['應徵類別'],  // X 軸標籤
+                        datasets: datasets    // 數據集
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',  // 圖例位置在右側
+                                labels: {
+                                    font: {
+                                        size: 14    // 圖例字體大小
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: '職缺分類統計',
+                                font: {
+                                    size: 18
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1,    // Y 軸刻度間隔
+                                    font: {
+                                        size: 12    // Y 軸字體大小
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: '數量',
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    font: {
+                                        size: 12    // X 軸字體大小
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching course order analysis:', error));
+
     });
 </script>
 </body>
