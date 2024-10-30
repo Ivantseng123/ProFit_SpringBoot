@@ -281,8 +281,24 @@ $(document).ready(function () {
         var translated = translateToChinese(transaction);
 
         // 確保 orderTypeText 和 orderId 存在並有值
-        var orderTypeText = "課程訂單"; // 這裡假設所有訂單都是課程訂單
-        var orderId = transaction.orderId || "未知ID"; // 確保 orderId 有值
+        var orderTypeText = "";
+switch (transaction.orderType) {
+    case "course":
+        orderTypeText = "課程訂單";
+        break;
+    case "event":
+        orderTypeText = "活動訂單";
+        break;
+    case "job":
+        orderTypeText = "工作訂單";
+        break;
+    case "service":
+        orderTypeText = "服務訂單";
+        break;
+    default:
+        orderTypeText = "取款";
+}
+        var orderId = transaction.orderId || "取款"; // 確保 orderId 有值
         var totalAmount = transaction.totalAmount || transaction.targetIncome || "無金額"; // 顯示 totalAmount 或 targetIncome，若無則顯示"無金額"
 
         // 檢查 orderDetail 按鈕能正常綁定事件

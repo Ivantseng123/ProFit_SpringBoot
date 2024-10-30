@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,13 +33,15 @@ public class LoggingAspect {
 
     @AfterReturning(pointcut = "execution(* com.ProFit.controller..*(..))", returning = "result")
     public void logAfterRequest(JoinPoint joinPoint, Object result) {
-        String timestamp = LocalDateTime.now().toString();
-        String methodName = joinPoint.getSignature().getName();
-        String response = (result != null) ? result.toString() : "null";
+        if (RequestContextHolder.getRequestAttributes() != null) { // 確認 HTTP 請求屬性是否存在
+            String timestamp = LocalDateTime.now().toString();
+            String methodName = joinPoint.getSignature().getName();
+            String response = (result != null) ? result.toString() : "null";
 
-        String requestPath = request.getRequestURI();
- 
-        logToCsv(timestamp, methodName, response, requestPath);
+            String requestPath = request.getRequestURI();
+
+            logToCsv(timestamp, methodName, response, requestPath);
+        }
     }
 
     private void logToCsv(String timestamp, String method, String response, String requestPath) {
@@ -50,4 +53,3 @@ public class LoggingAspect {
         }
     }
 }
-

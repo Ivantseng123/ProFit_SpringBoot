@@ -88,7 +88,7 @@
                                     <!-- 選擇要合作的接案人 -->
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
-                                            <label>選擇要合作的接案人*</label>
+                                            <label id="freelancer-top">選擇要合作的接案人*</label>
                                             <select id="freelancer" class="form-control" name="freelancerId">
                                                 <!-- 其他接案人可以動態生成 -->
                                             </select>
@@ -97,7 +97,7 @@
                                     <!-- 選擇要合作的服務 -->
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-group">
-                                            <label>選擇要合作的服務*</label>
+                                            <label id="serviceSelect-top">選擇要合作的服務*</label>
                                             <select class="form-control" name="serviceId" id="serviceSelect">
                                                 <!-- 其他服務可以動態生成 -->
                                             </select>
@@ -220,6 +220,13 @@
                                     <a  id="create-order-page" hidden href="#" style="width:120px;"
                                         class="btn btn-primary" type="button" th:text="'前往付款'">
                                     </a>
+                                    <!-- 接案人查看的話只有 接受 跟 刪除按鈕 -->
+                                    <button  id="accept-button" hidden href="#" style="width:120px;"
+                                        class="btn btn-success" type="button" th:text="'接受委託'">
+                                    </button>
+                                    <button  id="decline-button" hidden href="#" style="width:120px;"
+                                        class="btn btn-danger" type="button" th:text="'拒絕委託'">
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +235,6 @@
             </div>
         </div>
     </section>
-
 
 
     <!-- 引用 signModal.html -->

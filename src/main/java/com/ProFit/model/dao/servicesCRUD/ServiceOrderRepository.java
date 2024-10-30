@@ -45,6 +45,9 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrderBean, 
     // 刪除 服務訂單 boolean
 
 
-    @Query("SELECT o FROM ServiceOrderBean o WHERE o.serviceApplication.caseownerId = :caseownerId")
-    List<ServiceOrderBean> findByCaseownerId(@Param("caseownerId") Integer caseownerId);
+    //獲得getServiceOrdersByPayByUserId 在前台呈現
+    @Query("SELECT o FROM ServiceOrderBean o WHERE o.serviceOrderPayById = :userId")
+    List<ServiceOrderBean> findByServiceOrderPayById(@Param("userId") Integer userId);
+
+
 }
