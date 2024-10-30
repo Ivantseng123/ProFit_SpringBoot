@@ -67,11 +67,14 @@ $(document).ready(function () {
     // 生成帶入的服務詳情
     displayServiceDetails(servicesDTO);
 
+
     // 動態生成 要合作的接案人 選項
     let caseownerId = currentUser.userId;
+    // let freelancerId = servicesDTO.userMajor.user.userId;
+
     axios({
         method: 'get',
-        url: `/ProFit/c/serviceApplication/api/userChatList/${101}`
+        url: `/ProFit/c/serviceApplication/api/userChatList/${caseownerId}`
     })
         .then(response => {
             // console.log(response.data);

@@ -13,12 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ProFit.model.bean.chatsBean.ChatBean;
 import com.ProFit.model.bean.chatsBean.MessageBean;
+import com.ProFit.model.bean.servicesBean.ServiceBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.chatsCRUD.ChatRepository;
 import com.ProFit.model.dao.chatsCRUD.MessageRepository;
+import com.ProFit.model.dao.servicesCRUD.ServiceRepository;
 import com.ProFit.model.dto.chatsDTO.ChatDTO;
 import com.ProFit.model.dto.chatsDTO.ChatUserDTO;
 import com.ProFit.model.dto.chatsDTO.MessageDTO;
+import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 
 @Service
@@ -29,6 +32,9 @@ public class ChatService {
 
   @Autowired
   private MessageRepository messageRepository;
+
+  @Autowired
+  private ServiceRepository serviceRepository;
 
   /**
    * 保存新消息並更新聊天室資訊
@@ -81,6 +87,7 @@ public class ChatService {
    * @param caseOwnerId  案主ID
    * @return 聊天室DTO
    */
+  @Transactional
   public ChatDTO createOrGetChat(Integer serviceId, Integer freelancerId, Integer caseOwnerId) {
     // 查找現有聊天室
     ChatBean chat = chatRepository.findByUserId1AndUserId2AndServiceId(
@@ -92,6 +99,7 @@ public class ChatService {
           LocalDateTime.now(), LocalDateTime.now(), 1);
       chat = chatRepository.save(chat);
     }
+    // System.out.println(chat);
 
     return ChatDTO.fromEntity(chat);
   }
@@ -110,6 +118,13 @@ public class ChatService {
     List<ChatUserDTO> usersByUserId2 = chatRepository.findUsersByUserId2(caseOwnerId);
 
     return usersByUserId2;
+  }
+
+  // 返回一個user有的服務
+  public Page<ServicesDTO> getUserServices(Integer userId, Pageable pageable) {
+    Page<ServiceBean> services = serviceRepository.findByUserId(userId, pageable);
+    // 將實體轉換為DTO
+    return services.map(ServicesDTO::fromEntity);
   }
 
 }

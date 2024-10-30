@@ -39,10 +39,12 @@ public class ServiceOrdersService {
                 .collect(Collectors.toList());
     }
     
-    public List<ServiceOrdersDTO> getServiceOrdersByCaseownerId(Integer caseownerId) {
-        List<ServiceOrderBean> orders = serviceOrderRepo.findByCaseownerId(caseownerId);
+    //獲得getServiceOrdersByPayByUserId 在前台呈現
+    public List<ServiceOrdersDTO> getServiceOrdersByPayByUserId(Integer userId) {
+        List<ServiceOrderBean> orders = serviceOrderRepo.findByServiceOrderPayById(userId);
         return orders.stream()
-                     .map(order -> new ServiceOrdersDTO(order))  // 將每個 ServiceOrder 轉換為 DTO
+                     .map(order -> new ServiceOrdersDTO(order))
                      .collect(Collectors.toList());
     }
+
 }
