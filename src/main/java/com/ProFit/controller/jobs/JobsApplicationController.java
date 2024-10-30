@@ -1,5 +1,6 @@
 package com.ProFit.controller.jobs;
 
+import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.service.jobService.IJobsApplicationService;
 import com.ProFit.service.jobService.JobsService;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,6 +38,7 @@ public class JobsApplicationController {
     @GetMapping("/list")
     public String listJobsApplication(Model model){
         List<JobsApplication> jobsApplicationList = jobsApplicationService.findAll();
+
         model.addAttribute("jobsApplicationList", jobsApplicationList);
         return "jobsVIEW/jobsApplicationList";
     }
@@ -127,16 +131,23 @@ public class JobsApplicationController {
 
         //呈現更新後
         @PutMapping("/update/{id}")
-        public String updateJob(@PathVariable("id") Integer id,
+        public String updateJob(@ModelAttribute JobsApplication updatedJob,
                                 @RequestParam("status") Byte status,
+                                @RequestParam("Date") String date,
                                 Model model) {
-            JobsApplication jobsApplication = jobsApplicationService.findById(id).orElse(null);
-            if (jobsApplication != null){
-                jobsApplication.setJobsApplicationStatus(status);
-                jobsApplicationService.update(jobsApplication);
-            }
 
-            return "redirect:/jobsApplication/list" ;//只要跟Date相關的就用redirect:轉回到頁面
+
+
+            //以下遇到時間的設定就用此寫法
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date dateFinish = formatter.parse(date);
+                updatedJob.setJobsApplicationDate(dateFinish);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            jobsApplicationService.update(updatedJob);
+            return "redirect:/jobsApplication/list" ;//redirect:轉回到頁面
         }
 
 }

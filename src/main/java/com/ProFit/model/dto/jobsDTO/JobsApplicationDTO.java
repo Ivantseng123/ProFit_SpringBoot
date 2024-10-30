@@ -34,14 +34,14 @@ public class JobsApplicationDTO {
             dto.setJobsApplicationJobsId(entity.getJobs().getJobsId()); // 因為Jobs類中的getter方法就是getJobsId()
         }
 
-        // 設置應徵者ID
-        if (entity.getApplicant() != null) {
-            dto.setJobsApplicationMemberId(entity.getApplicant().getUserId());
-        }
-
-        dto.setJobsApplicationDate(entity.getJobsApplicationDate());
-        dto.setJobsApplicationStatus(entity.getJobsApplicationStatus());
-//        dto.setJobsApplicationContract(entity.getJobsApplicationContract());
+//        // 設置應徵者ID
+//        if (entity.getApplicant() != null) {
+//            dto.setJobsApplicationMemberId(entity.getApplicant().getUserId());
+//        }
+//
+//        dto.setJobsApplicationDate(entity.getJobsApplicationDate());
+//        dto.setJobsApplicationStatus(entity.getJobsApplicationStatus());
+////        dto.setJobsApplicationContract(entity.getJobsApplicationContract());
 
         // 轉換專案列表
 //        if (entity.getProjects() != null) {

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{jobsVIEW/frontEnd/profileLayout}">
+<head>
+  <meta charset="UTF-8">
+  <title>職缺列表</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="job-items">
+      <div class="manage-content" th:each="jobsApplication : ${applications}">
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-5 col-md-5">
+            <div class="title-img">
+              <div class="can-img">
+                <img src="" alt="#">
+              </div>
+              <h3 th:text="${jobsApplication.jobs.jobsTitle}">Mechanical Engineer <span th:text="jobsApplication.jobs.users.employer_profile.companyName">Conzio construction</span></h3>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <p><span class="time" th:text="${jobsApplication.jobs.jobsWorktime}">Full-Time</span></p>
+          </div>
+          <div class="col-lg-3 col-md-3">
+            <p th:text="${jobsApplication.jobsApplicationDate}">Nov 14th, 2023</p>
+          </div>
+          <div class="col-lg-2 col-md-2">
+            <th:block th:if="${jobsApplication.jobsApplicationStatus == 0}">
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="#dropdownMenuButton1" aria-expanded="false">
+                  待處理
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item btn-success hire" th:data-id="${jobsApplication.jobsApplicationId}" data-bs-toggle="modal" data-bs-target="#deal">同意合作</a></li>
+                  <li><a class="dropdown-item btn-danger fire" th:data-id="${jobsApplication.jobsApplicationId}" href="#">遺憾拒絕</a></li>
+                </ul>
+              </div>
+            </th:block>
+            <p th:if="${jobsApplication.jobsApplicationStatus == 1}">媒合成功</p>
+            <p th:if="${jobsApplication.jobsApplicationStatus == 2}">媒合失敗</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination left pagination-md-center">
+      <ul class="pagination-list">
+        <!-- 上一頁 -->
+        <li th:class="${pageDTO.currentPage == 0} ? 'disabled' : ''">
+          <a th:href="@{/front/profile/applicationsReturn/{page}(page=${pageDTO.currentPage - 1})}" th:if="${pageDTO.currentPage > 0}"><i class="lni lni-arrow-left"></i></a>
+          <span th:if="${pageDTO.currentPage == 0}"><i class="lni lni-arrow-left"></i></span>
+        </li>
+
+        <!-- 頁碼 -->
+        <li th:each="pageNum : ${#numbers.sequence(0, pageDTO.totalPage - 1)}"
+            th:class="${pageNum == pageDTO.currentPage} ? 'active' : ''">
+          <a th:href="@{/front/profile/applicationsReturn/} + ${pageNum}" th:text="${pageNum + 1}"></a>
+        </li>
+
+        <!-- 下一頁 -->
+        <li th:class="${pageDTO.currentPage == pageDTO.totalPage - 1} ? 'disabled' : ''">
+          <a th:href="@{/front/profile/applicationsReturn/{page}(page=${pageDTO.currentPage + 1})}"
+             th:if="${pageDTO.currentPage < pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></a>
+          <span th:if="${pageDTO.currentPage == pageDTO.totalPage - 1}"><i class="lni lni-arrow-right"></i></span>
+        </li>
+      </ul>
+    </div>
+    <!-- End Pagination -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="deal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <section class="job-post section">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-10 offset-lg-1 col-12">
+                  <div class="job-information">
+                    <h3 class="title">回覆應徵</h3>
+                    <form id="editForm" method="POST" enctype="multipart/form-data">
+                      <!--                            <input type="hidden" th:field="${user}">-->
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>職缺標題</label>
+                            <input class="form-control" type="text" id="jobsTitle" readonly>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label>金額</label>
+                            <input class="form-control" type="number" name="amount" required>
+                          </div>
+                        </div>
+                      </div>
+
+<!--                      合約上傳-->
+                      <div class="col-lg-12">
+                          <div class="choose-img">
+                              <p>合約上傳</p>
+                            <input
+                                    type="file"
+                                    id="doc"
+                                    name="doc"
+                                    accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                              <p>檔案上傳限制: 2 MB</p>
+                          </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="form-group checkboxs">
+                          <input type="checkbox" class="checkboxs" id="chb2">
+                          <p>
+                            請點擊勾選，表示您同意我們的 <a href="terms-conditions.html">會員守則條款</a> 以及 <a href="privacy-policy.html">隱私權政策。</a>
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="col-lg-12 button">
+                          <button class="btn" type="submit">
+                            送出申請
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+  $(document).ready(function (){
+    const baseUrl = /*[[@{/front/profile}]]*/'';
+
+    $(".fire").click(function (e){
+      const id = $('#button').data('id');
+      fetch(baseUrl + '/applicationFire/' + id, {
+        method: 'PUT',
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        } else {
+          Swal.fire({//Swal.fire呼叫api的寫法
+            icon: "warning",
+            title: "遺憾拒絕",
+            showConfirmButton: true,
+          }).then(() => {
+            window.location.reload();
+          });
+        }
+      }).catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+
+    $(".hire").click(function (){
+      const id = $('#button').data('id');
+      $("#editForm").attr('action', `${baseUrl}/applicationHire/${id}`);
+      fetch(baseUrl + '/getJobs/' + id)
+              .then(response => {
+                return response.json();
+              })
+              .then(data => {
+                $('#jobsTitle').val(data.jobsTitle);
+              })
+              .catch(e =>{
+                console.error(e);
+              });
+    })
+
+    $('#dropdownMenuButton1').click(function (e){
+      console.log(123);
+    })
+
+  });
+</script>
+</body>
+</html>

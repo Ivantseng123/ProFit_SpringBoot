@@ -3,6 +3,7 @@ package com.ProFit.model.dao.jobsCRUD;
 
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.model.bean.usersBean.Users;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +17,8 @@ import java.util.List;
 public interface IHJobsApplicationDAO extends JpaRepository<JobsApplication,Integer > {
 
     //公司
-    List<JobsApplication> findByJobs_Users_UserId(Integer userId, Pageable pageable);
+    Page<JobsApplication> findByJobs_Users_UserId(Integer userId, Pageable pageable);
 
     //個人應徵
-    List<JobsApplication> findJobsApplicationsByApplicant(Users users, Pageable pageable);
+    Page<JobsApplication> findJobsApplicationsByApplicant(Users users, Pageable pageable);
 }
