@@ -115,7 +115,11 @@ fetch('http://localhost:8080/ProFit/user/registration_statistics')
 				},
 				scales: {
 					x: { title: { display: true, text: '註冊日期' } },
-					y: { title: { display: true, text: '註冊人數' }, beginAtZero: true }
+					y: {
+						title: { display: true, text: '註冊人數' }, beginAtZero: true, ticks: {
+							stepSize: 1 // 將 y 軸的刻度設置爲 1
+						}
+					}
 				}
 			}
 		});

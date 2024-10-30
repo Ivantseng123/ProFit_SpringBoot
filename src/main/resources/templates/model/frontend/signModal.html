@@ -56,6 +56,12 @@
 								還沒有帳戶? <a id="signUp_href" href="#">建立一個免費帳戶</a>
 							</p>
 						</form>
+						<div class="mt-3">
+							<button class="btn btn-secondary" type="button" id="oneclick1">一鍵輸入1</button>
+							<button class="btn btn-secondary" type="button" id="oneclick2">一鍵輸入2</button>
+							<button class="btn btn-secondary ml-5" type="button"
+								id="oneclick3">一鍵輸入3</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -100,8 +106,9 @@
 							<div class="form-group">
 								<label for="email" class="label">E-mail</label> <input
 									type="email" class="form-control"
-									placeholder="example@gmail.com" id="email" name="userEmail"
-									required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
+									placeholder="example@gmail.com" id="email_register"
+									name="userEmail" required
+									pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
 							</div>
 							<div id="signUpError" class="mb-1"></div>
 							<div class="form-group">
@@ -156,16 +163,23 @@
 							<div class="form-group d-flex flex-wrap justify-content-between">
 								<!-- Default checkbox -->
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value="">
+									<input id="check_register" class="form-check-input" type="checkbox" value="">
 									<label class="form-check-label" for="flexCheckDefault">我同意
 										<a href="#">使用者政策暨隱私權條款</a>
 									</label>
 								</div>
 							</div>
 							<div class="form-group mb-8 button">
-								<button class="btn" id="submitBtn" type="submit"><span id="spinner" class="spinner-border spinner-border-sm" style="display: none;"></span> 註冊</button>
+								<button class="btn" id="submitBtn" type="submit">
+									<span id="spinner" class="spinner-border spinner-border-sm"
+										style="display: none;"></span> 註冊
+								</button>
 							</div>
 						</form>
+						<div class="mt-3">
+							<button class="btn btn-secondary" type="button"
+								id="oneclick_register">一鍵輸入</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -197,9 +211,17 @@
 									placeholder="example@gmail.com" id="email_resetpwd">
 							</div>
 							<div class="form-group mb-8 button">
-								<button class="btn" id="submitBtn_resetpwd" type="submit"><span id="spinner_resetpwd" class="spinner-border spinner-border-sm" style="display: none;"></span>確定</button>
+								<button class="btn" id="submitBtn_resetpwd" type="submit">
+									<span id="spinner_resetpwd"
+										class="spinner-border spinner-border-sm"
+										style="display: none;"></span>確定
+								</button>
 							</div>
 						</form>
+						<div class="mt-3">
+							<button class="btn btn-secondary" type="button"
+								id="oneclick_forgetpwd">一鍵輸入</button>
+						</div>
 					</div>
 				</div>
 			</div>

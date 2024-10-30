@@ -6,6 +6,9 @@ function fetchData(searchValue = '', address = '', category = '') {
 	const encodedCategory = category ? encodeURIComponent(category) : '';
 	const encodedSearchValue = searchValue ? encodeURIComponent(searchValue) : '';
 
+	const spinner = document.getElementById('spinner');
+
+	spinner.style.display = 'inline-block';
 
 	fetch(`http://localhost:8080/ProFit/api/empPf/page_frontend?pageNumber=${currentPage}&search=${encodedSearchValue}&address=${encodedAddress}&category=${encodedCategory}`)
 		.then(response => response.json())
@@ -39,6 +42,10 @@ function fetchData(searchValue = '', address = '', category = '') {
 		})
 		.catch(error => {
 			console.error('Fetching error:', error);
+		}).finally(() => {
+
+			spinner.style.display = 'none';
+
 		});
 }
 
@@ -118,19 +125,19 @@ function showModal(photoURL, name, address, category, capital, numberOfEmployee,
 
 
 	$('#cardModal').modal('show');
-	
+
 	// 調用示例
 	loadMap(address); // 替換為動態公司地址
 }
 
 function loadMap(address) {
-    const mapContainer = document.getElementById('mapContainer');
-    
-    // 使用 encodeURIComponent 編碼地址
-    const encodedAddress = encodeURIComponent(address);
-    
-    // Google 地圖嵌入 URL 格式
-    const iframe = `<iframe 
+	const mapContainer = document.getElementById('mapContainer');
+
+	// 使用 encodeURIComponent 編碼地址
+	const encodedAddress = encodeURIComponent(address);
+
+	// Google 地圖嵌入 URL 格式
+	const iframe = `<iframe 
                       width="100%" 
                       height="350" 
                       frameborder="0" 
@@ -138,8 +145,8 @@ function loadMap(address) {
                       src="https://www.google.com/maps?q=${encodedAddress}&output=embed" 
                       allowfullscreen>
                     </iframe>`;
-                    
-    mapContainer.innerHTML = iframe; // 將地圖 iframe 添加到容器中
+
+	mapContainer.innerHTML = iframe; // 將地圖 iframe 添加到容器中
 }
 
 

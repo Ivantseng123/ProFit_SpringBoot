@@ -54,7 +54,7 @@ public class MemeberOAuth2UserService extends DefaultOAuth2UserService {
 			userRepository.save(newUser);
 		} else {
 			Users existUser = user.get();
-			existUser.setUserName(name);
+
 			existUser.setEnabled(1);
 			userRepository.save(existUser);
 		}
