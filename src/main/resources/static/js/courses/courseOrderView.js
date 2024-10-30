@@ -1,8 +1,8 @@
 $('#searchBtn').click(function () {
-	
+
 	// 清空當前表格
 	$('#search-results').empty();
-	
+
 	$('#search-results').append(`	<div class="text-center">
 	  <div class="spinner-border" role="status">
 	    <span class="visually-hidden">Loading...</span>
@@ -26,7 +26,7 @@ $('#searchBtn').click(function () {
 
 			// 清空當前表格
 			$('#search-results').empty();
-			
+
 			let tableHtml = `<h3>搜尋結果如下 :</h3>
         	                <table>
         	                    <thead>
@@ -101,22 +101,27 @@ $(document).on('click', '.delete', function () {
 
 	console.log("Selected Course ID for Deletion: " + courseOrderId);
 
-	$.ajax({
-		url: contextPath + '/courseOrders/delete/' + courseOrderId,
-		type: 'get',
-		success: function (response) {
-			if (response) {
-				window.alert('課程訂單刪除成功');
-				console.log('刪除的课程信息:', response);
-				window.location.href = contextPath + '/courseOrders?clickButton=true';
-			} else {
-				window.alert('課程訂單刪除失敗');
+	let answer = confirm('確認刪除嗎？');
+	if (answer) {
+		$.ajax({
+			url: contextPath + '/courseOrders/delete/' + courseOrderId,
+			type: 'get',
+			success: function (response) {
+				if (response) {
+					window.alert('課程訂單刪除成功');
+					console.log('刪除的课程信息:', response);
+					window.location.href = contextPath + '/courseOrders?clickButton=true';
+				} else {
+					window.alert('課程訂單刪除失敗');
+				}
+			},
+			error: function (error) {
+				console.error('Error deleting course:', error);
 			}
-		},
-		error: function (error) {
-			console.error('Error deleting course:', error);
-		}
-	});
+		});
+	} else {
+
+	}
 });
 
 // 編輯課程訂單流程
