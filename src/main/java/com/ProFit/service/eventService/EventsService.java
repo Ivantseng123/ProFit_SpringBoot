@@ -68,7 +68,6 @@ public class EventsService implements IEventsService {
             event.setEventId(newEventId);
             event.setEventPublishDate(LocalDateTime.now());
         }
-        System.out.println(event);
         eventsDAO.save(event);
         return event.getEventId();
     }
