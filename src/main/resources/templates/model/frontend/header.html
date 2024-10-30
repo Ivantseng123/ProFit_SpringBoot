@@ -56,8 +56,8 @@
 								<li class="nav-item"><a href="#">找課程</a>
 									<ul class="sub-menu">
 										<li><a th:href="@{/course}">課程總覽</a></li>
-										<!-- <li><a href="#">我是學生</a></li>
-										<li><a href="#">我要創立課程</a></li> -->
+										<li><a th:href="@{/course/create}">申請創建課程</a></li>
+										<!-- li><a href="#">我要創立課程</a></li> -->
 									</ul>
 								</li>
 								<li class="nav-item"><a href="#">找活動</a>
@@ -113,7 +113,7 @@
 
 		navLinks.forEach(function (link) {
 			// 如果目前的網址包含 a 標籤的 href，就加上 active class
-			if (currentUrl.includes(link.href)) {
+			if (currentUrl === link.href) {
 				link.classList.add("active");
 
 				// 如果該 a 標籤在子選單內，向上找到上一層的 ul，再到上一層的 li 裡面的 a 標籤並加上 active
