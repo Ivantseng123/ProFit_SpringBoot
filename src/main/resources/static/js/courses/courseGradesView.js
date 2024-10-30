@@ -154,22 +154,27 @@ $(document).on('click', '.delete', function () {
 
     console.log("Selected courseGrade ID for Deletion: " + courseGradeId);
 
-    $.ajax({
-        url: contextPath + '/courseGrades/delete/' + courseGradeId,
-        type: 'get',
-        success: function (response) {
-            if (response) {
-                window.alert('評論刪除成功');
-                console.log('刪除的評論信息:', response);
-                window.location.href = contextPath + '/courseGrades?courseId=' + courseId;
-            } else {
-                window.alert('評論刪除失敗');
+    let answer = confirm('確認刪除嗎？');
+    if (answer) {
+        $.ajax({
+            url: contextPath + '/courseGrades/delete/' + courseGradeId,
+            type: 'get',
+            success: function (response) {
+                if (response) {
+                    window.alert('評論刪除成功');
+                    console.log('刪除的評論信息:', response);
+                    window.location.href = contextPath + '/courseGrades?courseId=' + courseId;
+                } else {
+                    window.alert('評論刪除失敗');
+                }
+            },
+            error: function (error) {
+                console.error('Error deleting course:', error);
             }
-        },
-        error: function (error) {
-            console.error('Error deleting course:', error);
-        }
-    });
+        });
+    } else {
+
+    }
 });
 
 // 編輯課程訂單流程

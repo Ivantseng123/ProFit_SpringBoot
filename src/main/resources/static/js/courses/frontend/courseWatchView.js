@@ -154,7 +154,7 @@ $(document).ready(function () {
             // 課程講師細節
             $('#courseCreaterDetailSpace').append(`
                 <h4 class="fs-4">講師姓名: ${courseMap.currentCourse.courseCreaterName}</h4>
-                <p>${courseMap.currentCourse.courseCreaterIntroduce}</p>
+                <p style="white-space: pre-wrap;">${courseMap.currentCourse.courseCreaterIntroduce}</p>
                 <img class="shape" src="/ProFit/images/testimonial/patern1.png" alt="#">
                 `);
 

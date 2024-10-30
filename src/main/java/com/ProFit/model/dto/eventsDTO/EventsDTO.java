@@ -19,6 +19,31 @@ public class EventsDTO {
 	private String eventDescription;
 	private String eventNote;
 
+	public EventsDTO() {
+	}
+	
+	public EventsDTO(String eventId, String eventName, int isEventActive, int eventCategory, int eventMajorId,
+			LocalDateTime eventPublishDate, LocalDateTime eventStartDate, LocalDateTime eventEndDate,
+			LocalDateTime eventPartStartDate, LocalDateTime eventPartEndDate, int eventAmount, String eventLocation,
+			int eventParticipantMaximum, String eventDescription, String eventNote) {
+		super();
+		this.eventId = eventId;
+		this.eventName = eventName;
+		this.isEventActive = isEventActive;
+		this.eventCategory = eventCategory;
+		this.eventMajorId = eventMajorId;
+		this.eventPublishDate = eventPublishDate;
+		this.eventStartDate = eventStartDate;
+		this.eventEndDate = eventEndDate;
+		this.eventPartStartDate = eventPartStartDate;
+		this.eventPartEndDate = eventPartEndDate;
+		this.eventAmount = eventAmount;
+		this.eventLocation = eventLocation;
+		this.eventParticipantMaximum = eventParticipantMaximum;
+		this.eventDescription = eventDescription;
+		this.eventNote = eventNote;
+	}
+
 	public String getEventId() {
 		return eventId;
 	}

@@ -112,5 +112,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error('There was an error!', error);
             });
     }
+    // function submitForm() {
+    //     //使用formdata封裝資料
+    //     let formData = new FormData();
+
+    //     //文件
+    //     const file = document.getElementById("eventFile");
+    //     if (file) {
+    //         formData.append("eventFile", file.files[0]);
+    //     } else {
+    //         formData.append("eventNote", document.getElementById("eventNote").value);
+    //     }
+
+    //     formData.append('eventId', document.getElementById("eventId").value || 'new');
+    //     formData.append('eventName', document.getElementById("eventName").value);
+    //     formData.append('isEventActive', document.getElementById("isEventActive").value);
+    //     formData.append('eventCategory', document.getElementById("eventCategory").value);
+    //     formData.append('eventMajorId', document.getElementById("eventMajor").value);
+    //     formData.append('eventPublishDate', document.getElementById("eventPublishDate").value);
+    //     formData.append('eventStartDate', document.getElementById("eventStartDate").value);
+    //     formData.append('eventEndDate', document.getElementById("eventEndDate").value);
+    //     formData.append('eventPartStartDate', document.getElementById("eventPartStartDate").value);
+    //     formData.append('eventPartEndDate', document.getElementById("eventPartEndDate").value);
+    //     formData.append('eventAmount', document.getElementById("eventAmount").value);
+    //     formData.append('eventLocation', document.getElementById("eventLocation").value);
+    //     formData.append('eventParticipantMaximum', document.getElementById("eventParticipantMaximum").value);
+    //     formData.append('eventDescription', document.getElementById("eventDescription").value);
+
+    //     console.log(formData);
+
+    //     axios.post('/ProFit/events/save', formData)
+    //         .then(function (response) {
+    //             // window.location.href = response.data;
+    //         })
+    //         .catch(function (error) {
+    //             console.error('There was an error!', error);
+    //         });
+    // }
 
 });

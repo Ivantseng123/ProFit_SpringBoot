@@ -34,3 +34,9 @@ document.getElementById('resetPwdForm_edit').addEventListener('submit', function
 		});
 
 })
+
+document.getElementById('oneclick_resetpwd').addEventListener('click', function() {
+
+	document.getElementById('password_reset').value = 'profit1871';
+	document.getElementById('ConfirmPassword_edit').value = 'profit1871';
+})

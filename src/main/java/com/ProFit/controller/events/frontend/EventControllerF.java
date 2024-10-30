@@ -1,37 +1,30 @@
-package com.ProFit.controller.events.backend;
+package com.ProFit.controller.events.frontend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
-import com.ProFit.service.majorService.IMajorCategoryService;
-import com.ProFit.service.utilsService.FirebaseStorageService;
+//import com.ProFit.service.majorService.IMajorCategoryService;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/events")
-public class EventsController {
+@RequestMapping("/f/events")
+public class EventControllerF {
 
     @Autowired
     private IEventsService eventsService;
 
     @Autowired
     private IMajorService majorService;
-
-//    @Autowired
-//    private FirebaseStorageService firebaseStorageService;
 
     // @Autowired
     // private IMajorCategoryService majorCategoryService;
@@ -107,49 +100,12 @@ public class EventsController {
         eventsService.deleteEvent(eventId);
         return "redirect:/events";
     }
-    
+
     // 儲存活動
     @PostMapping("/save")
     public ResponseEntity<String> saveEvent(@RequestBody EventsDTO eventsDTO) {
-    EventsBean event = eventsService.convertToBean(eventsDTO);
-    eventsService.saveEvent(event);
-    return ResponseEntity.ok("/ProFit/events");
+        EventsBean event = eventsService.convertToBean(eventsDTO);
+        eventsService.saveEvent(event);
+        return ResponseEntity.ok("/ProFit/events");
     }
-//    @PostMapping("/save")
-//    @ResponseBody
-//    public ResponseEntity<String> saveEvent(@RequestParam String eventId,
-//            @RequestParam String eventName,
-//            @RequestParam int isEventActive,
-//            @RequestParam int eventCategory,
-//            @RequestParam int eventMajorId,
-//            @RequestParam LocalDateTime eventPublishDate,
-//            @RequestParam LocalDateTime eventStartDate,
-//            @RequestParam LocalDateTime eventEndDate,
-//            @RequestParam LocalDateTime eventPartStartDate,
-//            @RequestParam LocalDateTime eventPartEndDate,
-//            @RequestParam int eventAmount,
-//            @RequestParam String eventLocation,
-//            @RequestParam int eventParticipantMaximum,
-//            @RequestParam String eventDescription,
-//            @RequestParam(required = false) String eventNote,
-//            @RequestPart(required = false) MultipartFile eventFile) {
-//
-//        // 處理檔案上傳
-//        String eventFileUrl = null;
-//        try {
-//        	if (eventFile != null && !eventFile.isEmpty()) {
-//                eventFileUrl = firebaseStorageService.uploadFile(eventFile);
-//        	} else {
-//				eventFileUrl = eventNote;
-//			}
-//        } catch (IOException e) {
-//        	e.printStackTrace();
-//        }
-//        EventsDTO eventsDTO = new EventsDTO(eventId, eventName, isEventActive, eventCategory, eventMajorId, eventPublishDate, eventStartDate, eventEndDate, eventPartStartDate, eventPartEndDate, eventAmount, eventLocation, eventParticipantMaximum, eventDescription, eventFileUrl);
-//
-//        EventsBean event = eventsService.convertToBean(eventsDTO);
-//        eventsService.saveEvent(event);
-//
-//        return ResponseEntity.ok("/ProFit/events");
-//    }
 }
