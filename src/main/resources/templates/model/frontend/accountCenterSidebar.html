@@ -25,6 +25,12 @@
 		</ul>
 	</div>
 </div>
+
+<!-- 用 thymeleaf 取出 Model 資料存成變數 -->
+<script th:inline="javascript">
+	const currentUser = /*[[${currentUser}]]*/ 'default currentUser';
+	console.log(currentUser)
+</script>
 <script th:src="@{/js/service/frontend/serviceCenter.js}" defer></script>
 <script th:src="@{/js/service/frontend/serviceApplicationCenter.js}" defer></script>
 <script th:src="@{/js/courses/frontend/courseCenter.js}" defer></script>

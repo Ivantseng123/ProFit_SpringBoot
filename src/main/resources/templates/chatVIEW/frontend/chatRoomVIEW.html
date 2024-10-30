@@ -150,6 +150,14 @@
             margin-top: 10px;
         }
 
+        img {
+            object-fit: cover;
+        }
+
+        .tab-content {
+            margin-top: 10px;
+        }
+
         /* 服務申請消息樣式 */
         .message-content.service-application {
             background-color: #e3f2fd;
@@ -159,6 +167,12 @@
         .message-content.service-application a {
             color: #1976d2;
             text-decoration: none;
+        }
+
+        #message-container {
+            /* max-height: 400px; */
+            /* 或其他您需要的高度 */
+            overflow-y: auto;
         }
 
         /* 響應式設計 */
@@ -206,22 +220,43 @@
                                 <div class="modal-content">
                                     <div class="chat-header">
                                         <!-- 搜索框 -->
-                                        <div class="msg-search">
+                                        <!-- <div class="msg-search">
                                             <input type="text" class="form-control" placeholder="搜尋..."
                                                 id="search-input">
-                                        </div>
+                                        </div> -->
                                         <!-- 標籤頁 -->
+                                        <div>
+                                            <h5>我是:</h5>
+                                        </div>
                                         <ul class="nav nav-tabs" role="tablist">
-                                            <li class="nav-item">
+                                            <li class="nav-item"
+                                                style="border-left: 1px solid steelblue; border-top: 1px solid steelblue; text-align: center;">
                                                 <a class="nav-link active" id="Open-tab" data-bs-toggle="tab"
-                                                    href="#Open" role="tab">開啟中</a>
+                                                    href="#Open" role="tab">案主</a>
                                             </li>
-                                            <li class="nav-item">
+                                            <li class="nav-item"
+                                                style="border-left: 1px solid steelblue; border-top: 1px solid steelblue; border-right: 1px solid steelblue; text-align: center;">
                                                 <a class="nav-link" id="Closed-tab" data-bs-toggle="tab" href="#Closed"
-                                                    role="tab">已關閉</a>
+                                                    role="tab">接案人</a>
                                             </li>
                                         </ul>
-                                        <div id="chat-users-list"></div>
+
+                                        <!-- 標籤頁內容區 -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="Open" role="tabpanel"
+                                                aria-labelledby="Open-tab">
+                                                <!-- 用戶列表容器 -->
+                                                <div id="chat-users-list" class="chat-users-container d-grid gap-2">
+                                                    <!-- 用戶列表會由 JavaScript 動態填充 -->
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="Closed" role="tabpanel"
+                                                aria-labelledby="Closed-tab">
+                                                <p>這是「接案人」的內容。</p>
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
                                     <div class="modal-body">
@@ -259,12 +294,21 @@
                                                         <img src="/images/back-arrow.svg" class="img-fluid" alt="返回">
                                                     </span>
                                                     <div class="flex-shrink-0">
-                                                        <img id="chat-user-avatar" src="/images/default-avatar.png"
-                                                            class="img-fluid" alt="用戶頭像">
+                                                        <img id="chat-user-avatar" src="#" class="img-fluid" alt="用戶頭像"
+                                                            style="width: 50px; height: 50px;">
+                                                    </div>
+                                                    <div class=" flex-grow-1 ms-3">
+                                                        <h5 id="chat-user-name" class="mb-0"></h5>
                                                     </div>
                                                     <div class="flex-grow-1 ms-3">
-                                                        <h6 id="chat-user-name" class="mb-0"></h6>
-                                                        <small id="chat-title" class="text-muted"></small>
+                                                        <div>
+                                                            <a id="chat-title-href" href="" target="_blank">
+                                                                <h5 id="chat-title" class="mb-0"></h5>
+                                                            </a>
+                                                        </div>
+                                                        <div>
+                                                            <small id="chat-title-detail" class="text-muted"></small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -272,7 +316,7 @@
                                     </div>
 
                                     <!-- 聊天消息區域 -->
-                                    <div class="modal-body">
+                                    <div id="message-box" class="modal-body">
                                         <div id="message-container" class="msg-body">
                                             <!-- 動態加載的消息內容 -->
                                         </div>
@@ -290,11 +334,11 @@
                                         <div class="send-btns mt-2">
                                             <div class="attach">
                                                 <div class="button-wrapper">
-                                                    <label class="btn btn-outline-secondary btn-sm">
-                                                        <i class="bi bi-paperclip"></i>
-                                                        附加檔案
-                                                        <input type="file" id="upload" class="d-none">
-                                                    </label>
+                                                    <a href="" target="_blank">
+                                                        <label class="btn btn-outline-secondary btn-sm">
+                                                            發送委託
+                                                        </label>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,7 +353,7 @@
     </div>
 
     <!-- 服務選擇模態框 -->
-    <div class="modal fade" id="serviceModal" tabindex="-1">
+    <div class="modal fade" id="serviceModal" tabindex="-1" data-bs-backdrop="false">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -397,7 +441,7 @@
             });
 
 
-        }); s
+        });
     </script>
 </body>
 

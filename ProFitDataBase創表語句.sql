@@ -376,7 +376,7 @@ CREATE TABLE service_application(
 	service_application_content NVARCHAR(1000),				--合作內容
 	service_application_appendix_url NVARCHAR(max),			--合約附件,存firebase後回傳url
 
-	service_application_status INT DEFAULT 0 NOT NULL,      --狀態: 0草稿、1洽談中(只有發起人能編輯其他欄位,另一人只能更改為完成)、成立(自動成立訂單service_order，尚未付款)、3婉拒、4關閉(由發起人關閉)、5已完成(訂單完成付款，且接案人完成任務)
+	service_application_status INT DEFAULT 0 NOT NULL,      --狀態: 0草稿、1洽談中(只有發起人能編輯其他欄位,另一人只能更改為完成)、2已接受(自動成立訂單service_order，尚未付款)、3婉拒(由freelancer婉拒)、4關閉(由caseowner關閉)、5已完成(service_order訂單由caseowner完成付款後的狀態)、6已結案(訂單完成付款，且接案人完成任務)
 
 	service_application_mission NVARCHAR(50),				-- 接案客需交付項目
 	service_application_done_date DATETIME2,				-- 接案客交付(完成)日期
