@@ -41,12 +41,12 @@ $('#searchBtn').click(function () {
 										<th>課程封面</th>
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
-        	                            <th>課程資訊</th>
+        	                            <th style="width: 30%;">課程資訊</th>
 										<th>章節數量</th>
 										<th>章節操作</th>
         	                            <th>價格</th>
         	                            <th>狀態</th>
-        	                            <th>操作</th>
+        	                            <th style="min-width: 117px;">操作</th>
         	                        </tr>
         	                    </thead>
         	                    <tbody id="table-body">
@@ -343,12 +343,12 @@ function loadThatPage(pageNum) {
 										<th>課程封面</th>
         	                            <th>課程名稱</th>
         	                            <th>課程創建者</th>
-        	                            <th>課程資訊</th>
+        	                            <th style="width: 30%;">課程資訊</th>
 										<th>章節數量</th>
 										<th>章節操作</th>
         	                            <th>價格</th>
         	                            <th>狀態</th>
-        	                            <th>操作</th>
+        	                            <th style="min-width: 117px;">操作</th>
         	                        </tr>
         	                    </thead>
         	                    <tbody id="table-body">
