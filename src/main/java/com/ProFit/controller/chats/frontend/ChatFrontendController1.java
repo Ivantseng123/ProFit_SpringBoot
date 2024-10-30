@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import com.ProFit.model.dto.chatsDTO.MessageDTO;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.chatService.ChatService;
+import com.ProFit.service.serviceService.ServiceService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -47,6 +49,31 @@ public class ChatFrontendController1 {
         // 將用戶信息添加到模型中
         model.addAttribute("currentUser", currentUser);
         return "chatVIEW/frontend/chatRoomVIEW";
+    }
+
+    // 案主從服務頁面建立(/查)聊天室 (currentUserId, freelancerId, serviceId)
+    @GetMapping("/add")
+    public String createOrGetChatRoom(HttpSession session, @RequestParam Integer serviceId, @RequestParam Integer freelancerId, Model model) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        System.out.println(currentUser);
+
+        if (currentUser == null) {
+            // 未登入，重定向到登入頁面
+            return "redirect:/user/profile";
+        }
+        // 將用戶信息添加到模型中
+        model.addAttribute("currentUser", currentUser);
+
+        try {
+            chatService.createOrGetChat(serviceId, freelancerId, currentUser.getUserId());
+            return "chatVIEW/frontend/chatRoomVIEW";
+        } catch (Exception e) {
+            System.err.println(e);
+            return "chatVIEW/frontend/chatRoomVIEW";
+        }
+
     }
 
     /**

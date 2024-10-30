@@ -82,7 +82,7 @@ $(document).ready(function() {
 					<h6>公司資本額:</h6>
 					</div>
 					<div class="col-md-6">
-					<p>${empPf.companyCaptital}</p>
+					<p>${empPf.companyCaptital}萬</p>
 					</div>
 			</div>
 			<div class="row">
