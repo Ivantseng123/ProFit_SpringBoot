@@ -11,8 +11,7 @@
 <body>
 	<div th:replace="~{model/layout-static}"></div>
 	<div class="container pt-2">
-		<a class="btn btn-primary" role="button" aria-disabled="true"
-		   th:href="@{/courses}">返回課程列表</a>
+		<a class="btn btn-primary" role="button" aria-disabled="true" th:href="@{/b/courses}">返回課程列表</a>
 	</div>
 	<div class="container pt-3">
 		<!-- 主要內容區域 -->
@@ -40,15 +39,19 @@
 				<tbody id="table-body">
 					<th:block th:each=" courseModule,courseModuleStat : ${courseModuleDTOList}">
 						<tr>
-							<td class="sort" th:text="${courseModuleStat.index+1}" th:data-courseModuleId="${courseModule.courseModuleId}"></td>
+							<td class="sort" th:text="${courseModuleStat.index+1}"
+								th:data-courseModuleId="${courseModule.courseModuleId}"></td>
 							<td th:text="${courseModule.courseModuleName}"></td>
 							<td th:text="${courseModule.moduleLessonsId.size()}"></td>
 							<td>
-								<a th:href="@{/courseLessons(courseModuleId=${courseModule.courseModuleId})}"><button class="viewLesson btn btn-info btn-sm">查看</button></a>
+								<a th:href="@{/courseLessons(courseModuleId=${courseModule.courseModuleId})}"><button
+										class="viewLesson btn btn-info btn-sm">查看</button></a>
 							</td>
 							<td>
-								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="edit btn btn-primary btn-sm">編輯</button>
-								<button th:data-courseModuleId="${courseModule.courseModuleId}" class="delete btn btn-danger btn-sm">刪除</button>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}"
+									class="edit btn btn-primary btn-sm">編輯</button>
+								<button th:data-courseModuleId="${courseModule.courseModuleId}"
+									class="delete btn btn-danger btn-sm">刪除</button>
 							</td>
 						</tr>
 					</th:block>

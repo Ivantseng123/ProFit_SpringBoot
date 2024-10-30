@@ -48,7 +48,7 @@ function getUser() {
 			user_pictureURL.value = user.userPictureURL;
 
 			user_name.innerHTML = user.userName;
-			
+
 			localStorage.setItem('userName', user.userName);
 			const usernameDisplay = document.getElementById('usernameDisplay');
 			let username = localStorage.getItem('userName');
@@ -520,6 +520,7 @@ function sendForm_application() {
 				$('#companyAppliction').modal('hide');
 				alert('申請成功');
 				getCompanyAppl()
+				company_application.reset();
 			} else {
 				alert('申請失敗，請稍後再試。');
 			}
@@ -583,6 +584,45 @@ $('#fileInput2').on('change', function() {
 		reader.readAsDataURL(fileInput.files[0]);
 	}
 });
+
+
+document.getElementById('oneclick_editpwd').addEventListener('click', function() {
+
+	document.getElementById('user_password_edit').value = 'profitfordemo1';
+	document.getElementById('ConfirmPassword_edit').value = 'profitfordemo1';
+})
+
+document.getElementById('oneclick_editprofile').addEventListener('click', function() {
+
+	document.getElementById('user_name_edit').value = '周杰倫';
+	document.getElementById('user_phoneNumber_edit').value = '09-87654321';
+	document.getElementById('keelung').selected = true;
+	document.getElementById('statusChoice2').checked = true;
+	document.getElementById('new_taipei').selected = true;
+	document.getElementById('worke_exprience').selected = true;
+	document.getElementById('identityChoice4').checked = true;
+	document.getElementById('freelancer_disc_edit').value = '我是一位專業的軟體開發工程師，擁有穩固的 Java 後端開發基礎和豐富的 Web 全端開發經驗。我專注於構建高效且可靠的應用程式，具備從資料庫設計、後端 API 開發到前端視覺介面整合的全面能力。過去我負責過多個專案，包含使用 Spring Boot 架構後端服務，並運用 RESTful API 與前端進行數據交互。此外，我精通 JavaScript、HTML、CSS，並善於運用各類框架，如 React 和 jQuery，來實現客製化且用戶友好的操作介面。我重視程式碼的品質和可維護性，致力於清晰、易於擴展的設計，同時不斷更新自己的技術知識，以提供最新、最佳的解決方案。無論是短期的功能開發還是長期的系統建置，我都願意投入其中，並在每個專案中全力以赴。';
+})
+
+document.getElementById('oneclick_editcompany').addEventListener('click', function() {
+
+	document.getElementById('category_onclick').selected = true;
+	document.getElementById('company_phoneNumber_edit').value = '03-1234567';
+	document.getElementById('numberOfemployee_oneclick').selected = true;
+	document.getElementById('company_capital_edit').value = '250';
+	document.getElementById('company_description_edit').value = '我們成立於2012年，是台灣領先的全方位運輸與物流服務提供商。我們專注於整合先進的智慧物流技術，致力於打造高效、安全且靈活的運輸解決方案，涵蓋陸、海、空三大運輸服務，並提供客製化的倉儲管理與配送支援。速達物流擁有一支專業團隊，嚴格把控運輸流程中的每一個環節，確保貨物能準時且安全地送達全球各地。公司強調「服務至上、效率為先」，並持續投入智慧化設備與數據分析技術，精準掌握物流需求動態。我們提供完善的客戶支援及全天候服務，為客戶創造最大價值，助力業務穩健成長。';
+})
+
+document.getElementById('oneclick_companyAppl').addEventListener('click', function() {
+
+	document.getElementById('company_name_application').value = '創新物流';
+	document.getElementById('company_phoneNumber_application').value = '03-7654321';
+	document.getElementById('taipei').selected = true;
+	document.getElementById('category_oneclick2').selected = true;
+	document.getElementById('company_taxID_application').value = '83591472';
+	document.getElementById('company_address_application1').value = '大安區復興南路一段390號';
+})
+
 
 
 

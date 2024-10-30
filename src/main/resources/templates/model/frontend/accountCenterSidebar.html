@@ -13,6 +13,17 @@
 			<li><a href="#" id="serviceCenter"><i class="lni lni-book"></i>我的服務</a></li>
 
 			<li><a href="#" id="serviceApplicationCenter"><i class="lni lni-book"></i>委託管理</a></li>
+
+			<li><a href="#" id="eventCenter"><i class="lni lni-book"></i>活動管理</a></li>
+			<!-- <li><a href="notifications.html"><i class="lni lni-alarm"></i> Notifications <span
+
+												class="notifi">5</span></a></li>
+									<li><a href="manage-applications.html"><i class="lni lni-envelope"></i> Manage
+											Applications</a></li>
+									<li><a href="manage-resumes.html"><i class="lni lni-files"></i> Manage Resumes</a></li>
+									<li><a href="job-alerts.html"><i class="lni lni-briefcase"></i> Job Alerts</a></li>
+									<li><a href="change-password.html"><i class="lni lni-lock"></i> Change Password</a></li>
+									<li><a href="index.html"><i class="lni lni-upload"></i> Sign Out</a></li>-->
 			<th:block th:if="${user != null and user.userIdentity == 2}">
 				<li class="heading">職缺管理</li>
 				<li><a th:href="@{/front/profile/applicationsReturn/0}"><i class="lni lni-bookmark"></i>管理職缺申請</a></li>
@@ -25,6 +36,12 @@
 		</ul>
 	</div>
 </div>
+
+<!-- 用 thymeleaf 取出 Model 資料存成變數 -->
+<script th:inline="javascript">
+	const currentUser = /*[[${currentUser}]]*/ 'default currentUser';
+	console.log(currentUser)
+</script>
 <script th:src="@{/js/service/frontend/serviceCenter.js}" defer></script>
 <script th:src="@{/js/service/frontend/serviceApplicationCenter.js}" defer></script>
 <script th:src="@{/js/courses/frontend/courseCenter.js}" defer></script>

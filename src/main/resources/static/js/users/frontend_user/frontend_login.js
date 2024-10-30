@@ -202,7 +202,7 @@ document.getElementById("signUp_href").onclick = function() {
 
 	setTimeout(function() {
 		$('#signup').modal('show');
-	}, 300);
+	}, 450);
 };
 
 document.getElementById("forgetPwdbtn").onclick = function() {
@@ -254,4 +254,35 @@ document.getElementById('resetPwdForm').addEventListener('submit', function(e) {
 
 })
 
+document.getElementById('oneclick1').addEventListener('click',function(){
+
+	document.getElementById('email').value = 'profitfordemo@gmail.com';
+	document.getElementById('password').value = 'profit187';
+
+})
+
+document.getElementById('oneclick2').addEventListener('click',function(){
+
+	document.getElementById('email').value = 'profitfordemo@gmail.com';
+	document.getElementById('password').value = 'profit1871';
+
+})
+
+document.getElementById('oneclick_register').addEventListener('click',function(){
+
+	document.getElementById('user_name').value = '周餅倫';
+	document.getElementById('email_register').value = 'profitfordemo@gmail.com';
+	document.getElementById('user_password').value = 'profit187';
+	document.getElementById('ConfirmPassword').value = 'profit187';
+	document.getElementById('user_phonenumber').value = '0912-345678';
+	document.getElementById("taoyuan").selected = true;
+	document.getElementById("check_register").checked = true;
+
+})
+
+document.getElementById('oneclick_forgetpwd').addEventListener('click',function(){
+
+	document.getElementById('email_resetpwd').value = 'profitfordemo@gmail.com';
+
+})
 

@@ -63,6 +63,14 @@
             <hr>
             <label for="eventNote">備註</label>
             <textarea id="eventNote" name="eventNote" th:text="${event.eventNote}"></textarea>
+            <!-- <label for="eventFile">其他資料</label>
+            <input type="file" id="eventFile" name="eventFile" accept=".pdf"></input>
+            <div th:if="${event.eventNote}">
+                <h3>PDF 預覽:</h3>
+                <iframe id="eventNote" name="eventNote" value="${event.eventNote}" th:src="${event.eventNote}" width="400" height="600" frameborder="0">
+                    此瀏覽器不支持 PDF 預覽。
+                </iframe>
+            </div> -->
             <hr>
             <button type="button" id="saveBtn">保存</button>
             <button type="button" id="cancelBtn">回上一頁</button>

@@ -62,10 +62,10 @@ public class ChatDTO {
     chatDTO.setStatus(chatBean.getStatus());
 
     //
-    if (chatBean.getUserId1() != null) {
+    if (chatBean.getUserId1() != null && chatBean.getUser1() != null) {
       chatDTO.setFreelancer(new UsersDTO(chatBean.getUser1()));
     }
-    if (chatBean.getUserId2() != null) {
+    if (chatBean.getUserId2() != null && chatBean.getUser2() != null) {
       chatDTO.setCaseowner(new UsersDTO(chatBean.getUser2()));
     }
     if (chatBean.getService() != null) {

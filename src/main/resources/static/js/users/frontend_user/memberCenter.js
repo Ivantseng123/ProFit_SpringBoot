@@ -18,6 +18,14 @@ $(document).ready(() => {
 
 		$('.col-lg-8').eq(0).empty();
 		htmlMakerForQuestionForm();
+
+
+		document.getElementById('oneclick_question').addEventListener('click', function() {
+
+			document.getElementById('subject_oneclick').selected = true;
+			document.getElementById('content').value = '最近在使用我們的網站時，發現有幾個地方可能能讓使用體驗更流暢、方便，分享一些小建議，看看是否能對網站提升有幫助：頁面載入速度有些圖片和資源的載入速度較慢，特別是在行動裝置上。建議可以嘗試壓縮圖片大小、採用新格式，或許也能考慮使用 CDN，這樣大家在不同地點也能更快看到內容。SEO 和搜尋功能的增強使用搜尋引擎找到網站時，有時會碰到不易找到關鍵內容的情況。如果我們加強一下 SEO，比如清楚的標題、簡明的描述，應該能幫助更多使用者精準找到所需的內容。行動裝置優化現在大家經常用手機看網站，如果可以更徹底地響應行動裝置，可能會提升用戶的使用感受。另外，減少彈出視窗或動畫，讓操作更流暢也應該會更受歡迎！增強安全性現在網路安全越來越重要，感覺如果網站可以定期更新憑證、增強加密，應該能讓用戶更放心，尤其是在輸入個人資料或交易的時候。希望這些建議有幫助！任何疑問或需要更詳細的建議，隨時找我聊聊，期待網站持續進步!';
+		})
+
 		document.getElementById('submitButton').addEventListener('click', function() {
 
 			console.log('CLICKCLICK');
@@ -459,7 +467,7 @@ function htmlMakerForQuestionForm() {
 													<label class="label mb-3">問題類型</label>
 													<select class="form-select" id="question_category">
 														<option value="Bug回報">Bug回報</option>
-														<option value="優化建議">優化建議</option>
+														<option id="subject_oneclick" value="優化建議">優化建議</option>
 														<option value="檢舉相關">檢舉相關</option>
 														<option value="帳戶相關">帳戶相關</option>
 														<option value="公司驗證相關">公司驗證相關</option>
@@ -489,6 +497,9 @@ function htmlMakerForQuestionForm() {
 											</div>
 										</div>
 									</form>
+									<div class="mt-3">
+											<button class="btn btn-secondary" type="button" id="oneclick_question">一鍵輸入</button>
+									</div>
 								</div>
 						</section>
 `)

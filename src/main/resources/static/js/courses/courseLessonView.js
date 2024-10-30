@@ -4,22 +4,27 @@ $(document).on('click', '.delete', function () {
 
 	console.log("Selected CourseLesson ID for Deletion: " + courseLessonId);
 
-	$.ajax({
-		url: contextPath + '/courseLessons/delete/' + courseLessonId,
-		type: 'get',
-		success: function (response) {
-			if (response) {
-				window.alert('單元刪除成功');
-				console.log('刪除的單元訊息:', response);
-				window.location.href = contextPath + '/courseLessons?courseModuleId=' + response;
-			} else {
-				window.alert('單元刪除失敗');
+	let answer = confirm('確認刪除嗎？');
+	if (answer) {
+		$.ajax({
+			url: contextPath + '/courseLessons/delete/' + courseLessonId,
+			type: 'get',
+			success: function (response) {
+				if (response) {
+					window.alert('單元刪除成功');
+					console.log('刪除的單元訊息:', response);
+					window.location.href = contextPath + '/courseLessons?courseModuleId=' + response;
+				} else {
+					window.alert('單元刪除失敗');
+				}
+			},
+			error: function (error) {
+				console.error('Error deleting course:', error);
 			}
-		},
-		error: function (error) {
-			console.error('Error deleting course:', error);
-		}
-	});
+		});
+	} else {
+
+	}
 });
 
 // 編輯課程流程
