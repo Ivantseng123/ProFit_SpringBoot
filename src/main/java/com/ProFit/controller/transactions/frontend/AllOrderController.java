@@ -81,12 +81,14 @@ public class AllOrderController {
 	        return null;
 	    }
 
-	    // 根據 caseownerId 過濾訂單
-	    List<ServiceOrdersDTO> serviceOrders = serviceOrdersService.getServiceOrdersByCaseownerId(usersDTO.getUserId());
+	    // 根據 service_order_payby 過濾訂單
+	    List<ServiceOrdersDTO> serviceOrders = serviceOrdersService.getServiceOrdersByPayByUserId(usersDTO.getUserId());
+	    
+	    System.out.println("Fetched Service Orders: " + serviceOrders); // 添加日誌
+
 	    return serviceOrders;
 	}
 
-	
 	// 獲取所有 CourseOrder 資料
 	@GetMapping("/allOrder/courseOrders")
 	@ResponseBody

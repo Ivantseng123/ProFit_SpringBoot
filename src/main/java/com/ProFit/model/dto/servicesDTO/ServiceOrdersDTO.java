@@ -36,10 +36,24 @@ public class ServiceOrdersDTO {
     this.serviceOrderAmount = serviceOrderAmount;
     this.createdAt = createdAt;
   }
+  
 
+  //添加訂單詳情裡面要抓取的欄位資料
   public ServiceOrdersDTO(ServiceOrderBean order) {
-	// TODO Auto-generated constructor stub
-}
+	    if (order != null) {
+	        this.serviceOrderId = order.getServiceOrderId();
+	        this.serviceApplicationId = order.getServiceApplicationId();
+	        this.serviceOrderPayById = order.getServiceOrderPayById();
+	        this.serviceOrderDate = order.getServiceOrderDate();
+	        this.status = order.getStatus();
+	        this.serviceOrderNote = order.getServiceOrderNote();
+	        this.paymentMethod = order.getPaymentMethod();
+	        this.taxId = order.getTaxId();
+	        this.serviceOrderAmount = order.getServiceOrderAmount();
+	        this.createdAt = order.getCreatedAt();
+	    }
+	}
+
 
 // 静态工厂方法
   public static ServiceOrdersDTO fromEntity(ServiceOrderBean serviceOrderBean) {
