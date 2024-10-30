@@ -98,6 +98,7 @@ public class ChatService {
       chat = new ChatBean(serviceId, freelancerId, caseOwnerId,
           LocalDateTime.now(), LocalDateTime.now(), 1);
       chat = chatRepository.save(chat);
+      System.out.println(chat);
     }
     // System.out.println(chat);
 

@@ -92,8 +92,11 @@
 
                                         </ul>
                                         <div class="mt-3">
-                                            <a id="sendMsg" href="#" style="width:150px;" class="btn btn-outline-danger"
-                                                type="button" target="_blank" th:text="'洽談'">
+                                            <a id="sendMsg"
+                                                th:href="${serviceDTO != null && serviceDTO.userMajor != null && serviceDTO.userMajor.user != null ? 
+                                                '/ProFit/c/chat/add?serviceId=' + serviceDTO.serviceId + '&freelancerId=' + serviceDTO.userMajor.user.userId : '#'}"
+                                                style="width:150px;" class="btn btn-outline-danger" type="button"
+                                                target="_blank" th:text="'洽談'">
                                             </a>
                                             <a id="buyNow"
                                                 th:href="${'/ProFit/c/serviceApplication/add?serviceId=' + serviceDTO.serviceId}"
@@ -212,8 +215,11 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <a id="sendMsg2" href="#" style="width:200px" class="btn btn-outline-danger"
-                                        type="button" th:text="'洽談'">
+                                    <a id="sendMsg"
+                                        th:href="${serviceDTO != null && serviceDTO.userMajor != null && serviceDTO.userMajor.user != null ? 
+                                        '/ProFit/c/chat/add?serviceId=' + serviceDTO.serviceId + '&freelancerId=' + serviceDTO.userMajor.user.userId : '#'}"
+                                        style="width:150px;" class="btn btn-outline-danger" type="button"
+                                        target="_blank" th:text="'洽談'">
                                     </a>
                                 </div>
 

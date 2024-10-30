@@ -100,6 +100,8 @@ public class ServiceApplicationFrontendController {
     ServiceApplicationsDTO serviceApplicationDTO = serviceApplicationService
         .findServiceApplicationById(serviceApplicationId);
 
+        System.out.println(serviceApplicationDTO);
+
     try {
       // 若沒有登入
       if (currentUser == null) {
@@ -168,6 +170,8 @@ public class ServiceApplicationFrontendController {
   @ResponseBody
   public ResponseEntity<Boolean> updateStatus(@PathVariable Integer id, @RequestParam Integer status,
       HttpSession session) {
+
+        System.out.println(status);
     UsersDTO currentUser = getCurrentUser(session);
     if (currentUser == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -266,11 +270,14 @@ public class ServiceApplicationFrontendController {
       return ResponseEntity.ok(false);
     }
 
-    // 驗證權限和狀態 (要是案主，且草稿狀態才能刪)
+
+    // 驗證權限和狀態 (要是案主，且草稿或關閉狀態才能刪)
     if (!currentUser.getUserId().equals(application.getCaseownerId()) ||
-        application.getStatus() != 0) {
+        application.getStatus() != 0 && application.getStatus() != 4 && application.getStatus() != 3) {
       return ResponseEntity.ok(false);
     }
+
+
 
     try {
       serviceApplicationService.deleteServiceApplication(id);
