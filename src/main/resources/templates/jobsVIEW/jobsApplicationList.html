@@ -45,13 +45,50 @@
             </tbody>
         </table>
     </div>
+
+    <div class="modal fade" id="pdfPreviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">履歷查看</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="pdfViewer" width="100%" height="1200px" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
 
     $(document).ready(function () {
         const baseUrl = /*[[@{/jobsApplication}]]*/'';
+        const pdfBaseUrl = /*[[@{/front/profile}]]*/'';
         console.log(baseUrl);
         let table = $("#jobsApplicationList").DataTable({
+            language: {
+                "processing": "處理中...",
+                "loadingRecords": "載入中...",
+                "lengthMenu": "顯示 _MENU_ 項結果",
+                "zeroRecords": "沒有符合的結果",
+                "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+                "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+                "infoFiltered": "(從 _MAX_ 項結果中過濾)",
+                "infoPostFix": "",
+                "search": "搜尋:",
+                "paginate": {
+                    "first": "第一頁",
+                    "previous": "上一頁",
+                    "next": "下一頁",
+                    "last": "最後一頁"
+                },
+                "aria": {
+                    "sortAscending": ": 升冪排列",
+                    "sortDescending": ": 降冪排列"
+                },
+                "emptyTable": "目前沒有資料",
+            },
             order: [0, 'asc'],
             columns: [{
                 data: 'jobsApplicationId',
@@ -88,7 +125,15 @@
                 }
             }, {
                 data: 'jobsApplicationResume',
-                className: 'all'
+                className: 'all',
+                render: function (data, type, row) {
+                    return `<button class="btn btn-secondary btn-sm preview-btn"
+                            data-id="${row.jobsApplicationId}"
+                            href="${pdfBaseUrl}/preview/${row.jobsApplicationId}"
+                            type="button">
+                            查看履歷
+                            </button>`;
+                }
             }, {
                 data: 'actions',
                 defaultContent: '',
@@ -153,6 +198,13 @@
                         });
                 }
             });
+        });
+
+        $('.preview-btn').click(function(e) {
+            e.preventDefault();
+            const previewUrl = $(this).attr('href');
+            $('#pdfViewer').attr('src', previewUrl);
+            $('#pdfPreviewModal').modal('show');
         });
     });
 </script>

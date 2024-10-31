@@ -1,12 +1,11 @@
 package com.ProFit.service.jobService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dao.usersCRUD.UsersRepository;
-import com.ProFit.service.userService.IUserService;
+import com.ProFit.model.dto.jobsDTO.AnalysisDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -65,11 +64,16 @@ public class JobsApplicationService implements IJobsApplicationService{
         }
     }
 
+    @Override
+    public List<AnalysisDTO> getApplicationCategoryAnalysis() {
+        return jobsApplicationDAO.getJobsCategoryAnalysis();
+    }
+
     public Page<JobsApplication> findCompanyByUserId(Integer userId, Pageable pageable) {
         Users users = usersRepository.findById(userId).orElse(null);
         Page<JobsApplication> applications = null;
         if (users != null && (users.getUserIdentity() == 2 || users.getUserIdentity() == 1)) {
-            applications = jobsApplicationDAO.findJobsApplicationsByApplicant(users, pageable);
+            applications = jobsApplicationDAO.findJobsApplicationsByApplicantOrderByJobsApplicationIdDesc(users, pageable);
         }
         return applications;
     }
@@ -78,7 +82,7 @@ public class JobsApplicationService implements IJobsApplicationService{
         Users users = usersRepository.findById(userId).orElse(null);
         Page<JobsApplication> applications = null;
         if (users != null && (users.getUserIdentity() == 2)) {
-            applications = jobsApplicationDAO.findByJobs_Users_UserId(users.getUserId(), pageable);
+            applications = jobsApplicationDAO.findByJobs_Users_UserIdOrderByJobsApplicationIdDesc(users.getUserId(), pageable);
         }
         return applications;
     }

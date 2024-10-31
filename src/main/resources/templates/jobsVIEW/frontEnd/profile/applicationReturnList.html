@@ -15,7 +15,7 @@
           <div class="col-lg-5 col-md-5">
             <div class="title-img">
               <div class="can-img">
-                <img src="" alt="#">
+                <img th:src="@{/images/jobs/img7.png}" alt="#">
               </div>
               <h3 th:text="${jobsApplication.jobs.jobsTitle}">Mechanical Engineer <span th:text="jobsApplication.jobs.users.employer_profile.companyName">Conzio construction</span></h3>
             </div>
@@ -29,17 +29,13 @@
           <div class="col-lg-2 col-md-2">
             <th:block th:if="${jobsApplication.jobsApplicationStatus == 0}">
               <div class="btn-group">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuButton1" type="button" data-bs-toggle="#dropdownMenuButton1" aria-expanded="false">
-                  待處理
+                <button class="btn btn-secondary btn-sm preview-btn" th:data-id="${jobsApplication.jobsApplicationId}" th:href="@{'/front/profile/preview/' + ${jobsApplication.jobsApplicationId}}" type="button">
+                  查看履歷
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item btn-success hire" th:data-id="${jobsApplication.jobsApplicationId}" data-bs-toggle="modal" data-bs-target="#deal">同意合作</a></li>
-                  <li><a class="dropdown-item btn-danger fire" th:data-id="${jobsApplication.jobsApplicationId}" href="#">遺憾拒絕</a></li>
-                </ul>
               </div>
             </th:block>
-            <p th:if="${jobsApplication.jobsApplicationStatus == 1}">媒合成功</p>
-            <p th:if="${jobsApplication.jobsApplicationStatus == 2}">媒合失敗</p>
+            <span class="badge rounded-pill bg-danger" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 1}">媒合成功</span>
+            <span class="badge rounded-pill bg-info" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 2}">媒合失敗</span>
           </div>
         </div>
       </div>
@@ -71,14 +67,15 @@
     <!-- End Pagination -->
 
   <!-- Modal -->
-  <div class="modal fade" id="deal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade" id="pdfPreviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">履歷查看</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <iframe id="pdfViewer" width="100%" height="1200px" frameborder="0"></iframe>
           <section class="job-post section">
             <div class="container">
               <div class="row">
@@ -100,7 +97,7 @@
                         <div class="col-lg-12">
                           <div class="form-group">
                             <label>金額</label>
-                            <input class="form-control" type="number" name="amount" required>
+                            <input class="form-control" type="text" name="amount">
                           </div>
                         </div>
                       </div>
@@ -127,9 +124,12 @@
                         </div>
                       </div>
                       <div>
-                        <div class="col-lg-12 button">
-                          <button class="btn" type="submit">
+                        <div class="col-lg-12">
+                          <button class="btn btn-primary" id="hire" type="submit">
                             送出申請
+                          </button>
+                          <button class="btn btn-danger" id="fire" type="submit">
+                            遺憾拒絕
                           </button>
                         </div>
                       </div>
@@ -140,10 +140,6 @@
             </div>
           </section>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
       </div>
     </div>
   </div>
@@ -152,9 +148,30 @@
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
   $(document).ready(function (){
     const baseUrl = /*[[@{/front/profile}]]*/'';
+    let id;
 
-    $(".fire").click(function (e){
-      const id = $('#button').data('id');
+    $('.preview-btn').click(function(e) {
+      e.preventDefault();
+      const previewUrl = $(this).attr('href');
+      $('#pdfViewer').attr('src', previewUrl);
+      $('#pdfPreviewModal').modal('show');
+
+      id = $(this).data('id');
+      $("#editForm").attr('action', `${baseUrl}/applicationHire/${id}`);
+      fetch(baseUrl + '/getJobs/' + id)
+              .then(response => {
+                return response.text();
+              })
+              .then(data => {
+                $('#jobsTitle').val(data);
+              })
+              .catch(e =>{
+                console.error(e);
+              });
+    });
+
+    $("#fire").click(function (e){
+      e.preventDefault();
       fetch(baseUrl + '/applicationFire/' + id, {
         method: 'PUT',
       }).then(response => {
@@ -170,27 +187,18 @@
           });
         }
       }).catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-        });
+        console.error('There was a problem with the fetch operation:', error);
+      });
     });
 
-    $(".hire").click(function (){
-      const id = $('#button').data('id');
-      $("#editForm").attr('action', `${baseUrl}/applicationHire/${id}`);
-      fetch(baseUrl + '/getJobs/' + id)
-              .then(response => {
-                return response.json();
-              })
-              .then(data => {
-                $('#jobsTitle').val(data.jobsTitle);
-              })
-              .catch(e =>{
-                console.error(e);
-              });
-    })
-
-    $('#dropdownMenuButton1').click(function (e){
-      console.log(123);
+    $('#hire').click(function (e){
+      Swal.fire({//Swal.fire呼叫api的寫法
+        icon: "success",
+        title: "邀約成功",
+        showConfirmButton: true,
+      }).then(() => {
+        $("#editForm").submit();
+      });
     })
 
   });

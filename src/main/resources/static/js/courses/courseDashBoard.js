@@ -88,8 +88,6 @@ fetch('/ProFit/courses/dashboard/courseByCategory')
     })
     .catch(error => console.error('Error fetching data:', error));
 
-
-
 fetch('/ProFit/courses/dashboard/courseOrderAnalysis')
     .then(response => response.json())
     .then(data => {
