@@ -106,8 +106,8 @@ function htmlMakerForServices(searchServicesPage) {
         $('#search-results').append(`
             <div class="col-lg-3 col-md-4 col-12">
                 <div class="single-news wow fadeInUp" data-wow-delay=".3s">
-                    <div class="image">
-                         <img class="thumb" src="${service.servicePictureURL1}" alt="#">
+                    <div class="image" style="width: 251px; height: 168px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                         <img class="thumb" src="${service.servicePictureURL1}" alt="#"  style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="content-body">
                         <h4 id="serviceTitle" class="title text-center"><a href="#">${service.serviceTitle}</a></h4>
