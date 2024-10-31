@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>申請創建課程</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+    <style>
+        .select {
+            width: 100%;
+            height: 50px;
+            border-radius: 0;
+            border: 1px solid #ebebeb;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-weight: 400
+        }
+
+        .modal {
+            z-index: 1060;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+    <!-- Start Add Resume Section -->
+    <section class="add-resume section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1 col-12">
+                    <div class="add-resume-inner box mt-5" style="max-width: 1000px;">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">Step-1 申請創立課程</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Step-2
+                                    新增課程章節</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link disabled" id="contact-tab" data-bs-toggle="tab"
+                                    data-bs-target="#contact" type="button" role="tab" aria-controls="contact"
+                                    aria-selected="false">Step-3
+                                    新增章節單元</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form class="form-ad mt-4">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">課程名稱</label>
+                                                <input id="courseName" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">申請者(自動帶入)</label>
+                                                <input id="courseCreateUserId" type="text" class="form-control"
+                                                    th:field="${currentUser.userName}"
+                                                    th:data-userid="${currentUser.userId}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>課程類別</label>
+                                                <select class="select" id="courseCategory">
+                                                    <option value="" disabled selected>請選擇</option>
+                                                    <option th:each="courseCategory : ${allCourseCategoryList}"
+                                                        th:value="${courseCategory.majorCategoryId}"
+                                                        th:text="${courseCategory.categoryName}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="courseEnrollmentDate">創建日期(自動帶入)</label>
+                                                <input type="date" id="courseEnrollmentDate"
+                                                    th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="courseStartDate">開始日期</label>
+                                                <input type="datetime-local" id="courseStartDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="courseEndDate">結束日期</label>
+                                                <input type="datetime-local" id="courseEndDate">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="courseCoverPictureURL">課程封面圖片: (建議比例16:9、小於1920 x
+                                                    1080像素)</label>
+                                                <input type="file" id="courseCoverPicture"></input>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="coursePrice">課程價格:</label>
+                                                <input type="number" id="coursePrice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="courseInformation">課程資訊</label>
+                                        <textarea id="courseInformation" style="height: auto;"
+                                            placeholder="簡短介紹100字以內"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="courseDescription">課程描述</label>
+                                        <textarea id="courseDescription" style="height: auto;"
+                                            placeholder="詳細介紹課程"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <a th:href="@{/course}" type="button" class="btn btn-danger btn-sm">取消新增</a>
+                                        <a href="#" type="button" class="btn btn-success btn-sm"
+                                            onclick="goToNextTab()">下一步:新增章節</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <form class="form-ad mt-4">
+                                    <div class="text-center mb-3 moduleNameSpace">
+                                        <a id="addNewModule" class="btn btn-warning btn-sm">新增章節</a>
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10%;" scope="col" class="text-center">章節</th>
+                                                <th scope="col">章節名稱</th>
+                                                <th scope="col" class="text-center">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="moduleTableBody">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control text-center no-spinner"
+                                                        value="1" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" placeholder="例如：設計基礎">
+                                                </td>
+                                                <td class="text-center">
+                                                    <a type="button" class="btn btn-primary btn-sm saveBtn">保存</a>
+                                                    <a type="button" class="btn btn-danger btn-sm deleteBtn">刪除</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <a id="previousStep" class="btn btn-secondary btn-sm">上一步:課程內容</a>
+                                        <a id="confirmAdd" class="btn btn-success btn-sm">確認新增</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <form class="form-ad mt-4">
+                                    <h4 class="text-center mb-3 moduleName">目前章節名稱: </h4>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="width: 7%;" scope="col">排序</th>
+                                                <th class="text-center" style="width: 20%;" scope="col">單元名稱</th>
+                                                <th class="text-center" style="width: 30%;" scope="col">單元內容</th>
+                                                <th class="text-center" style="width: 15%;" scope="col">類型</th>
+                                                <th class="text-center" style="width: 10%;" scope="col">長度(分鐘)</th>
+                                                <th class="text-center" style="width: 15%;" scope="col">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="lessonTableBody">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control" id="courseLessonSort"
+                                                        required>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="courseLessonName"
+                                                        required>
+                                                </td>
+                                                <td>
+                                                    <input type="file" class="form-control" id="lessonMedia"></input>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="lessonMediaType" required>
+                                                        <option value="" disabled selected>請選擇</option>
+                                                        <option value="Video">影片</option>
+                                                        <option value="File">檔案</option>
+                                                        <option value="HomeWork">作業</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="number" id="mediaDuration">
+                                                </td>
+                                                <td class="text-center">
+                                                    <a type="button" class="btn btn-primary btn-sm saveLessonBtn">保存</a>
+                                                    <a type="button"
+                                                        class="btn btn-danger btn-sm deleteLessonBtn">刪除</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <a class="btn btn-secondary btn-sm" id="backToStep2">上一步:課程章節</a>
+                                        <a href="/ProFit/user/profile?clickCourse=true" id="confirmApply"
+                                            class="btn btn-success btn-sm">送出申請</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- End Add Resume Section -->
+
+    <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModal}"></div>
+
+    <!-- 引用 footer.html -->
+    <div th:replace="~{model/frontend/footer}"></div>
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/bootstrap.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+    <script th:src="@{/js/courses/frontend/createCourseViewforFrontend.js}"></script>
+</body>
+
+</html>

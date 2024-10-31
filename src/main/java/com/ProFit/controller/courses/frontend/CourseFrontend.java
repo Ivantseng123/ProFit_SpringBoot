@@ -103,6 +103,24 @@ public class CourseFrontend {
 
     }
 
+    @GetMapping("/course/create")
+    public String createCoursePage(HttpSession session, Model model) {
+
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+
+        // if (currentUser != null) {
+
+        List<CourseCategoryDTO> allCourseCategoryList = majorCategoryService.findAllMajorCategories().stream()
+                .map(CourseCategoryDTO::new).collect(Collectors.toList());
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("allCourseCategoryList", allCourseCategoryList);
+
+        return "coursesVIEW/frontend/createCourseViewFrontend";
+        // }
+        // return "coursesVIEW/frontend/createCourseViewFrontend";
+    }
+
     @GetMapping("/course/watch/{courseId}")
     public ResponseEntity<Map<String, Object>> watchCoursePage(HttpSession session, @PathVariable String courseId) {
 
@@ -234,16 +252,24 @@ public class CourseFrontend {
     // 回傳已購買課程的Api
     @GetMapping("/c/course/purchasedList")
     @ResponseBody
-    public List<CourseOrderDTO> getPurchasedListByUserId(HttpSession session) {
+    public Map<String, Object> getPurchasedListByUserId(HttpSession session) {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
 
         if (currentUser != null) {
 
-            List<CourseOrderDTO> searchCourseOrdersByUserId = courseOrderService.searchAllCourseOrders(null,
+            List<CourseOrderDTO> purchasedCourses = courseOrderService.searchAllCourseOrders(null,
                     currentUser.getUserId(), "Completed");
 
-            return searchCourseOrdersByUserId;
+            List<CoursesDTO> appliedCourses = courseService.searchCourses(null,
+                    null, null, currentUser.getUserId(), null);
+
+            Map<String, Object> coursesMap = new HashMap<String, Object>();
+
+            coursesMap.put("purchasedCourses", purchasedCourses);
+            coursesMap.put("appliedCourses", appliedCourses);
+
+            return coursesMap;
         }
 
         return null;
