@@ -5,35 +5,35 @@
       layout:decorate="~{jobsVIEW/layout-static}">
 <head>
     <meta charset="UTF-8">
-    <title>編輯職缺申請項目資訊 - ProFit</title>
+    <title>編輯職缺申請資訊 - ProFit</title>
 </head>
 
 <body>
 <div layout:fragment="content"> <!-- Thymeleaf layout 標籤，用於插入內容到 model 模板中 -->
-    <h1 class="mt-4">編輯職缺申請項目資訊</h1>
+    <h1 class="mt-4">編輯職缺申請資訊</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a th:href="@{/jobsApplicationProject/list}">職缺申請項目管理</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/jobsApplication/list}">職缺申請管理</a></li>
         <li class="breadcrumb-item active">相關資訊</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
-            <!-- 職缺申請項目編輯表單 -->
-            <form id="jobApplicationProjectForm" th:action="@{/jobsApplicationProject/update/id(id=${jobApplicationProject.jobsApplicationProjectId})}" method="post">
-                <input type="hidden" th:field="${jobApplicationProject.jobsApplicationProjectId}"/>
+            <!-- 職缺申請編輯表單 -->
+            <form id="jobApplicationForm" th:action="@{/jobsApplication/update/id(id=${jobApplication.jobsApplicationId})}" method="post">
+                <input type="hidden" th:field="${jobApplication.jobsApplicationId}"/>
                 <input type="hidden" name="_method" value="put"/>
 
 
 
                 <!-- 刊登者（通常不允許編輯） -->
                 <div class="mb-3">
-                    <label class="form-label">刊登者 </label>
-                    <input type="text" class="form-control" th:field="${jobApplicationProject.jobsApplication.jobs.users.userName}" readonly />
+                    <label class="form-label">刊登者</label>
+                    <input type="text" class="form-control" th:field="${jobApplication.jobs.users.userName}" readonly />
                 </div>
 
                 <!-- 應徵者（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">應徵者</label>
-                    <input type="text" class="form-control" th:field="${jobApplicationProject.jobsApplication.applicant.userName}" readonly />
+                    <input type="text" class="form-control" th:field="${jobApplication.applicant.userName}" readonly />
                 </div>
 
 
@@ -46,16 +46,16 @@
                 <!-- 申請日期 -->
                 <div class="mb-3">
                     <label class="form-label">申請日期</label>
-                    <input type="date" class="form-control" name="deadline" th:value="${jobApplicationProject.jobsApplication.jobsApplicationDate}" required />
+                    <input type="date" class="form-control" name="deadline" th:value="${jobApplication.jobsApplicationDate}" required />
                 </div>
 
 
                 <!-- 職缺狀態 -->
                 <div class="mb-3">
                     <label class="form-label">職缺狀態</label>
-                    <select class="form-control" th:field="${jobApplicationProject.jobsApplicationStatus}" required>
-                        <option value="0" th:selected="${jobApplicationProject.jobsApplicationStatus == 0}">開放中</option>
-                        <option value="1" th:selected="${jobApplicationProject.jobsApplicationStatus == 1}">已關閉</option>
+                    <select class="form-control" th:field="${jobApplication.jobsApplicationStatus}" required>
+                        <option value="0" th:selected="${jobApplication.jobsApplicationStatus == 0}">開放中</option>
+                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 1}">已關閉</option>
                     </select>
                 </div>
 
@@ -63,7 +63,7 @@
 
                 <!-- 提交和取消按鈕 -->
                 <button type="submit" class="btn btn-primary">保存更改</button>
-                <a th:href="@{/jobsApplicationProject/list}" class="btn btn-secondary">取消</a>
+                <a th:href="@{/jobsApplication/list}" class="btn btn-secondary">取消</a>
             </form>
         </div>
     </div>
