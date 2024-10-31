@@ -2,6 +2,7 @@ package com.ProFit.controller.jobs;
 
 import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
+import com.ProFit.model.dto.jobsDTO.AnalysisDTO;
 import com.ProFit.service.jobService.IJobsApplicationService;
 import com.ProFit.service.jobService.JobsService;
 import com.ProFit.service.userService.IUserService;
@@ -36,7 +37,7 @@ public class JobsApplicationController {
 
     //查詢全部
     @GetMapping("/list")
-    public String listJobsApplication(Model model){
+    public String listJobsApplication(Model model) {
         List<JobsApplication> jobsApplicationList = jobsApplicationService.findAll();
 
         model.addAttribute("jobsApplicationList", jobsApplicationList);
@@ -109,45 +110,48 @@ public class JobsApplicationController {
 //        }
 
 
-
-
-        //導向查看頁面
-        @GetMapping("/view/{id}")
-        public String view(@PathVariable("id") Integer id, Model model){
-            if (id != null) {
-                model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
-            }
-            return "jobsVIEW/jobsApplicationForm";
+    //導向查看頁面
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Integer id, Model model) {
+        if (id != null) {
+            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));
+            ;
         }
+        return "jobsVIEW/jobsApplicationForm";
+    }
 
-        //導向更新頁面
-        @GetMapping("/edit/{id}")
-        public String edit(@PathVariable("id") Integer id, Model model){
-            if (id != null) {
-                model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));;
-            }
-            return "jobsVIEW/jobsApplicationEdit";
+    //導向更新頁面
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model) {
+        if (id != null) {
+            model.addAttribute("jobApplication", jobsApplicationService.findById(id).orElse(null));
+            ;
         }
+        return "jobsVIEW/jobsApplicationEdit";
+    }
 
-        //呈現更新後
-        @PutMapping("/update/{id}")
-        public String updateJob(@ModelAttribute JobsApplication updatedJob,
-                                @RequestParam("status") Byte status,
-                                @RequestParam("Date") String date,
-                                Model model) {
+    //呈現更新後
+    @PutMapping("/update/{id}")
+    public String updateJob(@ModelAttribute JobsApplication updatedJob,
+                            @RequestParam("status") Byte status,
+                            @RequestParam("Date") String date,
+                            Model model) {
 
 
-
-            //以下遇到時間的設定就用此寫法
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date dateFinish = formatter.parse(date);
-                updatedJob.setJobsApplicationDate(dateFinish);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            jobsApplicationService.update(updatedJob);
-            return "redirect:/jobsApplication/list" ;//redirect:轉回到頁面
+        //以下遇到時間的設定就用此寫法
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dateFinish = formatter.parse(date);
+            updatedJob.setJobsApplicationDate(dateFinish);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        jobsApplicationService.update(updatedJob);
+        return "redirect:/jobsApplication/list";//redirect:轉回到頁面
+    }
 
+    @GetMapping(value = "/analysis", produces = "application/json")
+    public ResponseEntity<List<AnalysisDTO>> getJobsCategoryAnalysis() {
+        return ResponseEntity.ok(jobsApplicationService.getApplicationCategoryAnalysis());
+    }
 }

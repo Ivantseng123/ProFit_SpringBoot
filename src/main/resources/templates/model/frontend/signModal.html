@@ -1,6 +1,5 @@
 <!-- Login Modal -->
-<div class="modal fade form-modal" id="login" tabindex="-1"
-	aria-hidden="true">
+<div class="modal fade form-modal" id="login" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog max-width-px-840 position-relative">
 		<button type="button"
 			class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -17,9 +16,8 @@
 						</div>
 						<div class="social-login">
 							<ul>
-								<li><a class="google"
-									href="http://localhost:8080/ProFit/oauth2/authorization/google"><i
-										class="lni lni-google"></i>使用 Google帳戶繼續</a></li>
+								<li><a class="google" href="http://localhost:8080/ProFit/oauth2/authorization/google"><i
+											class="lni lni-google"></i>使用 Google帳戶繼續</a></li>
 							</ul>
 						</div>
 						<div class="or-devider">
@@ -27,27 +25,23 @@
 						</div>
 						<form id="loginForm">
 							<div class="form-group">
-								<label for="email" class="label">E-mail</label> <input
-									type="email" class="form-control"
+								<label for="email" class="label">E-mail</label> <input type="email" class="form-control"
 									placeholder="example@gmail.com" id="email">
 							</div>
 							<div class="form-group">
 								<label for="password" class="label">密碼</label>
 								<div class="position-relative">
-									<input type="password" class="form-control" id="password"
-										placeholder="輸入密碼">
+									<input type="password" class="form-control" id="password" placeholder="輸入密碼">
 								</div>
 								<div id="loginError" class="mt-2"></div>
 							</div>
 							<div class="form-group d-flex flex-wrap justify-content-between">
 								<!-- Default checkbox -->
 								<div class="form-check">
-									<input class="form-check-input" type="checkbox" value=""
-										id="flexCheckDefault" /> <label class="form-check-label"
-										for="flexCheckDefault">記住密碼</label>
+									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+									<label class="form-check-label" for="flexCheckDefault">記住密碼</label>
 								</div>
-								<a class="font-size-3 text-dodger line-height-reset"
-									id="forgetPwdbtn">忘記密碼？</a>
+								<a class="font-size-3 text-dodger line-height-reset" id="forgetPwdbtn">忘記密碼？</a>
 							</div>
 							<div class="form-group mb-8 button">
 								<button class="btn" type="submit">登入</button>
@@ -59,8 +53,9 @@
 						<div class="mt-3">
 							<button class="btn btn-secondary" type="button" id="oneclick1">一鍵輸入1</button>
 							<button class="btn btn-secondary" type="button" id="oneclick2">一鍵輸入2</button>
-							<button class="btn btn-secondary ml-5" type="button"
-								id="oneclick3">一鍵輸入3</button>
+							<button class="btn btn-secondary" type="button" id="oneclick3">資展</button>
+							<button class="btn btn-secondary" type="button" id="oneclick4">蓋瑞
+							</button>
 						</div>
 					</div>
 				</div>
@@ -71,8 +66,7 @@
 <!-- End Login Modal -->
 
 <!-- Signup Modal -->
-<div class="modal fade form-modal" id="signup" tabindex="-1"
-	aria-hidden="true">
+<div class="modal fade form-modal" id="signup" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog max-width-px-840 position-relative">
 		<button type="button"
 			class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -89,9 +83,8 @@
 						</div>
 						<div class="social-login">
 							<ul>
-								<li><a class="google"
-									href="http://localhost:8080/ProFit/oauth2/authorization/google"><i
-										class="lni lni-google"></i>使用Google帳戶繼續</a></li>
+								<li><a class="google" href="http://localhost:8080/ProFit/oauth2/authorization/google"><i
+											class="lni lni-google"></i>使用Google帳戶繼續</a></li>
 							</ul>
 						</div>
 						<div class="or-devider">
@@ -99,45 +92,39 @@
 						</div>
 						<form id="signUpForm">
 							<div class="form-group">
-								<label for="user_name" class="label">名稱</label> <input
-									type="text" class="form-control" placeholder="輸入稱呼"
-									id="user_name" name="userName" required>
+								<label for="user_name" class="label">名稱</label> <input type="text" class="form-control"
+									placeholder="輸入稱呼" id="user_name" name="userName" required>
 							</div>
 							<div class="form-group">
-								<label for="email" class="label">E-mail</label> <input
-									type="email" class="form-control"
-									placeholder="example@gmail.com" id="email_register"
-									name="userEmail" required
+								<label for="email" class="label">E-mail</label> <input type="email" class="form-control"
+									placeholder="example@gmail.com" id="email_register" name="userEmail" required
 									pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
 							</div>
 							<div id="signUpError" class="mb-1"></div>
 							<div class="form-group">
 								<label for="user_password" class="label">密碼</label>
 								<div class="position-relative">
-									<input type="password" class="form-control" placeholder="輸入密碼"
-										id="user_password" name="userPasswordHash" required>
+									<input type="password" class="form-control" placeholder="輸入密碼" id="user_password"
+										name="userPasswordHash" required>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="password" class="label">確認密碼</label>
 								<div class="position-relative">
-									<input type="password" class="form-control"
-										placeholder="再次輸入密碼" id="ConfirmPassword" required
-										oninput="setCustomValidity('');"
+									<input type="password" class="form-control" placeholder="再次輸入密碼"
+										id="ConfirmPassword" required oninput="setCustomValidity('');"
 										onchange="if(document.getElementById('user_password').value != document.getElementById('ConfirmPassword').value){setCustomValidity('密碼不吻合');}">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="label" for="user_phonenumber">會員手機號碼:</label> <input
-									class="form-control" type="text"
-									placeholder="輸入手機號碼(格式:09XX-000000)" id="user_phonenumber"
-									name="userPhoneNumber" required maxlength="11"
-									pattern="09\d{2}-\d{6}">
+								<label class="label" for="user_phonenumber">會員手機號碼:</label> <input class="form-control"
+									type="text" placeholder="輸入手機號碼(格式:09XX-000000)" id="user_phonenumber"
+									name="userPhoneNumber" required maxlength="11" pattern="09\d{2}-\d{6}">
 
 							</div>
 							<div class="form-group">
-								<label class="label" for="user_city">會員居住城市:</label> <select
-									name="userCity" class="form-select">
+								<label class="label" for="user_city">會員居住城市:</label> <select name="userCity"
+									class="form-select">
 									<option>臺北市</option>
 									<option>新北市</option>
 									<option>基隆市</option>
@@ -177,8 +164,7 @@
 							</div>
 						</form>
 						<div class="mt-3">
-							<button class="btn btn-secondary" type="button"
-								id="oneclick_register">一鍵輸入</button>
+							<button class="btn btn-secondary" type="button" id="oneclick_register">一鍵輸入</button>
 						</div>
 					</div>
 				</div>
@@ -188,8 +174,7 @@
 </div>
 <!-- End Signup Modal -->
 
-<div class="modal fade form-modal" id="forgetPwd" tabindex="-1"
-	aria-hidden="true">
+<div class="modal fade form-modal" id="forgetPwd" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog max-width-px-840 position-relative">
 		<button type="button"
 			class="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
@@ -206,21 +191,18 @@
 						</div>
 						<form id="resetPwdForm">
 							<div class="form-group">
-								<label for="email_resetpwd" class="label mt-3">E-mail</label> <input
-									type="email" class="form-control"
-									placeholder="example@gmail.com" id="email_resetpwd">
+								<label for="email_resetpwd" class="label mt-3">E-mail</label> <input type="email"
+									class="form-control" placeholder="example@gmail.com" id="email_resetpwd">
 							</div>
 							<div class="form-group mb-8 button">
 								<button class="btn" id="submitBtn_resetpwd" type="submit">
-									<span id="spinner_resetpwd"
-										class="spinner-border spinner-border-sm"
+									<span id="spinner_resetpwd" class="spinner-border spinner-border-sm"
 										style="display: none;"></span>確定
 								</button>
 							</div>
 						</form>
 						<div class="mt-3">
-							<button class="btn btn-secondary" type="button"
-								id="oneclick_forgetpwd">一鍵輸入</button>
+							<button class="btn btn-secondary" type="button" id="oneclick_forgetpwd">一鍵輸入</button>
 						</div>
 					</div>
 				</div>

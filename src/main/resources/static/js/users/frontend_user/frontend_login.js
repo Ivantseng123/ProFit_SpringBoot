@@ -112,11 +112,11 @@ function getSession() {
 		})
 		.then(data => {
 
-			console.log(data.userName);
-
 			localStorage.setItem('isLoggedIn', 'true');
 
 			localStorage.setItem('userName', data.userName);
+			
+			localStorage.setItem('userPicture', data.userPictureURL);
 
 			console.log("登入狀態: " + localStorage.getItem('isLoggedIn'));
 
@@ -134,12 +134,16 @@ function initializeAuthButton() {
 	// 模擬用戶登入狀態，這裡用 localStorage 模擬，可根據實際情況修改
 	let isLoggedIn = localStorage.getItem('isLoggedIn');
 	let username = localStorage.getItem('userName'); // 取得 username
+	let userPicture = localStorage.getItem('userPicture'); 
 
 	// 獲取按鈕元素
 	const authButton = document.getElementById('authButton');
 	const authText = document.getElementById('authText');
 	const signupButton = document.getElementById('signupButton');
 	const usernameDisplay = document.getElementById('usernameDisplay');
+	const userPictureDisplay = document.getElementById('userPictureDisplay');
+	
+	console.log('會員頭貼' +userPicture );
 
 	// 根據登入狀態顯示按鈕
 	if (isLoggedIn === 'true') {
@@ -152,6 +156,13 @@ function initializeAuthButton() {
 		signupButton.style.display = 'none';
 		usernameDisplay.textContent = username;
 		usernameDisplay.style.display = 'inline';
+		if(userPicture == "" || userPicture == 'null'){
+			userPictureDisplay.src = "https://firebasestorage.googleapis.com/v0/b/profit-e686b.appspot.com/o/userUpload%2Fdefault_user_picture.png?alt=media&token=dd3a8cfa-1a00-48ac-ba30-1f7bb3d783bd";
+		}else{
+			userPictureDisplay.src = userPicture;
+		}
+		
+		userPictureDisplay.style.display = 'inline';
 	} else {
 		authText.textContent = '登入';
 		authButton.setAttribute('data-target', '#login');
@@ -182,6 +193,7 @@ function logout(event) {
 				localStorage.removeItem('isLoggedIn');
 				localStorage.removeItem('sessionValue');
 				localStorage.removeItem('userName');
+				localStorage.removeItem('userPicture');
 				alert('你已成功登出');
 				getSession();
 				window.location.href = 'http://localhost:8080/ProFit/homepage';
@@ -222,7 +234,7 @@ document.getElementById('resetPwdForm').addEventListener('submit', function(e) {
 	const emailData = {
 		'email': email_resetpwd
 	}
-	
+
 	const submitButton = document.getElementById('submitBtn_resetpwd');
 	const spinner = document.getElementById('spinner_resetpwd');
 	submitButton.disabled = true;
@@ -254,21 +266,35 @@ document.getElementById('resetPwdForm').addEventListener('submit', function(e) {
 
 })
 
-document.getElementById('oneclick1').addEventListener('click',function(){
+document.getElementById('oneclick1').addEventListener('click', function() {
 
 	document.getElementById('email').value = 'profitfordemo@gmail.com';
 	document.getElementById('password').value = 'profit187';
 
 })
 
-document.getElementById('oneclick2').addEventListener('click',function(){
+document.getElementById('oneclick2').addEventListener('click', function() {
 
 	document.getElementById('email').value = 'profitfordemo@gmail.com';
 	document.getElementById('password').value = 'profit1871';
 
 })
 
-document.getElementById('oneclick_register').addEventListener('click',function(){
+document.getElementById('oneclick3').addEventListener('click', function() {
+
+	document.getElementById('email').value = 'eeit187@gmail.com';
+	document.getElementById('password').value = 'EEIT187';
+
+})
+
+document.getElementById('oneclick4').addEventListener('click', function() {
+
+	document.getElementById('email').value = 'gary@gmail.com';
+	document.getElementById('password').value = 'GARY187';
+
+})
+
+document.getElementById('oneclick_register').addEventListener('click', function() {
 
 	document.getElementById('user_name').value = '周餅倫';
 	document.getElementById('email_register').value = 'profitfordemo@gmail.com';
@@ -280,7 +306,7 @@ document.getElementById('oneclick_register').addEventListener('click',function()
 
 })
 
-document.getElementById('oneclick_forgetpwd').addEventListener('click',function(){
+document.getElementById('oneclick_forgetpwd').addEventListener('click', function() {
 
 	document.getElementById('email_resetpwd').value = 'profitfordemo@gmail.com';
 

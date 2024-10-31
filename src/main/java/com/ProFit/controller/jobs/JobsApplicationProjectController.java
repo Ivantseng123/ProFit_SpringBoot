@@ -29,24 +29,25 @@ public class JobsApplicationProjectController {
 
     //查詢全部
     @GetMapping("/list")
-    public String listJobs(Model model){
-        List<JobsApplicationProject> jobsApplicationProjectListList = jobsApplicationProjectService.findAll();
-        model.addAttribute("jobsApplicationProjectListList", jobsApplicationProjectListList);
+    public String listJobsApplicationProjectList(Model model){
+        List<JobsApplicationProject> jobsApplicationProjectList = jobsApplicationProjectService.findAll();
+        model.addAttribute("jobsApplicationProjectList", jobsApplicationProjectList);
         return "jobsVIEW/jobsApplicationProjectList";
     }
 
 
 
-    // 單筆查詢
-    @GetMapping("/find/{id}")
-    public ResponseEntity<JobsApplicationProject> getJobApplicationProject(@PathVariable Integer id) {
-        JobsApplicationProject jobsApplicationProject = jobsApplicationProjectService.findById(id).orElse(null);
-        if (jobsApplicationProject != null) {
-            return ResponseEntity.ok(jobsApplicationProject);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
+//    // 單筆查詢
+//    @GetMapping("/find/{id}")
+//    public ResponseEntity<JobsApplicationProject> getJobApplicationProject(@PathVariable Integer id) {
+//        JobsApplicationProject jobsApplicationProject = jobsApplicationProjectService.findById(id).orElse(null);
+//        if (jobsApplicationProject != null) {
+//            return ResponseEntity.ok(jobsApplicationProject);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
 
     // 刪除
@@ -59,16 +60,20 @@ public class JobsApplicationProjectController {
 
     //導向查看頁面
     @GetMapping("/view/{id}")
-    public String view(@PathVariable("id") Integer id, Model model){
+    public String view(@PathVariable("id") Integer id,
+                       Model model){
         if (id != null) {
             model.addAttribute("jobApplicationProject", jobsApplicationProjectService.findById(id).orElse(null));;
         }
         return "jobsVIEW/jobsApplicationProjectForm";
     }
 
+
+
     //導向更新頁面
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Integer id, Model model){
+    public String edit(@PathVariable("id") Integer id,
+                       Model model){
         if (id != null) {
             model.addAttribute("jobApplicationProject", jobsApplicationProjectService.findById(id).orElse(null));;
         }

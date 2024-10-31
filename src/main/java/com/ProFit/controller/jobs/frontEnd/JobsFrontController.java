@@ -81,7 +81,7 @@ public class JobsFrontController {
         return "jobsVIEW/frontEnd/jobDetails";
     }
 
-    //新增
+    //導向 更新/新增 頁面
     @GetMapping({"/front/jobs/new", "/front/jobs/edit/{id}"})
     public String edit(Model model, @PathVariable Optional<Integer> id){
         Jobs jobs = null;
