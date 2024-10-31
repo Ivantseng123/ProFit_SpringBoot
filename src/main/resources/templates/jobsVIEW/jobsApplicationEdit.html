@@ -5,7 +5,7 @@
       layout:decorate="~{jobsVIEW/layout-static}">
 <head>
     <meta charset="UTF-8">
-    <title>編輯職缺資訊 - ProFit</title>
+    <title>編輯職缺申請資訊 - ProFit</title>
 </head>
 
 <body>
@@ -13,13 +13,12 @@
     <h1 class="mt-4">編輯職缺申請資訊</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a th:href="@{/jobsApplication/list}">職缺申請管理</a></li>
-        <li class="breadcrumb-item active">編輯職缺申請資訊</li>
+        <li class="breadcrumb-item active">相關資訊</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
             <!-- 職缺申請編輯表單 -->
-            <form id="jobApplicationForm" th:action="@{/jobsApplication/update/{id}(id=${jobApplication.jobsApplicationId})}" method="post">
-
+            <form id="jobApplicationForm" th:action="@{/jobsApplication/update/id(id=${jobApplication.jobsApplicationId})}" method="post">
                 <input type="hidden" th:field="${jobApplication.jobsApplicationId}"/>
                 <input type="hidden" name="_method" value="put"/>
 
@@ -28,18 +27,18 @@
                 <!-- 刊登者（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">刊登者</label>
-                    <input type="text" class="form-control" th:value="${jobApplication.jobs.users.userName}" readonly />
+                    <input type="text" class="form-control" th:field="${jobApplication.jobs.users.userName}" readonly />
                 </div>
 
                 <!-- 應徵者（通常不允許編輯） -->
                 <div class="mb-3">
                     <label class="form-label">應徵者</label>
-                    <input type="text" class="form-control" th:value="${jobApplication.applicant.userName}" readonly />
+                    <input type="text" class="form-control" th:field="${jobApplication.applicant.userName}" readonly />
                 </div>
 
 
 
-                <!--  以上th:field 就是包含id=""、name=""、value=""等3個集合體-->
+                <!--  th:field 就是包含id=""、name=""、value=""等3個集合體-->
 
 
 
@@ -47,59 +46,84 @@
                 <!-- 申請日期 -->
                 <div class="mb-3">
                     <label class="form-label">申請日期</label>
-                    <input type="date" class="form-control" th:value="${jobApplication.jobsApplicationDate}" readonly />
+                    <input type="date" class="form-control" name="deadline" th:value="${jobApplication.jobsApplicationDate}" required />
                 </div>
 
 
                 <!-- 職缺狀態 -->
                 <div class="mb-3">
-                    <label class="form-label">職缺申請狀態</label>
-                    <select class="form-control" name="status" th:value="${jobApplication.jobsApplicationStatus}" required>
-                        <option value="0" th:selected="${jobApplication.jobsApplicationStatus == 0}">已投遞受理中</option>
-                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 1}">已錄取</option>
-                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 2}">未錄取</option>
+                    <label class="form-label">職缺狀態</label>
+                    <select class="form-control" th:field="${jobApplication.jobsApplicationStatus}" required>
+                        <option value="0" th:selected="${jobApplication.jobsApplicationStatus == 0}">開放中</option>
+                        <option value="1" th:selected="${jobApplication.jobsApplicationStatus == 1}">已關閉</option>
                     </select>
                 </div>
 
 
 
                 <!-- 提交和取消按鈕 -->
-                <button type="button" class="btn btn-primary" id="saveBtn">保存</button>
+                <button type="submit" class="btn btn-primary">保存更改</button>
                 <a th:href="@{/jobsApplication/list}" class="btn btn-secondary">取消</a>
             </form>
         </div>
     </div>
 </div>
-<script th:inline="javascript" layout:fragment="script" type="text/javascript">
+<script>
+    document.addEventListener('DOMContentLoaded', function() {});
+    //     const jobId = new URLSearchParams(window.location.search).get('id');
+    //
+    //     fetch(`/jobs/update/${jobId}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             document.getElementById('jobsId').value = data.jobsId;
+    //             document.getElementById('jobsTitle').value = data.jobsTitle;
+    //             document.getElementById('jobsUserId').value = data.users.userId;
+    //             document.getElementById('jobsRequiredSkills').value = data.jobsRequiredSkills;
+    //             document.getElementById('jobsPostingDate').value = data.jobsPostingDate;
+    //             document.getElementById('jobsApplicationDeadline').value = data.jobsApplicationDeadline;
+    //             document.getElementById('jobsDescription').value = data.jobsDescription;
+    //             document.getElementById('jobsLocation').value = data.jobsLocation;
+    //             document.getElementById('jobsStatus').value = data.jobsStatus;
+    //             document.getElementById('jobsMaxSalary').value = data.jobsMaxSalary;
+    //             document.getElementById('jobsMinSalary').value = data.jobsMinSalary;
+    //             document.getElementById('jobsWorktime').value = data.jobsWorktime;
+    //             document.getElementById('jobsNumberOfOpenings').value = data.jobsNumberOfOpenings;
+    //         })
+    //         .catch(error => console.error('獲取職缺數據時出錯:', error));
+    //
+    //
+    //
+    //     document.getElementById('jobForm').addEventListener('submit', function(e) {
+    //         e.preventDefault();
+    //         const formData = new FormData(this);
+    //         const jobData = Object.fromEntries(formData.entries());
+    //
+    //         fetch('/jobs/update/${jobId}', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify(jobData),
+    //         })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 alert('職缺資訊已成功更新');
+    //                 window.location.href = '/jobs';
+    //             })
+    //             .catch(error => {
+    //                 console.error('更新職缺資訊時出錯:', error);
+    //                 alert('更新失敗，請稍後再試');
+    //             });
+    //     });
+    // });
+    //
+    // function goBack() {
+    //     window.history.back();
+    // };
 
-    $(document).ready(function () {
-        $('#saveBtn').click(function (e) {
-            e.preventDefault();
-            let timerInterval;
-            Swal.fire({
-                icon: "success",
-                title: "保存成功",
-                html: "即將在 <b></b> 豪秒後跳轉頁面...",
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading();
-                    const timer = Swal.getPopup().querySelector("b");
-                    timerInterval = setInterval(() => {
-                        timer.textContent = `${Swal.getTimerLeft()}`;
-                    }, 100);
-                },
-                willClose: () => {
-                    clearInterval(timerInterval);
-                }
-            }).then((result) => {
-                if (result.dismiss === Swal.DismissReason.timer) {
-                    $('#jobApplicationForm').submit()
-                }
-            })
-        })
 
-    })
+
+
 </script>
 
 </body>

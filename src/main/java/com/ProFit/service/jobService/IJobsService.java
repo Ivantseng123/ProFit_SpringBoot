@@ -2,6 +2,7 @@ package com.ProFit.service.jobService;
 
 
 import com.ProFit.model.bean.jobsBean.Jobs;
+import com.ProFit.model.dto.jobsDTO.AnalysisDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +21,6 @@ public interface IJobsService {
     void delete(Integer jobsId);
 
     Page<Jobs> findAll(Pageable pageable);
+
+    List<AnalysisDTO> getJobsCategoryAnalysis();
 }

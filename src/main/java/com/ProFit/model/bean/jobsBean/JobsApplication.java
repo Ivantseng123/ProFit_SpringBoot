@@ -55,10 +55,9 @@ public class JobsApplication implements java.io.Serializable{
 	  @Column(name = "jobs_application_resume")
 	  private String jobsApplicationResume;
 
-//	@Column(name = "jobs_application_contract)
-//	private String jobsApplicationContract;
 
-	@OneToMany(mappedBy = "jobsApplication")
+	// cascade = CascadeType.ALL會同步更新刪除
+	@OneToMany(mappedBy = "jobsApplication", cascade = CascadeType.ALL)
 	private List<JobsApplicationProject> projects = new ArrayList<>();
 
     //無參建構子
