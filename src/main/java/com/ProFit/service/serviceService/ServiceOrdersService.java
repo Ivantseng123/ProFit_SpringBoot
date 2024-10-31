@@ -1,5 +1,6 @@
 package com.ProFit.service.serviceService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,7 @@ public class ServiceOrdersService {
     @Transactional
     public ServiceOrdersDTO insertServiceOrder(ServiceOrderBean serviceOrder) {
         ServiceOrderBean insertedServiceOrder = serviceOrderRepo.insertServiceOrder(serviceOrder);
+        insertedServiceOrder.setCreatedAt(LocalDateTime.now());
         ServiceOrdersDTO fromEntity = ServiceOrdersDTO.fromEntity(insertedServiceOrder);
         return fromEntity;
     }

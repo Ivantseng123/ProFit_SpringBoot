@@ -301,15 +301,15 @@ function htmlMakerForCategory(allServiceCategoryList) {
     let i = 1;
     allServiceCategoryList.forEach(function (serviceCategory) {
         $('.categorySpace').append(`
-            <div class="col-lg-2 col-md-3 col-12 d-flex justify-content-center align-items-center flex-column border border-primary-subtle pt-3 mb-1 ml-1 rounded border-3">
-                <a href="#" class="single-cat wow fadeInUp"
+            <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column pt-1 mb-2 ">
+                <a href="#" class="border border-primary-subtle rounded border-3 single-cat wow fadeInUp"s style="width: 120px; height: 120px;"
                     data-wow-delay=".2s">
-                    <div class="top-side text-center">
+                    <div class="top-side text-center mt-2">
                         <img class="rounded" style="max-width:50px"
                         src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
-                        <h6 class="categoryId text-center mt-1" data-categoryid="${serviceCategory.majorCategoryId}">${serviceCategory.categoryName}</h6>
+                        <h5 class="categoryId text-center mt-1" data-categoryid="${serviceCategory.majorCategoryId}">${serviceCategory.categoryName}</h5>
                     </div>
-                    <div class="bottom-side text-center mt-2">
+                    <div class="bottom-side text-center mt-1">
                         <span class="available-job">(${serviceCategory.serviceCount}筆)</span>
                     </div>
                 </a>

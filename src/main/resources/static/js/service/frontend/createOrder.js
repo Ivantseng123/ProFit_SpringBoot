@@ -4,35 +4,35 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); // 防止表單默認提交
 
     // 獲取必要的表單數據
-    const serviceApplicationId = document.querySelector('[data-service-application-id]').getAttribute('data-service-application-id');
-    const invoiceType = document.querySelector('input[name="invoiceType"]:checked')?.value;
-    const taxID = document.getElementById('courseOrderTaxID').value || null;
-    const orderRemark = document.getElementById('orderRemark').value;
-    const serviceOrderAmount = parseInt(document.getElementById('subtotal').innerText, 10);
+    let serviceApplicationId = document.querySelector('[data-service-application-id]').getAttribute('data-service-application-id');
+    let invoiceType = document.querySelector('input[name="invoiceType"]:checked')?.value;
+    let taxID = document.getElementById('courseOrderTaxID').value || null;
+    let orderRemark = document.getElementById('orderRemark').value;
+    let serviceOrderAmount = parseInt(document.getElementById('subtotal').innerText, 10);
+    let caseOwnerId = document.getElementById("studentId").getAttribute("data-caseownerid");
+    console.log(caseOwnerId);
 
     if (!invoiceType) {
       alert("請選擇發票類型");
       return;
     }
 
-    console.log(document.getElementById('subtotal'))
-    console.log(serviceApplicationId)
-    console.log(serviceOrderAmount)
 
 
     // 構建發送的數據
-    const data = {
-      // serviceApplicationId: serviceApplicationId,
+    let data = {
+      serviceApplicationId: serviceApplicationId,
+      serviceOrderPayById: caseOwnerId,
       invoiceType: invoiceType,
       taxID: taxID,
       orderRemark: orderRemark,
       paymentMethod: "綠界", // 新增付款方式
       serviceOrderAmount: serviceOrderAmount, // 設定訂單金額
-      status: "Pending" // 初始化狀態
+      status: 'Pending' // 初始化狀態
     };
 
     // 發送 AJAX 請求
-    fetch(`/ProFit/c/serviceApplication/api/order?serviceApplicationId=${serviceApplicationId}`, {
+    fetch(`/ProFit/c/serviceApplication/api/order`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (success) {
           alert("訂單創建成功");
           // 重定向到其他頁面或執行成功後的操作
-          window.location.href = "/transactionVIEW/frontend/allOrder";
+          window.location.href = "/ProFit/allOrder";
         } else {
           alert("訂單創建失敗，請重試");
         }

@@ -27,7 +27,7 @@
             margin-left: auto !important;
         }
 
-        .hero-area.style2 .hero-inner .hero-text {
+        /* .hero-area.style2 .hero-inner .hero-text {
             margin-top: 120px;
         }
 
@@ -60,7 +60,7 @@
 
         .sidebar .widget {
             padding: 20px;
-        }
+        } */
     </style>
 
 </head>
@@ -73,7 +73,7 @@
     <div th:replace="~{model/frontend/headerOtherPage}"></div>
 
 
-    <!-- Start Hero Area -->
+    Start Hero Area
     <section class="hero-area style2">
         <!-- Single Slider -->
         <div class="hero-inner">
@@ -81,7 +81,7 @@
                 <div class="single-slider">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-8 co-12">
+                            <div class="col-lg-6 co-12">
                                 <div class="inner-content" style="padding-left: 30px;">
                                     <div class="hero-text">
                                         <h1 class="wow fadeInUp" data-wow-delay=".3s">尋找需要的專業類別</h1>
@@ -223,9 +223,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 co-12">
+                            <div class="col-lg-6 co-12">
                                 <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
-                                    <img th:src="@{/images/hero/banner.png}" style="width: 300px;" alt="#">
+                                    <img th:src="@{/images/hero/banner.png}" alt="#">
                                 </div>
                             </div>
                         </div>
@@ -385,6 +385,7 @@
     <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
     <script src="https://kit.fontawesome.com/7a67949f06.js" crossorigin="anonymous"></script>
     <script>
+
         //======== Home Slider
         var slider = new tns({
             container: '.home-slider',

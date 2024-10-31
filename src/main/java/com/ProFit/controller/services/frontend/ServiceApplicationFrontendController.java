@@ -354,11 +354,10 @@ public class ServiceApplicationFrontendController {
   @PostMapping("/api/order")
   @ResponseBody
   public ResponseEntity<Boolean> postMethodName(
-      @RequestParam(value = "serviceApplicationId") Integer serviceApplicationId,
       @RequestBody ServiceOrderBean serviceOrder, HttpSession session) {
 
     System.out.println("Service Order Amount: " + serviceOrder.getServiceOrderAmount());
-    System.out.println(serviceApplicationId);
+    System.out.println(serviceOrder.getServiceApplicationId());
 
     // 檢查必要欄位
     if (serviceOrder.getServiceOrderAmount() == null) {
@@ -374,7 +373,7 @@ public class ServiceApplicationFrontendController {
     try {
       ServiceOrdersDTO insertServiceOrder = serviceOrdersService.insertServiceOrder(serviceOrder);
       if (insertServiceOrder != null) {
-        serviceApplicationService.updateStatus(serviceApplicationId, 5);
+        serviceApplicationService.updateStatus(serviceOrder.getServiceApplicationId(), 5);
       }
       return ResponseEntity.ok(true);
     } catch (Exception e) {
