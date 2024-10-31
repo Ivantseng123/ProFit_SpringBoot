@@ -34,7 +34,7 @@ public class EventControllerF {
     public String listEvents(Model model) {
         List<MajorDTO> majors = majorService.findAllMajors();
         model.addAttribute("majors", majors);
-        return "eventsVIEW/backend/events";
+        return "eventsVIEW/frontend/eventsF";
     }
 
     // 新增活動
@@ -44,7 +44,7 @@ public class EventControllerF {
         List<MajorDTO> majors = majorService.findAllMajors();
         model.addAttribute("majors", majors);
         model.addAttribute("event", event);
-        return "eventsVIEW/backend/eventForm";
+        return "eventsVIEW/frontend/eventsFormF";
     }
 
     // 編輯活動
@@ -55,7 +55,7 @@ public class EventControllerF {
         List<MajorDTO> majors = majorService.findAllMajors();
         model.addAttribute("majors", majors);
         model.addAttribute("event", event);
-        return "eventsVIEW/backend/eventForm";
+        return "eventsVIEW/frontend/eventsFormF";
     }
 
     // 檢視活動
@@ -66,7 +66,7 @@ public class EventControllerF {
         List<MajorDTO> majors = majorService.findAllMajors();
         model.addAttribute("majors", majors);
         model.addAttribute("event", event);
-        return "eventsVIEW/backend/eventForm";
+        return "eventsVIEW/frontend/eventsFormF";
     }
 
     // 搜尋活動
@@ -98,7 +98,7 @@ public class EventControllerF {
     @GetMapping("/delete")
     public String deleteEvent(@RequestParam String eventId) {
         eventsService.deleteEvent(eventId);
-        return "redirect:/events";
+        return "redirect:/f/events";
     }
 
     // 儲存活動
@@ -106,6 +106,6 @@ public class EventControllerF {
     public ResponseEntity<String> saveEvent(@RequestBody EventsDTO eventsDTO) {
         EventsBean event = eventsService.convertToBean(eventsDTO);
         eventsService.saveEvent(event);
-        return ResponseEntity.ok("/ProFit/events");
+        return ResponseEntity.ok("/ProFit/f/events");
     }
 }
