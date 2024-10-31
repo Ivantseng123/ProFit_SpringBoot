@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ProFit.model.bean.servicesBean.ServiceOrderBean;
 import com.ProFit.model.dao.servicesCRUD.ServiceOrderRepository;
@@ -38,13 +39,20 @@ public class ServiceOrdersService {
                 .map(ServiceOrdersDTO::fromEntity)
                 .collect(Collectors.toList());
     }
-    
-    //獲得getServiceOrdersByPayByUserId 在前台呈現
+
+    // 獲得getServiceOrdersByPayByUserId 在前台呈現
     public List<ServiceOrdersDTO> getServiceOrdersByPayByUserId(Integer userId) {
         List<ServiceOrderBean> orders = serviceOrderRepo.findByServiceOrderPayById(userId);
         return orders.stream()
-                     .map(order -> new ServiceOrdersDTO(order))
-                     .collect(Collectors.toList());
+                .map(order -> new ServiceOrdersDTO(order))
+                .collect(Collectors.toList());
     }
 
+    // 新增訂單
+    @Transactional
+    public ServiceOrdersDTO insertServiceOrder(ServiceOrderBean serviceOrder) {
+        ServiceOrderBean insertedServiceOrder = serviceOrderRepo.insertServiceOrder(serviceOrder);
+        ServiceOrdersDTO fromEntity = ServiceOrdersDTO.fromEntity(insertedServiceOrder);
+        return fromEntity;
+    }
 }
