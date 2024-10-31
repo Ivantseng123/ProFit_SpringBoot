@@ -78,7 +78,7 @@ public class CourseModuleService implements IcourseModuleService {
 	@Override
 	public List<CourseModuleDTO> searchCourseModules(String courseId) {
 
-		List<CourseModuleBean> searchCourseModules = hcourseModuleDao.searchCourseModules(courseId);
+		List<CourseModuleBean> searchCourseModules = courseModuleRepo.findByCourse_CourseId(courseId);
 
 		List<CourseModuleDTO> courseModulesDTO = searchCourseModules.stream().map(CourseModuleDTO::new)
 				.collect(Collectors.toList());
