@@ -154,7 +154,7 @@
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <form class="form-ad mt-4">
-                                    <div class="text-center mb-3">
+                                    <div class="text-center mb-3 moduleNameSpace">
                                         <a id="addNewModule" class="btn btn-warning btn-sm">新增章節</a>
                                     </div>
                                     <table class="table">
@@ -189,7 +189,7 @@
                             </div>
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <form class="form-ad mt-4">
-                                    <h4 class="text-center mb-3">目前章節名稱: </h4>
+                                    <h4 class="text-center mb-3 moduleName">目前章節名稱: </h4>
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -201,23 +201,21 @@
                                                 <th class="text-center" style="width: 15%;" scope="col">操作</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="lessonTableBody">
                                             <tr>
                                                 <td>
                                                     <input type="text" class="form-control" id="courseLessonSort"
-                                                        name="courseLessonSort" required>
+                                                        required>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" id="courseLessonName"
-                                                        name="courseLessonName" required>
+                                                        required>
                                                 </td>
                                                 <td>
-                                                    <input type="file" class="form-control" id="lessonMedia"
-                                                        name="lessonMedia"></input>
+                                                    <input type="file" class="form-control" id="lessonMedia"></input>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control" id="lessonMediaType"
-                                                        name="lessonMediaType" required>
+                                                    <select class="form-control" id="lessonMediaType" required>
                                                         <option value="" disabled selected>請選擇</option>
                                                         <option value="Video">影片</option>
                                                         <option value="File">檔案</option>
@@ -225,16 +223,21 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="number" id="mediaDuration"
-                                                        name="mediaDuration">
+                                                    <input class="form-control" type="number" id="mediaDuration">
                                                 </td>
                                                 <td class="text-center">
-                                                    <a type="button" class="btn btn-primary btn-sm">保存</a>
-                                                    <a type="button" class="btn btn-danger btn-sm">刪除</a>
+                                                    <a type="button" class="btn btn-primary btn-sm saveLessonBtn">保存</a>
+                                                    <a type="button"
+                                                        class="btn btn-danger btn-sm deleteLessonBtn">刪除</a>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <a class="btn btn-secondary btn-sm" id="backToStep2">上一步:課程章節</a>
+                                        <a href="/ProFit/user/profile?clickCourse=true" id="confirmApply"
+                                            class="btn btn-success btn-sm">送出申請</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>

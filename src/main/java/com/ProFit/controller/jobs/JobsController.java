@@ -2,11 +2,10 @@ package com.ProFit.controller.jobs;
 
 import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.usersBean.Users;
+import com.ProFit.model.dto.jobsDTO.AnalysisDTO;
 import com.ProFit.service.jobService.IJobsService;
 import com.ProFit.service.majorService.IMajorCategoryService;
 import com.ProFit.service.userService.IUserService;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -280,5 +279,9 @@ public class JobsController {
 //        jobsService.update(jobs);
 //        return "redirect:all";
 
+    @GetMapping(value = "/jobsCategoryAnalysis", produces = "application/json")
+    public ResponseEntity<List<AnalysisDTO>> getJobsCategoryAnalysis(){
+        return ResponseEntity.ok(jobsService.getJobsCategoryAnalysis());
+    }
 }
 

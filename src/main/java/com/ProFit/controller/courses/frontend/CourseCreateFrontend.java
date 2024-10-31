@@ -15,20 +15,35 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ProFit.model.bean.coursesBean.CourseBean;
+import com.ProFit.model.bean.coursesBean.CourseLessonBean;
 import com.ProFit.model.bean.coursesBean.CourseModuleBean;
+import com.ProFit.model.dto.coursesDTO.CourseLessonDTO;
+import com.ProFit.model.dto.coursesDTO.CourseModuleDTO;
+import com.ProFit.model.dto.coursesDTO.CourseModuleDTOFrontend;
+import com.ProFit.model.dto.coursesDTO.CoursesDTO;
+import com.ProFit.service.courseService.IcourseLessonService;
+import com.ProFit.service.courseService.IcourseModuleService;
 import com.ProFit.service.courseService.IcourseService;
 import com.ProFit.service.utilsService.FirebaseStorageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.internal.FirebaseService;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class CourseCreateFrontend {
 
     @Autowired
     public IcourseService courseService;
+
+    @Autowired
+    public IcourseModuleService courseModuleService;
+
+    @Autowired
+    public IcourseLessonService courseLessonService;
 
     @Autowired
     public FirebaseStorageService firebaseStorageService;
@@ -42,7 +57,7 @@ public class CourseCreateFrontend {
      * @return 插入後的 CourseBean 對象
      */
     @PostMapping("/course/create")
-    public ResponseEntity<Map<String, String>> insertCourse(
+    public ResponseEntity<Map<String, Object>> insertCourse(
             @ModelAttribute CourseBean courseBean,
             @RequestParam(required = false) List<String> courseModuleNames,
             @RequestPart(required = false) MultipartFile courseCoverPicture) {
@@ -75,14 +90,68 @@ public class CourseCreateFrontend {
                 System.out.println("沒有module");
             }
             System.out.println(insertedCourse.getCourseId());
-            // 返回 JSON
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "OK");
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("insertedCourseId", insertedCourse.getCourseId());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/course/returnCreatedCourse")
+    @ResponseBody
+    public Map<String, Object> returnCreatedCourse(@RequestParam String courseId) {
+
+        CoursesDTO insertedCourseDTO = courseService.searchOneCourseById(courseId);
+
+        List<CourseModuleDTOFrontend> insertedCourseModuleList = courseModuleService
+                .searchCourseModulesFrontend(courseId);
+
+        Map<String, Object> insertedCourseMap = new HashMap<String, Object>();
+
+        insertedCourseMap.put("insertedCourseDTO", insertedCourseDTO);
+        insertedCourseMap.put("insertedCourseModuleList", insertedCourseModuleList);
+
+        return insertedCourseMap;
+    }
+
+    @PostMapping("/courseLesson/insert")
+    public ResponseEntity<Map<String, String>> createCourseLesson(
+            @ModelAttribute CourseLessonBean courseLesson,
+            @RequestPart(required = false) MultipartFile lessonMedia) {
+
+        try {
+            if (lessonMedia != null && !lessonMedia.isEmpty()) {
+                String uploadFileURL = firebaseStorageService.uploadFile(lessonMedia);
+                courseLesson.setLessonMediaUrl(uploadFileURL);
+            } else {
+                courseLesson.setLessonMediaUrl(null);
+            }
+
+            if (courseLesson != null) {
+                CourseLessonBean insertedCourseLesson = courseLessonService.insertCourseLesson(courseLesson);
+            }
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "ok");
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping("/courseLesson/searchByModuleId")
+    @ResponseBody
+    public List<CourseLessonDTO> searchByModuleId(@RequestParam Integer courseModuleId) {
+
+        List<CourseLessonDTO> moduleLessonList = courseLessonService.searchCourseLessons(courseModuleId);
+
+        return moduleLessonList;
     }
 
 }

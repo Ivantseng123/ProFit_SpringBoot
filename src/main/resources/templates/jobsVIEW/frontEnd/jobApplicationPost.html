@@ -73,7 +73,7 @@
                             </div>
                             <div>
                                 <div class="col-lg-12 button">
-                                    <button class="btn" type="submit">
+                                    <button class="btn" id="hire" type="submit">
                                         送出申請
                                     </button>
                                 </div>
@@ -86,9 +86,17 @@
     </section>
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
-    // $(document).ready(function (){
-    //
-    // });
+    $(document).ready(function (){
+        $('#hire').click(function (e){
+            Swal.fire({//Swal.fire呼叫api的寫法
+                icon: "success",
+                title: "應徵成功",
+                showConfirmButton: true,
+            }).then(() => {
+                $("#editForm").submit();
+            });
+        })
+    });
 </script>
 </body>
 </html>
