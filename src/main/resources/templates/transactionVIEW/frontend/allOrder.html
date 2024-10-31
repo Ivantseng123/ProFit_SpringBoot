@@ -69,7 +69,88 @@ body {
 </style>
 </head>
 <body>
-
+	
+	<section class="hero-area style2">
+    <!-- Single Slider -->
+    <div class="hero-inner">
+        <div class="home-slider">
+            <div class="single-slider">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7 co-12">
+                            <div class="inner-content" style="padding-left: 30px;">
+                                <div class="hero-text">
+                                    <h1 class="wow fadeInUp" data-wow-delay=".3s">周東榆-用戶訂單管理與錢包系統</h1>
+                                    <h6>聯絡信箱: dongyuz080@gmail.com</h6>
+                                    <br>
+                                    <div class="row">
+                                            <div class="col-3">
+                                                <h5 class="mb-3 text-primary">1. 訂單管理: </h5>
+                                                <ul>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">獲取所有訂單資訊</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">對訂單進行刪除、完成</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">第三方支付</h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-3">
+                                                <h5 class="mb-3 text-primary">2. 錢包功能: </h5>
+                                                <ul>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">查看用戶餘額</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">用戶取款功能</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">撥款功能</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">後臺放款功能</h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-3">
+                                                <h5 class="mb-3 text-primary">3. 交易紀錄、發票管理: </h5>
+                                                <ul>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">交易紀錄查看資訊</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">開立發票</h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 co-12">
+                            <div class="hero-image wow fadeInRight" data-wow-delay=".5s">
+                                <img th:src="@{/images/hero/banner2.png}" alt="banner2 image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Single Slider -->
+</section>
 	<!-- 引入頁頭 -->
 	<div th:replace="~{model/frontend/headerOtherPage}"></div>
 
@@ -191,6 +272,7 @@ body {
 	<script th:src="@{/js/frontend/bootstrap.min.js}"></script>
 	<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 	<script th:src="@{/js/frontend/main.js}"></script>
+	<script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
 
 	<!-- JavaScript 點擊事件 -->
 <script>
