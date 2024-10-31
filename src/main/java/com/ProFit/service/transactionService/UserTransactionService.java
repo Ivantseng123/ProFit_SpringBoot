@@ -114,17 +114,19 @@ public class UserTransactionService {
 
 	// 插入交易
 	public void insertTransaction(UserTransactionDTO transactionDTO) {
-	    // 查詢是否已存在相同的交易記錄
-	    Optional<UserTransactionBean> existingTransaction = transactionRepository
-	        .findByOrderIdAndUserIdAndTransactionType(
-	            transactionDTO.getOrderId(),
-	            transactionDTO.getUserId(),
-	            transactionDTO.getTransactionType()
-	        );
+	    // 檢查是否已存在相同的交易記錄
+	    if (!"withdrawal".equals(transactionDTO.getTransactionType())) {
+	        Optional<UserTransactionBean> existingTransaction = transactionRepository
+	            .findByOrderIdAndUserIdAndTransactionType(
+	                transactionDTO.getOrderId(),
+	                transactionDTO.getUserId(),
+	                transactionDTO.getTransactionType()
+	            );
 
-	    // 如果交易已經存在，則直接返回，避免重複執行
-	    if (existingTransaction.isPresent()) {
-	        return;
+	        // 如果已存在相同的交易，則返回
+	        if (existingTransaction.isPresent()) {
+	            return;
+	        }
 	    }
 
 	    double platformFee = 0; // 預設平台費用為0
@@ -137,11 +139,19 @@ public class UserTransactionService {
 	    // 設定目標收入
 	    double targetIncome = transactionDTO.getTotalAmount() - platformFee;
 
-	    UserTransactionBean transaction = new UserTransactionBean(transactionDTO.getUserId(),
-	        transactionDTO.getTransactionRole(), transactionDTO.getTransactionType(), transactionDTO.getOrderId(),
-	        transactionDTO.getOrderType(), transactionDTO.getTotalAmount(), platformFee, targetIncome, // 這裡設置目標收入
-	        transactionDTO.getTransactionStatus(), transactionDTO.getPaymentMethod(),
-	        transactionDTO.getReferenceId());
+	    UserTransactionBean transaction = new UserTransactionBean(
+	        transactionDTO.getUserId(),
+	        transactionDTO.getTransactionRole(),
+	        transactionDTO.getTransactionType(),
+	        transactionDTO.getOrderId(),
+	        transactionDTO.getOrderType(),
+	        transactionDTO.getTotalAmount(),
+	        platformFee,
+	        targetIncome,
+	        transactionDTO.getTransactionStatus(),
+	        transactionDTO.getPaymentMethod(),
+	        transactionDTO.getReferenceId()
+	    );
 
 	    if ("completed".equals(transactionDTO.getTransactionStatus())) {
 	        transaction.setCompletionAt(LocalDateTime.now());
@@ -150,26 +160,31 @@ public class UserTransactionService {
 	    // 更新用戶餘額
 	    Users user = userService.getUserInfoByID(transactionDTO.getUserId());
 	    if (user != null) {
-	        // 根據交易類型調整餘額
-	        double target_income = transaction.getTargetIncome(); // 使用交易的target_income
+	        double target_income = transaction.getTargetIncome();
 
 	        if ("deposit".equals(transactionDTO.getTransactionType())) {
-	            user.setUserBalance((int) (user.getUserBalance() + target_income)); // 轉換為整數
+	            user.setUserBalance((int) (user.getUserBalance() + target_income));
 	        } else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
-	            user.setUserBalance((int) (user.getUserBalance() - target_income)); // 轉換為整數
+	            user.setUserBalance((int) (user.getUserBalance() - target_income));
 	        }
 
 	        // 保存更新後的用戶信息
 	        userService.updateUserBalance(user);
 	    }
 
-	    // 保存交易
-	    transactionRepository.save(transaction);
+	    // 保存交易到資料庫
+	    try {
+	        transactionRepository.save(transaction);
+	        System.out.println("成功插入一筆交易記錄, 交易ID: " + transaction.getTransactionId());
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("保存交易失敗: " + e.getMessage());
+	    }
 
-	    // 檢查交易類型是否為 'payment'，並生成發票
+	    // 如果交易類型為 'payment'，生成發票
 	    if ("payment".equals(transactionDTO.getTransactionType())) {
-	        transactionDTO.setTransactionId(transaction.getTransactionId()); // 保存後獲取交易ID
-	        generateInvoice(transactionDTO); // 傳入 transactionDTO 時已經有交易ID
+	        transactionDTO.setTransactionId(transaction.getTransactionId());
+	        generateInvoice(transactionDTO);
 	    }
 	}
 
