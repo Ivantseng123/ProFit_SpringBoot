@@ -19,12 +19,12 @@
                 <li><a href="#" id="serviceCenter"><i class="lni lni-book"></i>我的服務</a></li>
 
                 <li><a href="#" id="serviceApplicationCenter"><i class="lni lni-book"></i>委託管理</a></li>
-                <th:block th:if="${user != null and user.userIdentity == 2}">
+                <th:block th:if="${session.CurrentUser != null and session.CurrentUser.userIdentity == 2}">
                     <li class="heading">職缺管理</li>
                     <li><a th:href="@{/front/profile/applicationsReturn/0}"><i class="lni lni-bookmark"></i>管理職缺申請</a></li>
-                    <li><a th:href="@{/}"><i class="lni lni-envelope"></i>管理發布職缺</a></li>
+<!--                    <li><a th:href="@{/}"><i class="lni lni-envelope"></i>管理發布職缺</a></li>-->
                 </th:block>
-                <th:block th:if="${user != null and (user.userIdentity == 1 or user.userIdentity == 2)}">
+                <th:block th:if="${session.CurrentUser != null and (session.CurrentUser.userIdentity == 2 or session.CurrentUser.userIdentity == 1)}">
                     <li class="heading">管理應徵</li>
                     <li><a th:href="@{/}"><i class="lni lni-bookmark"></i>我的應徵紀錄</a></li>
                 </th:block>

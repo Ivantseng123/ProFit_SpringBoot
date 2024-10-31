@@ -15,7 +15,7 @@
           <div class="col-lg-5 col-md-5">
             <div class="title-img">
               <div class="can-img">
-                <img src="assets/images/jobs/manage-job1.png" alt="#">
+                <img th:src="@{/images/jobs/img7.png}" alt="#">
               </div>
               <h3 th:text="${jobsApplication.jobs.jobsTitle}">Mechanical Engineer <span th:text="jobsApplication.jobs.users.employer_profile.companyName">Conzio construction</span></h3>
             </div>
@@ -28,9 +28,12 @@
           </div>
           <div class="col-lg-2 col-md-2">
             <p th:if="${jobsApplication.jobsApplicationStatus == 0}">已投遞受理</p>
-            <p th:if="${jobsApplication.jobsApplicationStatus == 1}">已錄取</p>
-            <p th:if="${jobsApplication.jobsApplicationStatus == 2}">未錄取</p>
-            <p th:if="${jobsApplication.jobsApplicationStatus == 3}">已取消</p>
+            <th:block th:if="${jobsApplication.jobsApplicationStatus == 1}">
+              <button class="btn btn-success btn-sm" id="hire" data-bs-toggle="modal" data-bs-target="#exampleModal">已錄取</button>
+              <a class="btn btn-warning btn-sm" id="download" data-bs-toggle="modal" data-bs-target="#exampleModal" th:href="@{|/front/profile/download/${jobsApplication.jobsApplicationId}|}">下載正式合約</a>
+            </th:block>
+            <span class="badge rounded-pill bg-danger" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 2}">未錄取</span>
+            <span class="badge rounded-pill bg-info" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 3}">已取消</span>
           </div>
         </div>
       </div>

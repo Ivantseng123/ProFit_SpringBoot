@@ -1,6 +1,5 @@
 package com.ProFit.controller.jobs.frontEnd;
 
-import com.ProFit.model.bean.jobsBean.Jobs;
 import com.ProFit.model.bean.jobsBean.JobsApplication;
 import com.ProFit.model.bean.jobsBean.JobsApplicationProject;
 import com.ProFit.model.bean.usersBean.Users;
@@ -12,6 +11,8 @@ import com.ProFit.service.majorService.IMajorCategoryService;
 import com.ProFit.service.userService.IUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,10 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -100,20 +98,25 @@ public class JobsProfileController {
     }
 
     //拒絕應徵
-    @GetMapping("/applicationFire/{id}")
+    @PutMapping("/applicationFire/{id}")
     public ResponseEntity<?> fire(HttpSession session, @PathVariable Integer id, Model model) {
         UsersDTO user = (UsersDTO) session.getAttribute("CurrentUser");
         JobsApplication jobsApplication = jobsApplicationService.findById(id).orElse(null);
-        if (jobsApplication != null && user.getUserIdentity() == 2 && jobsApplication.getJobs().getUsers().getUserId() == user.getUserId()){
+        if (jobsApplication != null && user.getUserIdentity() == 2){
             jobsApplication.setJobsApplicationStatus((byte)2);
+            JobsApplicationProject project = new JobsApplicationProject();
+            project.setJobsApplication(jobsApplication);
+            project.setJobsApplicationStatus((byte)2);
+            jobsApplication.getProjects().add(project);
+
             jobsApplicationService.update(jobsApplication);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(401).build();
     }
 
-    //拒絕應徵
-    @GetMapping("/applicationHire/{id}")
+    //邀約合作
+    @PostMapping("/applicationHire/{id}")
     public String hire(HttpSession session, @PathVariable Integer id,
                        @RequestParam("doc") MultipartFile file, @RequestParam("amount") Integer amount, Model model) {
         JobsApplication jobsApplication = jobsApplicationService.findById(id).orElse(null);
@@ -122,6 +125,7 @@ public class JobsProfileController {
                 //此為抓登入者id
                 UsersDTO usersDTO = (UsersDTO) session.getAttribute("CurrentUser");
                 Users user = userService.getUserInfoByID(usersDTO.getUserId());
+
                 JobsApplicationProject project = new JobsApplicationProject();
                 project.setJobsApplication(jobsApplication);
 
@@ -135,7 +139,7 @@ public class JobsProfileController {
                 Files.createDirectories(uploadPath);
 
                 // 生成唯一文件名
-                String fileName = UUID.randomUUID() + ".docx";
+                String fileName = UUID.randomUUID() + ".doc";
                 Path filePath = uploadPath.resolve(fileName);
 
                 // 保存文件
@@ -143,11 +147,16 @@ public class JobsProfileController {
                 //============上傳履歷============
 
                 project.setJobsContract(fileName);
+
+                //處理狀態
+                jobsApplication.setJobsApplicationStatus((byte)1);
+                project.setJobsApplicationStatus((byte)1);
+                project.setJobsAmount(amount);
+
                 List<JobsApplicationProject> projects = new ArrayList<>();
                 projects.add(project);
                 jobsApplication.setProjects(projects);
 
-                jobsApplicationService.save(jobsApplication);
             } catch (IOException ignore) {
             }
 
@@ -155,6 +164,27 @@ public class JobsProfileController {
         }
 
         return "redirect:/front/profile/applicationsReturn/0";
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Integer id) {
+        try {
+            JobsApplication jobsApplication = jobsApplicationService.findById(id)
+                    .orElseThrow(() -> new RuntimeException("找不到記錄"));
+
+            String fileName = jobsApplication.getProjects().get(0).getJobsContract();
+            String projectPath = new File("").getAbsolutePath();
+            Path filePath = Paths.get(projectPath, CONTRACT_DIR, fileName);
+
+            Resource resource = new FileSystemResource(filePath.toFile());
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/preview/{id}")
@@ -177,7 +207,7 @@ public class JobsProfileController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.add("Content-Disposition", "inline; filename=" + fileName);
-
+            headers.add("X-Frame-Options", "SAMEORIGIN");
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(content);
@@ -186,11 +216,11 @@ public class JobsProfileController {
         }
     }
 
-    @GetMapping("/getJobs/{id}")
+    @GetMapping(value = "/getJobs/{id}", produces = "application/json")
     public ResponseEntity<?> getJobs(HttpSession session, @PathVariable Integer id, Model model) {
         JobsApplication jobsApplication = jobsApplicationService.findById(id).orElse(null);
         if (jobsApplication != null){
-           return ResponseEntity.ok(jobsApplication.getJobs());
+           return ResponseEntity.ok(jobsApplication.getJobs().getJobsTitle());
         }
         return ResponseEntity.badRequest().build();
     }

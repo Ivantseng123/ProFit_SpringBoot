@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import com.ProFit.security.oauth.MemberOAuth2SuccessHandler;
 import com.ProFit.security.oauth.MemeberOAuth2UserService;
@@ -32,7 +33,10 @@ public class SecurityConfig {
 //		}).build();
 
 
-		http.csrf(csrf -> csrf.disable())
+		http
+				.headers(headers -> headers
+						.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> authorize.requestMatchers("/**").permitAll())
 				.oauth2Login(oauth2 -> oauth2.loginPage("/oauth2/authorization/google") // 使用 Google OAuth2 登入
 						.userInfoEndpoint(userInfo -> userInfo.userService(memberOAuth2UserService) // 使用自定義的OAuth2UserService

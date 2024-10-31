@@ -107,7 +107,7 @@ function htmlMakerForCourses(coursesMap) {
                 statusText = '審核中';
                 break;
             case 'Closed':
-                statusText = '已關閉';
+                statusText = '未通過';
                 break;
             default:
                 statusText = coursesDTO.courseStatus;
@@ -128,7 +128,7 @@ function htmlMakerForCourses(coursesMap) {
                     <span class="mb-0">審核: ${statusText}</span>
                 </div>
                 <div class="col-md-2 text-center d-flex flex-column align-items-center justify-content-center">
-                    <a href="/ProFit/course/${coursesDTO.courseId}" class="btn btn-success btn-sm" ${viewButtonDisabled}>查看課程</a>
+                    <a href="/ProFit/course/${coursesDTO.courseId}" class="btn btn-success btn-sm ${viewButtonDisabled}">查看課程</a>
                 </div>
             </div>
         `);

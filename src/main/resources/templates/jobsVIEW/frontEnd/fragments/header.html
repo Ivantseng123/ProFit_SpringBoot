@@ -42,7 +42,7 @@
                                         <li><a href="#">瀏覽分類</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item"><a href="#">我是雇主</a>
+                                <li class="nav-item" th:if="${session.CurrentUser != null and session.CurrentUser.userIdentity == 2}"><a href="#">我是雇主</a>
                                     <ul class="sub-menu">
                                         <li><a th:href="@{/front/jobs/new}">刊登職缺</a></li>
                                         <li><a href="#">管理職位</a></li>
