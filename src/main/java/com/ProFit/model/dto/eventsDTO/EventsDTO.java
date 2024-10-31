@@ -8,6 +8,8 @@ public class EventsDTO {
 	private int isEventActive;
 	private int eventCategory;
 	private int eventMajorId;
+	private int eventMajorCategoryId;
+	private String eventMajorCategoryName;	
 	private LocalDateTime eventPublishDate;
 	private LocalDateTime eventStartDate;
 	private LocalDateTime eventEndDate;
@@ -32,6 +34,31 @@ public class EventsDTO {
 		this.isEventActive = isEventActive;
 		this.eventCategory = eventCategory;
 		this.eventMajorId = eventMajorId;
+		this.eventPublishDate = eventPublishDate;
+		this.eventStartDate = eventStartDate;
+		this.eventEndDate = eventEndDate;
+		this.eventPartStartDate = eventPartStartDate;
+		this.eventPartEndDate = eventPartEndDate;
+		this.eventAmount = eventAmount;
+		this.eventLocation = eventLocation;
+		this.eventParticipantMaximum = eventParticipantMaximum;
+		this.eventDescription = eventDescription;
+		this.eventNote = eventNote;
+	}
+
+	public EventsDTO(String eventId, String eventName, int isEventActive, int eventCategory, int eventMajorId,
+			int eventMajorCategoryId, String eventMajorCategoryName, LocalDateTime eventPublishDate,
+			LocalDateTime eventStartDate, LocalDateTime eventEndDate, LocalDateTime eventPartStartDate,
+			LocalDateTime eventPartEndDate, int eventAmount, String eventLocation, int eventParticipantMaximum,
+			String eventDescription, String eventNote) {
+		super();
+		this.eventId = eventId;
+		this.eventName = eventName;
+		this.isEventActive = isEventActive;
+		this.eventCategory = eventCategory;
+		this.eventMajorId = eventMajorId;
+		this.eventMajorCategoryId = eventMajorCategoryId;
+		this.eventMajorCategoryName = eventMajorCategoryName;
 		this.eventPublishDate = eventPublishDate;
 		this.eventStartDate = eventStartDate;
 		this.eventEndDate = eventEndDate;
@@ -82,6 +109,22 @@ public class EventsDTO {
 
 	public void setEventMajorId(int eventMajorId) {
 		this.eventMajorId = eventMajorId;
+	}
+
+	public int getEventMajorCategoryId() {
+		return eventMajorCategoryId;
+	}
+
+	public void setEventMajorCategoryId(int eventMajorCategoryId) {
+		this.eventMajorCategoryId = eventMajorCategoryId;
+	}
+
+	public String getEventMajorCategoryName() {
+		return eventMajorCategoryName;
+	}
+
+	public void setEventMajorCategoryName(String eventMajorCategoryName) {
+		this.eventMajorCategoryName = eventMajorCategoryName;
 	}
 
 	public LocalDateTime getEventPublishDate() {
