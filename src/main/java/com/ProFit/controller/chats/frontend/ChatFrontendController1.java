@@ -53,7 +53,8 @@ public class ChatFrontendController1 {
 
     // 案主從服務頁面建立(/查)聊天室 (currentUserId, freelancerId, serviceId)
     @GetMapping("/add")
-    public String createOrGetChatRoom(HttpSession session, @RequestParam Integer serviceId, @RequestParam Integer freelancerId, Model model) {
+    public String createOrGetChatRoom(HttpSession session, @RequestParam Integer serviceId,
+            @RequestParam Integer freelancerId, Model model) {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
 
@@ -77,7 +78,7 @@ public class ChatFrontendController1 {
     }
 
     /**
-     * 獲取聊天用戶列表
+     * 獲取聊天用戶列表 (我是案主時)
      */
     @GetMapping("/api/users")
     @ResponseBody
@@ -92,10 +93,26 @@ public class ChatFrontendController1 {
     }
 
     /**
+     * 獲取聊天用戶列表 (我是接案人時, 從我已有的服務獲取聊天用戶)
+     */
+    @GetMapping("/api/users/service/{serviceId}")
+    @ResponseBody
+    public ResponseEntity<List<ChatUserDTO>> getChatUsersFromService(HttpSession session,
+            @PathVariable Integer serviceId) {
+        UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<ChatUserDTO> users = chatService.getCurrentFreelancerChatUserList(currentUser.getUserId(), serviceId);
+        return ResponseEntity.ok(users);
+    }
+
+    /**
      * 獲取用戶的服務列表
      * 
      * @param userId  要查詢的用戶ID
-     * @param session HTTP會話
+     * @param session HTTPsession
      * @return 服務列表
      */
     @GetMapping("/api/user/{userId}/services")

@@ -11,7 +11,7 @@ import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
-//import com.ProFit.service.majorService.IMajorCategoryService;
+import com.ProFit.service.majorService.IMajorCategoryService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,8 +26,8 @@ public class EventControllerF {
     @Autowired
     private IMajorService majorService;
 
-    // @Autowired
-    // private IMajorCategoryService majorCategoryService;
+     @Autowired
+     private IMajorCategoryService majorCategoryService;
 
     // 主頁面，列出所有活動
     @GetMapping

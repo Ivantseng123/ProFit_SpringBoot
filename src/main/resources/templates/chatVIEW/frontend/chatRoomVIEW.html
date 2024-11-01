@@ -52,6 +52,7 @@
             height: 80vh;
             background: #fff;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
         }
 
         /* 左側聊天列表樣式 */
@@ -125,6 +126,7 @@
         .message-content {
             padding: 10px 15px;
             border-radius: 15px;
+            color: black;
             background: #f8f9fa;
             position: relative;
         }
@@ -225,24 +227,22 @@
                                                 id="search-input">
                                         </div> -->
                                         <!-- 標籤頁 -->
-                                        <div>
-                                            <h5>我是:</h5>
-                                        </div>
-                                        <ul class="nav nav-tabs" role="tablist">
-                                            <li class="nav-item"
+
+                                        <ul class="nav nav-tabs" id="applicationTabs" role="tablist">
+                                            <li class="nav-item" role="presentation"
                                                 style="border-left: 1px solid steelblue; border-top: 1px solid steelblue; text-align: center;">
                                                 <a class="nav-link active" id="Open-tab" data-bs-toggle="tab"
-                                                    href="#Open" role="tab">案主</a>
+                                                    href="#Open" role="tab">我是案主</a>
                                             </li>
-                                            <li class="nav-item"
+                                            <li class="nav-item" role="presentation"
                                                 style="border-left: 1px solid steelblue; border-top: 1px solid steelblue; border-right: 1px solid steelblue; text-align: center;">
                                                 <a class="nav-link" id="Closed-tab" data-bs-toggle="tab" href="#Closed"
-                                                    role="tab">接案人</a>
+                                                    role="tab">我是接案人</a>
                                             </li>
                                         </ul>
 
                                         <!-- 標籤頁內容區 -->
-                                        <div class="tab-content">
+                                        <div class="tab-content" id="applicationTabContent">
                                             <div class="tab-pane fade show active" id="Open" role="tabpanel"
                                                 aria-labelledby="Open-tab">
                                                 <!-- 用戶列表容器 -->
@@ -252,7 +252,14 @@
                                             </div>
                                             <div class="tab-pane fade" id="Closed" role="tabpanel"
                                                 aria-labelledby="Closed-tab">
-                                                <p>這是「接案人」的內容。</p>
+
+                                                <div id="freelancer-chat-users-list"
+                                                    class="chat-users-container d-grid gap-2">
+                                                    <!-- 用戶列表會由 JavaScript 動態填充 -->
+                                                    <!-- 先選擇本身有的服務 -->
+                                                    <!-- 再選擇該服務下有聊天室的的用戶 -->
+                                                </div>
+
                                             </div>
                                         </div>
 
@@ -334,8 +341,8 @@
                                         <div class="send-btns mt-2">
                                             <div class="attach">
                                                 <div class="button-wrapper">
-                                                    <a href="" target="_blank">
-                                                        <label class="btn btn-outline-secondary btn-sm">
+                                                    <a id="send-appli-href" href="" target="_blank">
+                                                        <label id="send-appli" class="btn btn-outline-secondary btn-sm">
                                                             發送委託
                                                         </label>
                                                     </a>

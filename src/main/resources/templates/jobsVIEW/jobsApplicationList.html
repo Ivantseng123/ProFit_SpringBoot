@@ -5,18 +5,16 @@
       layout:decorate="~{jobsVIEW/layout-static}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>職缺申請列表</title>
     <link rel="stylesheet" th:href="@{/css/courses/coursesView.css}">
 </head>
 <body>
 <div layout:fragment="content">
     <div class="course-header">
         <h2>職缺申請列表</h2>
-
     </div>
 
     <div class="table-container" id="search-results">
-
         <table id="jobsApplicationList" class="display table table-striped table-hover nowrap">
             <thead>
             <tr>
@@ -34,7 +32,6 @@
                 <tr>
                     <td th:text="${jobApplication.jobsApplicationId}"></td>
                     <td th:text="${jobApplication.jobs.users.userName}"></td>
-                    <!--                    使用可选链操作符 ?. 来避免空值引起的错误-->
                     <td th:text="${jobApplication.applicant?.userName}"></td>
                     <td th:text="${jobApplication.jobsApplicationDate}"></td>
                     <td th:text="${jobApplication.jobsApplicationStatus}"></td>
@@ -46,26 +43,30 @@
         </table>
     </div>
 
-    <div class="modal fade" id="pdfPreviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- PDF預覽Modal -->
+    <div class="modal fade" id="pdfPreviewModal" tabindex="-1" aria-labelledby="pdfPreviewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">履歷查看</h5>
+                    <h5 class="modal-title" id="pdfPreviewModalLabel">履歷查看</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <iframe id="pdfViewer" width="100%" height="1200px" frameborder="0"></iframe>
+                    <iframe id="pdfViewer" width="100%" height="600px" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script th:inline="javascript" layout:fragment="script" type="text/javascript">
 
+<script th:inline="javascript" layout:fragment="script" type="text/javascript">
     $(document).ready(function () {
         const baseUrl = /*[[@{/jobsApplication}]]*/'';
         const pdfBaseUrl = /*[[@{/front/profile}]]*/'';
-        console.log(baseUrl);
+
         let table = $("#jobsApplicationList").DataTable({
             language: {
                 "processing": "處理中...",
@@ -127,12 +128,11 @@
                 data: 'jobsApplicationResume',
                 className: 'all',
                 render: function (data, type, row) {
-                    return `<button class="btn btn-secondary btn-sm preview-btn"
-                            data-id="${row.jobsApplicationId}"
-                            href="${pdfBaseUrl}/preview/${row.jobsApplicationId}"
-                            type="button">
-                            查看履歷
-                            </button>`;
+                    return `<button class="btn btn-secondary btn-sm preview-resume"
+                        data-resume-id="${row.jobsApplicationId}"
+                        type="button">
+                        查看履歷
+                        </button>`;
                 }
             }, {
                 data: 'actions',
@@ -141,18 +141,33 @@
                 searchable: false,
                 render: function (data, type, row) {
                     let result = '';
-
-                    //這裡的class就是bootstrap,就幾乎不用style
-                    result += '<a class="btn btn-sm btn-primary" href="' + baseUrl + '/view/' + row.jobsApplicationId + '"><i class="fas fa-search"></i></a>';
-                    result += '<a class="btn btn-sm btn-success ms-1" href="' + baseUrl + '/edit/' + row.jobsApplicationId + '"><i class="fas fa-pen"></i></a>';
-                    result += '<a class="btn btn-sm btn-danger ms-1 deleteBtn" data-id="' + row.jobsApplicationId +'" href="' + baseUrl + '/delete/' + row.jobsApplicationId + '"><i class="fas fa-trash"></i></a>';
-
+                    result += `<a class="btn btn-sm btn-primary" href="${baseUrl}/view/${row.jobsApplicationId}"><i class="fas fa-search"></i></a>`;
+                    result += `<a class="btn btn-sm btn-success ms-1" href="${baseUrl}/edit/${row.jobsApplicationId}"><i class="fas fa-pen"></i></a>`;
+                    result += `<a class="btn btn-sm btn-danger ms-1 deleteBtn" data-id="${row.jobsApplicationId}" href="#"><i class="fas fa-trash"></i></a>`;
                     return result;
                 }
             }]
         });
 
-        // 使用事件委派來處理刪除按鈕點擊
+        // 使用事件委派處理履歷預覽按鈕點擊
+        $('#jobsApplicationList').on('click', '.preview-resume', function(e) {
+            e.preventDefault();
+            const resumeId = $(this).data('resume-id');
+            const previewUrl = `${pdfBaseUrl}/preview/${resumeId}`;
+
+            // 顯示載入中動畫
+            $('#pdfViewer').attr('src', '').addClass('loading');
+            $('#pdfPreviewModal').modal('show');
+
+            // 設置 iframe 源並處理載入完成事件
+            $('#pdfViewer')
+                .attr('src', previewUrl)
+                .on('load', function() {
+                    $(this).removeClass('loading');
+                });
+        });
+
+        // 使用事件委派處理刪除按鈕點擊
         $('#jobsApplicationList').on('click', '.deleteBtn', function (e) {
             e.preventDefault();
             const id = $(this).data('id');
@@ -161,9 +176,12 @@
             Swal.fire({
                 icon: "question",
                 title: "確認刪除？",
+                text: "此操作無法復原",
                 showCancelButton: true,
                 confirmButtonText: "確認",
-                cancelButtonText: "取消"
+                cancelButtonText: "取消",
+                confirmButtonColor: "#dc3545",
+                cancelButtonColor: "#6c757d"
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch(deleteUrl, {
@@ -182,10 +200,10 @@
                             Swal.fire({
                                 icon: "success",
                                 title: "刪除成功",
-                                showConfirmButton: true
+                                showConfirmButton: false,
+                                timer: 1500
                             }).then(() => {
-                                // 重新加載表格數據而不是整個頁面
-                                window.location.reload();
+                                table.ajax.reload();
                             });
                         })
                         .catch(error => {
@@ -193,20 +211,35 @@
                                 icon: "error",
                                 title: "刪除失敗",
                                 text: error.message,
-                                showConfirmButton: true
+                                confirmButtonColor: "#dc3545"
                             });
                         });
                 }
             });
         });
 
-        $('.preview-btn').click(function(e) {
-            e.preventDefault();
-            const previewUrl = $(this).attr('href');
-            $('#pdfViewer').attr('src', previewUrl);
-            $('#pdfPreviewModal').modal('show');
+        // Modal 關閉時清空 iframe 源
+        $('#pdfPreviewModal').on('hidden.bs.modal', function () {
+            $('#pdfViewer').attr('src', '');
         });
     });
+
+    // 添加一些基本的 CSS
+    const style = document.createElement('style');
+    style.textContent = `
+    .loading {
+        background: url('data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==') center center no-repeat;
+    }
+    .modal-dialog.modal-lg {
+        max-width: 90%;
+    }
+    #pdfViewer {
+        width: 100%;
+        height: 80vh;
+        border: none;
+    }
+`;
+    document.head.appendChild(style);
 </script>
 </body>
 </html>
