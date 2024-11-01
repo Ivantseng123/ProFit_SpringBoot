@@ -1,9 +1,7 @@
 package com.ProFit.controller.events;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,13 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.bean.majorsBean.MajorCategoryBean;
 import com.ProFit.model.dto.eventsDTO.EventsCategoryDTO;
-import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorCategoryService;
 import com.ProFit.service.majorService.IMajorService;
-import com.ProFit.service.majorService.MajorCategoryService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -61,8 +57,6 @@ public class EventsGetController {
     	for (MajorCategoryBean majorCategory : majorCategorys) {
     		int number = 0;
     		for (EventsBean event : events) {
-    			System.out.println(event.getEventMajor().getMajorCategoryId()+" "+majorCategory.getMajorCategoryId());
-    			System.out.println(event.getEventMajor().getMajorCategoryId() == majorCategory.getMajorCategoryId());
     			if (event.getEventMajor().getMajorCategoryId() != null && 
     	                   event.getEventMajor().getMajorCategoryId().equals(majorCategory.getMajorCategoryId())) {
     				number++;
