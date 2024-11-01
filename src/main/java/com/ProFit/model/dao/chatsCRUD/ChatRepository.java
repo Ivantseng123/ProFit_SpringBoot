@@ -38,4 +38,20 @@ public interface ChatRepository extends JpaRepository<ChatBean, Integer> {
       """)
   List<ChatUserDTO> findUsersByUserId2(Integer userId2);
 
+  // 查 接案客服務下 有聊天室的 案主
+  @Query("""
+      SELECT new com.ProFit.model.dto.chatsDTO.ChatUserDTO(
+            u.id AS userId,
+            u.userName,
+            u.userEmail,
+            u.userPictureURL,
+            MAX(c.lastMessageAt)
+        )
+         FROM ChatBean c
+         JOIN Users u ON c.userId2 = u.id
+         WHERE c.userId1 = :userId1 AND c.serviceId = :serviceId
+         GROUP BY u.id, u.userName, u.userEmail, u.userPictureURL
+        ORDER BY MAX(c.lastMessageAt) DESC
+      """)
+  List<ChatUserDTO> findUsersByUserId1AndServiceId(Integer userId1, Integer serviceId);
 }
