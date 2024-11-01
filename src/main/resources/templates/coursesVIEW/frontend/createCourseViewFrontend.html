@@ -147,6 +147,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <a th:href="@{/course}" type="button" class="btn btn-danger btn-sm">取消新增</a>
+                                        <a type="button" class="btn btn-info btn-sm" id="insertCourseBtn">一鍵輸入</a>
                                         <a href="#" type="button" class="btn btn-success btn-sm"
                                             onclick="goToNextTab()">下一步:新增章節</a>
                                     </div>
@@ -183,6 +184,7 @@
                                     </table>
                                     <div class="d-flex justify-content-between mt-3">
                                         <a id="previousStep" class="btn btn-secondary btn-sm">上一步:課程內容</a>
+                                        <a type="button" class="btn btn-info btn-sm" id="insertModuleBtn">一鍵輸入</a>
                                         <a id="confirmAdd" class="btn btn-success btn-sm">確認新增</a>
                                     </div>
                                 </form>
@@ -235,6 +237,7 @@
                                     </table>
                                     <div class="d-flex justify-content-between mt-3">
                                         <a class="btn btn-secondary btn-sm" id="backToStep2">上一步:課程章節</a>
+                                        <a type="button" class="btn btn-info btn-sm" id="insertLessonBtn">一鍵輸入</a>
                                         <a href="/ProFit/user/profile?clickCourse=true" id="confirmApply"
                                             class="btn btn-success btn-sm">送出申請</a>
                                     </div>
@@ -269,6 +272,7 @@
     <script th:src="@{/js/frontend/main.js}"></script>
     <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
     <script th:src="@{/js/courses/frontend/createCourseViewforFrontend.js}"></script>
+    <script th:src="@{/js/courses/frontend/frontendTestData.js}"></script>
 </body>
 
 </html>

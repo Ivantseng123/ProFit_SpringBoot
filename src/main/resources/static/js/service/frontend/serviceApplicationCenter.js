@@ -172,10 +172,12 @@ function renderSentApplications(applications) {
                     <span>委託總額: $${application.serviceApplicationPrice * application.serviceApplicationAmount}</span>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-info btn-sm" 
+                    ${application.status != 2 ? `
+                      <button class="btn btn-info btn-sm" 
                             onclick="viewApplication(${application.serviceApplicationId})">
-                        編輯
-                    </button>
+                          編輯
+                      </button>
+                    ` : ''}
                     ${application.status === 1 ? `
                         <button class="btn btn-danger btn-sm" 
                                 onclick="cancelApplication(${application.serviceApplicationId})">
@@ -183,10 +185,14 @@ function renderSentApplications(applications) {
                         </button>
                     ` : ''}
                     ${application.status === 2 ? `
-                      <button class="btn btn-danger btn-sm" 
-                              onclick="completeApplication(${application.serviceApplicationId})">
-                          取消
+                       <button class="btn btn-info btn-sm"
+                            onclick="createOrder(${application.serviceApplicationId})">
+                          成立訂單
                       </button>
+                       <button class="btn btn-danger btn-sm"
+                                onclick="cancelApplication(${application.serviceApplicationId})">
+                            取消
+                        </button>
                   ` : ''}
                     ${application.status === 4 || application.status === 3 ? `
                       <button class="btn btn-secondary btn-sm" 
@@ -282,11 +288,11 @@ function rejectApplication(applicationId) {
   }
 }
 
-function completeApplication(applicationId) {
-  if (confirm('付款後即成立委託')) {
-    
+function createOrder(applicationId) {
+  if (confirm('訂單付款後委託才算成立')) {
+    window.location.href = `/ProFit/c/serviceApplication/order/${applicationId}`;
   }
-  
+
 }
 
 function deleteApplication(applicationId) {

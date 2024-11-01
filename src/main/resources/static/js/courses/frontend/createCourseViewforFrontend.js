@@ -294,37 +294,6 @@ function getResponseCourseAndModule(insertedCourseMap) {
                 `;
                     $('#lessonTableBody').append(lessonRow);
                 });
-
-                // 添加一個新的空行，準備輸入新單元
-                const newRow = `
-                <tr>
-                    <td>
-                        <input type="text" class="form-control" id="courseLessonSort" name="courseLessonSort" required>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" id="courseLessonName" name="courseLessonName" required>
-                    </td>
-                    <td>
-                        <input type="file" class="form-control" id="lessonMedia" name="lessonMedia"></input>
-                    </td>
-                    <td>
-                        <select class="form-control" id="lessonMediaType" name="lessonMediaType" required>
-                            <option value="" disabled selected>請選擇</option>
-                            <option value="Video">影片</option>
-                            <option value="File">檔案</option>
-                            <option value="HomeWork">作業</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="form-control" type="number" id="mediaDuration" name="mediaDuration">
-                    </td>
-                    <td class="text-center">
-                        <a type="button" class="btn btn-primary btn-sm saveLessonBtn">保存</a>
-                        <a type="button" class="btn btn-danger btn-sm deleteLessonBtn">刪除</a>
-                    </td>
-                </tr>
-            `;
-                $('#lessonTableBody').append(newRow);
             },
             error: function (xhr, status, error) {
                 console.error('無法獲取章節單元資料:', error);
