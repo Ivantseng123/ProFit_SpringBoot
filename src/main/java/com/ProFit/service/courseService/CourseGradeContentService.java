@@ -36,10 +36,10 @@ public class CourseGradeContentService implements IcourseGradeContentService {
     @Override
     public Page<CourseGradeContentDTO> searchCourseGradeContents(String courseId, String sort, Pageable pageable) {
 
-        Sort.Direction direction = Sort.Direction.DESC; // 默認為升序
+        Sort.Direction direction = Sort.Direction.DESC; // 默認為降序
 
         if (sort != null && sort.equalsIgnoreCase("ASC")) {
-            direction = Sort.Direction.DESC; // 如果是 "DESC" 則設置為降序
+            direction = Sort.Direction.ASC; // 如果是 "ASC" 則設置為升序
         }
 
         PageRequest pageRequest = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
