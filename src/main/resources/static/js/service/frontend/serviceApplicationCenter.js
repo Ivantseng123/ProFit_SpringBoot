@@ -172,7 +172,7 @@ function renderSentApplications(applications) {
                     <span>委託總額: $${application.serviceApplicationPrice * application.serviceApplicationAmount}</span>
                 </div>
                 <div class="col-md-2">
-                    ${application.status != 2 ? `
+                    ${application.status != 2 && application.status != 6 ? `
                       <button class="btn btn-info btn-sm" 
                             onclick="viewApplication(${application.serviceApplicationId})">
                           編輯
@@ -200,6 +200,12 @@ function renderSentApplications(applications) {
                           刪除
                       </button>
                   ` : ''}
+                  ${application.status === 6 ? `
+                    <button class="btn btn-secondary btn-sm" 
+                            onclick="viewApplication(${application.serviceApplicationId})">
+                        查看
+                    </button>
+                ` : ''}
                   
                 </div>
             </div>
@@ -363,8 +369,9 @@ function getStatusBadgeClass(status) {
     1: 'bg-success',    // 已接受
     2: 'bg-danger',     // 已拒絕
     3: 'bg-secondary',  // 已取消
-    4: 'bg-primary',    // 進行中
-    5: 'bg-info'        // 已完成
+    4: 'bg-primary',    // 已關閉
+    5: 'bg-info',        // 已成立
+    6: 'bg-secondary'        // 已結案
   };
   return classMap[status] || 'bg-secondary';
 }
