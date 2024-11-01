@@ -49,9 +49,9 @@
 								</li>
 								<li class="nav-item"><a href="#">找活動</a>
 									<ul class="sub-menu">
-										<li><a href="#">部落格網格側邊欄</a></li>
-										<li><a href="#">部落格單篇</a></li>
-										<li><a href="#">部落格單篇側邊欄</a></li>
+										<li><a th:href="@{/f/events}">活動總覽</a></li>
+										<li><a th:href="@{/f/events/new}">舉辦活動</a></li>
+										<!-- <li><a href="#">部落格單篇側邊欄</a></li> -->
 									</ul>
 								</li>
 								<li class="nav-item"><a href="http://localhost:8080/ProFit/empPf/allCompany">找公司</a>
@@ -68,13 +68,16 @@
 							</ul>
 						</div>
 						<!-- navbar collapse -->
-						<div class="button" style="width: 350px; ">
-							<a th:href="@{/c/chat}" class="login"><i class="lni lni-envelope"></i><span>訊息</span></a> <a
-								href="javascript:" id="authButton" data-toggle="modal" data-target="#login"
-								data-bs-toggle="modal" data-bs-target="#login" class="login"> <i
+						<div class="button" style="width: 280px;">
+							<a th:href="@{/c/chat}" class="login" style="width: 150px;"><i
+									class="lni lni-envelope"></i><span>訊息</span></a> <a href="javascript:"
+								id="authButton" data-toggle="modal" data-target="#login" data-bs-toggle="modal"
+								data-bs-target="#login" class="login" style="width: 150px;"> <i
 									class="lni lni-lock-alt"></i><span id="authText">登入</span>
 							</a> <a href="javascript:" data-toggle="modal" data-target="#signup" data-bs-toggle="modal"
-								data-bs-target="#signup" id="signupButton" class="btn">註冊</a>
+								data-bs-target="#signup" id="signupButton" class="btn" style="width: 150px;">註冊</a>
+							<img id="userPictureDisplay" class="d-flex align-items-center me-2"
+								style="display: none; width: 40px; height: 40px;  border: none; border-radius: 50%;"></img>
 							<p id="usernameDisplay" class="d-flex align-items-center"
 								style="display: none; width: 100px;"></p>
 						</div>

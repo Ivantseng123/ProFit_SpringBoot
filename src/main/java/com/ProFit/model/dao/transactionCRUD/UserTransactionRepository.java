@@ -43,4 +43,7 @@ public interface UserTransactionRepository extends JpaRepository<UserTransaction
 
     // 根據交易ID查詢交易
     Optional<UserTransactionBean> findById(String transactionId);
+
+    Optional<UserTransactionBean> findByOrderIdAndUserIdAndTransactionType(String orderId, Integer userId, String transactionType);
+
 }
