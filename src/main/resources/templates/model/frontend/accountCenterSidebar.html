@@ -31,7 +31,7 @@
 			</th:block>
 			<th:block th:if="${session.CurrentUser != null and (session.CurrentUser.userIdentity == 2 or session.CurrentUser.userIdentity == 1)}">
 				<li class="heading">管理應徵</li>
-				<li><a th:href="@{/}"><i class="lni lni-bookmark"></i>我的應徵紀錄</a></li>
+				<li><a th:href="@{/front/profile/applications/0}"><i class="lni lni-bookmark"></i>我的應徵紀錄</a></li>
 			</th:block>
 		</ul>
 	</div>
