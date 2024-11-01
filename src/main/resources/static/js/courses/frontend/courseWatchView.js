@@ -233,6 +233,8 @@ $(document).ready(function () {
                     const videoElement = document.getElementById('courseVideo');
                     videoElement.src = videoUrl;
 
+                    // 設定靜音
+                    videoElement.muted = true;
                     videoElement.load();
                     videoElement.play(); // 自動開始播放
                 } else {
@@ -249,10 +251,6 @@ $(document).ready(function () {
 
     })
 });
-
-function htmlMaker() {
-
-}
 
 function formatDate(data) {
     let date = new Date(data);
