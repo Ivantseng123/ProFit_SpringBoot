@@ -36,16 +36,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    Object.keys(majorMapping).forEach(key => {
-        if (key !== 'default') {
-            const option = document.createElement('option');
-            option.value = key;
-            option.text = majorMapping[key];
-            //初始選項
-            if (key === eventMajorSelect.dataset.value) {
-                option.selected = true;
-            }
-            eventMajorSelect.appendChild(option);
+    fetchMajors().then((majors) => {
+        if (majors) {
+            Object.keys(majors).forEach(category => {
+                if (category !== 'default') {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = majors[category][0];
+            
+                    majors[category].forEach(major => {
+                        if (major.majorId !== undefined) {
+                            const option = document.createElement('option');
+                            option.value = major.majorId;
+                            option.text = major.majorName;
+                            if (major.majorId == eventMajorSelect.dataset.value) {
+                                option.selected = true;
+                            }
+                            optgroup.appendChild(option);
+                        }
+                    });
+                    eventMajorSelect.appendChild(optgroup);
+                }
+            });
         }
     });
 

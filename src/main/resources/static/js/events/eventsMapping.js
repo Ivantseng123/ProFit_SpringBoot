@@ -28,3 +28,32 @@ majors.forEach(major => {
 });
 majorMapping['default'] = '錯誤';
 
+
+//取得專業類別
+function fetchMajors() {
+    return axios.get("/ProFit/events/get/major")
+        .then(function (response) {
+            const majors = response.data;
+            const majorsMapping = { default: '錯誤' };
+
+            // 活動專業映射
+            majors.forEach(major => {
+                const { majorId, majorName, majorCategoryId, categoryName } = major;
+
+                // 創建專業類別
+                if (!majorsMapping[majorCategoryId]) {
+                    majorsMapping[majorCategoryId] = [categoryName];
+                }
+
+                // 將專業加入對應類別
+                majorsMapping[majorCategoryId].push({
+                    majorId: majorId,
+                    majorName: majorName,
+                });
+            });
+            return majorsMapping;
+        })
+        .catch(function (error) {
+            console.error('There was an error!', error);
+        });
+}

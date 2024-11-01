@@ -5,6 +5,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const saveBtn = document.getElementById("saveBtn");
     const cancelBtn = document.getElementById("cancelBtn");
 
+    //取得使用者資料
+    axios.get("/ProFit/events/get/user")
+        .then(function(response) {
+            if (response.data !== "") {
+                console.log(response.data);
+            } else {
+                window.location.href = "/ProFit/user/profile";
+            }
+        })
+        .catch(function (error) {
+            console.error('There was an error!', error);
+        });
+
     //填入選項
     Object.keys(categoryMapping).forEach(key => {
         if (key !== 'default') {
@@ -19,16 +32,27 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    Object.keys(majorMapping).forEach(key => {
-        if (key !== 'default') {
-            const option = document.createElement('option');
-            option.value = key;
-            option.text = majorMapping[key];
-            //初始選項
-            if (key === eventMajorSelect.dataset.value) {
-                option.selected = true;
-            }
-            eventMajorSelect.appendChild(option);
+    fetchMajors().then((majors) => {
+        if (majors) {
+            Object.keys(majors).forEach(category => {
+                if (category !== 'default') {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = majors[category][0];
+            
+                    majors[category].forEach(major => {
+                        if (major.majorId !== undefined) {
+                            const option = document.createElement('option');
+                            option.value = major.majorId;
+                            option.text = major.majorName;
+                            if (major.majorId == eventMajorSelect.dataset.value) {
+                                option.selected = true;
+                            }
+                            optgroup.appendChild(option);
+                        }
+                    });
+                    eventMajorSelect.appendChild(optgroup);
+                }
+            });
         }
     });
 
@@ -52,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.history.back();
     });
 
-    送出表單
+    //送出表單
     function submitForm() {
         const eventData = {
             eventId: 'new',

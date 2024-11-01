@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (confirmation) {
             // 发送删除请求
-            axios.delete(`${eventPath}/delete?eventId=${eventId}`)
+            axios.get(`${eventPath}/delete?eventId=${eventId}`)
                 .then(response => {
                     console.log('删除成功', response);
                     window.location.href = `${eventPath}`;
