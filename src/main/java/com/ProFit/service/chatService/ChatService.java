@@ -121,7 +121,14 @@ public class ChatService {
     return usersByUserId2;
   }
 
-  // 返回一個user有的服務
+  // 查 freelancer的service下 有聊天室的 user(caseOwnerId)
+  public List<ChatUserDTO> getCurrentFreelancerChatUserList(Integer freelancerId, Integer serviceId) {
+    List<ChatUserDTO> usersByUserId1 = chatRepository.findUsersByUserId1AndServiceId(freelancerId, serviceId);
+
+    return usersByUserId1;
+  }
+
+  // 返回user有的服務
   public Page<ServicesDTO> getUserServices(Integer userId, Pageable pageable) {
     Page<ServiceBean> services = serviceRepository.findByUserId(userId, pageable);
     // 將實體轉換為DTO

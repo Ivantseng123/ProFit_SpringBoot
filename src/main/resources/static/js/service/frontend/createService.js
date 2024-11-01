@@ -212,11 +212,11 @@ function handleSubmit(event) {
 * 一鍵填入測試數據(demo用)
 */
 function generateTestData() {
-    document.getElementById('serviceTitle').value = 'java 網站建置' + Math.floor(Math.random() * 100);
-    document.getElementById('servicePrice').value = Math.floor(Math.random() * 10000) + 1000;
-    document.getElementById('serviceUnitName').value = '件';
+    document.getElementById('serviceTitle').value = 'SpringBoot 網站建置';
+    document.getElementById('servicePrice').value = 500;
+    document.getElementById('serviceUnitName').value = '小時';
     document.getElementById('serviceDuration').value = 30;
-    document.getElementById('serviceContent').value = '本網站建置服務專為企業及個人客戶量身打造，提供完整的 Java 網站開發解決方案。我們的服務包括需求分析、系統設計、後端開發、前端整合及測試部署。網站採用 Java 技術，並結合 Spring Boot 框架，以確保穩定性及高效性。數據庫可選擇 SQL Server 或 MySQL，並使用 Hibernate 進行 ORM 處理，確保數據持久性與安全性。此外，透過 AJAX 提供即時數據交互，讓網站擁有更佳的使用者體驗。我們重視客戶需求，並提供量身定制的解決方案及持續技術支援，協助您的網站順利上線並穩定運營。';
+    document.getElementById('serviceContent').value = '本服務專為企業及個人客戶量身打造，提供完整的 SpringBoot 網站開發解決方案。我們的服務包括需求分析、系統設計、後端開發、前端整合及測試部署。網站採用 Java 技術，並結合 Spring Boot 框架，以確保穩定性及高效性。數據庫可選擇 SQL Server 或 MySQL，並使用 Hibernate 進行 ORM 處理，確保數據持久性與安全性。此外，透過 AJAX 提供即時數據交互，讓網站擁有更佳的使用者體驗。我們重視客戶需求，並提供量身定制的解決方案及持續技術支援，協助您的網站順利上線並穩定運營。';
 }
 
 /**

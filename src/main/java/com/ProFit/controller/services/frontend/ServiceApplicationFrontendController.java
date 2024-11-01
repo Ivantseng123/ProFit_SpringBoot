@@ -25,14 +25,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ProFit.model.bean.servicesBean.ServiceApplicationBean;
+import com.ProFit.model.bean.servicesBean.ServiceOrderBean;
 import com.ProFit.model.dto.chatsDTO.ChatUserDTO;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.majorsDTO.PageResponse;
 import com.ProFit.model.dto.servicesDTO.ServiceApplicationsDTO;
+import com.ProFit.model.dto.servicesDTO.ServiceOrdersDTO;
 import com.ProFit.model.dto.servicesDTO.ServicesDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.chatService.ChatService;
 import com.ProFit.service.serviceService.ServiceApplicationService;
+import com.ProFit.service.serviceService.ServiceOrdersService;
 import com.ProFit.service.serviceService.ServiceService;
 import com.ProFit.service.utilsService.FirebaseStorageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,6 +58,9 @@ public class ServiceApplicationFrontendController {
 
   @Autowired
   private FirebaseStorageService firebaseStorageService;
+
+  @Autowired
+  private ServiceOrdersService serviceOrdersService;
 
   // 獲取當前user 資訊
   private UsersDTO getCurrentUser(HttpSession session) {
@@ -100,7 +106,7 @@ public class ServiceApplicationFrontendController {
     ServiceApplicationsDTO serviceApplicationDTO = serviceApplicationService
         .findServiceApplicationById(serviceApplicationId);
 
-        System.out.println(serviceApplicationDTO);
+    System.out.println(serviceApplicationDTO);
 
     try {
       // 若沒有登入
@@ -127,6 +133,39 @@ public class ServiceApplicationFrontendController {
     return "redirect:/user/profile";
   }
 
+  @GetMapping("/order/{serviceApplicationId}")
+  public String showCreateOrderPage(@PathVariable Integer serviceApplicationId, HttpSession session,
+      Model model) {
+    UsersDTO currentUser = getCurrentUser(session);
+    ServiceApplicationsDTO serviceApplicationDTO = serviceApplicationService
+        .findServiceApplicationById(serviceApplicationId);
+
+    System.out.println(serviceApplicationDTO);
+
+    try {
+      // 若沒有登入
+      if (currentUser == null) {
+        return "redirect:/user/profile";
+      }
+
+      if (serviceApplicationDTO != null) {
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("serviceApplicationDTO", serviceApplicationDTO);
+
+        return "servicesVIEW/frontend/createOrder";
+      } else {
+        return "redirect:/user/profile";
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return "redirect:/user/profile";
+
+  }
+
+  /////// -------------以下是RESTFULAPI--------/////////////
   // 查找服務委託by 委託Id
   @GetMapping("/api/{id}")
   @ResponseBody
@@ -171,7 +210,7 @@ public class ServiceApplicationFrontendController {
   public ResponseEntity<Boolean> updateStatus(@PathVariable Integer id, @RequestParam Integer status,
       HttpSession session) {
 
-        System.out.println(status);
+    System.out.println(status);
     UsersDTO currentUser = getCurrentUser(session);
     if (currentUser == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -270,14 +309,11 @@ public class ServiceApplicationFrontendController {
       return ResponseEntity.ok(false);
     }
 
-
     // 驗證權限和狀態 (要是案主，且草稿或關閉狀態才能刪)
     if (!currentUser.getUserId().equals(application.getCaseownerId()) ||
         application.getStatus() != 0 && application.getStatus() != 4 && application.getStatus() != 3) {
       return ResponseEntity.ok(false);
     }
-
-
 
     try {
       serviceApplicationService.deleteServiceApplication(id);
@@ -312,6 +348,39 @@ public class ServiceApplicationFrontendController {
         "serviceUpdateDate", false);
 
     return servicesDTO;
+  }
+
+  /// ------成立委託訂單-----///////
+  @PostMapping("/api/order")
+  @ResponseBody
+  public ResponseEntity<Boolean> postMethodName(
+      @RequestBody ServiceOrderBean serviceOrder, HttpSession session) {
+
+    System.out.println("Service Order Amount: " + serviceOrder.getServiceOrderAmount());
+    System.out.println(serviceOrder.getServiceApplicationId());
+
+    // 檢查必要欄位
+    if (serviceOrder.getServiceOrderAmount() == null) {
+      return ResponseEntity.badRequest().body(false);
+    }
+
+    // 獲取當前用戶
+    UsersDTO currentUser = getCurrentUser(session);
+    if (currentUser == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+    }
+
+    try {
+      ServiceOrdersDTO insertServiceOrder = serviceOrdersService.insertServiceOrder(serviceOrder);
+      if (insertServiceOrder != null) {
+        serviceApplicationService.updateStatus(serviceOrder.getServiceApplicationId(), 5);
+      }
+      return ResponseEntity.ok(true);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.ok(false);
+    }
+
   }
 
 }

@@ -5,13 +5,14 @@ let stompClient = null;
 let currentChatId = null;
 let currentServiceId = null;
 let freelancerId = null;
+let currentFreelancerServiceId = null;
 
 /**
  * 頁面初始化
  */
 document.addEventListener('DOMContentLoaded', function () {
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
   // 檢查用戶是否存在
   if (!currentUser || !currentUser.userId) {
@@ -23,11 +24,20 @@ document.addEventListener('DOMContentLoaded', function () {
   // 初始化各項功能
   initializeWebSocket();
   initializeEventListeners();
-  loadChatUsers();
+  // loadChatUsers();
+
+  // 根據當前激活的標籤載入對應的用戶列表
+  const activeTab = document.querySelector('#applicationTabs .nav-link.active');
+  if (activeTab && activeTab.id === 'Open-tab') {
+    loadChatUsers();
+  } else if (activeTab && activeTab.id === 'Closed-tab') {
+    loadFreelancerServices();
+  }
 
   // 載入最新的聊天室
   loadLatestChatRoom();
 });
+
 
 /**
  * 初始化事件監聽器
@@ -60,6 +70,34 @@ function initializeEventListeners() {
       }
     });
   }
+
+
+  // 添加標籤切換事件監聽
+  const tabs = document.querySelectorAll('#applicationTabs .nav-link');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      // 移除所有標籤的 active 類
+      tabs.forEach(t => t.classList.remove('active'));
+      // 添加當前標籤的 active 類
+      this.classList.add('active');
+
+      // 處理標籤內容
+      const targetId = this.getAttribute('href').substring(1);
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.remove('show', 'active');
+      });
+      document.getElementById(targetId).classList.add('show', 'active');
+
+      // 根據標籤載入對應內容
+      if (this.id === 'Open-tab') {
+        loadChatUsers();
+      } else if (this.id === 'Closed-tab') {
+        loadFreelancerServices();
+      }
+    });
+  });
 }
 
 /**
@@ -82,7 +120,7 @@ function initializeWebSocket() {
   stompClient.connect(connectHeaders,
     // 連接成功回調
     function (frame) {
-      console.log('WebSocket 連接成功:', frame);
+      // console.log('WebSocket 連接成功:', frame);
 
       // 如果有當前聊天，訂閱聊天室
       if (currentChatId) {
@@ -125,6 +163,7 @@ function loadLatestChatRoom() {
       let chat = page.content[0];
       console.log(chat);
       if (chat && chat.chatId) {
+        document.getElementById('send-appli-href').href = `/ProFit/c/serviceApplication/add?serviceId=${chat.serviceId}`;
         currentChatId = chat.chatId;
         // console.log("載入最新的聊天室:", chat);
         updateChatUI(chat);
@@ -163,7 +202,7 @@ function loadChatUsers() {
  * 渲染聊天用戶列表
  */
 function renderChatUsers(users) {
-  console.log(users);
+  // console.log(users);
   const chatList = document.getElementById('chat-users-list');
   // 安全檢查
   if (!chatList) {
@@ -303,6 +342,8 @@ function selectService(serviceId) {
   })
     .then(handleResponse)
     .then(chat => {
+      document.getElementById('send-appli-href').href = `/ProFit/c/serviceApplication/add?serviceId=${serviceId}`;
+      document.getElementById('send-appli').innerText = '發送委託';
       currentChatId = chat.chatId;
       console.log(chat);
       updateChatUI(chat);
@@ -320,6 +361,147 @@ function selectService(serviceId) {
 
 
 
+/////////-------渲染接案者身分標籤頁--------///////////////////////
+
+/**
+ * 載入當前用戶(接案者)的服務列表
+ */
+function loadFreelancerServices() {
+  const container = document.getElementById('freelancer-chat-users-list');
+  if (!container) return;
+
+  // 清空現有內容
+  container.innerHTML = '';
+
+  // 添加服務選擇下拉選單
+  container.innerHTML = `
+        <div class="service-selector mb-3">
+            <select class="form-select" id="freelancer-service-select">
+                <option value="">選擇服務...</option>
+            </select>
+        </div>
+        <div id="service-chat-users" class="service-chat-users">
+            <!-- 這裡將顯示選中服務的聊天用戶 -->
+        </div>
+    `;
+
+  // 載入服務列表
+  fetch(`/ProFit/c/service/api/userId`)
+    .then(response => response.json())
+    .then(serviceDTO => {
+      // console.log(serviceDTO)
+      const services = serviceDTO.content;
+      const select = document.getElementById('freelancer-service-select');
+
+      services.forEach(service => {
+        const option = document.createElement('option');
+        option.value = service.serviceId;
+        option.textContent = `${service.serviceTitle} - $${service.servicePrice}/${service.serviceUnitName}`;
+        select.appendChild(option);
+      });
+
+      // 添加選擇變更事件
+      select.addEventListener('change', function () {
+        const serviceId = this.value;
+        if (serviceId) {
+          currentFreelancerServiceId = serviceId;
+          loadServiceChatUsers(serviceId);
+        } else {
+          document.getElementById('service-chat-users').innerHTML = '';
+        }
+      });
+    })
+    .catch(error => {
+      console.error('載入服務失敗:', error);
+      container.innerHTML = '<div class="alert alert-danger">載入服務列表失敗，請重試</div>';
+    });
+}
+
+/**
+ * 載入特定服務的聊天用戶
+ */
+function loadServiceChatUsers(serviceId) {
+  const container = document.getElementById('service-chat-users');
+  if (!container) return;
+
+  container.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"></div></div>';
+
+  fetch(`/ProFit/c/chat/api/users/service/${serviceId}`)
+    .then(handleResponse)
+    .then(users => {
+      container.innerHTML = '';
+
+      if (!users || users.length === 0) {
+        container.innerHTML = '<div class="alert alert-info">目前沒有相關的聊天</div>';
+        return;
+      }
+
+      users.forEach(user => {
+        const userElement = document.createElement('div');
+        userElement.className = 'chat-user';
+        userElement.setAttribute('data-user-id', user.userId);
+        userElement.innerHTML = `
+                    <div class="d-flex align-items-center p-3 border-bottom">
+                        <div class="flex-shrink-0">
+                            <img src="${user.userPictureURL || '/images/default-avatar.png'}" 
+                                 class="rounded-circle" 
+                                 alt="${user.userName}"
+                                 style="width: 50px; height: 50px;">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="mb-0">${user.userName}</h6>
+                            <small class="text-muted">
+                                ${formatDateTime(user.lastChatTime)}
+                            </small>
+                        </div>
+                        <div class="ms-auto">
+                            <button class="btn btn-primary btn-sm" 
+                                    onclick="loadFreelancerChat(${user.userId}, ${serviceId})">
+                                開啟聊天
+                            </button>
+                        </div>
+                    </div>
+                `;
+        container.appendChild(userElement);
+      });
+    })
+    .catch(error => {
+      console.error('載入聊天用戶失敗:', error);
+      container.innerHTML = '<div class="alert alert-danger">載入用戶列表失敗，請重試</div>';
+    });
+}
+
+/**
+ * 載入接案者聊天室
+ */
+function loadFreelancerChat(userId, serviceId) {
+  fetch('/ProFit/c/chat/api/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId1: currentUser.userId,
+      userId2: userId,
+      serviceId: serviceId
+    })
+  })
+    .then(handleResponse)
+    .then(chat => {
+      document.getElementById('send-appli').innerText = '合作邀請';
+      currentChatId = chat.chatId;
+      updateChatUI(chat);
+      loadChatHistory(chat.chatId);
+      subscribeToChatRoom(chat.chatId);
+    })
+    .catch(error => {
+      console.error('載入聊天失敗:', error);
+      showErrorMessage('無法載入聊天，請重試');
+    });
+}
+
+
+////////-----聊天介面-----/////////////////////
 /**
  * 更新聊天界面
  */
@@ -508,7 +690,7 @@ function formatDateTime(dateTime) {
 function scrollToBottom() {
   const messageContainer = document.getElementById('message-box');
   if (messageContainer) {
-    console.log(messageContainer.scrollHeight);
+    // console.log(messageContainer.scrollHeight);
     requestAnimationFrame(() => {
       messageContainer.scrollTop = messageContainer.scrollHeight;
     });
