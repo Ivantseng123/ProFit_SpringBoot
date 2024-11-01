@@ -32,8 +32,9 @@
                     th:if="${jobsApplication.jobsApplicationStatus == 0}">已投遞受理</button>
 
             <!-- 已錄取 - 綠色，下載合約 - 灰色 -->
+            <!-- 已錄取 - 綠色，下載合約 - 灰色 -->
             <th:block th:if="${jobsApplication.jobsApplicationStatus == 1}">
-              <button class="btn btn-success btn-sm text-white" id="hire" data-bs-toggle="modal"
+              <button class="btn btn-success btn-sm text-white mb-2" id="hire" data-bs-toggle="modal"
                       data-bs-target="#exampleModal">已錄取</button>
               <a class="btn btn-info btn-sm text-white" id="download" data-bs-toggle="modal"
                  data-bs-target="#exampleModal"
@@ -41,7 +42,7 @@
             </th:block>
 
             <!-- 未錄取 - 黃色 -->
-            <button class="btn btn-warning btn-sm text-white" disabled
+            <button class="btn btn-warning btn-sm " disabled
                     th:if="${jobsApplication.jobsApplicationStatus == 2}">未錄取</button>
 
             <!-- 已取消 - 紅色 -->

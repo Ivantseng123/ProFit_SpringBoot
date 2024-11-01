@@ -15,7 +15,7 @@
           <div class="col-lg-5 col-md-5">
             <div class="title-img">
               <div class="can-img">
-                <img th:src="@{/images/jobs/img7.png}" alt="#">
+                <img th:src="@{/images/jobs/img6.png}" alt="#">
               </div>
               <h3 th:text="${jobsApplication.jobs.jobsTitle}">Mechanical Engineer <span th:text="jobsApplication.jobs.users.employer_profile.companyName">Conzio construction</span></h3>
             </div>
@@ -29,13 +29,17 @@
           <div class="col-lg-2 col-md-2">
             <th:block th:if="${jobsApplication.jobsApplicationStatus == 0}">
               <div class="btn-group">
-                <button class="btn btn-secondary btn-sm preview-btn" th:data-id="${jobsApplication.jobsApplicationId}" th:href="@{'/front/profile/preview/' + ${jobsApplication.jobsApplicationId}}" type="button">
+                <button class="badge rounded-pill bg-secondary preview-btn"
+                        style="font-size: 1.1rem; border: none; text-decoration: none;"
+                        th:data-id="${jobsApplication.jobsApplicationId}"
+                        th:href="@{'/front/profile/preview/' + ${jobsApplication.jobsApplicationId}}"
+                        type="button">
                   查看履歷
                 </button>
               </div>
             </th:block>
             <span class="badge rounded-pill bg-danger" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 1}">媒合成功</span>
-            <span class="badge rounded-pill bg-info" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 2}">媒合失敗</span>
+            <span class="badge rounded-pill bg-warning" style="font-size: 1.1rem;" th:if="${jobsApplication.jobsApplicationStatus == 2}">媒合失敗</span>
           </div>
         </div>
       </div>

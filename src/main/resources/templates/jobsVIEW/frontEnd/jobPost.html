@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{jobsVIEW/frontEnd/layout}">
+      layout:decorate="~{jobsVIEW/frontEnd/layout}">
 <head>
     <meta charset="UTF-8">
     <title>職缺列表</title>
@@ -18,7 +18,6 @@
                         <p>將您的需求匯集</p>
                         <p>吸收各方商業人才</p>
                         <p>輔助你往更高一層邁進</p>
-
                     </div>
                     <ul class="breadcrumb-nav">
                         <li><a th:href="@{/homepage}">回到首頁</a></li>
@@ -37,6 +36,9 @@
                     <div class="job-information">
                         <h3 class="title">刊登職缺資訊</h3>
                         <form id="editForm" th:action="${job.jobsId} ? @{/front/jobs/{id}(id=${job.jobsId})} : @{/front/jobs/new}" method="POST">
+                            <!-- 添加一鍵輸入按鈕 -->
+                            <button type="button" class="btn btn-info mb-3 text-white" id="autoFillBtn">一鍵輸入</button>
+
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -99,17 +101,6 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <h3 class="title">Company Information</h3>-->
-<!--                            <div class="row">-->
-<!--                                <div class="col-lg-12">-->
-<!--                                    <div class="choose-img">-->
-<!--                                        <p>Logo (Optional)</p>-->
-<!--                                        <label for="img">Select image:</label>-->
-<!--                                        <input type="file" id="img" name="img" accept="image/*">-->
-<!--                                        <p>Maximum file size: 2 MB</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
                             <div>
                                 <div class="col-lg-12 button">
                                     <button class="btn" type="submit">
@@ -124,10 +115,50 @@
         </div>
     </section>
 </div>
+
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
-    // $(document).ready(function (){
-    //
-    // });
+    $(document).ready(function() {
+        $("#autoFillBtn").click(function() {
+            // 填寫職缺標題
+            $("#jobsTitle").val("資深後端工程師");
+
+            // 選擇技能類別 (假設有對應的 option value)
+            $(".major_category").val("1").trigger('change');
+
+            // 設置截止日期 (當前日期加一個月)
+            let date = new Date();
+            date.setMonth(date.getMonth() + 1);
+            let formattedDate = date.toISOString().split('T')[0];
+            $("input[name='deadline']").val(formattedDate);
+
+            // 填寫工作地點
+            $("#jobsLocation").val("台北市信義區信義路五段7號");
+
+            // 填寫薪資範圍
+            $("#jobsMaxSalary").val("100000");
+            $("#jobsMinSalary").val("80000");
+
+            // 填寫工作時間
+            $("#jobsWorktime").val("週一至週五 09:00-18:00");
+
+            // 填寫開放職位數
+            $("#jobsNumberOfOpenings").val("2");
+
+            // 填寫職缺描述
+            $("#jobsDescription").val(
+                "工作內容：\n" +
+                "1. 負責開發及維護公司核心系統\n" +
+                "2. 設計並實作 RESTful API\n" +
+                "3. 資料庫規劃與效能優化\n" +
+                "4. 與前端工程師協作，開發網站功能\n\n" +
+                "必要條件：\n" +
+                "1. 具備 3 年以上 Java 開發經驗\n" +
+                "2. 熟悉 Spring Boot, Spring MVC 框架\n" +
+                "3. 具備 MySQL 資料庫開發經驗\n" +
+                "4. 良好的溝通能力及團隊合作精神"
+            );
+        });
+    });
 </script>
 </body>
 </html>
