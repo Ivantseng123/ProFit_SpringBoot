@@ -1,17 +1,22 @@
 package com.ProFit.model.bean.servicesBean;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.ProFit.model.bean.majorsBean.UserMajorBean;
+import com.ProFit.model.bean.chatsBean.ChatBean;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -68,6 +73,12 @@ public class ServiceBean implements java.io.Serializable {
 
 	@Column(name = "service_status", nullable = false)
 	private Integer serviceStatus = 0;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "service", cascade = CascadeType.ALL)
+	private List<ServiceApplicationBean> serviceApplication;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "service", cascade = CascadeType.ALL)
+	private List<ChatBean> chats;
 
 	// 無參數建構子
 	public ServiceBean() {
@@ -209,6 +220,38 @@ public class ServiceBean implements java.io.Serializable {
 
 	public void setServiceStatus(Integer serviceStatus) {
 		this.serviceStatus = serviceStatus;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Integer getMajorId() {
+		return majorId;
+	}
+
+	public void setMajorId(Integer majorId) {
+		this.majorId = majorId;
+	}
+
+	public List<ServiceApplicationBean> getServiceApplication() {
+		return serviceApplication;
+	}
+
+	public void setServiceApplication(List<ServiceApplicationBean> serviceApplication) {
+		this.serviceApplication = serviceApplication;
+	}
+
+	public List<ChatBean> getChats() {
+		return chats;
+	}
+
+	public void setChats(List<ChatBean> chats) {
+		this.chats = chats;
 	}
 
 	@Override

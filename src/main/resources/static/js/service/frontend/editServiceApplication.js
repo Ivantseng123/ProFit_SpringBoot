@@ -39,12 +39,16 @@ $(document).ready(function () {
             document.getElementById('submit').hidden = true;
         } else if (serviceApplicationDTO.status == 3) {
             document.getElementById('pageTitle').innerText = '委託已婉拒';
+            document.getElementById('submit').setAttribute("disabled", true);
         } else if (serviceApplicationDTO.status == 4) {
             document.getElementById('pageTitle').innerText = '委託已關閉';
+            document.getElementById('submit').setAttribute("disabled", true);
         } else if (serviceApplicationDTO.status == 5) {
             document.getElementById('pageTitle').innerText = '委託已成立';
+            document.getElementById('submit').setAttribute("disabled", true);
         } else if (serviceApplicationDTO.status == 6) {
             document.getElementById('pageTitle').innerText = '委託已結案';
+            document.getElementById('submit').setAttribute("disabled", true);
         }
 
 
