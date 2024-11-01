@@ -121,30 +121,31 @@ function mappingCategory(category) {
 function htmlMakerForEvents(searchEvents) {
 
     searchEvents.forEach(function (event) {
-
-        $('#search-results').append(`
-            <div class="col-lg-3 col-md-4 col-12">
-                <div class="single-news wow fadeInUp" data-wow-delay=".3s">
-                    <div class="image">
-                    </div>
-                    <div class="content-body">
-                        <h3 class="title text-center"><a href="#">${event.eventName}</a></h3>
-                        <div class="meta-details">
-
-                            <ul>
-                                <li><a href="#"><i class="lni lni-tag"></i>${mappingCategory(event.eventCategory)}</a></li>
-                                <li><a href="#"><i class="lni lni-tag"></i>${event.eventMajorCategoryName}</a></li>
-                                <li><a href="#"><i class="lni lni-calendar"></i>${formatDate(event.eventPartEndDate)}</a></li>
-                            </ul>
+        if (event.isEventActive === 1) {
+            $('#search-results').append(`
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="single-news wow fadeInUp" data-wow-delay=".3s">
+                        <div class="image">
                         </div>
-                        <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <h5 class="coursePrice mb-1">NT$ ${formatPrice(event.eventAmount)}</h5>
-                                <a href="#" class="btn btn-warning btn-sm">查看活動</a>
+                        <div class="content-body">
+                            <h3 class="title text-center"><a href="#">${event.eventName}</a></h3>
+                            <div class="meta-details">
+    
+                                <ul>
+                                    <li><a href="#"><i class="lni lni-tag"></i>${mappingCategory(event.eventCategory)}</a></li>
+                                    <li><a href="#"><i class="lni lni-tag"></i>${event.eventMajorCategoryName}</a></li>
+                                    <li><a href="#"><i class="lni lni-calendar"></i>${formatDate(event.eventPartEndDate)}</a></li>
+                                </ul>
+                            </div>
+                            <div class="mt-3 d-flex justify-content-between align-items-center">
+                                    <h5 class="coursePrice mb-1">NT$ ${formatPrice(event.eventAmount)}</h5>
+                                    <a href="#" class="btn btn-warning btn-sm">查看活動</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `);
+            `);
+        }
     });
 }
 

@@ -40,8 +40,8 @@
 	<!-- Modal -->
 	<!-- 新增類別 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false"
-			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -74,8 +74,8 @@
 
 	<!-- 編輯類別 彈出視窗 -->
 	<div>
-		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false"
-			tabindex="-1" aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
+		<div class="modal fade" id="staticBackdrop-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel-edit" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -129,16 +129,13 @@
 
 							<div class="row">
 								<div class="mb-3 col">
-									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id"
-										required>
+									<input type="number" class="form-control" id="insertMajorId" placeholder="專業Id" required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱"
-										required>
+									<input type="text" class="form-control" id="insertMajorName" placeholder="專業名稱" required>
 								</div>
 								<div class="mb-3 col">
-									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述"
-										required>
+									<input type="text" class="form-control" id="insertMajorDesc" placeholder="專業描述" required>
 								</div>
 							</div>
 							<button type="button" class="btn btn-primary">新增</button>
@@ -181,9 +178,9 @@
 					}
 				})
 					.then(res => {
-						
+
 						// console.log(res.data)
-						
+
 						if (res.data == "" || null) {
 							alert('創建失敗，已存在該id之類別');
 						} else {
@@ -227,15 +224,15 @@
 
 			///////------demo用 一鍵填入---------------------------------////////////////
 			document.getElementById('generateTestDataBtn').addEventListener('click', function () {
-				document.getElementById('majorCategoryId').value = 700;
-				document.getElementById('majorCategoryName').value = "影像製作";
+				document.getElementById('majorCategoryId').value = 800;
+				document.getElementById('majorCategoryName').value = "生活服務";
 			});
 
 
 			document.getElementById('generateTestDataBtn2').addEventListener('click', function () {
-				document.getElementById('insertMajorId').value = 701;
-				document.getElementById('insertMajorName').value = "動畫製作";
-				document.getElementById('insertMajorDesc').value = "2d動畫製作";
+				document.getElementById('insertMajorId').value = 801;
+				document.getElementById('insertMajorName').value = "清潔外包";
+				document.getElementById('insertMajorDesc').value = "提供辦公室與公共空間清潔服務";
 
 
 			});

@@ -8,33 +8,11 @@
 </head>
 <body>
 <div layout:fragment="content">
-<!--    &lt;!&ndash; Start Breadcrumbs &ndash;&gt;-->
-<!--    <div class="breadcrumbs overlay">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-12">-->
-<!--                    <div class="breadcrumbs-content">-->
-<!--                        <h1 class="page-title">我們找的就是你</h1>-->
-<!--                        <p>ProFit秉持著為所有人</p>-->
-<!--                        <p>提供具有吸引力的職缺</p>-->
-<!--                        <p>善用平台，掌握競爭力</p>-->
-<!--                        <p>尋找開放創新的工作環境</p>-->
-<!--                        <p>替自己打造學習與未來職涯的成長機會！</p>-->
-<!--                    </div>-->
-<!--                    <ul class="breadcrumb-nav">-->
-<!--                        <li><a th:href="@{/homepage}">回到首頁</a></li>-->
-<!--                        <li>職缺列表</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash; End Breadcrumbs &ndash;&gt;-->
-
     <section class="hero-area style2">
         <!-- Single Slider -->
         <div class="hero-inner">
             <div class="home-slider">
+                <!-- First Slide -->
                 <div class="single-slider">
                     <div class="container">
                         <div class="row">
@@ -47,124 +25,78 @@
                                             </div>
                                         </div>
                                         <div class="button wow fadeInUp" data-wow-delay=".7s">
-                                            <a href="#courseTop" class="btn">開始學習</a>
+                                            <a href="#courseTop" class="btn">踏上旅程</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 co-12">
                                 <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
-                                    <img th:src="@{/images/hero/teacher.png}" alt="#">
+                                    <img th:src="@{/images/hero/banner2.png}" alt="#">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Second Slide -->
                 <div class="single-slider">
                     <div class="container">
-                        <div class="row ">
-                            <div class="col-lg-7 co-12">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
                                 <div class="inner-content" style="padding-left: 30px;">
                                     <div class="hero-text">
                                         <h1 class="wow fadeInUp" data-wow-delay=".3s">惠鐘賢</h1>
                                         <h6>聯絡信箱: p8310112000@gmail.com</h6>
                                         <br>
+                                        <h5 class="mb-3 text-primary">職缺管理系統功能展示 </h5>
                                         <div class="row">
-                                            <div class="col-3">
-                                                <h5 class="mb-3 text-primary">職缺管理: </h5>
+                                            <div class="col-6">
                                                 <ul>
                                                     <li class="d-flex align-items-center mb-3">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">新增課程</h6>
+                                                        <h6 class="ms-2">DATA儀表板串接</h6>
                                                     </li>
                                                     <li class="d-flex align-items-center mb-3">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">刪除課程</h6>
+                                                        <h6 class="ms-2">上傳檔案</h6>
                                                     </li>
                                                     <li class="d-flex align-items-center mb-3">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">修改課程</h6>
+                                                        <h6 class="ms-2">下載(匯出)檔案</h6>
                                                     </li>
                                                     <li class="d-flex align-items-center">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">查詢課程</h6>
+                                                        <h6 class="ms-2">預覽檔案</h6>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="col-3">
-                                                <h5 class="mb-3 text-primary">2. 預約課程: </h5>
+                                            <div class="col-6">
                                                 <ul>
                                                     <li class="d-flex align-items-center mb-3">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">新增課程</h6>
+                                                        <h6 class="ms-2">頁面動畫通知</h6>
                                                     </li>
                                                     <li class="d-flex align-items-center mb-3">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">刪除課程</h6>
+                                                        <h6 class="ms-2">模糊查詢</h6>
                                                     </li>
                                                     <li class="d-flex align-items-center mb-3">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">修改課程</h6>
+                                                        <h6 class="ms-2">自動分頁</h6>
                                                     </li>
                                                     <li class="d-flex align-items-center">
                                                         <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">查詢課程</h6>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-3">
-                                                <h5 class="mb-3 text-primary">3. 上課系統: </h5>
-                                                <ul>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">新增課程</h6>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">刪除課程</h6>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">修改課程</h6>
-                                                    </li>
-                                                    <li class="d-flex align-items-center">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">查詢課程</h6>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-3">
-                                                <h5 class="mb-3 text-primary">4. 課程評價: </h5>
-                                                <ul>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">新增課程</h6>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">刪除課程</h6>
-                                                    </li>
-                                                    <li class="d-flex align-items-center mb-3">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">修改課程</h6>
-                                                    </li>
-                                                    <li class="d-flex align-items-center">
-                                                        <i class="lni lni-play"></i>
-                                                        <h6 class="ms-2">查詢課程</h6>
+                                                        <h6 class="ms-2">增刪改查</h6>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        <!-- <div class="button wow fadeInUp" data-wow-delay=".7s">
-                                            <a href="#courseTop" class="btn">立即加入</a>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-5 co-12">
-                                <div class="hero-image wow fadeInRight" data-wow-delay=".ss">
-                                    <!-- <img th:src="@{/images/hero/ivan.png}" alt="#"> -->
-                                    <img th:src="@{/images/hero/banner2.png}" alt="#">
+                            <div class="col-lg-6 col-12">
+                                <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
+                                    <img th:src="@{/images/hero/a.png}" alt="#">
                                 </div>
                             </div>
                         </div>
