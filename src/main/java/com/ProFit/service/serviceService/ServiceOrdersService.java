@@ -54,6 +54,7 @@ public class ServiceOrdersService {
     public ServiceOrdersDTO insertServiceOrder(ServiceOrderBean serviceOrder) {
         ServiceOrderBean insertedServiceOrder = serviceOrderRepo.insertServiceOrder(serviceOrder);
         insertedServiceOrder.setCreatedAt(LocalDateTime.now());
+        insertedServiceOrder.setServiceOrderDate(LocalDateTime.now());
         ServiceOrdersDTO fromEntity = ServiceOrdersDTO.fromEntity(insertedServiceOrder);
         return fromEntity;
     }

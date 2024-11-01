@@ -7,14 +7,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.ProFit.model.bean.eventsBean.EventsBean;
+import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
+import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
+
+import jakarta.servlet.http.HttpSession;
+
 import com.ProFit.service.majorService.IMajorCategoryService;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/f/events")
@@ -26,14 +34,12 @@ public class EventControllerF {
     @Autowired
     private IMajorService majorService;
 
-     @Autowired
-     private IMajorCategoryService majorCategoryService;
+    @Autowired
+    private IMajorCategoryService majorCategoryService;
 
     // 主頁面，列出所有活動
     @GetMapping
-    public String listEvents(Model model) {
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
+    public String listEvents() {
         return "eventsVIEW/frontend/eventsF";
     }
 
@@ -41,8 +47,8 @@ public class EventControllerF {
     @GetMapping("/new")
     public String newEvent(Model model) {
         EventsDTO event = new EventsDTO();
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
+//        List<MajorDTO> majors = majorService.findAllMajors();
+//        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/frontend/eventsFormF";
     }
@@ -108,4 +114,5 @@ public class EventControllerF {
         eventsService.saveEvent(event);
         return ResponseEntity.ok("/ProFit/f/events");
     }
+    
 }

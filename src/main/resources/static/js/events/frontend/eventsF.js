@@ -5,23 +5,14 @@ $(document).ready(function () {
     // 清空當前表格
     $('.categorySpace').empty();
 
-    // $.ajax({
-    //     url: '/ProFit/course/searchCourseByMajorCategory',
-    //     dataType: 'JSON',
-    //     type: 'GET',
-    //     success: function (allCourseCategoryList) {
-
-    //         // 寫入類別
-    //         htmlMakerForCategory(allCourseCategoryList);
-
-    //     },
-    //     error: function (jqXHR, textStatus, errorThrown) {
-    //         // 處理錯誤
-    //         console.error('查詢失敗:', textStatus, errorThrown);
-    //         alert('查詢失敗，請重試。');
-    //     }
-    // });
-
+    axios.get('/ProFit/events/get/majorCategory')
+        .then(response => {
+            console.log(response.data);
+            htmlMakerForCategory(response.data);
+        })
+        .catch( error => {
+            console.log(error);
+         });
 
     // loading 畫面
     $('#search-results').append(`	<div class="text-center">
@@ -149,25 +140,25 @@ function htmlMakerForEvents(searchEvents) {
     });
 }
 
-// function htmlMakerForCategory(allCourseCategoryList) {
-//     let i = 1;
-//     allCourseCategoryList.forEach(function (courseCategory) {
-//         $('.categorySpace').append(`
-//             <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column pt-1 mb-2">
-//                 <a href="#courseTop" class="single-cat wow fadeInUp border border-primary-subtle rounded border-3" data-wow-delay=".2s" style="width: 120px; height: 120px;">
-//                     <div class="top-side text-center mt-2">
-//                         <img class="rounded" style="max-width:50px"
-//                         src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
-//                         <h5 class="categoryId text-center mt-1" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h5>
-//                     </div>
-//                     <div class="bottom-side text-center mt-1">
-//                         <span>課程數:</span> <span class="available-job">${courseCategory.courseNumber}</span>
-//                     </div>
-//                 </a>
-//             </div>`);
-//         i++;
-//     })
-// }
+function htmlMakerForCategory(allCourseCategoryList) {
+    let i = 1;
+    allCourseCategoryList.forEach(function (majorCategory) {
+        $('.categorySpace').append(`
+            <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column pt-1 mb-2">
+                <a href="#eventTop" class="single-cat wow fadeInUp border border-primary-subtle rounded border-3" data-wow-delay=".2s" style="width: 120px; height: 120px;">
+                    <div class="top-side text-center mt-2">
+                        <img class="rounded" style="max-width:50px"
+                        src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
+                        <h5 class="categoryId text-center mt-1" data-categoryid="${majorCategory.majorCategoryId}">${majorCategory.majorCategoryName}</h5>
+                    </div>
+                    <div class="bottom-side text-center mt-1">
+                        <span>活動數:</span> <span class="available-job">${majorCategory.eventsNumber}</span>
+                    </div>
+                </a>
+            </div>`);
+        i++;
+    })
+}
 
 // function loadThatCategoryPage(categoryId) {
 

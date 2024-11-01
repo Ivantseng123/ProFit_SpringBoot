@@ -5,18 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartFile;
 
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
-import com.ProFit.service.majorService.IMajorCategoryService;
-import com.ProFit.service.utilsService.FirebaseStorageService;
+//import com.ProFit.service.utilsService.FirebaseStorageService;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +30,6 @@ public class EventsController {
 //    @Autowired
 //    private FirebaseStorageService firebaseStorageService;
 
-    // @Autowired
-    // private IMajorCategoryService majorCategoryService;
 
     // 主頁面，列出所有活動
     @GetMapping
@@ -48,8 +43,6 @@ public class EventsController {
     @GetMapping("/new")
     public String newEvent(Model model) {
         EventsDTO event = new EventsDTO();
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/backend/eventForm";
     }
@@ -59,8 +52,6 @@ public class EventsController {
     public String editEvent(@RequestParam String eventId, Model model) {
         EventsBean eventBean = eventsService.selectEventById(eventId);
         EventsDTO event = eventsService.convertToDTO(eventBean);
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/backend/eventForm";
     }
@@ -70,8 +61,6 @@ public class EventsController {
     public String viewEvent(@RequestParam String eventId, Model model) {
         EventsBean eventBean = eventsService.selectEventById(eventId);
         EventsDTO event = eventsService.convertToDTO(eventBean);
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
         model.addAttribute("event", event);
         return "eventsVIEW/backend/eventForm";
     }
