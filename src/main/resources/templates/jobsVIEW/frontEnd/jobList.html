@@ -8,28 +8,104 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <!-- Start Breadcrumbs -->
-    <div class="breadcrumbs overlay">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcrumbs-content">
-                        <h1 class="page-title">我們找的就是你</h1>
-                        <p>ProFit秉持著為所有人</p>
-                        <p>提供具有吸引力的職缺</p>
-                        <p>善用平台，掌握競爭力</p>
-                        <p>尋找開放創新的工作環境</p>
-                        <p>替自己打造學習與未來職涯的成長機會！</p>
+    <section class="hero-area style2">
+        <!-- Single Slider -->
+        <div class="hero-inner">
+            <div class="home-slider">
+                <!-- First Slide -->
+                <div class="single-slider">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 co-12">
+                                <div class="inner-content" style="padding-left: 30px;">
+                                    <div class="hero-text">
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">提升你的職業技能</h1>
+                                        <div class="cat-head">
+                                            <div class="row categorySpace">
+                                            </div>
+                                        </div>
+                                        <div class="button wow fadeInUp" data-wow-delay=".7s">
+                                            <a href="#courseTop" class="btn">踏上旅程</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 co-12">
+                                <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
+                                    <img th:src="@{/images/hero/banner2.png}" alt="#">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <ul class="breadcrumb-nav">
-                        <li><a th:href="@{/homepage}">回到首頁</a></li>
-                        <li>職缺列表</li>
-                    </ul>
+                </div>
+                <!-- Second Slide -->
+                <div class="single-slider">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <div class="inner-content" style="padding-left: 30px;">
+                                    <div class="hero-text">
+                                        <h1 class="wow fadeInUp" data-wow-delay=".3s">惠鐘賢</h1>
+                                        <h6>聯絡信箱: p8310112000@gmail.com</h6>
+                                        <br>
+                                        <h5 class="mb-3 text-primary">職缺管理系統功能展示 </h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <ul>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">DATA儀表板串接</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">上傳檔案</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">下載(匯出)檔案</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">預覽檔案</h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-6">
+                                                <ul>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">頁面動畫通知</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">模糊查詢</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center mb-3">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">自動分頁</h6>
+                                                    </li>
+                                                    <li class="d-flex align-items-center">
+                                                        <i class="lni lni-play"></i>
+                                                        <h6 class="ms-2">增刪改查</h6>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="hero-image wow fadeInRight" data-wow-delay=".4s">
+                                    <img th:src="@{/images/hero/a.png}" alt="#">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- End Breadcrumbs -->
+        <!--/ End Single Slider -->
+    </section>
 
     <!-- Start Find Job Area -->
     <section class="find-job job-list section">
@@ -140,9 +216,77 @@
     <!-- /End Find Job Area -->
 </div>
 <script th:inline="javascript" layout:fragment="script" type="text/javascript">
-    // $(document).ready(function (){
-    //
-    // });
+    $(document).ready(function (){
+        const baseUrl = /*[[@{/jobs}]]*/'';
+        //======== Home Slider
+        var slider = new tns({
+            container: '.home-slider',
+            slideBy: 'page',
+            autoplay: false,
+            autoplayButtonOutput: false,
+            mouseDrag: true,
+            gutter: 0,
+            items: 1,
+            nav: false,
+            controls: true,
+            controlsText: [
+                '<i class="lni lni-arrow-left prev"></i>',
+                '<i class="lni lni-arrow-right next"></i>'
+            ],
+            responsive: {
+                1200: {
+                    items: 1,
+                },
+                992: {
+                    items: 1,
+                },
+                0: {
+                    items: 1,
+                }
+
+            }
+        });
+
+        $('.categorySpace').empty();
+
+        $.ajax({
+            url: baseUrl + '/jobsCategoryAnalysis',
+            dataType: 'JSON',
+            type: 'GET',
+            success: function (allCourseCategoryList) {
+
+                // 寫入類別
+                htmlMakerForCategory(allCourseCategoryList);
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // 處理錯誤
+                console.error('查詢失敗:', textStatus, errorThrown);
+                alert('查詢失敗，請重試。');
+            }
+        });
+
+        function htmlMakerForCategory(allCourseCategoryList) {
+            let i = 1;
+            allCourseCategoryList.forEach(function (courseCategory) {
+                $('.categorySpace').append(`
+            <div class="col-lg-3 col-md-6 col-12 d-flex justify-content-center align-items-center flex-column pt-1 mb-2">
+                <a href="#courseTop" class="single-cat wow fadeInUp border border-primary-subtle rounded border-3" data-wow-delay=".2s" style="width: 120px; height: 120px;">
+                    <div class="top-side text-center mt-2">
+                        <img class="rounded" style="max-width:50px"
+                        src="http://localhost:8080/ProFit/images/major/category-${i}.png" alt="#">
+                        <h5 class="categoryId text-center mt-1" data-categoryid="${courseCategory.majorCategoryId}">${courseCategory.categoryName}</h5>
+                    </div>
+                    <div class="bottom-side text-center mt-1">
+                        <span>職缺數:</span> <span class="available-job">${courseCategory.totalCount}</span>
+                    </div>
+                </a>
+            </div>`);
+                i++;
+            })
+
+        }
+    });
 </script>
 </body>
 </html>

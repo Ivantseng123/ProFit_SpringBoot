@@ -85,14 +85,14 @@ public class WebAppConfig implements WebMvcConfigurer {
 			"/emp/getCompPfinfo",
 			"/c/course/");
 
-	// @Override
-	// public void addInterceptors(InterceptorRegistry registry) {
-	// registry.addInterceptor(loginInterceptor).addPathPatterns(pathPatterns_backend);
-	// //.excludePathPatterns("/loginPage","/login","/js/users/Login.js"); // 排除登入頁面
-	//
-	// registry.addInterceptor(loginInterceptor_frontend).addPathPatterns(pathPatterns_frontend);
-	// //.excludePathPatterns("/homepage","/login_frontend","/js/users/frontend_login.js");
-	// // 排除登入頁面
-	// }
+	 @Override
+	 public void addInterceptors(InterceptorRegistry registry) {
+	 registry.addInterceptor(loginInterceptor).addPathPatterns(pathPatterns_backend);
+	 //.excludePathPatterns("/loginPage","/login","/js/users/Login.js"); // 排除登入頁面
+	
+	 registry.addInterceptor(loginInterceptor_frontend).addPathPatterns(pathPatterns_frontend);
+	 //.excludePathPatterns("/homepage","/login_frontend","/js/users/frontend_login.js");
+	 // 排除登入頁面
+	 }
 
 }

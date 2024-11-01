@@ -52,19 +52,29 @@
         <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 		<script th:src="@{/js/jquery-ui-1.14.0.custom/jquery-ui.js}"></script>
 		<script th:src="@{/js/axios.min.js}"></script>
-		<script th:src="@{/js/users/home.js}"></script>
+<!--		<script th:src="@{/js/users/home.js}"></script>-->
         <script th:src="@{/js/fontawesome.js}" crossorigin="anonymous"></script>
         <script th:src="@{/js/datatables.min.js}"></script>
         <script th:src="@{/js/jobs/sweetalert2.js}"></script>
         <script th:src="@{/js/jobs/select2.min.js}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="text/javascript" th:inline="javascript">
-            const hamBurger = document.querySelector(".toggle-btn");
+            $(document).ready(function () {
+                const hamBurger = document.querySelector(".toggle-btn");
 
-            if (hamBurger) {
-                hamBurger.addEventListener("click", function () {
-                    document.querySelector("#sidebar").classList.toggle("expand");
-                });
-            }
+                if (hamBurger) {
+                    hamBurger.addEventListener("click", function () {
+                        document.querySelector("#sidebar").classList.toggle("expand");
+                    });
+                }
+
+                // const datatableI18nUrl = /*[[@{/js}]]*/'';
+                // $.extend(true, $.fn.dataTable.defaults, {
+                //     language: {
+                //         url: datatableI18nUrl + '/chinese.json'
+                //     }
+                // });
+            });
         </script>
         <th:block layout:fragment="script" />
     </body>

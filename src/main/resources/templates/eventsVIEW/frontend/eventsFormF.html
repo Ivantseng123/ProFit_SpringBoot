@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>舉辦活動</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/images/favicon.svg}" />
+
+    <!-- Web Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- ========================= CSS here ========================= -->
+    <link rel="stylesheet" th:href="@{/css/frontend/bootstrap.css}" />
+    <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+    <link rel="stylesheet" th:href="@{/css/frontend/animate.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/tiny-slider.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/glightbox.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/frontend/main.css}" />
+    <style>
+        .select {
+            width: 100%;
+            height: 50px;
+            border-radius: 0;
+            border: 1px solid #ebebeb;
+            padding-left: 20px;
+            padding-right: 20px;
+            font-weight: 400
+        }
+
+        .modal {
+            z-index: 1060;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="loading-area"></div>
+
+    <!-- 引用 headerOtherPage.html -->
+    <div th:replace="~{model/frontend/headerOtherPage}"></div>
+
+    <!-- Start Add Resume Section -->
+    <section class="add-resume section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1 col-12">
+                    <div class="add-resume-inner box mt-5" style="max-width: 1000px;">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">舉辦活動</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <form id="eventForm" class="form-ad mt-4">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">活動名稱</label>
+                                                <input id="eventName" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">申請者(自動帶入)</label>
+                                                <input id="eventCreateUserId" type="text" class="form-control"
+                                                    th:field="${currentUser.userName}"
+                                                    th:data-userid="${currentUser.userId}" readonly>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>活動類別</label>
+                                                <select class="select" id="eventCategory">
+                                                    <option value="" disabled selected>請選擇</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>活動專業類別</label>
+                                                <select class="select" id="eventMajor">
+                                                    <option value="" disabled selected>請選擇</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventStartDate">開始日期</label>
+                                                <input type="datetime-local" id="eventStartDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventEndDate">結束日期</label>
+                                                <input type="datetime-local" id="eventEndDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventPartStartDate">報名開始日期</label>
+                                                <input type="datetime-local" id="eventPartStartDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventPartEndDate">報名結束日期</label>
+                                                <input type="datetime-local" id="eventPartEndDate">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventAmount">報名價格:</label>
+                                                <input type="number" id="eventAmount">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventLocation">活動地點</label>
+                                                <input type="text" id="eventLocation">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label for="eventParticipantMaximum">參加人數上限</label>
+                                                <input type="number" id="eventParticipantMaximum">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="eventDescription">活動描述</label>
+                                        <textarea id="eventDescription" style="height: auto;"
+                                            placeholder="簡短介紹100字以內"></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <button type="button" id="saveBtn" class="btn btn-primary btn-sm">保存</button>
+                                        <button type="button" id="cancelBtn" class="btn btn-danger btn-sm">回上一頁</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="majors-data" style="display: none;">
+            <th:block th:each="major : ${majors}">
+                <div th:value="${major.majorId}" th:data-name="${major.majorName}"></div>
+            </th:block>
+        </div>
+
+        </div>
+    </section>
+    <!-- End Add Resume Section -->
+
+    <!-- 引用 signModal.html -->
+    <div th:replace="~{model/frontend/signModal}"></div>
+
+    <!-- 引用 footer.html -->
+    <div th:replace="~{model/frontend/footer}"></div>
+
+    <!-- ========================= scroll-top ========================= -->
+    <a href="#" class="scroll-top btn-hover">
+        <i class="lni lni-chevron-up"></i>
+    </a>
+
+    <!-- ========================= JS here ========================= -->
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/frontend/bootstrap.js}"></script>
+    <script th:src="@{/js/frontend/wow.min.js}"></script>
+    <script th:src="@{/js/frontend/tiny-slider.js}"></script>
+    <script th:src="@{/js/frontend/glightbox.min.js}"></script>
+    <script th:src="@{/js/frontend/main.js}"></script>
+    <script th:src="@{/js/users/frontend_user/frontend_login.js}"></script>
+    <script th:src="@{/js/events/eventsMapping.js}"></script>
+    <script th:src="@{/js/events/frontend/eventsFormF.js}"></script>
+</body>
+
+</html>

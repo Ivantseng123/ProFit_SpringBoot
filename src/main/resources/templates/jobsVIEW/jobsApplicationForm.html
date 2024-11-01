@@ -13,7 +13,7 @@
     <h1 class="mt-4">職缺申請詳情</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a th:href="@{/jobsApplication/list}">職缺申請管理</a></li>
-        <li class="breadcrumb-item active">查看職缺申請詳情</li>
+        <li class="breadcrumb-item active">申請詳情</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
@@ -50,12 +50,6 @@
                  jobApplication.jobsApplicationStatus == 2 ? '未錄取' : '未知狀態'}" readonly />
                 </div>
 
-                <!-- 申請合約 -->
-                <div class="mb-3">
-                    <label for="jobsApplicationResume" class="form-label">申請履歷</label>
-                    <input type="text" class="form-control" id="jobsApplicationResume" name="jobsApplicationResume" th:value="${jobApplication.jobsApplicationResume}" readonly />
-                </div>
-
 
 
                 <!-- 返回按鈕 -->
@@ -81,7 +75,7 @@
                 document.getElementById('applicant').textContent = data.users;
                 document.getElementById('jobsApplicationDate').textContent = data.jobsApplicationDate;
                 document.getElementById('jobsStatus').textContent = data.jobsStatus;
-                document.getElementById('jobsApplicationResume').textContent = data.jobsApplicationResume;
+                // document.getElementById('jobsApplicationResume').textContent = data.jobsApplicationResume;
             })
             .catch(error => console.error('獲取職缺數據時出錯:', error));
     })
