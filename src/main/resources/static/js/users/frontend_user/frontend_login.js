@@ -144,7 +144,7 @@ function initializeAuthButton() {
 	const userPictureDisplay = document.getElementById('userPictureDisplay');
 	
 	console.log('會員頭貼' +userPicture );
-
+	
 	// 根據登入狀態顯示按鈕
 	if (isLoggedIn === 'true') {
 		authText.textContent = '登出';
