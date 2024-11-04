@@ -18,6 +18,51 @@ $(document).ready(function () {
 
         document.getElementById('to-chatroom').hidden = false;
         document.getElementById('to-chatroom').href = `/ProFit/c/chat/add?serviceId=${servicesDTO.serviceId}&freelancerId=${servicesDTO.userMajor.user.userId}`;
+
+
+        // 一鍵輸入按鈕
+        document.getElementById('new-input-button').hidden = false;
+        document.getElementById('new-input-button').addEventListener('click', function () {
+            // 在此處添加按鈕的點擊事件邏輯
+            
+            // 將數據填入表單
+            // 填入接案人
+            // document.getElementById('freelancer').innerHTML = `<option selected value=${servicesDTO.userMajor.user.userId}>${servicesDTO.userMajor.user.userName}</option>`;
+            // 填入合作名稱
+            document.getElementById('serviceApplicationTitle').value = 'springboot 網站建置';
+            // 填入服務選項
+            // document.getElementById('serviceSelect').innerHTML = `<option selected value=${servicesDTO.serviceId}>${servicesDTO.serviceTitle}</option>`;
+
+            document.getElementsByName('serviceApplicationSubitem')[0].value = 'SprinBoot網站基礎功能';
+            document.getElementsByName('serviceApplicationPrice')[0].value = 70000;
+            document.getElementsByName('serviceApplicationAmount')[0].value = 1;
+            document.getElementsByName('serviceApplicationUnit')[0].value = '專案';
+            document.getElementsByName('serviceApplicationContent')[0].value = `本合約由甲方（委託方）與乙方（接案方）於__________（簽訂日期）訂立，旨在規範雙方合作提供專業服務的權利與義務。雙方同意按照以下條款進行合作。
+
+甲方委託乙方提供「」專案的專業服務。乙方將根據甲方的需求和規範，於（完成期限）內高品質地完成約定內容，並保證服務標準符合雙方的預期。甲方可隨時查詢專案進度，以確保服務符合要求。
+
+本合約總金額為__________，甲方應在服務確認開始前，將全額款項託管至平台。待乙方完成服務並經甲方確認後，平台將釋放款項予乙方。託管費用由甲乙雙方共同承擔，各自支付合約金額的 5%。
+
+在本合作中，甲方有責任提供乙方執行服務所需的資源與支持，並按約定支付款項；乙方則承諾在約定期限內保質完成服務。若乙方未能履行其義務，甲方有權終止合約並要求相應賠償。反之，若甲方無故終止合約，乙方有權索取已完成部分的合理報酬。若有特殊情況，雙方可經協商對合約內容進行書面變更。
+
+合約期間，乙方應對甲方提供的所有資訊嚴格保密，除非獲得甲方書面同意，不得向第三方透露任何相關資訊，保護甲方的商業機密。
+
+若雙方在合作過程中出現任何爭議，應以友好協商的方式解決；若無法達成共識，則按照所在地法律進行仲裁或訴訟，以保障雙方權益。
+
+本合約經雙方簽署後正式生效。`;
+
+        });
+
+        // 填入合約里程碑
+        document.getElementsByName('serviceApplicationMission')[0].value = '網站基本功能正常運作';
+
+        // // 填入交付日期，並轉換為 input date 格式
+        // let serviceDoneDate = new Date(serviceApplicationDTO.serviceApplicationDoneDate).toISOString().split('T')[0];
+        // document.getElementById('serviceApplicationDate').value = serviceDoneDate;
+
+        document.getElementsByName('serviceApplicationTotalPrice')[0].value = 70000;
+
+
     }
 
 
@@ -87,10 +132,10 @@ $(document).ready(function () {
         document.getElementById('serviceSelect').setAttribute('readonly', true);
     }
 
-    
+
 
     // 如果是接案人進入頁面，則全都不能用，且只有接受跟婉拒按鈕
-    if (serviceApplicationDTO!=null && currentUser.userId == serviceApplicationDTO.freelancerId) {
+    if (serviceApplicationDTO != null && currentUser.userId == serviceApplicationDTO.freelancerId) {
         console.log(serviceApplicationDTO)
 
         caseownerId = serviceApplicationDTO.caseownerId;
@@ -113,7 +158,7 @@ $(document).ready(function () {
         document.getElementById('serviceApplicationTitle').setAttribute('disabled', true);
         document.getElementById('serviceSelect').setAttribute('disabled', true);
 
-        
+
 
         // 生成帶入的服務詳情
         displayServiceDetails(serviceApplicationDTO.service);
@@ -128,7 +173,7 @@ $(document).ready(function () {
             acceptButton.hidden = false;
             // 婉拒按鈕
         } else if (serviceApplicationDTO.status == 2) { // 已接受
-            
+
         } else if (serviceApplicationDTO.status == 3) { // 已婉拒
         } else if (serviceApplicationDTO.status == 4) { // 已關閉
         } else if (serviceApplicationDTO.status == 5) { // 已成立
