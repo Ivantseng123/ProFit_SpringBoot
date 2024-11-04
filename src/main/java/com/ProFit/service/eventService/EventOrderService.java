@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ProFit.model.bean.eventsBean.EventOrderBean;
+import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dao.eventsCRUD.EventOrderDAO;
 
 @Service
@@ -17,6 +19,9 @@ public class EventOrderService implements IEventOrderService {
 
     @Autowired
     private EventOrderDAO eventOrderDAO;
+    
+    @Autowired
+	private IEventsService eventsService;
 
     // 搜尋全部訂單
     @Override
@@ -104,6 +109,14 @@ public class EventOrderService implements IEventOrderService {
         order.setEventId(orderDTO.getEventId());
         order.setEventParticipantId(orderDTO.getParticipantId());
         return order;
+    }
+    
+    // 轉換成event
+    @Override
+    public EventsDTO convertToEvents(EventOrderBean eventOrder) {
+ 	   EventsBean eventBean = eventOrder.getEvent();
+ 	   EventsDTO event = eventsService.convertToDTO(eventBean);
+ 	   return event;
     }
 
     private String generateNewEventOrderId() {

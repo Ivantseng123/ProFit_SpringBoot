@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ProFit.model.bean.eventsBean.EventOrderBean;
 import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
+import com.ProFit.model.dto.eventsDTO.EventOrderResultDTO;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.service.eventService.IEventOrderService;
 import com.ProFit.service.eventService.IEventsService;
@@ -61,7 +62,7 @@ public class EventOrderControllerF {
 
     // 搜尋訂單
     @GetMapping("/search") @ResponseBody
-    public List<EventOrderDTO> searchOrder(@RequestParam(required = false) Boolean eventOrderStatus,
+    public EventOrderResultDTO searchOrder(@RequestParam(required = false) Boolean eventOrderStatus,
     									@RequestParam(required = false) String eventId,
 							    		@RequestParam(required = false) Integer eventParticipantId) {
         List<EventOrderBean> eventOrderList;
@@ -78,8 +79,9 @@ public class EventOrderControllerF {
             eventOrderList = eventOrderService.selectAllOrders();
         }
         
-        List<EventOrderDTO> eventOrder = eventOrderList.stream().map(eventOrderService::convertToDTO).collect(Collectors.toList());
-        return eventOrder;
+        List<EventsDTO> events = eventOrderList.stream().map(eventOrderService::convertToEvents).collect(Collectors.toList());
+        List<EventOrderDTO> eventOrders = eventOrderList.stream().map(eventOrderService::convertToDTO).collect(Collectors.toList());
+        return new EventOrderResultDTO(events, eventOrders);
     }
 
 //    // 刪除訂單

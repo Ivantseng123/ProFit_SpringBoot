@@ -7,6 +7,9 @@ $(document).ready(() => {
         // 渲染基本結構
         renderEventCenter();
 
+        // 初始化標籤切換事件
+        initializeTab();
+
         // 取得使用者資訊
         axios.get("/ProFit/events/get/user")
             .then(function (response) {
@@ -19,9 +22,6 @@ $(document).ready(() => {
             .then(() => {
                 // 載入主辦活動
                 loadHostEvents();
-
-                // 初始化標籤切換事件
-                initializeTabEvents();
             })
             .catch(function (error) {
                 console.error('There was an error!', error);
@@ -32,7 +32,8 @@ $(document).ready(() => {
 /**
  * 初始化標籤切換事件
  */
-function initializeTabEvents() {
+function initializeTab() {
+
     // 使用事件委派，監聽整個 eventTabs 容器
     $('#eventTabs').on('click', 'button', function (e) {
         e.preventDefault();
@@ -125,7 +126,6 @@ function renderEventCenter() {
  */
 function loadHostEvents() {
     let userId = document.getElementById("userId").textContent;
-    console.log(userId);
     axios.get(`/ProFit/f/events/host/search?hostId=${userId}`)
         .then(response => {
             renderHostEvents(response.data);
@@ -140,19 +140,17 @@ function loadHostEvents() {
 /**
  * 載入收到的委託
  */
-// function loadPartEvents() {
-//     $.ajax({
-//         url: `/ProFit/c/serviceApplication/api/freelancer`,
-//         type: 'GET',
-//         success: function (applications) {
-//             renderReceivedApplications(applications.content);
-//         },
-//         error: function (xhr, status, error) {
-//             console.error('載入收到的委託失敗:', error);
-//             $('.part-events-list').html('<div class="alert alert-danger">載入失敗，請重試</div>');
-//         }
-//     });
-// }
+function loadPartEvents() {
+    let userId = document.getElementById("userId").textContent;
+    axios.get(`/ProFit/f/events/order/search?eventParticipantId=${userId}`)
+        .then(response => {
+            renderPartEvents(response.data.events, response.data.eventOrders);
+        })
+        .catch(error => {
+            console.error('載入參加活動失敗:', error);
+            $('.part-events-list').html('<div class="alert alert-danger">載入失敗，請重試</div>');
+        });
+}
 
 /**
  * 渲染主辦活動列表
@@ -169,232 +167,121 @@ function renderHostEvents(events) {
 
     events.forEach(event => {
         container.append(`
-              <div class="row align-items-center border-bottom py-3">
-                  <div class="col-md-3">
-                      <h6 class="mb-0">${event.eventName}</h6>
-                       <span>${formatDate(event.eventPublishDate)}</span>
-                  </div>
-                  </div>
+                    <div class="row align-items-center border-bottom py-3">
+                        <div class="col-md-4">
+                            <h6 class="mb-0">${event.eventName}</h6>
+                            <span>創立日期：${formatDate(event.eventPublishDate)}</span>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="badge ${getEventStatusClass(event.isEventActive)}"
+                                data-${event.eventId}-status="${event.isEventActive}">
+                                ${getEventStatus(event.isEventActive)}
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="view btn btn-secondary btn-sm" href="/ProFit/f/events/view?eventId=${event.eventId}">詳細資料</a>
+                            <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
+                            <a class="view-participant btn btn-success btn-sm" href="#">參加者列表</a>
+                            <a class="edit btn btn-primary btn-sm" href="#">編輯</a>
+                        </div>
+                    </div>
                   `);
-                //   <div class="col-md-2">
-                //       <h6 class="mb-0">${event.userName}</h6>
-                //       <span>${event.service.serviceTitle}</span>
-                //   </div>
-                //   <div class="col-md-2">
-                //       <span class="badge ${getStatusBadgeClass(event.isEventActive)}" data-${event.eventId}-status="${event.isEventActive}">
-                //           ${getApplicationStatus(event.isEventActive)}
-                //       </span>
-                //   </div>
-                //   <div class="col-md-3">
-                //       <span>委託單價: $${event.serviceeventPrice} / ${event.serviceeventUnit}</span>
-                //       <span>委託總額: $${event.serviceeventPrice * event.serviceeventAmount}</span>
-                //   </div>
-                //   <div class="col-md-2">
-                //       ${event.status != 2 && event.status != 6 ? `
-                //         <button class="btn btn-info btn-sm" 
-                //               onclick="viewApplication(${application.serviceApplicationId})">
-                //             編輯
-                //         </button>
-                //       ` : ''}
-                //       ${application.status === 1 ? `
-                //           <button class="btn btn-danger btn-sm" 
-                //                   onclick="cancelApplication(${application.serviceApplicationId})">
-                //               取消
-                //           </button>
-                //       ` : ''}
-                //       ${application.status === 2 ? `
-                //          <button class="btn btn-info btn-sm"
-                //               onclick="createOrder(${application.serviceApplicationId})">
-                //             成立訂單
-                //         </button>
-                //          <button class="btn btn-danger btn-sm"
-                //                   onclick="cancelApplication(${application.serviceApplicationId})">
-                //               取消
-                //           </button>
-                //     ` : ''}
-                //       ${application.status === 4 || application.status === 3 ? `
-                //         <button class="btn btn-secondary btn-sm" 
-                //                 onclick="deleteApplication(${application.serviceApplicationId})">
-                //             刪除
-                //         </button>
-                //     ` : ''}
-                //     ${application.status === 6 ? `
-                //       <button class="btn btn-secondary btn-sm" 
-                //               onclick="viewApplication(${application.serviceApplicationId})">
-                //           查看
-                //       </button>
-                //   ` : ''}
-
-                //   </div>
+                //   <a class="view-host btn btn-success btn-sm" href="/ProFit/f/events/host/search?eventId=${event.eventId}">主辦者列表</a>
+                //   <a class="view-participant btn btn-success btn-sm" href="/ProFit/f/events/order/search?eventId=${event.eventId}">參加者列表</a>
+                //   <a class="edit btn btn-primary btn-sm" href="/ProFit/f/events/edit?eventId=${event.eventId}">編輯</a>
     });
 }
 
 /**
- * 渲染收到的委託列表
+ * 渲染參加活動列表
  */
-// function renderReceivedApplications(applications) {
-//     const container = $('.part-events-list');
-//     container.empty();
+function renderPartEvents(events, orders) {
+    console.log(events,orders);
+    const container = $('.part-events-list');
+    container.empty();
 
-//     if (!applications || applications.length === 0) {
-//         container.html('<div class="alert alert-info">目前沒有收到的委託</div>');
-//         return;
-//     }
+    if (!events || events.length === 0) {
+        container.html('<div class="alert alert-info">目前沒有參加的活動</div>');
+        return;
+    }
 
-//     applications.forEach(application => {
-//         if (application.status != 0 || application.status != 4) {
-//             container.append(`
-//           <div class="row align-items-center border-bottom py-3">
-//               <div class="col-md-3">
-//                   <h6 class="mb-0">${application.serviceApplicationTitle}</h6>
-//                    <span>${formatDate(application.updatedAt)}</span>
-//               </div>
-//               <div class="col-md-2">
-//                   <h6 class="mb-0">${application.caseowner.userName}</h6>
-//                   <span>${application.service.serviceTitle}</span>
-//               </div>
-//               <div class="col-md-2">
-//                   <span class="badge ${getStatusBadgeClass(application.status)}" data-${application.serviceApplicationId}-status="${application.status}">
-//                       ${getApplicationStatus(application.status)}
-//                   </span>
-//               </div>
-//               <div class="col-md-3">
-//                   <span>委託單價: $${application.serviceApplicationPrice} / ${application.serviceApplicationUnit}</span>
-//                   <span>委託總額: $${application.serviceApplicationPrice * application.serviceApplicationAmount}</span>
-//               </div>
-//               <div class="col-md-2">
-//                   <button class="btn btn-info btn-sm"
-//                           onclick="viewApplication(${application.serviceApplicationId})">
-//                       查看
-//                   </button>
-//                   ${application.status === 1 ? `
-//                       <button class="btn btn-success btn-sm"
-//                               onclick="acceptApplication(${application.serviceApplicationId})">
-//                           同意
-//                       </button>
-//                       <button class="btn btn-danger btn-sm"
-//                             onclick="rejectApplication(${application.serviceApplicationId})">
-//                         婉拒
-//                     </button>
-//                   ` : ''}
-//               </div>
-//           </div>
-//       `);
-//         }
+    // 建立 eventId 對應的 order 對象
+    const orderMap = {};
+    orders.forEach(order => {
+        orderMap[order.eventId] = order;
+    });
 
-//     });
-// }
+    
+    events.forEach(event => {
+        
+        const order = orderMap[event.eventId];
+        console.log(order);
 
-/**
- * 操作相關函數
- */
-// function viewApplication(applicationId) {
-//     window.open(`/ProFit/c/serviceApplication/edit?serviceApplicationId=${applicationId}`, '_blank');
-// }
-
-// function cancelApplication(applicationId) {
-//     if (confirm('確定要取消此委託嗎？')) {
-//         updateApplicationStatus(applicationId, 4); // 4 代表取消
-//     }
-// }
-
-// function acceptApplication(applicationId) {
-//     if (confirm('確定要接受此委託嗎？')) {
-//         updateApplicationStatus(applicationId, 2); // 2 代表接受
-//     }
-// }
-
-// function rejectApplication(applicationId) {
-//     if (confirm('確定要拒絕此委託嗎？')) {
-//         updateApplicationStatus(applicationId, 3); // 3 代表拒絕
-//     }
-// }
-
-// function createOrder(applicationId) {
-//     if (confirm('訂單付款後委託才算成立')) {
-//         window.location.href = `/ProFit/c/serviceApplication/order/${applicationId}`;
-//     }
-
-// }
-
-// function deleteApplication(applicationId) {
-//     if (confirm('確定要刪除此委託嗎？')) {
-//         // 刪除委託
-//         $.ajax({
-//             url: `/ProFit/c/serviceApplication/${applicationId}`,
-//             type: 'DELETE',
-//             success: function (result) {
-//                 if (result) {
-//                     alert('委託已成功刪除');
-//                     // 可以在這裡重新載入列表或移除該委託項目
-//                     loadHostEvents(); // 例如重新載入委託列表
-//                 } else {
-//                     alert('無法刪除此委託，可能權限不足或狀態不符');
-//                 }
-//             },
-//             error: function () {
-//                 alert('刪除委託失敗，請重試');
-//             }
-//         });
-//     }
-// }
-
-/**
- * 更新委託狀態
- */
-// function updateApplicationStatus(applicationId, status) {
-//     console.log(status)
-//     $.ajax({
-//         url: `/ProFit/c/serviceApplication/api/${applicationId}/status?status=${status}`,
-//         type: 'PUT',
-//         contentType: 'application/json',
-//         success: function () {
-//             alert('狀態更新成功');
-//             // 重新載入當前頁面
-//             if ($('#host-tab').hasClass('active')) {
-//                 loadHostEvents();
-//             } else {
-//                 loadPartEvents();
-//             }
-//         },
-//         error: function () {
-//             alert('狀態更新失敗，請重試');
-//         }
-//     });
-// }
+        container.append(`
+                <div class="row align-items-center border-bottom py-3">
+                    <div class="col-md-3">
+                        <h6 class="mb-0">${event.eventName}</h6>
+                        <span>報名日期：${formatDate(order.eventParticipantDate)}</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="badge ${getEventStatusClass(event.isEventActive)}"
+                            data-${event.eventId}-status="${event.isEventActive}">
+                            活動狀態：${getEventStatus(event.isEventActive)}
+                        </span>
+                        <span class="badge ${getOrderStatusClass(order.eventOrderActive)}"
+                            data-${order.eventOrderId}-status="${order.eventOrderActive}">
+                            報名狀態：${getOrderStatus(order.eventOrderActive)}
+                        </span>
+                    </div>
+                    <div class="col-md-2">
+                        <span>報名費用</span>
+                        <span>$${order.eventOrderAmount}</span>
+                    </div>
+                    <div class="col-md-5">
+                        <a class="view btn btn-secondary btn-sm" href="/ProFit/f/events/view?eventId=${event.eventId}">活動資料</a>
+                        <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
+                        <a class="edit btn btn-primary btn-sm" href="#">編輯</a>
+                    </div>
+                </div>
+                `);
+                // <a class="view-host btn btn-success btn-sm" href="/ProFit/f/events/host/search?eventId=${event.eventId}">主辦者列表</a>
+                // <a class="edit btn btn-primary btn-sm" href="/ProFit/f/events/order/edit?eventId=${order.eventOrderId}">編輯</a>
+    });
+}
 
 /**
  * 工具函數
  */
-// function getApplicationStatus(status) {
-//     const statusMap = {
-//         0: '草稿',
-//         1: '洽談中', // 1洽談中(只有發起人能編輯其他欄位,另一人只能更改為完成)
-//         2: '已接受', // 2已接受(自動成立訂單service_order，尚未付款)
-//         3: '已婉拒', // 3婉拒(由freelancer婉拒)
-//         4: '已關閉', // 4關閉(由caseowner關閉)
-//         5: '已成立', // 5已完成(service_order訂單由caseowner完成付款後的狀態)
-//         6: '已結案'  // 6已結案(訂單完成付款，且接案人完成任務)
-//     };
-//     return statusMap[status] || '未知狀態';
-// }
+function getEventStatus(status) {
+    const statusMap = {
+        0: '已關閉',    //禁止報名
+        1: '已啟用',    //可以報名
+        2: '審核中'
+    };
+    return statusMap[status] || '錯誤';
+}
 
-// function getStatusBadgeClass(status) {
-//     const classMap = {
-//         0: 'bg-warning',    // 待處理
-//         1: 'bg-success',    // 已接受
-//         2: 'bg-danger',     // 已拒絕
-//         3: 'bg-secondary',  // 已取消
-//         4: 'bg-primary',    // 已關閉
-//         5: 'bg-info',        // 已成立
-//         6: 'bg-secondary'        // 已結案
-//     };
-//     return classMap[status] || 'bg-secondary';
-// }
+function getEventStatusClass(status) {
+    const classMap = {
+        0: 'bg-secondary',    // 已關閉
+        1: 'bg-success',    // 已啟用
+        2: 'bg-warning',     // 審核中
+    };
+    return classMap[status] || 'bg-secondary';
+}
 
-// function formatDate(dateString) {
-//     const date = new Date(dateString);
-//     return date.getFullYear() + '年' +
-//         (date.getMonth() + 1) + '月' +
-//         date.getDate() + '日';
-// }
+function getOrderStatus(status) {
+    const statusMap = {
+        false: '尚未成立',
+        true: '報名成功'
+    };
+    return statusMap[status] || '錯誤';
+}
+
+function getOrderStatusClass(status) {
+    const classMap = {
+        false: 'bg-secondary',   // 報名尚未成立
+        true: 'bg-success'       // 報名成功
+    };
+    return classMap[status] || 'bg-secondary';
+}
