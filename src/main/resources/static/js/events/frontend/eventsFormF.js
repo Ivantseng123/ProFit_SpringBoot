@@ -81,17 +81,17 @@ document.addEventListener("DOMContentLoaded", function () {
     //一鍵輸入
     document.getElementById('inputBtn').addEventListener('click', function() {
         const sampleData = {
-            eventName: '2025年軟體開發高峰論壇',
-            eventCategory: 1,
-            eventMajor: 100,
-            eventStartDate: '2025-03-15T09:00',
-            eventEndDate: '2025-03-16T17:00',
-            eventPartStartDate: '2025-01-01T09:00',
-            eventPartEndDate: '2025-03-10T17:00',
-            eventAmount: 300,
-            eventLocation: '台北市',
-            eventParticipantMaximum: 500,
-            eventDescription: '這是一場針對軟體開發的高峰論壇，包含前沿技術的分享、專業講座與開發趨勢討論，為軟體開發愛好者提供深入的學習與交流機會。'
+            eventName: '產品設計初學者訓練營',
+            eventCategory: 3,
+            eventMajor: 203,
+            eventStartDate: '2025-09-01T10:00',
+            eventEndDate: '2025-09-05T16:00',
+            eventPartStartDate: '2025-06-01T10:00',
+            eventPartEndDate: '2025-08-25T16:00',
+            eventAmount: 600,
+            eventLocation: '台南市',
+            eventParticipantMaximum: 70,
+            eventDescription: '此訓練營將帶領學員從零開始學習產品設計的基本流程，適合對產品設計有興趣的初學者，並提供多樣的設計練習。'
         }
     
         // 填入表單
