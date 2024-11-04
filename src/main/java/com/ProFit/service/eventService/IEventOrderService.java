@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ProFit.model.bean.eventsBean.EventOrderBean;
 import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 
 public interface IEventOrderService {
 
@@ -34,4 +35,6 @@ public interface IEventOrderService {
 	// 將DTO轉換成實體
 	EventOrderBean convertToBean(EventOrderDTO orderDTO);
 
+    // 轉換成event
+	EventsDTO convertToEvents(EventOrderBean eventOrder);
 }
