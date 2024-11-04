@@ -16,6 +16,8 @@ public interface EventsDAO extends JpaRepository<EventsBean, String> {
 
     EventsBean findByEventName(String eventName);
     
+    List<EventsBean> findAllByOrderByEventIdDesc();
+    
     List<EventsBean> findByEventNameContaining(String eventName);
 
     List<EventsBean> findByIsEventActive(int isEventActive);
