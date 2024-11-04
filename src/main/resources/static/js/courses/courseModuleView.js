@@ -1,9 +1,6 @@
 $(document).ready(function () {
-	console.log("Document is ready");
 	let params = new URLSearchParams(window.location.search);
 	let courseId = params.get('courseId');
-
-	console.log(courseId);
 
 	// 當新增章節按鈕被按下時
 	$('#createBtn').click(function () {
@@ -80,8 +77,6 @@ $(document).ready(function () {
 		let newModuleName = $row.find('.editModuleName').val().trim();
 		let courseModuleId = $row.find('.sort').data('coursemoduleid');  // 從當前行的 .edit 按鈕上抓取 data-courseModuleId
 
-		console.log(courseModuleId);
-
 		if (newModuleName === "") {
 			alert("章節名稱不能為空");
 			return;
@@ -128,7 +123,6 @@ $(document).ready(function () {
 	//按下刪除按鈕
 	$(document).on('click', '.delete', function () {
 		var courseModuleId = $(this).data('coursemoduleid');
-		console.log("Selected CourseModule ID for Deletion: " + courseModuleId);
 
 		let answer = confirm('確認刪除嗎？');
 		if (answer) {

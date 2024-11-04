@@ -107,14 +107,12 @@ document.getElementById("confirmAdd").addEventListener("click", function () {
     document.querySelectorAll("#moduleTableBody tr td:nth-child(2) input").forEach(input => {
         chapterNames.push(input.value);
     });
-    console.log('Create button clicked');
 
     let courseStartDate = $('#courseStartDate').val();
     let courseEndDate = $('#courseEndDate').val();
     let courseCoverPictureFile = $('#courseCoverPicture')[0].files[0];
     let courseModuleNames = chapterNames;
 
-    console.log(courseModuleNames);
     // 格式化日期
     courseStartDate = convertToSQLDateTimeFormat(courseStartDate);
     courseEndDate = convertToSQLDateTimeFormat(courseEndDate);
@@ -340,37 +338,6 @@ $(document).on('click', '.saveLessonBtn', function () {
             row.find('#lessonMedia').prop('disabled', true); // 禁用文件輸入框
             row.find('.deleteLessonBtn').remove(); // 移除刪除按鈕
             row.find('.saveLessonBtn').replaceWith('<span class="text-success">已保存</span>'); // 替換保存按鈕為已保存
-
-            // 添加新的空行，準備輸入下一個單元
-            const newRow = `
-                <tr>
-                    <td>
-                        <input type="text" class="form-control" id="courseLessonSort" required>
-                    </td>
-                    <td>
-                        <input type="text" class="form-control" id="courseLessonName" required>
-                    </td>
-                    <td>
-                        <input type="file" class="form-control" id="lessonMedia"></input>
-                    </td>
-                    <td>
-                        <select class="form-control" id="lessonMediaType" required>
-                            <option value="" disabled selected>請選擇</option>
-                            <option value="Video">影片</option>
-                            <option value="File">檔案</option>
-                            <option value="HomeWork">作業</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="form-control" type="number" id="mediaDuration">
-                    </td>
-                    <td class="text-center">
-                        <a type="button" class="btn btn-primary btn-sm saveLessonBtn">保存</a>
-                        <a type="button" class="btn btn-danger btn-sm deleteLessonBtn">刪除</a>
-                    </td>
-                </tr>
-            `;
-            $('#lessonTableBody').append(newRow);
         },
         error: function (xhr, status, error) {
             console.error('保存失敗:', error);
@@ -400,3 +367,39 @@ $(document).on('click', '#backToStep2', function () {
     var prevTab = new bootstrap.Tab(document.getElementById('profile-tab'));
     prevTab.show();
 });
+
+const newLessonBtn = document.getElementById('newLessonBtn');
+newLessonBtn.addEventListener('click',function(){
+    // 添加新的空行，準備輸入下一個單元
+    const newRow = `
+        <tr>
+            <td>
+                <input type="text" class="form-control" id="courseLessonSort" required>
+            </td>
+            <td>
+                <input type="text" class="form-control" id="courseLessonName" required>
+            </td>
+            <td>
+                <input type="file" class="form-control" id="lessonMedia"></input>
+            </td>
+            <td>
+                <select class="form-control" id="lessonMediaType" required>
+                    <option value="" disabled selected>請選擇</option>
+                    <option value="Video">影片</option>
+                    <option value="File">檔案</option>
+                    <option value="HomeWork">作業</option>
+                </select>
+            </td>
+            <td>
+                <input class="form-control" type="number" id="mediaDuration">
+            </td>
+            <td class="text-center">
+                <a type="button" class="btn btn-primary btn-sm saveLessonBtn">保存</a>
+                <a type="button" class="btn btn-danger btn-sm deleteLessonBtn">刪除</a>
+            </td>
+        </tr>
+    `;
+    $('#lessonTableBody').append(newRow);
+})
+
+

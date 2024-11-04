@@ -151,8 +151,6 @@ public class CoursesController {
             courseEndDate = courseEndDate.substring(0, 19);
         }
 
-        System.out.println(courseStartDate);
-        System.out.println(courseEndDate);
         // 定義日期格式
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -252,10 +250,7 @@ public class CoursesController {
                 }
                 insertedCourse.setCourseModules(courseModules);
                 courseService.updateCourseById(insertedCourse);
-            } else {
-                System.out.println("沒有module");
             }
-            System.out.println(insertedCourse.getCourseId());
             // 返回 JSON
             Map<String, String> response = new HashMap<>();
             response.put("message", "OK");

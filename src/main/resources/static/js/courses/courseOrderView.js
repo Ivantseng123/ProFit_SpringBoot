@@ -22,7 +22,6 @@ $('#searchBtn').click(function () {
 		dataType: 'json',
 		type: 'GET',
 		success: function (response) {
-			console.log(response);
 
 			// 清空當前表格
 			$('#search-results').empty();
@@ -48,8 +47,7 @@ $('#searchBtn').click(function () {
 			$('#search-results').append(tableHtml);
 
 			response.forEach(function (response) {
-				console.log("Serialized JSON: " + response.courseCreaterName);
-				$('#table-body').append(` 
+				$('#table-body').append(`
         		                    <tr>
         	                        <td class="result-courseOrderId" name="courseOrderId">${response.courseOrderId}</td>
         	                        <td class="result-courseName" name="courseName">${response.courseName}</td>
@@ -79,7 +77,6 @@ $('#searchBtn').click(function () {
 
 //新增課程後回傳帶參數的url，確認參數是否存在
 $(document).ready(function () {
-	console.log("Document is ready");
 	// 獲取URL中的參數
 	let params = new URLSearchParams(window.location.search);
 	let clickButton = params.get('clickButton');
@@ -99,8 +96,6 @@ $(document).ready(function () {
 $(document).on('click', '.delete', function () {
 	var courseOrderId = $(this).closest('tr').find('.result-courseOrderId').text();
 
-	console.log("Selected Course ID for Deletion: " + courseOrderId);
-
 	let answer = confirm('確認刪除嗎？');
 	if (answer) {
 		$.ajax({
@@ -109,7 +104,6 @@ $(document).on('click', '.delete', function () {
 			success: function (response) {
 				if (response) {
 					window.alert('課程訂單刪除成功');
-					console.log('刪除的课程信息:', response);
 					window.location.href = contextPath + '/courseOrders?clickButton=true';
 				} else {
 					window.alert('課程訂單刪除失敗');
@@ -128,8 +122,6 @@ $(document).on('click', '.delete', function () {
 $(document).on('click', '.edit', function () {
 	var courseOrderId = $(this).closest('tr').find('.result-courseOrderId').text(); // 抓取 courseOrderId
 
-	console.log("Selected Course Order ID for Editing: " + courseOrderId);
-
 	// 使用 courseOrderId 而不是 courseId
 	window.location.href = contextPath + '/courseOrders/updateOrder?courseOrderId=' + courseOrderId;
 });
@@ -138,8 +130,6 @@ $(document).on('click', '.edit', function () {
 //按下查看按鈕，抓取欄位的值傳給server
 $(document).on('click', '.view', function () {
 	var courseOrderId = $(this).closest('tr').find('.result-courseOrderId').text();
-
-	console.log("Selected Course ID for Deletion: " + courseOrderId);
 
 	$.ajax({
 		url: contextPath + '/courseOrders/searchOne/' + courseOrderId,

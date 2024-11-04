@@ -29,7 +29,6 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 		// 生成新的course_id
 		int newCourseOrderIdNumber = (maxCourseOrderIdNumber == null) ? 100 : maxCourseOrderIdNumber + 1;
 		String newCourseOrderId = String.format("CR%03d", newCourseOrderIdNumber);
-		System.out.println("New CourseOrder ID: " + newCourseOrderId);
 
 		// 設置生成的courseOrderId 到 courseOrderBean中
 		courseOrder.setCourseOrderId(newCourseOrderId);
@@ -60,7 +59,6 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 		CourseOrderBean oldCourseOrder = session.get(CourseOrderBean.class, newCourseOrder.getCourseOrderId());
 
 		if (oldCourseOrder == null) {
-			System.out.println("CourseOrder with ID" + newCourseOrder.getCourseOrderId() + "does not exist");
 			return false;
 		}
 
@@ -105,39 +103,5 @@ public class HcourseOrderDao implements IHcourseOrderDao {
 		Query<CourseOrderBean> query = session.createQuery("from CourseOrderBean", CourseOrderBean.class);
 		return query.list();
 	}
-
-	// // 搜尋課程訂單by 多條件
-	// @Override
-	// public List<CourseOrderBean> searchCourseOrders(String courseId,Integer
-	// studentId,String status) {
-
-	// System.out.println(status);
-	// Session session = entityManager.unwrap(Session.class);
-	// StringBuilder hql = new StringBuilder("from CourseOrderBean CO WHERE 1=1");
-
-	// if(courseId !=null && !courseId.trim().isEmpty()) {
-	// hql.append(" AND courseId LIKE :courseId");
-	// }
-	// if(studentId != null) {
-	// hql.append(" AND studentId = :studentId");
-	// }
-	// if(status != null && !status.trim().isEmpty()) {
-	// hql.append(" AND courseOrderStatus = :status");
-	// }
-
-	// Query<CourseOrderBean> query =
-	// session.createQuery(hql.toString(),CourseOrderBean.class);
-	// if(courseId !=null && !courseId.trim().isEmpty()) {
-	// query.setParameter("courseId", "%"+courseId+"%");
-	// }
-	// if(studentId != null) {
-	// query.setParameter("studentId", studentId);
-	// }
-	// if(status != null && !status.trim().isEmpty()) {
-	// query.setParameter("status",status);
-	// }
-
-	// return query.getResultList();
-	// }
 
 }

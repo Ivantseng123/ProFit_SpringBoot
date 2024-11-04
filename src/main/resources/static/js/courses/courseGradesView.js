@@ -1,6 +1,5 @@
 $('#searchBtn').click(function () {
 
-    console.log("Document is ready");
     let params = new URLSearchParams(window.location.search);
     let courseId = params.get('courseId');
 
@@ -30,7 +29,6 @@ $('#searchBtn').click(function () {
         dataType: 'json',
         type: 'GET',
         success: function (response) {
-            console.log(response);
 
             // 清空當前表格
             $('#search-results').empty();
@@ -53,7 +51,6 @@ $('#searchBtn').click(function () {
             $('#search-results').append(tableHtml);
 
             response.content.forEach(function (CourseGrade) {
-                console.log("Serialized JSON: " + response.courseCreaterName);
                 $('#table-body').append(` 
         		                <tr>
         	                        <td class="result-courseGradeId" name="courseGradeId">${CourseGrade.courseGradeId}</td>
@@ -77,7 +74,6 @@ $('#searchBtn').click(function () {
 
 //新增課程後回傳帶參數的url，確認參數是否存在
 $(document).ready(function () {
-    console.log("Document is ready");
     // 獲取URL中的參數
     let params = new URLSearchParams(window.location.search);
     let clickButton = params.get('clickButton');
@@ -93,7 +89,6 @@ $(document).ready(function () {
 
     //按下新增按鈕，抓取欄位的值傳給server
     $('.createBtn').on('click', function (event) {
-        console.log("Document is ready");
         let params = new URLSearchParams(window.location.search);
         let courseId = params.get('courseId');
 
@@ -124,7 +119,6 @@ $(document).ready(function () {
                 // 根據後端返回的 statusCode 進行不同的處理
                 if (response) {
                     window.alert('評論新增成功');
-                    console.log('評論信息:', response);
                     window.location.href = contextPath + '/courseGrades?courseId=' + courseId;
                     const exampleModal = new bootstrap.Modal('#exampleModal', {
                         keyboard: false
@@ -146,13 +140,10 @@ $(document).ready(function () {
 //按下刪除按鈕，抓取欄位的值傳給server
 $(document).on('click', '.delete', function () {
 
-    console.log("Document is ready");
     let params = new URLSearchParams(window.location.search);
     let courseId = params.get('courseId');
 
     var courseGradeId = $(this).closest('tr').find('.result-courseGradeId').text();
-
-    console.log("Selected courseGrade ID for Deletion: " + courseGradeId);
 
     let answer = confirm('確認刪除嗎？');
     if (answer) {
@@ -162,7 +153,6 @@ $(document).on('click', '.delete', function () {
             success: function (response) {
                 if (response) {
                     window.alert('評論刪除成功');
-                    console.log('刪除的評論信息:', response);
                     window.location.href = contextPath + '/courseGrades?courseId=' + courseId;
                 } else {
                     window.alert('評論刪除失敗');
@@ -176,14 +166,3 @@ $(document).on('click', '.delete', function () {
 
     }
 });
-
-// 編輯課程訂單流程
-// $(document).on('click', '.edit', function () {
-//     var courseGradeId = $(this).closest('tr').find('.result-courseGradeId').text(); // 抓取 courseGradeId
-
-//     console.log("Selected Course Order ID for Editing: " + courseGradeId);
-
-//     // 使用 courseOrderId 而不是 courseId
-//     window.location.href = contextPath + '/courseOrders/updateOrder?courseOrderId=' + courseOrderId;
-// });
-
