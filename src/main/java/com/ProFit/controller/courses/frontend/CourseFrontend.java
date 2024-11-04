@@ -108,17 +108,17 @@ public class CourseFrontend {
 
         UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
 
-        // if (currentUser != null) {
+        if (currentUser != null) {
 
-        List<CourseCategoryDTO> allCourseCategoryList = majorCategoryService.findAllMajorCategories().stream()
-                .map(CourseCategoryDTO::new).collect(Collectors.toList());
+            List<CourseCategoryDTO> allCourseCategoryList = majorCategoryService.findAllMajorCategories().stream()
+                    .map(CourseCategoryDTO::new).collect(Collectors.toList());
 
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("allCourseCategoryList", allCourseCategoryList);
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("allCourseCategoryList", allCourseCategoryList);
 
-        return "coursesVIEW/frontend/createCourseViewFrontend";
-        // }
-        // return "coursesVIEW/frontend/createCourseViewFrontend";
+            return "coursesVIEW/frontend/createCourseViewFrontend";
+        }
+        return "redirect:/homepage?login=false";
     }
 
     @GetMapping("/course/watch/{courseId}")

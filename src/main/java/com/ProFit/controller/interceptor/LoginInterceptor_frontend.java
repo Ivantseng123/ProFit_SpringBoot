@@ -17,7 +17,7 @@ public class LoginInterceptor_frontend implements HandlerInterceptor {
 
 		if (session.getAttribute("CurrentUser") == null) {
 			response.sendRedirect(request.getContextPath() + "/homepage?login=false");
-			
+			return false;
 		}
 		return true; // 返回 true 繼續請求
 	}
