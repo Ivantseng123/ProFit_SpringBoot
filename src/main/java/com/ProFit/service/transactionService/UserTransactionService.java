@@ -114,70 +114,75 @@ public class UserTransactionService {
 
 	// 插入交易
 	public void insertTransaction(UserTransactionDTO transactionDTO) {
-		// 檢查是否已存在相同的交易記錄
-		if (!"withdrawal".equals(transactionDTO.getTransactionType())) {
-			Optional<UserTransactionBean> existingTransaction = transactionRepository
-					.findByOrderIdAndUserIdAndTransactionType(transactionDTO.getOrderId(), transactionDTO.getUserId(),
-							transactionDTO.getTransactionType());
+	    // 檢查是否已存在相同的交易記錄
+	    if (!"withdrawal".equals(transactionDTO.getTransactionType())) {
+	        Optional<UserTransactionBean> existingTransaction = transactionRepository
+	                .findByOrderIdAndUserIdAndTransactionType(transactionDTO.getOrderId(), transactionDTO.getUserId(),
+	                        transactionDTO.getTransactionType());
 
-			// 如果已存在相同的交易，則返回
-			if (existingTransaction.isPresent()) {
-				return;
-			}
-		}
+	        // 如果已存在相同的交易，則返回
+	        if (existingTransaction.isPresent()) {
+	            return;
+	        }
+	    }
 
-		double platformFee = 0; // 預設平台費用為0
+	    double platformFee = 0;
 
-		// 僅當交易類型為「付款」時計算平台費用
-		if ("payment".equals(transactionDTO.getTransactionType())) {
-			platformFee = Math.floor(transactionDTO.getTotalAmount() * 0.05); // 計算5%平台費用
-		}
+	    // 僅當交易類型為「付款」時計算平台費用
+	    if ("payment".equals(transactionDTO.getTransactionType())) {
+	        platformFee = Math.floor(transactionDTO.getTotalAmount() * 0.05); // 計算5%平台費用
+	    }
 
-		// 設定目標收入
-		double targetIncome = transactionDTO.getTotalAmount() - platformFee;
+	    // 設定目標收入
+	    double targetIncome = transactionDTO.getTotalAmount() - platformFee;
 
-		UserTransactionBean transaction = new UserTransactionBean(transactionDTO.getUserId(),
-				transactionDTO.getTransactionRole(), transactionDTO.getTransactionType(), transactionDTO.getOrderId(),
-				transactionDTO.getOrderType(), transactionDTO.getTotalAmount(), platformFee, targetIncome,
-				transactionDTO.getTransactionStatus(), transactionDTO.getPaymentMethod(),
-				transactionDTO.getReferenceId());
+	    // 如果訂單 ID 為空，為交易生成一個新的訂單 ID
+	    if (transactionDTO.getOrderId() == null || transactionDTO.getOrderId().isEmpty()) {
+	        transactionDTO.setOrderId(generateOrderId());
+	    }
 
-		if ("completed".equals(transactionDTO.getTransactionStatus())) {
-			transaction.setCompletionAt(LocalDateTime.now());
-		}
+	    UserTransactionBean transaction = new UserTransactionBean(transactionDTO.getUserId(),
+	            transactionDTO.getTransactionRole(), transactionDTO.getTransactionType(), transactionDTO.getOrderId(),
+	            transactionDTO.getOrderType(), transactionDTO.getTotalAmount(), platformFee, targetIncome,
+	            transactionDTO.getTransactionStatus(), transactionDTO.getPaymentMethod(),
+	            transactionDTO.getReferenceId());
 
-		// 更新用戶餘額
-		Users user = userService.getUserInfoByID(transactionDTO.getUserId());
-		if (user != null) {
-			double target_income = transaction.getTargetIncome();
+	    if ("completed".equals(transactionDTO.getTransactionStatus())) {
+	        transaction.setCompletionAt(LocalDateTime.now());
+	    }
 
-			// 只有當交易狀態不是已完成時才更新餘額
-			if (!"completed".equals(transactionDTO.getTransactionStatus())) {
-				if ("deposit".equals(transactionDTO.getTransactionType())) {
-					user.setUserBalance((int) (user.getUserBalance() + target_income));
-				} else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
-					user.setUserBalance((int) (user.getUserBalance() - target_income));
-				}
+	    // 更新用戶餘額
+	    Users user = userService.getUserInfoByID(transactionDTO.getUserId());
+	    if (user != null) {
+	        double target_income = transaction.getTargetIncome();
 
-				// 保存更新後的用戶信息
-				userService.updateUserBalance(user);
-			}
+	        // 只有當交易狀態不是已完成時才更新餘額
+	        if (!"completed".equals(transactionDTO.getTransactionStatus())) {
+	            if ("deposit".equals(transactionDTO.getTransactionType())) {
+	                user.setUserBalance((int) (user.getUserBalance() + target_income));
+	            } else if ("withdrawal".equals(transactionDTO.getTransactionType())) {
+	                user.setUserBalance((int) (user.getUserBalance() - target_income));
+	            }
 
-			// 保存交易到資料庫
-			try {
-				transactionRepository.save(transaction);
-				System.out.println("成功插入一筆交易記錄, 交易ID: " + transaction.getTransactionId());
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("保存交易失敗: " + e.getMessage());
-			}
+	            // 保存更新後的用戶信息
+	            userService.updateUserBalance(user);
+	        }
 
-			// 如果交易類型為 'payment'，生成發票
-			if ("payment".equals(transactionDTO.getTransactionType())) {
-				transactionDTO.setTransactionId(transaction.getTransactionId());
-				generateInvoice(transactionDTO);
-			}
-		}
+	        // 保存交易到資料庫
+	        try {
+	            transactionRepository.save(transaction);
+	            System.out.println("成功插入一筆交易記錄, 交易ID: " + transaction.getTransactionId());
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            System.out.println("保存交易失敗: " + e.getMessage());
+	        }
+
+	        // 如果交易類型為 'payment'，生成發票
+	        if ("payment".equals(transactionDTO.getTransactionType())) {
+	            transactionDTO.setTransactionId(transaction.getTransactionId());
+	            generateInvoice(transactionDTO);
+	        }
+	    }
 	}
 
 	// 生成發票
@@ -423,6 +428,12 @@ public class UserTransactionService {
 
 		// 刪除交易記錄
 		transactionRepository.deleteById(transactionId);
+	}
+	
+	private String generateOrderId() {
+	    // 獲取當前時間戳並轉換為字串
+	    long timestamp = System.currentTimeMillis();
+	    return "w" + String.format("%03d", timestamp % 1000);
 	}
 
 }
