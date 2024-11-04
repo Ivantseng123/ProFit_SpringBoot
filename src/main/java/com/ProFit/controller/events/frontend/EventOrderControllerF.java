@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ProFit.model.bean.eventsBean.EventOrderBean;
 import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.service.eventService.IEventOrderService;
-
+import com.ProFit.service.eventService.IEventsService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,41 +18,46 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/f/events/order")
 public class EventOrderControllerF {
+	
+	@Autowired
+	private IEventsService eventsService;
 
     @Autowired
     private IEventOrderService eventOrderService;
     
     // 主頁面，列出所有訂單
-    @GetMapping
-    public String listOrder(Model model) {
-        return "eventsVIEW/backend/eventOrder";
-    }
+//    @GetMapping
+//    public String listOrder(Model model) {
+//        return "eventsVIEW/backend/eventOrder";
+//    }
 
     // 新增訂單
     @GetMapping("/new")
-    public String newOrder(Model model) {
+    public String newOrder(@RequestParam String eventId, Model model) {
         EventOrderDTO order = new EventOrderDTO();
+        EventsDTO event = eventsService.convertToDTO(eventsService.selectEventById(eventId));
+        model.addAttribute("event", event);
         model.addAttribute("order", order);
-        return "eventsVIEW/backend/eventOrderForm";
+        return "eventsVIEW/frontend/eventOrderFormF";
     }
 
-    // 編輯訂單
-    @GetMapping("/edit")
-    public String editOrder(@RequestParam String eventOrderId, Model model) {
-        EventOrderBean eventOrderBean = eventOrderService.selectOrderById(eventOrderId);
-        EventOrderDTO order = eventOrderService.convertToDTO(eventOrderBean);
-        model.addAttribute("order", order);
-        return "eventsVIEW/backend/eventOrderForm";
-    }
-
-    // 檢視訂單
-    @GetMapping("/view")
-    public String viewOrder(@RequestParam String eventOrderId, Model model) {
-        EventOrderBean eventOrderBean = eventOrderService.selectOrderById(eventOrderId);
-        EventOrderDTO order = eventOrderService.convertToDTO(eventOrderBean);
-        model.addAttribute("order", order);
-        return "eventsVIEW/backend/eventOrderForm";
-    }
+//    // 編輯訂單
+//    @GetMapping("/edit")
+//    public String editOrder(@RequestParam String eventOrderId, Model model) {
+//        EventOrderBean eventOrderBean = eventOrderService.selectOrderById(eventOrderId);
+//        EventOrderDTO order = eventOrderService.convertToDTO(eventOrderBean);
+//        model.addAttribute("order", order);
+//        return "eventsVIEW/backend/eventOrderForm";
+//    }
+//
+//    // 檢視訂單
+//    @GetMapping("/view")
+//    public String viewOrder(@RequestParam String eventOrderId, Model model) {
+//        EventOrderBean eventOrderBean = eventOrderService.selectOrderById(eventOrderId);
+//        EventOrderDTO order = eventOrderService.convertToDTO(eventOrderBean);
+//        model.addAttribute("order", order);
+//        return "eventsVIEW/backend/eventOrderForm";
+//    }
 
     // 搜尋訂單
     @GetMapping("/search") @ResponseBody
@@ -76,19 +82,19 @@ public class EventOrderControllerF {
         return eventOrder;
     }
 
-    // 刪除訂單
-    @GetMapping("/delete")
-    public String deleteOrder(@RequestParam String eventOrderId) {
-        eventOrderService.deleteOrder(eventOrderId);
-        return "redirect:/events/order";
-    }
+//    // 刪除訂單
+//    @GetMapping("/delete")
+//    public String deleteOrder(@RequestParam String eventOrderId) {
+//        eventOrderService.deleteOrder(eventOrderId);
+//        return "redirect:/events/order";
+//    }
 
     // 儲存訂單
     @PostMapping("/save")
     public ResponseEntity<String> saveOrder(@RequestBody EventOrderDTO eventOrderDTO) {
         EventOrderBean order = eventOrderService.convertToBean(eventOrderDTO);
         eventOrderService.saveOrder(order);
-        return ResponseEntity.ok("/ProFit/events/order");
+        return ResponseEntity.ok("/ProFit/f/events");
     }
     
 }

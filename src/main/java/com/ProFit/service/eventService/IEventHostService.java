@@ -5,6 +5,7 @@ import java.util.List;
 import com.ProFit.model.bean.eventsBean.EventHostBean;
 import com.ProFit.model.bean.eventsBean.EventHostIdBean;
 import com.ProFit.model.dto.eventsDTO.EventHostDTO;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 
 public interface IEventHostService {
 
@@ -31,5 +32,8 @@ public interface IEventHostService {
 
 	// 將DTO轉換成實體
 	EventHostBean convertToBean(EventHostDTO dto);
+
+	// 轉換成event
+	EventsDTO convertToEvents(EventHostBean eventHost);
 
 }

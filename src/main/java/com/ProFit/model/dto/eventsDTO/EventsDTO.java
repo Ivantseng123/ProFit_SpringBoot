@@ -8,6 +8,7 @@ public class EventsDTO {
 	private int isEventActive;
 	private int eventCategory;
 	private int eventMajorId;
+	private String eventMajorName;
 	private int eventMajorCategoryId;
 	private String eventMajorCategoryName;	
 	private LocalDateTime eventPublishDate;
@@ -20,6 +21,7 @@ public class EventsDTO {
 	private int eventParticipantMaximum;
 	private String eventDescription;
 	private String eventNote;
+	private int hostId;
 
 	public EventsDTO() {
 	}
@@ -46,17 +48,18 @@ public class EventsDTO {
 		this.eventNote = eventNote;
 	}
 
-	public EventsDTO(String eventId, String eventName, int isEventActive, int eventCategory, int eventMajorId,
+	public EventsDTO(String eventId, String eventName, int isEventActive, int eventCategory, int eventMajorId, String eventMajorName,
 			int eventMajorCategoryId, String eventMajorCategoryName, LocalDateTime eventPublishDate,
 			LocalDateTime eventStartDate, LocalDateTime eventEndDate, LocalDateTime eventPartStartDate,
 			LocalDateTime eventPartEndDate, int eventAmount, String eventLocation, int eventParticipantMaximum,
-			String eventDescription, String eventNote) {
+			String eventDescription, String eventNote, int hostId) {
 		super();
 		this.eventId = eventId;
 		this.eventName = eventName;
 		this.isEventActive = isEventActive;
 		this.eventCategory = eventCategory;
 		this.eventMajorId = eventMajorId;
+		this.eventMajorName = eventMajorName;
 		this.eventMajorCategoryId = eventMajorCategoryId;
 		this.eventMajorCategoryName = eventMajorCategoryName;
 		this.eventPublishDate = eventPublishDate;
@@ -69,6 +72,7 @@ public class EventsDTO {
 		this.eventParticipantMaximum = eventParticipantMaximum;
 		this.eventDescription = eventDescription;
 		this.eventNote = eventNote;
+		this.hostId = hostId;
 	}
 
 	public String getEventId() {
@@ -109,6 +113,14 @@ public class EventsDTO {
 
 	public void setEventMajorId(int eventMajorId) {
 		this.eventMajorId = eventMajorId;
+	}
+
+	public String getEventMajorName() {
+		return eventMajorName;
+	}
+
+	public void setEventMajorName(String eventMajorName) {
+		this.eventMajorName = eventMajorName;
 	}
 
 	public int getEventMajorCategoryId() {
@@ -206,5 +218,15 @@ public class EventsDTO {
 	public void setEventNote(String eventNote) {
 		this.eventNote = eventNote;
 	}
+
+	public int getHostId() {
+		return hostId;
+	}
+
+	public void setHostId(int hostId) {
+		this.hostId = hostId;
+	}
+	
+	
 
 }

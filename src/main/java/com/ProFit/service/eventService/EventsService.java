@@ -92,6 +92,7 @@ public class EventsService implements IEventsService {
         dto.setEventCategory(event.getEventCategory());
         if(event.getEventMajor()!=null) {
         	dto.setEventMajorId(event.getEventMajor().getMajorId());
+        	dto.setEventMajorName(event.getEventMajor().getMajorName());
         	dto.setEventMajorCategoryId(event.getEventMajor().getMajorCategory().getMajorCategoryId());
         	dto.setEventMajorCategoryName(event.getEventMajor().getMajorCategory().getCategoryName());        	
         }
