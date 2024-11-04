@@ -47,7 +47,6 @@ public class HcourseGradeContentDao implements IHcourseGradeContentDao {
 		CourseGradeContentBean oldGrade = session.get(CourseGradeContentBean.class, newCourseGrade);
 
 		if (oldGrade == null) {
-			System.out.println("CourseGradeId " + newCourseGrade.getCourseGradeId() + "does not exist");
 			return false;
 		}
 

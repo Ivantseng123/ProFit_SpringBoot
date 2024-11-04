@@ -12,7 +12,6 @@ $(document).ready(function() {
             dataType: 'json',
             type: 'GET',
             success: function(courseLessonDTO) {
-                console.log(courseLessonDTO);
 				
                 $('.form-container').append(`
                     <form enctype="multipart/form-data">
@@ -136,7 +135,6 @@ $(document).on('click', '#editBtn', function(event) {
         success: function(response) {
             if (response) {
                 window.alert('單元修改成功');
-                console.log('更新成功:', response);
                 window.location.href = contextPath +'/courseLessons?courseModuleId='+ courseModuleId;
             } else {
                 window.alert('單元修改失敗');

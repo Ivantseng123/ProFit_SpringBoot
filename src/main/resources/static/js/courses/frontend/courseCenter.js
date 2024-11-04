@@ -10,7 +10,6 @@ $(document).ready(() => {
             type: 'GET',
             success: function (coursesMap) {
 
-                console.log(coursesMap.purchasedCourses);
                 // 寫入類別
                 htmlMakerForCourses(coursesMap);
 

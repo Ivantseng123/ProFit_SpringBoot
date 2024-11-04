@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    console.log($('#categorySpace').length)
-
     // 清空當前表格
     $('.categorySpace').empty();
 
@@ -36,12 +34,13 @@ $(document).ready(function () {
         dataType: 'JSON',
         type: 'POST',
         success: function (searchCoursesPage) {
-            console.log(searchCoursesPage.content);
 
             // 清空當前表格
             $('#search-results').empty();
 
             htmlMakerForCourses(searchCoursesPage);
+
+            updatePaginationButtons(searchCoursesPage);
 
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -143,7 +142,6 @@ function htmlMakerForCourses(searchCoursesPage) {
         pageBtns[i].addEventListener('click', function (e) {
             e.preventDefault();
             let pageID = this.getAttribute('data-pagebtn');
-            console.log('pageID: ' + pageID)
             loadThatPage(pageID)
         })
     }
@@ -166,6 +164,31 @@ function htmlMakerForCourses(searchCoursesPage) {
     });
 }
 
+function updatePaginationButtons(searchCoursesPage) {
+
+    // 禁用「上一頁」按鈕，如果在第一頁
+    let currentPage = searchCoursesPage.number + 1;
+    let totalPages = searchCoursesPage.totalPages;
+
+    if (currentPage === 1) {
+        $('#prev-page').addClass('disabled'); // 增加 disabled class
+    } else {
+        $('#prev-page').removeClass('disabled'); // 移除 disabled class
+    }
+
+    // 禁用「下一頁」按鈕，如果在最後一頁
+    if (currentPage === totalPages) {
+        $('#next-page').addClass('disabled'); // 增加 disabled class
+    } else {
+        $('#next-page').removeClass('disabled'); // 移除 disabled class
+    }
+     // 移除所有頁數按鈕的 active 樣式
+     $('.pagination-list .pageBtn').removeClass('active');
+
+     // 為當前頁數的按鈕增加 active 樣式
+     $(`.pagination-list .pageBtn[data-pagebtn="${currentPage}"]`).addClass('active');
+}
+
 function loadThatPage(pageNum) {
     let courseName = $('#id-courseName').val();
     let courseStatus = $('#id-courseStatus').val();
@@ -182,7 +205,6 @@ function loadThatPage(pageNum) {
         dataType: 'JSON',
         type: 'POST',
         success: function (searchCoursesPage) {
-            console.log(searchCoursesPage);
 
             // 清空當前表格
             $('#search-results').empty();
@@ -204,25 +226,7 @@ function loadThatPage(pageNum) {
 
 }
 
-function updatePaginationButtons(searchCoursesPage) {
 
-    // 禁用「上一頁」按鈕，如果在第一頁
-    let currentPage = searchCoursesPage.number + 1;
-    let totalPages = searchCoursesPage.totalPages;
-
-    if (currentPage === 1) {
-        $('#prev-page').addClass('disabled'); // 增加 disabled class
-    } else {
-        $('#prev-page').removeClass('disabled'); // 移除 disabled class
-    }
-
-    // 禁用「下一頁」按鈕，如果在最後一頁
-    if (currentPage === totalPages) {
-        $('#next-page').addClass('disabled'); // 增加 disabled class
-    } else {
-        $('#next-page').removeClass('disabled'); // 移除 disabled class
-    }
-}
 
 function htmlMakerForCategory(allCourseCategoryList) {
     let i = 1;
@@ -255,7 +259,6 @@ function loadThatCategoryPage(categoryId) {
         dataType: 'JSON',
         type: 'POST',
         success: function (searchCoursesPage) {
-            console.log(searchCoursesPage);
 
             // 清空當前表格
             $('#search-results').empty();
@@ -297,7 +300,6 @@ function loadByConditionsPage(courseName, courseStatus, sortBy) {
         dataType: 'JSON',
         type: 'POST',
         success: function (searchCoursesPage) {
-            console.log(searchCoursesPage);
 
             // 清空當前表格
             $('#search-results').empty();

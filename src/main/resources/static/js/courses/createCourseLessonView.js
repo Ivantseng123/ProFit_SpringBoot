@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     // 「新增單元」按鈕點擊事件
     $('#createBtn').on('click', function (event) {
-        console.log('Create button clicked');
 
         // 獲取表單元素
         let form = $('form')[0];
@@ -15,8 +14,6 @@ $(document).ready(function () {
         let lessonMedia = $('#lessonMedia')[0].files[0];
         let lessonMediaType = $('#lessonMediaType').val();
         let mediaDuration = $('#mediaDuration').val();
-
-        console.log(courseModuleId);
 
         // 使用 FormData 來封裝表單數據
         let formData = new FormData(form);

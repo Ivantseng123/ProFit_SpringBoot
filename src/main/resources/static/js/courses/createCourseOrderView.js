@@ -1,5 +1,4 @@
 $(document).ready(function () {
-	console.log("Document is ready");
 		let params = new URLSearchParams(window.location.search);
 		let courseId = params.get('courseId');
 	
@@ -22,7 +21,6 @@ $(document).ready(function () {
 
     // 「新增訂單」按鈕點擊事件
     $('#createBtn').on('click', function (event) {
-        console.log('Create button clicked');
 		
         let form = $('form')[0];
         
