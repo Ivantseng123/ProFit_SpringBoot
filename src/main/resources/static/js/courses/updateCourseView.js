@@ -11,7 +11,6 @@ $(document).ready(function () {
             dataType: 'json',
             type: 'GET',
             success: function (response) {
-                console.log(response);
 
                 // 獲取課程數據
                 let course = response.course;
@@ -114,7 +113,6 @@ $(document).ready(function () {
                     let formattedDate = `${year}-${month}-${day}`;
                     enrollmentDateInput.value = formattedDate;
 
-                    console.log("Enrollment Date:", enrollmentDateInput.value);
                 } else {
                     console.error('enrollmentDateInput element not found');
                 }
@@ -186,7 +184,6 @@ $(document).on('click', '#editBtn', function (event) {
         success: function (response) {
             if (response) {
                 window.alert('課程修改成功');
-                console.log('更新成功:', response);
                 window.location.href = contextPath + '/b/courses?clickButton=true';
             } else {
                 window.alert('課程修改失敗');

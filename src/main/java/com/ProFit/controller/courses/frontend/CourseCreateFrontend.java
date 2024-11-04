@@ -86,10 +86,7 @@ public class CourseCreateFrontend {
                 }
                 insertedCourse.setCourseModules(courseModules);
                 courseService.updateCourseById(insertedCourse);
-            } else {
-                System.out.println("沒有module");
             }
-            System.out.println(insertedCourse.getCourseId());
 
             Map<String, Object> response = new HashMap<>();
             response.put("insertedCourseId", insertedCourse.getCourseId());

@@ -60,14 +60,12 @@ $(document).ready(function () {
         let formattedDate = `${year}-${month}-${day}`;
         enrollmentDateInput.value = formattedDate;
 
-        console.log("Enrollment Date:", enrollmentDateInput.value);
     } else {
         console.error('enrollmentDateInput element not found');
     }
 
     // 「略過，後續再新增」按鈕點擊事件
     $('#createBtn').on('click', function (event) {
-        console.log('Create button clicked');
 
         // 獲取表單元素
         let form = $('form')[0];
@@ -87,7 +85,6 @@ $(document).ready(function () {
             let courseStatus = $('#courseStatus').val();
             let courseModuleNames = Array.from(document.getElementsByClassName('courseModuleName')).map(element => element.textContent.trim());
 
-            console.log(courseModuleNames);
             // 格式化日期
             courseStartDate = convertToSQLDateTimeFormat(courseStartDate);
             courseEndDate = convertToSQLDateTimeFormat(courseEndDate);
@@ -121,7 +118,6 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response) {
                         window.alert('課程新增成功');
-                        console.log('新增的課程信息:', response);
                         // 跳轉回課程列表
                         window.location.href = contextPath + '/b/courses?clickButton=true';
                     } else {

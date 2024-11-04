@@ -11,6 +11,7 @@ import com.ProFit.model.bean.eventsBean.EventHostBean;
 import com.ProFit.model.bean.eventsBean.EventHostIdBean;
 import com.ProFit.model.dao.eventsCRUD.EventHostDAO;
 import com.ProFit.model.dto.eventsDTO.EventHostDTO;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.service.userService.IUserService;
 
@@ -71,6 +72,8 @@ public class EventHostService implements IEventHostService {
       dto.setEventName(eventHost.getEvent().getEventName());
       dto.setEventHostId(eventHost.getEventHost().getUserId());
       dto.setEventHostName(eventHost.getEventHost().getUserName());
+      dto.setEventHostEmail(eventHost.getEventHost().getUserEmail());
+      dto.setEventHostPicture(eventHost.getEventHost().getUserPictureURL());
       return dto;
    }
 
@@ -80,6 +83,14 @@ public class EventHostService implements IEventHostService {
       EventsBean event = eventsService.selectEventById(dto.getEventId());
       Users host = userService.getUserInfoByID(dto.getEventHostId());
       return new EventHostBean(event, host);
+   }
+   
+   // 轉換成event
+   @Override
+   public EventsDTO convertToEvents(EventHostBean eventHost) {
+	   EventsBean eventBean = eventHost.getEvent();
+	   EventsDTO event = eventsService.convertToDTO(eventBean);
+	   return event;
    }
 
 }

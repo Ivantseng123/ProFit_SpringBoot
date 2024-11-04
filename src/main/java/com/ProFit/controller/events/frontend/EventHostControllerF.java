@@ -11,6 +11,7 @@ import com.ProFit.model.bean.eventsBean.EventHostIdBean;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.eventsDTO.EventHostDTO;
+import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.service.eventService.IEventHostService;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.userService.IUserService;
@@ -32,23 +33,23 @@ public class EventHostControllerF {
     private IUserService userService;
 
     // 主頁面，列出所有活動
-    @GetMapping
-    public String listEventHost(Model model) {
-        return "eventsVIEW/backend/eventHost";
-    }
+//    @GetMapping
+//    public String listEventHost(Model model) {
+//        return "eventsVIEW/backend/eventHost";
+//    }
 
     // 新增活動
-    @GetMapping("/new")
-    public String newEventHost(Model model) {
-        EventHostDTO eventHost = new EventHostDTO();
-        model.addAttribute("eventHost", eventHost);
-        return "eventsVIEW/backend/eventHostForm";
-    }
+//    @GetMapping("/new")
+//    public String newEventHost(Model model) {
+//        EventHostDTO eventHost = new EventHostDTO();
+//        model.addAttribute("eventHost", eventHost);
+//        return "eventsVIEW/backend/eventHostForm";
+//    }
 
     // 搜尋活動
     @GetMapping("/search")
     @ResponseBody
-    public List<EventHostDTO> searchEventHost(@RequestParam(required = false) String eventId,
+    public List<EventsDTO> searchEventHost(@RequestParam(required = false) String eventId,
             @RequestParam(required = false) Integer hostId) {
         List<EventHostBean> eventHostList;
 
@@ -62,26 +63,26 @@ public class EventHostControllerF {
             eventHostList = eventHostService.selectAllEventHost();
         }
 
-        List<EventHostDTO> eventHost = eventHostList.stream().map(eventHostService::convertToDTO)
+        List<EventsDTO> events = eventHostList.stream().map(eventHostService::convertToEvents)
                 .collect(Collectors.toList());
-        return eventHost;
+        return events;
     }
 
     // 刪除活動
-    @GetMapping("/delete")
-    public String deleteEventHost(@RequestParam String eventId, @RequestParam Integer eventHostId) {
-        EventHostIdBean id = new EventHostIdBean(eventId, eventHostId);
-        eventHostService.deleteEventHost(id);
-        return "redirect:/events/host";
-    }
+//    @GetMapping("/delete")
+//    public String deleteEventHost(@RequestParam String eventId, @RequestParam Integer eventHostId) {
+//        EventHostIdBean id = new EventHostIdBean(eventId, eventHostId);
+//        eventHostService.deleteEventHost(id);
+//        return "redirect:/events/host";
+//    }
 
     // 儲存活動
-    @PostMapping("/save")
-    public ResponseEntity<String> saveEventHost(@RequestBody EventHostDTO eventHostDTO) {
-    	EventsBean event = eventsService.selectEventById(eventHostDTO.getEventId());
-    	Users host = userService.getUserInfoByID(eventHostDTO.getEventHostId());
-        EventHostBean eventHost = new EventHostBean(event, host);
-        eventHostService.saveEventHost(eventHost);
-        return ResponseEntity.ok("/ProFit/events");
-    }
+//    @PostMapping("/save")
+//    public ResponseEntity<String> saveEventHost(@RequestBody EventHostDTO eventHostDTO) {
+//    	EventsBean event = eventsService.selectEventById(eventHostDTO.getEventId());
+//    	Users host = userService.getUserInfoByID(eventHostDTO.getEventHostId());
+//        EventHostBean eventHost = new EventHostBean(event, host);
+//        eventHostService.saveEventHost(eventHost);
+//        return ResponseEntity.ok("/ProFit/events");
+//    }
 }

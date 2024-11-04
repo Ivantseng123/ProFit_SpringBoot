@@ -12,7 +12,7 @@ $(document).ready(function () {
         })
         .catch( error => {
             console.log(error);
-         });
+        });
 
     // loading 畫面
     $('#search-results').append(`	<div class="text-center">
@@ -130,7 +130,7 @@ function htmlMakerForEvents(searchEvents) {
                             </div>
                             <div class="mt-3 d-flex justify-content-between align-items-center">
                                     <h5 class="coursePrice mb-1">NT$ ${formatPrice(event.eventAmount)}</h5>
-                                    <a href="#" class="btn btn-warning btn-sm">查看活動</a>
+                                    <a href="events/view?eventId=${event.eventId}" class="btn btn-warning btn-sm">查看活動</a>
                             </div>
                         </div>
                     </div>

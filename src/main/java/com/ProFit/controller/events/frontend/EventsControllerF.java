@@ -6,13 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.ProFit.model.bean.eventsBean.EventHostBean;
+import com.ProFit.model.bean.eventsBean.EventOrderBean;
 import com.ProFit.model.bean.eventsBean.EventsBean;
+import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
+import com.ProFit.model.dto.eventsDTO.EventHostDTO;
+import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
+import com.ProFit.service.eventService.IEventHostService;
+import com.ProFit.service.eventService.IEventOrderService;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
+import com.ProFit.service.userService.IUserService;
+import com.ProFit.service.userService.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -26,10 +35,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/f/events")
-public class EventControllerF {
+public class EventsControllerF {
 
     @Autowired
     private IEventsService eventsService;
+    
+    @Autowired
+    private IEventHostService eventHostService;
+    
+    @Autowired
+    private IEventOrderService eventOrderService;
+    
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private IMajorService majorService;
@@ -53,26 +71,31 @@ public class EventControllerF {
         return "eventsVIEW/frontend/eventsFormF";
     }
 
-    // 編輯活動
-    @GetMapping("/edit")
-    public String editEvent(@RequestParam String eventId, Model model) {
-        EventsBean eventBean = eventsService.selectEventById(eventId);
-        EventsDTO event = eventsService.convertToDTO(eventBean);
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
-        model.addAttribute("event", event);
-        return "eventsVIEW/frontend/eventsFormF";
-    }
+//    // 編輯活動
+//    @GetMapping("/edit")
+//    public String editEvent(@RequestParam String eventId, Model model) {
+//        EventsBean eventBean = eventsService.selectEventById(eventId);
+//        EventsDTO event = eventsService.convertToDTO(eventBean);
+//        List<MajorDTO> majors = majorService.findAllMajors();
+//        model.addAttribute("majors", majors);
+//        model.addAttribute("event", event);
+//        return "eventsVIEW/frontend/eventsFormF";
+//    }
 
     // 檢視活動
     @GetMapping("/view")
-    public String viewEvent(@RequestParam String eventId, Model model) {
+    public String viewEvent(@RequestParam String eventId, HttpSession session, Model model) {
+    	UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
         EventsBean eventBean = eventsService.selectEventById(eventId);
         EventsDTO event = eventsService.convertToDTO(eventBean);
-        List<MajorDTO> majors = majorService.findAllMajors();
-        model.addAttribute("majors", majors);
+       
+        List<EventHostBean> eventHostList = eventHostService.selectByEvent(eventId);
+        List<EventHostDTO> eventHost = eventHostList.stream().map(eventHostService::convertToDTO)
+        		.collect(Collectors.toList());
+        
         model.addAttribute("event", event);
-        return "eventsVIEW/frontend/eventsFormF";
+        model.addAttribute("eventHosts", eventHost);
+        return "eventsVIEW/frontend/eventsInfoF";
     }
 
     // 搜尋活動
@@ -100,18 +123,21 @@ public class EventControllerF {
         return events;
     }
 
-    // 刪除活動
-    @GetMapping("/delete")
-    public String deleteEvent(@RequestParam String eventId) {
-        eventsService.deleteEvent(eventId);
-        return "redirect:/f/events";
-    }
+//    // 刪除活動
+//    @GetMapping("/delete")
+//    public String deleteEvent(@RequestParam String eventId) {
+//        eventsService.deleteEvent(eventId);
+//        return "redirect:/f/events";
+//    }
 
     // 儲存活動
     @PostMapping("/save")
     public ResponseEntity<String> saveEvent(@RequestBody EventsDTO eventsDTO) {
-        EventsBean event = eventsService.convertToBean(eventsDTO);
-        eventsService.saveEvent(event);
+        EventsBean newEvent = eventsService.convertToBean(eventsDTO);
+        Users host = userService.getUserInfoByID(eventsDTO.getHostId());
+        EventsBean event = eventsService.selectEventById(eventsService.saveEvent(newEvent));
+        eventHostService.saveEventHost(new EventHostBean(event, host));
+        
         return ResponseEntity.ok("/ProFit/f/events");
     }
     

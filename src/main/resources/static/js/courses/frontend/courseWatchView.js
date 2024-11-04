@@ -78,8 +78,6 @@ $(document).ready(function () {
         type: "GET",
         success: function (courseMap) {
 
-            console.log(courseMap);
-
             $('#courseVideoSpace').prepend(`
                 <div class="post-thumbnils">
                     <img src="${courseMap.currentCourse.courseCoverPictureURL}" alt="#">
@@ -106,8 +104,6 @@ $(document).ready(function () {
             let accordionContent = '';
 
             courseMap.courseModuleDTOList.forEach((courseModuleDTO, index) => {
-
-                console.log(courseModuleDTO);
 
                 let moduleIndex = index + 1;
 
@@ -218,7 +214,6 @@ $(document).ready(function () {
             success: function (response) {
 
                 if (response && response.url) {
-                    console.log(response.url);
 
                     const videoUrl = response.url;
 

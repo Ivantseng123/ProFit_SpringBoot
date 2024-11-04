@@ -9,7 +9,6 @@ $(document).ready(function() {
             dataType: 'json',
             type: 'GET',
             success: function(response) {
-                console.log(response);
 
                 $('.form-container').append(`
 					<form id="updateForm">

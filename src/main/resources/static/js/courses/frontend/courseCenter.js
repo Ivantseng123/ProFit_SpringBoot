@@ -10,10 +10,18 @@ $(document).ready(() => {
             type: 'GET',
             success: function (coursesMap) {
 
-                console.log(coursesMap.purchasedCourses);
                 // 寫入類別
                 htmlMakerForCourses(coursesMap);
 
+                // 檢查 coursesMap 是否為空
+                if (!coursesMap.purchasedCourses || coursesMap.purchasedCourses.length === 0) {
+                    $('.orderListSpace').prepend('<div class="alert alert-info">目前沒有購買的課程</div>');
+                }
+
+                // 檢查 coursesMap 是否為空
+                if (!coursesMap.appliedCourses || coursesMap.appliedCourses.length === 0) {
+                    $('.appliedListSpace').prepend('<div class="alert alert-info">目前沒有申請創建的課程</div>');
+                }
                 // 初始化 tab
                 var triggerTabList = $('#myTab a');
                 triggerTabList.each(function () {

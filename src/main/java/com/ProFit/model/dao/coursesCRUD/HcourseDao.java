@@ -16,7 +16,7 @@ import jakarta.persistence.EntityManager;
 public class HcourseDao implements IHcourseDao {
 
 	@Autowired
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	// 新增課程
 	@Override
@@ -29,7 +29,6 @@ public class HcourseDao implements IHcourseDao {
 		// 生成新的course_id
 		int newCourseIdNumber = (maxCourseIdNumber == null) ? 100 : maxCourseIdNumber + 1;
 		String newCourseId = String.format("C%04d", newCourseIdNumber); // 格式化新的course_id
-		System.out.println("New Course ID: " + newCourseId);
 
 		// 設置生成的 courseId 到 courseBean 中
 		course.setCourseId(newCourseId);
@@ -60,12 +59,11 @@ public class HcourseDao implements IHcourseDao {
 
 		// 確認查詢結果不為 null（即課程存在）
 		if (oldCourse == null) {
-			System.out.println("Course with ID " + newCourse.getCourseId() + " does not exist.");
 			return false;
 		}
 
 		// 對比新舊對象的屬性值，並進行更新操作
-		oldCourse.setCourseName(newCourse.getCourseName() == null || newCourse.getCourseName().isEmpty() 
+		oldCourse.setCourseName(newCourse.getCourseName() == null || newCourse.getCourseName().isEmpty()
 				? oldCourse.getCourseName()
 				: newCourse.getCourseName());
 
@@ -77,29 +75,35 @@ public class HcourseDao implements IHcourseDao {
 				? oldCourse.getCourseCategory()
 				: newCourse.getCourseCategory());
 
-		oldCourse.setCourseInformation(newCourse.getCourseInformation() == null || newCourse.getCourseInformation().isEmpty()
-				? oldCourse.getCourseInformation()
-				: newCourse.getCourseInformation());
-		
-		oldCourse.setCourseCoverPictureURL(newCourse.getCourseCoverPictureURL() == null || newCourse.getCourseCoverPictureURL().isEmpty()
-				? oldCourse.getCourseCoverPictureURL()
-				: newCourse.getCourseCoverPictureURL());
+		oldCourse.setCourseInformation(
+				newCourse.getCourseInformation() == null || newCourse.getCourseInformation().isEmpty()
+						? oldCourse.getCourseInformation()
+						: newCourse.getCourseInformation());
 
-		oldCourse.setCourseDescription(newCourse.getCourseDescription() == null || newCourse.getCourseDescription().isEmpty()
-				? oldCourse.getCourseDescription()
-				: newCourse.getCourseDescription());
+		oldCourse.setCourseCoverPictureURL(
+				newCourse.getCourseCoverPictureURL() == null || newCourse.getCourseCoverPictureURL().isEmpty()
+						? oldCourse.getCourseCoverPictureURL()
+						: newCourse.getCourseCoverPictureURL());
 
-		oldCourse.setCourseEnrollmentDate(newCourse.getCourseEnrollmentDate() == null || newCourse.getCourseEnrollmentDate().toString().isEmpty()
-				? oldCourse.getCourseEnrollmentDate()
-				: newCourse.getCourseEnrollmentDate());
+		oldCourse.setCourseDescription(
+				newCourse.getCourseDescription() == null || newCourse.getCourseDescription().isEmpty()
+						? oldCourse.getCourseDescription()
+						: newCourse.getCourseDescription());
 
-		oldCourse.setCourseStartDate(newCourse.getCourseStartDate() == null || newCourse.getCourseStartDate().toString().isEmpty()
-				? oldCourse.getCourseStartDate()
-				: newCourse.getCourseStartDate());
+		oldCourse.setCourseEnrollmentDate(
+				newCourse.getCourseEnrollmentDate() == null || newCourse.getCourseEnrollmentDate().toString().isEmpty()
+						? oldCourse.getCourseEnrollmentDate()
+						: newCourse.getCourseEnrollmentDate());
 
-		oldCourse.setCourseEndDate(newCourse.getCourseEndDate() == null || newCourse.getCourseEndDate().toString().isEmpty()
-				? oldCourse.getCourseEndDate()
-				: newCourse.getCourseEndDate());
+		oldCourse.setCourseStartDate(
+				newCourse.getCourseStartDate() == null || newCourse.getCourseStartDate().toString().isEmpty()
+						? oldCourse.getCourseStartDate()
+						: newCourse.getCourseStartDate());
+
+		oldCourse.setCourseEndDate(
+				newCourse.getCourseEndDate() == null || newCourse.getCourseEndDate().toString().isEmpty()
+						? oldCourse.getCourseEndDate()
+						: newCourse.getCourseEndDate());
 
 		oldCourse.setCoursePrice(newCourse.getCoursePrice() == null
 				? oldCourse.getCoursePrice()

@@ -26,7 +26,6 @@ $('#searchBtn').click(function () {
 		dataType: 'json',
 		type: 'GET',
 		success: function (response) {
-			console.log(response);
 
 			// 清空當前表格
 			$('#search-results').empty();
@@ -56,13 +55,6 @@ $('#searchBtn').click(function () {
 			$('#search-results').append(tableHtml);
 
 			response.content.forEach(function (course) {
-				console.log("Serialized JSON: " + course.courseCreaterName);
-
-				// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
-				// let orderButton = '';
-				// if (course.courseStatus === 'Active') {
-				// 	orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
-				// }
 
 				$('#table-body').append(` 
 							<tr>
@@ -103,7 +95,6 @@ $('#searchBtn').click(function () {
 
 //新增課程後回傳帶參數的url，確認參數是否存在
 $(document).ready(function () {
-	console.log("Document is ready");
 	// 獲取URL中的參數
 	let params = new URLSearchParams(window.location.search);
 	let clickButton = params.get('clickButton');
@@ -123,8 +114,6 @@ $(document).ready(function () {
 $(document).on('click', '.delete', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
-	console.log("Selected Course ID for Deletion: " + courseId);
-
 	let answer = confirm('確認刪除嗎？');
 	if (answer) {
 		$.ajax({
@@ -134,7 +123,6 @@ $(document).on('click', '.delete', function () {
 			success: function (response) {
 				if (response) {
 					window.alert('課程刪除成功');
-					console.log('新增的课程信息:', response);
 					window.location.href = contextPath + '/b/courses?clickButton=true';
 				} else {
 					window.alert('課程刪除失敗');
@@ -153,8 +141,6 @@ $(document).on('click', '.delete', function () {
 $(document).on('click', '.edit', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
 
-	console.log("Selected Course ID for Editing: " + courseId);
-
 	// 不需要發送 AJAX 請求來獲取課程信息，直接轉發到控制器方法
 	window.location.href = contextPath + '/courses/viewUpdate?courseId=' + courseId;
 });
@@ -163,8 +149,6 @@ $(document).on('click', '.edit', function () {
 //按下查看按鈕，抓取欄位的值傳給server
 $(document).on('click', '.view', function () {
 	var courseId = $(this).closest('tr').find('.result-courseId').text();
-
-	console.log("Selected Course ID for Deletion: " + courseId);
 
 	$.ajax({
 		url: contextPath + '/courses/search/' + courseId,
@@ -175,8 +159,6 @@ $(document).on('click', '.view', function () {
 			// 清空當前表格
 			$('.form-container').empty();
 
-			console.log(response);
-
 			// 完整的日期和时间
 			let courseStartDate = `${response.course.courseStartDate.split('.')[0]}`;
 			let courseEndDate = `${response.course.courseEndDate.split('.')[0]}`;
@@ -185,7 +167,6 @@ $(document).on('click', '.view', function () {
 			let courseStartDateTime = `${courseStartDate}`;
 			let courseEndDateTime = `${courseEndDate}`;
 
-			console.log(response.courseStatus);
 			$('.form-container').append(`<form>
 				
 				<div class="form-group" style="text-align: center">
@@ -269,7 +250,6 @@ function printPageNumber(searchCoursesPage) {
 		pageBtns[i].addEventListener('click', function (e) {
 			e.preventDefault();
 			let pageID = this.getAttribute('data-pagebtn');
-			console.log('pageID: ' + pageID)
 			loadThatPage(pageID)
 		})
 	}
@@ -309,6 +289,12 @@ function updatePaginationButtons(searchCoursesPage) {
 	} else {
 		$('#next-page').removeClass('disabled'); // 移除 disabled class
 	}
+
+	// 移除所有頁數按鈕的 active 樣式
+    $('.pagination .pageBtn').removeClass('active');
+
+    // 為當前頁數的按鈕增加 active 樣式
+    $(`.pagination .pageBtn[data-pagebtn="${currentPage}"]`).addClass('active');
 }
 
 function loadThatPage(pageNum) {
@@ -328,7 +314,6 @@ function loadThatPage(pageNum) {
 		dataType: 'JSON',
 		type: 'GET',
 		success: function (response) {
-			console.log(response);
 
 			// 清空當前表格
 			$('#search-results').empty();
@@ -358,13 +343,6 @@ function loadThatPage(pageNum) {
 			$('#search-results').append(tableHtml);
 
 			response.content.forEach(function (course) {
-				console.log("Serialized JSON: " + course.courseCreaterName);
-
-				// 檢查課程狀態，若為 active 則顯示立即訂購按鈕
-				// let orderButton = '';
-				// if (course.courseStatus === 'Active') {
-				// 	orderButton = `<a class="btn btn-warning btn-sm" href="${contextPath}/courseOrders/addOrder?courseId=${course.courseId}">訂購</a>`;
-				// }
 
 				$('#table-body').append(` 
 							<tr>

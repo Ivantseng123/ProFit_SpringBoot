@@ -10,17 +10,22 @@ public class EventHostDTO implements Serializable {
     private String eventName;
     private int eventHostId;
     private String eventHostName;
+    private String eventHostEmail;
+    private String eventHostPicture;
     
     
 	public EventHostDTO() {
 	}
 
-	public EventHostDTO(String eventId, String eventName, int eventHostId, String eventHostName) {
+	public EventHostDTO(String eventId, String eventName, int eventHostId, String eventHostName, String eventHostEmail,
+			String eventHostPicture) {
 		super();
 		this.eventId = eventId;
 		this.eventName = eventName;
 		this.eventHostId = eventHostId;
 		this.eventHostName = eventHostName;
+		this.eventHostEmail = eventHostEmail;
+		this.eventHostPicture = eventHostPicture;
 	}
 
 	public String getEventId() {
@@ -53,6 +58,22 @@ public class EventHostDTO implements Serializable {
 
 	public void setEventHostName(String eventHostName) {
 		this.eventHostName = eventHostName;
+	}
+
+	public String getEventHostEmail() {
+		return eventHostEmail;
+	}
+
+	public void setEventHostEmail(String eventHostEmail) {
+		this.eventHostEmail = eventHostEmail;
+	}
+
+	public String getEventHostPicture() {
+		return eventHostPicture;
+	}
+
+	public void setEventHostPicture(String eventHostPicture) {
+		this.eventHostPicture = eventHostPicture;
 	}
 
 	@Override

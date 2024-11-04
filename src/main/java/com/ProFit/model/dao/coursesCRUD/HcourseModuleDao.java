@@ -11,13 +11,12 @@ import com.ProFit.model.bean.coursesBean.CourseModuleBean;
 
 import jakarta.persistence.EntityManager;
 
-
 @Repository
 @Transactional
 public class HcourseModuleDao implements IHcourseModuleDao {
 
 	@Autowired
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	// 新增課程章節
 	@Override
@@ -49,7 +48,6 @@ public class HcourseModuleDao implements IHcourseModuleDao {
 		CourseModuleBean oldCourseModule = session.get(CourseModuleBean.class, newCourseModule.getCourseModuleId());
 
 		if (oldCourseModule == null) {
-			System.out.println("Module does not exist");
 			return false;
 		}
 
@@ -82,7 +80,8 @@ public class HcourseModuleDao implements IHcourseModuleDao {
 	@Override
 	public List<CourseModuleBean> searchCourseModules(String courseId) {
 		Session session = entityManager.unwrap(Session.class);
-		Query<CourseModuleBean> query = session.createQuery("from CourseModuleBean cm where cm.course.courseId = :courseId",
+		Query<CourseModuleBean> query = session.createQuery(
+				"from CourseModuleBean cm where cm.course.courseId = :courseId",
 				CourseModuleBean.class);
 		query.setParameter("courseId", courseId); // 使用 setParameter 設定參數的值
 		return query.getResultList(); // 執行查詢並返回結果
