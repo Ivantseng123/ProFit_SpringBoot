@@ -179,13 +179,16 @@ function renderHostEvents(events) {
                             </span>
                         </div>
                         <div class="col-md-6">
-                            <a class="view btn btn-secondary btn-sm" href="ProFit/f/events/view?eventId=${event.eventId}">詳細資料</a>
-                            <a class="view-host btn btn-success btn-sm" href="ProFit/f/events/host?eventId=${event.eventId}">主辦者列表</a>
-                            <a class="view-participant btn btn-success btn-sm" href="ProFit/f/events/order?eventId=${event.eventId}">參加者列表</a>
-                            <a class="edit btn btn-primary btn-sm" href="ProFit/f/events/edit?eventId=${event.eventId}">編輯</a>
+                            <a class="view btn btn-secondary btn-sm" href="/ProFit/f/events/view?eventId=${event.eventId}">詳細資料</a>
+                            <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
+                            <a class="view-participant btn btn-success btn-sm" href="#">參加者列表</a>
+                            <a class="edit btn btn-primary btn-sm" href="#">編輯</a>
                         </div>
                     </div>
                   `);
+                //   <a class="view-host btn btn-success btn-sm" href="/ProFit/f/events/host/search?eventId=${event.eventId}">主辦者列表</a>
+                //   <a class="view-participant btn btn-success btn-sm" href="/ProFit/f/events/order/search?eventId=${event.eventId}">參加者列表</a>
+                //   <a class="edit btn btn-primary btn-sm" href="/ProFit/f/events/edit?eventId=${event.eventId}">編輯</a>
     });
 }
 
@@ -235,12 +238,14 @@ function renderPartEvents(events, orders) {
                         <span>$${order.eventOrderAmount}</span>
                     </div>
                     <div class="col-md-5">
-                        <a class="view btn btn-secondary btn-sm" href="ProFit/f/events/view?eventId=${event.eventId}">活動資料</a>
-                        <a class="view-host btn btn-success btn-sm" href="ProFit/f/events/host/search?eventId=${event.eventId}">主辦者列表</a>
-                        <a class="edit btn btn-primary btn-sm" href="ProFit/f/events/order/edit?eventId=${order.eventOrderId}">編輯</a>
+                        <a class="view btn btn-secondary btn-sm" href="/ProFit/f/events/view?eventId=${event.eventId}">活動資料</a>
+                        <a class="view-host btn btn-success btn-sm" href="#">主辦者列表</a>
+                        <a class="edit btn btn-primary btn-sm" href="#">編輯</a>
                     </div>
                 </div>
                 `);
+                // <a class="view-host btn btn-success btn-sm" href="/ProFit/f/events/host/search?eventId=${event.eventId}">主辦者列表</a>
+                // <a class="edit btn btn-primary btn-sm" href="/ProFit/f/events/order/edit?eventId=${order.eventOrderId}">編輯</a>
     });
 }
 

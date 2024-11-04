@@ -7,14 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.ProFit.model.bean.eventsBean.EventHostBean;
+import com.ProFit.model.bean.eventsBean.EventOrderBean;
 import com.ProFit.model.bean.eventsBean.EventsBean;
 import com.ProFit.model.bean.usersBean.Users;
 import com.ProFit.model.dto.coursesDTO.CoursesDTO;
 import com.ProFit.model.dto.eventsDTO.EventHostDTO;
+import com.ProFit.model.dto.eventsDTO.EventOrderDTO;
 import com.ProFit.model.dto.eventsDTO.EventsDTO;
 import com.ProFit.model.dto.majorsDTO.MajorDTO;
 import com.ProFit.model.dto.usersDTO.UsersDTO;
 import com.ProFit.service.eventService.IEventHostService;
+import com.ProFit.service.eventService.IEventOrderService;
 import com.ProFit.service.eventService.IEventsService;
 import com.ProFit.service.majorService.IMajorService;
 import com.ProFit.service.userService.IUserService;
@@ -39,6 +42,9 @@ public class EventsControllerF {
     
     @Autowired
     private IEventHostService eventHostService;
+    
+    @Autowired
+    private IEventOrderService eventOrderService;
     
     @Autowired
     private IUserService userService;
@@ -78,10 +84,11 @@ public class EventsControllerF {
 
     // 檢視活動
     @GetMapping("/view")
-    public String viewEvent(@RequestParam String eventId, Model model) {
+    public String viewEvent(@RequestParam String eventId, HttpSession session, Model model) {
+    	UsersDTO currentUser = (UsersDTO) session.getAttribute("CurrentUser");
         EventsBean eventBean = eventsService.selectEventById(eventId);
         EventsDTO event = eventsService.convertToDTO(eventBean);
-        
+       
         List<EventHostBean> eventHostList = eventHostService.selectByEvent(eventId);
         List<EventHostDTO> eventHost = eventHostList.stream().map(eventHostService::convertToDTO)
         		.collect(Collectors.toList());
