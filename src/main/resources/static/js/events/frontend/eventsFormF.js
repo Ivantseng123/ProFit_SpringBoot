@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     fetchMajors().then((majors) => {
+        console.log(majors);
         if (majors) {
             Object.keys(majors).forEach(category => {
                 if (category !== 'default') {
@@ -76,6 +77,37 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         window.history.back();
     });
+
+    //一鍵輸入
+    document.getElementById('inputBtn').addEventListener('click', function() {
+        const sampleData = {
+            eventName: '2025年軟體開發高峰論壇',
+            eventCategory: 1,
+            eventMajor: 100,
+            eventStartDate: '2025-03-15T09:00',
+            eventEndDate: '2025-03-16T17:00',
+            eventPartStartDate: '2025-01-01T09:00',
+            eventPartEndDate: '2025-03-10T17:00',
+            eventAmount: 300,
+            eventLocation: '台北市',
+            eventParticipantMaximum: 500,
+            eventDescription: '這是一場針對軟體開發的高峰論壇，包含前沿技術的分享、專業講座與開發趨勢討論，為軟體開發愛好者提供深入的學習與交流機會。'
+        }
+    
+        // 填入表單
+        document.getElementById('eventName').value = sampleData.eventName;
+        document.getElementById('eventCategory').value = sampleData.eventCategory;
+        document.getElementById('eventMajor').value = sampleData.eventMajor;
+        document.getElementById('eventStartDate').value = sampleData.eventStartDate;
+        document.getElementById('eventEndDate').value = sampleData.eventEndDate;
+        document.getElementById('eventPartStartDate').value = sampleData.eventPartStartDate;
+        document.getElementById('eventPartEndDate').value = sampleData.eventPartEndDate;
+        document.getElementById('eventAmount').value = sampleData.eventAmount;
+        document.getElementById('eventLocation').value = sampleData.eventLocation;
+        document.getElementById('eventParticipantMaximum').value = sampleData.eventParticipantMaximum;
+        document.getElementById('eventDescription').value = sampleData.eventDescription;
+    });
+    
 
     //送出表單
     function submitForm() {
