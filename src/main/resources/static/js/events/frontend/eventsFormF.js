@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(function(response) {
             if (response.data !== "") {
                 console.log(response.data);
+                document.getElementById("hostId").value = response.data.userId;
             } else {
                 window.location.href = "/ProFit/user/profile";
             }
@@ -91,9 +92,11 @@ document.addEventListener("DOMContentLoaded", function () {
             eventAmount: document.getElementById("eventAmount").value,
             eventLocation: document.getElementById("eventLocation").value,
             eventParticipantMaximum: document.getElementById("eventParticipantMaximum").value,
-            eventDescription: document.getElementById("eventDescription").value
+            eventDescription: document.getElementById("eventDescription").value,
             // eventNote: document.getElementById("eventNote").value
+            hostId: document.getElementById("hostId").value
         };
+
 
         console.log(eventData);
 
