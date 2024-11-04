@@ -21,7 +21,7 @@ public class EventsService implements IEventsService {
     // 搜尋全部活動
     @Override
     public List<EventsBean> selectAllEvents() {
-        return eventsDAO.findAll();
+        return eventsDAO.findAllByOrderByEventIdDesc();
     }
 
     // 依照ID搜尋活動
